@@ -9,6 +9,7 @@ htmlcov/
 
 # Virtual environments and packaging output
 .venv/
+.tools/
 venv/
 dist/
 build/
