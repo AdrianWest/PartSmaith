@@ -7,8 +7,8 @@ foundation.
 
 ## Development
 
-PartSmith requires Python 3.12 or newer. Create an environment and install the project
-with its development tools:
+PartSmith requires Python 3.12.x (`>=3.12,<3.13`). Create an environment and
+install the project with its development tools:
 
 ```powershell
 py -3.12 -m venv .venv
