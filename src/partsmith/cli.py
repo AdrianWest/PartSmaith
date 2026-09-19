@@ -21,10 +21,19 @@ class Diagnostic:
     detail: str
 
 
+def is_supported_python(version: tuple[int, int]) -> bool:
+    """Return whether a Python major/minor version is supported."""
+    return version >= (3, 11)
+
+
 def collect_diagnostics() -> list[Diagnostic]:
     """Collect Phase 0 diagnostics without external dependencies."""
     checks = [
-        ("python", sys.version_info >= (3, 11), platform.python_version()),
+        (
+            "python",
+            is_supported_python(sys.version_info[:2]),
+            platform.python_version(),
+        ),
         ("package", bool(__version__), f"partsmith {__version__}"),
         ("cli", True, "command interface available"),
     ]
