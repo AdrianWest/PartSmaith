@@ -30,8 +30,22 @@ jobs:
       - name: Check formatting
         run: python -m ruff format --check .
       - name: Test
-        run: python -m pytest
+        run: python -m pytest --junitxml=gate-results.xml
+      - name: Verify installed wheel and migration resource
+        run: |
+          python -m pip wheel . --no-deps --wheel-dir dist
+          python -m pip install --force-reinstall --no-deps dist/partsmith-0.1.0-py3-none-any.whl
+          python -c "from importlib.resources import files; assert files('partsmith.persistence').joinpath('001_initial.sql').is_file()"
+          python -m pytest tests/test_persistence.py --junitxml=wheel-gate-results.xml
       - name: Check command-line entry point
         run: |
           partsmith version
           partsmith doctor --json
+      - name: Preserve phase gate evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase-gates-${{ matrix.os }}-${{ matrix.python-version }}
+          path: |
+            *gate-results.xml
+            dist/*.whl

@@ -70,7 +70,8 @@ visible instead of silently correcting one artifact to match another.
 
 PartSmith is currently advancing through a gated implementation plan. The
 foundation provides the Python package, command-line entry point, formatting,
-linting, tests, and continuous integration. Persistence, Component IR,
+linting, tests, continuous integration, and SQLite persistence for projects,
+components, and builds. Component IR,
 package definitions, generators, validation, KiCad integration, and the review
 experience follow in controlled phases.
 
@@ -101,6 +102,36 @@ partsmith doctor --json
 
 `partsmith doctor` verifies the Phase 0 runtime foundation: supported Python,
 installed package version, and command-line availability.
+
+## Persistence (Phase 1)
+
+```python
+from partsmith.persistence import Repository, database
+
+with database("partsmith.sqlite3") as connection:
+    records = Repository(connection)
+    project = records.create_project("Example board", "/projects/example")
+    component = records.create_component(
+        "Example manufacturer", "R-0402", "0402", project_id=project.id
+    )
+    build = records.create_build(component.id, "DRAFT")
+    assert records.get_build(build.id) == build
+```
+
+`database` enables foreign keys, applies migration 001 once, commits successful
+work, rolls back failed work, and closes the connection. For explicit lifecycle
+control, use `connect` and `migrate`, then commit/roll back and close yourself.
+Repository methods never commit independently. Missing ID queries return `None`;
+invalid references raise `sqlite3.IntegrityError`. Parent deletion is restricted.
+Build state is stored as supplied; later phases implement validation and approval.
+
+Migration SQL lives in `migrations/001_initial.sql` and is included in wheels.
+Applied migrations are checksum-verified and must never be edited. Future schema
+changes require new migrations. Every domain record has UTC creation/update
+timestamps; Phase 1 exposes creation and queries, not editing workflows.
+
+Run `python -m pytest tests/test_persistence.py` for the Phase 1 tests.
+See [Phase 1 gate evidence](docs/gates/phase-1.md) for recorded verification.
 
 ## Specification
 
