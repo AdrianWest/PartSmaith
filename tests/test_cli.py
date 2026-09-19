@@ -26,7 +26,7 @@ def test_doctor_output_is_deterministic():
     assert collect_diagnostics() == collect_diagnostics()
 
 
-def test_supported_python_range_starts_at_python_3_11():
-    assert not is_supported_python((3, 10))
-    assert is_supported_python((3, 11))
-    assert is_supported_python((3, 13))
+def test_supported_python_range_is_exactly_python_3_12():
+    assert not is_supported_python((3, 11))
+    assert is_supported_python((3, 12))
+    assert not is_supported_python((3, 13))

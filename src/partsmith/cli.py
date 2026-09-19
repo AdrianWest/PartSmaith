@@ -23,7 +23,7 @@ class Diagnostic:
 
 def is_supported_python(version: tuple[int, int]) -> bool:
     """Return whether a Python major/minor version is supported."""
-    return version >= (3, 11)
+    return (3, 12) <= version < (3, 13)
 
 
 def collect_diagnostics() -> list[Diagnostic]:
