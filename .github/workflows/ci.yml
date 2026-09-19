@@ -34,7 +34,7 @@ jobs:
       - name: Verify installed wheel and migration resource
         run: |
           python -m pip wheel . --no-deps --wheel-dir dist
-          python -m pip install --force-reinstall --no-deps dist/partsmith-0.1.0-py3-none-any.whl
+          python -c "import pathlib, subprocess, sys; wheels = list(pathlib.Path('dist').glob('*.whl')); assert len(wheels) == 1, f'Expected exactly one built wheel, found {len(wheels)}'; subprocess.run([sys.executable, '-m', 'pip', 'install', '--force-reinstall', '--no-deps', str(wheels[0])], check=True)"
           python -c "from importlib.resources import files; assert files('partsmith.persistence').joinpath('001_initial.sql').is_file()"
           python -m pytest tests/test_persistence.py --junitxml=wheel-gate-results.xml
       - name: Check command-line entry point
