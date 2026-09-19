@@ -1,0 +1,22 @@
+# Python bytecode and test/tool caches
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.coverage
+coverage.xml
+htmlcov/
+
+# Virtual environments and packaging output
+.venv/
+venv/
+dist/
+build/
+*.egg-info/
+
+# Local application state
+*.sqlite3
+*.db
+
+# Local environment variables
+.env

@@ -1,0 +1,9 @@
+# Fully pinned CI test and lint tool set for Python 3.12.
+# Update this file deliberately, then record the successful CI run.
+colorama==0.4.6
+iniconfig==2.3.0
+packaging==26.3
+pluggy==1.6.0
+pygments==2.21.0
+pytest==8.4.2
+ruff==0.16.8

@@ -1,24 +1,43 @@
-# v0.9.2 Normative Baseline
+# PartSmith Implementation Specification
+
+**Specification version:** v0.9.3  
+**Status:** Implementation baseline — CadQuery architecture selected  
+**Document date:** 2026-09-19
+
+## v0.9.3 Normative Baseline
 
 This document has been cleaned so that current implementation requirements are
 presented first and prior v0.8/v0.8.x material is retained only in the
 **Historical Appendix** at the end.
 
 The current normative sections, rules, interfaces, schemas, acceptance
-criteria, and implementation plan are authoritative for PartSmith v0.9.2.
+criteria, and implementation plan are authoritative for PartSmith v0.9.3.
 Historical material is non-normative and is retained solely for traceability.
 It must not be used to resolve an implementation question when it conflicts
 with the current baseline.
 
-The cleanup specifically removes ambiguity caused by historical OpenSCAD-only
-3D language, earlier STEP optionality, obsolete alternate 3D output claims,
-old backend/install assumptions, and earlier AI credential/billing wording.
+The cleanup specifically removes ambiguity caused by earlier optional-STEP
+claims, obsolete alternate 3D output claims, old backend/install assumptions,
+and earlier AI credential/billing wording.
 
 # Implementation Strategy — Small, Testable Increments
 
 PartSmith implementation shall proceed in small increments with a
 working, testable result at every step. The project shall not begin with
 the AI interpretation layer.
+
+## Phase-gate policy
+
+Every phase has a **blocking phase gate**. A phase gate passes only when
+every numbered work item in that phase is complete, every listed gate
+condition passes, and the commands, artifact hashes where applicable,
+and test results are recorded in the repository or CI evidence.
+
+Implementation work for phase *N+1* shall not begin until phase *N* has
+a recorded PASS. A failing, skipped, unrecorded, or manually assumed
+check is a gate failure. A waived gate requires an explicit specification
+revision that identifies the risk owner, scope, rationale, and expiry;
+a waiver is not a PASS.
 
 ## Phase 0 — Repository and build foundation
 
@@ -28,8 +47,10 @@ the AI interpretation layer.
 4. Add a minimal application entry point.
 5. Add `partsmith version` and `partsmith doctor`.
 
-**Exit test:** a clean checkout can run the test suite and report the
-application version.
+**Phase 0 gate (blocking):** From a clean checkout, supported Python can
+install the project and development dependencies; the test suite, linter,
+and format check pass; `partsmith version` reports the packaged version;
+and `partsmith doctor` returns PASS. CI runs these commands.
 
 ## Phase 1 — Persistence foundation
 
@@ -39,8 +60,9 @@ application version.
 4. Implement projects/components/build records.
 5. Add migration tests.
 
-**Exit test:** a new database can be created, migrated, opened, and
-queried entirely by automated tests.
+**Phase 1 gate (blocking):** Automated tests create an empty database,
+enable and verify foreign-key enforcement, apply migration 001 exactly
+once, reopen it, and create/query project, component, and build records.
 
 ## Phase 2 — Component IR
 
@@ -50,8 +72,10 @@ queried entirely by automated tests.
 4. Implement units and numeric normalization.
 5. Implement IR hashing.
 
-**Exit test:** a known-good fixture validates and produces a stable hash;
-invalid fixtures fail deterministically.
+**Phase 2 gate (blocking):** A known-good IR fixture passes schema,
+unit/number normalization, canonical serialization, and stable-hash
+tests. Each invalid IR fixture fails the intended validator
+deterministically.
 
 ## Phase 3 — PDL
 
@@ -61,7 +85,9 @@ invalid fixtures fail deterministically.
 4. Add the first PDL entry: 0402.
 5. Add PDL inspection CLI support.
 
-**Exit test:** GOLD-0402-001 loads from PDL and all PDL validation tests pass.
+**Phase 3 gate (blocking):** `GOLD-0402-001` loads through the versioned
+PDL loader; the PDL inspection CLI reports it; valid PDL tests pass; and
+each invalid/topologically incorrect PDL fixture fails deterministically.
 
 ## Phase 4 — Deterministic symbol generation
 
@@ -70,8 +96,9 @@ invalid fixtures fail deterministically.
 3. Generate a known-good 0402 component symbol.
 4. Validate pin numbering and symbol structure.
 
-**Exit test:** repeated generation produces byte-identical symbol output from
-identical inputs.
+**Phase 4 gate (blocking):** The known-good 0402 IR/PDL input generates
+a syntactically valid KiCad symbol with valid pin numbering and structure.
+At least two independent runs produce byte-identical output.
 
 ## Phase 5 — Deterministic footprint generation
 
@@ -80,26 +107,32 @@ identical inputs.
 3. Generate native `.kicad_mod`.
 4. Validate pads, numbering, courtyard, and required graphics.
 
-**Exit test:** generated 0402 footprint passes all footprint validators.
+**Phase 5 gate (blocking):** The known-good 0402 input generates a native
+`.kicad_mod`; all pad, numbering, courtyard, required-graphic, and
+footprint-format validators pass.
 
-## Phase 6 — 3D backend spike
+## Phase 6 — CadQuery 3D backend spike
 
 This phase answers the critical CAD-runtime questions before broader
 implementation.
 
-1. Implement the versioned 3D backend interface.
+1. Implement the versioned CadQuery 3D-generator adapter.
 2. Create a minimal 0402 PDL geometry fixture.
-3. Prototype the CadQuery backend.
-4. Prototype the OpenSCAD backend.
-5. Generate equivalent geometry from the same IR/PDL.
-6. Produce a valid STEP artifact through the selected STEP-capable path.
-7. Parse and validate STEP.
-8. Compare dimensions and reference geometry against PDL.
-9. Record backend/runtime versions.
-10. Measure installation/runtime packaging feasibility.
+3. Prototype the CadQuery/OCP/OCCT backend.
+4. Produce a valid STEP artifact directly from CadQuery geometry.
+5. Parse and validate STEP.
+6. Compare dimensions and reference geometry against PDL using defined
+   measurement tolerances and the coordinate contract.
+7. Record backend/runtime versions and dependency hashes.
+8. Measure installation/runtime packaging feasibility.
 
-**Exit test:** the 0402 prototype produces a validated STEP artifact and the
-backend/runtime can execute from the intended packaged PartSmith environment.
+**Phase 6 gate (blocking):** The CadQuery backend consumes the 0402 IR/PDL
+and exports a parseable, dimensionally valid STEP artifact from the intended
+packaged PartSmith environment. The recorded comparison includes body
+length, width, height, terminal/pin-1 anchor positions, orientation,
+expected-solid count, reference coordinate system, comparison algorithm, and
+explicit tolerances. All CadQuery/OCP/OCCT runtime versions, dependency
+hashes, and packaging-feasibility results are recorded.
 
 ## Phase 7 — 3D validation and cross-validation
 
@@ -111,8 +144,10 @@ backend/runtime can execute from the intended packaged PartSmith environment.
 6. Implement footprint-to-3D alignment validation.
 7. Add deliberate offset/rotation/mirror/scale fault fixtures.
 
-**Exit test:** valid geometry passes and every negative 3D fixture fails for
-the intended reason.
+**Phase 7 gate (blocking):** Valid STEP geometry passes scale, height,
+orientation, pin-1, and footprint-alignment validation. Every injected
+offset, rotation, mirror, scale, height, and pin-1 fault fails with its
+intended validation result.
 
 ## Phase 8 — First complete deterministic component
 
@@ -125,7 +160,10 @@ the intended reason.
 7. Generate the complete component package.
 8. Generate the manifest.
 
-**Exit test:** one complete known-good component reaches APPROVED without AI assistance.
+**Phase 8 gate (blocking):** One known-good component completes the
+IR-to-PDL-to-symbol/footprint/STEP pipeline without AI, passes all
+validators, cross-validation, and KiCad compatibility validation, and
+has an APPROVED package and manifest.
 
 ## Phase 9 — Reproducible builds
 
@@ -136,8 +174,10 @@ the intended reason.
 5. Rebuild identical fixtures.
 6. Compare hashes.
 
-**Exit test:** identical inputs and pinned runtime produce identical
-reproducible artifacts or a documented deterministic-equivalence result.
+**Phase 9 gate (blocking):** Two clean builds with identical canonical
+inputs and pinned runtime have identical IR, artifact, validation-result,
+and manifest-input hashes, or each approved deterministic-equivalence
+difference is documented and validated.
 
 ## Phase 10 — Document extraction
 
@@ -151,8 +191,10 @@ Only after the deterministic component path works:
 6. Convert extraction results into Evidence objects.
 7. Add evidence tests using the document corpus.
 
-**Exit test:** extraction produces structured evidence without generating
-engineering artifacts directly.
+**Phase 10 gate (blocking):** The document corpus tests demonstrate PDF
+ingestion, selected-page extraction, OCR, tables, and diagram/image
+extraction into structured Evidence records with provenance. The tests
+verify that extraction creates no engineering artifact directly.
 
 ## Phase 11 — AI provider adapter
 
@@ -164,8 +206,11 @@ engineering artifacts directly.
 6. Add prompt-injection/security tests.
 7. Add conflict and ambiguity handling.
 
-**Exit test:** AI can propose evidence/IR candidates, but deterministic
-validators and human review remain authoritative.
+**Phase 11 gate (blocking):** The configured provider produces typed,
+provenance-linked Evidence/IR candidates with provider/model metadata;
+credential-handling and prompt-injection tests pass; conflicts and
+ambiguities are surfaced; and tests prove AI cannot bypass deterministic
+validation or human review.
 
 ## Phase 12 — Human review and application UI
 
@@ -177,8 +222,10 @@ validators and human review remain authoritative.
 6. Support explicit overrides.
 7. Implement review/approval states.
 
-**Exit test:** a user can inspect and approve the deterministic build with
-all required evidence and validation results visible.
+**Phase 12 gate (blocking):** End-to-end UI tests demonstrate that a user
+can inspect evidence, conflicts, IR, symbol, footprint, 3D placement,
+overrides, and validation results, then explicitly approve the
+deterministic build.
 
 ## Phase 13 — KiCad integration
 
@@ -188,7 +235,9 @@ all required evidence and validation results visible.
 4. Add round-trip tests.
 5. Add installation/export workflow.
 
-**Exit test:** an approved PartSmith component is usable in the supported
+**Phase 13 gate (blocking):** The versioned KiCad adapter, CLI validation,
+and supported IPC operations pass integration and round-trip tests. An
+approved component is installed/exported and usable in the supported
 KiCad 10.x environment.
 
 ## Phase 14 — Packaging and clean installation
@@ -201,8 +250,11 @@ KiCad 10.x environment.
 6. Test upgrade/uninstall.
 7. Test runtime diagnostics.
 
-**Exit test:** a clean supported machine can install PartSmith without
-manually installing Python, CadQuery, OCP, OCCT, OpenSCAD, Conda, or
+**Phase 14 gate (blocking):** A clean supported machine passes automated
+install, launch, runtime-diagnostic, upgrade, and uninstall tests. The
+production package includes the selected CAD runtime, required
+dependencies, and validated dependency/license manifest, without a user
+manually installing Python, CadQuery, OCP, OCCT, Conda, or
 another CAD runtime.
 
 # B.F.T. --- PartSmith
@@ -215,7 +267,7 @@ another CAD runtime.
 **Repository:** `partsmith` (independent repository)\
 **Status:** Proposed / Feature-Set-Refined Engineering Specification
 with Component Acquisition\
-**Version:** 0.9.2\
+**Version:** 0.9.3\
 **Target EDA:** KiCad\
 **Primary output:** Native KiCad symbol + footprint + 3D model, packaged
 as a usable component library; users may build with PartSmith AI or
@@ -290,7 +342,7 @@ applicable data-handling configuration.
 
 The customer installation experience shall be a **single PartSmith
 installation**. Users shall not be required to manually install
-CadQuery, OCP, OCCT, Python, OpenSCAD, Conda, or another CAD runtime
+CadQuery, OCP, OCCT, Python, Conda, or another CAD runtime
 merely to use the supported PartSmith 3D-generation workflow.
 
 The installer shall provision the exact runtime dependencies required by
@@ -299,7 +351,7 @@ the selected production backend.
 ## INSTALL-002 — Development versus customer runtime
 
 Development environments may use package managers, Conda/Miniforge,
-system Python, KiCad development installations, OpenSCAD, or other
+system Python, KiCad development installations, or other
 developer tooling. Those development requirements shall not become
 customer installation requirements unless explicitly approved.
 
@@ -344,9 +396,9 @@ The selected 3D backend and all runtime components capable of affecting
 generated STEP geometry shall be recorded in the build manifest and
 included in reproducibility metadata.
 
-# v0.9.2 Standards Lock and Implementation Baseline
+# v0.9.3 Standards Lock and Implementation Baseline
 
-## v0.9.2 External Reference Baseline
+## v0.9.3 External Reference Baseline
 
 The standards-lock review used the following current public documentation:
 
@@ -413,9 +465,9 @@ PartSmith owns the engineering geometry definition through the
 Component IR and PDL. 3D-generation implementations consume those
 authoritative structures through a versioned 3D-generator interface.
 
-PartSmith supports **OpenSCAD and CadQuery as alternative 3D-generation
-backend options**. They are backend choices, not competing sources of
-engineering truth.
+PartSmith uses **CadQuery/OCP/OCCT** as its sole 3D-generation runtime.
+It is an implementation of the authoritative geometry definition, not a
+competing source of engineering truth.
 
 ```text
                     Component IR
@@ -429,10 +481,10 @@ engineering truth.
                  ┌───────┴────────┐
                  │                │
                  ▼                ▼
-        OpenSCAD Backend    CadQuery Backend
+             CadQuery/OCP/OCCT Backend
                  │                │
                  ▼                ▼
-              .scad             OCCT
+           CadQuery geometry       OCCT
                  │                │
                  │                ▼
                  │              STEP
@@ -446,17 +498,6 @@ engineering truth.
               Cross-Validation
 ```
 
-#### OpenSCAD backend
-
-The OpenSCAD backend shall generate deterministic `.scad` source from
-Component IR and PDL and, when execution is required, invoke OpenSCAD
-through its documented command-line interface. It shall record the
-OpenSCAD version, invocation metadata, exit status, diagnostics, and
-expected outputs.
-
-OpenSCAD is not the authoritative engineering source. OpenSCAD source
-is not a substitute for the required STEP artifact.
-
 #### CadQuery backend
 
 The CadQuery backend shall consume Component IR and PDL directly,
@@ -465,8 +506,8 @@ CadQuery/OCP/OCCT runtime, and generate STEP directly from CAD geometry.
 It shall record CadQuery, OCP, and OCCT runtime versions and validate the
 resulting STEP artifact.
 
-CadQuery is an implementation option, not the authoritative engineering
-source.
+CadQuery is the selected implementation runtime, not the authoritative
+engineering source.
 
 #### CadQuery runtime boundary
 
@@ -474,14 +515,20 @@ CadQuery shall be integrated through a PartSmith backend adapter. The
 customer runtime shall package the required CadQuery/OCP/OCCT components
 so that users do not need separate CAD-runtime installation.
 
-The backend shall expose deterministic geometry construction and STEP
-export through a controlled interface. Runtime versions and dependency
-hashes shall be recorded for reproducibility.
+The adapter shall expose deterministic geometry construction and STEP export
+through a controlled interface. Runtime versions, exact dependency archive
+hashes, exporter settings, and the Python version shall be recorded for
+reproducibility. The CadQuery, OCP, and OCCT versions shall be pinned as one
+tested compatibility tuple in a reviewed lockfile or constraints file.
+The tuple shall also record the supported operating system, architecture,
+Python 3.12 build, dependency source, archive SHA-256, and redistributable
+license files. A different tuple is a reproducibility-relevant build input
+and requires fresh Phase 6 validation.
 
-#### Backend independence
+#### Generator independence
 
-No 3D backend may modify another backend's generated geometry in order to
-force agreement.
+No generator or validator may modify generated geometry in order to force
+agreement with another artifact.
 
 Authoritative inputs remain:
 
@@ -492,16 +539,16 @@ Authoritative evidence
 Approved user overrides
 ```
 
-Generated `.scad`, STEP, footprint, and other artifacts are outputs and
+Generated STEP, footprint, and other artifacts are outputs and
 may not become authoritative inputs for another engineering generator.
 
-#### Backend selection
+#### Runtime identity
 
-The selected backend shall be recorded in build metadata:
+The CadQuery runtime shall be recorded in build metadata:
 
 ```yaml
 three_d_backend:
-  name: OPENSCAD | CADQUERY
+  name: CADQUERY
   version:
   adapter_version:
   runtime_versions:
@@ -509,24 +556,20 @@ three_d_backend:
     cadquery:
     ocp:
     occt:
-    openscad:
 ```
 
-Fields that do not apply to the selected backend may be null. The
-selected backend and relevant runtime versions are mandatory.
+The CadQuery/OCP/OCCT/Python runtime versions are mandatory.
 
-Backend selection is a build input and participates in reproducibility
+The pinned runtime tuple is a build input and participates in reproducibility
 metadata and dependency invalidation.
 
 #### Mandatory final artifact
-
-Regardless of backend:
 
 ```text
 STEP (.step) = REQUIRED FINAL 3D ARTIFACT
 ```
 
-OpenSCAD source and CadQuery source are not substitutes for STEP.
+CadQuery source code is not a substitute for STEP.
 
 STL, VRML, GLB, and other visualization/mesh formats are not substitutes
 for the required STEP artifact and are not part of the normative
@@ -752,6 +795,32 @@ bootstrap when:
 
 This is a **bootstrap completion criterion**, not a requirement to
 implement every standards document before writing the first code.
+
+## CODE-001 â€” Python code quality standards
+
+All production Python source code, test code, and executable maintenance
+scripts in the PartSmith repository shall conform to both the
+[PEP 8 Style Guide for Python Code](https://peps.python.org/pep-0008/)
+and the
+[Google Python Style Guide](https://google.github.io/styleguide/pyguide.html).
+
+Where the two guides differ, the stricter applicable rule shall be used.
+In particular, Python lines shall not exceed 79 characters, excluding
+explicitly exempted generated files and third-party source material.
+
+The repository shall configure automated linting and formatting checks
+to enforce the automatable portions of these standards. CI shall fail if
+those checks fail. Code review remains responsible for requirements that
+cannot be verified automatically, including clear naming, public API
+documentation, and maintainable design.
+
+## CODE-002 — Reproducible dependency resolution
+
+The repository shall use a reviewed lockfile or constraints file for CI and
+release builds. Build, test, lint, and CAD-runtime dependencies shall be
+resolved to exact versions; the resolver and Python version shall be recorded
+in CI evidence. Version ranges may describe allowed user installation inputs,
+but they shall not be the sole source of a release build's dependency set.
 # 1. Scope of PartSmith
 
 ### In scope
@@ -2989,8 +3058,8 @@ The **Package Definition Library (PDL)** is a first-class B.F.T.
 subsystem.
 
 The PDL is a structured engineering knowledge base for reusable physical
-package definitions. It is **not** a footprint library, and it is
-**not** an OpenSCAD source repository.
+package definitions. It is **not** a footprint library or a generator-source
+repository.
 
 The PDL represents:
 
@@ -3821,7 +3890,6 @@ manifest:
     symbol:
     footprint:
     model_3d:
-    openscad:
 
   validation:
     overall:
@@ -4094,8 +4162,7 @@ component/
 ├── footprint/
 │   └── *.kicad_mod
 ├── 3d/
-│   ├── *.step
-│   └── *.scad
+│   └── *.step
 ├── evidence/
 ├── manifest/
 └── report/
@@ -4109,9 +4176,9 @@ and validate components without opening the GUI.
 The MVP reference implementation shall use:
 
 ``` text
-Language: Python 3
+Language: Python 3.12
 Data: JSON/YAML
-Geometry: deterministic Python geometry + OpenSCAD backend
+Geometry: deterministic Python geometry + CadQuery/OCP/OCCT backend
 3D exchange: STEP
 OCR: pluggable adapter
 AI: pluggable provider adapter
@@ -4192,7 +4259,7 @@ board-forge-tools/
   `pdl`                    Package definitions and topology
   `generators.symbol`      Native symbol generation
   `generators.footprint`   Native footprint generation
-  `generators.model3d`     OpenSCAD/STEP generation
+  `generators.model3d`     CadQuery/STEP generation
   `validation`             Deterministic validators
   `kicad`                  Version-specific KiCad adapters
   `build`                  State machine and dependency invalidation
@@ -4813,7 +4880,6 @@ class Model3DGenerator(Protocol):
 The generator shall produce:
 
 ``` text
-OpenSCAD source
 STEP output
 3D metadata
 ```
@@ -4847,10 +4913,10 @@ STEP Export
 Independent 3D Validation
 ```
 
-# 146. OpenSCAD Backend
+# 146. CadQuery Backend
 
-OpenSCAD is an implementation backend, not the authoritative geometry
-definition.
+CadQuery/OCP/OCCT is the selected implementation runtime, not the
+authoritative geometry definition.
 
 The authoritative data is:
 
@@ -4858,7 +4924,8 @@ The authoritative data is:
 Component IR + PDL + evidence
 ```
 
-The `.scad` file shall be reproducible from those inputs.
+The generated STEP artifact shall be reproducible from those inputs and the
+pinned CadQuery/OCP/OCCT/Python compatibility tuple.
 
 # 147. STEP Validation
 
@@ -5654,7 +5721,7 @@ zip bomb if archives are accepted
 malformed STEP
 malformed KiCad files
 invalid YAML/JSON
-unsafe OpenSCAD input
+unsafe CadQuery parameters
 shell injection
 provider credential leakage
 ```
@@ -5669,7 +5736,7 @@ maximum page count
 maximum extracted image size
 maximum OCR time
 maximum AI request size
-maximum OpenSCAD execution time
+maximum CadQuery generation time
 maximum STEP size
 maximum concurrent builds
 ```
@@ -5682,7 +5749,7 @@ External tools such as:
 
 ``` text
 OCR
-OpenSCAD
+CadQuery runtime
 KiCad
 PDF converters
 ```
@@ -6429,9 +6496,7 @@ Implement:
 -   symbol generator
 -   footprint generator
 -   3D generator
--   3D backend interface
--   OpenSCAD backend
--   CadQuery backend
+-   CadQuery/OCP/OCCT adapter
 
 ## Milestone 4 --- Validators
 
@@ -6706,7 +6771,7 @@ This appendix is retained **for traceability only**.
 
 **NON-NORMATIVE:** Nothing in this appendix is an implementation requirement
 unless the same requirement is explicitly incorporated into the current
-v0.9.2 normative sections above.
+v0.9.3 normative sections above.
 
 The appendix preserves prior v0.8/v0.8.x reviews, release notes, architecture
 drafts, implementation specifications, contradiction-resolution logs, and
@@ -6716,7 +6781,7 @@ statements document what the specification said at that point in its history;
 they are not current PartSmith requirements.
 
 When a historical statement conflicts with the current specification, the
-current v0.9.2 normative baseline controls.
+current v0.9.3 normative baseline controls.
 
 ---
 
@@ -11387,7 +11452,7 @@ Deliver:
 
 ``` text
 pyproject.toml
-src/bft/
+src/partsmith/
 tests/
 schemas/
 pdl/
@@ -12103,12 +12168,12 @@ No additional feature is introduced by v0.8.5.
 Specification.
 # v0.9.2 Full-Spec Review and Resolution Log
 
-## REVIEW-019 — 3D backend architecture unified
+## REVIEW-019 — CadQuery backend architecture selected
 
-The specification previously contained stale sections that described the
-3D pipeline as OpenSCAD-only or OpenSCAD-to-STEP. The current architecture
-is backend-neutral and supports OpenSCAD and CadQuery as alternative
-implementations consuming Component IR and PDL.
+The specification previously contained stale sections that described an
+OpenSCAD-based or backend-neutral 3D pipeline. The current architecture uses
+CadQuery/OCP/OCCT as the sole 3D implementation runtime consuming Component
+IR and PDL and exporting STEP directly.
 
 ## REVIEW-020 — STEP requirement unified
 
@@ -12118,14 +12183,14 @@ acceptance without a valid STEP artifact.
 
 ## REVIEW-021 — Historical material explicitly subordinated
 
-Historical v0.8/v0.8.x sections remain for traceability, but current v0.9.2
+Historical v0.8/v0.8.x sections remain for traceability, but current v0.9.3
 normative sections take precedence. Stale historical statements must not
 be interpreted as current requirements.
 
 ## REVIEW-022 — Clean installation unified
 
-CadQuery, OCP, OCCT, Python, and OpenSCAD are runtime dependencies managed
-by PartSmith rather than separate customer installation requirements.
+CadQuery, OCP, OCCT, and Python are runtime dependencies managed by PartSmith
+rather than separate customer installation requirements.
 Development environments may still install them independently.
 
 ## REVIEW-023 — AI billing/authentication unified
@@ -12137,24 +12202,27 @@ hashes.
 
 ## REVIEW-024 — Implementation plan aligned with architecture
 
-The small-step implementation plan now explicitly prototypes both 3D
-backends before committing the production backend, while the first
-complete deterministic component remains the principal milestone before
-AI integration.
+The small-step implementation plan now uses a pinned CadQuery/OCP/OCCT spike
+with explicit STEP-equivalence measurements before committing production
+packaging. The first complete deterministic component remains the principal
+milestone before AI integration.
 
 ---
 
 # v0.9.3 Cleanup Note
 
-**Document purpose:** v0.9.2 implementation baseline, cleaned for implementation.
+**Document purpose:** v0.9.3 implementation baseline, revised for a single,
+release-capable CadQuery 3D path.
 
-This revision does not introduce a new product capability. It reorganizes the
-document so that current normative material is separated from historical
-v0.8/v0.8.x material. The engineering decisions remain those established by
-v0.9.2, including:
+This revision resolves the previous 3D-backend ambiguity. It selects
+CadQuery/OCP/OCCT as the only 3D-generation runtime, removes OpenSCAD from
+the current normative implementation path, and adds requirements for pinned
+runtime tuples, dependency hashes, and measurable Phase 6 STEP validation.
+Historical v0.8/v0.8.x text remains non-normative and is retained solely for
+traceability. The engineering decisions include:
 
 - STEP is mandatory for every released 3D component.
-- OpenSCAD and CadQuery are alternative 3D-generation backends.
+- CadQuery/OCP/OCCT is the sole 3D-generation runtime.
 - Footprint and 3D generation remain independent.
 - AI interprets evidence and proposes IR content; deterministic generators and
   validators remain authoritative.
