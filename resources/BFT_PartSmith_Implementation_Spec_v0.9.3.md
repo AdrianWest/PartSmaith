@@ -20,6 +20,19 @@ PartSmith implementation shall proceed in small increments with a
 working, testable result at every step. The project shall not begin with
 the AI interpretation layer.
 
+## Phase-gate policy
+
+Every phase has a **blocking phase gate**. A phase gate passes only when
+every numbered work item in that phase is complete, every listed gate
+condition passes, and the commands, artifact hashes where applicable,
+and test results are recorded in the repository or CI evidence.
+
+Implementation work for phase *N+1* shall not begin until phase *N* has
+a recorded PASS. A failing, skipped, unrecorded, or manually assumed
+check is a gate failure. A waived gate requires an explicit specification
+revision that identifies the risk owner, scope, rationale, and expiry;
+a waiver is not a PASS.
+
 ## Phase 0 — Repository and build foundation
 
 1. Create the independent `partsmith` repository structure.
@@ -28,8 +41,10 @@ the AI interpretation layer.
 4. Add a minimal application entry point.
 5. Add `partsmith version` and `partsmith doctor`.
 
-**Exit test:** a clean checkout can run the test suite and report the
-application version.
+**Phase 0 gate (blocking):** From a clean checkout, supported Python can
+install the project and development dependencies; the test suite, linter,
+and format check pass; `partsmith version` reports the packaged version;
+and `partsmith doctor` returns PASS. CI runs these commands.
 
 ## Phase 1 — Persistence foundation
 
@@ -39,8 +54,9 @@ application version.
 4. Implement projects/components/build records.
 5. Add migration tests.
 
-**Exit test:** a new database can be created, migrated, opened, and
-queried entirely by automated tests.
+**Phase 1 gate (blocking):** Automated tests create an empty database,
+enable and verify foreign-key enforcement, apply migration 001 exactly
+once, reopen it, and create/query project, component, and build records.
 
 ## Phase 2 — Component IR
 
@@ -50,8 +66,10 @@ queried entirely by automated tests.
 4. Implement units and numeric normalization.
 5. Implement IR hashing.
 
-**Exit test:** a known-good fixture validates and produces a stable hash;
-invalid fixtures fail deterministically.
+**Phase 2 gate (blocking):** A known-good IR fixture passes schema,
+unit/number normalization, canonical serialization, and stable-hash
+tests. Each invalid IR fixture fails the intended validator
+deterministically.
 
 ## Phase 3 — PDL
 
@@ -61,7 +79,9 @@ invalid fixtures fail deterministically.
 4. Add the first PDL entry: 0402.
 5. Add PDL inspection CLI support.
 
-**Exit test:** GOLD-0402-001 loads from PDL and all PDL validation tests pass.
+**Phase 3 gate (blocking):** `GOLD-0402-001` loads through the versioned
+PDL loader; the PDL inspection CLI reports it; valid PDL tests pass; and
+each invalid/topologically incorrect PDL fixture fails deterministically.
 
 ## Phase 4 — Deterministic symbol generation
 
@@ -70,8 +90,9 @@ invalid fixtures fail deterministically.
 3. Generate a known-good 0402 component symbol.
 4. Validate pin numbering and symbol structure.
 
-**Exit test:** repeated generation produces byte-identical symbol output from
-identical inputs.
+**Phase 4 gate (blocking):** The known-good 0402 IR/PDL input generates
+a syntactically valid KiCad symbol with valid pin numbering and structure.
+At least two independent runs produce byte-identical output.
 
 ## Phase 5 — Deterministic footprint generation
 
@@ -80,7 +101,9 @@ identical inputs.
 3. Generate native `.kicad_mod`.
 4. Validate pads, numbering, courtyard, and required graphics.
 
-**Exit test:** generated 0402 footprint passes all footprint validators.
+**Phase 5 gate (blocking):** The known-good 0402 input generates a native
+`.kicad_mod`; all pad, numbering, courtyard, required-graphic, and
+footprint-format validators pass.
 
 ## Phase 6 — 3D backend spike
 
@@ -98,8 +121,11 @@ implementation.
 9. Record backend/runtime versions.
 10. Measure installation/runtime packaging feasibility.
 
-**Exit test:** the 0402 prototype produces a validated STEP artifact and the
-backend/runtime can execute from the intended packaged PartSmith environment.
+**Phase 6 gate (blocking):** Both prototype backends consume the same 0402
+IR/PDL and produce geometry that passes the defined equivalence checks.
+The selected STEP-capable path exports a parseable, dimensionally valid
+STEP artifact from the intended packaged PartSmith environment, with all
+backend/runtime versions and packaging-feasibility results recorded.
 
 ## Phase 7 — 3D validation and cross-validation
 
@@ -111,8 +137,10 @@ backend/runtime can execute from the intended packaged PartSmith environment.
 6. Implement footprint-to-3D alignment validation.
 7. Add deliberate offset/rotation/mirror/scale fault fixtures.
 
-**Exit test:** valid geometry passes and every negative 3D fixture fails for
-the intended reason.
+**Phase 7 gate (blocking):** Valid STEP geometry passes scale, height,
+orientation, pin-1, and footprint-alignment validation. Every injected
+offset, rotation, mirror, scale, height, and pin-1 fault fails with its
+intended validation result.
 
 ## Phase 8 — First complete deterministic component
 
@@ -125,7 +153,10 @@ the intended reason.
 7. Generate the complete component package.
 8. Generate the manifest.
 
-**Exit test:** one complete known-good component reaches APPROVED without AI assistance.
+**Phase 8 gate (blocking):** One known-good component completes the
+IR-to-PDL-to-symbol/footprint/STEP pipeline without AI, passes all
+validators, cross-validation, and KiCad compatibility validation, and
+has an APPROVED package and manifest.
 
 ## Phase 9 — Reproducible builds
 
@@ -136,8 +167,10 @@ the intended reason.
 5. Rebuild identical fixtures.
 6. Compare hashes.
 
-**Exit test:** identical inputs and pinned runtime produce identical
-reproducible artifacts or a documented deterministic-equivalence result.
+**Phase 9 gate (blocking):** Two clean builds with identical canonical
+inputs and pinned runtime have identical IR, artifact, validation-result,
+and manifest-input hashes, or each approved deterministic-equivalence
+difference is documented and validated.
 
 ## Phase 10 — Document extraction
 
@@ -151,8 +184,10 @@ Only after the deterministic component path works:
 6. Convert extraction results into Evidence objects.
 7. Add evidence tests using the document corpus.
 
-**Exit test:** extraction produces structured evidence without generating
-engineering artifacts directly.
+**Phase 10 gate (blocking):** The document corpus tests demonstrate PDF
+ingestion, selected-page extraction, OCR, tables, and diagram/image
+extraction into structured Evidence records with provenance. The tests
+verify that extraction creates no engineering artifact directly.
 
 ## Phase 11 — AI provider adapter
 
@@ -164,8 +199,11 @@ engineering artifacts directly.
 6. Add prompt-injection/security tests.
 7. Add conflict and ambiguity handling.
 
-**Exit test:** AI can propose evidence/IR candidates, but deterministic
-validators and human review remain authoritative.
+**Phase 11 gate (blocking):** The configured provider produces typed,
+provenance-linked Evidence/IR candidates with provider/model metadata;
+credential-handling and prompt-injection tests pass; conflicts and
+ambiguities are surfaced; and tests prove AI cannot bypass deterministic
+validation or human review.
 
 ## Phase 12 — Human review and application UI
 
@@ -177,8 +215,10 @@ validators and human review remain authoritative.
 6. Support explicit overrides.
 7. Implement review/approval states.
 
-**Exit test:** a user can inspect and approve the deterministic build with
-all required evidence and validation results visible.
+**Phase 12 gate (blocking):** End-to-end UI tests demonstrate that a user
+can inspect evidence, conflicts, IR, symbol, footprint, 3D placement,
+overrides, and validation results, then explicitly approve the
+deterministic build.
 
 ## Phase 13 — KiCad integration
 
@@ -188,7 +228,9 @@ all required evidence and validation results visible.
 4. Add round-trip tests.
 5. Add installation/export workflow.
 
-**Exit test:** an approved PartSmith component is usable in the supported
+**Phase 13 gate (blocking):** The versioned KiCad adapter, CLI validation,
+and supported IPC operations pass integration and round-trip tests. An
+approved component is installed/exported and usable in the supported
 KiCad 10.x environment.
 
 ## Phase 14 — Packaging and clean installation
@@ -201,7 +243,10 @@ KiCad 10.x environment.
 6. Test upgrade/uninstall.
 7. Test runtime diagnostics.
 
-**Exit test:** a clean supported machine can install PartSmith without
+**Phase 14 gate (blocking):** A clean supported machine passes automated
+install, launch, runtime-diagnostic, upgrade, and uninstall tests. The
+production package includes the selected CAD runtime, required
+dependencies, and validated dependency/license manifest, without a user
 manually installing Python, CadQuery, OCP, OCCT, OpenSCAD, Conda, or
 another CAD runtime.
 
@@ -752,6 +797,24 @@ bootstrap when:
 
 This is a **bootstrap completion criterion**, not a requirement to
 implement every standards document before writing the first code.
+
+## CODE-001 â€” Python code quality standards
+
+All production Python source code, test code, and executable maintenance
+scripts in the PartSmith repository shall conform to both the
+[PEP 8 Style Guide for Python Code](https://peps.python.org/pep-0008/)
+and the
+[Google Python Style Guide](https://google.github.io/styleguide/pyguide.html).
+
+Where the two guides differ, the stricter applicable rule shall be used.
+In particular, Python lines shall not exceed 79 characters, excluding
+explicitly exempted generated files and third-party source material.
+
+The repository shall configure automated linting and formatting checks
+to enforce the automatable portions of these standards. CI shall fail if
+those checks fail. Code review remains responsible for requirements that
+cannot be verified automatically, including clear naming, public API
+documentation, and maintainable design.
 # 1. Scope of PartSmith
 
 ### In scope
@@ -11387,7 +11450,7 @@ Deliver:
 
 ``` text
 pyproject.toml
-src/bft/
+src/partsmith/
 tests/
 schemas/
 pdl/
