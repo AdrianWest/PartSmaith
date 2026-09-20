@@ -1,24 +1,58 @@
 # PartSmith Implementation Specification
 
-**Specification version:** v0.9.3  
-**Status:** Implementation baseline — CadQuery architecture selected  
-**Document date:** 2026-09-19
+**Specification version:** v0.9.6
+**Status:** Implementation baseline — IR 1.2 implemented against v0.9.5; downstream revisions pending
+**Document date:** 2026-09-20
 
-## v0.9.3 Normative Baseline
+**Revision purpose:** Resolve D095-01–D095-06 and the consistency remnants in
+[the downstream impact review](../docs/spec-downstream-impact-review-v0.9.5.md).
+Define installation aggregates, input-review services, portable history, scoped
+dependency projections, final-byte invalidation, and early STEP determinism.
+Component IR 1.2, canonical JSON profile 1.0, and placement convention 1.1 remain
+unchanged. Snapshot profile 1.2 is a new later-phase contract; section 246 records
+the resolutions and their implementation gates.
 
-This document has been cleaned so that current implementation requirements are
-presented first and prior v0.8/v0.8.x material is retained only in the
-**Historical Appendix** at the end.
+## v0.9.6 Normative Baseline
 
-The current normative sections, rules, interfaces, schemas, acceptance
-criteria, and implementation plan are authoritative for PartSmith v0.9.3.
-Historical material is non-normative and is retained solely for traceability.
-It must not be used to resolve an implementation question when it conflicts
-with the current baseline.
+Current sections and numbered phase gates are authoritative. Abbreviated
+YAML/JSON and directory examples explain those contracts; they are not
+alternative schemas. Historical material is preserved unchanged in the
+[non-normative archive](history/BFT_PartSmith_Historical_Appendix_v0.9.4.md).
+Version labels inside that archive describe its original context only.
 
-The cleanup specifically removes ambiguity caused by earlier optional-STEP
-claims, obsolete alternate 3D output claims, old backend/install assumptions,
-and earlier AI credential/billing wording.
+**Implementation status:** IR 1.2 schema, validation, explicit migration,
+revision-store protocol, snapshot-profile-1.1 dependency projections, and
+fixtures are implemented against v0.9.5.
+[The revised Phase 2 report](../docs/gates/phase-2-ir-1.2.md) records that scope.
+Those Phase 2 requirements remain unchanged and its PASS satisfies Phase 3's
+prerequisite. Snapshot profile 1.2 must be implemented and tested incrementally in
+Phases 4–6 and 8–9, not claimed by that report. The earlier
+[IR 1.1 PASS](../docs/gates/phase-2-ir-1.1.md) remains tied to v0.9.4. Earlier
+reports and hashes retain their original scope. Unchanged Phase 0/1 requirements
+retain their previous evidence. Later phases still need their own implementation
+and gate results; this status does not assert product release readiness.
+
+## Current-section navigation
+
+Section numbers are stable identifiers, not a continuous implementation checklist.
+The numbered phase plan is the sole gate/order authority.
+
+- [Implementation strategy and phases](#implementation-strategy--small-testable-increments)
+- [Standards and runtime baseline](#v096-standards-lock-and-implementation-baseline)
+- [Scope and release matrix](#31-component-package-types)
+- [Independent artifact workflow](#11-independent-footprint-and-3d-generation)
+- [IR contract, migration, and provenance](#121-component-ir-json-schema-and-contract)
+- [Transforms](#92-transform-contract)
+- [Evidence regions](#1241-canonical-source-regions-document-page-10)
+- [Validation results](#152-validation-result-contract)
+- [Build hashes and finalization](#166-reproducible-build-algorithm)
+- [Input and release review services](#172-review-decision-api)
+- [Installation aggregates](#1741-installation-aggregates-and-approval-boundaries)
+- [Portable replay bundles](#175-project-packaging)
+- [Release milestones](#235-implementation-milestones)
+- [Finding resolutions](#246-consistency-resolution-register)
+- [External references](#247-external-reference-register)
+- [Historical archive](history/BFT_PartSmith_Historical_Appendix_v0.9.4.md)
 
 # Implementation Strategy — Small, Testable Increments
 
@@ -66,7 +100,11 @@ once, reopen it, and create/query project, component, and build records.
 
 ## Phase 2 — Component IR
 
-1. Implement the normative Component IR schema.
+The authoritative Phase 2 contract is
+[section 121](#121-component-ir-json-schema-and-contract), including the
+versioned machine-readable schema and canonical profile 1.0.
+
+1. Implement Component IR 1.2 and explicit migration from IR 1.0/1.1 per section 121.
 2. Implement canonical serialization.
 3. Implement schema validation.
 4. Implement units and numeric normalization.
@@ -75,7 +113,16 @@ once, reopen it, and create/query project, component, and build records.
 **Phase 2 gate (blocking):** A known-good IR fixture passes schema,
 unit/number normalization, canonical serialization, and stable-hash
 tests. Each invalid IR fixture fails the intended validator
-deterministically.
+deterministically. The gate also covers missing quantities without fabricated
+numbers, active-versus-historical evidence, the canonical enums, documentation
+revision identity, structured provenance, and explicit migration failure when
+required information cannot be recovered. Old-version fixtures remain intact.
+IR 1.2 coverage additionally includes typed pin/placement overrides, independent
+candidate relevance, successive immutable decisions with active selectors,
+revision-transition validation, applicability/result fields, and document-page
+coordinates. Negative cases prove that dropping an evidence selection cannot
+dismiss a relevant conflict. Hash-projection golden cases in section 166 must
+also pass; this does not require implementing the Phase 8 orchestrator.
 
 ## Phase 3 — PDL
 
@@ -85,9 +132,12 @@ deterministically.
 4. Add the first PDL entry: 0402.
 5. Add PDL inspection CLI support.
 
-**Phase 3 gate (blocking):** `GOLD-0402-001` loads through the versioned
-PDL loader; the PDL inspection CLI reports it; valid PDL tests pass; and
+**Phase 3 gate (blocking):** The PDL entry referenced by golden component
+fixture `GOLD-0402-001` loads through the versioned PDL loader;
+`partsmith pdl inspect <pdl-id>` reports that entry; valid PDL tests pass; and
 each invalid/topologically incorrect PDL fixture fails deterministically.
+The schema distinguishes peripheral leads, exposed terminals, terminal groups,
+and pad shapes under section 93 and pins the section 31 release profile.
 
 ## Phase 4 — Deterministic symbol generation
 
@@ -95,10 +145,16 @@ each invalid/topologically incorrect PDL fixture fails deterministically.
 2. Implement deterministic KiCad symbol serialization.
 3. Generate a known-good 0402 component symbol.
 4. Validate pin numbering and symbol structure.
+5. Implement the input-only validation path in section 137 before generation.
+6. Implement the symbol's trusted IR/configuration projection under snapshot
+   profile 1.2 (section 166), preserving the profile 1.1 API and golden evidence.
 
 **Phase 4 gate (blocking):** The known-good 0402 IR/PDL input generates
 a syntactically valid KiCad symbol with valid pin numbering and structure.
 At least two independent runs produce byte-identical output.
+Projection tests prove that symbol inputs/serializer changes invalidate its
+dependency hash, while CAD-only version/settings changes do not. Symbol
+generation requires no fabricated or installed CAD runtime tuple.
 
 ## Phase 5 — Deterministic footprint generation
 
@@ -106,10 +162,13 @@ At least two independent runs produce byte-identical output.
 2. Implement 0402 land-pattern generation.
 3. Generate native `.kicad_mod`.
 4. Validate pads, numbering, courtyard, and required graphics.
+5. Implement the footprint's snapshot-profile-1.2 dependency declaration.
 
 **Phase 5 gate (blocking):** The known-good 0402 input generates a native
 `.kicad_mod`; all pad, numbering, courtyard, required-graphic, and
 footprint-format validators pass.
+Changing a consumed land-pattern input invalidates the footprint dependency;
+CAD-only settings do not. Association dependencies are tracked separately.
 
 ## Phase 6 — CadQuery 3D backend spike
 
@@ -125,6 +184,10 @@ implementation.
    measurement tolerances and the coordinate contract.
 7. Record backend/runtime versions and dependency hashes.
 8. Measure installation/runtime packaging feasibility.
+9. Implement sections 92/150 placement-to-affine conversion, composition,
+   inversion, nonuniform-scale/shear, adapter-rejection, and round-trip tests.
+10. Implement the model's snapshot-profile-1.2 dependency declaration and compare
+    STEP bytes from two clean independent exports under the same pinned tuple.
 
 **Phase 6 gate (blocking):** The CadQuery backend consumes the 0402 IR/PDL
 and exports a parseable, dimensionally valid STEP artifact from the intended
@@ -133,6 +196,13 @@ length, width, height, terminal/pin-1 anchor positions, orientation,
 expected-solid count, reference coordinate system, comparison algorithm, and
 explicit tolerances. All CadQuery/OCP/OCCT runtime versions, dependency
 hashes, and packaging-feasibility results are recorded.
+The two exports run in separate fresh processes/work directories with the same
+frozen fixture and settings, without a generated-artifact cache. Final STEP
+SHA-256 values must match exactly. Record the algorithm/version/settings of any
+deterministic metadata normalization and reparse/remeasure its output before hashing; normalization
+must not conceal geometry changes. A byte mismatch fails Phase 6 even when
+geometry is equivalent. CAD settings invalidate model dependencies; placement-only
+edits preserve canonical STEP dependencies. Phase 9 still tests the whole build.
 
 ## Phase 7 — 3D validation and cross-validation
 
@@ -146,26 +216,46 @@ hashes, and packaging-feasibility results are recorded.
 
 **Phase 7 gate (blocking):** Valid STEP geometry passes scale, height,
 orientation, pin-1, and footprint-alignment validation. Every injected
-offset, rotation, mirror, scale, height, and pin-1 fault fails with its
-intended validation result.
+offset, rotation, mirror, scale, height, and pin-1 fault that changes a
+required observable or declared placement fails with its intended result.
+Symmetry-equivalent geometry is tested separately under sections 148–149; it
+is not counted as a detected fault. Section 152 applicability records must
+validate, bind to pinned declarations, and distinguish measured success from
+justified non-applicability.
 
 ## Phase 8 — First complete deterministic component
 
-1. Connect IR → PDL → symbol.
-2. Connect IR → PDL → footprint.
-3. Connect IR → PDL → selected 3D backend → STEP.
-4. Run all validators.
-5. Run footprint/STEP cross-validation.
-6. Run KiCad compatibility validation.
-7. Generate the complete component package.
-8. Generate the manifest.
+1. Validate IR/PDL and freeze input/dependency hashes under section 166.
+2. Generate symbol, footprint, and STEP independently; run preliminary checks.
+3. Implement the orchestrator and persisted states in section 159.
+4. Finalize associations, then run final artifact, mapping, cross-validation,
+   and KiCad compatibility checks on the released bytes under section 167.
+5. Freeze artifact hashes and construct the deterministic engineering manifest.
+6. Run post-manifest verification; store its results outside that manifest.
+7. Implement headless approval/rejection bound to exact manifest/artifact hashes.
+8. Package/export only verified, explicitly approved bytes; test invalidation
+   when associations, paths, geometry, or approval bindings change.
+9. Implement section 172's input-review/proposal/revision operations and section
+   163's immutable SQLite store using a forward migration.
+10. Implement section 175's history-complete bundle index and import validation;
+    define section 174.1 installation identities without mutating source bundles.
 
-**Phase 8 gate (blocking):** One known-good component completes the
-IR-to-PDL-to-symbol/footprint/STEP pipeline without AI, passes all
-validators, cross-validation, and KiCad compatibility validation, and
-has an APPROVED package and manifest.
+**Phase 8 gate (blocking):** One known-good component completes the pipeline
+without AI, passes all applicable validators and KiCad compatibility checks,
+and receives explicit recorded human approval through the headless service.
+The approved package and manifest exist. Negative approval tests prove that
+blocking results or stale final-byte checks cannot become APPROVED. CI may replay a recorded decision
+only when it is bound to the exact input and artifact hashes being checked.
+Phase 12 adds UI to these services; Phase 13 expands integration.
+Tests also cover review before artifacts exist, stale-base rejection, immutable
+pending proposals, transaction rollback, multi-revision bundle export/import,
+and missing/tampered parents or inventories. A silkscreen-only edit preserves
+STEP but invalidates checks bound to old footprint bytes and release approval.
 
 ## Phase 9 — Reproducible builds
+
+Extend the snapshot/hash recording established in Phase 8 with selective reuse,
+invalidation, and clean-build reproducibility verification.
 
 1. Hash all required inputs.
 2. Canonicalize structured inputs.
@@ -173,11 +263,18 @@ has an APPROVED package and manifest.
 4. Implement dependency invalidation.
 5. Rebuild identical fixtures.
 6. Compare hashes.
+7. Rebuild an imported multi-revision OFFLINE_COMPLETE bundle with network
+   disabled, and test per-node configuration invalidation under section 166.
 
 **Phase 9 gate (blocking):** Two clean builds with identical canonical
-inputs and pinned runtime have identical IR, artifact, validation-result,
-and manifest-input hashes, or each approved deterministic-equivalence
-difference is documented and validated.
+inputs and pinned runtime have identical input-snapshot, artifact, semantic
+validation-result, and engineering-manifest hashes under sections 166/188.
+Measured geometry equivalence cannot substitute for byte identity at this gate.
+The comparison report is post-manifest audit evidence. Run IDs and
+wall-clock timestamps are compared as audit metadata, not deterministic content.
+CAD-only updates preserve unrelated generator dependencies; validator-only
+updates rerun affected checks without regenerating unchanged engineering files.
+Required replay objects must be available locally and verified before execution.
 
 ## Phase 10 — Document extraction
 
@@ -194,7 +291,9 @@ Only after the deterministic component path works:
 **Phase 10 gate (blocking):** The document corpus tests demonstrate PDF
 ingestion, selected-page extraction, OCR, tables, and diagram/image
 extraction into structured Evidence records with provenance. The tests
-verify that extraction creates no engineering artifact directly.
+verify that extraction creates no engineering artifact directly. The language
+matrix in section 31 and crop/rotation/DPI coordinate fixtures in section 124
+are mandatory; evidence overlays must resolve to the same original-page region.
 
 ## Phase 11 — AI provider adapter
 
@@ -210,7 +309,8 @@ verify that extraction creates no engineering artifact directly.
 provenance-linked Evidence/IR candidates with provider/model metadata;
 credential-handling and prompt-injection tests pass; conflicts and
 ambiguities are surfaced; and tests prove AI cannot bypass deterministic
-validation or human review.
+validation or human review. Section 31 requires one released provider adapter;
+additional providers are optional and must pass the same contract suite.
 
 ## Phase 12 — Human review and application UI
 
@@ -220,17 +320,20 @@ validation or human review.
 4. Display generated symbol/footprint.
 5. Display 3D placement.
 6. Support explicit overrides.
-7. Implement review/approval states.
+7. Connect the UI to the existing Phase 8 review/approval states and services.
 
 **Phase 12 gate (blocking):** End-to-end UI tests demonstrate that a user
 can inspect evidence, conflicts, IR, symbol, footprint, 3D placement,
 overrides, and validation results, then explicitly approve the
 deterministic build.
+Tests start with unreviewed evidence, approve inputs before generation, and
+approve final outputs separately. Pin edits exercise section 121.7's supported
+reorder, renumber, and removal operations without retargeting historical evidence.
 
 ## Phase 13 — KiCad integration
 
-1. Implement versioned KiCad adapter.
-2. Add CLI validation.
+1. Extend the Phase 8 versioned KiCad adapter.
+2. Expand CLI compatibility/validation coverage.
 3. Add supported IPC operations.
 4. Add round-trip tests.
 5. Add installation/export workflow.
@@ -239,6 +342,10 @@ deterministic build.
 and supported IPC operations pass integration and round-trip tests. An
 approved component is installed/exported and usable in the supported
 KiCad 10.x environment.
+Tests install two approved components into one packed symbol library, update
+one while preserving the other, reject stale integration plans, and recover
+from failed publication. Installed aggregate hashes, source bindings, relocation,
+and rollback obey sections 174.1 and 216–218; source bundles remain byte-identical.
 
 ## Phase 14 — Packaging and clean installation
 
@@ -249,30 +356,34 @@ KiCad 10.x environment.
 5. Test clean-machine installation.
 6. Test upgrade/uninstall.
 7. Test runtime diagnostics.
+8. Expand the validated 0402 pipeline to all eight STD-010 package variants.
+9. Run the full manufacturer-backed golden, negative, reproducibility, and
+   KiCad compatibility corpus for each variant; record results per variant.
 
 **Phase 14 gate (blocking):** A clean supported machine passes automated
 install, launch, runtime-diagnostic, upgrade, and uninstall tests. The
 production package includes the selected CAD runtime, required
 dependencies, and validated dependency/license manifest, without a user
 manually installing Python, CadQuery, OCP, OCCT, Conda, or
-another CAD runtime.
+another CAD runtime. All eight production variants pass the complete release
+corpus; single-component success is insufficient for this gate.
 
 # B.F.T. --- PartSmith
 
-## Proposed Product Specification --- PartSmith
+## Product Specification --- PartSmith
 
 **Project:** Board Forge Tools (B.F.T.)\
 **Product:** PartSmith\
 **Tool:** AI-Driven Component Builder\
 **Repository:** `partsmith` (independent repository)\
-**Status:** Proposed / Feature-Set-Refined Engineering Specification
-with Component Acquisition\
-**Version:** 0.9.3\
+**Status:** Current engineering specification; implementation status above
+with a deferred Component Acquisition extension\
+**Version:** 0.9.6\
 **Target EDA:** KiCad\
 **Primary output:** Native KiCad symbol + footprint + 3D model, packaged
-as a usable component library; users may build with PartSmith AI or
-purchase a released component from B.F.T.\
-**Document date:** 2026-09-18
+as a usable component library through the PartSmith build workflow.
+Purchase from B.F.T. is a post-MVP extension, outside Phases 0–14.\
+**Original product-description date:** 2026-09-18; revised baseline date: 2026-09-20
 
 ------------------------------------------------------------------------
 
@@ -396,9 +507,9 @@ The selected 3D backend and all runtime components capable of affecting
 generated STEP geometry shall be recorded in the build manifest and
 included in reproducibility metadata.
 
-# v0.9.3 Standards Lock and Implementation Baseline
+# v0.9.6 Standards Lock and Implementation Baseline
 
-## v0.9.3 External Reference Baseline
+## v0.9.6 External Reference Baseline
 
 The standards-lock review used the following current public documentation:
 
@@ -413,10 +524,10 @@ The standards-lock review used the following current public documentation:
 These references establish the implementation boundary; they do not
 replace the authoritative manufacturer documentation for an exact part.
 
-This release records the final standards/documentation review performed
-before repository implementation begins. It does not add a new product
-feature. It locks the external engineering references that the v0.9
-repository bootstrap shall implement against.
+This release locks the roles and integration boundaries of external
+references. Package-specific evidence completeness and executable standards
+reproducibility are separate milestones under STD-014; neither is claimed
+complete merely by publication of this specification.
 
 ## STD-001 — KiCad baseline
 
@@ -455,8 +566,11 @@ them.
 
 ### Mandatory STEP rule and 3D backend architecture
 
-For every component whose release includes a 3D model, the final
-component package **MUST contain a valid STEP (`.step`) artifact**.
+Every initial MVP production component release **MUST contain a valid STEP
+(`.step`) artifact**, symbol, footprint, and their required validation.
+Partial symbol-only or footprint-only production releases are outside this
+MVP contract. `model_3d.required` may be false in a candidate, but must be true
+for the MVP release profile; the flag cannot waive STEP or cross-validation.
 
 A component requiring 3D that lacks a valid STEP artifact cannot receive
 an engineering/release PASS.
@@ -527,20 +641,8 @@ and requires fresh Phase 6 validation.
 
 #### Generator independence
 
-No generator or validator may modify generated geometry in order to force
-agreement with another artifact.
-
-Authoritative inputs remain:
-
-```text
-Component IR
-PDL
-Authoritative evidence
-Approved user overrides
-```
-
-Generated STEP, footprint, and other artifacts are outputs and
-may not become authoritative inputs for another engineering generator.
+[Section 11](#11-independent-footprint-and-3d-generation) defines the mandatory
+independence rule; section 89 specifies allowed generator inputs.
 
 #### Runtime identity
 
@@ -780,23 +882,24 @@ engineering requirement is introduced.
 
 ## STD-014 — Standards review completion criterion
 
-The standards/documentation review is considered complete for repository
-bootstrap when:
+Three separately recorded milestones govern standards readiness:
 
-1. KiCad 10 native artifact contracts are captured.
-2. KiCad IPC integration boundary is captured.
-3. KiCad CLI validation boundary is captured.
-4. IPC land-pattern methodology is captured.
-5. Each supported PDL variant identifies its applicable package-standard
-   basis or manufacturer-specific evidence basis.
-6. The evidence hierarchy is represented in the PDL schema.
-7. Standards revisions participate in reproducible build hashes and
-   dependency invalidation.
+1. **Role baseline locked:** KiCad integration boundaries, domain-specific
+   source precedence, and IPC/JEDEC roles are defined. This permits repository
+   implementation to begin; it is not approval of a package entry.
+2. **PDL entry complete:** each entry has exact manufacturer/standard citations,
+   extracted values, revision identity, and validation. Phase 3 requires the
+   first 0402 entry; Phase 14 requires all eight production variants.
+3. **Executable reproducibility verified:** offline access to recorded inputs,
+   version participation, and dependency invalidation pass Phase 9 and are
+   repeated over the full Phase 14 corpus.
 
-This is a **bootstrap completion criterion**, not a requirement to
-implement every standards document before writing the first code.
+Neither a role baseline nor a reference-directory link substitutes for the
+package-specific evidence records in STD-011 and section 121.5. The source
+register in section 247 records documentation entry points, not completed
+package-standard approval.
 
-## CODE-001 â€” Python code quality standards
+## CODE-001 — Python code quality standards
 
 All production Python source code, test code, and executable maintenance
 scripts in the PartSmith repository shall conform to both the
@@ -875,10 +978,11 @@ Component Builder
 1. Source
 2. Extract
 3. Interpret
-4. Generate
-5. Validate
-6. Review
-7. Export
+4. Review inputs and resolve evidence
+5. Generate
+6. Validate
+7. Review and approve release
+8. Export / approve project integration
 ```
 
 ------------------------------------------------------------------------
@@ -1081,6 +1185,9 @@ Where sufficient mechanical information exists:
 
 # 6. Intermediate Component Representation
 
+Examples in this section are abbreviated explanatory views, not schema-valid
+IR instances. Section 121 defines required fields and canonical tokens.
+
 B.F.T. shall NOT have the AI directly write final KiCad files from
 unstructured text.
 
@@ -1100,7 +1207,9 @@ component:
       width_mm: 3.0
       height_mm: 0.95
     pitch_mm: 0.5
-    pins: 16
+    peripheral_lead_count: 16
+    exposed_terminal_count: 1
+    pin_count: 17  # for a manufacturer-confirmed conductive exposed terminal
     exposed_pad: true
 
 pins:
@@ -1112,10 +1221,10 @@ pins:
     type: output
   - number: 3
     name: VIN
-    type: power_input
+    type: power_in
 
 footprint:
-  pad_count: 16
+  terminal_group_count: 17
   thermal_pad: true
 ```
 
@@ -1172,7 +1281,8 @@ The generator must enforce:
 -   Readable symbol graphics
 -   KiCad grid conventions
 -   No disconnected pin graphics
--   No duplicate pin numbers unless explicitly valid for the device
+-   No duplicate physical pin IDs; intentional repeated symbol representations
+    must map explicitly to the same physical IR pin
 -   No accidental pin-number/name changes during regeneration
 
 ------------------------------------------------------------------------
@@ -1256,7 +1366,7 @@ Validation must detect:
 
 -   Missing pad
 -   Extra pad
--   Duplicate pad
+-   Duplicate pad shape or ungrouped repeated terminal number (section 93.1)
 -   Incorrect numbering
 -   Incorrect exposed-pad mapping
 -   Pin/pad count mismatch
@@ -1269,8 +1379,9 @@ unresolved errors.
 
 # 10. 3D Model Generation
 
-B.F.T. shall generate a 3D representation of the physical component when
-the supplied mechanical information is sufficient.
+B.F.T. shall generate a 3D representation when mechanical evidence is
+sufficient. Insufficient evidence blocks the MVP production release; candidate
+previews may remain available with explicit incomplete status.
 
 KiCad supports 3D models associated with footprints. Current KiCad
 documentation identifies STEP and VRML as supported component model
@@ -1310,8 +1421,8 @@ passes. The footprint MUST NOT be used to determine the model geometry.
 The footprint and 3D model are independent artifacts. They may share the
 same Component IR and Package Definition Library inputs, but neither
 artifact may be treated as the source of truth for constructing the
-other. Final KiCad association is permitted only after both artifacts
-have been independently generated and validated.
+other. Final KiCad association follows independent generation and preliminary
+geometry validation; final-byte checks then run under section 167.
 
 ------------------------------------------------------------------------
 
@@ -1381,39 +1492,23 @@ Definition Library / authoritative source documentation**.
 5.  Generate the 3D model independently.
 6.  Validate each artifact independently against its source
     requirements.
-7.  Place the 3D model against the footprint in the B.F.T. 3D Viewer.
+7.  Apply the declared placement transform in the headless validation engine.
+    The Phase 12 viewer displays this placement for interactive review; it is
+    not a prerequisite for automated cross-validation.
 8.  Perform automated cross-validation.
 9.  If discrepancies remain, report them rather than silently correcting
     them.
-10. Only after successful validation, create/finalize the KiCad 3D model
-    association.
+10. After preliminary geometry validation, finalize the KiCad association,
+    then validate final files/references before manifest creation and approval.
+    Section 167 defines the required sequence and invalidation rules.
 
 ------------------------------------------------------------------------
 
 # 12A. Independent Artifact Principle --- Mandatory Rule
 
-The footprint and 3D model are independent engineering artifacts.
-
-B.F.T. SHALL:
-
-1.  Generate the footprint from the Component IR, package definition,
-    land-pattern requirements, and authoritative evidence.
-2.  Generate the 3D model independently from the Component IR, package
-    definition, mechanical requirements, and authoritative evidence.
-3.  Never use the generated 3D model as authoritative input to determine
-    pad locations or footprint geometry.
-4.  Never use the generated footprint as authoritative input to
-    determine 3D package geometry.
-5.  Use shared authoritative package definitions where appropriate while
-    preserving independent generator paths.
-6.  Cross-validate the resulting artifacts after generation.
-7.  Never silently move, scale, rotate, or mirror either artifact merely
-    to make the two artifacts appear aligned.
-
-Agreement between independently generated artifacts is a deliberate
-cross-validation signal. Disagreement shall be treated as evidence of a
-possible extraction, package-definition, coordinate-system, generator,
-or source-data problem.
+The governing rule and rationale are in
+[section 11](#11-independent-footprint-and-3d-generation); generator input
+boundaries are in section 89. This section adds no separate contract.
 
 # 12. 3D Viewer / Placement Validator
 
@@ -1513,7 +1608,6 @@ Footprint:
 
 3D:
 *.step
-*.wrl
 ```
 
 KiCad's developer documentation specifies the native s-expression
@@ -1554,82 +1648,28 @@ Use a provider abstraction:
 
 Additional providers can be added later.
 
-## Initial provider targets
+## Provider release scope
 
-### OpenAI
+Section 31 requires one configured provider adapter for the MVP. OpenAI,
+Anthropic, and Google Gemini are candidate adapters, not three mandatory
+deliverables. Record the selected provider, API/model versions, capabilities,
+authentication mechanism, and dated official references in its adapter manifest
+before Phase 11 acceptance. All use the interface in section 133 and the
+credential/billing rules AI-001–AI-004.
 
-Support user-supplied OpenAI API credentials.
-
-OpenAI's current API uses API keys and supports multimodal input,
-including image input, structured responses, tools, and file/search
-workflows.
-
-### Anthropic
-
-Support user-supplied Anthropic API credentials.
-
-Anthropic currently supports API-key authentication as well as other
-production authentication methods.
-
-### Google Gemini
-
-Support user-supplied Gemini API credentials.
-
-Gemini provides an API-key-based API and current documentation describes
-multimodal and structured-output capabilities.
-
-### GitHub Copilot
-
-B.F.T. should treat **GitHub Copilot separately from GitHub Models**.
-
-GitHub Models was retired on July 30, 2026, including its inference API
-and BYOK capability. GitHub states that Copilot remains the GitHub
-product for AI-powered workflows.
-
-Therefore:
-
-**Do not design B.F.T. around the retired GitHub Models API.**
-
-For Copilot, the implementation should depend on the currently supported
-GitHub Copilot extension/integration mechanism rather than assuming that
-a normal Copilot subscription provides a general-purpose API key.
-
-GitHub documents Copilot Extensions as an integration mechanism with
-authorization and API access.
-
-------------------------------------------------------------------------
+GitHub Copilot integration is optional and must use an officially supported
+interface established at implementation time; a subscription is not evidence
+of a general-purpose API entitlement. GitHub Models is not an integration target:
+the dated retirement reference is maintained in section 247. Do not substitute
+that retired API for Copilot.
 
 # 15. Provider Interface
 
-Conceptually:
-
-``` python
-class AIProvider:
-
-    def analyze_document(self, document):
-        ...
-
-    def extract_component_data(self, pages):
-        ...
-
-    def generate_symbol_data(self, component_ir):
-        ...
-
-    def generate_footprint_data(self, component_ir):
-        ...
-
-    def generate_3d_model_spec(self, component_ir):
-        ...
-
-    def validate_component(self, component_ir, generated_data):
-        ...
-```
-
-The provider must return structured data.
-
-It must NOT be trusted to directly write arbitrary KiCad files.
-
-------------------------------------------------------------------------
+The typed interface in [section 133](#133-ai-provider-interface) is the
+authoritative provider contract. Providers return structured interpretation
+candidates to the Evidence/IR workflow. Deterministic generators and validators
+own artifact production and engineering validation; providers cannot write
+production KiCad files or grant approval.
 
 # 16. AI + Deterministic Architecture
 
@@ -1666,6 +1706,9 @@ The architecture should deliberately separate:
 ------------------------------------------------------------------------
 
 # 17. Evidence, Confidence, and Uncertainty
+
+Examples in this section are abbreviated explanatory views, not schema-valid
+IR instances. Section 121 defines required fields and canonical tokens.
 
 Every extracted or derived value shall carry provenance and an evidence
 status.
@@ -1899,7 +1942,8 @@ Input:
   pages 8, 9, 34, 36
 
 Expected:
-  16 pins
+  16 peripheral leads plus one manufacturer-confirmed conductive exposed terminal
+  17 physical electrical terminals / logical conductive pad groups
   0.5 mm pitch
   exposed pad
   QFN package
@@ -2118,115 +2162,58 @@ rather than silently accepting an AI guess.
 
 # 30. JEDEC / Industry Standards
 
-The B.F.T. component model should be designed so that package standards
-can be incorporated.
+STD-007–STD-014 define the adopted roles and precedence of manufacturer,
+JEDEC, IPC, and PDL evidence. Section 121.5 defines the required structured
+citations. Section 247 maintains external entry points.
 
-Potential standards/data sources to investigate include:
-
--   JEDEC package standards
--   IPC footprint/land-pattern standards
--   Manufacturer package drawings
--   Manufacturer recommended land patterns
-
-The user will separately investigate relevant JEDEC standards.
-
-### Design requirement
-
-Standards must be represented as **authoritative sources with
-version/revision metadata**, not merely hard-coded assumptions.
-
-Example:
-
-``` yaml
-standard:
-  organization: JEDEC
-  document: <standard identifier>
-  revision: <revision>
-  source: <reference>
-```
-
-The B.F.T. system should eventually be able to distinguish:
-
-``` text
-Manufacturer datasheet
-        +
-JEDEC package standard
-        +
-IPC land-pattern guidance
-        ↓
-Component definition
-```
-
-------------------------------------------------------------------------
+Each PDL entry must complete its applicable standards review before its gate.
+An unknown edition or absent licensed reference remains an explicit evidence
+gap; it is not a future promise, an assumed standard, or an implicit task
+assigned to the user.
 
 # 31. Component Package Types
 
-Initial MVP should support common packages first.
+## MVP release acceptance matrix
 
-Suggested initial test families:
+This is the single scope matrix for Phases 0–14; STD-010 supplies the exact
+production variant names. The matrix is part of the pinned release profile
+`mvp-1`, whose version/content hash enters the input snapshot and requirements
+context. It cannot be weakened by IR or user configuration.
 
-### Through-hole
+| Dimension | Required acceptance coverage | Gate |
+| --- | --- | --- |
+| Bootstrap package | 0402, using GOLD-0402-001 and its approved PDL | 3–9 |
+| Production packages | All eight STD-010 variants; at least one manufacturer-backed golden component and relevant negative cases for each | 14 |
+| Model accuracy | CLASS A for every production variant; PDL lists required measured body/terminal/clearance observables; CLASS B/C are previews only | 6–8, 14 |
+| AI providers | One selected, configured adapter with pinned interface/model metadata and full provider contract/security tests; others optional | 11, 14 |
+| Languages | English and at least one named non-English language pinned in the release profile before Phase 10; native-text and scanned/OCR samples for each, plus a mixed-language sample; retain originals and translations | 10–12, 14 |
+| Document difficulty | Every category in section 182, including expected blockers for incomplete/conflicting evidence | 10–11 |
+| Reproducibility | Identical released bytes and deterministic hashes for equal frozen inputs and runtime | 9, 14 |
+| Interaction | Headless build/review service first; UI over the same service later | 8, 12 |
 
--   Axial
--   Radial
--   DIP
--   TO packages
--   Connectors
+Additional languages/providers do not become claimed supported capabilities
+until their own fixtures pass the same suite. The language and provider choices
+are recorded configuration decisions, not implicit expansion to every example.
+There is no requirement for every document difficulty to be crossed with every
+package/language; the corpus manifest records explicit coverage and expected
+outcomes. Each production package still needs its own full engineering corpus.
 
-### SMT
-
--   0402
--   0603
--   0805
--   SOT-23
--   SOT-223
--   SOIC
--   TSSOP
--   QFP
--   QFN
--   DFN
--   LGA
--   BGA
-
-The package list should expand based on real test coverage rather than
-being treated as a marketing checklist.
-
-------------------------------------------------------------------------
+Through-hole axial/radial/DIP/TO parts, connectors, SOT-223, QFP, other QFN/DFN,
+LGA, and BGA variants are future examples outside the MVP release gate. Adding
+production variants requires a reviewed scope/PDL/corpus revision.
 
 # 32. Output Package
 
-A successful component build should produce something similar to:
-
-``` text
-BFT_Component/
-│
-├── symbol/
-│   └── BFT_Component.kicad_sym
-│
-├── footprint/
-│   └── BFT_Component.pretty/
-│       └── BFT_Component.kicad_mod
-│
-├── 3d/
-│   └── BFT_Component.step
-│
-├── documentation/
-│   └── source.pdf
-│
-├── bft/
-│   ├── component.json
-│   ├── provenance.json
-│   ├── validation.json
-│   └── build-report.html
-│
-└── README.md
-```
-
-------------------------------------------------------------------------
+A component release includes native symbol, footprint, STEP, manifest, and
+validation/provenance records. Section 175 defines the reproducible component
+bundle; section 174 defines the installed KiCad library layout. Those serve
+different purposes and are not competing workspace directory schemas.
 
 # 33. Component Manifest
 
-Every generated component should have a machine-readable manifest.
+Every generated component shall have a machine-readable manifest. This
+abbreviated content example omits required hashes and the separate audit
+envelope; sections 110 and 166–167 define the complete contract.
 
 Example:
 
@@ -2355,7 +2342,7 @@ Likewise:
 ``` text
 Symbol Pin 4 electrical type
     ↓
-POWER_INPUT
+power_in
     ↓
 Datasheet page 9
     ↓
@@ -2409,7 +2396,7 @@ PartSmith is considered ready for release when B.F.T. can:
 -   [ ] Symbol pin ↔ footprint pad mapping passes.
 -   [ ] Footprint ↔ 3D model alignment passes.
 -   [ ] Generated libraries can be installed/used by KiCad.
--   [ ] Output is reproducible from the same source and configuration.
+-   [ ] Output is reproducible from the same frozen reviewed inputs and pinned runtime/configuration (section 166); live AI reruns are not deterministic replay.
 
 ### Testing
 
@@ -2809,31 +2796,25 @@ HUMAN REVIEW REQUIRED
 
 The system should preserve both values and identify their sources.
 
-A documented source-priority policy may be added later, but conflicting
-authoritative information must remain visible.
+Apply the existing domain-specific policies in section 4 and STD-012.
+Conflicting authoritative information remains visible, with explicit recorded
+resolution under sections 96 and 121.2.
 
 ------------------------------------------------------------------------
 
 # 50. Non-English Datasheets
 
-B.F.T. must support datasheets that are not written in English.
-
-Initial design should support at least:
-
--   English
--   Simplified Chinese
--   Traditional Chinese
--   Japanese
--   Korean
--   German
--   French
--   Spanish
-
-The architecture must allow additional languages to be added later.
-
-------------------------------------------------------------------------
+The mandatory language coverage is defined by section 31's release matrix.
+Extraction retains original text and explicit language metadata; translations
+follow sections 51 and 121.5. Additional candidates include Simplified and
+Traditional Chinese, Japanese, Korean, German, French, and Spanish. This list
+does not claim that all are implemented or independently add gate requirements.
+The architecture must allow language adapters and corpus coverage to expand.
 
 # 51. Language-Aware Extraction
+
+Examples in this section are abbreviated explanatory views, not schema-valid
+IR instances. Section 121 defines required fields and canonical tokens.
 
 B.F.T. should identify the document language before extraction.
 
@@ -3091,7 +3072,9 @@ pdl:
   identity:
     family: QFN
     variant: QFN-16-3x3-0.5P
-    pin_count: 16
+    peripheral_lead_count: 16
+    exposed_terminal_count: 1
+    pin_count: 17  # Illustrative manufacturer variant with conductive EP terminal
 
   mechanical:
     body_length_mm: 3.0
@@ -3112,7 +3095,8 @@ pdl:
 
   land_pattern:
     source: manufacturer_or_standard
-    thermal_pad_supported: true
+    exposed_pad_present: true
+    exposed_pad_terminal_number: "17"  # Must match the selected manufacturer drawing
 
   coordinate_system:
     origin: package_center
@@ -3214,6 +3198,7 @@ component_ir:
   evidence:
   standards:
   overrides:
+  resolutions:
   validation:
   build:
   revision:
@@ -3276,7 +3261,10 @@ Each override shall record:
 ``` yaml
 override:
   id:
-  path: package.mechanical.body_height_mm
+  path: /package/mechanical/body_height
+  value_type: QUANTITY_RECORD
+  base_revision_id:
+  supersedes_override_id:
   previous_value:
   new_value:
   reason:
@@ -3290,12 +3278,18 @@ Rules:
 
 1.  An override never deletes the original evidence.
 2.  An override is visible in the review UI.
-3.  An override is included in the build hash.
-4.  Removing an override restores the prior derived/source value.
+3.  Override history participates in the full IR record hash; active override
+    content participates in snapshot/dependency hashes under section 166.
+4.  Removing an override creates a new revision restoring the prior
+    derived/source value and reruns validation; it never alters prior history.
 5.  Overrides require explicit user action.
 6.  An override that creates a validation failure cannot produce `PASS`.
 7.  Overrides affecting package topology, pin mapping, or
     safety-critical geometry require human review.
+
+Section 121.6 defines payload types, editable paths, and active bindings;
+section 121.8 defines history selection. This abbreviated view is not a
+second override schema.
 
 # 89. Generator Input Isolation
 
@@ -3342,33 +3336,15 @@ is allowed to become the authoritative input to the other.
 
 # 90. Independent Artifact Contract
 
-The independent-generation rule is elevated to a release-gating
-requirement.
-
-``` text
-                   Component IR
-                  /             \
-                 /               \
-                ▼                 ▼
-       Footprint Generator   3D Generator
-                │                 │
-                ▼                 ▼
-          .kicad_mod             STEP
-                │                 │
-                └───────┬─────────┘
-                        ▼
-                Cross-Validation
-```
-
-Agreement is evidence that the package definition, coordinate
-conventions, and generation processes are mutually consistent.
-
-Agreement does **not** prove that both artifacts are correct; source
-evidence and independent validation remain required.
+Section 11 is the single normative independence rule. Sections 89 and
+148 specify its input boundaries and cross-validation checks. Agreement is
+evidence of consistency, not proof of source correctness. Both independent
+source validation and cross-validation are required by the applicable gates.
 
 # 91. Coordinate and Unit Contract
 
-All internal B.F.T. geometry shall use:
+All internal engineering geometry shall use the units below. Source-document
+page regions use the separate document coordinate contract in section 124.1.
 
 ``` text
 Length: millimeters
@@ -3401,30 +3377,47 @@ established.
 
 # 92. Transform Contract
 
-Every 3D placement shall be representable as:
+Coordinate convention version `1.1` is normative. Engineering frames are
+right-handed, use mm/degrees, and use column vectors. In the top-side view,
+look toward the PCB from +Z: +X is right, +Y is up, and +Z is away from the PCB.
+The PCB surface is z=0. Component/model origin is the package reference-center
+projection onto its nominal mounting plane, not a volume centroid. Footprint
+origin is the corresponding package reference-center at the PCB surface.
+Any package-specific mounting offset or center definition is explicit PDL data.
 
-``` text
-T = Translation × Rotation × Scale × Mirror
+Canonical STEP geometry is in the model frame. Placement maps model-frame
+points into the engineering footprint frame using homogeneous coordinates:
+
+```text
+p_destination = T * Rz(rz) * Ry(ry) * Rx(rx) * S * M * p_source
+M = diag(mx, my, mz, 1), each m = -1 if mirrored, otherwise +1
+S = diag(sx, sy, sz, 1), each s > 0
 ```
 
-The implementation shall define a single canonical transform order and
-use it everywhere.
+Rotations are active, right-hand positive, extrinsic about fixed source axes,
+applied X then Y then Z. Mirror and scale act about the source origin before
+rotation. Translation is expressed in destination-frame mm. Direction vectors
+use homogeneous w=0 and points w=1. The record declares source/destination
+frame IDs, translation, rotation, scale, mirror flags, units, `T*R*S*M`, and
+convention version. Defaults may not conceal a frame conversion.
 
-The transform record shall include:
+The versioned KiCad adapter owns conversions between these engineering frames
+and native KiCad coordinate/angle conventions. Verify conversions against the
+pinned KiCad build; never infer a native convention from a viewer orientation.
+Bottom-side placement must use an explicit adapter transform and board plane.
 
--   Source coordinate system
--   Destination coordinate system
--   Translation
--   Rotation
--   Scale
--   Mirror state
--   Units
--   Convention version
-
-The implementation shall provide round-trip transform tests.
-
-A transform that cannot be inverted or reproduced within tolerance shall
-fail validation.
+Composition A→B→C is `T_BC * T_AB`; inverse reverses operation order.
+Composition and inversion return section 150's full affine matrix, not an Euler/
+scale/mirror placement record. Nonuniform scale combined with rotation can
+produce shear. Preserve it in the matrix; never silently decompose/approximate
+it into the simple placement record. An adapter unable to serialize the resulting
+affine map must reject it with an unsupported-transform diagnostic. Inversion
+or round-trip error beyond the configured tolerance fails input validation.
+Phase 6 includes analytical fixtures for identity, basis vectors, 90-degree
+rotations, mirror axes, combined noncommuting rotations, composition, inverse,
+and bounding boxes. For example Rz(90) maps (1,0,0) to (0,1,0), and T(1,2,3)
+maps the origin to (1,2,3). No generated footprint is needed to establish the
+model frame or its geometry.
 
 # 93. Package Topology Validation
 
@@ -3461,6 +3454,30 @@ Result:
   HUMAN_REVIEW
 ```
 
+## 93.1 Terminal and pad counting
+
+`package.pin_count` is the number of physical electrical terminal records in
+`pins`, including any conductive exposed terminal. Package marketing names such
+as QFN-16 describe peripheral leads and do not override this count. A PDL requires
+peripheral_lead_count, exposed_terminal_count, and a terminal map keyed by the
+manufacturer's explicit terminal numbers. Do not infer EP numbering from a name.
+The section 84.1 example is illustrative: a manufacturer-backed 16+EP variant
+has 17 terminals, but a different manufacturer numbering scheme needs its own
+mapping. A non-electrical mechanical feature is not an invented electrical pin.
+
+One physical terminal maps to one logical numbered conductive pad group. A group
+may contain multiple geometric pad shapes/serializer pad objects, all with the
+same terminal number and explicit common group ID. Different terminal groups
+cannot share a number; duplicate shape IDs and ungrouped repeated pad numbers
+fail. Count groups against electrical terminals, shapes against their declared
+group definition, and rendered symbol-unit representations against their explicit
+terminal mapping. Non-electrical holes/features are counted separately.
+
+MVP PDL and serializer support for a compound group is accepted only with a
+pinned KiCad round-trip fixture. If that representation is unsupported, fail
+explicitly rather than duplicate a terminal or merge shapes silently. Exposed
+pad/thermal-via structures require declared grouping and electrical connectivity.
+
 # 94. Land Pattern Safety Rules
 
 Package body dimensions shall never be substituted automatically for
@@ -3480,41 +3497,33 @@ package mechanical evidence.
 
 # 95. Electrical Pin-Type Rules
 
-Electrical pin types shall be determined from manufacturer evidence and
-explicit B.F.T. rules.
+Canonical IR electrical types are:
 
-The system shall support at least:
-
-``` text
+```text
 input
 output
 bidirectional
 tri_state
+passive
+free
+unspecified
+power_in
+power_out
 open_collector
 open_emitter
-passive
-power_input
-power_output
-power_flag
 no_connect
-unspecified
 ```
 
-`unspecified` is a legitimate intermediate state.
+These tokens are the single IR vocabulary. A power-flag symbol is a separate
+symbol-level construct, not an electrical type of a physical component pin.
+Do not synthesize it from a pin name or package standard. Target-format tokens
+are mapped explicitly by the versioned serializer; manufacturer labels such as
+`power_input` and `power_output` map to `power_in` and `power_out` only through
+documented interpretation/migration rules. Retain the original source label.
 
-It is not acceptable for the AI to select an electrical type solely
-because it is common for that pin name.
-
-For example:
-
-``` text
-RESET
-ENABLE
-FAULT
-SENSE
-```
-
-shall not be assigned an electrical type by name alone.
+`unspecified` is a legitimate candidate or explicitly approved pin type.
+Electrical behavior must come from manufacturer evidence or recorded approved
+rules, never from the spelling of names such as RESET, ENABLE, FAULT, or SENSE.
 
 # 96. Evidence Conflict Resolution
 
@@ -3532,7 +3541,10 @@ Conflict resolution shall follow this sequence:
 ```
 
 The system shall not resolve a conflict merely by selecting the AI
-answer with the highest confidence.
+answer with the highest confidence. Resolution creates a new active snapshot
+and a resolution record; original candidates and audit records remain
+immutable. Section 121.2 defines how superseded history is excluded from
+active generation checks without deleting it.
 
 # 97. Evidence Sufficiency Gates
 
@@ -3590,7 +3602,11 @@ prove detailed mechanical dimensions.
 Class C is visual-only and must never be presented as a dimensionally
 validated model.
 
-The MVP should target Class A for supported package families.
+The MVP requires CLASS A for every production variant under section 31.
+`model_3d.accuracy_class` is required in IR 1.2 and is one of CLASS_A, CLASS_B,
+or CLASS_C. The trusted release profile requires CLASS_A for release; an IR
+label alone does not prove it. Validators must measure the PDL's required
+engineering observables. CLASS_B/C outputs are explicitly marked previews.
 
 # 99. 3D Model Validation
 
@@ -3634,7 +3650,7 @@ which the artifact was validated.
 B.F.T. shall not claim universal forward compatibility.
 
 KiCad major releases can change file formats, so compatibility must be
-tested rather than assumed. citeturn0search3turn0search20
+tested rather than assumed. [Reference register: section 247](#247-external-reference-register).
 
 # 101. Native Artifact Validation
 
@@ -3658,6 +3674,13 @@ A file that merely exists on disk is not considered valid.
 
 # 102. Canonical Serialization and Hashing
 
+For supported Component IR versions, canonical profile 1.0 and the whole-record
+hash are defined in [section 121.3](#1213-canonical-profile-10). The whole
+normalized record is hashed, including source metadata; equal physical
+dimensions alone do not make records with different provenance the same IR.
+Build snapshots and generator dependency projections have distinct hash scopes
+under section 166; do not substitute the whole-record hash for those scopes.
+
 Before hashing structured artifacts, B.F.T. shall canonicalize:
 
 -   Key ordering
@@ -3672,8 +3695,9 @@ The same logical IR must produce the same canonical hash.
 
 Raw source files shall be hashed byte-for-byte.
 
-Generated text artifacts shall be hashed after canonicalization unless
-the exact byte representation is itself the release artifact.
+Canonicalize generated text before finalizing the release artifact, then hash
+the exact finalized bytes. Backend-equivalence results are separate from byte
+hashes and follow section 166.
 
 # 103. Build Dependency Invalidation
 
@@ -3694,7 +3718,8 @@ Example:
 ``` text
 Change silkscreen text only
     → invalidate footprint
-    → invalidate cross-validation if footprint geometry changes
+    → rerun footprint and applicable final-byte mapping/association/compatibility checks
+    → replace results bound to changed footprint bytes, manifest, and release approval
     → do not invalidate 3D
 ```
 
@@ -3708,6 +3733,10 @@ Change body height
 ```
 
 B.F.T. shall not regenerate unrelated artifacts unnecessarily.
+Geometry reuse does not preserve an approval or result bound to a different
+released file hash. Reuse an independent check only when its declared inputs
+and artifact hashes are unchanged (section 167). Final cross-validation involving
+the changed footprint receives new exact-byte bindings even when pads are equal.
 
 # 104. Human Review Gates
 
@@ -3855,14 +3884,15 @@ filesystem paths.
 
 # 110. Artifact Manifest v2
 
-The manifest shall identify:
+The package contains a deterministic engineering manifest and a separate audit
+envelope. The following abbreviated field inventory is organized by those
+boundaries; sections 166–167 define projection and hashing rules. Local record
+IDs are audit metadata, while engineering references use content hashes.
 
 ``` yaml
-manifest:
+engineering_manifest:
   schema_version:
-  component_id:
-  build_id:
-  build_status:
+  component_identity:
 
   source:
     documents:
@@ -3874,7 +3904,7 @@ manifest:
 
   component_ir:
     schema_version:
-    hash:
+    input_snapshot_hash:
 
   pdl:
     id:
@@ -3899,11 +3929,23 @@ manifest:
     kicad:
 
   overrides:
-    count:
-    ids:
+    active_content_hashes:
 
   reproducibility:
     build_inputs_hash:
+    dependency_hashes:
+
+audit_envelope:
+  schema_version:
+  component_id:
+  build_id:
+  build_status:
+  started_at:
+  completed_at:
+  ir_record_hash:
+  engineering_manifest_hash:
+  reviews:
+  historical_evidence_and_override_refs:
 ```
 
 # 111. Semantic Diff Requirements
@@ -3990,7 +4032,7 @@ Required human review complete
 
 # 114. Architecture vs. Implementation Acceptance
 
-v0.8 build architecture acceptance means:
+Architecture acceptance, distinct from implementation gate completion, means:
 
 -   Interfaces are defined.
 -   Data ownership is defined.
@@ -4012,32 +4054,13 @@ MVP implementation acceptance additionally requires:
 -   Passing negative corpus
 -   Passing supported-version compatibility tests
 
-# 115. Recommended v0.8
+# 115. Executable Contract Completion
 
-The next specification should be implementation-level.
-
-It should define:
-
-1.  Exact JSON Schema for Component IR.
-2.  Exact JSON Schema for PDL.
-3.  Exact Evidence schema.
-4.  Exact manifest schema.
-5.  Generator API signatures.
-6.  Deterministic geometry algorithms.
-7.  Coordinate-transform implementation.
-8.  First package-family PDL records.
-9.  First supported KiCad version matrix.
-10. PDF/OCR adapter interface.
-11. AI provider adapter interface.
-12. Persistent build database schema.
-13. UI wireframes and state transitions.
-14. CLI/API behavior.
-15. Golden component fixture format.
-16. Fault-injection harness.
-17. CI/CD test gates.
-18. Packaging and installation behavior.
-
-------------------------------------------------------------------------
+The numbered gates assign delivery of schemas, PDL records, generators,
+validators, transform implementations, CLI/API behavior, fixtures, and runtime
+packaging. A published requirement is not evidence of executable conformance.
+Track required repository artifacts and tests against those gates; do not
+declare specification publication or a single fixture equivalent to MVP release.
 
 # Final Architecture and Build Specification Position — Current Normative Baseline
 
@@ -4099,23 +4122,15 @@ And the independent-artifact rule remains mandatory:
 
 # Appendix A --- External Technical Reference Note
 
-The compatibility architecture in this specification is intentionally
-versioned because KiCad major releases can change file formats and are
-not guaranteed to be forward-compatible. KiCad documentation identifies
-native `.kicad_sym` symbol libraries, `.pretty` footprint libraries
-containing `.kicad_mod` files, and separate 3D model files referenced by
-footprints. These facts are used here only to define validation
-boundaries; the implementation must validate against the specific KiCad
-major version it claims to support.
-citeturn0search3turn0search21turn0search24
-
-------------------------------------------------------------------------
+External references are maintained only in
+[section 247](#247-external-reference-register). Exact installed-version
+compatibility tests govern supported KiCad capabilities.
 
 # Implementation Specification — Current Normative Baseline
 
 ## Purpose
 
-v0.8 converts the architecture into an implementation contract.
+v0.9.6 defines the revised implementation contract and phase-gate requirements.
 
 This document defines:
 
@@ -4153,20 +4168,9 @@ And:
 PartSmith shall accept authoritative component documentation and produce
 a reviewable, reproducible KiCad library item.
 
-Primary outputs:
-
-``` text
-component/
-├── symbol/
-│   └── *.kicad_sym
-├── footprint/
-│   └── *.kicad_mod
-├── 3d/
-│   └── *.step
-├── evidence/
-├── manifest/
-└── report/
-```
+Primary deliverables and their component-bundle/library layouts are defined in
+sections 175 and 174. Section 118 describes the development repository, not an
+exported library.
 
 The implementation must support a headless build path so CI can generate
 and validate components without opening the GUI.
@@ -4196,7 +4200,7 @@ footprint libraries containing `.kicad_mod` files, and KiCad 10's
 IPC/Python API direction; KiCad also documents that major releases can
 change file formats and are not forward-compatible with older major
 versions after saving.
-citeturn0search0turn0search2turn0search6turn0search1
+[Reference register: section 247](#247-external-reference-register).
 
 The implementation shall isolate KiCad-version-specific behavior behind
 adapters.
@@ -4206,12 +4210,12 @@ adapters.
 Recommended repository:
 
 ``` text
-board-forge-tools/
+partsmith/
 ├── pyproject.toml
 ├── README.md
 ├── LICENSE
 ├── src/
-│   └── bft/
+│   └── partsmith/
 │       ├── cli/
 │       ├── core/
 │       ├── schemas/
@@ -4291,43 +4295,331 @@ IDs should be UUIDv7 or another sortable UUID format.
 
 Human-readable names are separate from stable IDs.
 
-# 121. Component IR JSON Schema
+# 121. Component IR JSON Schema and Contract
 
-The implementation shall maintain a machine-readable JSON Schema.
+## 121.1 Normative Component IR 1.2 contract
 
-Representative structure:
+IR 1.2 remains the v0.9.6 target. Its implemented Draft 2020-12
+[schema](../schemas/component-ir-1.2.schema.json) has ID
+`bft://schemas/component-ir/1.2` and `schema_version: "1.2"`. The existing
+[IR 1.0](../schemas/component-ir-1.0.schema.json) and
+[IR 1.1](../schemas/component-ir-1.1.schema.json) schemas remain authoritative
+for their own records; their previously recorded PASS does not cover IR 1.2.
 
-``` json
-{
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "bft://schemas/component-ir/1",
-  "type": "object",
-  "required": [
-    "schema_version",
-    "identity",
-    "pins",
-    "package",
-    "evidence",
-    "validation"
-  ],
-  "properties": {
-    "schema_version": {"type": "string"},
-    "identity": {"$ref": "#/$defs/identity"},
-    "pins": {
-      "type": "array",
-      "items": {"$ref": "#/$defs/pin"}
-    },
-    "package": {"$ref": "#/$defs/package"},
-    "evidence": {"type": "array"},
-    "overrides": {"type": "array"},
-    "validation": {"type": "object"}
-  }
-}
-```
+The 16 top-level domains in section 86 are required, including `resolutions`.
+IR 1.2 retains IR 1.1 fields except the additions and revised constraints below.
+Objects reject unknown fields; named property maps require typed entries.
+The root is the IR object, without a `component_ir` wrapper. Electrical,
+symbol/footprint-property, standards, overrides, resolutions, and validation
+result collections may be empty when not applicable. The immutable model and
+canonical JSON profile 1.0 remain the API/serialization basis.
 
-The repository shall contain the complete schema, not merely an example.
+Identity includes raw and normalized manufacturer/MPN values, package variant,
+`source_document_id`, and required `source_revision`. The referenced document
+has required `revision`, original-file SHA-256, and a portable logical path.
+Revision must agree with identity. An unversioned document uses `UNVERSIONED`
+plus `revision_basis: {kind: "content_hash", sha256, captured_at}`; the hash
+must match the document. It is not an invented publisher revision. Known
+revision labels remain verbatim. Optional string identity qualifiers are
+`die_revision`, `package_suffix`, `lead_finish`, and `mechanical_variant`, in
+addition to the existing ordering/temperature/qualification fields.
+
+Pin numbers remain strings. Electrical types are exactly section 95's enum.
+`footprint.land_pattern_source` is exactly `MANUFACTURER_RECOMMENDED`,
+`IPC_DERIVED`, or `PDL_DERIVED`; candidate `null` is allowed only with unresolved
+footprint status. Override status and `override_id` are independent provenance,
+not substitutes for the land-pattern source category. Generic `STANDARD`
+must not erase the distinction between IPC and PDL derivation.
+
+Scalar values retain value/status/evidence references. Quantities retain
+`source_value`, `source_unit`, status, and evidence references. For unresolved
+statuses UNKNOWN, INFERRED, AMBIGUOUS, CONFLICTING, or MISSING, source value/unit
+may be null and an `unresolved_reason` string is required when either is null.
+For MISSING, source value is null. Concrete unknown-unit numbers remain
+candidates, never implicitly mm. Supported non-null units are listed in 121.3.
+Normalized value/unit are null unless both source value and unit are known.
+If both are known, conversion is exact and supplied normalization must agree.
+No placeholder number or fabricated evidence is required to store a candidate.
+
+For DIRECT, DERIVED, STANDARD, or USER_OVERRIDE quantities selected for
+generation, values and units must be concrete and provenance must resolve.
+Optional min/max bounds must be paired; when supplied, minimum <= nominal <=
+maximum. Missing nominal values have no normalized bounds. Selected physical
+lengths are positive; zero is permitted for PDL-declared optional geometric
+features such as an absent chamfer. Placement follows convention 1.1 in
+section 92 and retains translation, rotation, positive scale, and mirror flags.
+
+## 121.2 Component IR API and validation behavior
+
+`ComponentIR(data)`, `from_json`, and `from_file` validate and normalize a
+supported declared version without mutating input. The model is immutable;
+`.data` returns a detached Decimal-valued tree, `.canonical_bytes` is the exact
+serialization, and `.sha256` is the full record hash. `normalize_ir`,
+`canonical_ir`, and `ir_hash` retain these semantics.
+
+`validate_ir` returns sorted stable Issue(path, code, message) records, using
+JSON Pointer paths; throwing entry points use IRValidationError. Duplicate
+keys, normalized key collisions, invalid UTF-8, non-JSON objects, and non-finite
+numbers fail explicitly. Structural validation accepts incomplete candidates.
+
+`for_generation=True` requires an explicit versioned requirements context:
+`validate_ir(data, for_generation=True, requirements=context)`. The context
+lists required IR paths and PDL/rule/generator versions for the artifact.
+Missing context is an error; callers cannot select an empty requirement set
+to waive a supported generator's declared mandatory inputs.
+
+IR 1.2 generation validation additionally requires `revisions=revision_store`,
+a read-only protocol exposing `get_revision(id)` and `get_inventory(sha256)`.
+The validator checks the retained chain, inventory hashes, and approved review
+bindings under sections 121.7–121.8. A missing store/snapshot or invalid transition
+blocks generation. Structural candidate loading may omit the store but cannot
+claim that external history is validated. Phase 2 implements this protocol with
+detached fixture snapshots; Phase 8 connects it to persisted review records.
+
+The active input closure consists of those paths plus their recursively
+referenced active evidence, standards, derivations, translations, approved
+overrides, and resolution decisions. Unresolved or null required values block
+generation. DIRECT needs evidence; DERIVED needs derivation and input links;
+STANDARD needs a versioned standard; USER_OVERRIDE needs a recorded approved
+override bound to the target path and new value. Dangling references and cycles
+in provenance/resolution dependencies fail structural validation.
+
+Sections 121.6–121.8 define typed overrides, independent candidate relevance,
+and immutable decision history. Required active values bind to the revision's
+selected approved decisions. Unresolved historical records do not block solely
+by status, but relevant unresolved candidates require an explicit disposition.
+Only dependency edges participate in cycle detection; target-binding and
+history edges have the exact projection rules in section 166.
+
+This precheck does not itself assign build state. Input-only checks in section
+137 establish IR_VALIDATED before generation. Output validators, compatibility,
+and explicit review establish APPROVED afterwards. Phase 2 implements the
+requirements-context protocol; later phases supply PDL/generator-specific
+requirements and the review UI. No artifact validator is an input prerequisite.
+
+## 121.3 Canonical profile 1.0
+
+- UTF-8 without BOM or trailing newline; compact JSON separators.
+- NFC Unicode and LF line endings in strings; object keys sorted by Unicode
+  code point. Array order is significant and preserved.
+- Numbers use exact decimal tokens without exponent notation or unnecessary
+  fractional zeros. `1`, `1.0`, and `1e0` serialize as `1`; negative zero is `0`.
+- JSON numbers are parsed directly as Decimal. Python floats use Python 3.12's
+  shortest round-trip decimal spelling. No tolerance-based rounding occurs:
+  `0.1 + 0.2` and `0.3` are distinct inputs. Numeric tokens are limited to 100
+  significant coefficient digits and an absolute decimal exponent of 100
+  after removing redundant trailing zeros, before and after
+  unit conversion; out-of-range values are rejected, never truncated.
+- Unit arithmetic uses a local 256-digit Decimal context, independent of the
+  caller's context. Explicit units: mm, mil (0.0254 mm), inch (25.4 mm),
+  um/µm/μm (0.001 mm), and deg/degree/degrees. Radians and other units are
+  rejected until deliberately added. Canonical geometry units are mm and deg.
+- Document logical paths use `/`, collapse redundant separators and `.`
+  segments, and retain case. Absolute paths, drive prefixes, and `..` segments
+  fail. No filesystem resolution or machine-specific paths enter the hash.
+- `ir_hash` / `ir_record_hash` is SHA-256 of the entire normalized IR record,
+  including history and metadata. It is an audit/content-identity hash, not a
+  generator cache key. Equal geometry with different provenance can have
+  different record hashes. Section 166 defines input-snapshot, dependency,
+  validation, and manifest hashes. Raw source hashes remain byte-for-byte.
+
+This is a PartSmith canonical profile, not a claim of RFC 8785 compatibility.
+JSON Schema validation uses pinned `jsonschema` 4.26.0 with local references;
+see the [validator documentation](https://python-jsonschema.readthedocs.io/en/stable/validate/).
+Schema loading and IR validation require no network access.
+
+
+## 121.4 Fixtures, packaging, and Phase 2 scope
+
+Preserve IR 1.0/1.1 schemas, fixtures, hashes, and original gate reports. Add
+IR 1.2 fixtures for every revised constraint, with expected diagnostic codes
+and paths. Test installed-wheel schema loading and offline reference resolution
+for all supported versions. Synthetic fixtures are not manufacturer evidence.
+
+Implement `migrate_v1_1_to_v1_2(ir, supplied_evidence)` returning the existing
+MigrationResult shape: new immutable IR or null, migration history, and sorted
+issues. IR 1.0 migrates through the existing explicit 1.0→1.1 path first.
+Never relabel old records or overwrite their original hashes.
+
+Migration requires evidence-backed candidate targets, active override/resolution
+selectors and revision bindings, typed override payloads, model accuracy class,
+and region coordinate conventions/conversion where regions exist. No candidate
+relevance, coordinate units, history selection, or CLASS_A claim may be guessed.
+Empty decisions permit empty active selectors. Existing validation results need
+explicit stage and applicability classification; absent proof is a migration
+issue, not default PASS or NOT_APPLICABLE. The supplied mapping, rationale,
+source/target hashes, and migration version are preserved in migration history.
+
+The revised Phase 2 gate includes the counterexamples V094-01–V094-06 where
+they concern IR/projection contracts, plus coordinate schema and transition
+checks. Mathematical transform execution remains Phase 6; OCR remains Phase 10.
+The implementation must publish exact schema/API diagnostics and fixture hashes
+before claiming PASS. Existing gate reports retain their earlier scope.
+
+## 121.5 Structured provenance records
+
+Standards records require `id`, `organization`, `document`, `revision`,
+`reference` (URL or controlled citation), `access_date`, and `evidence_ids`.
+Optional `section`, `table_or_figure`, and `content_sha256` refine the citation.
+`name` remains an optional display label. Unknown editions cannot support a
+STANDARD value for generation; use unresolved candidate status until identified.
+Relevant extracted engineering values are retained in evidence so deterministic
+builds do not fetch live standards. Licensed source text need not be redistributed.
+
+Evidence may contain a `translation` object requiring `original_text`,
+`translated_text`, `source_language`, `target_language`, `provider`, `model`,
+and `timestamp`. Manual translations use explicit `provider: "manual"` and
+`model: "not_applicable"`. Original text must agree with retained source text.
+Translation is supporting interpretation, not independent engineering authority.
+Translation records inherit the evidence ID and source links. Active derivations
+reference evidence/standard IDs explicitly; the frozen input snapshot includes
+the referenced records, so revision changes affect dependency hashes.
+
+## 121.6 Typed overrides and target bindings
+
+IR 1.2 overrides retain section 88's ID, path, reason, user, timestamp,
+evidence_reference, and approval_state fields. Add required `value_type`,
+`base_revision_id`, and nullable `supersedes_override_id`. A versioned trusted
+editable-path registry maps engineering JSON Pointers to the exact IR schema
+type and provenance owner. It is part of the schema implementation, not
+caller-supplied data. IDs, source records, history, validation outputs, version
+fields, and active selectors cannot be edited through this override API.
+
+The closed `value_type` union is STRING, NUMBER, BOOLEAN, VALUE_RECORD,
+QUANTITY_RECORD, PIN_RECORD, PIN_ARRAY, PLACEMENT_RECORD, VEC3, or MIRROR_RECORD.
+`previous_value` and `new_value` must match the registered target schema,
+including enum, units, length, and bounds constraints. This is typed replacement,
+not unrestricted JSON Patch. Null is legal only where the target schema permits
+it. Add/remove pins by replacing PIN_ARRAY and revalidating all mappings.
+
+Examples: `/pins/0/electrical_type` uses STRING with section 95's enum;
+`/pins/0/number` uses STRING; a mechanical quantity uses QUANTITY_RECORD;
+`/model_3d/placement/translation_mm/0` uses NUMBER; its parent uses VEC3;
+the complete placement uses PLACEMENT_RECORD. The path registry must include
+these cases and the section 177 controls. Requests outside the registry fail.
+
+`revision.active_override_ids` selects current approved overrides. Effective
+paths, after approved target rebindings, must be disjoint (no duplicate or
+ancestor/descendant overlap), resolve in the current revision, and match their
+new values after canonical normalization.
+The old value must match the base revision's target. Editable records with their
+own status use USER_OVERRIDE and the matching override_id; raw leaves/vectors
+bind through the active selector and do not require a fabricated value wrapper.
+Other fields retain their own provenance. Selecting an override pulls its evidence
+and reason into the active input closure, including for raw pin/placement leaves.
+
+Replacing/removing an override creates a revision and a recorded review decision.
+The prior record is retained unchanged; the new selector and supersession link
+identify the active decision. Historical old values validate against their base
+snapshots; historical new values validate against snapshots that selected that
+override, not against the latest target. Approval never waives topology, type,
+provenance, or geometry checks. Snapshot binding references follow section 166.
+
+## 121.7 Candidate relevance and revision transitions
+
+Every evidence record requires `acquisition_revision_id` and `candidate_targets`:
+a unique array of engineering JSON Pointers in that revision, separate from
+selected evidence_ids. The acquisition revision is retained in the immutable
+revision store; this back-reference is an audit binding, not a dependency edge.
+These pointers use the same schema/provenance-owner registry as overrides;
+pin-leaf relevance resolves to that pin and quantity relevance to that quantity.
+Container requirements include candidate targets within their subtrees. Selected
+evidence must have a compatible candidate target. Empty targets mean unassigned
+evidence, not a reviewed assertion of irrelevance, and cannot support generation.
+
+Before IR_VALIDATED, `revision.evidence_review` covers every acquired candidate.
+It is null for an unreviewed candidate revision; a reviewed revision requires an
+object with inventory_sha256, reviewed_evidence_ids, reviewer, timestamp, and
+approval_state. The immutable acquisition inventory lists source hashes and
+all evidence IDs acquired for the component; its canonical bytes must be retained
+and match the hash. Reviewed IDs must cover that inventory exactly, including
+retained historical candidates. Only APPROVED reviews qualify for generation.
+Review confirms target relationships or records an approved exclusion with reason.
+Store exclusions in `revision.evidence_exclusions` as records requiring
+evidence_id, replacement_evidence_ids (possibly empty), reason, reviewer,
+timestamp, and approval_state. Assigning an initially unassigned record creates
+a new evidence ID with known targets, preserves the original record, and records
+the new ID in the original's exclusion as its reviewed replacement. Inventories
+retain both IDs. It does not edit candidate_targets on an existing record.
+The replacement retains the source hash/region and the unresolved status unless
+a separate interpretation/resolution justifies a change. Missing coverage
+blocks the reviewed snapshot. Unrelated evidence with assigned targets outside
+the required closure need not block that generator. An exclusion cannot suppress
+an already assigned relevant target; that requires a resolution.
+
+For each required provenance owner, the validator examines all assigned
+candidates independently of selected evidence_ids. A candidate with unresolved
+status must either block or appear in the active approved resolution's
+superseded_evidence_ids with an explicit rationale. Selecting another value,
+unlinking the candidate, or approving a raw-leaf override alone cannot dismiss it.
+The active resolution's selected evidence must match the selected target evidence
+or its bound override evidence. Selected evidence must itself be sufficient;
+approval does not fabricate a value from unresolved evidence.
+
+Add `validate_revision_transition(previous, current)` before persisting a new
+reviewed revision. It checks parent identity, immutable record retention,
+unchanged candidate relationships, override old values, and selector transitions.
+New evidence gets new IDs; correcting an existing interpretation creates new
+evidence plus an explicit superseding decision. Old records are never edited.
+`revision.target_rebindings` records old_path, new_path, base_revision_id, reason,
+reviewer, timestamp, and approval_state for topology reorder/replacement; require
+an unambiguous mapping to the same terminal identity. Retired targets are explicit
+approved rebindings with new_path null and cannot remain generation inputs.
+Ambiguous rebindings block. Historical pointers are interpreted in their bound
+revision and translated by this retained chain, never by the latest array index.
+
+For edits offered by section 172's service and the Phase 12 UI, IR 1.2 terminal
+numbers identify pins across a reorder; renumbering is a separate typed in-place
+edit. Each service-created revision may reorder/add/retire pins while preserving
+retained terminal numbers, or renumber retained pins in place, but must not
+combine those operations. Combined user requests require separately reviewed
+revisions. This is a service mutation policy, not a reinterpretation of retained
+IR 1.2 schema/gate fixtures. Reject number collisions or ambiguous swaps; do not
+invent temporary terminal identities. Reordering creates all required approved
+rebindings; retirement also removes active references through explicit decisions.
+View-only sorting must not reorder the persisted pins array. Phase 12 tests
+verify that each supported operation preserves evidence/override target identity
+and that unsupported combinations fail before revision commit.
+
+The gate checks both immutable snapshots and transitions. Standalone structural
+validation cannot prove an unseen acquisition history was complete; generation
+requires a retained, validated revision chain (or an explicitly reviewed imported
+root with acquisition inventory). That provenance is part of the review service,
+not a boolean callers may set to bypass checks.
+
+## 121.8 Resolution history and active selections
+
+Keep immutable resolution records inline and preserve prior revision snapshots.
+Retain id, target_path, superseded_evidence_ids, selected_evidence_ids, override_id,
+decision, reason, reviewer, timestamp, and approval_state. Add `base_revision_id`
+and nullable `supersedes_resolution_id`. `revision.active_resolution_ids` is a
+required unique array selecting at most one APPROVED resolution per current
+provenance owner after approved target rebindings. Nonselected old approvals
+remain approvals in history; only selected decisions must match the latest
+value/evidence/override binding.
+
+A later decision references the earlier one, changes the active selector in a
+new revision, and supplies a reason. Approving a persisted pending proposal
+appends a new APPROVED decision with a new ID and a supersession link; it does
+not mutate the pending record. Replacing a decision must retain dispositions
+for previously unresolved candidates still relevant to that owner. Validate old
+selections against the retained snapshots whose active selectors selected them;
+base_revision_id binds their prior target context, not their resulting new value.
+Validate current selections against current values. Dangling IDs, supersession cycles, incompatible target rebindings,
+and silently deleted/reclassified historical records fail transition validation.
+Pending/rejected proposals cannot be active. History links never become active
+hash dependencies merely because their historical status was APPROVED.
+
+Required IR 1.2 revision additions are active_override_ids,
+active_resolution_ids, evidence_exclusions, target_rebindings, and evidence_review.
+Arrays may be empty only when their corresponding decisions/relations are absent;
+evidence_review is nullable only before review. Section 152 defines the
+validation-result additions; section 124 defines source regions.
 
 # 122. Component Identity Schema
+
+Examples in this section are abbreviated explanatory views, not schema-valid
+IR instances. Section 121 defines required fields and canonical tokens.
 
 ``` yaml
 identity:
@@ -4348,6 +4640,9 @@ spelling.
 Both raw and normalized values are retained.
 
 # 123. Pin Schema
+
+Examples in this section are abbreviated explanatory views, not schema-valid
+IR instances. Section 121 defines required fields and canonical tokens.
 
 ``` yaml
 pin:
@@ -4387,6 +4682,9 @@ representation requires a particular format.
 
 # 124. Evidence Schema
 
+Examples in this section are abbreviated explanatory views, not schema-valid
+IR instances. Section 121 defines required fields and canonical tokens.
+
 ``` yaml
 evidence:
   id: E-001
@@ -4422,6 +4720,36 @@ evidence:
 
 Confidence is metadata and cannot override evidence status.
 
+## 124.1 Canonical source regions (document-page-1.0)
+
+IR 1.2 evidence.source adds required `coordinate_convention` and
+`page_geometry`, each null exactly when region is null. For a region, convention
+is `document-page-1.0`; page is a one-based index in the hashed original PDF.
+Coordinates are PDF points (1/72 inch after applying PDF UserUnit), in the
+unrotated MediaBox frame, origin at its lower-left, +X right and +Y up. Width
+and height are positive; preserve decimal values without pixel rounding.
+
+page_geometry requires media_box [llx,lly,urx,ury] in raw PDF user coordinates,
+user_unit, crop_box in the same raw coordinates, and rotation_deg (0/90/180/270).
+The canonical origin subtracts MediaBox llx/lly before applying user_unit.
+Canonical regions are axis-aligned bounds within that physical MediaBox; page
+rotation and CropBox do not redefine their coordinate frame. Out-of-page regions
+fail instead of being silently clipped. Retain the original document hash.
+
+Rendered/OCR evidence additionally records `render_transform` with image_sha256,
+width_px, height_px, dpi_x, dpi_y, renderer/version, and a 3x3 invertible affine
+`pixel_to_page` matrix. Pixels use top-left origin, +X right, +Y down, with integer
+coordinates at pixel edges. Transform all four box corners into canonical page
+coordinates and store their enclosing bounds. The matrix explicitly incorporates
+crop, scale, page rotation, and any deskew; DPI alone is insufficient. Non-affine
+dewarping is unsupported until a versioned mapping is defined. Native text
+extraction uses null render_transform and the PDF page transform directly.
+
+The strict IR 1.2 schema includes these fields. Phase 2 covers their structural
+and numeric validation; Phase 10 covers extraction conversion and inverse-overlay
+fixtures for changed DPI, rotated/cropped pages, and shifted MediaBox origins.
+Phase 12 must reproduce the recorded source region using these same transforms.
+
 # 125. Evidence Graph
 
 Evidence relationships shall be explicit.
@@ -4450,6 +4778,13 @@ to resolve to the exact source evidence and transformation chain.
 # 126. PDL Schema
 
 The PDL schema shall be separate from Component IR.
+
+The field inventory below is abbreviated. Phase 3's actual schema must also
+encode sections 31/93.1/148: the pinned release-profile identity/version/hash,
+peripheral and exposed counts, terminal/group/shape identities, reference
+features, allowed label-preserving symmetries, required measured observables,
+applicability declarations, and tolerances. Missing declarations cannot be
+supplied retrospectively by a validator after generation fails.
 
 ``` yaml
 pdl:
@@ -4710,21 +5045,19 @@ It must not generate KiCad files.
 
 # 137. IR Validation
 
-Validation occurs before generation.
+Validation before generation is input-only: schema, required active values,
+reference/provenance resolution, unique physical pin IDs, supported PDL,
+package topology, dimension consistency, units, and input transforms. Section
+121.2 provides preliminary checks; PDL/generator contexts supply applicability.
+These checks establish IR_VALIDATED. Unsupported or incomplete inputs enter
+the appropriate failure/waiting state; no production generator accepts them.
 
-Checks:
-
--   schema validity
--   required fields
--   duplicate pin numbers
--   impossible topology
--   contradictory dimensions
--   unresolved critical evidence
--   unsupported package
--   invalid units
--   invalid transforms
-
-Only `IR_VALIDATED` can enter generation.
+After generation, separate artifact, electrical mapping, cross-validation,
+KiCad compatibility, and reproducibility checks run. Passing these plus explicit
+required review establishes APPROVED. Those output checks never gate the first
+creation of the artifacts they must inspect. Physical IR pins have unique IDs;
+intentional repeated representations across symbol units require explicit
+mapping to that one physical pin, not duplicated physical IR pin records.
 
 # 138. Symbol Generator API
 
@@ -4798,8 +5131,8 @@ Footprint artifact
 .kicad_mod (no authoritative 3D geometry dependency)
 ```
 
-The final 3D reference path is attached only in a post-validation
-association/finalization step. A pre-validation footprint artifact may
+The final 3D reference path is attached after preliminary geometry validation,
+then final-byte association/compatibility checks run under section 167. A preliminary footprint may
 contain no 3D reference, or only a non-authoritative placeholder token.
 In all cases, 3D geometry must never drive pad generation.
 
@@ -4812,17 +5145,8 @@ Use manufacturer coordinates
 → normalize units
 → validate pad count
 → validate numbering
-→ validate pin-1
+→ validate pin-1 and package/topology constraints
 → generate footprint
-```
-
-For a manufacturer land pattern:
-
-``` text
-Manufacturer coordinates
-→ normalize units
-→ validate against package/topology constraints
-→ generate
 ```
 
 For an IPC-derived pattern:
@@ -4946,70 +5270,94 @@ independent IR dimensions.
 
 # 148. Footprint ↔ 3D Cross-Validation
 
-Cross-validation shall compare independently generated artifacts.
+Cross-validation compares independent artifacts under section 92. Each PDL
+revision declares `reference_features` with stable terminal IDs, nominal anchor
+coordinates, expected representation (MEASURED or DECLARED_ONLY), physical
+feature applicability, tolerances, and required observables. It also declares
+allowed geometry symmetries as explicit transforms preserving terminal labels
+and electrical meaning. Applicability is input data, not chosen after a failure.
 
-Required checks:
+Check physical pin count/positions, pin-1, body/reference-center, height,
+orientation, mirror state, and exposed pad when the PDL requires those features.
+Use measured geometry for MEASURED features; a missing required measured feature
+fails. Intentionally absent features use DECLARED_ONLY anchors with a report
+clearly stating that geometry was not measured. Such anchors cannot prove a
+dimensionally required physical feature. The release accuracy class determines
+which checks require actual geometry; MVP engineering dimensions must be measured.
 
-``` text
-pad count ↔ physical pin count
-pad positions ↔ lead/pin positions
-package center ↔ model center
-pin 1 ↔ pin-1 marker
-body extents ↔ model extents
-model height ↔ package height
-orientation ↔ coordinate contract
-mirror state ↔ expected state
-thermal pad ↔ exposed pad
-```
+Pad centers and lead centers need not coincide: land-pattern extensions are
+intentional. Validate the expected PDL contact/overlap and offset relationship,
+not unconditional equality. Section 93.1 defines terminal groups and shapes,
+including explicit serializer support for compound pads.
 
-No validator may "fix" either artifact.
+Record whether each check is measured PASS/FAIL or justified NOT_APPLICABLE.
+NOT_APPLICABLE is a separate applicability field, not a new PASS status. A gate
+counts it only when its pinned fixture/PDL declared that non-applicability;
+it is not a skipped or manually waived test. Section 152 defines null status,
+declaration bindings, and measurement mode for this case. No validator repairs geometry.
 
 # 149. Fault Injection for Cross-Validation
 
-CI shall intentionally modify test 3D models:
+Fixtures inject shifts, 90/180-degree rotation, X/Y mirrors, 2x/0.5x scale,
+wrong height, and wrong pin-1 mapping. Every injection that changes a required
+observable or declared placement/terminal mapping must fail its intended rule.
 
-``` text
-+0.10 mm X offset
--0.10 mm Y offset
-90° rotation
-180° rotation
-mirror X
-mirror Y
-2× scale
-0.5× scale
-wrong height
-wrong pin-1 marker
-```
-
-Every injected fault must be detected.
+For geometry symmetric under an allowed PDL transform, geometry alone cannot
+prove that a rotation/mirror happened. Validate explicit placement and terminal
+identities separately. Geometry-equivalent cases form positive equivalence
+tests and never count as detected faults. The fault corpus must include
+asymmetric reference fixtures that make each required fault observable; a
+symmetric 0402 alone cannot establish rotation/mirror detection coverage.
 
 # 150. Coordinate Transform Library
 
-Provide:
+Two immutable types have different purposes:
 
-``` python
+```python
 @dataclass(frozen=True)
-class Transform:
+class Placement:
     translation_mm: Vec3
     rotation_deg: Vec3
     scale: Vec3
     mirror: MirrorState
+    source_frame: str
+    destination_frame: str
+
+@dataclass(frozen=True)
+class AffineTransform:
+    matrix: Matrix4x4
+    source_frame: str
+    destination_frame: str
+
+def to_affine(placement: Placement) -> AffineTransform: ...
+def compose(ab: AffineTransform, bc: AffineTransform) -> AffineTransform: ...
+def invert(transform: AffineTransform) -> AffineTransform: ...
 ```
 
-Required functions:
+The placement record retains convention 1.1 from section 92. Affine matrices
+use column vectors, mm translations, finite entries, last row [0,0,0,1], and
+an invertible linear part. Frame IDs must match at composition boundaries;
+composition returns bc.matrix * ab.matrix and inversion swaps frame IDs.
+Reject singular or numerically unstable inversion outside pinned tolerances.
+The internal affine format has convention `affine-1.0`; it does not replace
+the persisted simple IR placement or require shear support from KiCad.
 
-``` python
-compose()
-invert()
-apply_point()
-apply_vector()
-apply_bbox()
-equivalent_within_tolerance()
-```
+`apply_point`, `apply_vector`, `apply_bbox`, and `equivalent_within_tolerance`
+operate on affine transforms. Bbox transformation uses all eight corners and
+returns their destination-axis-aligned bounds. Vectors use w=0; points use w=1.
+Numerical algorithms, precision, and tolerances are pinned runtime inputs.
+Adapters may emit a simple placement only if its reconstructed matrix agrees
+within the pinned serialization tolerance; otherwise fail, never drop shear.
 
-All functions shall be deterministic.
+Phase 6 tests include nonuniform S=diag(2,1,1) composed with a planar rotation
+cos=3/5, sin=4/5, exact expected matrices, nonrepresentable simple-placement
+rejection, inverse round trips, mirrors, and frame mismatch. No decomposition
+to Euler angles is required for internal composition.
 
 # 151. Tolerance Engine
+
+Examples in this section are abbreviated explanatory views, not schema-valid
+IR instances. Section 121 defines required fields and canonical tokens.
 
 Tolerances shall be package-specific.
 
@@ -5025,44 +5373,53 @@ Tolerance values are configuration, not hard-coded constants.
 
 # 152. Validation Result Contract
 
-``` yaml
-validation_result:
-  id:
-  category:
-  rule_id:
-  status:
-  severity:
-  message:
-  evidence_ids:
-  artifact_ids:
-  measured:
-  expected:
-  tolerance:
-```
+IR 1.2 validation.results and build output reports use the same strict result
+definition. In addition to id, category, rule_id, severity, message, evidence_ids,
+artifact_ids, measured, expected, and tolerance, require:
 
-Status:
+| Field | Contract |
+| --- | --- |
+| stage | INPUT, ARTIFACT, FINAL_ARTIFACT, POST_MANIFEST, or REPRODUCIBILITY |
+| applicability | APPLICABLE or NOT_APPLICABLE |
+| applicability_reason | Nonempty justification for NOT_APPLICABLE; null otherwise |
+| applicability_basis | For NOT_APPLICABLE: kind (PDL or FIXTURE), id, revision, sha256, and feature_id of the pinned declaration; null otherwise |
+| status | PASS, FAIL, WARN, HUMAN_REVIEW, or NOT_GENERATABLE when APPLICABLE; null exactly when NOT_APPLICABLE |
+| measurement_mode | MEASURED, DECLARED_ONLY, or NONE |
 
-``` text
-PASS
-FAIL
-WARN
-HUMAN_REVIEW
-NOT_GENERATABLE
-```
+NOT_APPLICABLE is not PASS: measured/expected/tolerance are null and
+measurement_mode is NONE. A gate counts it as a satisfied declared exclusion
+only when the trusted fixture/PDL explicitly declares that feature absent.
+Undeclared exclusions or incompatible basis hashes produce an applicable FAIL.
+A missing required feature cannot become NOT_APPLICABLE after generation.
+
+An applicable dimensional PASS requires MEASURED for CLASS_A observables.
+DECLARED_ONLY can validate a declaration/mapping but cannot prove measured
+geometry. Non-geometric checks use NONE. Preserve evidence and subject bindings
+for all cases; section 166 includes applicability and measurement mode in hashes.
+The result definition is packaged with the IR 1.2 schema and reused by output
+report serialization. Standalone reports declare result schema version 1.2.
+Output reports remain outside the frozen source IR; copying them into an audit
+revision follows section 166 and cannot change a build's source snapshot.
+
+Gate aggregation uses a pinned required-rule inventory for each stage and
+subject. Missing, duplicate, or stale required results fail aggregation; an
+empty result list is not success. Count declared NOT_APPLICABLE separately from
+PASS/FAIL/WARN and preserve its null status in JSON and UI. Each exclusion must
+match its trusted declaration; CLASS_A measurements and blocking statuses
+remain mandatory. Phase 7 tests result semantics and Phase 8 tests aggregation,
+including missing results and a fabricated exclusion.
 
 # 153. Blocking Rules
 
-The following are release-blocking:
+FAIL, HUMAN_REVIEW, and NOT_GENERATABLE validation results block production
+approval/export. Ordinary review cannot waive or rename them. Resolve the cause
+and rerun affected validators; the old result remains in immutable history.
 
-``` text
-FAIL
-HUMAN_REVIEW
-NOT_GENERATABLE
-```
-
-unless an explicitly approved rule allows the specific warning.
-
-Warnings must never be silently converted to PASS.
+WARN may be accepted only by an explicit versioned warning policy identifying
+the rule, scope, rationale, and required reviewer decision. It remains WARN in
+reports; it is never silently converted to PASS. `--fail-on-warning` is stricter
+than normal warning policy. Phase-gate waivers require the specification-level
+process at the start of this document and are never a recorded gate PASS.
 
 # 154. Validation Engine API
 
@@ -5095,6 +5452,10 @@ ManifestValidator
 ReproducibilityValidator
 ```
 
+ManifestValidator runs POST_MANIFEST; ReproducibilityValidator runs in a separate
+REPRODUCIBILITY comparison stage. Neither result is an input to the manifest it
+verifies. Section 167 defines the acyclic ordering and release checks.
+
 # 156. KiCad Adapter
 
 ``` python
@@ -5113,10 +5474,12 @@ The adapter must be version-specific.
 The implementation shall prefer supported KiCad interfaces over private
 file manipulation when the required operation is available.
 
-For KiCad 10, the implementation shall evaluate the IPC API and official
-Python bindings for runtime integration. KiCad documents a headless IPC
-API server and officially maintained Python bindings.
-citeturn0search8turn0search1
+For the pinned KiCad 10 build, the implementation shall verify supported IPC
+operations and Python bindings. Do not assume an `api-server` CLI command
+exists merely because development-version documentation lists it. Record
+capabilities from the installed build; use supported headless CLI operations
+for Phase 8 and a live IPC test session where required in Phase 13.
+[Reference register: section 247](#247-external-reference-register).
 
 For native library artifact generation, B.F.T. may generate validated
 native files directly where this is deterministic and stable, while
@@ -5145,37 +5508,57 @@ requested KiCad target is unavailable.
 
 # 159. Build State Machine
 
-Implementation states:
+Persisted progress states:
 
-``` text
+```text
 SOURCE_RECEIVED
 SOURCE_ANALYZED
 EVIDENCE_COLLECTED
 IR_BUILT
-IR_VALIDATED
 PACKAGE_IDENTIFIED
+IR_VALIDATED
+SYMBOL_GENERATED
 FOOTPRINT_GENERATED
 3D_GENERATED
-SYMBOL_GENERATED
 ARTIFACT_VALIDATION
 CROSS_VALIDATION
-HUMAN_REVIEW
+HUMAN_REVIEW_REQUIRED
 APPROVED
 EXPORTED
+REJECTED
 ```
 
-Failure states:
+Failure states: EXTRACTION_FAILED, EVIDENCE_CONFLICT, IR_INVALID,
+PACKAGE_UNSUPPORTED, NOT_GENERATABLE, ARTIFACT_VALIDATION_FAILED,
+CROSS_VALIDATION_FAILED. HUMAN_REVIEW_REQUIRED is a waiting state, not failure.
+HUMAN_REVIEW belongs only to the validation-result enum.
 
-``` text
-EXTRACTION_FAILED
-EVIDENCE_CONFLICT
-IR_INVALID
-PACKAGE_UNSUPPORTED
-NOT_GENERATABLE
-ARTIFACT_VALIDATION_FAILED
-CROSS_VALIDATION_FAILED
-HUMAN_REVIEW_REQUIRED
-```
+| Transition | Required condition |
+| --- | --- |
+| SOURCE_RECEIVED → SOURCE_ANALYZED → EVIDENCE_COLLECTED → IR_BUILT | Source processing succeeds; deterministic fixtures may enter IR_BUILT with recorded supplied inputs |
+| IR_BUILT → PACKAGE_IDENTIFIED → IR_VALIDATED | PDL resolved; all applicable input checks pass |
+| IR_BUILT or PACKAGE_IDENTIFIED → HUMAN_REVIEW_REQUIRED | Input review or resolution is missing; record review stage INPUT and the bound revision/inventory |
+| HUMAN_REVIEW_REQUIRED (INPUT) → IR_BUILT | Section 172 atomically commits a reviewed child revision; input/PDL validation must rerun before generation |
+| IR_VALIDATED → generation progress states → ARTIFACT_VALIDATION | Each artifact consumes its frozen declared inputs; all required artifacts complete |
+| ARTIFACT_VALIDATION → CROSS_VALIDATION | Independent artifact/mapping checks pass |
+| CROSS_VALIDATION → HUMAN_REVIEW_REQUIRED | Final-byte cross-validation and KiCad compatibility pass; manifest frozen and post-manifest verification passes under section 167; approval is pending |
+| HUMAN_REVIEW_REQUIRED (RELEASE) → APPROVED | Explicit approval bound to exact snapshot/manifest/artifact hashes and successful required checks; no blockers |
+| HUMAN_REVIEW_REQUIRED → REJECTED | Recorded rejection and reason |
+| APPROVED → EXPORTED | Atomic export succeeds without changing approved engineering content |
+
+Preliminary checks, finalization, and final-byte rechecks are distinct tracked
+substeps within ARTIFACT_VALIDATION/CROSS_VALIDATION, in section 167 order.
+Artifact completion is also tracked per node; progress states do not permit
+skipping required nodes or force independent generators to read one another.
+Recoverable failures may enter HUMAN_REVIEW_REQUIRED for resolution, but cannot
+be approved while blocked. Changed inputs create a new immutable revision/build
+attempt at IR_BUILT, invalidate affected descendants, and rerun checks. Retry
+without changed inputs is permitted only for transient operational failures.
+Previously approved releases and rejected attempts remain immutable.
+Each review request records INPUT or RELEASE stage; section 167's post-manifest
+waiting state uses RELEASE. Resolving an INPUT request never transitions directly
+to APPROVED. A reviewed supplied fixture may bypass an interactive input-review
+session only with its retained valid review/inventory bindings.
 
 # 160. Build Orchestrator
 
@@ -5262,6 +5645,31 @@ build_dependencies
 
 All records shall include creation/update timestamps.
 
+Immutable snapshots/events keep their original timestamps (an updated_at field,
+where present, equals created_at); edits append records. Mutable current-head
+indexes and orchestration progress are separate from approved snapshot bytes.
+
+Phase 8 adds forward migrations after 001 for immutable IR revisions, canonical
+acquisition inventories, review proposals/decisions, snapshot/dependency records,
+bundle object indexes, and approval bindings. Physical table grouping may vary,
+but the store must provide get_revision(id) and get_inventory(sha256) with the
+exact bytes and identity checked under section 121.2. Preserve historical
+schemas, migration checksums, and existing database contents.
+
+Revision IDs are unique within their declared identity namespace; the same ID
+with different bytes is a conflict. Store a canonical hash with every snapshot
+and inventory. Parent/base/acquisition references and reviewed inventories must
+resolve before a reviewed revision becomes current. Snapshots reachable from
+retained releases, decisions, or replay bundles cannot be pruned or cascade-deleted.
+
+Commit a reviewed revision, appended approved decisions, selected bindings,
+inventory, audit event, and current-head compare-and-swap in one SQLite
+transaction. Check the caller's expected head hash, retained base values, and
+transition validation in that transaction. A stale head or validation failure
+rolls back all changes. The review service owns this transaction; the
+orchestrator alone subsequently advances build state. Phase 8 tests reopen,
+concurrent stale-head rejection, immutability, and rollback without partial approval.
+
 # 164. Build Record
 
 ``` yaml
@@ -5297,61 +5705,201 @@ artifact:
 
 # 166. Reproducible Build Algorithm
 
-A reproducible build shall be determined by:
+Each generation attempt freezes an input snapshot after input validation.
+Validation results produced by that attempt are written to separate output
+records, never appended to or substituted into its frozen input snapshot.
+An IR editor may create a new full record containing those reports, but that
+new audit record is not retroactively the source input of existing artifacts.
 
-``` text
-source hashes
-+
-evidence selections
-+
-IR
-+
-PDL revision
-+
-generator versions
-+
-B.F.T. version
-+
-configuration
-+
-approved overrides
-```
+The following hashes have distinct meanings:
 
-Canonicalize all structured inputs first.
+| Hash | Exact scope |
+| --- | --- |
+| ir_record_hash (`ir_hash` API) | Entire normalized versioned IR, including history and metadata |
+| input_snapshot_hash | Canonical input snapshot defined below |
+| dependency_hash per generator | Declared projection of snapshot paths and recursively referenced active provenance plus generator/backend/configuration versions |
+| artifact_hash | SHA-256 of exact released artifact bytes; backend-equivalence results are recorded separately |
+| validation_semantics_hash | Final retained ARTIFACT/FINAL_ARTIFACT results only: sorted rule/category/stage/applicability/basis/reason/status/severity/measurement_mode, engineering measurements, expected values/tolerances, stable subject identity and exact artifact hashes, and validator versions; excludes preliminary/superseded, POST_MANIFEST, and REPRODUCIBILITY results, IDs, and execution times |
+| engineering_manifest_hash | Deterministic content manifest with snapshot, dependencies, artifacts, semantic validation, and target/runtime versions |
+| audit_envelope_hash | Run IDs, reviewer identities/decisions, timestamps, full IR record hash, and references to deterministic content hashes |
 
-Then:
+The input snapshot includes schema/profile versions, raw/normalized component
+identity (excluding local component_id), required engineering IR paths, active
+evidence/standard/translation records, selected override new values and reasons,
+resolution selections/reasons, PDL content/revision, all generator/validator and
+CadQuery/OCP/OCCT/Python versions, exporter settings, and effective non-secret
+engineering configuration, including the section 31 release profile. True
+dependency references are replaced by recursively projected content hashes under
+the edge rules below; acquisition/translation execution
+timestamps, run/result IDs, reviewer identities/timestamps, display revision
+IDs/descriptions, historical previous
+values, and output validation results belong only to the audit envelope. Source
+document revisions, source-file hashes, original/translated text, and engineering
+source units remain content-significant. Cyclic dependency projections fail.
 
-``` text
-build_inputs_hash = SHA256(canonical_build_inputs)
-```
+### Projection versions and configuration scope
+
+Canonical JSON profile 1.0 is unchanged; the content projection is separately
+versioned. Profile 1.1 remains readable with its original implementation and
+golden hashes. Profile 1.2 retains the edge rules below but adds the scoped
+configuration contract in this section. New Phase 4–6 generator projections
+and Phase 8–9 snapshots use 1.2 and declare that version in canonical bytes.
+Never relabel an existing 1.1 hash as 1.2 or replace its frozen golden evidence.
+
+The complete build snapshot contains all actual runtime/configuration inputs
+listed above. Each node's dependency projection contains only its versioned
+trusted IR/provenance paths and configuration paths. A declaration has node
+kind, declaration ID/version, required IR paths, required configuration paths,
+and configuration schema/version; its canonical content/hash participates in
+the node dependency. Declarations are shipped with the adapter/generator/rules,
+not supplied or narrowed by an IR author, CLI flag, or arbitrary caller.
+
+| Node | Required configuration scope |
+| --- | --- |
+| Symbol | Python/serializer/generator versions, target symbol format, symbol conventions, naming and consumed assignment inputs |
+| Footprint geometry | Python/serializer/generator versions, target footprint format, consumed PDL/land-pattern/graphics/clearance rules |
+| Canonical STEP | Complete tested CAD/Python tuple and archive hashes, geometry adapter/generator, consumed PDL mechanics, numeric and STEP exporter settings |
+| Association/finalization | Finalizer and target format versions, input artifact hashes, logical reference paths/nicknames and placement conversion/settings |
+| Validation | Validator/rule/runtime versions, applicable PDL/profile declarations, tolerances, exact subject input/artifact hashes |
+| Manifest/release | Complete snapshot, retained validation semantics, finalized artifact hashes, release profile and manifest implementation version |
+
+Each node includes consumed release-policy fields and their declaration versions;
+the full release-profile content/hash is always in the complete snapshot. A
+consumer of an entire configuration object declares the entire object as an
+input. Do not drop dependencies merely because one fixture happens to produce
+unchanged output. PDL content is projected by declared consumed fields while
+retaining its identity/revision and applicable rule versions.
+
+Symbol and footprint geometry projections must not require unused CAD versions,
+STEP exporter settings, or output-validator versions. Early phase fixtures
+declare only available actual inputs; they are not complete release snapshots
+and cannot receive release approval. Missing required node inputs fail rather
+than acquiring invented runtime placeholders. Phase 8 requires the full tuple.
+Validator-only changes rerun affected checks and invalidate manifests/approval;
+they regenerate engineering files only if a generator actually consumes changed
+rules. CAD-only changes invalidate STEP and dependent checks/association as
+needed, while preserving unrelated symbol/footprint geometry dependencies.
+
+Phases 4–6 test each new declaration with consumed-input changes and unrelated
+configuration changes. Phase 9 exercises the complete dependency graph,
+including validator-only, CAD-only, placement-only, and audit-only changes.
+Profile 1.1 remains the scope of the existing Phase 2 projection evidence;
+profile 1.2 evidence is additional and records its own hashes.
+
+### Projection edge rules (retained from profile 1.1)
+
+- Dependency edges: selected evidence, standards, derivation/translation inputs,
+  and active approved decision content. Resolve by content hash, never random IDs.
+- Binding edges: override_id and active decision selectors connect a target to
+  a selected decision. Project the binding once as that decision's content hash.
+  While projecting an override's new_value, omit a self-binding override_id
+  (only when it equals that override's own ID); retain target path, value type,
+  typed new content, reason, and evidence content. Do not recursively hash the
+  target object through its path. A mismatched binding is invalid, not omitted.
+- History edges: previous_value, supersedes_override_id, supersedes_resolution_id,
+  base_revision_id, acquisition_revision_id, prior evidence dispositions, and superseded_evidence_ids are
+  audit links, not recursive dependency edges. Keep them in the full IR/audit
+  hash. Active resolution projection contains current target identity, selected
+  evidence hashes, override content hash if any, decision, and reason. Active
+  exclusion/rebinding content needed to establish the current selection is
+  retained without reviewer/time/parent-snapshot recursion.
+- Record id, revision display labels, and reviewer/time fields are excluded
+  from these content nodes. Source-document hash/revision and substantive
+  engineering interpretation remain included. Candidate relationships used by
+  the active selection remain significant; inactive historical record bodies
+  do not become active solely through a supersession link.
+
+Golden projection tests must prove that a valid self-bound quantity override
+hashes without a cycle; changing its new value/reason/evidence changes the
+affected dependency; changing only previous_value/reviewer/time affects the
+audit hash; and a real derivation dependency cycle fails. A raw pin/placement
+override must contribute its active decision content even without override_id
+on the leaf. Approved historical decisions must not be compared to current values.
+These edge cases remain required for profile 1.2 as it is implemented; the
+existing Phase 2 cases retain their profile 1.1 baselines.
+
+Each generator publishes a versioned required-path projection; omitting a
+geometry-affecting parameter or active provenance dependency fails validation.
+Placement-only edits invalidate association, cross-validation, and export, not
+canonical STEP geometry. Audit-only changes alter the record/envelope hash but
+not an unaffected generator's dependency hash. Sections 103/162 use these
+dependency hashes rather than the whole-record hash for selective reuse.
+
+Canonical profile 1.0 serializes each projection. `build_inputs_hash` is an
+alias for `input_snapshot_hash`; SHA-256 hashes canonical bytes. A build record
+stores both input_snapshot_hash and ir_record_hash. Release reproducibility
+requires exact artifact bytes and dependent hashes. Backend equivalence may be
+reported diagnostically with algorithm/version/tolerances and both byte hashes,
+but cannot satisfy a reproducibility gate or replace any artifact hash. Runtime
+or input changes define different build inputs, even when geometry is equivalent.
+Replay uses frozen reviewed Evidence/IR and recorded provider responses; new live
+AI interpretation is a new candidate acquisition, not a deterministic rebuild.
 
 # 167. Manifest Generation
 
-The manifest shall be generated last from the completed build graph.
+The build graph shall use this order:
 
-It shall include all artifact hashes and validation results.
+1. Validate inputs and freeze the snapshot/dependency hashes.
+2. Generate artifacts independently. Run preliminary geometry/mapping checks
+   using declared transforms without requiring a viewer or final KiCad reference.
+3. On preliminary success, attach the final model path/placement and finalize
+   all released bytes. Paths are portable logical paths; export relocation must
+   preserve their resolution without rewriting the approved files.
+4. Run final artifact/mapping/cross-validation and KiCad compatibility checks
+   against those bytes, including referenced STEP existence/hash and association
+   transform. Retain ARTIFACT/FINAL_ARTIFACT results bound to exact artifact
+   hashes. Unchanged independent geometry checks may be reused only with exact
+   declared input/artifact hash equality; changed footprint bytes require new
+   footprint/association/compatibility checks. Preliminary results for different
+   bytes do not enter validation_semantics_hash.
+5. Freeze final artifact hashes and validation_semantics_hash. Construct/hash
+   the engineering manifest from those hashes, input/dependency hashes, release
+   profile, and target/runtime versions. No self-hash field is inside it.
+6. Run ManifestValidator on the completed manifest and its content references.
+   Store POST_MANIFEST results in the separate run/audit envelope, bound to the
+   manifest hash. ReproducibilityValidator compares two already frozen builds
+   at Phase 9 and writes a separate REPRODUCIBILITY report referencing both
+   manifest/artifact hashes. Neither report changes either engineering manifest
+   or validation_semantics_hash. Phase 8 does not depend on a future Phase 9 test.
+7. Explicit human approval binds the frozen manifest/artifact hashes and the
+   required successful post-manifest checks. The audit envelope has its own hash;
+   approval does not include that eventual envelope hash in its own input.
+   Headless operation uses the same service with an authenticated recorded
+   reviewer/decision; CI replay is valid only for identical approved content.
+8. Release/export rechecks bytes, references, approval bindings, and required
+   gate evidence. A changed reference, path, placement, or file invalidates
+   dependent checks, manifest, and approval and creates a new attempt.
 
-The manifest itself receives a SHA-256 hash.
+This sequence governs the component release bundle. Project installation may
+derive new aggregate files only through section 174.1's separate validation and
+authorization contract; it never modifies the approved source bundle or treats
+new aggregate bytes as if the component approval covered them.
+
+The viewer is an optional presentation surface for the Phase 8 service and a
+required Phase 12 UI deliverable. It cannot repair geometry or substitute visual
+inspection for final-byte checks. All blockers apply equally to CLI and GUI.
+The manifest never depends on a report that requires that same manifest's hash.
 
 # 168. CLI
 
 MVP commands:
 
 ``` bash
-bft component inspect <source>
-bft component extract <source>
-bft component build <source>
-bft component validate <build-id>
-bft component review <build-id>
-bft component export <build-id>
-bft component diff <build-a> <build-b>
+partsmith component inspect <source>
+partsmith component extract <source>
+partsmith component build <source>
+partsmith component validate <build-id>
+partsmith component review <build-id>
+partsmith component review-inputs <component-id> --revision <revision-id>
+partsmith component export <build-id>
+partsmith component diff <build-a> <build-b>
 
-bft pdl list
-bft pdl inspect <pdl-id>
-bft pdl validate <pdl-id>
+partsmith pdl list
+partsmith pdl inspect <pdl-id>
+partsmith pdl validate <pdl-id>
 
-bft doctor
-bft version
+partsmith doctor
+partsmith version
 ```
 
 # 169. Build Command
@@ -5359,7 +5907,7 @@ bft version
 Example:
 
 ``` bash
-bft component build TPS62130.pdf \
+partsmith component build TPS62130.pdf \
   --kicad 10 \
   --output ./generated \
   --review
@@ -5370,7 +5918,7 @@ The command shall never auto-export a blocked build.
 # 170. Non-Interactive CI Mode
 
 ``` bash
-bft component build source.pdf \
+partsmith component build source.pdf \
   --ci \
   --fail-on-review \
   --fail-on-warning
@@ -5381,7 +5929,7 @@ CI mode shall produce machine-readable JSON results.
 # 171. Review Command
 
 ``` bash
-bft component review BUILD-ID
+partsmith component review BUILD-ID
 ```
 
 The review interface shall show:
@@ -5401,6 +5949,11 @@ Overrides
 # 172. Review Decision API
 
 ``` python
+class InputReviewService:
+    def propose(self, request: InputReviewProposal) -> ProposalResult: ...
+    def approve_inputs(self, request: InputApprovalRequest) -> RevisionResult: ...
+    def reject_inputs(self, request: InputRejectionRequest) -> ReviewResult: ...
+
 class ReviewService:
     def approve(self, build_id: UUID, reviewer: str) -> ReviewResult: ...
     def reject(self, build_id: UUID, reviewer: str, reason: str) -> ReviewResult: ...
@@ -5408,10 +5961,47 @@ class ReviewService:
         self,
         build_id: UUID,
         path: str,
-        value: object,
-        reason: str
-    ) -> Override: ...
+        value: OverrideValue,
+        reason: str,
+        expected_revision_hash: str
+    ) -> ProposalResult: ...
 ```
+
+Input review is available before any generated artifact exists. Its operations
+use closed, versioned request schemas with these mandatory bindings:
+
+| Request | Required content |
+| --- | --- |
+| InputReviewProposal | Component ID, base revision ID and canonical hash, expected current-head hash, reason, and typed proposed actions |
+| InputApprovalRequest | Component ID, exact candidate revision ID/hash, expected current-head hash, inventory SHA-256, exact proposal IDs/hashes being accepted, and review reason |
+| InputRejectionRequest | Component ID, exact candidate revision ID/hash, proposal IDs where applicable, expected current-head hash, and reason |
+
+Actions are typed override replacements, evidence acquisition/replacement,
+unassigned-evidence exclusions, conflict resolutions, decision supersession or
+removal, and topology rebindings under sections 121.6–121.8. Each action uses
+its schema-defined payload and references; arbitrary patches to approval,
+history, or active-selector fields are forbidden. OverrideValue is section
+121.6's closed typed union selected by the trusted path registry. The service
+captures old values and base bindings; clients cannot assert them as trusted.
+
+propose persists an unreviewed candidate/proposal without applying an approval.
+approve_inputs authenticates the reviewer, verifies the exact candidate and
+complete inventory, validates every selected action and transition, then
+atomically appends a reviewed child revision under section 163. Approving a
+pending decision creates a new APPROVED record with a new ID and supersession
+link; the pending record is retained unchanged. Rejecting records an immutable
+rejection event and never alters prior approvals. Any stale hash fails with a
+conflict requiring rereview; it is not silently rebased. The service derives
+active selectors and review metadata from accepted decisions.
+
+ReviewService.override delegates to this proposal workflow and never edits a
+released build. ReviewService.approve/reject are RELEASE operations: approval
+requires section 167's finalized hashes and successful checks. The reviewer
+argument must match the authenticated principal; a caller-supplied name is not
+authentication. All services capture actor/time server-side. Input approval
+cannot grant release approval, and release approval cannot fill missing input
+reviews or waive blockers. The orchestrator alone advances build states after
+successful service results; interfaces and CLI must label the two review stages.
 
 # 173. Approval Rules
 
@@ -5435,7 +6025,7 @@ APPROVED
 
 builds may be exported as production library content.
 
-Export shall create:
+Installed library layout (distinct from the component bundle in section 175):
 
 ``` text
 library/
@@ -5445,12 +6035,58 @@ library/
 └── manifest/
 ```
 
+## 174.1 Installation aggregates and approval boundaries
+
+The MVP retains the packed shared symbol library in section 212. An approved
+component bundle is immutable and content-addressed. Installing one or more
+bundles creates a separate installation aggregate; adding a symbol to a packed
+library is a new aggregate, not a byte-preserving copy of a component artifact.
+
+An integration plan schema version 1.0 records the target project/library
+identity, expected installed generation and hashes, source component manifest
+and artifact hashes, adapter/serializer versions, logical-to-installed path and
+nickname mappings, proposed files/table changes, and any removals. Freeze/hash
+the plan before staging. Logical component paths remain independent of absolute
+local destinations; local paths and execution identities belong to integration
+audit records, not component engineering hashes.
+
+Only deterministic container assembly and explicitly declared namespace/path
+relocation are permitted integration transformations. They must preserve pin
+numbers/types, electrical mappings, footprint/STEP geometry, and placement
+meaning. Compare each installed symbol and footprint to its approved source
+using a versioned semantic comparison with a closed allowlist of relocation
+fields. Unexpected changes fail. A requested engineering or placement change
+requires a new component release under section 167, not integration authorization.
+
+Stage all aggregate files and final references, then run target KiCad parsing,
+mapping/association/path-resolution checks and semantic-preservation checks
+against their exact hashes. STEP bytes are copied unchanged. Produce a
+deterministic installation manifest schema version 1.0 with plan hash, source
+component manifest/artifact hashes, final installed file hashes, target/runtime
+versions, and semantic-validation hash. It has no self-hash field. Verify that
+completed manifest separately; retain post-manifest results in integration audit.
+
+Explicit integration authorization binds the plan hash, installation manifest
+hash, expected previous installed generation, and successful required checks.
+Record actor, time, and decision in a separate audit envelope. Component release
+approval is a prerequisite, not authorization for new aggregate bytes. Reusing
+authorization is allowed only for identical plan/content/target/base bindings.
+Publish through section 216 after rechecking bytes and the expected base.
+Changing the target mappings or base generation requires a new plan and checks.
+
+Phase 8 defines these schemas and proves that bundle export preserves source
+bytes. Phase 13 implements shared-library installation, semantic preservation,
+authorization, conflict detection, and rollback. Subsequent library updates do
+not invalidate the source component releases; they create new installation
+generations and preserve earlier installation manifests in history.
+
 # 175. Project Packaging
 
-A generated component package shall be self-contained enough to
-reproduce the component.
-
-Recommended:
+A generated component bundle shall contain the frozen inputs or controlled
+retrieval references, outputs, and evidence needed for reproducibility. This is
+the portable audit/build bundle, distinct from section 174's installed library
+and section 118's development repository. The following relative layout is
+illustrative; its manifest is authoritative for paths and hashes:
 
 ``` text
 BFT_COMPONENT/
@@ -5466,6 +6102,55 @@ BFT_COMPONENT/
 
 Sensitive source documents may be excluded from a distributable package
 while preserving their hashes and provenance references.
+
+The bundle index schema version 1.0 is separate from the deterministic
+engineering manifest. A separate bundle transport envelope records its canonical
+hash and delivery metadata; neither the approved component manifest nor its
+frozen audit envelope is changed. The index may include the already frozen
+component audit records, but never itself or the transport envelope that hashes
+it. This ordering prevents a packaging hash cycle.
+Each entry declares object kind, schema/profile version, identity where present,
+relative path or controlled retrieval locator, byte length, and SHA-256. Reject
+duplicate identities with different bytes, unsafe paths, and hash mismatches.
+
+The required replay closure includes:
+
+- The exact source IR and every ancestor snapshot to its retained root, with
+  base/acquisition references and decision history resolvable in that chain.
+- Every inventory referenced by retained reviews, exact canonical bytes and
+  reviewed evidence IDs; retained evidence, standards, translations, and decisions
+  within snapshots or indexed immutable objects.
+- Frozen input snapshots, node declarations/projections, PDL content/revisions,
+  release profile, non-secret configuration, runtime lock/archive identities,
+  recorded provider responses used for replay, and required source/raster objects.
+- Final component artifacts, deterministic manifests, output/post-manifest
+  reports, review/approval audit records, and versioned schemas needed to load them.
+
+Bundle availability is OFFLINE_COMPLETE only after every object needed for the
+declared rebuild and evidence inspection is materialized and hash-verified
+locally, and the matching executable runtime is locally available and verified.
+Runtime archives may be supplied by the installed runtime rather than duplicated
+inside every bundle. A bundle with controlled retrieval dependencies is
+RETRIEVAL_REQUIRED and cannot claim offline completeness until hydration succeeds.
+Excluding sensitive documents preserves distribution utility but must not claim
+unavailable source inspection or a complete offline replay. Credentials are
+never part of the bundle or its locators.
+
+Import stages and verifies the entire declared closure before publishing it to
+the revision store. Missing history, incompatible schemas, ID conflicts, or
+invalid transitions fail; do not clear parent IDs or invent review approvals.
+An explicit reviewed-root import is a separate operation: preserve the original
+import bytes/hash in audit, create a new root with fresh evidence identities and
+an acquisition inventory, retain original facts/provenance, and obtain a new
+input review. Inherited override/resolution approvals cannot be transferred as
+new approvals; any required decisions are reapplied through reviewed children.
+If valid provenance cannot be established without unavailable information, the
+import remains an incomplete candidate and cannot generate. It is not a replay
+of the old release and cannot inherit its release approval.
+
+Phase 8 tests closure verification and transactional import. Phase 9 rebuilds
+an imported multi-revision OFFLINE_COMPLETE fixture with network disabled,
+matching deterministic component hashes while permitting truthful new audit IDs.
 
 # 176. 3D Viewer Implementation
 
@@ -5509,8 +6194,11 @@ Z rotation
 mirror
 ```
 
-Placement edits shall update placement metadata, not rewrite the
-underlying STEP geometry.
+Placement edits use section 121.6's typed override path and require a new
+reviewed revision. They update placement metadata, not the underlying STEP
+geometry. Association, final-byte cross-validation, manifest, and approval are
+invalidated under sections 166–167; approved canonical geometry may be reused
+only when its declared dependency hash is unchanged.
 
 # 178. Placement Validation
 
@@ -5562,21 +6250,10 @@ fixture/
 
 # 181. MVP Golden Corpus
 
-Initial package coverage:
-
-``` text
-0402
-0603
-0805
-SOT-23
-SOIC-8
-TSSOP-16
-QFN-16
-QFN-24
-```
-
-At least one component shall be selected for each package family with
-high-quality manufacturer documentation.
+Section 31 defines bootstrap and production coverage; STD-010 supplies exact
+variant names. At least one manufacturer-backed golden component is required
+per production variant. Generic family labels cannot substitute for those
+variants or waive the per-variant negative and reproducibility corpus.
 
 # 182. Document Difficulty Corpus
 
@@ -5694,19 +6371,23 @@ Provider differences must not change B.F.T. downstream schemas.
 
 # 188. Determinism Tests
 
-Run the same build twice.
+Run two clean builds with equal input snapshots and pinned runtime. Compare
+input_snapshot_hash, generator dependency hashes, exact artifact byte hashes,
+validation_semantics_hash,
+and engineering_manifest_hash. Full run envelopes are not expected to be equal:
+new build IDs, timestamps, and approval event IDs remain truthful audit data.
+Compare their bindings to identical deterministic content instead. An equivalent
+but byte-different STEP file fails this gate; equivalence diagnostics do not
+make downstream manifest hashes equal. Normalize exporter metadata deterministically
+before final-byte validation or select a runtime/exporter that passes the gate.
+Store the comparison as section 167's separate post-manifest report.
 
-Expected:
-
-``` text
-same IR hash
-same artifact hashes
-same validation results
-same manifest content
-```
-
-If nondeterminism is unavoidable in a backend, it must be isolated and
-normalized before release.
+Tests include different process hash seeds, replayed prepared evidence,
+audit-only changes, placement-only changes, and an engineering-value change.
+The first two preserve deterministic content, audit-only changes preserve
+generator dependencies, placement changes preserve STEP geometry, and changed
+engineering inputs invalidate the declared affected outputs. A reused full IR
+record also retains an equal ir_record_hash; different audit histories need not.
 
 # 189. Security Tests
 
@@ -5833,7 +6514,9 @@ built-in defaults
 → command-line overrides
 ```
 
-The effective configuration shall be stored in the build manifest.
+The effective non-secret engineering configuration shall be stored in the
+engineering manifest; operational/run settings belong in the audit envelope.
+Credentials are excluded from both and from all hashes (AI-003).
 
 # 196. Provider Configuration
 
@@ -5972,12 +6655,18 @@ The service layer should expose typed operations:
 
 ``` text
 POST /components
+POST /components/{id}/input-review/proposals
+POST /components/{id}/input-review/approve
+POST /components/{id}/input-review/reject
 POST /builds
 GET  /builds/{id}
 POST /builds/{id}/validate
 POST /builds/{id}/review
 POST /builds/{id}/approve
 POST /builds/{id}/export
+POST /integration-plans
+POST /integration-plans/{id}/authorize
+POST /integration-plans/{id}/publish
 GET  /builds/{id}/manifest
 GET  /builds/{id}/evidence
 GET  /builds/{id}/artifacts
@@ -5985,6 +6674,9 @@ GET  /builds/{id}/artifacts
 
 The API is optional for the first desktop MVP but the internal service
 boundaries shall support it.
+Input-review endpoints use section 172's typed requests and stale-head checks;
+build approval remains release approval. Integration endpoints use section
+174.1's exact plan/content/target bindings and section 216's publication checks.
 
 # 204. Event Model
 
@@ -6016,12 +6708,15 @@ The following shall be replaceable:
 AI provider
 OCR engine
 PDF parser
-3D backend
+3D adapter implementation within the approved CadQuery/OCP/OCCT runtime
 KiCad adapter
 storage backend
 ```
 
-Core schemas and validation rules remain B.F.T.-owned.
+Core schemas and validation rules remain B.F.T.-owned. Adapter replaceability
+does not authorize another CAD runtime. A different runtime requires an
+explicit specification revision; a changed approved runtime tuple requires
+fresh Phase 6 validation before release use.
 
 # 206. Version Compatibility
 
@@ -6037,7 +6732,8 @@ AI provider/model
 ```
 
 A build made with a newer schema shall not be silently loaded as an
-older schema.
+older schema. IR 1.0/1.1 remain readable under their own versioned rules;
+v0.9.6 production inputs require explicit migration to IR 1.2 (section 121.4).
 
 # 207. Schema Migration
 
@@ -6089,7 +6785,7 @@ uniqueness is mandatory.
 
 KiCad documents project and global symbol-library tables and the
 requirement for unique library nicknames within a table.
-citeturn0search0
+[Reference register: section 247](#247-external-reference-register).
 
 # 211. Footprint Library Layout
 
@@ -6112,9 +6808,11 @@ BFT_Symbols.kicad_sym
 ```
 
 An unpacked symbol-library layout may be supported later.
+This file is the installation aggregate defined by section 174.1; its hash and
+authorization differ from those of each immutable source component bundle.
 
 KiCad 10 documentation supports both packed `.kicad_sym` libraries and
-unpacked symbol-library directories. citeturn0search0
+unpacked symbol-library directories. [Reference register: section 247](#247-external-reference-register).
 
 # 213. 3D Library Layout
 
@@ -6160,7 +6858,7 @@ No project files may be modified during dry run.
 
 # 216. Atomic Export
 
-Export shall use:
+Component bundle export shall use:
 
 ``` text
 temporary directory
@@ -6171,6 +6869,28 @@ temporary directory
 
 A partially generated library shall never be presented as a successful
 export.
+
+Installation aggregates use immutable staged generations and one publication
+boundary covering the complete file/reference set. Acquire an installation
+lock, verify the plan's expected base hashes, stage and validate all changes,
+obtain section 174.1 authorization, then recheck the base and staged hashes.
+Publish only the complete generation. Independent sequential file replacements
+are not an atomic multi-file publication algorithm.
+
+The versioned installation adapter must declare and test its publication
+mechanism on each supported filesystem/platform, including how KiCad resolves
+the active generation and how library-table changes are included. Use a single
+atomic generation switch where supported. If the target cannot provide the
+required publication boundary, report UNSUPPORTED_ATOMIC_INSTALL before changing
+the project; do not silently degrade to partial installation. Phase 13 acceptance
+requires a working supported target, not only this rejection path.
+
+Persist a recoverable journal binding previous/new generation hashes and
+authorization before publication. Crash recovery must resolve to a complete
+verified previous or new generation, reconcile the integration audit event,
+and never mark a partial generation EXPORTED. Test faults before staging,
+after validation, during publication, and before audit completion. Dry run
+produces the plan without writing target files or changing build state.
 
 # 217. Rollback
 
@@ -6184,6 +6904,13 @@ library table state
 timestamp
 build ID
 ```
+
+For an aggregate update, retain the entire previous installation manifest,
+generation, exact library-table/reference state, and source-component bindings.
+Rollback restores that complete verified generation under the same lock and
+publication rules. Check the expected current generation first: unrelated
+concurrent edits cause a conflict, not an overwrite. Record rollback as a new
+audit event; never delete the failed attempt or rewrite component approvals.
 
 # 218. Existing-Component Update
 
@@ -6199,6 +6926,11 @@ inspect
 ```
 
 Never overwrite an approved component silently.
+The approval above is section 174.1 integration authorization for the exact
+staged installation and expected base. Updating one component preserves all
+unmodified components' engineering content and source bindings; verify this
+before publishing the packed library. Engineering changes require a separately
+approved new component release before installation planning.
 
 # 219. Duplicate Detection
 
@@ -6334,7 +7066,8 @@ This is required for cross-validation and viewer overlays.
 
 # 227. Pin Mapping Engine
 
-The mapping engine shall compare:
+The mapping engine shall compare, using section 148 applicability and declared
+reference features when physical geometry is intentionally absent:
 
 ``` text
 IR pin
@@ -6354,13 +7087,16 @@ mapping:
   status: PASS
 ```
 
+The mapping report records MEASURED versus DECLARED_ONLY evidence and does not
+claim physical measurement for an absent model feature.
+
 # 228. Mapping Failure Rules
 
 Failures include:
 
 ``` text
 missing mapping
-duplicate mapping
+duplicate mapping outside an explicitly declared terminal group (section 93.1)
 renumbered mapping
 ambiguous mapping
 physical mismatch
@@ -6391,7 +7127,7 @@ MVP symbol checks:
 
 ``` text
 all pins visible or intentionally hidden
-no duplicate pin numbers
+no duplicate physical pin IDs; repeated symbol-unit representations require explicit mapping
 no duplicate pin names unless explicitly permitted
 pin orientation valid
 pin lengths valid
@@ -6404,8 +7140,8 @@ footprint field valid
 MVP footprint checks:
 
 ``` text
-all pads have unique numbers
-pad count correct
+all logical terminal groups have unique numbers; shapes obey section 93.1
+terminal/group/shape counts correct
 pad shapes valid
 pad positions valid
 pin-1 marker present where required
@@ -6467,93 +7203,24 @@ reproducibility:
 
 # 235. Implementation Milestones
 
-## Milestone 1 --- Foundation
+The numbered Phases 0–14 are the sole implementation order and gate authority.
+These milestones summarize them and create no competing prerequisites:
 
-Implement:
-
--   repository
--   schemas
--   IDs
--   evidence objects
--   SQLite
--   configuration
--   hashing
--   basic CLI
-
-## Milestone 2 --- PDL
-
-Implement:
-
--   PDL schema
--   first 8 package variants
--   topology engine
--   package resolver
-
-## Milestone 3 --- Deterministic Generators
-
-Implement:
-
--   symbol generator
--   footprint generator
--   3D generator
--   CadQuery/OCP/OCCT adapter
-
-## Milestone 4 --- Validators
-
-Implement:
-
--   schema
--   topology
--   mapping
--   footprint
--   3D
--   cross-validation
-
-## Milestone 5 --- Document Intelligence
-
-Implement:
-
--   PDF parser
--   OCR
--   page classifier
--   evidence extraction
--   AI adapter
-
-## Milestone 6 --- Review UI
-
-Implement:
-
--   evidence viewer
--   IR editor
--   package review
--   2D/3D viewer
--   validation panel
--   override system
-
-## Milestone 7 --- KiCad Integration
-
-Implement:
-
--   KiCad adapter
--   CLI discovery
--   headless validation
--   project-local library installation
--   library-table handling
-
-## Milestone 8 --- Release Hardening
-
-Implement:
-
--   reproducibility
--   golden corpus
--   negative corpus
--   security tests
--   CI
--   packaging
+| Milestone | Phases and scope |
+| --- | --- |
+| Foundation | 0–2: repository, persistence, versioned IR and normalization |
+| First PDL | 3: the entry referenced by GOLD-0402-001, loader and validation |
+| Deterministic component | 4–8: input checks, generators, CAD spike, validators, minimal approval and KiCad compatibility |
+| Reproducibility | 9: snapshots, dependency invalidation, deterministic comparisons |
+| Document intelligence | 10–11: extraction, evidence, provider adapter |
+| Review UI | 12: UI over existing review/approval services |
+| Extended integration | 13: broader CLI, IPC, round-trip and installation |
+| Production release | 14: packaging plus all eight production variants and full release corpus |
 
 # 236. MVP Definition of Done
 
-PartSmith MVP is complete when a supported golden component can:
+PartSmith MVP is complete only when all Phases 0–14 pass and at least one
+manufacturer-backed golden component for each of the eight STD-010 variants can:
 
 ``` text
 start from manufacturer PDF
@@ -6581,7 +7248,9 @@ receive human approval
 export a portable library package
 ```
 
-and the complete process is reproducible from recorded inputs.
+and the complete process is reproducible under section 166. The negative,
+compatibility, and clean-installation gates also pass. A single 0402 component
+is the Phase 8 engineering bootstrap, not the full production MVP.
 
 # 237. MVP Non-Goals
 
@@ -6599,40 +7268,18 @@ The first MVP does not require:
 
 # 238. First Implementation Priority
 
-The first code should not start with the AI. This is the **engineering
-bootstrap milestone**, not a claim that the full PartSmith MVP is
-complete.
-
-The recommended implementation order is:
-
-``` text
-Schemas
-↓
-PDL
-↓
-Component IR
-↓
-Deterministic generators
-↓
-Deterministic validators
-↓
-Golden tests
-↓
-Document extraction
-↓
-AI interpretation
-↓
-Review UI
-↓
-KiCad integration
-```
-
-This ordering ensures that AI is plugged into a known engineering
-framework rather than becoming the framework.
+Follow the numbered phase plan: repository → persistence → Component IR →
+first PDL → deterministic generators/validators → first complete approved
+component → reproducibility → extraction → AI → full review UI → expanded
+KiCad integration → full corpus/packaging. Minimal input validation, approval,
+and compatibility work occurs at the early gates explicitly assigning it.
+The project does not start with AI. One component proves the deterministic
+bootstrap; Phase 14 proves the declared eight-variant production scope.
 
 # 239. First Package Definition Set
 
-Create and validate PDL records for:
+Create the first 0402 PDL record in Phase 3; expand and validate all of these
+records by the Phase 14 production gate:
 
 ``` text
 0402
@@ -6681,7 +7328,11 @@ wrong package
 wrong height
 ```
 
-All must fail at deterministic validation.
+Every injected change to a required observable or declared placement/terminal
+mapping must fail its intended deterministic rule. Under section 149, an allowed
+symmetry-equivalent geometry is a separate positive equivalence case, never
+counted as a detected fault. Include asymmetric fixtures to prove each required
+rotation/mirror fault is observable.
 
 # 242. CI Pipeline
 
@@ -6730,7 +7381,7 @@ for failed builds.
 
 # 244. Engineering Review Checklist
 
-Before declaring v0.8.2 specification-ready:
+Before declaring the v0.9.6 production implementation release-ready after Phase 14:
 
 -   [ ] Component IR schema frozen
 -   [ ] Evidence schema frozen
@@ -6748,5487 +7399,134 @@ Before declaring v0.8.2 specification-ready:
 -   [ ] Viewer architecture accepted
 -   [ ] Reproducibility test passes
 -   [ ] Security baseline passes
+-   [ ] Input and release approval stages are independently tested
+-   [ ] Portable revision/inventory closure and offline import/rebuild pass
+-   [ ] Snapshot profile 1.2 per-node invalidation passes
+-   [ ] STEP byte determinism passed in Phase 6 and full-build Phase 9
+-   [ ] Shared-library aggregate publication, authorization, and rollback pass
 
 # 245. Implementation Boundary and Repository Bootstrap
-# Appendix --- Current KiCad Reference Basis
 
-The implementation targets KiCad 10 initially. KiCad's current
-documentation describes native `.kicad_sym` symbol libraries, `.pretty`
-footprint libraries containing `.kicad_mod` files, project/global
-symbol-library tables, and the KiCad 10 IPC/Python integration path.
-KiCad also states that major releases commonly change file formats and
-that files saved by a newer major release are not generally readable by
-older major releases. These facts are why B.F.T. uses a versioned KiCad
-adapter and compatibility matrix rather than assuming universal
-compatibility.
-citeturn0search0turn0search2turn0search6turn0search1turn0search8
-
-------------------------------------------------------------------------
-
-# Historical Appendix — v0.8 / v0.8.x Material
-
-This appendix is retained **for traceability only**.
-
-**NON-NORMATIVE:** Nothing in this appendix is an implementation requirement
-unless the same requirement is explicitly incorporated into the current
-v0.9.3 normative sections above.
-
-The appendix preserves prior v0.8/v0.8.x reviews, release notes, architecture
-drafts, implementation specifications, contradiction-resolution logs, and
-other historical material. Some entries intentionally contain obsolete or
-superseded statements (including earlier OpenSCAD/VRML wording). Those
-statements document what the specification said at that point in its history;
-they are not current PartSmith requirements.
-
-When a historical statement conflicts with the current specification, the
-current v0.9.3 normative baseline controls.
-
----
-
-# v0.8.8 Full-Spec Conflict Review
-
-A full consistency review was performed against the v0.8.9 specification.
-The following conflicts/ambiguities were found and resolved. No new
-product feature is introduced by this revision.
-
-## CR-013 — Standards section placement and release identity
-
-**Finding:** The v0.8.9 standards-lock section was inserted inside the
-PartSmith product-identity section, which made the document structure
-ambiguous and interrupted the identity definition.
-
-**Resolution:** The standards-lock material is now a standalone normative
-section immediately after the product/repository identity. The release is
-renamed v0.8.8.
-
-## CR-014 — Standards-lock vs standards-review completion
-
-**Finding:** The document said the standards review was both complete and
-dependent on future PDL reference records being added.
-
-**Resolution:** Distinguish the two states:
-
-- **Standards baseline locked:** the external standards roles and
-  implementation boundaries are fixed.
-- **PDL entry complete:** each concrete supported package entry contains
-  its applicable manufacturer/standard evidence before that package is
-  production-supported.
-
-The repository may begin implementation while individual PDL entries are
-being completed.
-
-## CR-015 — 3D output format scope
-
-**Finding:** Earlier text described STEP as primary while also mentioning
-VRML and other visualization formats.
-
-**Resolution:** **STEP is mandatory for every PartSmith component that
-requires a 3D model.** VRML is not part of the PartSmith output contract
-and is removed from the normative specification. No alternate 3D format
-may substitute for STEP.
-
-## CR-016 — KiCad CLI vs IPC responsibilities
-
-**Finding:** Both `kicad-cli` and IPC were described as validation paths
-without a clear ownership boundary.
-
-**Resolution:**
-
-```text
-Core deterministic validators
-        ↓
-PartSmith artifact validation
-
-KiCad CLI adapter
-        ↓
-Headless KiCad compatibility/render/export checks
-
-KiCad IPC adapter
-        ↓
-Live KiCad integration and interactive inspection
-```
-
-Neither KiCad interface replaces PartSmith's core deterministic
-engineering validators.
-
-## CR-017 — Direct native serialization vs KiCad validation
-
-**Finding:** Native KiCad files may be generated directly, but some text
-could be interpreted as requiring KiCad to generate them.
-
-**Resolution:** PartSmith may directly serialize documented native formats.
-KiCad is then used as an independent compatibility/round-trip check.
-PartSmith remains responsible for deterministic artifact construction.
-
-## CR-018 — IPC-7351 vs PDL land-pattern ownership
-
-**Finding:** The standards hierarchy could be interpreted as allowing
-IPC-derived geometry to override an existing PDL definition.
-
-**Resolution:** PDL is the stored engineering rule set used by the
-generator. The PDL entry must itself identify the authoritative evidence
-and derivation basis. IPC is an input/reference methodology; it is not a
-runtime override of a package-specific PDL entry.
-
-## CR-019 — JEDEC applicability for every package
-
-**Finding:** The specification requires an applicable JEDEC reference for
-the eight package variants, but some package nomenclature may be
-manufacturer-specific or may not map cleanly to one JEDEC outline.
-
-**Resolution:** Each PDL variant must have either:
-
-1. an applicable JEDEC/package-standard reference, **or**
-2. authoritative manufacturer package/mechanical evidence with the
-   absence of a directly applicable JEDEC outline explicitly recorded.
-
-A JEDEC document shall never be fabricated or assumed solely from a
-package family name.
-
-## CR-020 — Purchase path and engineering release state
-
-**Finding:** Purchased components are described as released and validated,
-while the general component state machine is centered on AI generation.
-
-**Resolution:** Purchased components enter PartSmith through a distinct
-`PURCHASED_RELEASE` acquisition state referencing an immutable B.F.T.
-release. They do not pass through the AI generation states and cannot
-alter the AI build state machine.
-
-The purchased release must still satisfy the B.F.T. released-component
-contract.
-
-## CR-021 — Purchase order vs component release
-
-**Finding:** Commerce order state and engineering component-release state
-could be conflated.
-
-**Resolution:** They are separate state machines:
-
-```text
-Commerce:
-CART → ORDER_CREATED → PAYMENT_AUTHORIZED → FULFILLING → FULFILLED
-                              │
-                              ├→ PAYMENT_FAILED
-                              └→ CANCELLED/REFUNDED
-
-Engineering:
-B.F.T. RELEASED COMPONENT
-          ↓
-     Purchased by user
-          ↓
-     Delivered artifact
-```
-
-An order never changes the engineering release itself.
-
-## CR-022 — Acquisition metadata and reproducibility
-
-**Finding:** Acquisition metadata was described as manifest metadata,
-while reproducibility could be read as hashing transaction-specific
-data into the engineering artifact.
-
-**Resolution:** Engineering artifact hashes cover the released component
-contents and engineering manifest. Commerce transaction identifiers are
-audit metadata and are not part of the deterministic component-content
-hash unless a future commercial requirement explicitly requires it.
-
-## CR-023 — AI generation of final symbol/footprint data
-
-**Finding:** Historical sections still use language such as AI
-generation of symbol/footprint data even though the architectural rule
-says deterministic generators own final artifacts.
-
-**Resolution:** Current normative behavior is:
-
-```text
-AI → structured proposal / evidence interpretation
-       ↓
-Component IR
-       ↓
-Deterministic generator
-       ↓
-Native KiCad artifact
-```
-
-Historical review text is retained for traceability, but current
-implementation requirements take precedence.
-
-## CR-024 — MVP package support vs architectural package families
-
-**Finding:** Broad package-family references can still be mistaken for
-MVP production support.
-
-**Resolution:** Only these eight concrete variants are production
-supported for the initial release:
-
-```text
-0402
-0603
-0805
-SOT-23
-SOIC-8
-TSSOP-16
-QFN-16-3x3-0.5P
-QFN-24-4x4-0.5P
-```
-
-All other package families are unsupported unless a future release adds
-them explicitly.
-
-## CR-025 — Validation PASS vs human review
-
-**Finding:** Validation PASS and human approval could be interpreted as
-equivalent.
-
-**Resolution:**
-
-```text
-Validation PASS
-    ≠
-Human Approval
-    ≠
-Released Component
-```
-
-Blocking validation failures prevent approval. A component requiring
-human review cannot be released until the required review is completed.
-
-## CR-026 — Placement transform and STEP hash
-
-**Finding:** Placement is editable metadata while STEP is immutable, but
-the dependency/hash relationship was not always explicit.
-
-**Resolution:** Placement metadata has its own canonical hash and is
-included in the final component manifest. A placement change invalidates
-the association/cross-validation/export-dependent outputs as defined by
-the dependency graph, but does not rewrite the STEP geometry artifact.
-
-## CR-027 — Standards source access vs reproducibility
-
-**Finding:** A standards reference may be identified by URL/revision, but
-the external source may later change or become inaccessible.
-
-**Resolution:** The PDL/evidence record shall store the identifying
-citation, revision, relevant section/table/figure, and extracted
-engineering values needed for reproducibility. Redistribution of
-copyrighted standards text is not required. The repository shall not
-depend on live retrieval of a standards document during a deterministic
-build.
-
-## CR-028 — Repository name vs supplied GitHub URL
-
-**Finding:** The specification names the repository `partsmith`, while
-the supplied GitHub URL uses `PartSmaith`.
-
-**Resolution:** The user's supplied GitHub repository is the target
-repository for this implementation. The product/repository identity in
-the engineering specification remains `PartSmith` / `partsmith`.
-Repository hosting/URL spelling is treated as external hosting metadata,
-not the product's canonical identifier.
-
-# v0.8.9 Release Note
-
-v0.8.9 is a correction-only revision. It resolves the 3D-output
-ambiguity identified in the previous review.
-
-Normative rule:
-
-> **STEP is always required for PartSmith 3D component output. VRML is
-> not a PartSmith output requirement and is removed from the contract.**
-
-No other product feature is added or removed.
-
-The next implementation version remains:
-
-> **v0.9 — Executable PartSmith Repository Specification**
-
-## CR-029 — 3D backend selection and clean installation
-
-**Finding:** The prior specification described OpenSCAD in the 3D chain
-without defining whether it was mandatory, while CadQuery was considered
-separately. This could create an unnecessary multi-application
-installation requirement.
-
-**Resolution:** PartSmith defines a backend abstraction and supports
-OpenSCAD and CadQuery as alternative implementation options. The
-customer-facing application shall not require users to manually install
-multiple CAD applications. The selected production backend and its
-runtime dependencies shall be packaged and managed by PartSmith's
-installer/runtime distribution.
-
-# v0.8.1 Contradiction Review and Resolution Log
-
-This release is a contradiction-correction pass over v0.8. The purpose
-is to remove statements that could cause two competent implementers to
-build incompatible behavior.
-
-## CR-001 --- AI generation vs deterministic generation
-
-**Contradiction:** The purpose section said the AI was responsible for
-"interpretation and generation," while later architecture rules required
-B.F.T. deterministic generators to construct final KiCad artifacts.
-
-**Resolution:** AI may interpret source material and produce structured
-proposals. Deterministic B.F.T. generators own final artifact
-construction. AI output never bypasses the IR, generator contracts, or
-deterministic validation.
-
-**Severity:** BLOCKING architectural contradiction.
-
-## CR-002 --- v0.8 implementation-ready vs v0.9 executable specification
-
-**Contradiction:** v0.8 described itself as a direct build
-specification, while later sections said v0.8 should merely recommend
-that the next version become the implementation specification.
-
-**Resolution:** v0.8.1 is the corrected direct build specification. v0.9
-is explicitly the executable repository/bootstrap specification
-containing committed schemas, code skeletons, migrations, generators,
-validators, fixtures, and CI.
-
-**Severity:** BLOCKING release-definition contradiction.
-
-## CR-003 --- Build-state `HUMAN_REVIEW` vs `HUMAN_REVIEW_REQUIRED`
-
-**Contradiction:** Validation results used `HUMAN_REVIEW`, while
-build-state examples used both `HUMAN_REVIEW` and
-`HUMAN_REVIEW_REQUIRED`.
-
-**Resolution:** `HUMAN_REVIEW` is a validation result.
-`HUMAN_REVIEW_REQUIRED` is the persisted build/release state. They are
-related but not interchangeable.
-
-**Severity:** HIGH.
-
-## CR-004 --- 3D association timing
-
-**Contradiction:** The footprint-generation pipeline appeared to insert
-a 3D model reference before the independent 3D artifact had been
-validated, while another rule required final association only after
-validation.
-
-**Resolution:** Footprint generation produces an artifact independent of
-the 3D model. Final 3D association is a separate post-validation
-finalization step. A placeholder may exist internally, but it has no
-geometry authority.
-
-**Severity:** HIGH.
-
-## CR-005 --- 3D model "must align" before validation
-
-**Contradiction:** The 3D section could be read as requiring alignment
-as an input condition even though alignment is one of the outputs of
-cross-validation.
-
-**Resolution:** The 3D generator emits canonical geometry plus an
-explicit placement transform. Cross-validation determines whether the
-resulting associated placement aligns. B.F.T. does not force alignment
-by editing either artifact.
-
-**Severity:** HIGH.
-
-## CR-006 --- Cross-validation assumes every STEP model contains visible pins/leads
-
-**Contradiction:** "All pad centers ↔ corresponding lead/pin centers"
-was stated as a universal requirement. Some package models may not
-expose every electrical termination as a distinct 3D feature.
-
-**Resolution:** The PDL declares expected 3D reference features.
-Cross-validation uses model features when present and PDL/IR reference
-coordinates when a physical feature is intentionally not represented.
-Missing visual geometry is not automatically a failure.
-
-**Severity:** HIGH.
-
-## CR-007 --- Evidence-status enum was incomplete
-
-**Contradiction:** Early text omitted `USER_OVERRIDE` and `UNKNOWN`,
-while the frozen schema later required them.
-
-**Resolution:** The normative value-status set is now centralized as
-`DIRECT`, `DERIVED`, `STANDARD`, `USER_OVERRIDE`, `INFERRED`, `UNKNOWN`,
-`AMBIGUOUS`, `CONFLICTING`, and `MISSING`.
-
-**Severity:** MEDIUM.
-
-## CR-008 --- Validation levels were promised but not defined
-
-**Contradiction:** The document promised "at least five levels" but
-initially defined only Levels 1 and 2, leaving the remaining levels
-implicit.
-
-**Resolution:** Five normative levels are now defined: Unit,
-Schema/Domain, Artifact, Integration/Cross-Validation, and
-System/Release.
-
-**Severity:** MEDIUM.
-
-## CR-009 --- Land-pattern precedence exceeded the explicit algorithm
-
-**Contradiction:** Source precedence allowed manufacturer → IPC → PDL
-resolution, but the algorithm only described manufacturer and
-PDL-derived patterns.
-
-**Resolution:** The land-pattern resolver now explicitly defines
-manufacturer, IPC-derived, and PDL-derived paths and requires provenance
-for the selected path.
-
-**Severity:** HIGH.
-
-## CR-010 --- Section numbering contained stale subsection labels
-
-**Contradiction:** The document claimed normalized numbering but
-retained stale labels such as `3.1` and `54.1`.
-
-**Resolution:** These labels are corrected to `2.1`, `40.1`, and `40.2`.
-The v0.8.1 document treats numbering as editorially normative so
-implementation references remain stable.
-
-**Severity:** LOW, but corrected.
-
-## CR-011 --- MVP end-to-end flow vs AI-free first milestone
-
-**Potential contradiction:** The MVP definition starts from a
-manufacturer PDF, while the first implementation priority deliberately
-excludes AI and begins from known-good structured IR.
-
-**Resolution:** These are explicitly two different milestones. The
-**engineering bootstrap** proves deterministic generation/validation
-without AI. The **Tool 01 MVP** adds document extraction and AI
-interpretation after that foundation is proven.
-
-**Severity:** MEDIUM.
-
-## CR-012 --- Placement editing vs immutable generated geometry
-
-**Potential contradiction:** The viewer permits placement edits while
-the STEP artifact is immutable after generation.
-
-**Resolution:** Placement editing changes only explicit placement
-metadata. It does not rewrite STEP geometry. Any changed placement is
-hashable, diffable, reviewable, and causes the appropriate
-validation/release dependencies to rerun.
-
-**Severity:** NONE after clarification; retained as an explicit design
-rule.
-
-------------------------------------------------------------------------
-
-# v0.8.2 Feature-Set Review and Recommendations
-
-This release reviews the **existing feature set only**. It does not add
-product features. The objective is to make the current scope coherent,
-implementable, and measurable without allowing optional capabilities to
-accidentally become MVP requirements.
-
-## FS-001 --- Separate MVP requirements from supporting engineering infrastructure
-
-**Recommendation:** Keep the existing feature set, but classify it into
-three buckets:
-
-### A. PartSmith user-facing MVP
-
-These are the capabilities the user directly experiences:
-
--   PDF source ingestion
--   explicit page selection
--   source/evidence inspection
--   component extraction
--   Component IR review
--   package selection/review
--   symbol generation
--   footprint generation
--   independent 3D generation
--   2D footprint preview
--   3D placement/validation viewer
--   deterministic validation
--   human review/approval
--   native KiCad export
-
-### B. Required engineering infrastructure
-
-These are not optional product features; they are foundations required
-to make the MVP trustworthy:
-
--   Component IR schema
--   PDL
--   evidence/provenance
--   coordinate/transform system
--   deterministic generators
--   validation engine
--   dependency graph
--   reproducible build system
--   audit trail
--   SQLite persistence
--   test fixtures
--   KiCad compatibility adapter
-
-### C. Supporting capabilities that should remain secondary
-
-The specification already contains these, but they should not be allowed
-to delay the first deterministic end-to-end component:
-
--   multiple AI providers
--   multilingual translation
--   provider failover
--   caching
--   offline AI/local provider support
--   duplicate/near-duplicate detection
--   broad standards integration
--   full API exposure
--   extensive rollback tooling
--   broad document-format expansion
-
-**No new capability is introduced by this classification.**
-
-------------------------------------------------------------------------
-
-## FS-002 --- Narrow the first user-visible package scope without removing package support from the architecture
-
-The document currently lists a very broad package-family set while the
-first PDL/golden corpus contains eight concrete variants.
-
-**Recommendation:** Treat the eight existing variants as the only **MVP
-production-supported package set**:
-
-``` text
-0402
-0603
-0805
-SOT-23
-SOIC-8
-TSSOP-16
-QFN-16-3x3-0.5P
-QFN-24-4x4-0.5P
-```
-
-The broader package list remains an architectural expansion target, not
-an MVP promise.
-
-This prevents the phrase "support QFP, BGA, LGA, DFN, connectors, TO
-packages, etc." from being interpreted as an immediate implementation
-commitment.
-
-------------------------------------------------------------------------
-
-## FS-003 --- Make the 3D viewer a validation tool, not a general CAD feature
-
-The current feature set is appropriate, but it risks growing into a
-general 3D editor.
-
-**Recommendation:** Freeze the MVP viewer around:
-
--   view/navigation
--   footprint/model overlay
--   measurement
--   reference axes/origin
--   pin-1 highlighting
--   discrepancy visualization
--   explicit placement transform inspection/editing
-
-Do not treat arbitrary mesh editing, CAD remodeling, or general-purpose
-3D authoring as part of PartSmith.
-
-This preserves the existing viewer feature set while preventing scope
-drift.
-
-------------------------------------------------------------------------
-
-## FS-004 --- Treat AI provider breadth as an implementation concern, not a reason to expand the product workflow
-
-The current specification names OpenAI, Anthropic, Google Gemini, and
-GitHub Copilot.
-
-**Recommendation:** Keep the provider abstraction, but make **one
-provider sufficient for MVP acceptance**.
-
-The other adapters remain supported architecture targets and
-contract-test targets when implemented.
-
-MVP success must therefore mean:
-
-``` text
-one working provider
-+
-provider-independent normalized result
-+
-same deterministic downstream pipeline
-```
-
-rather than requiring simultaneous production readiness for every
-provider.
-
-------------------------------------------------------------------------
-
-## FS-005 --- Do not make every listed document-intelligence capability an MVP gate
-
-The specification contains a strong and valuable difficult-document
-feature set:
-
--   scanned PDFs
--   OCR
--   multilingual documents
--   diagram-heavy documents
--   image tables
--   symbol discovery
--   page classification
--   conflict detection
--   translation
-
-**Recommendation:** Keep these capabilities in PartSmith, but establish
-a progression:
-
-``` text
-MVP acceptance:
-PDF → evidence → reviewed IR
-
-Then:
-scanned/OCR
-multilingual
-diagram-heavy
-translation
-difficult-document edge cases
-```
-
-The deterministic component-building path should not be considered
-incomplete merely because the AI cannot yet solve every difficult
-document class.
-
-------------------------------------------------------------------------
-
-## FS-006 --- Keep validation breadth; prioritize validation depth
-
-The current feature set has many validators:
-
--   schema
--   evidence
--   topology
--   electrical
--   symbol
--   footprint
--   3D
--   mapping
--   cross-artifact
--   KiCad
--   manifest
--   reproducibility
-
-**Recommendation:** Do not remove any of these categories from the
-architecture. However, MVP release should require **complete correctness
-for the supported package corpus**, rather than shallow support across
-every conceivable package.
-
-This is particularly important for:
-
--   pin mapping
--   pin 1
--   package topology
--   land pattern
--   coordinate transforms
--   3D placement
--   KiCad compatibility
-
-------------------------------------------------------------------------
-
-## FS-007 --- Keep the current export/install feature set, but make "portable package" the primary MVP deliverable
-
-The specification supports:
-
--   standalone component package
--   project-local library installation
--   library-table updates
--   backup
--   rollback
--   atomic export
-
-**Recommendation:** Define the portable generated component package as
-the primary MVP output.
-
-Project-local installation should remain part of PartSmith, but
-library-table mutation should not become a prerequisite for proving that
-the builder works.
-
-The core success criterion remains:
-
-``` text
-approved component
-→ portable native KiCad library package
-```
-
-------------------------------------------------------------------------
-
-## FS-008 --- Keep API architecture without making the API a product dependency
-
-The specification correctly says the API is optional for the desktop
-MVP.
-
-**Recommendation:** Preserve that decision consistently.
-
-The internal service boundaries should be typed and API-ready, but the
-first usable PartSmith build should not require a network service layer.
-
-This prevents architecture from becoming product overhead.
-
-------------------------------------------------------------------------
-
-## FS-009 --- Keep duplicate detection informational and out of the critical build path
-
-The current duplicate/near-duplicate feature is useful but is not
-necessary to prove component construction.
-
-**Recommendation:** Keep it exactly as an informational review
-capability. It should never block:
-
-``` text
-IR → generators → validators → approval
-```
-
-unless a separate explicit duplicate policy is later adopted.
-
-------------------------------------------------------------------------
-
-## FS-010 --- Keep standards support constrained to evidence and package/land-pattern resolution
-
-The existing standards feature is appropriately scoped, but the
-standards adapter could otherwise become a large independent subsystem.
-
-**Recommendation:** For PartSmith, standards support should remain
-limited to the existing roles:
-
--   package geometry
--   package topology
--   land-pattern methodology
--   terminology/constraints
-
-Do not turn PartSmith into a general standards-management system.
-
-------------------------------------------------------------------------
-
-## FS-011 --- Preserve the current feature set but eliminate duplicate requirements in implementation planning
-
-The specification repeats several capabilities in multiple sections,
-especially:
-
--   3D viewer
--   validation
--   footprint generation
--   3D generation
--   golden testing
--   KiCad integration
--   export
-
-**Recommendation:** Treat the normative section and the implementation
-backlog as the authoritative sources for feature commitment. Repeated
-descriptive sections should explain the capability but must not
-introduce additional requirements.
-
-This prevents accidental scope growth when the same feature appears with
-slightly different wording.
-
-------------------------------------------------------------------------
-
-## FS-012 --- Make "production-ready" mean supported-corpus correctness
-
-The current acceptance language can be read as requiring the builder to
-be broadly correct for arbitrary components.
-
-**Recommendation:** Define production readiness for PartSmith as:
-
-``` text
-Supported package
-+
-sufficient authoritative evidence
-+
-valid Component IR
-+
-all blocking validators PASS
-+
-required human review complete
-+
-KiCad compatibility PASS
-+
-reproducibility PASS
-```
-
-For unsupported packages or insufficient evidence, the correct result
-remains:
-
-``` text
-NOT_GENERATABLE
-```
-
-This is not a reduction in engineering rigor; it makes the existing
-failure policy operationally meaningful.
-
-------------------------------------------------------------------------
-
-# v0.8.3 Component Acquisition Feature
-
-This release adds exactly **one product feature** to the v0.8.2 feature
-set:
-
-> **When B.F.T. identifies a component, the user may choose to build it
-> with the AI workflow or purchase an already-built B.F.T. component
-> from B.F.T.**
-
-This is an acquisition-path feature. It does not change the engineering
-authority model, the Component IR, PDL, deterministic generators,
-validation system, or approval requirements.
-
-## ACQ-001 --- Acquisition Choice
-
-PartSmith shall present an explicit choice, when applicable:
-
-``` text
-Component identified
-        │
-   ┌────┴────┐
-   │         │
- BUILD      PURCHASE
- WITH AI    FROM B.F.T.
-   │         │
-   ▼         ▼
-AI + IR    B.F.T. Component
-Pipeline   Package
-   │         │
-   └────┬────┘
-        ▼
-Validated KiCad Component
-```
-
-The purchase option shall not be presented as available unless B.F.T.
-has a matching purchasable component offering for the requested
-component/package variant.
-
-## ACQ-002 --- AI Build Path
-
-The existing AI build workflow remains unchanged:
-
-``` text
-Source
-↓
-Evidence
-↓
-Component IR
-↓
-PDL
-↓
-Deterministic Generators
-↓
-Validation
-↓
-Human Review / Approval
-↓
-Export
-```
-
-The acquisition feature does not allow AI output to bypass any existing
-engineering validation.
-
-## ACQ-003 --- Purchased Component Path
-
-A purchased B.F.T. component shall be delivered as a versioned, native
-KiCad component package containing the artifacts required by the
-purchased offering.
-
-Where applicable, the package shall identify:
-
--   component identity
--   manufacturer
--   manufacturer part number
--   package variant
--   B.F.T. component/release version
--   supported KiCad version
--   symbol
--   footprint
--   3D model
--   manifest
--   validation/release metadata
-
-## ACQ-004 --- Common Component Contract
-
-AI-generated and purchased components shall conform to the same core
-B.F.T. component contract wherever the purchased offering supplies the
-corresponding artifacts.
-
-The acquisition method shall never alter:
-
--   pin numbering
--   pin mapping
--   package identity
--   coordinate conventions
--   artifact relationships
--   validation semantics
--   provenance rules
--   release-state rules
-
-## ACQ-005 --- Purchased Components Are Not a Validation Bypass
-
-A purchased component is a B.F.T. released product, not an instruction
-to trust an unvalidated artifact.
-
-Purchased components shall originate from B.F.T.'s released component
-inventory and carry the applicable release/validation identity.
-
-A purchased component shall not be allowed to enter the user's project
-as an untracked or unverifiable artifact.
-
-## ACQ-006 --- Acquisition Availability
-
-PartSmith shall distinguish at least these states:
-
-``` text
-PURCHASE_AVAILABLE
-PURCHASE_NOT_AVAILABLE
-PURCHASE_SELECTED
-AI_BUILD_SELECTED
-```
-
-If purchase is unavailable, the AI path remains available when the
-component is otherwise generatable.
-
-If AI generation is not possible but a matching purchased component is
-available, the purchase path remains available.
-
-## ACQ-007 --- Component Identity Matching
-
-A purchase offer shall be associated with an exact component identity,
-including the applicable manufacturer part number and package variant.
-
-A generic family match such as:
-
-``` text
-QFN-16
-```
-
-shall not be sufficient to represent an exact purchasable component when
-the component identity or package variant could differ.
-
-The purchase path shall use the same exact-identity discipline already
-required by Component IR and PDL.
-
-## ACQ-008 --- Purchased Component Versioning
-
-A purchased component shall have an immutable release identity.
-
-Updates to a purchased component shall create a new release/version
-rather than silently changing an already-released package.
-
-The user's installed component shall remain identifiable by its
-purchased B.F.T. release.
-
-## ACQ-009 --- Acquisition Metadata
-
-The acquisition method shall be recorded in build/release metadata where
-applicable:
-
-``` yaml
-acquisition:
-  method: AI_BUILD | PURCHASE
-  product_id:
-  product_version:
-  component_identity:
-  package_variant:
-```
-
-For an AI-built component, `method` is `AI_BUILD`.
-
-For a purchased component, `method` is `PURCHASE`.
-
-The acquisition metadata is metadata about how the component was
-obtained; it does not replace engineering provenance.
-
-## ACQ-010 --- Purchase Boundary
-
-The commercial purchase mechanism shall remain outside the deterministic
-component-generation core.
-
-The engineering architecture shall expose a clean boundary:
-
-``` text
-PartSmith
-  │
-  ├── AI Build
-  │
-  └── Purchase
-          │
-          ▼
-   B.F.T. Component Store
-```
-
-Payment processing, account management, checkout, taxation, fulfillment,
-and other commerce implementation details are outside the PartSmith
-engineering core unless separately specified.
-
-## ACQ-011 --- Portable Purchased Package
-
-A purchased component shall be usable independently of the purchase
-transaction after successful delivery.
-
-The delivered engineering artifact shall not require the user to repeat
-the purchase process merely to load the component into KiCad.
-
-## ACQ-012 --- Purchase and Export Separation
-
-Purchase and export are separate concepts:
-
-``` text
-Purchase
-   ↓
-Obtain released component
-   ↓
-Install/use in KiCad
-
-AI Build
-   ↓
-Generate/review/approve
-   ↓
-Export/install in KiCad
-```
-
-The acquisition feature shall not weaken the existing atomic export,
-compatibility, or rollback rules.
-
-## ACQ-013 --- No New Engineering Authority
-
-The B.F.T. store/catalog shall not become an engineering authority.
-
-The engineering authority remains:
-
-``` text
-Authoritative Evidence
-        +
-Component IR
-        +
-PDL
-        +
-Deterministic Generation
-        +
-Deterministic Validation
-        +
-Human Approval
-```
-
-The store identifies and distributes released components; it does not
-redefine their engineering truth.
-
-# v0.8.8 Release Note
-
-v0.8.8 is a full-spec conflict-review revision. It adds no new product capability.
-It records the final KiCad/IPC/JEDEC implementation baseline and makes
-those standards/reference responsibilities explicit before v0.9
-repository bootstrap.
-
-The acquisition/e-commerce boundary from v0.8.6 remains unchanged.
-
-The next implementation version remains:
-
-> **v0.9 — Executable PartSmith Repository Specification**
-
-# v0.8.3 Full-Spec Review
-
-The complete v0.8.2 specification was reviewed with the new acquisition
-feature in mind. The existing engineering architecture remains coherent.
-
-The review produces the following decisions.
-
-## REVIEW-001 --- Core architecture remains unchanged
-
-No change is required to:
-
--   Component IR
--   PDL
--   evidence hierarchy
--   provenance graph
--   coordinate systems
--   independent footprint/3D generation
--   deterministic validation
--   cross-validation
--   human review
--   reproducible builds
--   KiCad compatibility architecture
-
-The new feature is an additional path into the released-component
-experience.
-
-## REVIEW-002 --- MVP feature set is updated by one feature
-
-The PartSmith user-facing MVP now includes:
-
--   PDF source ingestion
--   explicit page selection
--   source/evidence inspection
--   component extraction
--   Component IR review
--   package selection/review
--   symbol generation
--   footprint generation
--   independent 3D generation
--   2D footprint preview
--   3D placement/validation viewer
--   deterministic validation
--   human review/approval
--   native KiCad export
--   **AI build vs. B.F.T. purchase choice**
-
-No other product feature is added by this release.
-
-## REVIEW-003 --- Purchase is a parallel acquisition path, not a second generator
-
-The purchase path must not create a competing engineering pipeline.
-
-``` text
-                         Component
-                            │
-                 ┌──────────┴──────────┐
-                 │                     │
-             AI BUILD              PURCHASE
-                 │                     │
-        Interpretation + IR       Released B.F.T.
-                 │                 Component
-                 │                     │
-        Deterministic Build           │
-                 │                     │
-                 └──────────┬──────────┘
-                            ▼
-                    Usable KiCad
-                     Component
-```
-
-The purchased component is already a released engineering artifact.
-
-## REVIEW-004 --- Acquisition does not change NOT_GENERATABLE semantics
-
-`NOT_GENERATABLE` continues to mean that B.F.T. cannot safely generate
-the requested component from the available evidence.
-
-If a purchasable released component exists, the user may still purchase
-it.
-
-Therefore:
-
-``` text
-AI path:       NOT_GENERATABLE
-Purchase path: AVAILABLE
-```
-
-is a valid state.
-
-Likewise:
-
-``` text
-AI path:       GENERATABLE
-Purchase path: NOT_AVAILABLE
-```
-
-is valid.
-
-The two availability states are independent.
-
-## REVIEW-005 --- Acquisition does not change release gates
-
-AI-generated components still require all existing release gates.
-
-Purchased components are distributed only from the released B.F.T.
-component inventory.
-
-The purchase mechanism must never be used to mark an unvalidated AI
-build as approved.
-
-## REVIEW-006 --- Acquisition must participate in reproducibility and auditability
-
-For purchased components, reproducibility applies to the released B.F.T.
-package itself.
-
-For AI-built components, the existing reproducible-build inputs remain
-authoritative.
-
-Acquisition metadata is included in the manifest/audit trail but does
-not replace the engineering input hashes.
-
-## REVIEW-007 --- Existing UI needs one additional decision point
-
-The existing workflow:
-
-``` text
-Source → Extract → Interpret → Generate → Validate → Review → Export
-```
-
-is extended only where a matching purchased component exists:
-
-``` text
-Source / Component Identification
-              │
-        Acquisition Choice
-          ┌───┴────┐
-          │        │
-        Build   Purchase
-          │        │
-          ▼        ▼
-       Existing  Released
-       workflow  component
-          │        │
-          └───┬────┘
-              ▼
-          Use in KiCad
-```
-
-The purchase choice should appear after B.F.T. has enough identity
-information to determine whether a matching released component exists.
-
-## REVIEW-008 --- CLI/API impact is intentionally minimal
-
-The existing build APIs remain valid.
-
-The acquisition boundary may expose:
-
-``` text
-GET /components/{identity}/availability
-POST /components/{identity}/purchase
-```
-
-and corresponding CLI behavior may be added when the commerce
-integration is implemented.
-
-These are acquisition interfaces, not replacements for the existing
-build APIs.
-
-They should not be required for the deterministic engineering bootstrap.
-
-## REVIEW-009 --- Purchased component identity must be exact
-
-The existing Component Variant Identity rules are sufficient.
-
-No new identity system is required.
-
-Purchase lookup shall reuse the same identity fields rather than
-inventing a separate commercial naming system.
-
-## REVIEW-010 --- Feature-set conclusion
-
-The full review confirms that the existing architecture remains
-appropriate.
-
-The only product feature added in v0.8.3 is:
-
-> **User choice between building the component with AI and purchasing
-> the component from B.F.T.**
-
-No additional feature expansion is recommended in this release.
-
-# Feature-Set Decision
-
-After reviewing the complete v0.8.2 specification, **one explicitly
-requested product feature is added in v0.8.3: Component Acquisition
-Choice**.
-
-No other major product feature needs to be added. The existing
-engineering feature set remains sufficient for PartSmith.
-
-The primary recommendation is to **freeze the feature set and reduce
-ambiguity about priority**, rather than continuing to expand it.
-
-The implementation target should therefore be:
-
-``` text
-                    TOOL 01
-                       │
-             ┌─────────┴─────────┐
-             │                   │
-       Understand Source     Build Component
-             │                   │
-             ▼                   ▼
-        Evidence + IR      Symbol + Footprint
-                                 +
-                              3D Model
-                                 │
-                                 ▼
-                         Deterministic Validation
-                                 │
-                                 ▼
-                         Human Review / Approval
-                                 │
-                                 ▼
-                         Native KiCad Export
-```
-
-The eight existing PDL variants form the first supported production
-corpus. Everything else in the current architecture remains available as
-infrastructure or subsequent implementation depth without becoming a new
-feature commitment.
-
-# v0.8.1 Consistency Rules
-
-The following rules take precedence if an older paragraph elsewhere in
-this document is accidentally read differently:
-
-1.  **AI interprets; deterministic B.F.T. generators construct final
-    artifacts.**
-2.  **Component IR + PDL + authoritative evidence are the engineering
-    inputs.**
-3.  **Footprint and 3D generation are independent.**
-4.  **Cross-validation compares artifacts; it never repairs them
-    silently.**
-5.  **`HUMAN_REVIEW` is a validation result; `HUMAN_REVIEW_REQUIRED` is
-    a build state.**
-6.  **Final 3D association occurs only after independent artifact
-    validation and cross-validation.**
-7.  **Placement metadata is separate from STEP geometry.**
-8.  **Manufacturer-specific land-pattern evidence outranks generic
-    derivation when applicable.**
-9.  **No inferred/unknown/ambiguous/conflicting/missing release-critical
-    value may silently become approved.**
-10. **v0.8.3 is the feature-set-refined build specification with
-    Component Acquisition; v0.9 is the first executable repository
-    implementation specification.**
-
-------------------------------------------------------------------------
-
-# Review of v0.8 --- Required Corrections Incorporated in v0.8
-
-The prior architecture was directionally sound, but it was **not yet
-implementation-safe**. The following issues are explicitly corrected in
-v0.8.
-
-## Critical issues found
-
-1.  **Section numbering was inconsistent.**\
-    v0.5 contained duplicated and stale section numbers such as `3.1`,
-    `54.1`, and `42.1`. v0.8 normalizes the primary section sequence and
-    removes stale version references.
-
-2.  **The PDL was described but not specified as a first-class
-    subsystem.**\
-    v0.8 defines the Package Definition Library as a versioned,
-    schema-controlled engineering database with package-family, variant,
-    topology, mechanical, land-pattern, 3D, and validation data.
-
-3.  **Package identity was under-specified.**\
-    A generic package name such as `QFN-16` is not sufficient. v0.8
-    requires an unambiguous package variant identity, including body
-    size, pitch, pin count, topology, and manufacturer-specific
-    deviations where applicable.
-
-4.  **Electrical pin semantics needed stronger boundaries.**\
-    Standards and package geometry must never be allowed to invent
-    electrical behavior. Pin electrical type is a manufacturer-evidence
-    problem, with explicit `UNKNOWN` and `HUMAN_REVIEW` states.
-
-5.  **User overrides were not sufficiently controlled.**\
-    v0.8 makes overrides explicit, typed, attributable, reviewable,
-    hashable, and distinct from source-derived values. An override
-    cannot silently replace provenance.
-
-6.  **Generated-artifact ownership was ambiguous.**\
-    v0.8 defines exactly which inputs each generator may consume. A
-    generated footprint may not become the geometric source for the 3D
-    generator, and vice versa.
-
-7.  **The 3D model validation plan needed a stronger definition of what
-    can actually be proven.**\
-    v0.8 separates geometric correctness, placement correctness, and
-    visual plausibility. A visually attractive model is not evidence of
-    dimensional correctness.
-
-8.  **KiCad compatibility needed versioned validation rather than a
-    generic "KiCad-compatible" claim.**\
-    v0.8 requires a supported KiCad-version matrix and actual
-    parse/open/round-trip tests. Native file formats are treated as
-    version-sensitive artifacts.
-
-9.  **Units and coordinate transforms needed to be explicit at every
-    boundary.**\
-    v0.8 requires millimeter-normalized internal geometry, explicit
-    source units, explicit transforms, and no implicit unit conversion.
-
-10. **Evidence conflict handling needed a formal decision model.**\
-    v0.8 distinguishes direct evidence, derivation, inference, conflict,
-    ambiguity, and absence, and defines which states block release.
-
-11. **Reproducibility needed canonical serialization.**\
-    Hashes alone are insufficient if serialization order is
-    nondeterministic. v0.8 requires canonical JSON/YAML-like
-    representations before hashing.
-
-12. **The acceptance criteria needed to distinguish architecture
-    readiness from MVP implementation readiness.**\
-    v0.8 separates architecture acceptance from implementation exit
-    criteria.
-
-13. **Security and privacy boundaries needed to include source-document
-    handling.**\
-    Datasheets may contain proprietary or customer-supplied material.
-    v0.8 defines provider disclosure, retention expectations,
-    local-processing options, and redaction requirements.
-
-14. **The test strategy needed negative tests for "wrong but
-    syntactically valid" components.**\
-    v0.8 makes semantic fault injection mandatory, including mirrored
-    packages, plausible-but-wrong pin maps, wrong package variants, and
-    incorrect 3D transforms.
-
-15. **The build state machine needed artifact dependency rules.**\
-    v0.8 defines what may be regenerated independently and what
-    downstream states must be invalidated when an upstream value
-    changes.
-
-These corrections are architectural requirements, not optional
-enhancements.
-
-------------------------------------------------------------------------
-
-## 1. Purpose
-
-PartSmith is the first named B.F.T. tool and is an **AI-driven component
-builder**.
-
-The user provides:
-
-1.  A component datasheet, preferably as a PDF.
-2.  The page number(s) containing the relevant package, pinout,
-    mechanical, and/or electrical information.
-3.  Optionally, additional manufacturer documentation or images.
-
-B.F.T. analyzes the supplied information and generates a complete KiCad
-component consisting of:
-
--   Schematic symbol
--   PCB footprint
--   3D model
--   Component metadata
--   Correct relationships between symbol pins and footprint pads
--   A native KiCad library representation
-
-The generated files must be usable by KiCad without conversion to
-another EDA format.
-
-### Core objective
-
-> **Turn authoritative component documentation into a complete,
-> KiCad-compatible component library item.**
-
-The AI is responsible for interpretation and for producing structured
-proposals where useful. B.F.T.'s deterministic generators construct the
-final KiCad artifacts, and deterministic validation decides whether
-those artifacts are acceptable. AI output can never by itself constitute
-an accepted component.
-
-------------------------------------------------------------------------
-
-# 59. Architecture & Data Model Specification --- v0.8
-
-This version establishes the engineering architecture required before
-implementation of the MVP begins.
-
-## 42.1 System Architecture
-
-``` text
-                         AUTHORITATIVE SOURCES
-                                  │
-                                  ▼
-                           DOCUMENT ENGINE
-                                  │
-                     ┌────────────┴────────────┐
-                     ▼                         ▼
-                Text/OCR                  Images/Diagrams
-                     │                         │
-                     └────────────┬────────────┘
-                                  ▼
-                           EVIDENCE ENGINE
-                                  │
-                                  ▼
-                            COMPONENT IR
-                                  │
-              ┌───────────────────┼───────────────────┐
-              ▼                   ▼                   ▼
-           SYMBOL               PACKAGE              3D
-             IR                  PDL              Definition
-              │                   │                   │
-              └───────────────────┼───────────────────┘
-                                  ▼
-                 ┌────────────────┼────────────────┐
-                 ▼                ▼                ▼
-            Symbol Engine   Footprint Engine   3D Engine
-                 │                │                │
-                 ▼                ▼                ▼
-             .kicad_sym      .kicad_mod       OpenSCAD / CadQuery → STEP
-                 │                │                │
-                 └────────────────┼────────────────┘
-                                  ▼
-                         VALIDATION ENGINE
-                                  │
-              ┌───────────────────┼───────────────────┐
-              ▼                   ▼                   ▼
-            Syntax           Connectivity          Geometry
-              │                   │                   │
-              └───────────────────┼───────────────────┘
-                                  ▼
-                         3D PLACEMENT VIEWER
-                                  │
-                                  ▼
-                           HUMAN REVIEW
-                                  │
-                                  ▼
-                          APPROVED COMPONENT
-```
-
-## 42.2 Design Principle
-
-> AI interprets. B.F.T. represents. Deterministic generators construct.
-> Deterministic validators decide. Humans resolve ambiguity.
-
-AI must never be the final authority for whether a generated component
-is production-ready.
-
-------------------------------------------------------------------------
-
-# 60. Component IR Specification
-
-The Component IR is the central contract between document
-interpretation, package knowledge, generators, validation, review, and
-export.
-
-## 43.1 Required IR domains
-
-``` text
-Component IR
-├── Identity
-├── Electrical
-├── Pins
-├── Package
-│   ├── Mechanical Definition
-│   ├── Pin Topology
-│   └── Land Pattern Definition
-├── Symbol
-├── 3D Geometry
-├── Evidence
-├── Standards
-├── Confidence / Evidence Status
-├── Validation
-├── Build Metadata
-└── Revision Metadata
-```
-
-## 43.2 Identity
-
-``` yaml
-identity:
-  manufacturer:
-  manufacturer_part_number:
-  family:
-  description:
-  datasheet_revision:
-  datasheet_date:
-  package_name:
-  package_code:
-```
-
-## 43.3 Electrical model
-
-Electrical information shall remain independent from physical package
-information.
-
-``` yaml
-electrical:
-  operating_voltage:
-  functions:
-  notes:
-```
-
-No package standard may be used to infer electrical behavior.
-
-## 43.4 Pin model
-
-``` yaml
-pin:
-  number: 5
-  name: EN
-  electrical_type: input
-  function: enable
-  active_low: false
-  alternate_functions: []
-  exposed_pad: false
-  no_connect: false
-  topology_position:
-    side: left
-    sequence: 3
-```
-
-Pin topology is separate from electrical semantics.
-
-## 43.5 Package model
-
-``` yaml
-package:
-  family: QFN
-  variant: QFN-16-3x3-0.5P
-
-  mechanical:
-    body_length_mm: 3.0
-    body_width_mm: 3.0
-    body_height_mm: 0.85
-
-  topology:
-    pin_count: 16
-    pitch_mm: 0.5
-    numbering_scheme: counter_clockwise
-    pin1_orientation: top_left
-
-  land_pattern:
-    source_type: manufacturer_recommended
-    pad_length_mm:
-    pad_width_mm:
-    pad_spacing_mm:
-    thermal_pad:
-      enabled: true
-      length_mm:
-      width_mm:
-```
-
-## 43.6 Symbol model
-
-The IR shall contain symbol intent, not raw KiCad serialization.
-
-``` yaml
-symbol:
-  reference: U
-  units:
-  graphics:
-  pins:
-  fields:
-```
-
-## 43.7 3D model
-
-``` yaml
-model_3d:
-  format: STEP
-  geometry_source: PDL
-  body:
-    length_mm:
-    width_mm:
-    height_mm:
-  pin1_marker:
-  placement:
-    offset_mm:
-      x:
-      y:
-      z:
-    rotation_deg:
-      x:
-      y:
-      z:
-```
-
-------------------------------------------------------------------------
-
-# 61. Evidence and Provenance Model
-
-## 44.1 Evidence object
-
-``` yaml
-evidence:
-  id: E-000123
-  source:
-    document: TPS62130.pdf
-    revision: Rev F
-    page: 34
-    region: "Package Drawing"
-  evidence_type: drawing_dimension
-  extracted_value: "3.00 ± 0.10 mm"
-  interpretation:
-    nominal_mm: 3.00
-    min_mm: 2.90
-    max_mm: 3.10
-```
-
-## 44.2 Evidence types
-
-``` text
-DATASHEET_TEXT
-OCR_TEXT
-TABLE
-PACKAGE_DRAWING
-BLOCK_DIAGRAM
-PINOUT_DIAGRAM
-LAND_PATTERN
-MANUFACTURER_CAD
-MANUFACTURER_WEB_DOCUMENT
-JEDEC_STANDARD
-IPC_STANDARD
-USER_PROVIDED_VALUE
-DERIVED_VALUE
-```
-
-## 44.3 Provenance graph
-
-``` text
-Source
-  ↓
-Evidence
-  ↓
-IR value
-  ↓
-Generated artifact
-  ↓
-Validation result
-```
-
-The UI shall be able to answer why an important value exists and show
-the supporting evidence and derivation.
-
-------------------------------------------------------------------------
-
-# 62. Package Model: Mechanical Geometry vs. Land Pattern
-
-A package definition shall explicitly distinguish:
-
-``` text
-PACKAGE MECHANICAL GEOMETRY
-            +
-PIN TOPOLOGY
-            +
-LAND PATTERN
-```
-
-These are related but not interchangeable.
-
-A package's mechanical dimensions shall not automatically be treated as
-a PCB land pattern.
-
-Manufacturer-recommended land patterns take precedence when available.
-
-------------------------------------------------------------------------
-
-# 63. Package Topology Specification
-
-Every supported PDL package shall define expected topology:
-
--   Pin count
--   Side distribution
--   Pitch
--   Numbering direction
--   Corner behavior
--   Staggering
--   Exposed pads
--   Mechanical pin locations
--   Pin 1 location
--   Symmetry/mirroring rules
-
-Example:
-
-``` text
-QFN-16
-
-       1  2  3  4
-    ┌─────────────┐
- 16 │             │ 5
- 15 │             │ 6
- 14 │             │ 7
- 13 │             │ 8
-    └─────────────┘
-      12 11 10  9
-```
-
-Topology validation shall occur before artifact generation.
-
-------------------------------------------------------------------------
-
-# 64. Coordinate-System Specification
-
-B.F.T. shall explicitly model coordinate systems.
-
-## 47.1 Required systems
-
-``` text
-Component coordinate system
-Footprint coordinate system
-3D model coordinate system
-PCB coordinate system
-KiCad display coordinates
-```
-
-## 47.2 Required conventions
-
-The specification shall define:
-
--   Origin
--   X direction
--   Y direction
--   Z direction
--   Positive rotation direction
--   Units
--   Pin 1 orientation
--   Mirroring convention
--   Model-to-footprint transform
-
-## 47.3 Reference geometry
-
-The viewer and validation engine shall display, where useful:
-
-``` text
-PCB reference plane
-Package center
-Footprint origin
-3D model origin
-Pad centers
-3D pin centers
-Pin 1 marker
-Body bounding box
-```
-
-------------------------------------------------------------------------
-
-# 65. Independent Generator Interfaces
-
-Generators consume the Component IR but do not consume each other's
-generated artifacts as authoritative input.
-
-## 48.1 Footprint generator
-
-Input:
-
-``` text
-Component IR
-Package PDL
-Land Pattern Definition
-Authoritative evidence
-```
-
-Output:
-
-``` text
-Native .kicad_mod
-```
-
-## 48.2 3D generator
-
-Input:
-
-``` text
-Component IR
-Package PDL
-Mechanical Definition
-Authoritative evidence
-```
-
-Output:
-
-``` text
-OpenSCAD source
-STEP model
-Placement metadata
-```
-
-## 48.3 Symbol generator
-
-Input:
-
-``` text
-Component IR
-Electrical pin model
-Symbol conventions
-```
-
-Output:
-
-``` text
-Native .kicad_sym
-```
-
-------------------------------------------------------------------------
-
-# 66. Deterministic Validation Specification
-
-Validation shall be deterministic wherever a mathematical or syntactic
-rule can be used.
-
-## 49.1 Categories
-
-``` text
-Schema
-Source/Evidence
-Package topology
-Symbol
-Footprint
-Pin mapping
-3D geometry
-Footprint/3D cross-validation
-KiCad compatibility
-PCB connectivity
-Visual regression
-```
-
-## 49.2 Result states
-
-``` text
-PASS
-FAIL
-WARN
-HUMAN_REVIEW
-NOT_GENERATABLE
-```
-
-WARN shall never silently become PASS.
-
-## 49.3 Package-aware tolerances
-
-Tolerances shall be configurable in the PDL.
-
-``` yaml
-validation:
-  xy_pin_pad_tolerance_mm: 0.01
-  package_center_tolerance_mm: 0.01
-  rotation_tolerance_deg: 0.1
-  height_tolerance_mm: 0.02
-```
-
-These are placeholders until calibrated against known-good components.
-
-------------------------------------------------------------------------
-
-# 67. Footprint ↔ 3D Cross-Validation
-
-This is a primary B.F.T. differentiator.
-
-## 50.1 Checks
-
-At minimum:
-
--   Pad 1 ↔ 3D pin 1
--   All pad centers ↔ corresponding 3D lead/pin reference features, when
-    those features are represented by the model
--   Package center
--   Body dimensions
--   Body orientation
--   Pin 1 orientation
--   Model origin
--   Model scale
--   Z height
--   Thermal/exposed pad alignment, when represented by the model;
-    otherwise validate from independent package/placement definitions
--   Mirroring
--   Rotation
-
-The PDL shall declare which 3D reference features are expected for each
-package family. A model is not considered incorrect merely because an
-internal or bottom-side electrical feature is not visually modeled; in
-that case the corresponding cross-check must use the PDL/IR coordinate
-definition rather than an absent STEP surface.
-
-## 50.2 Mathematical validation
-
-``` text
-Footprint Pad 1:
-  X = 0.000 mm
-  Y = -1.000 mm
-
-3D Pin 1:
-  X = 0.002 mm
-  Y = -1.001 mm
-
-ΔX = 0.002 mm
-ΔY = 0.001 mm
-
-Result:
-  PASS
-```
-
-## 50.3 Fault injection
-
-The functional suite shall deliberately introduce:
-
--   XY offset
--   Z offset
--   90° rotation
--   180° rotation
--   Mirror
--   Incorrect scale
--   Pin 1 mismatch
-
-The validator must detect each.
-
-## 50.4 No silent correction
-
-When cross-validation fails, B.F.T. shall report the mismatch and likely
-causes. It shall not automatically alter either artifact merely to force
-alignment.
-
-------------------------------------------------------------------------
-
-# 68. 3D Viewer / Placement Validation Architecture
-
-The 3D viewer is part of PartSmith.
-
-The first implementation shall provide:
-
--   Rotate
--   Pan
--   Zoom
--   Isometric view
--   Top/front/side views
--   Footprint + model overlay
--   Pads visibility
--   Silkscreen visibility
--   Courtyard visibility
--   Fabrication geometry visibility
--   Pin 1 highlight
--   Origin/axis display
--   Measurement
--   X/Y/Z model offset controls
--   X/Y/Z rotation controls
--   Height inspection
--   Pad/pin highlighting
--   Bounding-box display
--   Cross-section or clipping where practical
-
-Placement changes shall be stored as explicit placement metadata and
-remain distinguishable from model geometry.
-
-Initial scope is component + footprint + 3D model. Full-board context is
-future scope.
-
-------------------------------------------------------------------------
-
-# 69. Build State Machine
-
-``` text
-SOURCE_RECEIVED
-      ↓
-SOURCE_ANALYZED
-      ↓
-EVIDENCE_COLLECTED
-      ↓
-IR_BUILT
-      ↓
-IR_VALIDATED
-      ↓
-PACKAGE_IDENTIFIED
-      ↓
-FOOTPRINT_GENERATED
-      ↓
-3D_GENERATED
-      ↓
-SYMBOL_GENERATED
-      ↓
-ARTIFACT_VALIDATION
-      ↓
-CROSS_VALIDATION
-      ↓
-HUMAN_REVIEW_REQUIRED
-      ↓
-APPROVED
-      ↓
-EXPORTED
-```
-
-Failure states:
-
-``` text
-EXTRACTION_FAILED
-EVIDENCE_CONFLICT
-IR_INVALID
-PACKAGE_UNSUPPORTED
-NOT_GENERATABLE
-ARTIFACT_VALIDATION_FAILED
-CROSS_VALIDATION_FAILED
-HUMAN_REVIEW_REQUIRED
-```
-
-Regeneration shall return to the appropriate earlier state.
-
-------------------------------------------------------------------------
-
-# 70. NOT_GENERATABLE State
-
-`NOT_GENERATABLE` is a deliberate engineering result, not an application
-error.
-
-Example:
-
-``` text
-NOT GENERATABLE
-
-The available documentation contains:
-- pin names
-- pin numbers
-- package name
-
-but does not contain:
-- package dimensions
-- mechanical drawing
-- recommended land pattern
-
-B.F.T. cannot safely create a production footprint.
-```
-
-The system shall explain what additional evidence could resolve the
-condition.
-
-------------------------------------------------------------------------
-
-# 71. Build Reproducibility
-
-A build shall be reproducible from:
-
-``` text
-Source documents
-+
-Evidence selections
-+
-Component IR
-+
-PDL version
-+
-B.F.T. version
-+
-Generator version
-+
-Configuration
-+
-AI provider/model identifiers
-+
-User-approved overrides
-```
-
-------------------------------------------------------------------------
-
-# 72. Content Hashing and Artifact Identity
-
-B.F.T. should compute cryptographic hashes for:
-
-``` text
-Source PDF
-Evidence package
-Component IR
-PDL definition
-Generated symbol
-Generated footprint
-OpenSCAD source
-STEP model
-Manifest
-```
-
-Example:
-
-``` yaml
-hashes:
-  source_sha256:
-  evidence_sha256:
-  component_ir_sha256:
-  pdl_sha256:
-  symbol_sha256:
-  footprint_sha256:
-  openscad_sha256:
-  step_sha256:
-  manifest_sha256:
-```
-
-------------------------------------------------------------------------
-
-# 73. Revision and Change Tracking
-
-When a component is regenerated, B.F.T. shall compare the new IR and
-artifacts with the previous approved version.
-
-Example:
-
-``` text
-TPS62130RGTR
-Datasheet: Rev A → Rev B
-
-Changes:
-  Pin mapping:      UNCHANGED
-  Body height:      0.80 → 0.85 mm
-  Thermal pad:      1.60 → 1.70 mm
-  Footprint:        CHANGED
-  3D model:         CHANGED
-  Symbol:           UNCHANGED
-```
-
-The system shall identify which engineering domains changed.
-
-------------------------------------------------------------------------
-
-# 74. AI Provider Boundary
-
-AI providers are interchangeable interpretation services, not
-engineering authorities.
-
-``` text
-OpenAI
-Anthropic
-Gemini
-Copilot
-Future/local model
-       │
-       ▼
-Provider Adapter
-       │
-       ▼
-Normalized AI Result
-       │
-       ▼
-Evidence / IR Engine
-```
-
-AI may propose extracted values, interpretations, package
-classifications, symbol intent, ambiguity explanations, and candidate
-corrections.
-
-B.F.T. shall decide schema validity, evidence consistency, topology
-validity, geometry validity, KiCad compatibility, cross-validation
-results, and production approval.
-
-------------------------------------------------------------------------
-
-# 75. Evidence Conflict Engine
-
-B.F.T. shall classify evidence relationships:
-
-``` text
-CONSISTENT
-DERIVABLE
-CONFLICTING
-AMBIGUOUS
-INSUFFICIENT
-```
-
-A numerical difference is not automatically a conflict if the values
-describe different engineering quantities.
-
-Example:
-
-``` text
-Package drawing:
-  Body = 3.00 mm
-
-Land pattern:
-  Pad span = 3.20 mm
-
-Result:
-  CONSISTENT
-```
-
-------------------------------------------------------------------------
-
-# 76. Datasheet Difficulty Test Matrix
-
-The test corpus shall include:
-
-### Documents
-
--   Native digital PDF
--   Scanned PDF
--   Poor scan
--   Rotated pages
--   Low-resolution diagrams
--   Image-based tables
--   Multi-column layouts
--   Chinese
--   Japanese
--   German
--   French
--   Spanish
--   Mixed-language documents
-
-### Information challenges
-
--   Symbol present
--   Symbol absent
--   Symbol inside block diagram
--   Multiple symbols
--   Pinout separated from descriptions
--   Package drawing separated from pinout
--   Multiple package variants
--   Conflicting revisions
--   Incomplete mechanical information
-
-### Packages
-
--   Two-terminal passive
--   SOT-23
--   SOIC
--   TSSOP
--   QFN
--   DFN
--   Thermal-pad package
--   BGA
--   Irregular package
--   Connector
-
-------------------------------------------------------------------------
-
-# 77. Golden Components and Fault Injection
-
-Each golden component shall include:
-
-``` text
-Source
-Approved Component IR
-Approved Symbol
-Approved Footprint
-Approved 3D Model
-Expected Validation Results
-```
-
-The suite shall inject faults such as:
-
-``` text
-Wrong pin number
-Wrong pin name
-Wrong electrical type
-Missing pad
-Extra pad
-Pad shifted
-Pad mirrored
-Wrong pitch
-Wrong footprint origin
-3D shifted
-3D rotated
-3D mirrored
-3D scaled
-Wrong height
-Pin 1 mismatch
-Thermal pad mismatch
-```
-
-------------------------------------------------------------------------
-
-# 78. MVP Package Strategy
-
-The initial release shall prioritize reliability over package breadth.
-
-Proposed initial corpus:
-
-``` text
-0402
-0603
-0805
-
-SOT-23
-
-SOIC-8
-TSSOP-16
-
-QFN-16
-QFN-24
-```
-
-Additional families shall be added only after their package definitions,
-generators, viewer checks, and validation tests are mature.
-
-------------------------------------------------------------------------
-
-# 79. Architecture Diagrams
-
-## 62.1 Evidence Architecture
-
-``` text
-                     DATASHEET
-                         │
-          ┌──────────────┼──────────────┐
-          ▼              ▼              ▼
-        Text           Tables       Images/Diagrams
-          │              │              │
-          └──────────────┼──────────────┘
-                         ▼
-                    OCR / Vision
-                         │
-                         ▼
-                      Evidence
-                         │
-                         ▼
-                    Component IR
-```
-
-## 62.2 Independent Artifact Architecture
-
-``` text
-                     Component IR
-                          │
-                 ┌────────┴────────┐
-                 ▼                 ▼
-            Footprint           3D Model
-             Engine              Engine
-                 │                 │
-                 ▼                 ▼
-             .kicad_mod      OpenSCAD / CadQuery → STEP
-                 │                 │
-                 └────────┬────────┘
-                          ▼
-                  Cross Validator
-                          │
-                    PASS / FAIL
-```
-
-## 62.3 Review Architecture
-
-``` text
-Source Evidence
-      │
-      ▼
-Component IR
-      │
-      ▼
-Generated Artifacts
-      │
-      ▼
-Deterministic Validation
-      │
- ┌────┴─────┐
- ▼          ▼
-PASS      Review
- │          │
- │     ┌────┴────┐
- │     ▼         ▼
- │   Correct   Reject
- │     │
- └─────┘
-      │
-      ▼
-Approved Component
-```
-
-------------------------------------------------------------------------
-
-# 80. Implementation Roadmap
-
-## Phase 1 --- Evidence → Component IR
-
-Build PDF ingestion, page selection, OCR, table extraction,
-image/diagram extraction, evidence objects, provenance, conflict
-detection, and the Component IR schema.
-
-**Exit criterion:** a validated IR can be produced from representative
-datasheets without generating KiCad artifacts.
-
-## Phase 2 --- IR → Symbol
-
-Build the Symbol IR, deterministic `.kicad_sym` serializer, validation,
-preview, and golden symbol tests.
-
-## Phase 3 --- IR + PDL → Footprint
-
-Build PDL package schema, land-pattern definitions, deterministic
-footprint generation, `.pretty` libraries, footprint validation, and
-topology tests.
-
-## Phase 4 --- IR + PDL → 3D
-
-Build mechanical package definitions, 3D backend templates/interfaces, deterministic
-parameter generation, STEP generation, and model validation.
-
-## Phase 5 --- 3D Viewer
-
-Build model/footprint overlay, coordinate axes, Pin 1, measurements,
-placement transforms, standard views, and human review.
-
-## Phase 6 --- Cross-Validation
-
-Build pad/pin correspondence, XY alignment, rotation, mirroring, Z
-height, scale, thermal-pad checks, and fault-injection tests.
-
-## Phase 7 --- KiCad Integration
-
-Build native library packaging, KiCad opening/parsing tests,
-symbol/footprint association, 3D model association, and installation/use
-workflow.
-
-## Phase 8 --- Production Test Corpus
-
-Build golden components, difficult PDFs, multilingual corpus, visual
-regression, ERC-oriented tests, PCB connectivity tests, and full
-regression.
-
-------------------------------------------------------------------------
-
-# 81. v0.8 Acceptance Criteria
-
-Before implementation begins, the architecture shall have:
-
--   [ ] Formal Component IR schema
--   [ ] Formal evidence/provenance model
--   [ ] Source precedence by engineering domain
--   [ ] Explicit package mechanical model
--   [ ] Explicit land-pattern model
--   [ ] Explicit package topology model
--   [ ] Explicit coordinate-system conventions
--   [ ] Independent footprint generator interface
--   [ ] Independent 3D generator interface
--   [ ] Deterministic validation model
--   [ ] Package-aware validation tolerances
--   [ ] Footprint/3D cross-validation
--   [ ] 3D viewer requirements
--   [ ] Human-review workflow
--   [ ] Build state machine
--   [ ] NOT_GENERATABLE state
--   [ ] Reproducible build definition
--   [ ] Content hashing model
--   [ ] Revision/change tracking
--   [ ] AI provider boundary
--   [ ] Evidence conflict engine
--   [ ] Golden component strategy
--   [ ] Fault-injection strategy
--   [ ] MVP package strategy
--   [ ] Implementation roadmap
-
-------------------------------------------------------------------------
-
-# 82. Recommended Next Specification: v0.8
-
-v0.8 should define the MVP implementation specification rather than
-adding more conceptual features.
-
-It should contain:
-
-1.  Exact Component IR schema.
-2.  PDL schema for the first supported packages.
-3.  Generator interfaces.
-4.  Validation algorithms.
-5.  Coordinate transforms.
-6.  Data persistence format.
-7.  Build-state persistence.
-8.  UI/workflow screens.
-9.  First AI-provider adapter.
-10. First end-to-end golden components.
-11. Automated test harness.
-12. KiCad integration strategy.
-
-The objective is to make the architecture sufficiently precise that
-implementation can begin without major architectural decisions being
-made during coding.
-
-------------------------------------------------------------------------
-
-# 83. Final B.F.T. Component Builder Principles
-
-1.  **AI interprets; B.F.T. verifies.**
-2.  **The Component IR is the central structured source of truth.**
-3.  **Evidence provenance is preserved for important engineering
-    values.**
-4.  **Source authority is domain-specific.**
-5.  **Package mechanical geometry and land pattern are distinct
-    concepts.**
-6.  **Package topology is explicitly modeled and validated.**
-7.  **Footprint and 3D artifacts are independently generated.**
-8.  **Independent artifact agreement is used as a cross-validation
-    signal.**
-9.  **B.F.T. never silently modifies an artifact merely to force
-    agreement.**
-10. **Deterministic validators, not AI confidence, decide PASS/FAIL.**
-11. **Ambiguous or conflicting evidence requires human review.**
-12. **Insufficient source data may result in NOT_GENERATABLE.**
-13. **Validated package definitions are reused instead of reinvented.**
-14. **OpenSCAD is an initial 3D backend, not the ultimate package source
-    of truth.**
-15. **Native KiCad artifacts remain the final deliverables.**
-16. **Builds are reproducible and traceable.**
-17. **Engineering changes are explicitly tracked.**
-18. **A small, highly validated MVP is preferred over broad unreliable
-    package coverage.**
-19. **Functional end-to-end testing is mandatory; unit tests alone are
-    insufficient.**
-20. **Human review is a controlled part of the engineering workflow, not
-    an exception hidden from the user.**
-
-> **Don't ask AI to draw the same package a thousand times. Teach B.F.T.
-> what the package is, let AI extract the component-specific parameters,
-> let independent deterministic generators build the artifacts, and let
-> B.F.T. prove that they agree.**
-
-------------------------------------------------------------------------
-
-# 245. v0.9 Boundary
-
-v0.8.1 is the corrected architecture + direct build specification. It
-defines the implementation contract but does not itself claim that the
-repository implementation already exists.
-
-v0.9 shall be the **Executable Specification / Repository Bootstrap**
-and shall contain the first actual implementation artifacts:
-
-1.  JSON Schema files committed to the repository.
-2.  PDL YAML records with validated dimensions/evidence.
-3.  Python domain models and package skeleton.
-4.  Deterministic generator implementations.
-5.  Validator implementations.
-6.  SQLite migrations.
-7.  CLI skeleton and command contracts.
-8.  API request/response schemas and service skeleton.
-9.  Golden and negative fixture files.
-10. CI configuration.
-11. At least one runnable deterministic end-to-end build without AI.
-
-The distinction is normative:
-
--   **v0.8.1:** defines what must be built.
--   **v0.9:** begins shipping the code and machine-readable
-    implementation artifacts that realize that specification.
-
-------------------------------------------------------------------------
-
-# Final v0.8.1 Build Specification Position
-
-The architecture is now converted into an implementation contract with
-explicit ownership, schemas, interfaces, deterministic generation,
-validation, persistence, testing, and release behavior.
-
-The critical implementation boundary remains:
-
-``` text
-                 Manufacturer Documents
-                         │
-                         ▼
-                 Extraction / OCR
-                         │
-                         ▼
-                   Evidence Graph
-                         │
-                         ▼
-                    Component IR
-                         │
-              ┌──────────┴──────────┐
-              ▼                     ▼
-             PDL               AI Interpretation
-              │                     │
-              └──────────┬──────────┘
-                         ▼
-                  Approved IR
-                         │
-             ┌───────────┴───────────┐
-             ▼                       ▼
-      Footprint Generator      3D Generator
-             │                       │
-             ▼                       ▼
-        .kicad_mod                 STEP
-             │                       │
-             └───────────┬───────────┘
-                         ▼
-                Deterministic Validation
-                         │
-                         ▼
-                  Cross-Validation
-                         │
-                         ▼
-                    Human Review
-                         │
-                         ▼
-                       Export
-```
-
-**The AI is deliberately downstream of the engineering model and
-upstream of deterministic decision-making.**
-
-That is the central design decision that prevents PartSmith from
-becoming an AI system that merely produces plausible-looking KiCad
-files.
-
-------------------------------------------------------------------------
-
-# v0.8 --- Direct Build Specification
-
-v0.8 freezes the implementation contract sufficiently to begin coding.
-
-This version adds the concrete artifacts required to turn the
-specification into a working repository:
-
--   normative JSON Schemas
--   PDL record examples
--   Python model contracts
--   validator rule IDs
--   SQL schema
--   API request/response contracts
--   CLI behavior
--   exact build dependency rules
--   fixture layout
--   test-case identifiers
--   UI state model
--   first implementation backlog
--   acceptance gates
-
-The examples in this document are normative unless explicitly marked
-illustrative.
-
-# 1. v0.8 Normative Conventions
-
-The following keywords are normative:
-
-``` text
-MUST
-MUST NOT
-REQUIRED
-SHALL
-SHALL NOT
-SHOULD
-SHOULD NOT
-MAY
-```
-
-A production implementation MUST follow all `MUST` and `SHALL`
-requirements.
-
-# 2. Frozen Version Matrix
-
-  Artifact                Version
-  ----------------------- --------------
-  B.F.T. spec             0.8
-  Component IR schema     1.0
-  Evidence schema         1.0
-  PDL schema              1.0
-  Manifest schema         1.0
-  Validation schema       1.0
-  Build database schema   1.0
-  KiCad target            10.x
-  Internal units          mm / degrees
-  Hash                    SHA-256
-
-The initial KiCad target is KiCad 10.x. KiCad 10.0 documentation
-identifies `.kicad_sym`, `.kicad_mod`, `.pretty`, and the current
-CLI/API architecture; B.F.T. therefore treats KiCad compatibility as a
-versioned adapter rather than assuming file-format stability.
-citeturn0search1turn0search12turn0search9
-
-# 3. Normative Component IR
-
-The canonical IR is JSON-compatible.
-
-``` json
-{
-  "schema_version": "1.0",
-  "identity": {
-    "manufacturer": "Example Manufacturer",
-    "mpn": "EXAMPLE-123",
-    "package_variant": "QFN-16-3x3-0.5P"
-  },
-  "pins": [],
-  "package": {},
-  "symbol": {},
-  "footprint": {},
-  "model_3d": {},
-  "evidence": [],
-  "standards": [],
-  "overrides": [],
-  "validation": {},
-  "build": {},
-  "revision": {}
-}
-```
-
-Unknown fields MUST be rejected unless the schema explicitly permits an
-extension namespace.
-
-# 4. Component IR JSON Schema --- Core
-
-The repository MUST contain:
-
-``` text
-schemas/component-ir-1.0.json
-```
-
-Core schema:
-
-``` json
-{
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://board-forge-tools.dev/schema/component-ir/1.0",
-  "title": "BFT Component IR",
-  "type": "object",
-  "additionalProperties": false,
-  "required": [
-    "schema_version",
-    "identity",
-    "pins",
-    "package",
-    "evidence",
-    "validation"
-  ],
-  "properties": {
-    "schema_version": {
-      "const": "1.0"
-    },
-    "identity": {
-      "$ref": "#/$defs/identity"
-    },
-    "pins": {
-      "type": "array",
-      "items": {
-        "$ref": "#/$defs/pin"
-      }
-    },
-    "package": {
-      "$ref": "#/$defs/package"
-    },
-    "symbol": {
-      "$ref": "#/$defs/symbol"
-    },
-    "footprint": {
-      "$ref": "#/$defs/footprint"
-    },
-    "model_3d": {
-      "$ref": "#/$defs/model3d"
-    },
-    "evidence": {
-      "type": "array",
-      "items": {
-        "$ref": "#/$defs/evidenceRef"
-      }
-    },
-    "standards": {
-      "type": "array"
-    },
-    "overrides": {
-      "type": "array"
-    },
-    "validation": {
-      "type": "object"
-    },
-    "build": {
-      "type": "object"
-    },
-    "revision": {
-      "type": "object"
-    }
-  }
-}
-```
-
-The full schema MUST define every `$defs` object in the repository.
-
-# 5. Value Status Schema
-
-``` json
-{
-  "type": "string",
-  "enum": [
-    "DIRECT",
-    "DERIVED",
-    "STANDARD",
-    "USER_OVERRIDE",
-    "INFERRED",
-    "UNKNOWN",
-    "AMBIGUOUS",
-    "CONFLICTING",
-    "MISSING"
-  ]
-}
-```
-
-Release-critical values MUST NOT have status:
-
-``` text
-INFERRED
-UNKNOWN
-AMBIGUOUS
-CONFLICTING
-MISSING
-```
-
-unless a specific validator explicitly allows that state.
-
-# 6. Identity Schema
-
-``` json
-{
-  "type": "object",
-  "additionalProperties": false,
-  "required": [
-    "manufacturer",
-    "mpn",
-    "package_variant"
-  ],
-  "properties": {
-    "manufacturer": {"type": "string", "minLength": 1},
-    "manufacturer_normalized": {"type": "string"},
-    "mpn": {"type": "string", "minLength": 1},
-    "mpn_normalized": {"type": "string"},
-    "package_variant": {"type": "string", "minLength": 1},
-    "ordering_suffix": {"type": "string"},
-    "temperature_grade": {"type": "string"},
-    "qualification": {"type": "string"},
-    "source_revision": {"type": "string"}
-  }
-}
-```
-
-# 7. Pin Schema
-
-``` json
-{
-  "type": "object",
-  "additionalProperties": false,
-  "required": ["number", "name", "electrical_type"],
-  "properties": {
-    "number": {"type": "string", "minLength": 1},
-    "name": {"type": "string"},
-    "electrical_type": {
-      "enum": [
-        "input",
-        "output",
-        "bidirectional",
-        "tri_state",
-        "open_collector",
-        "open_emitter",
-        "passive",
-        "power_input",
-        "power_output",
-        "power_flag",
-        "no_connect",
-        "unspecified"
-      ]
-    },
-    "function": {"type": "string"},
-    "active_low": {"type": "boolean"},
-    "alternate_functions": {
-      "type": "array",
-      "items": {"type": "string"}
-    },
-    "topology": {
-      "$ref": "#/$defs/pinTopology"
-    },
-    "flags": {
-      "$ref": "#/$defs/pinFlags"
-    },
-    "evidence_ids": {
-      "type": "array",
-      "items": {"type": "string"}
-    }
-  }
-}
-```
-
-# 8. Package Schema
-
-``` json
-{
-  "type": "object",
-  "required": [
-    "family",
-    "variant",
-    "mechanical",
-    "topology",
-    "land_pattern"
-  ],
-  "properties": {
-    "family": {"type": "string"},
-    "variant": {"type": "string"},
-    "pdl_id": {"type": "string"},
-    "pdl_revision": {"type": "integer", "minimum": 1},
-    "mechanical": {"type": "object"},
-    "topology": {"type": "object"},
-    "land_pattern": {"type": "object"},
-    "coordinate_system": {"type": "object"}
-  }
-}
-```
-
-# 9. Mechanical Dimension Object
-
-All dimensions use:
-
-``` json
-{
-  "nominal_mm": 3.0,
-  "min_mm": 2.9,
-  "max_mm": 3.1,
-  "status": "DIRECT",
-  "evidence_ids": ["E-001"]
-}
-```
-
-A dimension with no tolerance MUST NOT be interpreted as a tolerance of
-zero.
-
-# 10. Evidence Schema --- Normative
-
-File:
-
-``` text
-schemas/evidence-1.0.json
-```
-
-Required structure:
-
-``` json
-{
-  "id": "E-000001",
-  "type": "PACKAGE_DRAWING",
-  "source": {
-    "document_id": "DOC-000001",
-    "document_sha256": "…",
-    "page": 34,
-    "region": {
-      "x": 100,
-      "y": 200,
-      "width": 800,
-      "height": 500
-    }
-  },
-  "raw": {
-    "text": "3.00 ± 0.10",
-    "language": "en"
-  },
-  "interpretation": {
-    "value": 3.0,
-    "unit": "mm",
-    "status": "DIRECT"
-  },
-  "extractor": {
-    "type": "pdf_text",
-    "version": "1.0"
-  }
-}
-```
-
-# 11. Evidence Type Enum
-
-``` text
-DATASHEET_TEXT
-OCR_TEXT
-TABLE
-PACKAGE_DRAWING
-BLOCK_DIAGRAM
-PINOUT_DIAGRAM
-LAND_PATTERN
-MANUFACTURER_CAD
-MANUFACTURER_WEB_DOCUMENT
-JEDEC_STANDARD
-IPC_STANDARD
-USER_PROVIDED_VALUE
-DERIVED_VALUE
-```
-
-# 12. PDL Schema --- Normative
-
-File:
-
-``` text
-schemas/pdl-1.0.json
-```
-
-Example:
-
-``` yaml
-schema_version: "1.0"
-
-id: "qfn-16-3x3-0p5"
-revision: 1
-
-identity:
-  family: "QFN"
-  variant: "QFN-16-3x3-0.5P"
-
-mechanical:
-  body:
-    length_mm: 3.0
-    width_mm: 3.0
-    height_nominal_mm: 0.85
-
-topology:
-  pin_count: 16
-  pitch_mm: 0.5
-  numbering: counter_clockwise
-  pin1:
-    location: top_left
-
-land_pattern:
-  strategy: manufacturer_or_validated_family
-  thermal_pad:
-    supported: true
-
-model_3d:
-  body_strategy: qfn_body
-  lead_strategy: gullwing_like
-  marker_strategy: pin1_marker
-
-coordinate_system:
-  origin: package_center
-  x_positive: right
-  y_positive: up
-  z_positive: away_from_pcb
-
-validation:
-  xy_pin_pad_tolerance_mm: 0.01
-  center_tolerance_mm: 0.01
-  rotation_tolerance_deg: 0.1
-  height_tolerance_mm: 0.02
-```
-
-# 13. PDL Record Rules
-
-Every PDL record MUST include:
-
-``` text
-id
-revision
-schema_version
-family
-variant
-topology
-coordinate_system
-validation
-source references
-```
-
-A PDL record without evidence is not approved for production generation.
-
-# 14. Initial PDL Records
-
-The repository shall initially contain:
-
-``` text
-pdl/variants/0402.yaml
-pdl/variants/0603.yaml
-pdl/variants/0805.yaml
-pdl/variants/sot-23.yaml
-pdl/variants/soic-8.yaml
-pdl/variants/tssop-16.yaml
-pdl/variants/qfn-16-3x3-0p5.yaml
-pdl/variants/qfn-24-4x4-0p5.yaml
-```
-
-Exact dimensions must be populated from validated sources before the
-records are marked approved.
-
-# 15. Python Domain Models
-
-Use typed immutable models for engineering data.
-
-Representative:
-
-``` python
-@dataclass(frozen=True)
-class Dimension:
-    nominal_mm: float | None
-    min_mm: float | None
-    max_mm: float | None
-    status: ValueStatus
-    evidence_ids: tuple[str, ...]
-```
-
-``` python
-@dataclass(frozen=True)
-class Pin:
-    number: str
-    name: str
-    electrical_type: ElectricalType
-    function: str | None
-    active_low: bool | None
-    evidence_ids: tuple[str, ...]
-```
-
-Mutable UI state MUST NOT be used as the engineering source of truth.
-
-# 16. Exact Domain Interfaces
-
-Required Python protocols:
-
-``` python
-class EvidenceStore(Protocol):
-    def get(self, evidence_id: str) -> Evidence: ...
-    def list_for_value(self, path: str) -> list[Evidence]: ...
-```
-
-``` python
-class PDLStore(Protocol):
-    def get(self, pdl_id: str, revision: int | None = None) -> PDL: ...
-    def find_candidates(self, query: PackageQuery) -> list[PDLCandidate]: ...
-```
-
-``` python
-class IRStore(Protocol):
-    def save(self, ir: ComponentIR) -> None: ...
-    def load(self, component_id: str) -> ComponentIR: ...
-```
-
-# 17. Generator Context
-
-``` python
-@dataclass(frozen=True)
-class GeneratorContext:
-    bft_version: str
-    generator_version: str
-    target_kicad: str
-    output_root: Path
-    reproducible: bool = True
-```
-
-Generators MUST NOT read global mutable configuration.
-
-# 18. Artifact Contract
-
-``` python
-@dataclass(frozen=True)
-class GeneratedArtifact:
-    artifact_id: str
-    artifact_type: ArtifactType
-    path: Path
-    sha256: str
-    generator: str
-    generator_version: str
-    input_hash: str
-```
-
-# 19. Validation Rule Registry
-
-Each validator rule receives a permanent ID.
-
-Examples:
-
-``` text
-IR-001 Schema valid
-IR-002 Required value present
-PIN-001 Unique pin numbers
-PIN-002 Pin count matches package
-PIN-003 Electrical type supported
-PKG-001 Package family recognized
-PKG-002 Topology valid
-PKG-003 Pin-1 orientation valid
-FP-001 Pad count
-FP-002 Pad numbering
-FP-003 Pad geometry
-FP-004 Courtyard
-3D-001 STEP parse
-3D-002 Scale
-3D-003 Height
-3D-004 Orientation
-3D-005 Required STEP artifact
-3D-006 Backend/runtime metadata
-MAP-001 Symbol-to-pad mapping
-MAP-002 Pad-to-model mapping
-XVAL-001 Pin/pad alignment
-XVAL-002 Center alignment
-XVAL-003 Pin-1 alignment
-XVAL-004 Height alignment
-XVAL-005 Thermal-pad alignment
-KICAD-001 Target version
-KICAD-002 Parse/open
-KICAD-003 Round-trip
-REP-001 Reproducibility
-REL-001 No blocking validation
-```
-
-Rule IDs MUST never be reused for different meanings.
-
-# 20. Validator Implementation Contract
-
-``` python
-@dataclass(frozen=True)
-class ValidationRule:
-    rule_id: str
-    category: str
-    severity: Severity
-    blocking: bool
-```
-
-``` python
-class ValidationEngine:
-    def run(
-        self,
-        build: BuildContext,
-        rules: Sequence[ValidationRule]
-    ) -> list[ValidationResult]:
-        ...
-```
-
-# 21. Validation Severity
-
-``` text
-INFO
-WARNING
-ERROR
-BLOCKING
-```
-
-`BLOCKING` always prevents approval.
-
-# 22. Deterministic Rule Example
-
-``` python
-def validate_pad_count(ir, footprint):
-    expected = len([p for p in ir.pins if not p.flags.no_connect])
-    actual = len(footprint.signal_pads())
-    if expected != actual:
-        return fail(
-            "FP-001",
-            expected=expected,
-            measured=actual
-        )
-    return pass_("FP-001")
-```
-
-The actual implementation must account for legitimate exposed/thermal
-pads and package-specific exceptions.
-
-# 23. Coordinate Transform Tests
-
-Required test cases:
-
-``` text
-identity
-translation
-rotation X
-rotation Y
-rotation Z
-mirror X
-mirror Y
-combined transform
-inverse
-round trip
-```
-
-Every transform test must use known analytical expected results.
-
-# 24. SQL Schema
-
-MVP migration:
-
-``` sql
-CREATE TABLE projects (
-    id TEXT PRIMARY KEY,
-    name TEXT NOT NULL,
-    root_path TEXT NOT NULL,
-    created_at TEXT NOT NULL,
-    updated_at TEXT NOT NULL
-);
-
-CREATE TABLE components (
-    id TEXT PRIMARY KEY,
-    project_id TEXT,
-    manufacturer TEXT NOT NULL,
-    mpn TEXT NOT NULL,
-    package_variant TEXT NOT NULL,
-    created_at TEXT NOT NULL,
-    updated_at TEXT NOT NULL
-);
-
-CREATE TABLE documents (
-    id TEXT PRIMARY KEY,
-    component_id TEXT NOT NULL,
-    filename TEXT NOT NULL,
-    sha256 TEXT NOT NULL,
-    media_type TEXT NOT NULL,
-    created_at TEXT NOT NULL
-);
-
-CREATE TABLE evidence (
-    id TEXT PRIMARY KEY,
-    document_id TEXT NOT NULL,
-    evidence_type TEXT NOT NULL,
-    page INTEGER,
-    region_json TEXT,
-    raw_json TEXT NOT NULL,
-    interpretation_json TEXT NOT NULL,
-    created_at TEXT NOT NULL
-);
-
-CREATE TABLE builds (
-    id TEXT PRIMARY KEY,
-    component_id TEXT NOT NULL,
-    state TEXT NOT NULL,
-    bft_version TEXT NOT NULL,
-    ir_hash TEXT,
-    inputs_hash TEXT,
-    started_at TEXT NOT NULL,
-    completed_at TEXT
-);
-
-CREATE TABLE artifacts (
-    id TEXT PRIMARY KEY,
-    build_id TEXT NOT NULL,
-    artifact_type TEXT NOT NULL,
-    path TEXT NOT NULL,
-    sha256 TEXT NOT NULL,
-    generator TEXT NOT NULL,
-    generator_version TEXT NOT NULL
-);
-
-CREATE TABLE validation_results (
-    id TEXT PRIMARY KEY,
-    build_id TEXT NOT NULL,
-    rule_id TEXT NOT NULL,
-    status TEXT NOT NULL,
-    severity TEXT NOT NULL,
-    result_json TEXT NOT NULL
-);
-
-CREATE TABLE overrides (
-    id TEXT PRIMARY KEY,
-    build_id TEXT NOT NULL,
-    path TEXT NOT NULL,
-    old_value_json TEXT,
-    new_value_json TEXT NOT NULL,
-    reason TEXT NOT NULL,
-    reviewer TEXT,
-    created_at TEXT NOT NULL
-);
-
-CREATE TABLE reviews (
-    id TEXT PRIMARY KEY,
-    build_id TEXT NOT NULL,
-    reviewer TEXT NOT NULL,
-    decision TEXT NOT NULL,
-    reason TEXT,
-    created_at TEXT NOT NULL
-);
-
-CREATE TABLE build_dependencies (
-    build_id TEXT NOT NULL,
-    upstream_id TEXT NOT NULL,
-    downstream_id TEXT NOT NULL,
-    dependency_type TEXT NOT NULL,
-    PRIMARY KEY(build_id, upstream_id, downstream_id)
-);
-```
-
-Foreign keys MUST be enabled.
-
-# 25. Database Migration Rules
-
-Migrations live in:
-
-``` text
-migrations/
-001_initial.sql
-002_...
-```
-
-Never modify an applied migration.
-
-# 26. API Contract
-
-Base path:
-
-``` text
-/api/v1
-```
-
-Create component:
-
-``` http
-POST /api/v1/components
-Content-Type: application/json
-```
-
-Request:
-
-``` json
-{
-  "manufacturer": "Example",
-  "mpn": "EXAMPLE-123",
-  "package_variant": "QFN-16-3x3-0.5P"
-}
-```
-
-Response:
-
-``` json
-{
-  "component_id": "COMP-…",
-  "status": "CREATED"
-}
-```
-
-# 27. Build API
-
-``` http
-POST /api/v1/builds
-```
-
-Request:
-
-``` json
-{
-  "component_id": "COMP-…",
-  "source_document_ids": ["DOC-…"],
-  "target_kicad": "10",
-  "mode": "review"
-}
-```
-
-Response:
-
-``` json
-{
-  "build_id": "BUILD-…",
-  "state": "SOURCE_RECEIVED"
-}
-```
-
-# 28. Build Status API
-
-``` http
-GET /api/v1/builds/{build_id}
-```
-
-Response shall contain:
-
-``` text
-state
-current_stage
-progress
-blocking_issues
-warnings
-artifact_status
-```
-
-# 29. Evidence API
-
-``` http
-GET /api/v1/builds/{build_id}/evidence
-```
-
-Supports filtering:
-
-``` text
-type
-page
-status
-pin
-package
-```
-
-# 30. Review API
-
-``` http
-POST /api/v1/builds/{build_id}/review
-```
-
-Request:
-
-``` json
-{
-  "decision": "APPROVE",
-  "reviewer": "user",
-  "comment": "Reviewed pin table and package drawing."
-}
-```
-
-`APPROVE` MUST be rejected if blocking issues remain.
-
-# 31. Override API
-
-``` http
-POST /api/v1/builds/{build_id}/overrides
-```
-
-Request:
-
-``` json
-{
-  "path": "package.mechanical.body.height.nominal_mm",
-  "value": 0.85,
-  "reason": "Manufacturer mechanical drawing confirmed value."
-}
-```
-
-The server MUST create an immutable override record and invalidate
-dependent artifacts.
-
-# 32. CLI Contract
-
-``` bash
-bft component create
-bft component inspect
-bft component build
-bft component validate
-bft component review
-bft component approve
-bft component reject
-bft component export
-bft component diff
-
-bft build status
-bft build resume
-bft build invalidate
-
-bft pdl list
-bft pdl inspect
-bft pdl validate
-
-bft doctor
-bft version
-```
-
-# 33. CLI Exit Codes
-
-``` text
-0   success
-1   general failure
-2   invalid arguments
-3   source failure
-4   validation failure
-5   human review required
-6   not generatable
-7   compatibility failure
-8   reproducibility failure
-9   security/resource violation
-```
-
-# 34. CLI JSON Output
-
-All commands support:
-
-``` bash
---json
-```
-
-Example:
-
-``` json
-{
-  "status": "HUMAN_REVIEW_REQUIRED",
-  "build_id": "BUILD-123",
-  "issues": [
-    {
-      "rule_id": "PIN-004",
-      "severity": "BLOCKING",
-      "message": "Conflicting pin evidence."
-    }
-  ]
-}
-```
-
-# 35. Build Dependency Matrix
-
-  Change              Symbol       Footprint     3D                    Cross-validation
-  ------------------- ------------ ------------- --------------------- ------------------
-  pin number          regenerate   regenerate    conditional           rerun
-  pin name only       regenerate   retain        retain                rerun mapping
-  electrical type     regenerate   retain        retain                rerun mapping
-  body length         retain       regenerate    regenerate            rerun
-  body width          retain       regenerate    regenerate            rerun
-  body height         retain       conditional   regenerate            rerun
-  pitch               retain       regenerate    regenerate            rerun
-  pin-1 orientation   regenerate   regenerate    regenerate            rerun
-  land pattern        retain       regenerate    retain                rerun
-  symbol graphic      regenerate   retain        retain                no
-  3D marker           retain       retain        regenerate            rerun
-  3D placement        retain       retain        regenerate metadata   rerun
-
-"Conditional" means the dependency engine consults the PDL rule graph.
-
-# 36. Invalidation Algorithm
-
-``` text
-1. Identify changed IR paths.
-2. Resolve dependency graph.
-3. Mark affected artifacts stale.
-4. Preserve unaffected artifacts.
-5. Rebuild in topological order.
-6. Rerun all dependent validators.
-7. Recompute manifest.
-```
-
-# 37. Artifact Staleness
-
-Artifact states:
-
-``` text
-CURRENT
-STALE
-FAILED
-MISSING
-```
-
-A stale artifact cannot participate in approval.
-
-# 38. Build Resume
-
-A resumed build MUST verify:
-
-``` text
-source hashes
-IR hash
-PDL hash
-generator versions
-configuration hash
-artifact hashes
-```
-
-If any immutable input changed, the appropriate dependency subtree is
-invalidated.
-
-# 39. Canonical Serialization
-
-Canonical JSON MUST:
-
-``` text
-sort keys
-use UTF-8
-use LF
-normalize Unicode
-use deterministic number formatting
-omit insignificant whitespace
-```
-
-Floating-point values shall use a defined decimal representation.
-
-# 40. Hash Inputs
-
-Build input hash includes:
-
-``` text
-source document hashes
-evidence selection hashes
-IR canonical hash
-PDL canonical hash
-generator versions
-BFT version
-configuration hash
-override hashes
-target KiCad version
-```
-
-# 41. Manifest Schema
-
-File:
-
-``` text
-schemas/manifest-1.0.json
-```
-
-Required:
-
-``` json
-{
-  "schema_version": "1.0",
-  "build_id": "BUILD-…",
-  "component_id": "COMP-…",
-  "status": "APPROVED",
-  "inputs_hash": "…",
-  "artifacts": [],
-  "validation": {},
-  "compatibility": {},
-  "overrides": [],
-  "reproducibility": {}
-}
-```
-
-# 42. PDL Validation Rules
-
-Minimum PDL rules:
-
-``` text
-PDL-001 schema valid
-PDL-002 unique ID
-PDL-003 revision valid
-PDL-004 pin count positive
-PDL-005 pitch positive
-PDL-006 topology internally consistent
-PDL-007 coordinate system complete
-PDL-008 tolerance values valid
-PDL-009 evidence present
-PDL-010 land-pattern strategy valid
-```
-
-# 43. PDL Topology Model
-
-The topology object shall support:
-
-``` yaml
-sides:
-  north:
-    pins: [1, 2, 3, 4]
-  east:
-    pins: [5, 6, 7, 8]
-  south:
-    pins: [9, 10, 11, 12]
-  west:
-    pins: [13, 14, 15, 16]
-```
-
-The topology validator shall derive pad coordinates from topology only
-when the PDL explicitly defines a derivable rule.
-
-# 44. Package-Specific Geometry Strategy
-
-Each PDL family shall declare a geometry strategy:
-
-``` text
-RECTANGULAR
-ROUND
-CYLINDRICAL
-LEADED
-ARRAY
-CUSTOM
-```
-
-Custom geometry requires an explicit deterministic generator.
-
-# 45. 0402/0603/0805 Strategy
-
-For passive chip packages:
-
-``` text
-body rectangle
-termination geometry
-pad geometry
-courtyard
-silkscreen restrictions
-```
-
-The footprint and 3D model are still generated independently.
-
-# 46. SOIC/TSSOP Strategy
-
-The PDL shall define:
-
-``` text
-body
-lead count
-lead pitch
-lead span
-lead width
-lead thickness
-pin-1 marker
-```
-
-The footprint uses land-pattern evidence.
-
-The 3D generator uses mechanical lead/body evidence.
-
-# 47. QFN Strategy
-
-QFN PDL shall explicitly support:
-
-``` text
-perimeter pads
-exposed thermal pad
-corner pin behavior
-pin-1 marking
-center thermal pad
-```
-
-Thermal pad dimensions are independent of body dimensions.
-
-# 48. Symbol Unit Strategy
-
-The symbol generator shall support:
-
-``` text
-single-unit
-multi-unit
-power-unit
-alternate-body
-```
-
-The initial MVP may implement single-unit and power-unit components
-first.
-
-# 49. Symbol Pin Placement Strategy
-
-Pin placement shall be deterministic.
-
-Rules shall consider:
-
-``` text
-function group
-pin direction
-pin name length
-pin number
-package topology where useful
-standard BFT symbol conventions
-```
-
-The symbol generator MUST NOT infer electrical grouping solely from pin
-order.
-
-# 50. Symbol Graphics Contract
-
-Generated symbol graphics shall have deterministic:
-
-``` text
-line widths
-pin lengths
-text sizes
-grid alignment
-origin
-body dimensions
-```
-
-All values shall be configurable through versioned symbol rules.
-
-# 51. Footprint Text Contract
-
-Default fields:
-
-``` text
-Reference: REF**
-Value: component value
-```
-
-The generated footprint MUST preserve KiCad-required footprint structure
-and use valid layer identifiers for the target KiCad version.
-
-KiCad 10 documentation identifies `Reference` and `Value` as mandatory
-footprint fields in the footprint editor and describes `.kicad_mod` as
-the native footprint file format. citeturn0search6turn0search5
-
-# 52. 3D Model Placement Contract
-
-The footprint shall reference the 3D model using a
-project/library-relative path.
-
-Placement metadata:
-
-``` yaml
-placement:
-  offset_mm:
-    x: 0
-    y: 0
-    z: 0
-  rotation_deg:
-    x: 0
-    y: 0
-    z: 0
-  mirror: none
-```
-
-# 53. 3D Model Geometry Contract
-
-The model generator owns:
-
-``` text
-body
-leads
-terminals
-marker
-mechanical details
-```
-
-The footprint generator owns:
-
-``` text
-pads
-courtyard
-silkscreen
-fabrication graphics
-```
-
-No geometry ownership is shared.
-
-# 54. Cross-Validation Measurement Contract
-
-Measurements are taken from independent artifacts.
-
-For each check:
-
-``` text
-expected
-measured
-difference
-tolerance
-status
-```
-
-Example:
-
-``` yaml
-rule_id: XVAL-001
-expected_mm:
-  x: 0.75
-  y: -1.25
-measured_mm:
-  x: 0.751
-  y: -1.249
-difference_mm:
-  x: 0.001
-  y: 0.001
-tolerance_mm: 0.01
-status: PASS
-```
-
-# 55. Fault Injection Contract
-
-Faults shall be generated from immutable golden artifacts.
-
-Each fault has:
-
-``` yaml
-fault:
-  id: FI-3D-ROT-180
-  target: model_3d
-  operation:
-    type: rotate
-    z_deg: 180
-  expected_rule: XVAL-003
-  expected_status: FAIL
-```
-
-# 56. Test Fixture Manifest
-
-Each fixture shall contain:
-
-``` yaml
-fixture_id:
-source:
-expected_ir:
-expected_pdl:
-expected_artifacts:
-expected_results:
-faults:
-```
-
-# 57. Golden Fixture IDs
-
-Initial:
-
-``` text
-GOLD-0402-001
-GOLD-0603-001
-GOLD-0805-001
-GOLD-SOT23-001
-GOLD-SOIC8-001
-GOLD-TSSOP16-001
-GOLD-QFN16-001
-GOLD-QFN24-001
-```
-
-# 58. Negative Fixture IDs
-
-Initial:
-
-``` text
-NEG-PIN-001
-NEG-PIN-002
-NEG-PITCH-001
-NEG-PAD-001
-NEG-PIN1-001
-NEG-PKG-001
-NEG-3D-OFFSET-001
-NEG-3D-ROT-001
-NEG-3D-MIRROR-001
-NEG-3D-SCALE-001
-NEG-3D-HEIGHT-001
-NEG-EVIDENCE-CONFLICT-001
-NEG-LANDPATTERN-MISSING-001
-```
-
-# 59. Test Naming
-
-Tests shall use:
-
-``` text
-test_<domain>_<rule>_<condition>
-```
-
-Example:
-
-``` text
-test_cross_validation_xval003_detects_180_degree_rotation
-```
-
-# 60. Unit Test Minimums
-
-Minimum initial test counts:
-
-``` text
-schema: 20
-units: 15
-transforms: 25
-PDL: 30
-topology: 30
-generators: 40
-validators: 60
-hashing: 15
-dependency graph: 30
-```
-
-These are minimum test cases, not coverage percentages.
-
-# 61. Integration Test Minimums
-
-At least:
-
-``` text
-8 golden end-to-end builds
-8 negative end-to-end builds
-5 document-extraction cases
-5 evidence-conflict cases
-5 reproducibility cases
-3 KiCad compatibility cases
-```
-
-# 62. CI Gate Definitions
-
-``` text
-GATE-01 schema
-GATE-02 unit
-GATE-03 PDL
-GATE-04 generator
-GATE-05 validator
-GATE-06 golden
-GATE-07 negative
-GATE-08 deterministic
-GATE-09 security
-GATE-10 KiCad
-```
-
-All gates MUST pass for a release build.
-
-# 63. Security Gate
-
-The security gate MUST test:
-
-``` text
-path traversal
-command injection
-prompt injection
-malformed PDFs
-malformed STEP
-oversized inputs
-credential leakage
-unsafe filenames
-symlink attacks
-temporary-directory escape
-```
-
-# 64. UI State Model
-
-The review UI shall have:
-
-``` text
-IMPORT
-ANALYZE
-EVIDENCE
-IR
-PACKAGE
-SYMBOL
-FOOTPRINT
-3D
-VALIDATION
-REVIEW
-EXPORT
-```
-
-Each state displays:
-
-``` text
-status
-blocking issues
-warnings
-source/evidence links
-```
-
-# 65. Evidence Viewer
-
-The evidence viewer shall support:
-
-``` text
-page navigation
-zoom
-region highlight
-OCR text
-source text
-translation
-evidence status
-linked IR value
-```
-
-# 66. IR Editor
-
-The IR editor shall:
-
--   display provenance
--   distinguish source values from overrides
--   reject invalid values
--   show downstream impact before applying changes
--   require confirmation for blocking overrides
-
-# 67. Package Review Panel
-
-Show:
-
-``` text
-selected PDL
-candidate PDLs
-why selected
-mechanical dimensions
-topology
-land pattern source
-evidence
-validation
-```
-
-# 68. 2D Footprint Preview
-
-Show:
-
-``` text
-pads
-numbers
-silkscreen
-courtyard
-fabrication
-origin
-pin 1
-dimensions
-```
-
-# 69. 3D Viewer Overlay
-
-The viewer shall allow:
-
-``` text
-footprint-only
-3D-only
-overlay
-crosshair
-pad highlight
-pin highlight
-measurement
-```
-
-# 70. Review Issue Navigation
-
-Selecting a validation failure shall navigate to:
-
-``` text
-artifact
-geometry
-evidence
-IR path
-```
-
-where applicable.
-
-# 71. Export UI
-
-Export shall show:
-
-``` text
-approved?
-validation status
-KiCad target
-artifact hashes
-destination
-existing-file conflicts
-```
-
-The final action is disabled if approval requirements are not met.
-
-# 72. Project-Local Library Installation
-
-Installation sequence:
-
-``` text
-validate
-→ dry-run
-→ backup
-→ write temporary files
-→ validate again
-→ atomic commit
-→ update library tables if requested
-→ record audit
-```
-
-# 73. KiCad Adapter v10
-
-The KiCad 10 adapter shall support:
-
-``` text
-detect version
-launch kicad-cli
-launch IPC API server
-validate supported library/document operations
-report unsupported operations
-```
-
-KiCad currently documents `kicad-cli` subcommands including
-`api-server`, `fp`, `sch`, `sym`, and `version`, and the official Python
-bindings expose the IPC API. citeturn0search9turn0search0
-
-# 74. API Integration Boundary
-
-B.F.T. shall prefer:
-
-``` text
-official IPC/Python API
-```
-
-for operations requiring live KiCad interaction.
-
-Direct native file generation remains acceptable for deterministic
-library artifacts where the format contract is explicitly implemented
-and tested.
-
-The older `pcbnew` scripting API shall be isolated as a compatibility
-fallback rather than becoming the primary new integration architecture.
-KiCad's documentation describes the `pcbnew` API as tightly coupled to
-internals and subject to change. citeturn0search6
-
-# 75. Current KiCad API Caution
-
-B.F.T. MUST record the exact KiCad version used for API tests.
-
-A passing test against KiCad 10.0.6 MUST NOT be represented as proof of
-compatibility with every future KiCad 10.x release.
-
-# 76. Build Performance Targets
-
-Initial targets for a typical supported component:
-
-``` text
-document inspection: < 2 s
-local text extraction: < 10 s
-deterministic generation: < 10 s
-deterministic validation: < 10 s
-3D generation: < 60 s
-```
-
-AI/OCR network latency is excluded from deterministic performance
-targets.
-
-These are engineering targets, not release blockers until measured
-against the MVP hardware baseline.
-
-# 77. Memory Targets
-
-MVP should remain usable within:
-
-``` text
-8 GB RAM
-4 CPU cores
-```
-
-Large documents may be streamed/page-processed rather than loaded
-entirely into memory.
-
-# 78. Temporary File Rules
-
-Temporary files shall live under a per-build directory:
-
-``` text
-<cache>/builds/<build_id>/tmp/
-```
-
-The build ID must be non-predictable enough to avoid collisions.
-
-Temporary files are deleted after successful cleanup unless retained by
-a failure/debug policy.
-
-# 79. Cache Rules
-
-Cache entries shall be immutable.
-
-Cache key:
-
-``` text
-SHA256(
-    operation
-    + normalized input
-    + tool version
-    + configuration
-)
-```
-
-# 80. AI Cache Rules
-
-AI results shall only be reused when:
-
-``` text
-provider
-model
-task schema
-prompt template version
-input hash
-relevant provider settings
-```
-
-all match.
-
-# 81. Provider Failure Policy
-
-If AI fails:
-
-``` text
-retry transiently
-→ fall back to another configured provider if allowed
-→ otherwise continue with deterministic extraction
-→ enter HUMAN_REVIEW when required
-```
-
-The system shall never substitute fabricated values.
-
-# 82. Local-Only Security Mode
-
-When enabled:
-
-``` text
-no external AI calls
-no external OCR calls
-no external web retrieval
-```
-
-unless explicitly authorized for a specific operation.
-
-# 83. Source Retention Policy
-
-Build records shall retain:
-
-``` text
-source hash
-source metadata
-evidence references
-```
-
-Whether raw source files are retained is a project policy.
-
-The system shall support:
-
-``` text
-retain
-reference-only
-delete-after-build
-```
-
-# 84. Provenance Integrity
-
-If a source document is replaced:
-
-``` text
-document hash changes
-→ evidence becomes stale
-→ IR values become stale
-→ dependent artifacts become stale
-```
-
-No old evidence may silently attach to a new document.
-
-# 85. Evidence Staleness
-
-Evidence states:
-
-``` text
-CURRENT
-STALE
-INVALID
-SUPERSEDED
-```
-
-A stale evidence object cannot support approval until revalidated.
-
-# 86. Revision Diff
-
-Semantic diff output:
-
-``` yaml
-changes:
-  - path: pins[7].name
-    old: "EN"
-    new: "ENABLE"
-    category: electrical
-  - path: package.mechanical.body.height
-    old: 0.80
-    new: 0.85
-    category: mechanical
-```
-
-# 87. Review Decision Persistence
-
-A review decision shall store:
-
-``` text
-build ID
-reviewer
-timestamp
-decision
-comment
-issue IDs addressed
-override IDs created
-```
-
-# 88. Approval Immutability
-
-Once a build is approved:
-
-``` text
-approved build inputs are immutable
-approved artifacts are immutable
-approved manifest is immutable
-```
-
-Changes create a new build.
-
-# 89. Release IDs
-
-Approved builds receive:
-
-``` text
-release_id
-```
-
-Example:
-
-``` text
-BFTREL-2026-000123
-```
-
-The release ID is separate from the build ID.
-
-# 90. Release Manifest
-
-The release manifest shall include:
-
-``` text
-release_id
-build_id
-component identity
-artifact hashes
-PDL revision
-BFT version
-KiCad target
-validation summary
-reviewer
-timestamp
-```
-
-# 91. Component Library Update Policy
-
-A library update shall compare:
-
-``` text
-existing release
-vs
-new release
-```
-
-and show semantic changes before replacing anything.
-
-# 92. Duplicate/Near-Duplicate Detection
-
-Similarity features:
-
-``` text
-normalized MPN
-package
-pin count
-pin map
-body dimensions
-pad geometry
-symbol hash
-footprint hash
-```
-
-The system may report:
-
-``` text
-EXACT_DUPLICATE
-LIKELY_DUPLICATE
-POSSIBLE_DUPLICATE
-UNRELATED
-```
-
-This classification is informational and does not replace human review.
-
-# 93. Documentation Extraction Acceptance
-
-The extraction subsystem is considered acceptable when it can correctly
-preserve:
-
-``` text
-page
-bounding box
-source text
-table rows
-diagram regions
-language
-document hash
-```
-
-for the initial test corpus.
-
-# 94. AI Extraction Acceptance
-
-AI is considered integrated when it can:
-
-``` text
-return typed candidates
-cite evidence IDs
-identify ambiguity
-identify conflicts
-avoid inventing missing values
-```
-
-A successful AI call alone does not constitute component acceptance.
-
-# 95. PDL Acceptance
-
-A PDL record is accepted only after:
-
-``` text
-schema PASS
-topology PASS
-mechanical evidence PASS
-land-pattern evidence PASS
-coordinate contract PASS
-3D strategy PASS
-```
-
-# 96. Generator Acceptance
-
-Each generator must pass:
-
-``` text
-golden output
-negative input rejection
-determinism
-schema/format validation
-```
-
-# 97. Cross-Validation Acceptance
-
-Cross-validation must detect every injected fault in the initial fault
-corpus.
-
-False negatives are release-blocking.
-
-# 98. Reproducibility Acceptance
-
-Run:
-
-``` text
-build A
-build B
-```
-
-with identical inputs.
-
-Required:
-
-``` text
-IR hash identical
-artifact hashes identical
-validation results identical
-manifest inputs hash identical
-```
-
-# 99. CI Reproducibility
-
-At least one golden build shall be reproduced in a clean CI environment.
-
-# 100. First Implementation Backlog
-
-Priority order:
-
-``` text
-BFT-001 repository bootstrap
-BFT-002 schema package
-BFT-003 core value/unit types
-BFT-004 canonical JSON
-BFT-005 hashing
-BFT-006 SQLite migrations
-BFT-007 evidence store
-BFT-008 PDL store
-BFT-009 PDL topology engine
-BFT-010 Component IR model
-BFT-011 IR validator
-BFT-012 symbol generator
-BFT-013 footprint generator
-BFT-014 3D generator
-BFT-015 geometry engine
-BFT-016 coordinate transforms
-BFT-017 validators
-BFT-018 cross-validator
-BFT-019 build orchestrator
-BFT-020 dependency graph
-BFT-021 golden fixtures
-BFT-022 negative fixtures
-BFT-023 PDF adapter
-BFT-024 OCR adapter
-BFT-025 AI provider adapter
-BFT-026 review UI
-BFT-027 3D viewer
-BFT-028 KiCad adapter
-BFT-029 export/install
-BFT-030 CI/security hardening
-```
-
-# 101. BFT-001 --- Repository Bootstrap
-
-Deliver:
-
-``` text
-pyproject.toml
-src/partsmith/
-tests/
-schemas/
-pdl/
-migrations/
-fixtures/
-```
-
-Acceptance:
-
-``` text
-pytest runs
-package imports
-CLI returns version
-```
-
-# 102. BFT-002 --- Schema Package
-
-Deliver:
-
-``` text
-component-ir-1.0.json
-evidence-1.0.json
-pdl-1.0.json
-manifest-1.0.json
-validation-1.0.json
-```
-
-Acceptance:
-
-``` text
-valid fixtures PASS
-invalid fixtures FAIL
-```
-
-# 103. BFT-003 --- Core Engineering Types
-
-Implement:
-
-``` text
-Dimension
-Angle
-Point2
-Point3
-Vector2
-Vector3
-Transform
-BoundingBox
-Tolerance
-ValueStatus
-```
-
-# 104. BFT-004 --- Canonicalization
-
-Implement:
-
-``` python
-canonical_json(obj) -> bytes
-sha256_bytes(data) -> str
-sha256_file(path) -> str
-```
-
-Acceptance includes known hash vectors.
-
-# 105. BFT-005 --- Persistence
-
-Implement repositories:
-
-``` text
-ComponentRepository
-DocumentRepository
-EvidenceRepository
-BuildRepository
-ArtifactRepository
-ValidationRepository
-ReviewRepository
-```
-
-# 106. BFT-006 --- Evidence Store
-
-Support:
-
-``` text
-create
-get
-list
-link
-supersede
-invalidate
-```
-
-# 107. BFT-007 --- PDL Store
-
-Support:
-
-``` text
-load
-validate
-list
-resolve
-compare
-```
-
-# 108. BFT-008 --- Topology Engine
-
-Input:
-
-``` text
-PDL topology
-```
-
-Output:
-
-``` text
-expected physical pin coordinates
-pin ordering
-side membership
-pin-1 reference
-```
-
-# 109. BFT-009 --- Component IR Builder
-
-Input:
-
-``` text
-evidence
-AI candidates
-PDL candidate
-overrides
-```
-
-Output:
-
-``` text
-canonical IR
-issues
-provenance graph
-```
-
-# 110. BFT-010 --- Symbol Generator
-
-Initial scope:
-
-``` text
-single-unit symbols
-power pins
-standard pin types
-reference/value fields
-datasheet field
-footprint association
-```
-
-# 111. BFT-011 --- Footprint Generator
-
-Initial scope:
-
-``` text
-0402
-0603
-0805
-SOT-23
-SOIC-8
-TSSOP-16
-QFN-16
-QFN-24
-```
-
-# 112. BFT-012 --- 3D Generator
-
-Initial scope:
-
-``` text
-chip body
-lead/body packages
-QFN body
-QFN leads
-pin-1 marker
-STEP export
-```
-
-# 113. BFT-013 --- Geometry Engine
-
-Must support:
-
-``` text
-rectangle
-circle
-line
-arc
-extrusion
-translation
-rotation
-mirror
-bounding box
-distance
-intersection
-```
-
-# 114. BFT-014 --- Validator Engine
-
-Implement initial rules:
-
-``` text
-IR-001 through IR-002
-PIN-001 through PIN-003
-PKG-001 through PKG-003
-FP-001 through FP-004
-3D-001 through 3D-004
-MAP-001 through MAP-002
-XVAL-001 through XVAL-005
-```
-
-# 115. BFT-015 --- Build Orchestrator
-
-Implement the state machine and resume behavior.
-
-# 116. BFT-016 --- Dependency Graph
-
-Implement path-based dependency invalidation.
-
-# 117. BFT-017 --- Golden Corpus
-
-Create the eight initial golden fixture directories.
-
-# 118. BFT-018 --- Fault Injection
-
-Implement transformations:
-
-``` text
-offset
-rotation
-mirror
-scale
-height
-pin-1 marker
-pad shift
-```
-
-# 119. BFT-019 --- Document Extraction
-
-Implement:
-
-``` text
-PDF inspection
-text extraction
-page rendering
-image extraction
-table extraction
-OCR adapter
-```
-
-# 120. BFT-020 --- AI Adapter
-
-Implement one provider first behind:
-
-``` python
-AIProvider
-```
-
-The provider implementation is replaceable.
-
-# 121. BFT-021 --- Review UI
-
-Initial screens:
-
-``` text
-build dashboard
-evidence viewer
-IR editor
-package panel
-validation panel
-approval panel
-```
-
-# 122. BFT-022 --- 3D Viewer
-
-Initial capabilities:
-
-``` text
-rotate
-pan
-zoom
-standard views
-overlay
-measurement
-transform display
-pin-1 highlight
-```
-
-# 123. BFT-023 --- KiCad Adapter
-
-Initial capabilities:
-
-``` text
-version detection
-CLI invocation
-IPC connection
-library validation
-project-local installation
-```
-
-# 124. BFT-024 --- Export
-
-Implement:
-
-``` text
-atomic export
-manifest
-backup
-rollback
-library table update
-audit record
-```
-
-# 125. BFT-025 --- CI Hardening
-
-Implement all ten CI gates.
-
-# 126. v0.8.1 Specification Exit Criteria
-
-The specification baseline is implementation-ready when:
-
-``` text
-[ ] all normative schemas exist
-[ ] all initial PDL records exist as placeholders
-[ ] domain model contracts compile
-[ ] database migration runs
-[ ] validator rule registry exists
-[ ] build dependency graph is defined
-[ ] fixture IDs are assigned
-[ ] first implementation backlog is accepted
-[ ] KiCad 10 target is configured
-[ ] no architectural boundary remains undefined
-```
-
-# 127. v0.9 Implementation Boundary
-
-v0.9 shall be the **Executable Specification**.
-
-It should contain the first actual implementation artifacts:
-
-``` text
-JSON Schema files
-PDL YAML records
-Python package skeleton
-SQLite migrations
-initial validators
-initial generators
-golden fixtures
-CLI skeleton
-CI configuration
-```
-
-The goal of v0.9 should be:
-
-> **A runnable B.F.T. PartSmith skeleton that can build and validate at
-> least one deterministic component end-to-end without AI.**
-
-# 128. Final v0.8.5 Position
-
-The project is now ready to move from specification into implementation.
-
-The intended sequence is:
-
-``` text
-v0.5
-Architecture/data model
-
-v0.6
-Architecture hardening
-
-v0.7
-Implementation contract
-
-v0.8
-Direct build specification
-
-v0.8.1
-Contradiction-corrected build specification
-
-v0.8.2
-Feature-set-refined build specification
-
-v0.8.3
-Component acquisition feature + full-spec review
-
-v0.9
-Executable repository specification / code skeleton
-```
-
-The first implementation milestone should deliberately **exclude AI**.
-
-The first end-to-end success should be:
-
-``` text
-Known-good structured Component IR
-        ↓
-PDL
-        ↓
-Symbol
-        ↓
-Footprint
-        ↓
-Independent 3D model
-        ↓
-Deterministic validation
-        ↓
-Footprint/3D cross-validation
-        ↓
-KiCad validation
-        ↓
-Approved component
-```
-
-Once that deterministic path works, document intelligence and AI
-interpretation can be inserted upstream without allowing AI behavior to
-define engineering correctness.
-
-> **The AI should make B.F.T. faster at understanding components. It
-> should never become the mechanism by which B.F.T. decides whether a
-> component is correct.**
-
-------------------------------------------------------------------------
-
-# v0.8.5 Final Consistency Statement
-
-The specification is internally organized around the engineering build
-layers plus a separate acquisition boundary:
-
-``` text
-SOURCE / EVIDENCE
-        ↓
-COMPONENT IR + PDL
-        ↓
-DETERMINISTIC GENERATORS
-        ↓
-INDEPENDENT ARTIFACTS
-        ↓
-DETERMINISTIC VALIDATION
-        ↓
-CROSS-VALIDATION
-        ↓
-HUMAN REVIEW / APPROVAL
-        ↓
-FINAL ASSOCIATION + EXPORT
-
-                 ┌──────────────────────┐
-                 │  B.F.T. Acquisition  │
-                 │  AI Build | Purchase │
-                 └──────────────────────┘
-```
-
-No later stage is permitted to become the hidden source of truth for an
-earlier stage.
-
-# Appendix --- Current KiCad References
-
-The KiCad-specific portions of this specification were checked against
-current KiCad documentation. KiCad 10 documentation identifies native
-symbol and footprint library formats and current CLI behavior; the
-official `kicad-python` project documents Python bindings for the KiCad
-IPC API. The specification intentionally treats these interfaces as
-versioned integration boundaries.
-citeturn0search12turn0search9turn0search0
-
-------------------------------------------------------------------------
-
-# v0.8.5 Full-Spec Review and Baseline Cleanup
-
-This release is a **specification consistency and
-implementation-readiness review** of v0.8.4. It adds no product
-features.
-
-## REVIEW-011 --- Product identity is now normative
-
-The current product identity is:
-
-``` text
-B.F.T. — Board Forge Tools
-        │
-        └── PartSmith
-            AI-Driven Component Builder
-            Repository: partsmith
-```
-
-B.F.T. is the parent suite. PartSmith is the named product/tool.
-`partsmith` is the independent repository.
-
-Historical references to "Tool 01" remain only where they describe the
-version-history context of the specification. Current normative
-references use **PartSmith**.
-
-## REVIEW-012 --- Repository independence is normative
-
-PartSmith shall be independently:
-
--   built
--   tested
--   versioned
--   released
--   packaged
--   documented
-
-The PartSmith repository shall not require a monolithic B.F.T.
-repository.
-
-B.F.T.-wide conventions may be shared conceptually or through separately
-defined reusable standards, but PartSmith's build must remain
-independently executable.
-
-## REVIEW-013 --- Acquisition boundary remains unchanged
-
-The v0.8.3 acquisition feature remains exactly one product capability:
-
-``` text
-PartSmith
-   │
-   ├── Build with AI
-   │
-   └── Purchase from B.F.T.
-```
-
-No commerce infrastructure is added to the PartSmith engineering core by
-this release.
-
-## REVIEW-014 --- Deterministic engineering authority remains unchanged
-
-The governing architecture remains:
-
-``` text
-AI interprets
-      ↓
-Component IR
-      ↓
-PDL + authoritative evidence
-      ↓
-Deterministic generators
-      ↓
-Deterministic validators
-      ↓
-Human review
-      ↓
-Released KiCad component
-```
-
-AI does not construct final KiCad artifacts directly, and purchase
-status does not replace engineering validation/release authority.
-
-## REVIEW-015 --- Feature set remains frozen
-
-No additional user-facing product feature is introduced in v0.8.5.
-
-The existing PartSmith feature set remains the approved scope:
-
--   document/evidence ingestion
--   component identification and extraction
--   Component IR
--   package/PDL handling
--   symbol generation
--   footprint generation
--   independent 3D generation
--   deterministic validation
--   footprint/3D cross-validation
--   2D/3D review
--   human approval
--   native KiCad export
--   AI-build vs. B.F.T.-purchase choice
-
-## REVIEW-016 --- v0.9 boundary is unchanged
-
-v0.9 remains the first executable repository specification.
-
-It shall translate the current normative requirements into actual
-repository artifacts including:
-
-``` text
-schemas
-PDL records
-Python package
-database migrations
-generators
-validators
-fixtures
-CLI
-CI
-```
-
-The first executable milestone remains deliberately AI-free so that
-deterministic component construction and validation are proven before AI
-interpretation is introduced.
-
-## REVIEW-017 --- Historical numbering is retained for traceability
-
-The v0.8.x history contains prior review sections and implementation
-planning sections. Those historical sections are retained rather than
-rewritten as though they were authored in v0.8.5.
-
-Current implementation decisions are governed by the latest normative
-sections and this review.
-
-## REVIEW-018 --- No unresolved product-architecture contradiction identified
-
-The review found no new contradiction requiring a change to:
-
--   Component IR
--   PDL
--   evidence hierarchy
--   provenance
--   independent artifact generation
--   coordinate transforms
--   validation
--   cross-validation
--   reproducibility
--   KiCad integration
--   acquisition boundary
--   repository independence
-
-# v0.8.3 Release Position (Historical)
-
-**Feature-set decision:** The feature set is now frozen with one
-additional capability: **Component Acquisition Choice**.
-
-``` text
-                         TOOL 01
-                            │
-                 ┌──────────┴──────────┐
-                 │                     │
-             BUILD WITH AI         PURCHASE
-                 │                  FROM B.F.T.
-                 │                     │
-                 ▼                     ▼
-          Existing deterministic   Released B.F.T.
-             build path             component
-                 │                     │
-                 └──────────┬──────────┘
-                            ▼
-                    Native KiCad Use
-```
-
-The commercial path is intentionally separated from the engineering
-core.
-
-The next implementation specification remains **v0.9**, with the
-acquisition boundary represented in the executable architecture but
-without making commerce infrastructure part of the deterministic
-engineering bootstrap.
-
-------------------------------------------------------------------------
-
-# v0.8.4 Product Identity Correction (Historical)
-
-This release explicitly establishes the product and repository
-hierarchy.
-
-## ID-001 --- B.F.T. is the parent suite
-
-B.F.T. means **Board Forge Tools** and represents the complete family of
-tools.
-
-## ID-002 --- PartSmith is the named product
-
-The current tool is:
-
-> **PartSmith --- AI-Driven Component Builder**
-
-## ID-003 --- PartSmith is independently hosted
-
-The implementation repository is:
-
-``` text
-partsmith
-```
-
-PartSmith is independently buildable, testable, versioned, and released.
-It does not require a monolithic B.F.T. repository.
-
-## ID-004 --- No additional feature is introduced
-
-This release changes product naming and repository organization only.
-The acquisition feature remains the only product feature added in
-v0.8.3.
-
-------------------------------------------------------------------------
-
-# v0.8.5 Current Release Position
-
-**PartSmith** is the named B.F.T. product covered by this specification.
-
-``` text
-B.F.T.
-Board Forge Tools
-│
-├── PartSmith
-│   AI-Driven Component Builder
-│   Independent repository: partsmith
-│
-└── Other B.F.T. tools
-    Independent repositories
-```
-
-The PartSmith feature set is frozen at the current scope. The only
-product capability added in the v0.8.x review sequence beyond the
-original builder is the acquisition choice:
-
-``` text
-Build with AI
-OR
-Purchase from B.F.T.
-```
-
-No additional feature is introduced by v0.8.5.
-
-**Next version:** v0.9 --- Executable PartSmith Repository
-Specification.
-# v0.9.2 Full-Spec Review and Resolution Log
-
-## REVIEW-019 — CadQuery backend architecture selected
-
-The specification previously contained stale sections that described an
-OpenSCAD-based or backend-neutral 3D pipeline. The current architecture uses
-CadQuery/OCP/OCCT as the sole 3D implementation runtime consuming Component
-IR and PDL and exporting STEP directly.
-
-## REVIEW-020 — STEP requirement unified
-
-STEP is mandatory wherever a component includes 3D. The specification now
-uses one normative rule: a required 3D component cannot pass release
-acceptance without a valid STEP artifact.
-
-## REVIEW-021 — Historical material explicitly subordinated
-
-Historical v0.8/v0.8.x sections remain for traceability, but current v0.9.3
-normative sections take precedence. Stale historical statements must not
-be interpreted as current requirements.
-
-## REVIEW-022 — Clean installation unified
-
-CadQuery, OCP, OCCT, and Python are runtime dependencies managed by PartSmith
-rather than separate customer installation requirements.
-Development environments may still install them independently.
-
-## REVIEW-023 — AI billing/authentication unified
-
-External AI provider usage is user-account based: the user supplies the
-provider credential and pays the provider directly. Credentials remain
-secret and are excluded from engineering artifacts and reproducibility
-hashes.
-
-## REVIEW-024 — Implementation plan aligned with architecture
-
-The small-step implementation plan now uses a pinned CadQuery/OCP/OCCT spike
-with explicit STEP-equivalence measurements before committing production
-packaging. The first complete deterministic component remains the principal
-milestone before AI integration.
-
----
-
-# v0.9.3 Cleanup Note
-
-**Document purpose:** v0.9.3 implementation baseline, revised for a single,
-release-capable CadQuery 3D path.
-
-This revision resolves the previous 3D-backend ambiguity. It selects
-CadQuery/OCP/OCCT as the only 3D-generation runtime, removes OpenSCAD from
-the current normative implementation path, and adds requirements for pinned
-runtime tuples, dependency hashes, and measurable Phase 6 STEP validation.
-Historical v0.8/v0.8.x text remains non-normative and is retained solely for
-traceability. The engineering decisions include:
-
-- STEP is mandatory for every released 3D component.
-- CadQuery/OCP/OCCT is the sole 3D-generation runtime.
-- Footprint and 3D generation remain independent.
-- AI interprets evidence and proposes IR content; deterministic generators and
-  validators remain authoritative.
-- Customer installation is a single PartSmith installation with required
-  runtime dependencies provisioned by PartSmith.
-- User-supplied AI credentials and direct provider billing remain the model.
-- The first implementation path remains deterministic and AI-free.
-
-**Status:** Implementation baseline — documentation cleanup complete.
+PartSmith is independently packaged as `partsmith` with `src/partsmith` and
+the `partsmith` executable. The hosting repository URL/path spelling is external
+metadata and does not change product identity. No `bft` launcher is required.
+
+Component acquisition/purchase is explicitly deferred beyond the Phases 0–14
+MVP. Current scope is the deterministic build workflow with later AI-assisted
+interpretation. Historical ACQ requirements are not current implementation
+requirements. A future acquisition revision must define exact identity matching,
+immutable released-package verification, acquisition metadata separate from
+engineering hashes, and a commerce boundary outside the engineering core.
+
+The v0.9.5 IR 1.2 schema/code/migration/fixtures and profile 1.1 projections are
+implemented. Their unchanged Phase 2 scope supplies the prerequisite for Phase 3.
+The IR 1.1 PASS remains tied to v0.9.4. No earlier gate hash is rewritten to imply
+verification of this revision. v0.9.6 profile 1.2 projections and downstream
+services/storage/install contracts remain pending at their assigned later-phase
+gates. Specification-level resolution is not an implementation PASS.
+
+# 246. Consistency Resolution Register
+
+The following decisions resolve the 2026-09-19 review at specification level.
+They do not assert that pending implementation work or tests have completed.
+
+| Finding | Normative resolution |
+| --- | --- |
+| R01 | Sections 88, 96, 121.2: active closure and explicit resolution records; immutable superseded history does not block by status alone |
+| R02 | Section 121.1: null candidate values/units and unresolved reasons, concrete values required only for selected generation inputs |
+| R03 | Sections 95/121.1: one power_in/power_out electrical enum; power flag is not a physical pin type |
+| R04 | STD-007/121.1: manufacturer-recommended, IPC-derived, PDL-derived source enum; overrides are separate provenance |
+| R05 | Phase 8: minimal orchestrator, headless approval and KiCad adapter precede later UI/IPC expansion |
+| R06 | Sections 121.2/137: input-only IR_VALIDATED versus post-generation APPROVED |
+| R07 | Sections 159/160: HUMAN_REVIEW_REQUIRED waiting state, HUMAN_REVIEW validation result |
+| R08 | Sections 121.3/166–167/188: frozen inputs, dependency projections, deterministic content versus audit envelope |
+| R09 | Section 92: complete frame, handedness, Euler/matrix, origin, and adapter-conversion contract |
+| R10 | Section 153: blockers cannot be warning-waived; WARN policy and phase waivers are distinct |
+| R11 | Section 13: STEP-only PartSmith output list |
+| R12 | STD-002/10/113: all MVP production releases require STEP; partial previews are not releases |
+| R13 | Sections 148–149/227: declared applicability, measured versus declared anchors, contact relations, and symmetry tests |
+| R14 | Sections 118/168–171/245: partsmith package/repository/executable vocabulary |
+| R15 | Sections 85/121.1: required revision/document link and explicit content-hash basis for unversioned sources |
+| R16 | Product header/245: purchase explicitly deferred to a separately specified post-MVP extension |
+| R17 | STD-014: role baseline, per-entry evidence, and executable reproducibility are separate milestones |
+| R18 | Phase 14/235–240: numbered plan is authoritative; all eight production variants required at release |
+| R19 | Section 205: adapter replacement within CadQuery runtime; new runtime requires specification revision |
+| R20 | Section 121.5/221/223: structured standards and translation records with explicit hash/provenance inclusion |
+
+Editorial resolutions: version/readiness/date labels distinguish current baseline
+from original authorship; section 245 has operative content; explanatory
+examples are labeled; current citation placeholders are replaced by section 247.
+
+## v0.9.5 review resolutions
+
+All V094 findings are resolved at specification level by the decisions below.
+Implementation and gate status is recorded in the header and phase reports. The
+[original review](../docs/spec-consistency-review-v0.9.4.md) and probes are
+preserved as evidence of the reviewed v0.9.4 baseline.
+
+| Finding | Decision | Normative sections |
+| --- | --- | --- |
+| V094-01 | Typed overrides | 88, 121.6; typed registry and active bindings including pin/placement leaves |
+| V094-02 | Evidence relevance | 121.7; candidate targets independent of selection, review inventory and transition checks |
+| V094-03 | Decision history | 121.8; immutable inline decisions, bound snapshots and explicit active selectors |
+| V094-04 | Hash binding cycles | 166; snapshot profile 1.1 distinguishes dependency, binding, and history edges |
+| V094-05 | Transform closure | 92/150; full affine composition/inversion, explicit adapter rejection |
+| V094-06 | Applicability | 148/152; strict IR 1.2 fields, null status for declared exclusions |
+| V094-07 | Final bytes | Phase 8/141/167; final association checks, exact-byte invalidation and approval |
+| V094-08 | Manifest graph | 155/166/167; post-manifest/comparison results outside deterministic manifests |
+| V094-09 | Backend equivalence | Phase 9/166/188; byte identity is mandatory; equivalence diagnostic only |
+| V094-10 | Headless workflow | 11/167; automated placement and CLI review precede UI |
+| V094-11 | Release scope | 31/50/98/181; one release matrix, eight variants, CLASS_A, provider/language coverage |
+| V094-12 | Terminal counts | 84.1/93.1/148/228/231; exposed terminals and compound group/shape counts |
+| V094-13 | Source rectangles | 124.1; document-page-1.0 and retained render transforms |
+| V094-14 | Historical material | linked unchanged archive; no obsolete contracts in the active text |
+| V094-15 | Duplicate prose | 11/15/30/32/90/116/142/174/175/247; authoritative definitions and cross-references |
+| V094-16 | Stale navigation | v0.9.5 labels, current-section navigation, canonical examples and dated sources |
+
+## v0.9.6 downstream review resolutions
+
+The [v0.9.5 downstream review](../docs/spec-downstream-impact-review-v0.9.5.md)
+is retained unchanged. The following decisions resolve its findings at
+specification level; implementation and test evidence remain due at the named
+gates. The earlier resolution tables describe their original revision scopes.
+
+| Finding | Concrete solution | Sections and delivery gates |
+| --- | --- | --- |
+| D095-01 | Preserve immutable component bundles; separately hash, validate, authorize and atomically publish packed installation aggregates with source bindings and rollback | 167/174.1/175/212/216–218; contracts in Phase 8, shared installation in Phase 13 |
+| D095-02 | Typed input proposal/approval/rejection services bound to revision/inventory hashes, distinct from release approval; append approved decisions and reject stale heads | 2.1/159/163/168/172/203; service Phase 8, UI Phase 12 |
+| D095-03 | Retain immutable ancestry/inventories, transactional forward migrations, versioned bundle object index, verified closure import and explicit offline availability | 163/175; persistence/import Phase 8, offline replay Phase 9 |
+| D095-04 | Snapshot profile 1.2 scopes trusted configuration per generator/validator/finalizer while the full snapshot retains complete runtime inputs; retain profile 1.1 hashes unchanged | 166; incremental projection implementation Phases 4–6, whole-build integration Phases 8–9 |
+| D095-05 | Silkscreen edits invalidate results bound to changed footprint bytes, final checks, manifest and approval while preserving independent STEP geometry | 103/167; Phases 8–9 negative/reuse tests |
+| D095-06 | Two clean independent STEP exports must be byte-identical in the CAD spike, with deterministic settings and revalidated normalization | Phase 6 gate; whole-build Phase 9 test retained |
+| Metadata remnants | Current product/spec headers consistently identify v0.9.6 and 2026-09-20; earlier review/gate versions remain historical | Header/product description/245/246 |
+| Count/fault examples | QFN examples distinguish peripheral leads, conductive exposed terminals and groups; blanket fault language excludes allowed symmetry-equivalence positives | 6/21/93.1/241 |
+| Downstream checkpoints | Define supported pin-edit sequencing, complete PDL feature declarations, and required-rule result aggregation | 121.7/126/152; Phases 3/7–8/12 |
+
+# 247. External Reference Register
+
+Documentation entry points checked 2026-09-19:
+
+| Reference | Entry point and limits |
+| --- | --- |
+| KiCad native formats | [Official s-expression format overview](https://dev-docs.kicad.org/en/file-formats/sexpr-intro/index.html) and [footprint format](https://dev-docs.kicad.org/en/file-formats/sexpr-footprint/index.html); capture the exact format/version used in compatibility evidence |
+| KiCad 10 CLI | [Version 10.0 CLI manual](https://docs.kicad.org/10.0/en/cli/cli.pdf); installed-version capability tests govern available commands, not master documentation |
+| KiCad 10 symbol storage | [Official schematic editor manual](https://docs.kicad.org/10.0/en/eeschema/eeschema.html); packed/unpacked capability checked 2026-09-20; adapter fixtures establish supported operations |
+| GitHub Models retirement | [Official 2026-07-01 announcement](https://github.blog/changelog/2026-07-01-github-models-is-being-fully-retired-on-july-30-2026/); retirement dated 2026-07-30, checked 2026-09-20; not a supported provider target |
+| IPC-7351 | [Official published contents/reference](https://www.ipc.org/TOC/IPC-7351.pdf); this entry is not a licensed full standard or approval of any derived land pattern |
+| JEDEC | [Official standards organization](https://www.jedec.org/); each PDL entry must supply its exact applicable document/edition or manufacturer-specific evidence |
+
+These entry points establish traceable documentation sources, not final
+package evidence. Every implementation/PDL review records exact edition or
+build version, relevant section/table, access date, and retained engineering
+values per STD-011/121.5. Runtime-specific facts and provider interfaces must
+be rechecked when implementing their adapter; publication of this register
+does not claim universal support or completion of the eight-package review.
+
+# Appendix --- Historical Material
+
+The unchanged v0.8/v0.8.x appendix extracted from v0.9.4 is available in
+[the archive](history/BFT_PartSmith_Historical_Appendix_v0.9.4.md). It contains
+superseded drafts and review logs, not active requirements. Current section IDs
+are retained for stable references; reserved IDs 59–83 are not missing MVP work.
+Earlier reviews remain available in [the review history](../docs/spec-consistency-review.md)
+and [the v0.9.4 review](../docs/spec-consistency-review-v0.9.4.md).

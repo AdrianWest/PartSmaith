@@ -1,0 +1,74 @@
+[
+  {
+    "file": "unknown-version.json",
+    "code": "IR_VERSION",
+    "path": "/schema_version",
+    "for_generation": false
+  },
+  {
+    "file": "legacy-source.json",
+    "code": "IR_SCHEMA",
+    "path": "/footprint/land_pattern_source",
+    "for_generation": false
+  },
+  {
+    "file": "legacy-power.json",
+    "code": "IR_SCHEMA",
+    "path": "/pins/0/electrical_type",
+    "for_generation": false
+  },
+  {
+    "file": "legacy-frame.json",
+    "code": "IR_SCHEMA",
+    "path": "/model_3d/placement/convention_version",
+    "for_generation": false
+  },
+  {
+    "file": "document-link.json",
+    "code": "IR_IDENTITY",
+    "path": "/identity/source_revision",
+    "for_generation": false
+  },
+  {
+    "file": "revision-conflict.json",
+    "code": "IR_IDENTITY",
+    "path": "/identity/source_revision",
+    "for_generation": false
+  },
+  {
+    "file": "missing-resolutions-type.json",
+    "code": "IR_SCHEMA",
+    "path": "/resolutions",
+    "for_generation": false
+  },
+  {
+    "file": "unknown-field.json",
+    "code": "IR_SCHEMA",
+    "path": "/identity",
+    "for_generation": false
+  },
+  {
+    "file": "negative-scale.json",
+    "code": "IR_TRANSFORM",
+    "path": "/model_3d/placement/scale",
+    "for_generation": false
+  },
+  {
+    "file": "active-conflict.json",
+    "code": "IR_UNRESOLVED",
+    "path": "/package/mechanical/body_width",
+    "for_generation": true
+  },
+  {
+    "file": "null-source-resolved.json",
+    "code": "IR_SCHEMA",
+    "path": "/footprint/status",
+    "for_generation": false
+  },
+  {
+    "file": "dangling-evidence.json",
+    "code": "IR_REFERENCE",
+    "path": "/package/mechanical/body_width",
+    "for_generation": false
+  }
+]

@@ -1,0 +1,80 @@
+[
+  {
+    "file": "missing-domain.json",
+    "code": "IR_SCHEMA",
+    "path": "",
+    "for_generation": false
+  },
+  {
+    "file": "unknown-schema-version.json",
+    "code": "IR_VERSION",
+    "path": "/schema_version",
+    "for_generation": false
+  },
+  {
+    "file": "unknown-property.json",
+    "code": "IR_SCHEMA",
+    "path": "/identity",
+    "for_generation": false
+  },
+  {
+    "file": "numeric-pin-number.json",
+    "code": "IR_SCHEMA",
+    "path": "/pins/0/number",
+    "for_generation": false
+  },
+  {
+    "file": "duplicate-pin.json",
+    "code": "IR_PIN_DUPLICATE",
+    "path": "/pins/1/number",
+    "for_generation": false
+  },
+  {
+    "file": "wrong-pin-count.json",
+    "code": "IR_TOPOLOGY",
+    "path": "/package/pin_count",
+    "for_generation": false
+  },
+  {
+    "file": "unsupported-unit.json",
+    "code": "IR_UNIT",
+    "path": "/package/mechanical/body_width/source_unit",
+    "for_generation": false
+  },
+  {
+    "file": "negative-dimension.json",
+    "code": "IR_DIMENSION",
+    "path": "/package/mechanical/body_width",
+    "for_generation": false
+  },
+  {
+    "file": "contradictory-bounds.json",
+    "code": "IR_DIMENSION",
+    "path": "/package/mechanical/body_length",
+    "for_generation": false
+  },
+  {
+    "file": "missing-evidence-reference.json",
+    "code": "IR_REFERENCE",
+    "path": "/pins/0",
+    "for_generation": false
+  },
+  {
+    "file": "singular-transform.json",
+    "code": "IR_TRANSFORM",
+    "path": "/model_3d/placement/scale",
+    "for_generation": false
+  },
+  {
+    "file": "absolute-path.json",
+    "code": "IR_PATH",
+    "path": "/source/documents/0/path",
+    "for_generation": false
+  },
+  {
+    "file": "inferred-critical-value.json",
+    "code": "IR_UNRESOLVED",
+    "path": "/package/mechanical/body_width",
+    "for_generation": true
+  }
+]
