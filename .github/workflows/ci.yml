@@ -31,12 +31,13 @@ jobs:
         run: python -m ruff format --check .
       - name: Test
         run: python -m pytest --junitxml=gate-results.xml
-      - name: Verify installed wheel and migration resource
+      - name: Verify installed wheel and packaged resources
         run: |
           python -m pip wheel . --no-deps --wheel-dir dist
           python -c "import pathlib, subprocess, sys; wheels = list(pathlib.Path('dist').glob('*.whl')); assert len(wheels) == 1, f'Expected exactly one built wheel, found {len(wheels)}'; subprocess.run([sys.executable, '-m', 'pip', 'install', '--force-reinstall', '--no-deps', str(wheels[0])], check=True)"
           python -c "from importlib.resources import files; assert files('partsmith.persistence').joinpath('001_initial.sql').is_file()"
-          python -m pytest tests/test_persistence.py --junitxml=wheel-gate-results.xml
+          python -c "from importlib.resources import files; from pathlib import Path; import partsmith.ir; from partsmith.ir import SUPPORTED_VERSIONS; assert 'site-packages' in str(Path(partsmith.ir.__file__).resolve()); assert all(files('partsmith.ir').joinpath(f'component-ir-{v}.schema.json').read_bytes() == Path(f'schemas/component-ir-{v}.schema.json').read_bytes() for v in SUPPORTED_VERSIONS)"
+          python -m pytest --junitxml=wheel-gate-results.xml
       - name: Check command-line entry point
         run: |
           partsmith version

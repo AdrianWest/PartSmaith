@@ -1,0 +1,13 @@
+{
+  "python": "3.12.10",
+  "partsmith": "0.1.0",
+  "packaged_schema_verified": true,
+  "canonical_ir_sha256": "7a90c2784528ee872a1ea206b34282104909c1b9020cf7da8ca9520871521868",
+  "sha256": {
+    "schemas/component-ir-1.0.schema.json": "c58e687cd2e324edcec83eff1e0e7b5dbbb86ad95cecef3315679a28b8c82e6d",
+    "fixtures/ir/valid/0402.json": "8fdf5a74adf5ed04c884b763175de93fee63ea0e63d1950e4f6ea0f1b24ce622",
+    "fixtures/ir/expected/0402.canonical.json": "7a90c2784528ee872a1ea206b34282104909c1b9020cf7da8ca9520871521868",
+    "fixtures/ir/source/synthetic-0402.txt": "1c636a36d87288fa1de3c3ae29728713e00d773e126eb7464409a170b154fe55",
+    ".tools/phase-2-dist/partsmith-0.1.0-py3-none-any.whl": "db78ed459c546ba860e9089475dbe7c04df8fc1ba591f08e6e58f3ba76ec0e21"
+  }
+}

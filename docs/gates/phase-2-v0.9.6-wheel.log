@@ -1,0 +1,110 @@
+C:\GIT_HUB\PartSmaith\.venv\Scripts\python.exe -m pip wheel . --no-deps --wheel-dir C:\GIT_HUB\PartSmaith\.tools\phase-2-v096\dist
+Processing c:\git_hub\partsmaith
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Getting requirements to build wheel: started
+  Getting requirements to build wheel: finished with status 'done'
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+Building wheels for collected packages: partsmith
+  Building wheel for partsmith (pyproject.toml): started
+  Building wheel for partsmith (pyproject.toml): finished with status 'done'
+  Created wheel for partsmith: filename=partsmith-0.1.0-py3-none-any.whl size=76984 sha256=23bbc6ab98c4269f9908b1dd1c09b282a6d1c9505c60512b9b7e010460292976
+  Stored in directory: C:\Users\User\AppData\Local\Temp\pip-ephem-wheel-cache-foc91jpf\wheels\fc\ba\74\32adb5b52a3bfc4c460e1f300fcb4cd282bd589f2f97b232fa
+Successfully built partsmith
+
+[notice] A new release of pip is available: 25.0.1 -> 26.2.1
+[notice] To update, run: C:\GIT_HUB\PartSmaith\.venv\Scripts\python.exe -m pip install --upgrade pip
+C:\GIT_HUB\PartSmaith\.venv\Scripts\python.exe -m venv C:\GIT_HUB\PartSmaith\.tools\phase-2-v096\env
+C:\GIT_HUB\PartSmaith\.tools\phase-2-v096\env\Scripts\python.exe -m pip install -r requirements-ci.txt
+Collecting jsonschema==4.26.0 (from -r requirements-ci.txt (line 3))
+  Using cached jsonschema-4.26.0-py3-none-any.whl.metadata (7.6 kB)
+Collecting attrs==26.1.0 (from -r requirements-ci.txt (line 4))
+  Using cached attrs-26.1.0-py3-none-any.whl.metadata (8.8 kB)
+Collecting jsonschema-specifications==2025.9.1 (from -r requirements-ci.txt (line 5))
+  Using cached jsonschema_specifications-2025.9.1-py3-none-any.whl.metadata (2.9 kB)
+Collecting referencing==0.37.0 (from -r requirements-ci.txt (line 6))
+  Using cached referencing-0.37.0-py3-none-any.whl.metadata (2.8 kB)
+Collecting rpds-py==2026.6.3 (from -r requirements-ci.txt (line 7))
+  Using cached rpds_py-2026.6.3-cp312-cp312-win_amd64.whl.metadata (4.2 kB)
+Collecting typing-extensions==4.16.0 (from -r requirements-ci.txt (line 8))
+  Using cached typing_extensions-4.16.0-py3-none-any.whl.metadata (3.3 kB)
+Collecting colorama==0.4.6 (from -r requirements-ci.txt (line 9))
+  Using cached colorama-0.4.6-py2.py3-none-any.whl.metadata (17 kB)
+Collecting iniconfig==2.3.0 (from -r requirements-ci.txt (line 10))
+  Using cached iniconfig-2.3.0-py3-none-any.whl.metadata (2.5 kB)
+Collecting packaging==26.3 (from -r requirements-ci.txt (line 11))
+  Using cached packaging-26.3-py3-none-any.whl.metadata (3.5 kB)
+Collecting pluggy==1.6.0 (from -r requirements-ci.txt (line 12))
+  Using cached pluggy-1.6.0-py3-none-any.whl.metadata (4.8 kB)
+Collecting pygments==2.21.0 (from -r requirements-ci.txt (line 13))
+  Using cached pygments-2.21.0-py3-none-any.whl.metadata (2.5 kB)
+Collecting pytest==8.4.2 (from -r requirements-ci.txt (line 14))
+  Using cached pytest-8.4.2-py3-none-any.whl.metadata (7.7 kB)
+Collecting ruff==0.16.8 (from -r requirements-ci.txt (line 15))
+  Using cached ruff-0.16.8-py3-none-win_amd64.whl.metadata (21 kB)
+Using cached jsonschema-4.26.0-py3-none-any.whl (90 kB)
+Using cached attrs-26.1.0-py3-none-any.whl (67 kB)
+Using cached jsonschema_specifications-2025.9.1-py3-none-any.whl (18 kB)
+Using cached referencing-0.37.0-py3-none-any.whl (26 kB)
+Using cached rpds_py-2026.6.3-cp312-cp312-win_amd64.whl (220 kB)
+Using cached typing_extensions-4.16.0-py3-none-any.whl (45 kB)
+Using cached colorama-0.4.6-py2.py3-none-any.whl (25 kB)
+Using cached iniconfig-2.3.0-py3-none-any.whl (7.5 kB)
+Using cached packaging-26.3-py3-none-any.whl (129 kB)
+Using cached pluggy-1.6.0-py3-none-any.whl (20 kB)
+Using cached pygments-2.21.0-py3-none-any.whl (1.3 MB)
+Using cached pytest-8.4.2-py3-none-any.whl (365 kB)
+Using cached ruff-0.16.8-py3-none-win_amd64.whl (10.6 MB)
+Installing collected packages: typing-extensions, ruff, rpds-py, pygments, pluggy, packaging, iniconfig, colorama, attrs, referencing, pytest, jsonschema-specifications, jsonschema
+Successfully installed attrs-26.1.0 colorama-0.4.6 iniconfig-2.3.0 jsonschema-4.26.0 jsonschema-specifications-2025.9.1 packaging-26.3 pluggy-1.6.0 pygments-2.21.0 pytest-8.4.2 referencing-0.37.0 rpds-py-2026.6.3 ruff-0.16.8 typing-extensions-4.16.0
+
+[notice] A new release of pip is available: 25.0.1 -> 26.2.1
+[notice] To update, run: C:\GIT_HUB\PartSmaith\.tools\phase-2-v096\env\Scripts\python.exe -m pip install --upgrade pip
+C:\GIT_HUB\PartSmaith\.tools\phase-2-v096\env\Scripts\python.exe -m pip install --no-deps C:\GIT_HUB\PartSmaith\.tools\phase-2-v096\dist\partsmith-0.1.0-py3-none-any.whl
+Processing c:\git_hub\partsmaith\.tools\phase-2-v096\dist\partsmith-0.1.0-py3-none-any.whl
+Installing collected packages: partsmith
+Successfully installed partsmith-0.1.0
+
+[notice] A new release of pip is available: 25.0.1 -> 26.2.1
+[notice] To update, run: C:\GIT_HUB\PartSmaith\.tools\phase-2-v096\env\Scripts\python.exe -m pip install --upgrade pip
+C:\GIT_HUB\PartSmaith\.tools\phase-2-v096\env\Scripts\python.exe -c "
+from importlib.resources import files
+from pathlib import Path
+import partsmith.ir
+from partsmith.ir import SUPPORTED_VERSIONS
+assert 'site-packages' in str(Path(partsmith.ir.__file__).resolve())
+assert SUPPORTED_VERSIONS == ('1.0', '1.1', '1.2')
+for version in SUPPORTED_VERSIONS:
+    name = f'component-ir-{version}.schema.json'
+    assert files('partsmith.ir').joinpath(name).read_bytes() == Path('schemas', name).read_bytes()
+assert files('partsmith.persistence').joinpath('001_initial.sql').read_bytes() == Path('migrations/001_initial.sql').read_bytes()
+print('PASS: isolated wheel imports; all three schema bytes and migration match')
+"
+PASS: isolated wheel imports; all three schema bytes and migration match
+C:\GIT_HUB\PartSmaith\.tools\phase-2-v096\env\Scripts\python.exe -m pytest --junitxml=docs/gates/phase-2-v0.9.6-wheel-tests.xml
+============================= test session starts =============================
+platform win32 -- Python 3.12.10, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\GIT_HUB\PartSmaith
+configfile: pyproject.toml
+testpaths: tests
+collected 280 items
+
+tests\test_cli.py ....                                                   [  1%]
+tests\test_ir.py ....................................................... [ 21%]
+.........................                                                [ 30%]
+tests\test_ir_v11.py ................................................... [ 48%]
+..................................                                       [ 60%]
+tests\test_ir_v12.py ................................................... [ 78%]
+..............................................                           [ 95%]
+tests\test_persistence.py ............                                   [ 99%]
+tests\test_project.py ..                                                 [100%]
+
+- generated xml file: C:\GIT_HUB\PartSmaith\docs\gates\phase-2-v0.9.6-wheel-tests.xml -
+============================= 280 passed in 4.04s =============================
+C:\GIT_HUB\PartSmaith\.tools\phase-2-v096\env\Scripts\python.exe -m pip check
+No broken requirements found.
+C:\GIT_HUB\PartSmaith\.tools\phase-2-v096\env\Scripts\partsmith.exe version
+0.1.0
+C:\GIT_HUB\PartSmaith\.tools\phase-2-v096\env\Scripts\partsmith.exe doctor --json
+[{"detail":"3.12.10","name":"python","status":"PASS"},{"detail":"partsmith 0.1.0","name":"package","status":"PASS"},{"detail":"command interface available","name":"cli","status":"PASS"}]

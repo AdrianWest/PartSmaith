@@ -1,0 +1,75 @@
+C:\GIT_HUB\PartSmaith\.venv\Scripts\python.exe -m ruff check .
+All checks passed!
+C:\GIT_HUB\PartSmaith\.venv\Scripts\python.exe -m ruff format --check .
+unformatted: File would be reformatted
+  --> docs\component-ir.md:41:26
+   |
+40 | from pathlib import Path
+   - from partsmith.ir import ComponentIR, MemoryRevisionStore, RequirementsContext, validate_ir
+41 + from partsmith.ir import (
+42 +     ComponentIR,
+43 +     MemoryRevisionStore,
+44 +     RequirementsContext,
+45 +     validate_ir,
+46 + )
+47 |
+48 | ir = ComponentIR.from_file("fixtures/ir/v1.2/valid/0402.json")
+   - inventory = json.loads(Path("fixtures/ir/v1.2/history/inventory.json").read_text())
+49 + inventory = json.loads(
+50 +     Path("fixtures/ir/v1.2/history/inventory.json").read_text()
+51 + )
+52 | store = MemoryRevisionStore([ir], [inventory])
+   - paths = ("/identity", "/electrical", "/pins", "/package", "/footprint", "/model_3d")
+   - context = RequirementsContext("synthetic", "test-1", "test-1", "test-1", paths, paths)
+   - assert validate_ir(ir.data, for_generation=True, requirements=context, revisions=store) == ()
+53 + paths = (
+54 +     "/identity",
+55 +     "/electrical",
+56 +     "/pins",
+57 +     "/package",
+58 +     "/footprint",
+59 +     "/model_3d",
+60 + )
+61 + context = RequirementsContext(
+62 +     "synthetic", "test-1", "test-1", "test-1", paths, paths
+63 + )
+64 + assert (
+65 +     validate_ir(
+66 +         ir.data, for_generation=True, requirements=context, revisions=store
+67 +     )
+68 +     == ()
+69 + )
+70 | ```
+   |
+
+1 file would be reformatted, 34 files already formatted
+C:\GIT_HUB\PartSmaith\.venv\Scripts\python.exe -m ruff check .
+All checks passed!
+C:\GIT_HUB\PartSmaith\.venv\Scripts\python.exe -m ruff format --check .
+35 files already formatted
+C:\GIT_HUB\PartSmaith\.venv\Scripts\python.exe -m pytest --junitxml=docs/gates/phase-2-v0.9.6-tests.xml
+============================= test session starts =============================
+platform win32 -- Python 3.12.10, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\GIT_HUB\PartSmaith
+configfile: pyproject.toml
+testpaths: tests
+collected 280 items
+
+tests\test_cli.py ....                                                   [  1%]
+tests\test_ir.py ....................................................... [ 21%]
+.........................                                                [ 30%]
+tests\test_ir_v11.py ................................................... [ 48%]
+..................................                                       [ 60%]
+tests\test_ir_v12.py ................................................... [ 78%]
+..............................................                           [ 95%]
+tests\test_persistence.py ............                                   [ 99%]
+tests\test_project.py ..                                                 [100%]
+
+- generated xml file: C:\GIT_HUB\PartSmaith\docs\gates\phase-2-v0.9.6-tests.xml -
+============================= 280 passed in 3.94s =============================
+C:\GIT_HUB\PartSmaith\.venv\Scripts\python.exe -m pip check
+No broken requirements found.
+C:\GIT_HUB\PartSmaith\.venv\Scripts\python.exe -m partsmith version
+0.1.0
+C:\GIT_HUB\PartSmaith\.venv\Scripts\python.exe -m partsmith doctor --json
+[{"detail":"3.12.10","name":"python","status":"PASS"},{"detail":"partsmith 0.1.0","name":"package","status":"PASS"},{"detail":"command interface available","name":"cli","status":"PASS"}]

@@ -1,2 +1,4 @@
 *.py text eol=lf
 *.sql text eol=lf
+*.json text eol=lf
+fixtures/ir/source/*.txt text eol=lf

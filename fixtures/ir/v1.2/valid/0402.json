@@ -1,0 +1,244 @@
+{
+  "schema_version": "1.2",
+  "identity": {
+    "component_id": "01995ead-8000-7000-8000-000000000001",
+    "manufacturer": {
+      "name": "Example Components",
+      "normalized_name": "example components"
+    },
+    "mpn": "TEST-R-0402",
+    "normalized_mpn": "TEST-R-0402",
+    "package_variant": "0402",
+    "evidence_ids": [
+      "E-001"
+    ],
+    "source_document_id": "D-001",
+    "source_revision": "synthetic-1"
+  },
+  "source": {
+    "documents": [
+      {
+        "id": "D-001",
+        "path": "source/synthetic-0402.txt",
+        "sha256": "1c636a36d87288fa1de3c3ae29728713e00d773e126eb7464409a170b154fe55",
+        "revision": "synthetic-1"
+      }
+    ]
+  },
+  "electrical": {
+    "resistance": {
+      "value": 10000,
+      "unit": "ohm",
+      "status": "DIRECT",
+      "evidence_ids": [
+        "E-001"
+      ]
+    }
+  },
+  "pins": [
+    {
+      "number": "1",
+      "name": "1",
+      "electrical_type": "passive",
+      "function": "resistor terminal",
+      "active_low": false,
+      "alternate_functions": [],
+      "physical": {
+        "topology_side": "west",
+        "topology_index": 0
+      },
+      "flags": {
+        "exposed_pad": false,
+        "no_connect": false
+      },
+      "status": "DIRECT",
+      "evidence_ids": [
+        "E-001"
+      ]
+    },
+    {
+      "number": "2",
+      "name": "2",
+      "electrical_type": "passive",
+      "function": "resistor terminal",
+      "active_low": false,
+      "alternate_functions": [],
+      "physical": {
+        "topology_side": "east",
+        "topology_index": 0
+      },
+      "flags": {
+        "exposed_pad": false,
+        "no_connect": false
+      },
+      "status": "DIRECT",
+      "evidence_ids": [
+        "E-001"
+      ]
+    }
+  ],
+  "package": {
+    "family": "chip_resistor",
+    "variant": "0402",
+    "pin_count": 2,
+    "mechanical": {
+      "body_length": {
+        "source_value": 1,
+        "source_unit": "mm",
+        "status": "DIRECT",
+        "evidence_ids": [
+          "E-001"
+        ],
+        "source_min": 0.95,
+        "source_max": 1.05
+      },
+      "body_width": {
+        "source_value": 500,
+        "source_unit": "um",
+        "status": "DIRECT",
+        "evidence_ids": [
+          "E-001"
+        ]
+      },
+      "body_height": {
+        "source_value": 0.35,
+        "source_unit": "mm",
+        "status": "DIRECT",
+        "evidence_ids": [
+          "E-001"
+        ]
+      }
+    },
+    "status": "DIRECT",
+    "evidence_ids": [
+      "E-001"
+    ]
+  },
+  "symbol": {
+    "reference_prefix": "R",
+    "properties": {}
+  },
+  "footprint": {
+    "land_pattern_source": "MANUFACTURER_RECOMMENDED",
+    "properties": {},
+    "status": "DIRECT",
+    "evidence_ids": [
+      "E-001"
+    ]
+  },
+  "model_3d": {
+    "required": true,
+    "placement": {
+      "source_coordinate_system": "component",
+      "destination_coordinate_system": "footprint",
+      "translation_mm": [
+        0,
+        0,
+        0
+      ],
+      "rotation_deg": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "mirror": {
+        "x": false,
+        "y": false,
+        "z": false
+      },
+      "units": {
+        "length": "mm",
+        "angle": "deg"
+      },
+      "convention_version": "1.1",
+      "order": "T*R*S*M",
+      "status": "DIRECT",
+      "evidence_ids": [
+        "E-001"
+      ]
+    },
+    "accuracy_class": "CLASS_A"
+  },
+  "evidence": [
+    {
+      "id": "E-001",
+      "type": "SYNTHETIC_TEST_DATA",
+      "source": {
+        "document_id": "D-001",
+        "document_hash": "1c636a36d87288fa1de3c3ae29728713e00d773e126eb7464409a170b154fe55",
+        "page": 1,
+        "region": null,
+        "coordinate_convention": null,
+        "page_geometry": null,
+        "render_transform": null
+      },
+      "extracted": {
+        "text": "Synthetic Phase 2 resistor fixture; not approved engineering data.",
+        "value": null,
+        "unit": null
+      },
+      "interpretation": {
+        "normalized_value": null,
+        "status": "DIRECT"
+      },
+      "extractor": {
+        "method": "manual-test-fixture",
+        "version": "1.0"
+      },
+      "confidence": {
+        "score": 1,
+        "basis": "Explicit synthetic test values"
+      },
+      "acquisition_revision_id": "IR12-1",
+      "candidate_targets": [
+        "/identity",
+        "/electrical/resistance",
+        "/pins/0",
+        "/pins/1",
+        "/package",
+        "/package/mechanical/body_length",
+        "/package/mechanical/body_width",
+        "/package/mechanical/body_height",
+        "/footprint",
+        "/model_3d/placement"
+      ]
+    }
+  ],
+  "standards": [],
+  "overrides": [],
+  "validation": {
+    "results": [],
+    "tolerances": {}
+  },
+  "build": {
+    "bft_version": "0.1.0",
+    "kicad_target": "10.x",
+    "pdl_revision": null,
+    "ai_provider": null,
+    "ai_model": null
+  },
+  "revision": {
+    "id": "IR12-1",
+    "parent_id": null,
+    "description": "Synthetic Phase 2 fixture",
+    "active_override_ids": [],
+    "active_resolution_ids": [],
+    "evidence_exclusions": [],
+    "target_rebindings": [],
+    "evidence_review": {
+      "inventory_sha256": "b435747f32cbbcccb56adcac9fee50aa237ba774187bf75b983a8869a2a9ad0c",
+      "reviewed_evidence_ids": [
+        "E-001"
+      ],
+      "reviewer": "synthetic-reviewer",
+      "timestamp": "2026-09-20T12:00:00Z",
+      "approval_state": "APPROVED"
+    }
+  },
+  "resolutions": []
+}

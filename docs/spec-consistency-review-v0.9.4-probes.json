@@ -1,0 +1,71 @@
+{
+  "reviewed": "2026-09-20",
+  "specification": "0.9.4",
+  "spec_sha256": "489a9b64230cc2d1d44fbc7fc295a711c0cf1a5c812ef2fafd0430caf20fd466",
+  "total_lines": 12460,
+  "current_lines": 6993,
+  "historical_lines": 5467,
+  "probes": {
+    "pin_override": [
+      {
+        "code": "IR_OVERRIDE",
+        "path": "/overrides/0/path"
+      }
+    ],
+    "placement_override": [
+      {
+        "code": "IR_OVERRIDE",
+        "path": "/overrides/0/path"
+      }
+    ],
+    "quantity_override": {
+      "issues": [],
+      "new_value_back_reference": "O-1",
+      "override_id": "O-1"
+    },
+    "unlinked_conflict": {
+      "before": [
+        {
+          "code": "IR_UNRESOLVED",
+          "path": "/evidence/1/interpretation"
+        }
+      ],
+      "after": [],
+      "resolutions": []
+    },
+    "second_resolution_with_history": {
+      "before": [],
+      "after": [
+        {
+          "code": "IR_RESOLUTION",
+          "path": "/resolutions/0"
+        },
+        {
+          "code": "IR_RESOLUTION",
+          "path": "/resolutions/1"
+        }
+      ]
+    },
+    "validation_applicability": [
+      {
+        "code": "IR_SCHEMA",
+        "path": "/validation/results/0"
+      }
+    ],
+    "transform_composition": {
+      "factors": "S=diag(2,1), R=[[3/5,-4/5],[4/5,3/5]]",
+      "composed": [
+        [
+          1.2,
+          -1.6
+        ],
+        [
+          0.8,
+          0.6
+        ]
+      ],
+      "column_dot_product": -1.44,
+      "required_column_dot_product_for_RSM": 0
+    }
+  }
+}
