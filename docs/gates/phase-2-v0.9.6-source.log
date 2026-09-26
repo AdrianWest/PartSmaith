@@ -1,0 +1,31 @@
+C:\GIT_HUB\PartSmaith\.venv\Scripts\python.exe -m ruff check .
+All checks passed!
+C:\GIT_HUB\PartSmaith\.venv\Scripts\python.exe -m ruff format --check .
+38 files already formatted
+C:\GIT_HUB\PartSmaith\.venv\Scripts\python.exe -m pytest --junitxml=docs/gates/phase-2-v0.9.6-tests.xml
+============================= test session starts =============================
+platform win32 -- Python 3.12.10, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\GIT_HUB\PartSmaith
+configfile: pyproject.toml
+testpaths: tests
+collected 290 items
+
+tests\test_cli.py ....                                                   [  1%]
+tests\test_ir.py ....................................................... [ 20%]
+.........................                                                [ 28%]
+tests\test_ir_v11.py ................................................... [ 46%]
+..................................                                       [ 58%]
+tests\test_ir_v12.py ................................................... [ 75%]
+....................................................                     [ 93%]
+tests\test_persistence.py ............                                   [ 97%]
+tests\test_phase2_manifest.py ....                                       [ 99%]
+tests\test_project.py ..                                                 [100%]
+
+- generated xml file: C:\GIT_HUB\PartSmaith\docs\gates\phase-2-v0.9.6-tests.xml -
+============================= 290 passed in 4.57s =============================
+C:\GIT_HUB\PartSmaith\.venv\Scripts\python.exe -m pip check
+No broken requirements found.
+C:\GIT_HUB\PartSmaith\.venv\Scripts\python.exe -m partsmith version
+0.1.0
+C:\GIT_HUB\PartSmaith\.venv\Scripts\python.exe -m partsmith doctor --json
+[{"detail":"3.12.10","name":"python","status":"PASS"},{"detail":"partsmith 0.1.0","name":"package","status":"PASS"},{"detail":"command interface available","name":"cli","status":"PASS"}]

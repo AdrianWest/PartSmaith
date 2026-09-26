@@ -37,19 +37,26 @@ Authoritative documentation and evidence
                 ↓
 Component IR + Package Definition Library
                 ↓
+Input review and evidence approval
+                ↓
 Independent deterministic generators
                 ↓
 Symbol + footprint + CadQuery STEP model
                 ↓
 Validation and cross-validation
                 ↓
-Human review and explicit approval
+Human review and explicit release approval
+                ↓
+Immutable component bundle
 ```
 
 PartSmith treats source evidence, structured Component IR, and package
 definitions as the engineering inputs. Generated artifacts never become the
 source of truth for another generator. This separation makes discrepancies
 visible instead of silently correcting one artifact to match another.
+Project installation will assemble approved components into a separately
+validated library, with explicit integration authorization for the installed
+files. The approved source bundles retain their original bytes and hashes.
 
 ## Engineering principles
 
@@ -59,8 +66,8 @@ visible instead of silently correcting one artifact to match another.
   standards references support package and land-pattern decisions.
 - **Independent validation:** Symbols, footprints, and 3D models are generated
   independently, then checked against one another.
-- **STEP is required:** Released components with 3D geometry must include a
-  valid STEP model.
+- **STEP is required:** Every MVP production release must include a valid
+  STEP model alongside its symbol and footprint.
 - **CadQuery 3D runtime:** CadQuery, OCP, and OCCT provide the selected
   parametric CAD path for STEP generation.
 - **Human approval:** Automation assists engineering work; it does not replace
@@ -71,9 +78,16 @@ visible instead of silently correcting one artifact to match another.
 PartSmith is currently advancing through a gated implementation plan. The
 foundation provides the Python package, command-line entry point, formatting,
 linting, tests, continuous integration, and SQLite persistence for projects,
-components, and builds. Component IR,
-package definitions, generators, validation, KiCad integration, and the review
+components, and builds, plus versioned Component IR validation, normalization,
+canonical serialization, and hashing. Package definitions, generators,
+artifact validation, KiCad integration, and the review
 experience follow in controlled phases.
+
+The current specification is **v0.9.6**. The recorded IR 1.2 Phase 2 PASS covers
+the implementation against v0.9.5 and remains the prerequisite for Phase 3.
+The revised specification assigns new dependency projections, review services,
+portable rebuild bundles, and installation behavior to later phases; these
+features are not yet implemented.
 
 AI-assisted document interpretation is intentionally later in the plan. The
 first end-to-end component path must be deterministic and AI-free.
@@ -133,9 +147,42 @@ timestamps; Phase 1 exposes creation and queries, not editing workflows.
 Run `python -m pytest tests/test_persistence.py` for the Phase 1 tests.
 See [Phase 1 gate evidence](docs/gates/phase-1.md) for recorded verification.
 
+## Component IR (Phase 2)
+
+```python
+from partsmith.ir import ComponentIR, validate_ir
+
+ir = ComponentIR.from_file("fixtures/ir/v1.2/valid/0402.json")
+assert validate_ir(ir.data) == ()
+print(ir.sha256)
+```
+
+Component IR 1.0, 1.1, and 1.2 have packaged offline schemas, exact decimal
+normalization, canonical JSON profile 1.0, and SHA-256 record hashing. IR 1.2
+adds typed overrides, independent evidence relevance, active decision selectors,
+immutable revision checks, applicability records, and document-page coordinates.
+Generation prechecks require both a trusted `RequirementsContext` and a read-only
+revision/inventory store. Explicit 1.0→1.1→1.2 migration preserves source records
+and returns issues when required evidence is missing.
+
+Snapshot-profile 1.1 dependency projections distinguish engineering content from
+audit history, including self-bound overrides. The fixtures and contexts are
+synthetic, not production approvals. Production PDL contexts, affine transforms,
+CAD generation, artifact validators, the build orchestrator, and approval services
+remain in their specified later phases.
+Specification v0.9.6 introduces snapshot profile 1.2 for configuration scoped
+to each generator and validation step. Its implementation and verification are
+assigned to Phases 4–6 and 8–9; the current helpers still produce profile 1.1.
+
+Run `python -m pytest tests/test_ir.py tests/test_ir_v11.py tests/test_ir_v12.py`
+for all IR versions.
+See the [IR contract](docs/component-ir.md) and
+[IR 1.2 Phase 2 gate evidence against v0.9.5](docs/gates/phase-2-ir-1.2.md). The earlier
+[IR 1.1 PASS](docs/gates/phase-2-ir-1.1.md) retains its v0.9.4 baseline.
+
 ## Specification
 
-The implementation contract is maintained in
+The v0.9.6 implementation contract is maintained in
 [the PartSmith Implementation Specification](resources/BFT_PartSmith_Implementation_Spec.md).
 It defines the phase gates, engineering authority model, deterministic output
 requirements, and CadQuery-based 3D architecture.
