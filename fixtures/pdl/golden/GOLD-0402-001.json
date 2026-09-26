@@ -8,13 +8,13 @@
   },
   "source": {
     "path": "fixtures/pdl/source/synthetic-gold-0402.txt",
-    "sha256": "9b83c8b0e18f6199c9767d0ddb2af79faffcf5cfc613a66c930d6ad15a42d0fe"
+    "sha256": "dd912c336c41538c8dcc95fd642542f3b6480ae632adc4cd649a6a6b54bf84df"
   },
   "pdl": {
     "id": "synthetic-0402",
     "revision": "1.0",
-    "content_sha256": "13af140044f61b0ee79c98611a6eb534f365b16ad6f74c2d3e8bbf1cdaa79609",
-    "file_sha256": "cbb80577824c645752b36fd1549d1b88e8aee0b402b15afd99626a63277653de"
+    "content_sha256": "e442dd4b7fe7eddc5a5e7707885ba9bfe1e01d963922ac226726fecf8aa383aa",
+    "file_sha256": "199ad7042f45eda4dd0b839f8838a6135c2e0abc2bea0b1011658ab8495a811a"
   },
   "release_profile": {
     "id": "mvp-1",

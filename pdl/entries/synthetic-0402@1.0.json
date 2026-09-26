@@ -4,7 +4,7 @@
   "revision": "1.0",
   "effective_date": "2026-09-26",
   "validation_status": "APPROVED",
-  "content_sha256": "13af140044f61b0ee79c98611a6eb534f365b16ad6f74c2d3e8bbf1cdaa79609",
+  "content_sha256": "e442dd4b7fe7eddc5a5e7707885ba9bfe1e01d963922ac226726fecf8aa383aa",
   "release_profile": {
     "id": "mvp-1",
     "version": "1.0",
@@ -120,7 +120,7 @@
       "access_date": "2026-09-26",
       "section": null,
       "table_or_figure": null,
-      "content_sha256": "9b83c8b0e18f6199c9767d0ddb2af79faffcf5cfc613a66c930d6ad15a42d0fe"
+      "content_sha256": "dd912c336c41538c8dcc95fd642542f3b6480ae632adc4cd649a6a6b54bf84df"
     }
   ],
   "change_history": [

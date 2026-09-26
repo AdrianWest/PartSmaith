@@ -50,7 +50,7 @@ Evidence:
 - [Artifact and input hashes](phase-3-artifacts.json)
 
 Fresh wheel SHA-256:
-`9d48fcc00182f33b0fe413fd76dfcae50bf72dc92d62e83039496f3002980338`.
+`723d958d4da5e200cf61c49203e15e68131e6315784f5aab926ac795fe2c681e`.
 
 Verification commands:
 
