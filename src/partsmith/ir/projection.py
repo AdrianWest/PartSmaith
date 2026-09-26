@@ -218,14 +218,22 @@ def dependency_projection(data, *, requirements, revisions, configuration):
             for path, r in values.items()
             if any(overlaps(owner_path(data, path), p) for p in required)
         )
+
     # The full audit retains excluded bodies and predecessor IDs. The active
     # projection retains the substantive disposition/rebinding, not execution.
+    def relevant_current_path(path, base_id):
+        current = effective_path(data, path, base_id, chain)
+        return current is not None and any(
+            overlaps(current, required_path) for required_path in required
+        )
+
     dispositions = []
     for r in data["revision"]["evidence_exclusions"]:
         if r["approval_state"] == "APPROVED" and any(
-            any(overlaps(p, t) for p in required)
+            relevant_current_path(target, evidence["acquisition_revision_id"])
             for ref in r["replacement_evidence_ids"]
-            for t in records[("evidence", ref)]["candidate_targets"]
+            for evidence in [records[("evidence", ref)]]
+            for target in evidence["candidate_targets"]
         ):
             dispositions.append(
                 {
@@ -252,13 +260,8 @@ def dependency_projection(data, *, requirements, revisions, configuration):
             {key: item[key] for key in ("old_path", "new_path", "reason")}
             for item in data["revision"]["target_rebindings"]
             if item["approval_state"] == "APPROVED"
-            and any(
-                overlaps(item["old_path"], path)
-                or (
-                    item["new_path"] is not None
-                    and overlaps(item["new_path"], path)
-                )
-                for path in required
+            and relevant_current_path(
+                item["old_path"], item["base_revision_id"]
             )
         ],
     }

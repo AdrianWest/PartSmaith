@@ -1,9 +1,9 @@
 {
   "specification": "0.9.6",
-  "recorded_date": "2026-09-20",
+  "recorded_at": "2026-09-26",
   "status": "PASS",
-  "scope": "Local Windows Phase 2; no remote CI run",
-  "branch": "Phase-02-Development",
+  "scope": "Local Windows working-tree verification after specification consistency fixes; no remote CI run",
+  "base_commit": "f6a4a4205c4007d7a616e44475934b188f6e3b96",
   "ir_versions": [
     "1.0",
     "1.1",
@@ -22,7 +22,7 @@
   },
   "tests": {
     "source": {
-      "tests": 280,
+      "tests": 290,
       "failures": 0,
       "errors": 0,
       "skipped": 0,
@@ -30,13 +30,14 @@
         "tests.test_cli": 4,
         "tests.test_ir": 80,
         "tests.test_ir_v11": 85,
-        "tests.test_ir_v12": 97,
+        "tests.test_ir_v12": 103,
         "tests.test_persistence": 12,
+        "tests.test_phase2_manifest": 4,
         "tests.test_project": 2
       }
     },
     "wheel": {
-      "tests": 280,
+      "tests": 290,
       "failures": 0,
       "errors": 0,
       "skipped": 0,
@@ -44,20 +45,22 @@
         "tests.test_cli": 4,
         "tests.test_ir": 80,
         "tests.test_ir_v11": 85,
-        "tests.test_ir_v12": 97,
+        "tests.test_ir_v12": 103,
         "tests.test_persistence": 12,
+        "tests.test_phase2_manifest": 4,
         "tests.test_project": 2
       }
     }
   },
   "packaged_schemas_and_migration_byte_verified": true,
   "isolated_wheel_import_verified": true,
-  "prior_manifest_unchanged_inputs": 47,
-  "prior_manifest_documentation_changes": [
-    "README.md",
-    "docs/component-ir.md",
-    "resources/BFT_PartSmith_Implementation_Spec.md"
-  ],
+  "frozen_build_test_inputs_verified": 93,
+  "git_clean_bytes_verified": false,
+  "wheel": {
+    "path": ".tools/phase-2-pr3/dist/partsmith-0.1.0-py3-none-any.whl",
+    "sha256": "293d91cd9248ed039f28a45108a6243b6f15f8b537b2e88d91a7ee741c951202",
+    "availability": "Local generated output; not required for repository input verification"
+  },
   "commands": {
     "source": [
       [
@@ -110,16 +113,16 @@
         ".",
         "--no-deps",
         "--wheel-dir",
-        "C:\\GIT_HUB\\PartSmaith\\.tools\\phase-2-v096\\dist"
+        "C:\\GIT_HUB\\PartSmaith\\.tools\\phase-2-pr3\\dist"
       ],
       [
         "C:\\GIT_HUB\\PartSmaith\\.venv\\Scripts\\python.exe",
         "-m",
         "venv",
-        "C:\\GIT_HUB\\PartSmaith\\.tools\\phase-2-v096\\env"
+        "C:\\GIT_HUB\\PartSmaith\\.tools\\phase-2-pr3\\env"
       ],
       [
-        "C:\\GIT_HUB\\PartSmaith\\.tools\\phase-2-v096\\env\\Scripts\\python.exe",
+        "C:\\GIT_HUB\\PartSmaith\\.tools\\phase-2-pr3\\env\\Scripts\\python.exe",
         "-m",
         "pip",
         "install",
@@ -127,45 +130,45 @@
         "requirements-ci.txt"
       ],
       [
-        "C:\\GIT_HUB\\PartSmaith\\.tools\\phase-2-v096\\env\\Scripts\\python.exe",
+        "C:\\GIT_HUB\\PartSmaith\\.tools\\phase-2-pr3\\env\\Scripts\\python.exe",
         "-m",
         "pip",
         "install",
         "--no-deps",
-        "C:\\GIT_HUB\\PartSmaith\\.tools\\phase-2-v096\\dist\\partsmith-0.1.0-py3-none-any.whl"
+        "C:\\GIT_HUB\\PartSmaith\\.tools\\phase-2-pr3\\dist\\partsmith-0.1.0-py3-none-any.whl"
       ],
       [
-        "C:\\GIT_HUB\\PartSmaith\\.tools\\phase-2-v096\\env\\Scripts\\python.exe",
+        "C:\\GIT_HUB\\PartSmaith\\.tools\\phase-2-pr3\\env\\Scripts\\python.exe",
         "-c",
         "\nfrom importlib.resources import files\nfrom pathlib import Path\nimport partsmith.ir\nfrom partsmith.ir import SUPPORTED_VERSIONS\nassert 'site-packages' in str(Path(partsmith.ir.__file__).resolve())\nassert SUPPORTED_VERSIONS == ('1.0', '1.1', '1.2')\nfor version in SUPPORTED_VERSIONS:\n    name = f'component-ir-{version}.schema.json'\n    assert files('partsmith.ir').joinpath(name).read_bytes() == Path('schemas', name).read_bytes()\nassert files('partsmith.persistence').joinpath('001_initial.sql').read_bytes() == Path('migrations/001_initial.sql').read_bytes()\nprint('PASS: isolated wheel imports; all three schema bytes and migration match')\n"
       ],
       [
-        "C:\\GIT_HUB\\PartSmaith\\.tools\\phase-2-v096\\env\\Scripts\\python.exe",
+        "C:\\GIT_HUB\\PartSmaith\\.tools\\phase-2-pr3\\env\\Scripts\\python.exe",
         "-m",
         "pytest",
         "--junitxml=docs/gates/phase-2-v0.9.6-wheel-tests.xml"
       ],
       [
-        "C:\\GIT_HUB\\PartSmaith\\.tools\\phase-2-v096\\env\\Scripts\\python.exe",
+        "C:\\GIT_HUB\\PartSmaith\\.tools\\phase-2-pr3\\env\\Scripts\\python.exe",
         "-m",
         "pip",
         "check"
       ],
       [
-        "C:\\GIT_HUB\\PartSmaith\\.tools\\phase-2-v096\\env\\Scripts\\partsmith.exe",
+        "C:\\GIT_HUB\\PartSmaith\\.tools\\phase-2-pr3\\env\\Scripts\\partsmith.exe",
         "version"
       ],
       [
-        "C:\\GIT_HUB\\PartSmaith\\.tools\\phase-2-v096\\env\\Scripts\\partsmith.exe",
+        "C:\\GIT_HUB\\PartSmaith\\.tools\\phase-2-pr3\\env\\Scripts\\partsmith.exe",
         "doctor",
         "--json"
       ]
     ]
   },
   "sha256": {
-    ".github/workflows/ci.yml": "2c7167aa3c34493debcef78aec0703339f9b0ee595dd3e5b11d1ea30ea649409",
-    ".tools/phase-2-v096/dist/partsmith-0.1.0-py3-none-any.whl": "23bbc6ab98c4269f9908b1dd1c09b282a6d1c9505c60512b9b7e010460292976",
-    "docs/component-ir.md": "afe5943271b27805a0c726fab78d813b9a2a513bbdc5e7c03ef264838b3447ed",
+    ".gitattributes": "32b1798dae7df64a5e40e95bd7d3363e5a27b72c7c9ccae6c2e268724158b696",
+    ".github/workflows/ci.yml": "30da928f8f4ef26137a3f586f0b0dee30c5419304d9b9a0da1fc6cf17d28e579",
+    "docs/component-ir.md": "34509a26158258789f4300e95768d2cdf18661ab780c0397dfcefd2908b85056",
     "docs/gates/phase-2-ir-1.1-tests.xml": "8dc084e0c42a3c997f57201c79ebf5d49e290ec917f097e11aa3d76c9f5469f2",
     "docs/gates/phase-2-ir-1.1-wheel-tests.xml": "4b41123dffaaf57af6c34fd96e937540a0c32225ab7818eda38ca95ec552affb",
     "docs/gates/phase-2-ir-1.1.md": "b08eb6fef4b99a23ca962dfbddf90aa15f6a2518915148f2bb2eb74a2fd645f4",
@@ -173,15 +176,15 @@
     "docs/gates/phase-2-ir-1.2-wheel-tests.xml": "27ae4d7f2ec97b5968231a227e178f92c9b927d59076fc08929a5e7ebe73e1f0",
     "docs/gates/phase-2-ir-1.2.md": "7c08010e43c170f0dd1f18b059c450c1793abe4c265163268bba9971c7e30df9",
     "docs/gates/phase-2-tests.xml": "47f8bb448b028e09a22edd000d90b75978a1beff1c0d25b838fe516ff87a6322",
-    "docs/gates/phase-2-v0.9.6-source.log": "75067290a95df2c8aac534c8edc5663e2183b7a4a8a9bee424949c383e1bed86",
-    "docs/gates/phase-2-v0.9.6-tests.xml": "348ddf412f4b872ac0fef4a95464a8db90987a4a5822e133c5e19b783394a610",
-    "docs/gates/phase-2-v0.9.6-wheel-tests.xml": "cf7bff634cd73ae33aa9c4f45da02ef1bc71376d142f182a3ef4966afccc5d08",
-    "docs/gates/phase-2-v0.9.6-wheel.log": "524949366b2df142f233c21298b70ccdccb862851ecdba986ddade49441b430b",
-    "docs/gates/phase-2-v0.9.6.md": "7e7ba2dab9d9ff8cec2b6111ff96e3b7201a01631559f182e2b4c76509a246eb",
+    "docs/gates/phase-2-v0.9.6-source.log": "f6b0974d029651de3734e2e1ba2ff388eb50d821a2e6359273c054582fa956d8",
+    "docs/gates/phase-2-v0.9.6-tests.xml": "b228c9785394abe02816adf0623426e633cee8c74d4d09df69d93273e0a0807f",
+    "docs/gates/phase-2-v0.9.6-wheel-tests.xml": "e16fc1faa8fe083769ef87d786f5f41764f1244c34b0e872ac448f91a55fba0b",
+    "docs/gates/phase-2-v0.9.6-wheel.log": "933c54ef7cca3af636d063becff2eac78234bfee37a039975a9f28de327371cc",
+    "docs/gates/phase-2-v0.9.6.md": "a06e3a92e445504cc4ed83068076d98e16badb184b7c33fd14452416cf956887",
     "docs/gates/phase-2-wheel-tests.xml": "9f2d26e3dd42f2cb3c29b2c5a7b8e5b9adda09d0a16b4a247bdf90b2099ebaae",
     "docs/gates/phase-2.md": "013513959680595386ca69a2507a0ef3bb6acbfe6a92b008803a13c63a1dc72b",
     "fixtures/ir/expected/0402.canonical.json": "7a90c2784528ee872a1ea206b34282104909c1b9020cf7da8ca9520871521868",
-    "fixtures/ir/expected/0402.sha256": "f4d89b98cff3a119b8fee9e49f357eafef6d163cc0d5bec775e6bf4fc9e2428c",
+    "fixtures/ir/expected/0402.sha256": "50196ae640b21203a570758d3b3f90dc5dbfff33172724015ec863acaf2ef992",
     "fixtures/ir/invalid/absolute-path.json": "784b1d873775617c35617752be3663c1e3db4d325d95e0a85834a2132f9b0d2a",
     "fixtures/ir/invalid/contradictory-bounds.json": "13ecb41176ae2c0f789023dd6a5a49f31cae3c9635a6f44b60681dabb187f587",
     "fixtures/ir/invalid/duplicate-pin.json": "f8036dbdcca27b2a7f305edfcafc7579a490b16c9579d019b11a673f80ca4089",
@@ -196,8 +199,9 @@
     "fixtures/ir/invalid/unknown-schema-version.json": "512870f2c31035b26c479053f7d1ad8df5c8b4aedf90812ff12827dfe6aeccc2",
     "fixtures/ir/invalid/unsupported-unit.json": "f05acd5511096906f8cae5216aed0e5e49f37afe3ac283e2af6da0b0f241e0b2",
     "fixtures/ir/invalid/wrong-pin-count.json": "e6aac827904ea909c4471a23843fbeba0404ecce40dea1b3978d2c5e1e0296ac",
+    "fixtures/ir/source/synthetic-0402.txt": "1c636a36d87288fa1de3c3ae29728713e00d773e126eb7464409a170b154fe55",
     "fixtures/ir/v1.1/expected/0402.canonical.json": "1907fe7bb5f17bc48cf9539894162bcdaf84d625bf86d693180676b26924014a",
-    "fixtures/ir/v1.1/expected/0402.sha256": "bb2eb0f7bdabb80c4354255d7cf2471b7053770218aa174bc860ad9b6e37329c",
+    "fixtures/ir/v1.1/expected/0402.sha256": "89e68ef39eb17b684280d5041a5f81a27c724006b089a7f081f10474fbebf494",
     "fixtures/ir/v1.1/invalid/active-conflict.json": "40e502fdb241541878d8e13780b55df7a4a90cb298d296b33e7f3757b1eff9c5",
     "fixtures/ir/v1.1/invalid/dangling-evidence.json": "25de4ebc8ccac9d2ad2376844a677cc4451344ce301fa3457e0f982c83756bc8",
     "fixtures/ir/v1.1/invalid/document-link.json": "9738c296b0fbc9bd9e2b47e1ba4a9ab6c52ee7d0a152ff46256450ee1afc2554",
@@ -234,14 +238,16 @@
     "fixtures/ir/v1.2/invalid/unknown-version.json": "30659fedd5c1ddf01d479360b5d988f319b9932c314a0340eecb5ab6c5736510",
     "fixtures/ir/v1.2/valid/0402.json": "ff8f8697ef789b694123385a73777787ec16b1b8ebb8d9c9fd590cc4078a1063",
     "fixtures/ir/valid/0402.json": "8fdf5a74adf5ed04c884b763175de93fee63ea0e63d1950e4f6ea0f1b24ce622",
+    "LICENSE": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
     "migrations/001_initial.sql": "840216cf721f9b76be6575a4dccc07ff70b3fd32637f4c1f39d33892f5c3eba9",
-    "pyproject.toml": "23518319c87953a8286fee0f9099a789e0630d39446e4e1af16d138ac2bc856b",
-    "README.md": "593476d0f4b25b7af7ec4e9bc641020352e78712b650026a38a80998afde8b34",
-    "requirements-ci.txt": "5bd2b0b5617d75ca46d9bd361cc142e08075c33deb52f3325ed9742ffbe705c1",
-    "resources/BFT_PartSmith_Implementation_Spec.md": "cd049edea24ed514df7fd8f39b62abe93b453ebc30287beffa2bc345d25bb931",
+    "pyproject.toml": "c28b1e299dff01cecdc07a2a7fb2e36b428960f79d6bcb14ba6aafe2dcf18e48",
+    "README.md": "52d8e81f78a8f025147b5c2a51a4b93d98d10e9daefa54d569c18aa729d1af47",
+    "requirements-ci.txt": "ac773cdab39cfa6bd99576737561c0ee6fbc1c63a8b7f2e1365adbb9b7ce4422",
+    "resources/BFT_PartSmith_Implementation_Spec.md": "a2e45ce06bb6c961926bd0e5b01082e2c5d3316a4c11ed68c0fa0ac6d7e8f84d",
     "schemas/component-ir-1.0.schema.json": "c58e687cd2e324edcec83eff1e0e7b5dbbb86ad95cecef3315679a28b8c82e6d",
     "schemas/component-ir-1.1.schema.json": "4ed64619ad5d1c50a7c75125835067e8594b8b6a73c197dfe07267588832d438",
     "schemas/component-ir-1.2.schema.json": "4a26d6bd925fbf91862f5eeeae27989ea59a1c4b2f8924a23743f6d1a464a8c1",
+    "scripts/verify_phase2_manifest.py": "a840984893a066923e8cffd7dc4869c0e9479e08c4ee96f62daa0d229a641842",
     "src/partsmith/__init__.py": "0282a88bf703b74daa8169ce8c2510a0b4292ad81c3d85cadbe496a1a3901a10",
     "src/partsmith/__main__.py": "2eed1c8ab4d81c223c09e3f0969c455ee037f95e8f237947576b01a7611b2bec",
     "src/partsmith/cli.py": "0cae15158f1c35aa46d1cd6725f0c43153d3045bf669162ad457310c20c1f9ce",
@@ -253,7 +259,7 @@
     "src/partsmith/ir/migration.py": "2d84dad20650a4a809ae80c829ad4e6dd885efe1bd105a617a0f3138ff5c261d",
     "src/partsmith/ir/migration_v12.py": "5f54ecc4f116a1eebd83f9f74d2df82156d400da9fb11ad32bbe63453f2ddddc",
     "src/partsmith/ir/model.py": "0036ff9715e2e96b508ec9cf9b4ead2f47db360beebed841c7c3fea924ca8e3c",
-    "src/partsmith/ir/projection.py": "0f9e680a476e3f5ebc852218bf41229ed1aa8a45ccfecb514a9e469be639fae1",
+    "src/partsmith/ir/projection.py": "061a8582b940016c79f954c2e855360c265fa61ba183c5ab2b9013e3447039ab",
     "src/partsmith/ir/revised.py": "56ad56015576469d889ce5172996e0cbb4c29a1908e56cc26d0121b1db6bb039",
     "src/partsmith/ir/schema.py": "c9266a0971437d01b93877460c3949c37b0e9a850fa95e106799ae5466ddfe75",
     "src/partsmith/ir/targets.py": "7d5cebe9201c943230bd45325ef93f448f8138b76be20dcb647884ddbcc76d41",
@@ -264,8 +270,9 @@
     "tests/test_cli.py": "604f667d65f144e58b594ac1fe0ff2a5781e890a28a4697949b1bd98698b255e",
     "tests/test_ir.py": "ca8b1b6d4cb3aaa9d1d00caf26d1b4c2c6d409e8de848274b39122fd5156dd02",
     "tests/test_ir_v11.py": "9fa78ddc84a72621e7e66d50073686deda45d32eac313c596a5f99de8b66b9f8",
-    "tests/test_ir_v12.py": "8bc8067b1352e44bd62fdfa1e1cb58a2350f36a6a36d66b75ffb3e473c9264c1",
+    "tests/test_ir_v12.py": "2069b936d55bdd2d093f3215441f39d0879c1d4fedf52e8946fd9c7c8c8ac2c1",
     "tests/test_persistence.py": "b6f82882a7f2d70cb875afad53285f52f8ec633b637e28e8c46df7c69508b206",
+    "tests/test_phase2_manifest.py": "c150625937283a57426e17f675bc62ca08d54adadb48e8baf1cbc53e4f00c30b",
     "tests/test_project.py": "f61ccd056e662363e8c9955f91dbcb1022494684695a219410207c2636f6667d"
   }
 }

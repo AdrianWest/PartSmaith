@@ -1,11 +1,21 @@
 # Phase 2 — Component IR, specification v0.9.6: PASS
 
-Recorded 2026-09-20. This is fresh local Windows verification of the unchanged
+Refreshed after PR #3 review. This is local Windows verification of the
 Phase 2 contract in [specification v0.9.6](../../resources/BFT_PartSmith_Implementation_Spec.md#phase-2--component-ir).
-Prerequisite: [Phase 1 PASS](phase-1.md). The existing IR 1.2 implementation
-satisfies this scope; no additional production code was needed. A formatting
-failure in the IR documentation's Python example was corrected before the
-successful source gate run.
+Prerequisite: [Phase 1 PASS](phase-1.md). The IR 1.2 projection now resolves
+replacement evidence and retained rebindings through the complete revision chain
+before deciding dependency relevance. Six regression cases cover moved and retired
+targets, granular required paths, multi-step chains, and unrelated bindings.
+The existing profile 1.1 golden fixtures remain unchanged and pass.
+
+This refresh replaces the earlier v0.9.6 logs/manifest, whose hashes differed
+from committed bytes because of inconsistent text line endings. `.gitattributes`
+now enforces LF for text. Verification uses frozen final build/test inputs;
+logs are written as LF, and manifest hashes are computed only after the logs,
+JUnit reports, and gate report are finalized. CI runs
+`python scripts/verify_phase2_manifest.py` to reject missing or changed inputs.
+Four regression cases cover exact-byte changes, CRLF conversion, missing files,
+and paths outside the repository.
 
 | Phase 2 requirement | Implemented and verified |
 | --- | --- |
@@ -18,10 +28,10 @@ successful source gate run.
 
 Results:
 
-- Source installation: **280 passed**, no failures or skips.
-- Fresh wheel in a new isolated environment: **280 passed**, no failures or skips.
-- Test coverage: 97 IR 1.2, 85 IR 1.1/schema-packaging, 80 IR 1.0,
-  12 persistence, and 6 CLI/project tests.
+- Source installation: **290 passed**, no failures or skips.
+- Fresh wheel in a new isolated environment: **290 passed**, no failures or skips.
+- Test coverage: 103 IR 1.2, 85 IR 1.1/schema-packaging, 80 IR 1.0,
+  12 persistence, 6 CLI/project, and 4 manifest-integrity tests.
 - Ruff lint and formatting checks passed; dependency checks passed in both
   environments. Version and doctor commands passed in both environments.
 - Wheel imports resolved to `site-packages`; all three packaged schemas and
@@ -39,15 +49,17 @@ Evidence:
 - [Source JUnit report](phase-2-v0.9.6-tests.xml)
 - [Installed-wheel JUnit report](phase-2-v0.9.6-wheel-tests.xml)
 - [Input/artifact hashes and exact verification commands](phase-2-v0.9.6-artifacts.json)
-- [Source checks log](phase-2-v0.9.6-source.log), including the corrected initial formatting failure
+- [Source checks log](phase-2-v0.9.6-source.log)
 - [Wheel checks log](phase-2-v0.9.6-wheel.log)
 
 The freshly built wheel is
-`.tools/phase-2-v096/dist/partsmith-0.1.0-py3-none-any.whl`, SHA-256
-`23bbc6ab98c4269f9908b1dd1c09b282a6d1c9505c60512b9b7e010460292976`.
+`.tools/phase-2-pr3/dist/partsmith-0.1.0-py3-none-any.whl`, SHA-256
+`293d91cd9248ed039f28a45108a6243b6f15f8b537b2e88d91a7ee741c951202`.
 Wheel selection used the sole file from a newly created build directory, with
 no hardcoded package version in the installation command. Its isolated
-environment is `.tools/phase-2-v096/env`.
+environment is `.tools/phase-2-pr3/env`. The wheel is a local generated output;
+its path/hash is recorded separately from repository inputs so a clean checkout
+can verify all committed evidence without an ignored local environment.
 
 The successful commands included:
 
@@ -58,13 +70,14 @@ The successful commands included:
 .venv/Scripts/python.exe -m pip check
 .venv/Scripts/python.exe -m partsmith version
 .venv/Scripts/python.exe -m partsmith doctor --json
-.venv/Scripts/python.exe -m pip wheel . --no-deps --wheel-dir .tools/phase-2-v096/dist
-.venv/Scripts/python.exe -m venv .tools/phase-2-v096/env
-.tools/phase-2-v096/env/Scripts/python.exe -m pip install -r requirements-ci.txt
-.tools/phase-2-v096/env/Scripts/python.exe -m pytest --junitxml=docs/gates/phase-2-v0.9.6-wheel-tests.xml
-.tools/phase-2-v096/env/Scripts/python.exe -m pip check
-.tools/phase-2-v096/env/Scripts/partsmith.exe version
-.tools/phase-2-v096/env/Scripts/partsmith.exe doctor --json
+.venv/Scripts/python.exe -m pip wheel . --no-deps --wheel-dir .tools/phase-2-pr3/dist
+.venv/Scripts/python.exe -m venv .tools/phase-2-pr3/env
+.tools/phase-2-pr3/env/Scripts/python.exe -m pip install -r requirements-ci.txt
+.tools/phase-2-pr3/env/Scripts/python.exe -m pytest --junitxml=docs/gates/phase-2-v0.9.6-wheel-tests.xml
+.tools/phase-2-pr3/env/Scripts/python.exe -m pip check
+.tools/phase-2-pr3/env/Scripts/partsmith.exe version
+.tools/phase-2-pr3/env/Scripts/partsmith.exe doctor --json
+.venv/Scripts/python.exe scripts/verify_phase2_manifest.py
 ```
 
 The command inventory includes the resolved wheel installation and exact

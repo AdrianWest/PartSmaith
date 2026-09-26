@@ -10,7 +10,7 @@ Specification **v0.9.6** retains IR 1.2 and canonical JSON profile 1.0. The
 its unchanged Phase 2 scope remains the prerequisite for Phase 3. New v0.9.6
 downstream services and snapshot profile 1.2 remain later-phase requirements.
 The [fresh Phase 2 verification against v0.9.6](gates/phase-2-v0.9.6.md)
-records 280 passing tests in both the source and isolated-wheel installations.
+records the source and isolated-wheel results, including PR review regressions.
 IR 1.1 has a recorded
 [Phase 2 PASS against v0.9.4](gates/phase-2-ir-1.1.md). IR 1.0 remains supported;
 older schemas, fixtures, and gate evidence retain their original versions.

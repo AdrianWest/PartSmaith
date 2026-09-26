@@ -1,4 +1,4 @@
-C:\GIT_HUB\PartSmaith\.venv\Scripts\python.exe -m pip wheel . --no-deps --wheel-dir C:\GIT_HUB\PartSmaith\.tools\phase-2-v096\dist
+C:\GIT_HUB\PartSmaith\.venv\Scripts\python.exe -m pip wheel . --no-deps --wheel-dir C:\GIT_HUB\PartSmaith\.tools\phase-2-pr3\dist
 Processing c:\git_hub\partsmaith
   Installing build dependencies: started
   Installing build dependencies: finished with status 'done'
@@ -9,14 +9,14 @@ Processing c:\git_hub\partsmaith
 Building wheels for collected packages: partsmith
   Building wheel for partsmith (pyproject.toml): started
   Building wheel for partsmith (pyproject.toml): finished with status 'done'
-  Created wheel for partsmith: filename=partsmith-0.1.0-py3-none-any.whl size=76984 sha256=23bbc6ab98c4269f9908b1dd1c09b282a6d1c9505c60512b9b7e010460292976
-  Stored in directory: C:\Users\User\AppData\Local\Temp\pip-ephem-wheel-cache-foc91jpf\wheels\fc\ba\74\32adb5b52a3bfc4c460e1f300fcb4cd282bd589f2f97b232fa
+  Created wheel for partsmith: filename=partsmith-0.1.0-py3-none-any.whl size=76862 sha256=293d91cd9248ed039f28a45108a6243b6f15f8b537b2e88d91a7ee741c951202
+  Stored in directory: C:\Users\User\AppData\Local\Temp\pip-ephem-wheel-cache-ogeacgfr\wheels\fc\ba\74\32adb5b52a3bfc4c460e1f300fcb4cd282bd589f2f97b232fa
 Successfully built partsmith
 
 [notice] A new release of pip is available: 25.0.1 -> 26.2.1
 [notice] To update, run: C:\GIT_HUB\PartSmaith\.venv\Scripts\python.exe -m pip install --upgrade pip
-C:\GIT_HUB\PartSmaith\.venv\Scripts\python.exe -m venv C:\GIT_HUB\PartSmaith\.tools\phase-2-v096\env
-C:\GIT_HUB\PartSmaith\.tools\phase-2-v096\env\Scripts\python.exe -m pip install -r requirements-ci.txt
+C:\GIT_HUB\PartSmaith\.venv\Scripts\python.exe -m venv C:\GIT_HUB\PartSmaith\.tools\phase-2-pr3\env
+C:\GIT_HUB\PartSmaith\.tools\phase-2-pr3\env\Scripts\python.exe -m pip install -r requirements-ci.txt
 Collecting jsonschema==4.26.0 (from -r requirements-ci.txt (line 3))
   Using cached jsonschema-4.26.0-py3-none-any.whl.metadata (7.6 kB)
 Collecting attrs==26.1.0 (from -r requirements-ci.txt (line 4))
@@ -60,15 +60,15 @@ Installing collected packages: typing-extensions, ruff, rpds-py, pygments, plugg
 Successfully installed attrs-26.1.0 colorama-0.4.6 iniconfig-2.3.0 jsonschema-4.26.0 jsonschema-specifications-2025.9.1 packaging-26.3 pluggy-1.6.0 pygments-2.21.0 pytest-8.4.2 referencing-0.37.0 rpds-py-2026.6.3 ruff-0.16.8 typing-extensions-4.16.0
 
 [notice] A new release of pip is available: 25.0.1 -> 26.2.1
-[notice] To update, run: C:\GIT_HUB\PartSmaith\.tools\phase-2-v096\env\Scripts\python.exe -m pip install --upgrade pip
-C:\GIT_HUB\PartSmaith\.tools\phase-2-v096\env\Scripts\python.exe -m pip install --no-deps C:\GIT_HUB\PartSmaith\.tools\phase-2-v096\dist\partsmith-0.1.0-py3-none-any.whl
-Processing c:\git_hub\partsmaith\.tools\phase-2-v096\dist\partsmith-0.1.0-py3-none-any.whl
+[notice] To update, run: C:\GIT_HUB\PartSmaith\.tools\phase-2-pr3\env\Scripts\python.exe -m pip install --upgrade pip
+C:\GIT_HUB\PartSmaith\.tools\phase-2-pr3\env\Scripts\python.exe -m pip install --no-deps C:\GIT_HUB\PartSmaith\.tools\phase-2-pr3\dist\partsmith-0.1.0-py3-none-any.whl
+Processing c:\git_hub\partsmaith\.tools\phase-2-pr3\dist\partsmith-0.1.0-py3-none-any.whl
 Installing collected packages: partsmith
 Successfully installed partsmith-0.1.0
 
 [notice] A new release of pip is available: 25.0.1 -> 26.2.1
-[notice] To update, run: C:\GIT_HUB\PartSmaith\.tools\phase-2-v096\env\Scripts\python.exe -m pip install --upgrade pip
-C:\GIT_HUB\PartSmaith\.tools\phase-2-v096\env\Scripts\python.exe -c "
+[notice] To update, run: C:\GIT_HUB\PartSmaith\.tools\phase-2-pr3\env\Scripts\python.exe -m pip install --upgrade pip
+C:\GIT_HUB\PartSmaith\.tools\phase-2-pr3\env\Scripts\python.exe -c "
 from importlib.resources import files
 from pathlib import Path
 import partsmith.ir
@@ -82,29 +82,30 @@ assert files('partsmith.persistence').joinpath('001_initial.sql').read_bytes() =
 print('PASS: isolated wheel imports; all three schema bytes and migration match')
 "
 PASS: isolated wheel imports; all three schema bytes and migration match
-C:\GIT_HUB\PartSmaith\.tools\phase-2-v096\env\Scripts\python.exe -m pytest --junitxml=docs/gates/phase-2-v0.9.6-wheel-tests.xml
+C:\GIT_HUB\PartSmaith\.tools\phase-2-pr3\env\Scripts\python.exe -m pytest --junitxml=docs/gates/phase-2-v0.9.6-wheel-tests.xml
 ============================= test session starts =============================
 platform win32 -- Python 3.12.10, pytest-8.4.2, pluggy-1.6.0
 rootdir: C:\GIT_HUB\PartSmaith
 configfile: pyproject.toml
 testpaths: tests
-collected 280 items
+collected 290 items
 
 tests\test_cli.py ....                                                   [  1%]
-tests\test_ir.py ....................................................... [ 21%]
-.........................                                                [ 30%]
-tests\test_ir_v11.py ................................................... [ 48%]
-..................................                                       [ 60%]
-tests\test_ir_v12.py ................................................... [ 78%]
-..............................................                           [ 95%]
-tests\test_persistence.py ............                                   [ 99%]
+tests\test_ir.py ....................................................... [ 20%]
+.........................                                                [ 28%]
+tests\test_ir_v11.py ................................................... [ 46%]
+..................................                                       [ 58%]
+tests\test_ir_v12.py ................................................... [ 75%]
+....................................................                     [ 93%]
+tests\test_persistence.py ............                                   [ 97%]
+tests\test_phase2_manifest.py ....                                       [ 99%]
 tests\test_project.py ..                                                 [100%]
 
 - generated xml file: C:\GIT_HUB\PartSmaith\docs\gates\phase-2-v0.9.6-wheel-tests.xml -
-============================= 280 passed in 4.04s =============================
-C:\GIT_HUB\PartSmaith\.tools\phase-2-v096\env\Scripts\python.exe -m pip check
+============================= 290 passed in 4.35s =============================
+C:\GIT_HUB\PartSmaith\.tools\phase-2-pr3\env\Scripts\python.exe -m pip check
 No broken requirements found.
-C:\GIT_HUB\PartSmaith\.tools\phase-2-v096\env\Scripts\partsmith.exe version
+C:\GIT_HUB\PartSmaith\.tools\phase-2-pr3\env\Scripts\partsmith.exe version
 0.1.0
-C:\GIT_HUB\PartSmaith\.tools\phase-2-v096\env\Scripts\partsmith.exe doctor --json
+C:\GIT_HUB\PartSmaith\.tools\phase-2-pr3\env\Scripts\partsmith.exe doctor --json
 [{"detail":"3.12.10","name":"python","status":"PASS"},{"detail":"partsmith 0.1.0","name":"package","status":"PASS"},{"detail":"command interface available","name":"cli","status":"PASS"}]

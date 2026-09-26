@@ -843,3 +843,112 @@ def test_frozen_dependency_projections(valid, label):
         .read_text()
         .strip()
     )
+
+
+def reordered_revision(before, order, key):
+    """Build a valid simultaneous reorder, retaining all historical links."""
+    data = child(before, key)
+    data["pins"] = [copy.deepcopy(before["pins"][i]) for i in order]
+    data["package"]["pin_count"] = len(order)
+    for old in range(len(before["pins"])):
+        new = order.index(old) if old in order else None
+        if old == new:
+            continue
+        data["revision"]["target_rebindings"].append(
+            dict(
+                old_path=f"/pins/{old}",
+                new_path=None if new is None else f"/pins/{new}",
+                base_revision_id=before["revision"]["id"],
+                reason=f"Retain terminal {before['pins'][old]['number']}",
+                reviewer="fixture",
+                timestamp="2026-09-20T12:00:00Z",
+                approval_state="APPROVED",
+            )
+        )
+    return data
+
+
+@pytest.mark.parametrize("target", ["/pins/0", "/pins/0/name"])
+@pytest.mark.parametrize("order", [(1, 0), (1,)])
+def test_projection_exclusion_tracks_rebound_candidate(valid, target, order):
+    raw = copy.deepcopy(valid["evidence"][0])
+    raw.update(id="E-RAW", candidate_targets=[])
+    replacement = copy.deepcopy(raw)
+    replacement.update(id="E-REPLACEMENT", candidate_targets=[target])
+    valid["evidence"].extend([raw, replacement])
+    valid["pins"][0]["evidence_ids"] = ["E-REPLACEMENT"]
+    valid["revision"]["evidence_exclusions"].append(
+        dict(
+            evidence_id="E-RAW",
+            replacement_evidence_ids=["E-REPLACEMENT"],
+            reason="Interpretation assigned to original terminal",
+            reviewer="fixture",
+            timestamp="2026-09-20T12:00:00Z",
+            approval_state="APPROVED",
+        )
+    )
+    review(valid)
+    selected = "/pins/1/name" if len(order) == 2 else "/pins/0/name"
+    context = replace(
+        CONTEXT, required_paths=(selected,), mandatory_paths=(selected,)
+    )
+
+    def snapshot(root):
+        data = reordered_revision(root, order, "REORDERED")
+        assert issues(data, root, context=context) == ()
+        return dependency_projection(
+            data,
+            requirements=context,
+            revisions=store(data, root),
+            configuration=CONFIG,
+        )
+
+    baseline = snapshot(valid)
+    assert bool(baseline["dispositions"]) == (len(order) == 2)
+    # Compare valid histories without mutating either retained parent.
+    changed = copy.deepcopy(valid)
+    changed["revision"]["evidence_exclusions"][0]["reason"] = "New rationale"
+    assert (canonical_json(snapshot(changed)) != canonical_json(baseline)) == (
+        len(order) == 2
+    )
+
+
+@pytest.mark.parametrize("first_binding", [0, 1])
+def test_projection_rebinding_tracks_entire_chain(valid, first_binding):
+    third = copy.deepcopy(valid["pins"][1])
+    third.update(number="3", name="3")
+    third["physical"]["topology_index"] = 1
+    valid["pins"].append(third)
+    valid["package"]["pin_count"] = 3
+    valid["evidence"][0]["candidate_targets"].append("/pins/2")
+    context = replace(
+        CONTEXT,
+        required_paths=("/pins/2/name",),
+        mandatory_paths=("/pins/2/name",),
+    )
+
+    def snapshot(reason=None):
+        first = reordered_revision(valid, (1, 0, 2), "REORDER-1")
+        if reason:
+            first["revision"]["target_rebindings"][first_binding]["reason"] = (
+                reason
+            )
+        second = reordered_revision(first, (0, 2, 1), "REORDER-2")
+        assert issues(second, valid, first, context=context) == ()
+        return dependency_projection(
+            second,
+            requirements=context,
+            revisions=store(second, valid, first),
+            configuration=CONFIG,
+        )
+
+    baseline = snapshot()
+    assert [
+        (r["old_path"], r["new_path"]) for r in baseline["rebindings"]
+    ] == [
+        ("/pins/0", "/pins/1"),
+        ("/pins/1", "/pins/2"),
+    ]
+    assert (
+        canonical_json(snapshot("New rationale")) != canonical_json(baseline)
+    ) == (first_binding == 0)

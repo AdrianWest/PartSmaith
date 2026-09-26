@@ -902,14 +902,18 @@ package-standard approval.
 ## CODE-001 — Python code quality standards
 
 All production Python source code, test code, and executable maintenance
-scripts in the PartSmith repository shall conform to both the
+scripts in the PartSmith repository shall follow the
 [PEP 8 Style Guide for Python Code](https://peps.python.org/pep-0008/)
 and the
 [Google Python Style Guide](https://google.github.io/styleguide/pyguide.html).
 
-Where the two guides differ, the stricter applicable rule shall be used.
-In particular, Python lines shall not exceed 79 characters, excluding
-explicitly exempted generated files and third-party source material.
+PEP 8 governs formatting and syntax where the guides conflict. The Google
+guide supplies complementary naming, documentation, and design guidance where
+it does not conflict with PEP 8 or this specification. Ruff 0.16.8, configured
+in `pyproject.toml`, is the executable lint/format policy for the current
+baseline; changing its version or selected rules requires reviewed configuration
+and updated gate evidence. Python lines shall not exceed 79 characters,
+excluding explicitly exempted generated files and third-party source material.
 
 The repository shall configure automated linting and formatting checks
 to enforce the automatable portions of these standards. CI shall fail if
@@ -2184,7 +2188,7 @@ context. It cannot be weakened by IR or user configuration.
 | --- | --- | --- |
 | Bootstrap package | 0402, using GOLD-0402-001 and its approved PDL | 3–9 |
 | Production packages | All eight STD-010 variants; at least one manufacturer-backed golden component and relevant negative cases for each | 14 |
-| Model accuracy | CLASS A for every production variant; PDL lists required measured body/terminal/clearance observables; CLASS B/C are previews only | 6–8, 14 |
+| Model accuracy | CLASS A for the 0402 bootstrap in Phases 6–8 and for every production variant in Phase 14; each applicable PDL lists required measured body/terminal/clearance observables; CLASS B/C are previews only | 6–8, 14 |
 | AI providers | One selected, configured adapter with pinned interface/model metadata and full provider contract/security tests; others optional | 11, 14 |
 | Languages | English and at least one named non-English language pinned in the release profile before Phase 10; native-text and scanned/OCR samples for each, plus a mixed-language sample; retain originals and translations | 10–12, 14 |
 | Document difficulty | Every category in section 182, including expected blockers for incomplete/conflicting evidence | 10–11 |
@@ -4198,8 +4202,8 @@ unless the project later selects another target. Current KiCad
 documentation identifies `.kicad_sym` symbol libraries, `.pretty`
 footprint libraries containing `.kicad_mod` files, and KiCad 10's
 IPC/Python API direction; KiCad also documents that major releases can
-change file formats and are not forward-compatible with older major
-versions after saving.
+change file formats and that files saved by a newer major version may not be
+backward-compatible with older major versions.
 [Reference register: section 247](#247-external-reference-register).
 
 The implementation shall isolate KiCad-version-specific behavior behind
