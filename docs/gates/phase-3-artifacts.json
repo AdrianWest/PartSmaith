@@ -22,9 +22,9 @@
     "production_evidence": false
   },
   "tests": {
-    "source": { "tests": 316, "failures": 0, "errors": 0, "skipped": 0 },
-    "wheel": { "tests": 316, "failures": 0, "errors": 0, "skipped": 0 },
-    "phase_3_pdl": 24,
+    "source": { "tests": 319, "failures": 0, "errors": 0, "skipped": 0 },
+    "wheel": { "tests": 319, "failures": 0, "errors": 0, "skipped": 0 },
+    "phase_3_pdl": 27,
     "phase_3_cli": 2
   },
   "packaged_pdl_resources_byte_verified": true,
@@ -32,7 +32,7 @@
   "git_clean_bytes_verified": false,
   "wheel": {
     "filename": "partsmith-0.1.0-py3-none-any.whl",
-    "sha256": "723d958d4da5e200cf61c49203e15e68131e6315784f5aab926ac795fe2c681e",
+    "sha256": "2eba8fa87be6e42c217084abb2cecef4ad9ecd975bbf992dfd064363c18858f8",
     "availability": "Temporary local generated output"
   },
   "commands": [
@@ -67,13 +67,13 @@
     "src/partsmith/pdl/errors.py": "9f097910da98dc0fbac9f69ee3141cb04e76612341888827ab8f9861ae3b1847",
     "src/partsmith/pdl/loader.py": "fa2bc3e257ca0334987a5c856f33afff5617bf040943fe1778da4e68d85c1734",
     "src/partsmith/pdl/model.py": "b4857040e93b525c015758afcb8a5c270c19aaaab9b8b0e405a83fd52ec96181",
-    "src/partsmith/pdl/profiles.py": "e4870b3ce281cd422866810242c280716ddc0ad843cd5cdb4b4d7c400f1b349a",
+    "src/partsmith/pdl/profiles.py": "7500ca657edd5880c2fbc2e02d7fad54b00ff4fee090dd73281f28ac2eb22cc1",
     "src/partsmith/pdl/schema.py": "af78eab755505cc497285fd51a555e65fae665e56562b4817aba60e0c3233265",
     "tests/test_cli.py": "942be02da2cfe27f57b5eb8911b43fbe67d6c29b185bdc020be2697ad3d0877d",
-    "tests/test_pdl.py": "74dff6bbe81dbe7701e686604b08a2a4ed225f7edc52277baa2f47cb00b388d2",
+    "tests/test_pdl.py": "a76b5c3fdcf77dbcb77f77791790fb6cfeb890acc99b447a1c59ba6ee0f02319",
     "scripts/verify_phase2_manifest.py": "a840984893a066923e8cffd7dc4869c0e9479e08c4ee96f62daa0d229a641842",
-    "docs/gates/phase-3.md": "5fd97928ac95106d8acfc43aba7b4fd81307d137dc9c4c05e31e21caab427ad8",
-    "docs/gates/phase-3-tests.xml": "3a047c0df6785e4d7de2e6d290c4f31f37658d1c21a8da8b976c0685c2bdf252",
-    "docs/gates/phase-3-wheel-tests.xml": "0dc03e6236217bd6f33eb55f6fa391469b6b524574af1474060095d11510c34d"
+    "docs/gates/phase-3.md": "029f2d1cff18293a5664fbdef892bdafdc6d98c8ac7374f8a02706f081a9532a",
+    "docs/gates/phase-3-tests.xml": "764fa758037a980802db280cf8ae2084a7e68f7e0c86c8fb8028dbd721a6e4ee",
+    "docs/gates/phase-3-wheel-tests.xml": "fdfe7a2dab6856488ebd0b0ef50640ab0543239b679c487120dd509fa18f90af"
   }
 }

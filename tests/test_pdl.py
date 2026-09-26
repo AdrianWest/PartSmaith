@@ -125,6 +125,17 @@ def test_loader_requires_exact_safe_identity(tmp_path, valid):
 
 
 @pytest.mark.parametrize(
+    ("profile_id", "version"),
+    [("../escape", "1.0"), ("mvp-1", "../escape"), ("mvp/1", "1.0")],
+)
+def test_release_profile_requires_safe_identity(tmp_path, profile_id, version):
+    from partsmith.pdl import load_release_profile
+
+    with pytest.raises(PDLValidationError, match="PDL_PROFILE_"):
+        load_release_profile(profile_id, version, root=tmp_path)
+
+
+@pytest.mark.parametrize(
     ("path", "value"),
     [
         (("package", "variant"), "0603"),

@@ -1,5 +1,6 @@
 """Pinned release-profile loading and content hashing."""
 
+import re
 from hashlib import sha256
 from importlib.resources import files
 from pathlib import Path
@@ -17,6 +18,7 @@ _REQUIRED_FIELD_TYPES = {
     "required_artifacts": list,
     "kicad_target": str,
 }
+_SAFE_IDENTIFIER = re.compile(r"[A-Za-z0-9][A-Za-z0-9._-]*\Z")
 
 
 def load_release_profile(
@@ -26,6 +28,18 @@ def load_release_profile(
     root: str | Path | None = None,
 ) -> dict:
     """Load one exact release profile without implicit version selection."""
+    if not _SAFE_IDENTIFIER.fullmatch(profile_id):
+        fail(
+            "/release_profile/id",
+            "PDL_PROFILE_ID",
+            "Invalid release-profile identifier",
+        )
+    if not _SAFE_IDENTIFIER.fullmatch(version):
+        fail(
+            "/release_profile/version",
+            "PDL_PROFILE_VERSION",
+            "Invalid release-profile version",
+        )
     name = f"{profile_id}@{version}.json"
     if root is None:
         resource = files(__package__).joinpath("release-profiles", name)
