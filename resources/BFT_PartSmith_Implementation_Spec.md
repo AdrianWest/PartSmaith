@@ -22,10 +22,13 @@ Version labels inside that archive describe its original context only.
 
 **Implementation status:** IR 1.2 schema, validation, explicit migration,
 revision-store protocol, snapshot-profile-1.1 dependency projections, and
-fixtures are implemented against v0.9.5.
+fixtures are implemented against v0.9.5. Phase 3's PDL 1.0 schema, versioned
+loader, deterministic validation, synthetic 0402 bootstrap entry, and inspection
+CLI are implemented against v0.9.6.
 [The revised Phase 2 report](../docs/gates/phase-2-ir-1.2.md) records that scope.
-Those Phase 2 requirements remain unchanged and its PASS satisfies Phase 3's
-prerequisite. Snapshot profile 1.2 must be implemented and tested incrementally in
+Those Phase 2 requirements remain unchanged and its PASS satisfied Phase 3's
+prerequisite. The Phase 3 PASS is recorded separately and does not claim
+manufacturer-backed production package approval. Snapshot profile 1.2 must be implemented and tested incrementally in
 Phases 4–6 and 8–9, not claimed by that report. The earlier
 [IR 1.1 PASS](../docs/gates/phase-2-ir-1.1.md) remains tied to v0.9.4. Earlier
 reports and hashes retain their original scope. Unchanged Phase 0/1 requirements

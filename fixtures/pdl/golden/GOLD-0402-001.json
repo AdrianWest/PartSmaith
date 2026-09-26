@@ -1,0 +1,24 @@
+{
+  "id": "GOLD-0402-001",
+  "scope": "SYNTHETIC_PHASE_3_BOOTSTRAP",
+  "production_evidence": false,
+  "component_ir": {
+    "path": "fixtures/ir/v1.2/valid/0402.json",
+    "sha256": "ff8f8697ef789b694123385a73777787ec16b1b8ebb8d9c9fd590cc4078a1063"
+  },
+  "source": {
+    "path": "fixtures/pdl/source/synthetic-gold-0402.txt",
+    "sha256": "9b83c8b0e18f6199c9767d0ddb2af79faffcf5cfc613a66c930d6ad15a42d0fe"
+  },
+  "pdl": {
+    "id": "synthetic-0402",
+    "revision": "1.0",
+    "content_sha256": "13af140044f61b0ee79c98611a6eb534f365b16ad6f74c2d3e8bbf1cdaa79609",
+    "file_sha256": "cbb80577824c645752b36fd1549d1b88e8aee0b402b15afd99626a63277653de"
+  },
+  "release_profile": {
+    "id": "mvp-1",
+    "version": "1.0",
+    "sha256": "6f6f53a32a731a03d4c396f7235c199887232e24a95728dd9d78db1c179edfd8"
+  }
+}

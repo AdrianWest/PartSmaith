@@ -21,8 +21,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
-      - name: Verify recorded Phase 2 input hashes
-        run: python scripts/verify_phase2_manifest.py
+      - name: Verify recorded Phase 3 input hashes
+        run: python scripts/verify_phase2_manifest.py --manifest docs/gates/phase-3-artifacts.json
       - name: Install pinned CI tools and project
         run: |
           python -m pip install --requirement requirements-ci.txt
@@ -39,6 +39,7 @@ jobs:
           python -c "import pathlib, subprocess, sys; wheels = list(pathlib.Path('dist').glob('*.whl')); assert len(wheels) == 1, f'Expected exactly one built wheel, found {len(wheels)}'; subprocess.run([sys.executable, '-m', 'pip', 'install', '--force-reinstall', '--no-deps', str(wheels[0])], check=True)"
           python -c "from importlib.resources import files; assert files('partsmith.persistence').joinpath('001_initial.sql').is_file()"
           python -c "from importlib.resources import files; from pathlib import Path; import partsmith.ir; from partsmith.ir import SUPPORTED_VERSIONS; assert 'site-packages' in str(Path(partsmith.ir.__file__).resolve()); assert all(files('partsmith.ir').joinpath(f'component-ir-{v}.schema.json').read_bytes() == Path(f'schemas/component-ir-{v}.schema.json').read_bytes() for v in SUPPORTED_VERSIONS)"
+          python -c "from importlib.resources import files; from pathlib import Path; import partsmith.pdl; root = files('partsmith.pdl'); assert root.joinpath('pdl-1.0.schema.json').read_bytes() == Path('schemas/pdl-1.0.schema.json').read_bytes(); assert root.joinpath('entries/synthetic-0402@1.0.json').read_bytes() == Path('pdl/entries/synthetic-0402@1.0.json').read_bytes(); assert root.joinpath('release-profiles/mvp-1@1.0.json').read_bytes() == Path('pdl/release-profiles/mvp-1@1.0.json').read_bytes()"
           python -m pytest --junitxml=wheel-gate-results.xml
       - name: Check command-line entry point
         run: |
