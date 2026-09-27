@@ -153,6 +153,13 @@ def _semantic_issues(data: dict) -> list[Issue]:
                 "PDL_TOPOLOGY",
                 "Symmetry matrix must be affine",
             )
+        if any(matrix[row][3] != 0 for row in range(3)):
+            add(
+                f"/allowed_symmetries/{index}/matrix",
+                "PDL_TOPOLOGY",
+                "Symmetry matrix cannot translate the package reference "
+                "center",
+            )
         determinant = (
             matrix[0][0]
             * (matrix[1][1] * matrix[2][2] - matrix[1][2] * matrix[2][1])
@@ -167,6 +174,27 @@ def _semantic_issues(data: dict) -> list[Issue]:
                 "PDL_TOPOLOGY",
                 "Symmetry matrix must preserve or mirror scale",
             )
+        for row in range(3):
+            if sum(matrix[row][column] ** 2 for column in range(3)) != 1:
+                add(
+                    f"/allowed_symmetries/{index}/matrix",
+                    "PDL_TOPOLOGY",
+                    "Symmetry matrix rows must preserve length",
+                )
+        for first in range(3):
+            for second in range(first + 1, 3):
+                if (
+                    sum(
+                        matrix[first][column] * matrix[second][column]
+                        for column in range(3)
+                    )
+                    != 0
+                ):
+                    add(
+                        f"/allowed_symmetries/{index}/matrix",
+                        "PDL_TOPOLOGY",
+                        "Symmetry matrix rows must be orthogonal",
+                    )
         if set(symmetry["terminal_mapping"]) != terminal_id_set:
             add(
                 f"/allowed_symmetries/{index}/terminal_mapping",

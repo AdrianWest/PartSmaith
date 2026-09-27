@@ -22,9 +22,9 @@
     "production_evidence": false
   },
   "tests": {
-    "source": { "tests": 323, "failures": 0, "errors": 0, "skipped": 0 },
-    "wheel": { "tests": 323, "failures": 0, "errors": 0, "skipped": 0 },
-    "phase_3_pdl": 31,
+    "source": { "tests": 324, "failures": 0, "errors": 0, "skipped": 0 },
+    "wheel": { "tests": 324, "failures": 0, "errors": 0, "skipped": 0 },
+    "phase_3_pdl": 32,
     "phase_3_cli": 2
   },
   "packaged_pdl_resources_byte_verified": true,
@@ -32,7 +32,7 @@
   "git_clean_bytes_verified": false,
   "wheel": {
     "filename": "partsmith-0.1.0-py3-none-any.whl",
-    "sha256": "d15c64b8978747a66ea2f737c9d97956248a599baf0ddbddabfff66ea68fe3d7",
+    "sha256": "7cacbdf24d4f4de57a5212a06ee19188f9f9fb9ffa7cbdf7de8607dc40f3f40b",
     "availability": "Temporary local generated output"
   },
   "commands": [
@@ -59,21 +59,21 @@
     "pdl/release-profiles/mvp-1@1.0.json": "8798d9a552e5dab29f0c5985a4bfbf7b91fb148ac4e90c42f73952dcf8550b0a",
     "fixtures/pdl/source/synthetic-gold-0402.txt": "dd912c336c41538c8dcc95fd642542f3b6480ae632adc4cd649a6a6b54bf84df",
     "fixtures/pdl/golden/GOLD-0402-001.json": "dcad0e3db45b2d2e01c7351284b2dd3cb25f5e39bb8ddd63b5602586faf176bb",
-    "fixtures/pdl/invalid/cases.json": "b077ac4f1407bad863fe3f568b4c09318e1a34a1967d4ee93fdd17f948d61f6b",
+    "fixtures/pdl/invalid/cases.json": "0a2b8cffcc41c3291dd29ab2f0606cee9b2e959dd73c017370a9b67cb807629c",
     "fixtures/ir/v1.2/valid/0402.json": "ff8f8697ef789b694123385a73777787ec16b1b8ebb8d9c9fd590cc4078a1063",
     "src/partsmith/cli.py": "311947a8fac08de9b6f8661f1ab48b8fcb8655607426f645afbb1bb5c0680ffb",
     "src/partsmith/pdl/__init__.py": "28246210e0e2880be443616482f637bd3f199eac897989ab2216a7d3d1334a93",
     "src/partsmith/pdl/compatibility.py": "7d5f912e2fbc1873752b8460fb7acce2197ab1f358927d4e7e8429d35c5f71d5",
     "src/partsmith/pdl/errors.py": "9f097910da98dc0fbac9f69ee3141cb04e76612341888827ab8f9861ae3b1847",
     "src/partsmith/pdl/loader.py": "0bc20392555c7d484642f697d6a3ccc7bc8f23ed73429c52f2e0f4a17f0e22b7",
-    "src/partsmith/pdl/model.py": "92aaff273ccf57f00e7682213ca52c7a50d4f2b54feb102f7c2d80f6b88c9bd4",
+    "src/partsmith/pdl/model.py": "76df56d58e794efb46fdc227506a8bf45140ce725d6803059319657da3cd74ba",
     "src/partsmith/pdl/profiles.py": "7500ca657edd5880c2fbc2e02d7fad54b00ff4fee090dd73281f28ac2eb22cc1",
     "src/partsmith/pdl/schema.py": "af78eab755505cc497285fd51a555e65fae665e56562b4817aba60e0c3233265",
     "tests/test_cli.py": "942be02da2cfe27f57b5eb8911b43fbe67d6c29b185bdc020be2697ad3d0877d",
     "tests/test_pdl.py": "cd32c155e5ad69bb74c2426f62280fa744914061b6770d1f29107326d8803db5",
     "scripts/verify_phase2_manifest.py": "a840984893a066923e8cffd7dc4869c0e9479e08c4ee96f62daa0d229a641842",
-    "docs/gates/phase-3.md": "a3a6b68975b7be14b1ddc6f6de5cb6d2bc4fbdad5173c196b5de66a1e6c7e6be",
-    "docs/gates/phase-3-tests.xml": "7f821e27010f9029c66ca7988b72d19f5a71770dc258c853634cf7531645d314",
-    "docs/gates/phase-3-wheel-tests.xml": "b72751285c24aabce32371fe130b60f21f494796edf2c31d5741a47bbc57a547"
+    "docs/gates/phase-3.md": "03590194b3b13056d68e4bfd02fca082c3ed8a2662853e68c46ddb868b22f68a",
+    "docs/gates/phase-3-tests.xml": "251371957614a4b6653a9ff9782f01d40cb8fcb7da0aa2186107ef4f7658ad76",
+    "docs/gates/phase-3-wheel-tests.xml": "5b9df7df024b99f9b5cd14540f6fbcb44a96a9aad52bdbb4df9c6d5e36beab4d"
   }
 }
