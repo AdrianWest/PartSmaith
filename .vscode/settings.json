@@ -1,5 +1,12 @@
 {
   "python.defaultInterpreterPath": "${workspaceFolder}\\.venv\\Scripts\\python.exe",
   "python.envFile": "${workspaceFolder}\\.env",
-  "python.terminal.activateEnvironment": true
+  "python.terminal.activateEnvironment": true,
+  "terminal.integrated.profiles.windows": {
+    "PartSmith PowerShell": {
+      "path": "pwsh.exe",
+      "args": ["-NoExit", "-Command", ". '${workspaceFolder}\\scripts\\load-env.ps1'"]
+    }
+  },
+  "terminal.integrated.defaultProfile.windows": "PartSmith PowerShell"
 }
