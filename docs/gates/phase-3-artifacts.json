@@ -65,15 +65,15 @@
     "src/partsmith/pdl/__init__.py": "28246210e0e2880be443616482f637bd3f199eac897989ab2216a7d3d1334a93",
     "src/partsmith/pdl/compatibility.py": "7d5f912e2fbc1873752b8460fb7acce2197ab1f358927d4e7e8429d35c5f71d5",
     "src/partsmith/pdl/errors.py": "9f097910da98dc0fbac9f69ee3141cb04e76612341888827ab8f9861ae3b1847",
-    "src/partsmith/pdl/loader.py": "fa2bc3e257ca0334987a5c856f33afff5617bf040943fe1778da4e68d85c1734",
+    "src/partsmith/pdl/loader.py": "0bc20392555c7d484642f697d6a3ccc7bc8f23ed73429c52f2e0f4a17f0e22b7",
     "src/partsmith/pdl/model.py": "b4857040e93b525c015758afcb8a5c270c19aaaab9b8b0e405a83fd52ec96181",
     "src/partsmith/pdl/profiles.py": "7500ca657edd5880c2fbc2e02d7fad54b00ff4fee090dd73281f28ac2eb22cc1",
     "src/partsmith/pdl/schema.py": "af78eab755505cc497285fd51a555e65fae665e56562b4817aba60e0c3233265",
     "tests/test_cli.py": "942be02da2cfe27f57b5eb8911b43fbe67d6c29b185bdc020be2697ad3d0877d",
-    "tests/test_pdl.py": "a76b5c3fdcf77dbcb77f77791790fb6cfeb890acc99b447a1c59ba6ee0f02319",
+    "tests/test_pdl.py": "e6ddc941dee2f8ffa1f9a85fce950904f045794dd2d6c5c65ce928613628a12a",
     "scripts/verify_phase2_manifest.py": "a840984893a066923e8cffd7dc4869c0e9479e08c4ee96f62daa0d229a641842",
     "docs/gates/phase-3.md": "029f2d1cff18293a5664fbdef892bdafdc6d98c8ac7374f8a02706f081a9532a",
-    "docs/gates/phase-3-tests.xml": "764fa758037a980802db280cf8ae2084a7e68f7e0c86c8fb8028dbd721a6e4ee",
-    "docs/gates/phase-3-wheel-tests.xml": "fdfe7a2dab6856488ebd0b0ef50640ab0543239b679c487120dd509fa18f90af"
+    "docs/gates/phase-3-tests.xml": "467fbfde65a5fc028424dc0ad27e0643ba7af66dd16ef873b486359db3234892",
+    "docs/gates/phase-3-wheel-tests.xml": "1e145672db8bc6642bce6531f46638463228d11d56c10b4135ae2860174764f3"
   }
 }

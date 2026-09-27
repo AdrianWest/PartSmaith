@@ -43,7 +43,8 @@ def load_pdl(
     result = PDL.from_file(candidates[0])
     if result.data["id"] != pdl_id:
         fail("/id", "PDL_ID", "PDL filename and content disagree")
-    if revision is not None and result.data["revision"] != revision:
+    filename_revision = candidates[0].stem.removeprefix(f"{pdl_id}@")
+    if result.data["revision"] != filename_revision:
         fail(
             "/revision",
             "PDL_REVISION",

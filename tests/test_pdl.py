@@ -118,6 +118,18 @@ def test_loader_requires_exact_safe_identity(tmp_path, valid):
         )
     with pytest.raises(PDLValidationError, match="PDL_REVISION_REQUIRED"):
         load_pdl("synthetic-0402", root=tmp_path)
+
+    mismatched = copy.deepcopy(valid)
+    mismatched["id"] = "mismatched"
+    mismatched["revision"] = "2.0"
+    mismatched["change_history"][-1]["revision"] = "2.0"
+    mismatched["content_sha256"] = pdl_hash(mismatched)
+    (tmp_path / "mismatched@1.0.json").write_bytes(
+        PDL(mismatched).canonical_bytes
+    )
+    with pytest.raises(PDLValidationError, match="PDL_REVISION"):
+        load_pdl("mismatched", root=tmp_path)
+
     assert (
         load_pdl("synthetic-0402", "2.0", root=tmp_path).data["revision"]
         == "2.0"
