@@ -1,4 +1,10 @@
-"""Packaged, offline JSON Schema validation with stable diagnostics."""
+"""
+
+@package src.partsmith.ir.schema
+@brief Packaged, offline JSON Schema validation with stable
+diagnostics.
+@details Provides the module implementation and public interfaces.
+"""
 
 import json
 import re
@@ -16,6 +22,15 @@ SUPPORTED_VERSIONS = ("1.0", "1.1", "1.2")
 
 
 def load_schema(version: str = "1.0") -> dict:
+    """
+
+    @brief Implements the load_schema operation.
+    @param version The version argument.
+    @return The dict result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     if version not in SUPPORTED_VERSIONS:
         fail("/schema_version", "IR_VERSION", "Unsupported IR version")
     name = f"component-ir-{version}.schema.json"
@@ -27,6 +42,15 @@ def load_schema(version: str = "1.0") -> dict:
 
 @lru_cache(maxsize=3)
 def _validator(version):
+    """
+
+    @brief Implements the _validator operation.
+    @param version The version argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     checker = Draft202012Validator.TYPE_CHECKER.redefine(
         "integer",
         lambda _, value: (
@@ -44,6 +68,15 @@ def _validator(version):
 
     @formats.checks("date-time", raises=ValueError)
     def timestamp(value):
+        """
+
+        @brief Implements the timestamp operation.
+        @param value The value argument.
+        @return The callable result.
+        @details Implements the documented behavior without changing the
+        public contract.
+
+        """
         if not isinstance(value, str):
             return True  # Type validation reports non-string input.
         if not re.fullmatch(
@@ -58,12 +91,31 @@ def _validator(version):
 
 
 def fragment_valid(value, fragment, version="1.2"):
-    """Validate a trusted fragment using packaged local definitions."""
+    """
+
+    @brief Validate a trusted fragment using packaged local definitions.
+    @param value The value argument.
+    @param fragment The fragment argument.
+    @param version The version argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     schema = {**fragment, "$defs": load_schema(version)["$defs"]}
     return _validator(version).evolve(schema=schema).is_valid(value)
 
 
 def schema_issues(data) -> list[Issue]:
+    """
+
+    @brief Implements the schema_issues operation.
+    @param data The data argument.
+    @return The list[Issue] result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     version = data.get("schema_version") if isinstance(data, dict) else None
     if version not in SUPPORTED_VERSIONS:
         return [

@@ -1,4 +1,9 @@
-"""Phase 3 Package Definition Library gate tests."""
+"""
+
+@package tests.test_pdl
+@brief Phase 3 Package Definition Library gate tests.
+@details Provides the module implementation and public interfaces.
+"""
 
 import copy
 import json
@@ -30,10 +35,28 @@ CASES = ROOT / "fixtures/pdl/invalid/cases.json"
 
 @pytest.fixture
 def valid():
+    """
+
+    @brief Implements the valid operation.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     return parse_json(ENTRY.read_bytes())
 
 
 def _target(data, path):
+    """
+
+    @brief Implements the _target operation.
+    @param data The data argument.
+    @param path The path argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     tokens = path.strip("/").split("/")
     parent = data
     for token in tokens[:-1]:
@@ -45,6 +68,15 @@ def _target(data, path):
 
 
 def test_phase_three_gate(valid):
+    """
+
+    @brief Implements the test_phase_three_gate operation.
+    @param valid The valid argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     Draft202012Validator.check_schema(load_schema("1.0"))
     pdl = load_pdl("synthetic-0402", "1.0")
     assert pdl.data == valid
@@ -60,6 +92,15 @@ def test_phase_three_gate(valid):
 
 
 def test_golden_fixture_binds_exact_ir_and_pdl_bytes():
+    """
+
+    @brief Implements the
+    test_golden_fixture_binds_exact_ir_and_pdl_bytes operation.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     golden = json.loads(GOLDEN.read_text(encoding="utf-8"))
     ir_path = ROOT / golden["component_ir"]["path"]
     source_path = ROOT / golden["source"]["path"]
@@ -98,6 +139,17 @@ def test_golden_fixture_binds_exact_ir_and_pdl_bytes():
     ids=lambda case: case["name"],
 )
 def test_invalid_pdl_cases_fail_deterministically(valid, case):
+    """
+
+    @brief Implements the test_invalid_pdl_cases_fail_deterministically
+    operation.
+    @param valid The valid argument.
+    @param case The case argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     data = copy.deepcopy(valid)
     parent, key = _target(data, case["path"])
     if case["operation"] == "remove":
@@ -111,6 +163,17 @@ def test_invalid_pdl_cases_fail_deterministically(valid, case):
 
 
 def test_loader_requires_exact_safe_identity(tmp_path, valid):
+    """
+
+    @brief Implements the test_loader_requires_exact_safe_identity
+    operation.
+    @param tmp_path The tmp_path argument.
+    @param valid The valid argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     with pytest.raises(PDLValidationError, match="PDL_NOT_FOUND"):
         load_pdl("missing", root=tmp_path)
     with pytest.raises(PDLValidationError, match="PDL_ID"):
@@ -149,6 +212,18 @@ def test_loader_requires_exact_safe_identity(tmp_path, valid):
     [("../escape", "1.0"), ("mvp-1", "../escape"), ("mvp/1", "1.0")],
 )
 def test_release_profile_requires_safe_identity(tmp_path, profile_id, version):
+    """
+
+    @brief Implements the test_release_profile_requires_safe_identity
+    operation.
+    @param tmp_path The tmp_path argument.
+    @param profile_id The profile_id argument.
+    @param version The version argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     from partsmith.pdl import load_release_profile
 
     with pytest.raises(PDLValidationError, match="PDL_PROFILE_"):
@@ -156,6 +231,16 @@ def test_release_profile_requires_safe_identity(tmp_path, profile_id, version):
 
 
 def test_release_profile_rejects_non_object_json(tmp_path):
+    """
+
+    @brief Implements the test_release_profile_rejects_non_object_json
+    operation.
+    @param tmp_path The tmp_path argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     from partsmith.pdl import load_release_profile
 
     (tmp_path / "mvp-1@1.0.json").write_text("[]", encoding="utf-8")
@@ -174,6 +259,17 @@ def test_release_profile_rejects_non_object_json(tmp_path):
     ],
 )
 def test_ir_pdl_topology_mismatches_are_rejected(path, value):
+    """
+
+    @brief Implements the test_ir_pdl_topology_mismatches_are_rejected
+    operation.
+    @param path The path argument.
+    @param value The value argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     ir = parse_json(IR.read_bytes())
     target = ir
     for token in path[:-1]:
@@ -183,6 +279,16 @@ def test_ir_pdl_topology_mismatches_are_rejected(path, value):
 
 
 def test_linear_terminal_order_is_validated(valid):
+    """
+
+    @brief Implements the test_linear_terminal_order_is_validated
+    operation.
+    @param valid The valid argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     data = copy.deepcopy(valid)
     data["topology"]["terminals"].reverse()
     data["content_sha256"] = pdl_hash(data)

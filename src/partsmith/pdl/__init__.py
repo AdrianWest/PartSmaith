@@ -1,4 +1,9 @@
-"""Versioned Package Definition Library contracts."""
+"""
+
+@package src.partsmith.pdl.__init__
+@brief Versioned Package Definition Library contracts.
+@details Provides the module implementation and public interfaces.
+"""
 
 from partsmith.pdl.compatibility import ir_pdl_issues
 from partsmith.pdl.errors import PDLValidationError

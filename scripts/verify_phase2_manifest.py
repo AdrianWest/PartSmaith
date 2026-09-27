@@ -1,4 +1,10 @@
-"""Verify the current Phase 2 manifest against exact repository file bytes."""
+"""
+
+@package scripts.verify_phase2_manifest
+@brief Verify the current Phase 2 manifest against exact repository
+file bytes.
+@details Provides the module implementation and public interfaces.
+"""
 
 import argparse
 import json
@@ -7,7 +13,17 @@ from pathlib import Path
 
 
 def verify(manifest_path: Path, root: Path) -> list[str]:
-    """Return missing/changed inputs; wheel output is separately recorded."""
+    """
+
+    @brief Return missing/changed inputs; wheel output is separately
+    recorded.
+    @param manifest_path The manifest_path argument.
+    @param root The root argument.
+    @return The list[str] result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
     errors = []
     for name, expected in manifest["sha256"].items():
@@ -22,6 +38,14 @@ def verify(manifest_path: Path, root: Path) -> list[str]:
 
 
 def main() -> int:
+    """
+
+    @brief Implements the main operation.
+    @return The int result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     root = Path(__file__).resolve().parents[1]
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(

@@ -1,4 +1,10 @@
-"""Phase 2 fixture gate and canonicalization/validation regressions."""
+"""
+
+@package tests.test_ir
+@brief Phase 2 fixture gate and canonicalization/validation
+regressions.
+@details Provides the module implementation and public interfaces.
+"""
 
 import copy
 import json
@@ -31,12 +37,29 @@ NEGATIVE_CASES = json.loads((FIXTURES / "invalid/expected.json").read_text())
 
 @pytest.fixture
 def valid():
+    """
+
+    @brief Implements the valid operation.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     return json.loads(
         (FIXTURES / "valid/0402.json").read_text(encoding="utf-8")
     )
 
 
 def test_phase_two_gate(valid):
+    """
+
+    @brief Implements the test_phase_two_gate operation.
+    @param valid The valid argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     Draft202012Validator.check_schema(load_schema())
     assert validate_ir(valid) == ()
     normalized = normalize_ir(valid)
@@ -56,6 +79,16 @@ def test_phase_two_gate(valid):
 
 @pytest.mark.parametrize("case", NEGATIVE_CASES, ids=lambda c: c["file"])
 def test_negative_fixtures_fail_intended_validator(case):
+    """
+
+    @brief Implements the test_negative_fixtures_fail_intended_validator
+    operation.
+    @param case The case argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     data = json.loads((FIXTURES / "invalid" / case["file"]).read_text())
     issues = validate_ir(data, for_generation=case["for_generation"])
     assert [(issue.code, issue.path) for issue in issues] == [
@@ -68,6 +101,15 @@ def test_negative_fixtures_fail_intended_validator(case):
 
 
 def test_every_invalid_fixture_has_expectations():
+    """
+
+    @brief Implements the test_every_invalid_fixture_has_expectations
+    operation.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     assert {c["file"] for c in NEGATIVE_CASES} == {
         p.name
         for p in (FIXTURES / "invalid").glob("*.json")
@@ -90,6 +132,18 @@ def test_every_invalid_fixture_has_expectations():
     ],
 )
 def test_exact_unit_conversions(unit, value, expected, target):
+    """
+
+    @brief Implements the test_exact_unit_conversions operation.
+    @param unit The unit argument.
+    @param value The value argument.
+    @param expected The expected argument.
+    @param target The target argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     with localcontext() as context:
         context.prec = 2
         assert normalize_quantity(value, unit) == (Decimal(expected), target)
@@ -97,11 +151,29 @@ def test_exact_unit_conversions(unit, value, expected, target):
 
 @pytest.mark.parametrize("unit", [None, "", "rad", "cm", "MM"])
 def test_never_guess_units(unit):
+    """
+
+    @brief Implements the test_never_guess_units operation.
+    @param unit The unit argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     with pytest.raises(IRValidationError, match="IR_UNIT"):
         normalize_quantity(1, unit)
 
 
 def test_canonical_json_has_independent_expected_bytes():
+    """
+
+    @brief Implements the
+    test_canonical_json_has_independent_expected_bytes operation.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     value = {
         "z": [-0.0, Decimal("1.2300"), 1e3, True, None],
         "a": "e\u0301\r\nline",
@@ -130,6 +202,16 @@ def test_canonical_json_has_independent_expected_bytes():
     ],
 )
 def test_nonfinite_and_unbounded_numbers_are_rejected(value):
+    """
+
+    @brief Implements the
+    test_nonfinite_and_unbounded_numbers_are_rejected operation.
+    @param value The value argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     with pytest.raises(IRValidationError, match="IR_NUMBER"):
         canonical_json(value)
 
@@ -138,6 +220,16 @@ def test_nonfinite_and_unbounded_numbers_are_rejected(value):
     "value", [{1: "bad"}, {"é": 1, "e\u0301": 2}, (1, 2), {1, 2}]
 )
 def test_non_json_data_and_key_collisions_are_rejected(value):
+    """
+
+    @brief Implements the
+    test_non_json_data_and_key_collisions_are_rejected operation.
+    @param value The value argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     with pytest.raises(IRValidationError, match="IR_JSON"):
         canonical_json(value)
 
@@ -155,11 +247,32 @@ def test_non_json_data_and_key_collisions_are_rejected(value):
     ],
 )
 def test_invalid_json_is_rejected_before_schema(text, code):
+    """
+
+    @brief Implements the test_invalid_json_is_rejected_before_schema
+    operation.
+    @param text The text argument.
+    @param code The code argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     with pytest.raises(IRValidationError, match=code):
         ComponentIR.from_json(text)
 
 
 def test_no_input_mutation_and_immutable_model(valid):
+    """
+
+    @brief Implements the test_no_input_mutation_and_immutable_model
+    operation.
+    @param valid The valid argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     original = copy.deepcopy(valid)
     component = ComponentIR(valid)
     detached = component.data
@@ -171,6 +284,16 @@ def test_no_input_mutation_and_immutable_model(valid):
 
 
 def test_cosmetic_variants_have_equal_hashes(valid):
+    """
+
+    @brief Implements the test_cosmetic_variants_have_equal_hashes
+    operation.
+    @param valid The valid argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     first = copy.deepcopy(valid)
     first["revision"]["description"] = "Café\nTest"
     second = dict(reversed(list(first.items())))
@@ -184,6 +307,16 @@ def test_cosmetic_variants_have_equal_hashes(valid):
 
 
 def test_source_units_remain_hash_significant(valid):
+    """
+
+    @brief Implements the test_source_units_remain_hash_significant
+    operation.
+    @param valid The valid argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     changed = copy.deepcopy(valid)
     changed["package"]["mechanical"]["body_width"].update(
         source_value=0.5, source_unit="mm"
@@ -196,6 +329,17 @@ def test_source_units_remain_hash_significant(valid):
 
 
 def test_hash_covers_engineering_values_provenance_and_array_order(valid):
+    """
+
+    @brief Implements the
+    test_hash_covers_engineering_values_provenance_and_array_order
+    operation.
+    @param valid The valid argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     changed = copy.deepcopy(valid)
     changed["electrical"]["resistance"]["value"] = 22000
     assert ir_hash(changed) != ir_hash(valid)
@@ -208,6 +352,16 @@ def test_hash_covers_engineering_values_provenance_and_array_order(valid):
 
 
 def test_hash_is_stable_across_processes_and_hash_seeds(valid):
+    """
+
+    @brief Implements the
+    test_hash_is_stable_across_processes_and_hash_seeds operation.
+    @param valid The valid argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     code = (
         "from partsmith.ir import ComponentIR; import sys; "
         "print(ComponentIR.from_file(sys.argv[1]).sha256)"
@@ -228,6 +382,17 @@ def test_hash_is_stable_across_processes_and_hash_seeds(valid):
     "status", ["UNKNOWN", "INFERRED", "AMBIGUOUS", "CONFLICTING", "MISSING"]
 )
 def test_candidates_are_preserved_but_cannot_enter_generation(valid, status):
+    """
+
+    @brief Implements the
+    test_candidates_are_preserved_but_cannot_enter_generation operation.
+    @param valid The valid argument.
+    @param status The status argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     valid["package"]["mechanical"]["body_height"]["status"] = status
     assert validate_ir(valid) == ()
     assert (
@@ -246,11 +411,32 @@ def test_candidates_are_preserved_but_cannot_enter_generation(valid, status):
     [("source_value", True), ("source_value", "0.5"), ("status", "APPROVED")],
 )
 def test_schema_rejects_coercion(valid, field, value):
+    """
+
+    @brief Implements the test_schema_rejects_coercion operation.
+    @param valid The valid argument.
+    @param field The field argument.
+    @param value The value argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     valid["package"]["mechanical"]["body_width"][field] = value
     assert {i.code for i in validate_ir(valid)} == {"IR_SCHEMA"}
 
 
 def test_supplied_normalization_cannot_override_source(valid):
+    """
+
+    @brief Implements the
+    test_supplied_normalization_cannot_override_source operation.
+    @param valid The valid argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     width = valid["package"]["mechanical"]["body_width"]
     width.update(normalized_value=1, normalized_unit="mm")
     assert {i.code for i in validate_ir(valid)} == {"IR_UNIT"}
@@ -259,6 +445,16 @@ def test_supplied_normalization_cannot_override_source(valid):
 
 
 def test_reference_integrity_and_provenance(valid):
+    """
+
+    @brief Implements the test_reference_integrity_and_provenance
+    operation.
+    @param valid The valid argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     valid["evidence"][0]["source"]["document_hash"] = "0" * 64
     assert {i.code for i in validate_ir(valid)} == {"IR_REFERENCE"}
     valid["evidence"][0]["source"]["document_hash"] = valid["source"][
@@ -271,6 +467,15 @@ def test_reference_integrity_and_provenance(valid):
 
 
 def test_synthetic_source_hash_is_real(valid):
+    """
+
+    @brief Implements the test_synthetic_source_hash_is_real operation.
+    @param valid The valid argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     source = valid["source"]["documents"][0]
     assert (
         sha256((FIXTURES / source["path"]).read_bytes()).hexdigest()
@@ -283,22 +488,63 @@ def test_synthetic_source_hash_is_real(valid):
     ["../private.pdf", "/home/private.pdf", "\\\\server\\private.pdf", "."],
 )
 def test_nonportable_paths_are_rejected(valid, path):
+    """
+
+    @brief Implements the test_nonportable_paths_are_rejected operation.
+    @param valid The valid argument.
+    @param path The path argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     valid["source"]["documents"][0]["path"] = path
     assert {i.code for i in validate_ir(valid)} == {"IR_PATH"}
 
 
 @pytest.mark.parametrize("number", ["A1", "NC", "EP"])
 def test_alphanumeric_pin_numbers_are_preserved(valid, number):
+    """
+
+    @brief Implements the test_alphanumeric_pin_numbers_are_preserved
+    operation.
+    @param valid The valid argument.
+    @param number The number argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     valid["pins"][0]["number"] = number
     assert ComponentIR(valid).data["pins"][0]["number"] == number
 
 
 def test_duplicate_evidence_ids_are_rejected(valid):
+    """
+
+    @brief Implements the test_duplicate_evidence_ids_are_rejected
+    operation.
+    @param valid The valid argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     valid["evidence"].append(copy.deepcopy(valid["evidence"][0]))
     assert {i.code for i in validate_ir(valid)} == {"IR_DUPLICATE_ID"}
 
 
 def test_null_electrical_value_is_not_generation_ready(valid):
+    """
+
+    @brief Implements the
+    test_null_electrical_value_is_not_generation_ready operation.
+    @param valid The valid argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     valid["electrical"]["resistance"]["value"] = None
     assert validate_ir(valid) == ()
     assert {i.code for i in validate_ir(valid, for_generation=True)} == {
@@ -307,6 +553,16 @@ def test_null_electrical_value_is_not_generation_ready(valid):
 
 
 def test_derived_and_standard_values_require_provenance(valid):
+    """
+
+    @brief Implements the
+    test_derived_and_standard_values_require_provenance operation.
+    @param valid The valid argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     width = valid["package"]["mechanical"]["body_width"]
     width["status"] = "DERIVED"
     assert {i.code for i in validate_ir(valid, for_generation=True)} == {
@@ -331,6 +587,17 @@ def test_derived_and_standard_values_require_provenance(valid):
 
 
 def test_override_audit_data_and_timestamp_are_validated_and_hashed(valid):
+    """
+
+    @brief Implements the
+    test_override_audit_data_and_timestamp_are_validated_and_hashed
+    operation.
+    @param valid The valid argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     before = ir_hash(valid)
     value = {
         "value": 10000,
@@ -362,6 +629,16 @@ def test_override_audit_data_and_timestamp_are_validated_and_hashed(valid):
 
 
 def test_manufacturer_and_mpn_spellings_are_preserved(valid):
+    """
+
+    @brief Implements the
+    test_manufacturer_and_mpn_spellings_are_preserved operation.
+    @param valid The valid argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     valid["identity"]["manufacturer"]["name"] = "Example Components Inc."
     valid["identity"]["mpn"] = "Test-R-0402/a"
     identity = ComponentIR(valid).data["identity"]
@@ -372,6 +649,16 @@ def test_manufacturer_and_mpn_spellings_are_preserved(valid):
 
 
 def test_error_order_is_independent_of_input_key_order(valid):
+    """
+
+    @brief Implements the
+    test_error_order_is_independent_of_input_key_order operation.
+    @param valid The valid argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     valid["package"]["mechanical"]["body_width"]["source_value"] = float("inf")
     valid["electrical"]["resistance"]["value"] = float("nan")
     reversed_data = dict(reversed(list(valid.items())))
@@ -388,6 +675,17 @@ def test_error_order_is_independent_of_input_key_order(valid):
     ],
 )
 def test_numeric_limits_survive_canonical_round_trip(valid, number):
+    """
+
+    @brief Implements the
+    test_numeric_limits_survive_canonical_round_trip operation.
+    @param valid The valid argument.
+    @param number The number argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     valid["electrical"]["resistance"]["value"] = number
     ir = ComponentIR(valid)
     assert ComponentIR.from_json(ir.canonical_bytes).sha256 == ir.sha256

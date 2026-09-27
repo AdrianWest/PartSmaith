@@ -1,4 +1,10 @@
-"""Immutable PDL loading, canonicalization, hashing, and validation."""
+"""
+
+@package src.partsmith.pdl.model
+@brief Immutable PDL loading, canonicalization, hashing, and
+validation.
+@details Provides the module implementation and public interfaces.
+"""
 
 from dataclasses import dataclass
 from hashlib import sha256
@@ -12,16 +18,45 @@ from partsmith.pdl.schema import schema_issues
 
 
 def pdl_hash(data: dict) -> str:
-    """Hash canonical PDL content without its self-declared hash field."""
+    """
+
+    @brief Hash canonical PDL content without its self-declared hash
+    field.
+    @param data The data argument.
+    @return The str result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     content = normalize_json(data)
     content.pop("content_sha256", None)
     return sha256(canonical_json(content)).hexdigest()
 
 
 def _semantic_issues(data: dict) -> list[Issue]:
+    """
+
+    @brief Implements the _semantic_issues operation.
+    @param data The data argument.
+    @return The list[Issue] result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     issues = []
 
     def add(path: str, code: str, message: str) -> None:
+        """
+
+        @brief Implements the add operation.
+        @param path The path argument.
+        @param code The code argument.
+        @param message The message argument.
+        @return The None result.
+        @details Implements the documented behavior without changing the
+        public contract.
+
+        """
         issues.append(Issue(path, code, message))
 
     identity = data["identity"]
@@ -320,7 +355,15 @@ def _semantic_issues(data: dict) -> list[Issue]:
 
 
 def normalize_pdl(data: dict) -> dict:
-    """Return a validated normalized PDL copy."""
+    """
+
+    @brief Return a validated normalized PDL copy.
+    @param data The data argument.
+    @return The dict result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     result = normalize_json(data)
     issues = schema_issues(result)
     if not issues:
@@ -357,7 +400,15 @@ def normalize_pdl(data: dict) -> dict:
 
 
 def validate_pdl(data: dict) -> tuple[Issue, ...]:
-    """Return stable diagnostics for one PDL entry."""
+    """
+
+    @brief Return stable diagnostics for one PDL entry.
+    @param data The data argument.
+    @return The tuple[Issue, ...] result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     try:
         normalize_pdl(data)
     except PDLValidationError as error:
@@ -366,7 +417,15 @@ def validate_pdl(data: dict) -> tuple[Issue, ...]:
 
 
 def canonical_pdl(data: dict) -> bytes:
-    """Return canonical bytes including the verified declared hash."""
+    """
+
+    @brief Return canonical bytes including the verified declared hash.
+    @param data The data argument.
+    @return The bytes result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     return canonical_json(normalize_pdl(data))
 
 
@@ -377,20 +436,63 @@ class PDL:
     canonical_bytes: bytes
 
     def __init__(self, data: dict):
+        """
+
+        @brief Implements the __init__ operation.
+        @param data The data argument.
+        @return None.
+        @details Implements the documented behavior without changing the
+        public contract.
+
+        """
         object.__setattr__(self, "canonical_bytes", canonical_pdl(data))
 
     @classmethod
     def from_json(cls, text: str | bytes) -> "PDL":
+        """
+
+        @brief Implements the from_json operation.
+        @param text The text argument.
+        @return The 'PDL' result.
+        @details Implements the documented behavior without changing the
+        public contract.
+
+        """
         return cls(parse_json(text))
 
     @classmethod
     def from_file(cls, path: str | Path) -> "PDL":
+        """
+
+        @brief Implements the from_file operation.
+        @param path The path argument.
+        @return The 'PDL' result.
+        @details Implements the documented behavior without changing the
+        public contract.
+
+        """
         return cls.from_json(Path(path).read_bytes())
 
     @property
     def data(self) -> dict:
+        """
+
+        @brief Implements the data operation.
+        @return The dict result.
+        @details Implements the documented behavior without changing the
+        public contract.
+
+        """
         return parse_json(self.canonical_bytes)
 
     @property
     def sha256(self) -> str:
+        """
+
+        @brief Implements the sha256 operation.
+        @return The str result.
+        @details Implements the documented behavior without changing the
+        public contract.
+
+        """
         return self.data["content_sha256"]

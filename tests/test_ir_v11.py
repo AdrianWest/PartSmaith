@@ -1,4 +1,10 @@
-"""Revised Phase 2: candidates, provenance, migration and packaging."""
+"""
+
+@package tests.test_ir_v11
+@brief Revised Phase 2: candidates, provenance, migration and
+packaging.
+@details Provides the module implementation and public interfaces.
+"""
 
 import copy
 import json
@@ -37,12 +43,31 @@ CONTEXT = RequirementsContext(
 
 @pytest.fixture
 def valid():
+    """
+
+    @brief Implements the valid operation.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     return json.loads(
         (FIXTURES / "valid/0402.json").read_text(encoding="utf-8")
     )
 
 
 def codes(data, generation=False, context=CONTEXT):
+    """
+
+    @brief Implements the codes operation.
+    @param data The data argument.
+    @param generation The generation argument.
+    @param context The context argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     return {
         issue.code
         for issue in validate_ir(
@@ -52,6 +77,16 @@ def codes(data, generation=False, context=CONTEXT):
 
 
 def historical(data, status="CONFLICTING"):
+    """
+
+    @brief Implements the historical operation.
+    @param data The data argument.
+    @param status The status argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     old = copy.deepcopy(data["evidence"][0])
     old["id"] = "E-OLD"
     old["interpretation"]["status"] = status
@@ -60,6 +95,15 @@ def historical(data, status="CONFLICTING"):
 
 
 def resolution(data):
+    """
+
+    @brief Implements the resolution operation.
+    @param data The data argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     decision = dict(
         id="R-1",
         target_path=WIDTH,
@@ -77,6 +121,15 @@ def resolution(data):
 
 
 def standard(data):
+    """
+
+    @brief Implements the standard operation.
+    @param data The data argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     record = dict(
         id="S-1",
         organization="Synthetic",
@@ -93,6 +146,15 @@ def standard(data):
 
 
 def override(data):
+    """
+
+    @brief Implements the override operation.
+    @param data The data argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     width = data["package"]["mechanical"]["body_width"]
     previous = dict(
         source_value=None,
@@ -118,6 +180,15 @@ def override(data):
 
 
 def test_phase_two_ir11_gate(valid):
+    """
+
+    @brief Implements the test_phase_two_ir11_gate operation.
+    @param valid The valid argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     before = copy.deepcopy(valid)
     assert codes(valid, True) == set()
     ir = ComponentIR(valid)
@@ -137,6 +208,15 @@ def test_phase_two_ir11_gate(valid):
 
 @pytest.mark.parametrize("version", SUPPORTED_VERSIONS)
 def test_offline_schema_packaging(version):
+    """
+
+    @brief Implements the test_offline_schema_packaging operation.
+    @param version The version argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     schema = load_schema(version)
     Draft202012Validator.check_schema(schema)
     assert schema["properties"]["schema_version"]["const"] == version
@@ -152,6 +232,15 @@ def test_offline_schema_packaging(version):
 
 
 def _refs(node):
+    """
+
+    @brief Implements the _refs operation.
+    @param node The node argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     if isinstance(node, dict):
         if "$ref" in node:
             yield node["$ref"]
@@ -164,6 +253,15 @@ def _refs(node):
 
 @pytest.mark.parametrize("case", CASES, ids=lambda case: case["file"])
 def test_negative_fixture(case):
+    """
+
+    @brief Implements the test_negative_fixture operation.
+    @param case The case argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     data = json.loads((FIXTURES / "invalid" / case["file"]).read_text())
     issues = validate_ir(
         data, for_generation=case["for_generation"], requirements=CONTEXT
@@ -175,6 +273,14 @@ def test_negative_fixture(case):
 
 
 def test_negative_inventory():
+    """
+
+    @brief Implements the test_negative_inventory operation.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     assert {c["file"] for c in CASES} == {
         p.name
         for p in (FIXTURES / "invalid").glob("*.json")
@@ -187,6 +293,18 @@ def test_negative_inventory():
 )
 @pytest.mark.parametrize("unit", [None, "mm"])
 def test_missing_candidate_does_not_invent_number(valid, status, unit):
+    """
+
+    @brief Implements the test_missing_candidate_does_not_invent_number
+    operation.
+    @param valid The valid argument.
+    @param status The status argument.
+    @param unit The unit argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     value = valid["package"]["mechanical"]["body_width"]
     value.update(
         source_value=None,
@@ -203,6 +321,16 @@ def test_missing_candidate_does_not_invent_number(valid, status, unit):
 
 
 def test_unknown_unit_and_required_reason(valid):
+    """
+
+    @brief Implements the test_unknown_unit_and_required_reason
+    operation.
+    @param valid The valid argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     value = valid["package"]["mechanical"]["body_width"]
     value.update(source_unit=None, status="UNKNOWN")
     assert "IR_SCHEMA" in codes(valid)
@@ -226,12 +354,32 @@ def test_unknown_unit_and_required_reason(valid):
     ],
 )
 def test_invalid_candidate_combinations(valid, change):
+    """
+
+    @brief Implements the test_invalid_candidate_combinations operation.
+    @param valid The valid argument.
+    @param change The change argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     value = valid["package"]["mechanical"]["body_width"]
     value.update(unresolved_reason="Missing", **change)
     assert codes(valid) & {"IR_SCHEMA", "IR_UNIT"}
 
 
 def test_active_history_resolution_and_hash(valid):
+    """
+
+    @brief Implements the test_active_history_resolution_and_hash
+    operation.
+    @param valid The valid argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     original = ComponentIR(valid)
     historical(valid)
     decision = resolution(valid)
@@ -243,6 +391,16 @@ def test_active_history_resolution_and_hash(valid):
 
 
 def test_active_unresolved_evidence_cannot_be_hidden(valid):
+    """
+
+    @brief Implements the
+    test_active_unresolved_evidence_cannot_be_hidden operation.
+    @param valid The valid argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     historical(valid)
     valid["package"]["mechanical"]["body_width"]["evidence_ids"] = ["E-OLD"]
     assert "IR_UNRESOLVED" in codes(valid, True)
@@ -260,10 +418,31 @@ def test_active_unresolved_evidence_cannot_be_hidden(valid):
     ],
 )
 def test_context_cannot_omit_mandatory_inputs(valid, change):
+    """
+
+    @brief Implements the test_context_cannot_omit_mandatory_inputs
+    operation.
+    @param valid The valid argument.
+    @param change The change argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     assert "IR_REQUIREMENTS" in codes(valid, True, replace(CONTEXT, **change))
 
 
 def test_context_required_and_artifact_specific(valid):
+    """
+
+    @brief Implements the test_context_required_and_artifact_specific
+    operation.
+    @param valid The valid argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     assert "IR_REQUIREMENTS" in codes(valid, True, None)
     valid["package"]["mechanical"]["body_width"]["status"] = "MISSING"
     valid["package"]["mechanical"]["body_width"].update(
@@ -280,12 +459,33 @@ def test_context_required_and_artifact_specific(valid):
     "field", ["selected_evidence_ids", "superseded_evidence_ids"]
 )
 def test_resolution_references_must_resolve(valid, field):
+    """
+
+    @brief Implements the test_resolution_references_must_resolve
+    operation.
+    @param valid The valid argument.
+    @param field The field argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     historical(valid)
     resolution(valid)[field] = ["absent"]
     assert codes(valid) & {"IR_REFERENCE", "IR_RESOLUTION"}
 
 
 def test_cycles_and_dangling_history_fail_structurally(valid):
+    """
+
+    @brief Implements the
+    test_cycles_and_dangling_history_fail_structurally operation.
+    @param valid The valid argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     other = historical(valid, "DERIVED")
     other["interpretation"].update(
         evidence_ids=["E-001"], derivation="Synthetic relationship"
@@ -301,6 +501,17 @@ def test_cycles_and_dangling_history_fail_structurally(valid):
 
 
 def test_approved_override_checks_binding_and_preserves_null_old_value(valid):
+    """
+
+    @brief Implements the
+    test_approved_override_checks_binding_and_preserves_null_old_value
+    operation.
+    @param valid The valid argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     record = override(valid)
     assert codes(valid, True) == set()
     assert (
@@ -315,6 +526,17 @@ def test_approved_override_checks_binding_and_preserves_null_old_value(valid):
 
 @pytest.mark.parametrize("state", ["PENDING", "REJECTED"])
 def test_unapproved_override_blocks_only_when_active(valid, state):
+    """
+
+    @brief Implements the
+    test_unapproved_override_blocks_only_when_active operation.
+    @param valid The valid argument.
+    @param state The state argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     record = override(valid)
     record["approval_state"] = state
     assert "IR_OVERRIDE" in codes(valid, True)
@@ -325,6 +547,16 @@ def test_unapproved_override_blocks_only_when_active(valid, state):
 
 
 def test_zero_optional_feature_requires_pdl_declaration(valid):
+    """
+
+    @brief Implements the
+    test_zero_optional_feature_requires_pdl_declaration operation.
+    @param valid The valid argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     mechanical = valid["package"]["mechanical"]
     mechanical["chamfer"] = copy.deepcopy(mechanical["body_width"])
     mechanical["chamfer"]["source_value"] = 0
@@ -345,6 +577,16 @@ def test_zero_optional_feature_requires_pdl_declaration(valid):
 
 
 def test_unversioned_identity_uses_actual_hash(valid):
+    """
+
+    @brief Implements the test_unversioned_identity_uses_actual_hash
+    operation.
+    @param valid The valid argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     doc = valid["source"]["documents"][0]
     doc["revision"] = valid["identity"]["source_revision"] = "UNVERSIONED"
     assert "IR_SCHEMA" in codes(valid)
@@ -359,6 +601,16 @@ def test_unversioned_identity_uses_actual_hash(valid):
 
 
 def test_structured_standard_and_translation(valid):
+    """
+
+    @brief Implements the test_structured_standard_and_translation
+    operation.
+    @param valid The valid argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     record = standard(valid)
     evidence = valid["evidence"][0]
     evidence["translation"] = dict(
@@ -385,11 +637,30 @@ def test_structured_standard_and_translation(valid):
     "category", ["MANUFACTURER_RECOMMENDED", "IPC_DERIVED", "PDL_DERIVED"]
 )
 def test_land_pattern_enum(valid, category):
+    """
+
+    @brief Implements the test_land_pattern_enum operation.
+    @param valid The valid argument.
+    @param category The category argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     valid["footprint"]["land_pattern_source"] = category
     assert codes(valid) == set()
 
 
 def migration_inputs(valid):
+    """
+
+    @brief Implements the migration_inputs operation.
+    @param valid The valid argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     old = json.loads((ROOT / "fixtures/ir/valid/0402.json").read_text())
     supplied = dict(
         placement=valid["model_3d"]["placement"],
@@ -399,6 +670,17 @@ def migration_inputs(valid):
 
 
 def test_explicit_migration_preserves_original_and_is_deterministic(valid):
+    """
+
+    @brief Implements the
+    test_explicit_migration_preserves_original_and_is_deterministic
+    operation.
+    @param valid The valid argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     old, supplied = migration_inputs(valid)
     before = copy.deepcopy(old)
     source = ComponentIR(old)
@@ -413,6 +695,17 @@ def test_explicit_migration_preserves_original_and_is_deterministic(valid):
 
 @pytest.mark.parametrize("missing", ["placement", "reason"])
 def test_migration_requires_frame_evidence(valid, missing):
+    """
+
+    @brief Implements the test_migration_requires_frame_evidence
+    operation.
+    @param valid The valid argument.
+    @param missing The missing argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     old, supplied = migration_inputs(valid)
     del supplied[missing]
     result = migrate_v1_0_to_v1_1(old, supplied)
@@ -422,6 +715,17 @@ def test_migration_requires_frame_evidence(valid, missing):
 
 @pytest.mark.parametrize("category", ["STANDARD", "USER_OVERRIDE"])
 def test_migration_recovers_source_category(valid, category):
+    """
+
+    @brief Implements the test_migration_recovers_source_category
+    operation.
+    @param valid The valid argument.
+    @param category The category argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     old, supplied = migration_inputs(valid)
     old["footprint"]["land_pattern_source"] = category
     assert migrate_v1_0_to_v1_1(old, supplied).ir is None
@@ -430,6 +734,16 @@ def test_migration_recovers_source_category(valid, category):
 
 
 def test_migration_does_not_invent_revision(valid):
+    """
+
+    @brief Implements the test_migration_does_not_invent_revision
+    operation.
+    @param valid The valid argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     old, supplied = migration_inputs(valid)
     del old["source"]["documents"][0]["revision"]
     assert migrate_v1_0_to_v1_1(old, supplied).ir is None
@@ -440,6 +754,14 @@ def test_migration_does_not_invent_revision(valid):
 
 
 def test_fresh_process_hash_seeds():
+    """
+
+    @brief Implements the test_fresh_process_hash_seeds operation.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     path = str(FIXTURES / "valid/0402.json")
     program = (
         "from partsmith.ir import ComponentIR; import sys; "
@@ -456,6 +778,15 @@ def test_fresh_process_hash_seeds():
 
 def test_canonical_profile_unchanged(valid):
     # Independent canonical-json profile regression rather than a new profile.
+    """
+
+    @brief Implements the test_canonical_profile_unchanged operation.
+    @param valid The valid argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     assert (
         canonical_json({"z": Decimal("1.000"), "a": "e\u0301"})
         == '{"a":"é","z":1}'.encode()
@@ -464,12 +795,33 @@ def test_canonical_profile_unchanged(valid):
 
 @pytest.mark.parametrize("state", ["PENDING", "REJECTED"])
 def test_active_resolution_requires_approval(valid, state):
+    """
+
+    @brief Implements the test_active_resolution_requires_approval
+    operation.
+    @param valid The valid argument.
+    @param state The state argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     historical(valid)
     resolution(valid)["approval_state"] = state
     assert "IR_RESOLUTION" in codes(valid, True)
 
 
 def test_leaf_requirement_cannot_bypass_status(valid):
+    """
+
+    @brief Implements the test_leaf_requirement_cannot_bypass_status
+    operation.
+    @param valid The valid argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     valid["package"]["mechanical"]["body_width"]["status"] = "CONFLICTING"
     leaf = WIDTH + "/source_value"
     context = replace(CONTEXT, required_paths=(leaf,), mandatory_paths=(leaf,))
@@ -481,12 +833,32 @@ def test_leaf_requirement_cannot_bypass_status(valid):
     ["organization", "document", "revision", "access_date", "evidence_ids"],
 )
 def test_standard_metadata_is_structured_and_required(valid, field):
+    """
+
+    @brief Implements the
+    test_standard_metadata_is_structured_and_required operation.
+    @param valid The valid argument.
+    @param field The field argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     record = standard(valid)
     del record[field]
     assert "IR_SCHEMA" in codes(valid)
 
 
 def test_standard_provenance_cycle(valid):
+    """
+
+    @brief Implements the test_standard_provenance_cycle operation.
+    @param valid The valid argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     standard(valid)
     valid["evidence"][0]["interpretation"].update(
         status="STANDARD", standard_id="S-1"
@@ -495,6 +867,16 @@ def test_standard_provenance_cycle(valid):
 
 
 def test_date_validation_and_empty_standard_evidence(valid):
+    """
+
+    @brief Implements the
+    test_date_validation_and_empty_standard_evidence operation.
+    @param valid The valid argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     record = standard(valid)
     record["access_date"] = "2026-02-30"
     assert "IR_SCHEMA" in codes(valid)
@@ -504,6 +886,15 @@ def test_date_validation_and_empty_standard_evidence(valid):
 
 
 def test_escaped_requirement_pointer(valid):
+    """
+
+    @brief Implements the test_escaped_requirement_pointer operation.
+    @param valid The valid argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     valid["electrical"]["a/b~c"] = dict(
         value=None, status="UNKNOWN", evidence_ids=[]
     )
@@ -516,16 +907,46 @@ def test_escaped_requirement_pointer(valid):
     "path", ["/pins/01", "/pins/-1", "/pins/99", "/electrical/unknown~2key"]
 )
 def test_invalid_requirement_pointer(valid, path):
+    """
+
+    @brief Implements the test_invalid_requirement_pointer operation.
+    @param valid The valid argument.
+    @param path The path argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     context = replace(CONTEXT, required_paths=(path,), mandatory_paths=(path,))
     assert "IR_REQUIREMENTS" in codes(valid, True, context)
 
 
 def test_unknown_version_has_no_fallback(valid):
+    """
+
+    @brief Implements the test_unknown_version_has_no_fallback
+    operation.
+    @param valid The valid argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     valid["schema_version"] = "99.0"
     assert codes(valid) == {"IR_VERSION"}
 
 
 def test_migration_rejects_already_migrated_source(valid):
+    """
+
+    @brief Implements the test_migration_rejects_already_migrated_source
+    operation.
+    @param valid The valid argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     _, supplied = migration_inputs(valid)
     result = migrate_v1_0_to_v1_1(valid, supplied)
     assert result.ir is None
@@ -533,6 +954,16 @@ def test_migration_rejects_already_migrated_source(valid):
 
 
 def test_migration_standard_requires_explicit_metadata(valid):
+    """
+
+    @brief Implements the
+    test_migration_standard_requires_explicit_metadata operation.
+    @param valid The valid argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     old, supplied = migration_inputs(valid)
     old["standards"] = [
         dict(
@@ -551,6 +982,14 @@ def test_migration_standard_requires_explicit_metadata(valid):
 
 
 def test_original_artifacts_preserved():
+    """
+
+    @brief Implements the test_original_artifacts_preserved operation.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     evidence = json.loads(
         (ROOT / "docs/gates/phase-2-artifacts.json").read_text()
     )
@@ -564,6 +1003,17 @@ def test_original_artifacts_preserved():
     ["status", "source_unit", "evidence_ids", "standard_id", "override_id"],
 )
 def test_named_properties_do_not_impersonate_metadata(valid, name):
+    """
+
+    @brief Implements the
+    test_named_properties_do_not_impersonate_metadata operation.
+    @param valid The valid argument.
+    @param name The name argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     valid["electrical"][name] = dict(
         value=1, status="DIRECT", evidence_ids=["E-001"]
     )

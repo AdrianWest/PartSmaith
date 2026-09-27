@@ -1,4 +1,10 @@
-"""IR 1.2 regression gates for reviewed contracts and immutable history."""
+"""
+
+@package tests.test_ir_v12
+@brief IR 1.2 regression gates for reviewed contracts and immutable
+history.
+@details Provides the module implementation and public interfaces.
+"""
 
 import copy
 import json
@@ -66,10 +72,27 @@ CONFIG = {
 
 @pytest.fixture
 def valid():
+    """
+
+    @brief Implements the valid operation.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     return json.loads((FIXTURES / "valid/0402.json").read_text())
 
 
 def inventory(data):
+    """
+
+    @brief Implements the inventory operation.
+    @param data The data argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     return {
         "source_hashes": [r["sha256"] for r in data["source"]["documents"]],
         "evidence_ids": [r["id"] for r in data["evidence"]],
@@ -77,6 +100,15 @@ def inventory(data):
 
 
 def review(data):
+    """
+
+    @brief Implements the review operation.
+    @param data The data argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     inv = inventory(data)
     data["revision"]["evidence_review"].update(
         inventory_sha256=sha256(canonical_json(inv)).hexdigest(),
@@ -85,12 +117,34 @@ def review(data):
 
 
 def store(data, *parents):
+    """
+
+    @brief Implements the store operation.
+    @param data The data argument.
+    @param parents The parents argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     return MemoryRevisionStore(
         parents, [inventory(d) for d in (data, *parents)]
     )
 
 
 def issues(data, *parents, context=CONTEXT, revisions=None):
+    """
+
+    @brief Implements the issues operation.
+    @param data The data argument.
+    @param context The context argument.
+    @param revisions The revisions argument.
+    @param parents The parents argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     return validate_ir(
         data,
         for_generation=True,
@@ -100,16 +154,48 @@ def issues(data, *parents, context=CONTEXT, revisions=None):
 
 
 def codes(data, *parents, **kwargs):
+    """
+
+    @brief Implements the codes operation.
+    @param data The data argument.
+    @param parents The parents argument.
+    @param kwargs The kwargs argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     return {i.code for i in issues(data, *parents, **kwargs)}
 
 
 def child(data, key="IR12-2"):
+    """
+
+    @brief Implements the child operation.
+    @param data The data argument.
+    @param key The key argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     result = copy.deepcopy(data)
     result["revision"].update(id=key, parent_id=data["revision"]["id"])
     return result
 
 
 def put(data, path, value):
+    """
+
+    @brief Implements the put operation.
+    @param data The data argument.
+    @param path The path argument.
+    @param value The value argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     prefix, _, token = path.rpartition("/")
     node = resolve_pointer(data, prefix) if prefix else data
     node[int(token) if isinstance(node, list) else token] = value
@@ -118,6 +204,19 @@ def put(data, path, value):
 def override(
     before, path=WIDTH, value=None, kind="QUANTITY_RECORD", key="O-1"
 ):
+    """
+
+    @brief Implements the override operation.
+    @param before The before argument.
+    @param path The path argument.
+    @param value The value argument.
+    @param kind The kind argument.
+    @param key The key argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     data = child(before)
     old = copy.deepcopy(resolve_pointer(data, path))
     if value is None:
@@ -154,6 +253,21 @@ def resolution(
     base=None,
     supersedes=None,
 ):
+    """
+
+    @brief Implements the resolution operation.
+    @param data The data argument.
+    @param key The key argument.
+    @param target The target argument.
+    @param old The old argument.
+    @param selected The selected argument.
+    @param base The base argument.
+    @param supersedes The supersedes argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     data["resolutions"].append(
         dict(
             id=key,
@@ -174,6 +288,15 @@ def resolution(
 
 
 def conflict(data):
+    """
+
+    @brief Implements the conflict operation.
+    @param data The data argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     evidence = copy.deepcopy(data["evidence"][0])
     evidence.update(
         id="E-CONFLICT",
@@ -186,6 +309,18 @@ def conflict(data):
 
 
 def projected(data, *parents, context=CONTEXT, config=None):
+    """
+
+    @brief Implements the projected operation.
+    @param data The data argument.
+    @param context The context argument.
+    @param config The config argument.
+    @param parents The parents argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     return dependency_hash(
         data,
         requirements=context,
@@ -195,6 +330,16 @@ def projected(data, *parents, context=CONTEXT, config=None):
 
 
 def test_valid_fixture_roundtrip_and_frozen_hash(valid):
+    """
+
+    @brief Implements the test_valid_fixture_roundtrip_and_frozen_hash
+    operation.
+    @param valid The valid argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     assert issues(valid) == ()
     ir = ComponentIR(valid)
     assert (
@@ -213,6 +358,15 @@ def test_valid_fixture_roundtrip_and_frozen_hash(valid):
     ids=lambda c: c["file"],
 )
 def test_negative_corpus(case):
+    """
+
+    @brief Implements the test_negative_corpus operation.
+    @param case The case argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     data = json.loads((FIXTURES / "invalid" / case["file"]).read_text())
     assert [
         {"code": i.code, "path": i.path} for i in validate_ir(data)
@@ -220,6 +374,15 @@ def test_negative_corpus(case):
 
 
 def test_store_is_detached(valid):
+    """
+
+    @brief Implements the test_store_is_detached operation.
+    @param valid The valid argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     repo = MemoryRevisionStore([valid], [inventory(valid)])
     valid["pins"].clear()
     assert len(repo.get_revision("IR12-1")["pins"]) == 2
@@ -228,6 +391,16 @@ def test_store_is_detached(valid):
 
 
 def test_generation_requires_real_history_and_context(valid):
+    """
+
+    @brief Implements the
+    test_generation_requires_real_history_and_context operation.
+    @param valid The valid argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     assert "IR_HISTORY" in {
         i.code
         for i in validate_ir(valid, for_generation=True, requirements=CONTEXT)
@@ -257,12 +430,34 @@ def test_generation_requires_real_history_and_context(valid):
     ],
 )
 def test_typed_leaf_overrides(valid, path, value, kind):
+    """
+
+    @brief Implements the test_typed_leaf_overrides operation.
+    @param valid The valid argument.
+    @param path The path argument.
+    @param value The value argument.
+    @param kind The kind argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     data = override(valid, path, value, kind)
     assert issues(data, valid) == ()
     assert projected(data, valid) != projected(valid)
 
 
 def test_quantity_override_has_no_projection_cycle(valid):
+    """
+
+    @brief Implements the test_quantity_override_has_no_projection_cycle
+    operation.
+    @param valid The valid argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     data = override(valid)
     assert issues(data, valid) == ()
     assert len(projected(data, valid)) == 64
@@ -280,18 +475,48 @@ def test_quantity_override_has_no_projection_cycle(valid):
     ],
 )
 def test_bad_override_is_rejected(valid, change):
+    """
+
+    @brief Implements the test_bad_override_is_rejected operation.
+    @param valid The valid argument.
+    @param change The change argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     data = override(valid)
     change(data)
     assert validate_ir(data)
 
 
 def test_override_previous_value_must_match_base(valid):
+    """
+
+    @brief Implements the test_override_previous_value_must_match_base
+    operation.
+    @param valid The valid argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     data = override(valid, "/pins/0/electrical_type", "input", "STRING")
     data["overrides"][0]["previous_value"] = "output"
     assert "IR_HISTORY" in codes(data, valid)
 
 
 def test_overlapping_active_overrides_rejected(valid):
+    """
+
+    @brief Implements the test_overlapping_active_overrides_rejected
+    operation.
+    @param valid The valid argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     data = override(
         valid, "/model_3d/placement/translation_mm", [1, 0, 0], "VEC3"
     )
@@ -309,6 +534,16 @@ def test_overlapping_active_overrides_rejected(valid):
 
 
 def test_unlinking_conflicting_candidate_cannot_pass(valid):
+    """
+
+    @brief Implements the
+    test_unlinking_conflicting_candidate_cannot_pass operation.
+    @param valid The valid argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     conflict(valid)
     assert "IR_CONFLICT" in codes(valid)
     valid["package"]["mechanical"]["body_width"]["evidence_ids"] = ["E-001"]
@@ -318,6 +553,16 @@ def test_unlinking_conflicting_candidate_cannot_pass(valid):
 
 
 def test_unrelated_history_does_not_block_generator(valid):
+    """
+
+    @brief Implements the
+    test_unrelated_history_does_not_block_generator operation.
+    @param valid The valid argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     conflict(valid)
     context = replace(
         CONTEXT, mandatory_paths=("/pins",), required_paths=("/pins",)
@@ -326,11 +571,31 @@ def test_unrelated_history_does_not_block_generator(valid):
 
 
 def test_selected_evidence_requires_relevance(valid):
+    """
+
+    @brief Implements the test_selected_evidence_requires_relevance
+    operation.
+    @param valid The valid argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     valid["evidence"][0]["candidate_targets"] = [WIDTH]
     assert "IR_RELEVANCE" in codes(valid)
 
 
 def test_successive_resolutions_keep_approved_history(valid):
+    """
+
+    @brief Implements the
+    test_successive_resolutions_keep_approved_history operation.
+    @param valid The valid argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     conflict(valid)
     resolution(valid, old=["E-CONFLICT"])
     data = child(valid)
@@ -344,6 +609,16 @@ def test_successive_resolutions_keep_approved_history(valid):
 
 
 def test_second_resolution_must_keep_conflict_disposition(valid):
+    """
+
+    @brief Implements the
+    test_second_resolution_must_keep_conflict_disposition operation.
+    @param valid The valid argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     conflict(valid)
     resolution(valid, old=["E-CONFLICT"])
     data = child(valid)
@@ -355,6 +630,16 @@ def test_second_resolution_must_keep_conflict_disposition(valid):
     "domain", ["evidence", "source", "resolutions", "overrides"]
 )
 def test_history_cannot_be_rewritten(valid, domain):
+    """
+
+    @brief Implements the test_history_cannot_be_rewritten operation.
+    @param valid The valid argument.
+    @param domain The domain argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     if domain == "resolutions":
         resolution(valid)
     if domain == "overrides":
@@ -370,6 +655,16 @@ def test_history_cannot_be_rewritten(valid, domain):
 
 
 def test_candidate_target_dismissal_is_a_transition_error(valid):
+    """
+
+    @brief Implements the
+    test_candidate_target_dismissal_is_a_transition_error operation.
+    @param valid The valid argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     conflict(valid)
     data = child(valid)
     data["evidence"][1]["candidate_targets"] = []
@@ -395,11 +690,31 @@ def test_candidate_target_dismissal_is_a_transition_error(valid):
     ],
 )
 def test_review_inventory_and_acquisition_are_required(valid, change):
+    """
+
+    @brief Implements the
+    test_review_inventory_and_acquisition_are_required operation.
+    @param valid The valid argument.
+    @param change The change argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     change(valid)
     assert issues(valid)
 
 
 def test_real_provenance_cycle_rejected(valid):
+    """
+
+    @brief Implements the test_real_provenance_cycle_rejected operation.
+    @param valid The valid argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     valid["evidence"][0]["interpretation"].update(
         status="DERIVED", derivation="cycle", evidence_ids=["E-001"]
     )
@@ -407,6 +722,14 @@ def test_real_provenance_cycle_rejected(valid):
 
 
 def result():
+    """
+
+    @brief Implements the result operation.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     return dict(
         id="V-1",
         category="cross_validation",
@@ -434,6 +757,16 @@ def result():
 
 
 def test_non_applicability_is_not_fabricated_pass(valid):
+    """
+
+    @brief Implements the test_non_applicability_is_not_fabricated_pass
+    operation.
+    @param valid The valid argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     valid["validation"]["results"] = [result()]
     assert validate_ir(valid) == ()
     valid["validation"]["results"][0]["status"] = "PASS"
@@ -451,6 +784,17 @@ def test_non_applicability_is_not_fabricated_pass(valid):
     ],
 )
 def test_invalid_applicability_rejected(valid, field, value):
+    """
+
+    @brief Implements the test_invalid_applicability_rejected operation.
+    @param valid The valid argument.
+    @param field The field argument.
+    @param value The value argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     record = result()
     record[field] = value
     valid["validation"]["results"] = [record]
@@ -458,6 +802,15 @@ def test_invalid_applicability_rejected(valid, field, value):
 
 
 def region(data):
+    """
+
+    @brief Implements the region operation.
+    @param data The data argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     data["evidence"][0]["source"].update(
         region=dict(x=10, y=10, width=20, height=30),
         coordinate_convention="document-page-1.0",
@@ -481,6 +834,15 @@ def region(data):
 
 
 def test_source_region_contract(valid):
+    """
+
+    @brief Implements the test_source_region_contract operation.
+    @param valid The valid argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     region(valid)
     assert validate_ir(valid) == ()
 
@@ -502,12 +864,32 @@ def test_source_region_contract(valid):
     ],
 )
 def test_invalid_source_regions_fail(valid, change):
+    """
+
+    @brief Implements the test_invalid_source_regions_fail operation.
+    @param valid The valid argument.
+    @param change The change argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     region(valid)
     change(valid["evidence"][0]["source"])
     assert validate_ir(valid)
 
 
 def test_ocr_cannot_omit_pixel_transform(valid):
+    """
+
+    @brief Implements the test_ocr_cannot_omit_pixel_transform
+    operation.
+    @param valid The valid argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     region(valid)
     valid["evidence"][0]["extractor"]["method"] = "ocr"
     valid["evidence"][0]["source"]["render_transform"] = None
@@ -515,6 +897,15 @@ def test_ocr_cannot_omit_pixel_transform(valid):
 
 
 def migration_evidence(valid):
+    """
+
+    @brief Implements the migration_evidence operation.
+    @param valid The valid argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     return dict(
         reason="Reviewed synthetic migration context",
         revision=valid["revision"],
@@ -534,6 +925,16 @@ def migration_evidence(valid):
 
 
 def test_explicit_migration_preserves_input(valid):
+    """
+
+    @brief Implements the test_explicit_migration_preserves_input
+    operation.
+    @param valid The valid argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     old = ComponentIR.from_file(ROOT / "fixtures/ir/v1.1/valid/0402.json")
     before = old.canonical_bytes
     migrated = migrate_v1_1_to_v1_2(old, migration_evidence(valid))
@@ -547,6 +948,16 @@ def test_explicit_migration_preserves_input(valid):
     "field", ["revision", "accuracy_class", "evidence", "reason"]
 )
 def test_migration_does_not_guess(valid, field):
+    """
+
+    @brief Implements the test_migration_does_not_guess operation.
+    @param valid The valid argument.
+    @param field The field argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     supplied = migration_evidence(valid)
     del supplied[field]
     old = ComponentIR.from_file(ROOT / "fixtures/ir/v1.1/valid/0402.json")
@@ -556,6 +967,16 @@ def test_migration_does_not_guess(valid, field):
 
 
 def test_migration_rejects_changed_source_identity(valid):
+    """
+
+    @brief Implements the test_migration_rejects_changed_source_identity
+    operation.
+    @param valid The valid argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     supplied = migration_evidence(valid)
     supplied["evidence"]["E-001"]["source"]["page"] = 4
     old = ComponentIR.from_file(ROOT / "fixtures/ir/v1.1/valid/0402.json")
@@ -563,6 +984,16 @@ def test_migration_rejects_changed_source_identity(valid):
 
 
 def test_projection_audit_changes_do_not_invalidate(valid):
+    """
+
+    @brief Implements the
+    test_projection_audit_changes_do_not_invalidate operation.
+    @param valid The valid argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     data = override(valid)
     before = projected(data, valid)
     data["overrides"][0].update(
@@ -574,6 +1005,16 @@ def test_projection_audit_changes_do_not_invalidate(valid):
 
 
 def test_placement_only_edit_preserves_geometry_projection(valid):
+    """
+
+    @brief Implements the
+    test_placement_only_edit_preserves_geometry_projection operation.
+    @param valid The valid argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     context = replace(
         CONTEXT, required_paths=("/package",), mandatory_paths=("/package",)
     )
@@ -585,12 +1026,32 @@ def test_placement_only_edit_preserves_geometry_projection(valid):
 
 
 def test_output_reports_not_in_input_projection(valid):
+    """
+
+    @brief Implements the test_output_reports_not_in_input_projection
+    operation.
+    @param valid The valid argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     before = projected(valid)
     valid["validation"]["results"] = [result()]
     assert projected(valid) == before
 
 
 def test_source_revision_changes_projection(valid):
+    """
+
+    @brief Implements the test_source_revision_changes_projection
+    operation.
+    @param valid The valid argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     before = projected(valid)
     valid["source"]["documents"][0]["revision"] = "new"
     valid["identity"]["source_revision"] = "new"
@@ -598,6 +1059,17 @@ def test_source_revision_changes_projection(valid):
 
 
 def test_projection_configuration_and_accuracy_cannot_be_omitted(valid):
+    """
+
+    @brief Implements the
+    test_projection_configuration_and_accuracy_cannot_be_omitted
+    operation.
+    @param valid The valid argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     with pytest.raises(IRValidationError):
         projected(valid, config={"runtime": {}})
     valid["model_3d"]["accuracy_class"] = "CLASS_C"
@@ -606,6 +1078,16 @@ def test_projection_configuration_and_accuracy_cannot_be_omitted(valid):
 
 
 def test_canonical_hash_independent_process_seeds(valid):
+    """
+
+    @brief Implements the test_canonical_hash_independent_process_seeds
+    operation.
+    @param valid The valid argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     path = FIXTURES / "valid/0402.json"
     command = (
         "from partsmith.ir import ComponentIR; import sys; "
@@ -623,6 +1105,14 @@ def test_canonical_hash_independent_process_seeds(valid):
 
 
 def test_schema_loading_is_detached():
+    """
+
+    @brief Implements the test_schema_loading_is_detached operation.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     schema = load_schema("1.2")
     schema["$defs"].clear()
     assert load_schema("1.2")["$defs"]
@@ -638,12 +1128,33 @@ def test_schema_loading_is_detached():
     ],
 )
 def test_whole_record_overrides(valid, path, kind):
+    """
+
+    @brief Implements the test_whole_record_overrides operation.
+    @param valid The valid argument.
+    @param path The path argument.
+    @param kind The kind argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     data = override(valid, path=path, kind=kind)
     assert issues(data, valid) == ()
     assert len(projected(data, valid)) == 64
 
 
 def test_override_cannot_authorize_another_value(valid):
+    """
+
+    @brief Implements the test_override_cannot_authorize_another_value
+    operation.
+    @param valid The valid argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     data = override(valid, "/pins/0/electrical_type", "input", "STRING")
     data["package"]["mechanical"]["body_width"].update(
         status="USER_OVERRIDE", override_id="O-1", source_value=123
@@ -652,6 +1163,16 @@ def test_override_cannot_authorize_another_value(valid):
 
 
 def test_replaced_override_preserves_previous_approval(valid):
+    """
+
+    @brief Implements the
+    test_replaced_override_preserves_previous_approval operation.
+    @param valid The valid argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     first = override(valid)
     second = override(first, key="O-2")
     second["revision"]["id"] = "IR12-3"
@@ -662,18 +1183,49 @@ def test_replaced_override_preserves_previous_approval(valid):
 
 
 def test_retained_decision_supersession_cycle_rejected(valid):
+    """
+
+    @brief Implements the
+    test_retained_decision_supersession_cycle_rejected operation.
+    @param valid The valid argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     data = override(valid)
     data["overrides"][0]["supersedes_override_id"] = "O-1"
     assert "IR_HISTORY" in {i.code for i in validate_ir(data)}
 
 
 def test_stored_revision_identity_cannot_be_reused(valid):
+    """
+
+    @brief Implements the test_stored_revision_identity_cannot_be_reused
+    operation.
+    @param valid The valid argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     repo = MemoryRevisionStore([valid], [inventory(valid)])
     valid["revision"]["description"] = "Changed stored revision"
     assert "IR_HISTORY" in codes(valid, revisions=repo)
 
 
 def test_reordered_pins_require_explicit_simultaneous_rebindings(valid):
+    """
+
+    @brief Implements the
+    test_reordered_pins_require_explicit_simultaneous_rebindings
+    operation.
+    @param valid The valid argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     data = child(valid)
     data["pins"].reverse()
     assert "IR_TRANSITION" in codes(data, valid)
@@ -696,6 +1248,16 @@ def test_reordered_pins_require_explicit_simultaneous_rebindings(valid):
 
 
 def test_history_can_resolve_changed_evidence_selection(valid):
+    """
+
+    @brief Implements the
+    test_history_can_resolve_changed_evidence_selection operation.
+    @param valid The valid argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     resolution(valid)
     data = child(valid)
     new = copy.deepcopy(valid["evidence"][0])
@@ -715,6 +1277,16 @@ def test_history_can_resolve_changed_evidence_selection(valid):
 
 
 def test_historical_previous_value_does_not_change_projection(valid):
+    """
+
+    @brief Implements the
+    test_historical_previous_value_does_not_change_projection operation.
+    @param valid The valid argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     first = override(valid, "/pins/0/electrical_type", "input", "STRING")
     other_base = copy.deepcopy(valid)
     other_base["pins"][0]["electrical_type"] = "output"
@@ -724,6 +1296,16 @@ def test_historical_previous_value_does_not_change_projection(valid):
 
 
 def test_projection_replaces_run_ids_with_content(valid):
+    """
+
+    @brief Implements the test_projection_replaces_run_ids_with_content
+    operation.
+    @param valid The valid argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     before = projected(valid)
     valid["identity"]["component_id"] = "another-component-id"
     valid["source"]["documents"][0]["id"] = "D-OTHER"
@@ -740,11 +1322,31 @@ def test_projection_replaces_run_ids_with_content(valid):
 
 
 def test_invalid_resolution_target_returns_diagnostics(valid):
+    """
+
+    @brief Implements the
+    test_invalid_resolution_target_returns_diagnostics operation.
+    @param valid The valid argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     resolution(valid, target="/model_3d/required")
     assert validate_ir(valid)
 
 
 def test_migration_from_wrong_version_fails_cleanly(valid):
+    """
+
+    @brief Implements the
+    test_migration_from_wrong_version_fails_cleanly operation.
+    @param valid The valid argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     source = ComponentIR.from_file(ROOT / "fixtures/ir/valid/0402.json")
     result = migrate_v1_1_to_v1_2(source, migration_evidence(valid))
     assert result.ir is None
@@ -752,6 +1354,16 @@ def test_migration_from_wrong_version_fails_cleanly(valid):
 
 
 def test_missing_nominal_values_remain_candidates(valid):
+    """
+
+    @brief Implements the test_missing_nominal_values_remain_candidates
+    operation.
+    @param valid The valid argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     quantity = valid["package"]["mechanical"]["body_width"]
     quantity.update(
         source_value=None,
@@ -769,6 +1381,16 @@ def test_missing_nominal_values_remain_candidates(valid):
 
 
 def test_unassigned_evidence_requires_recorded_exclusion(valid):
+    """
+
+    @brief Implements the
+    test_unassigned_evidence_requires_recorded_exclusion operation.
+    @param valid The valid argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     raw = copy.deepcopy(valid["evidence"][0])
     raw.update(id="E-RAW", candidate_targets=[])
     valid["evidence"].append(raw)
@@ -793,6 +1415,16 @@ def test_unassigned_evidence_requires_recorded_exclusion(valid):
 
 
 def test_removing_override_requires_explicit_review(valid):
+    """
+
+    @brief Implements the
+    test_removing_override_requires_explicit_review operation.
+    @param valid The valid argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     first = override(valid)
     second = child(first, "IR12-3")
     second["revision"]["active_override_ids"] = []
@@ -806,6 +1438,15 @@ def test_removing_override_requires_explicit_review(valid):
 
 
 def test_cyclic_revision_ancestry_fails(valid):
+    """
+
+    @brief Implements the test_cyclic_revision_ancestry_fails operation.
+    @param valid The valid argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     parent = copy.deepcopy(valid)
     parent["revision"]["parent_id"] = "IR12-2"
     data = child(parent)
@@ -813,6 +1454,16 @@ def test_cyclic_revision_ancestry_fails(valid):
 
 
 def test_scalar_resolution_pointer_never_crashes_generation(valid):
+    """
+
+    @brief Implements the
+    test_scalar_resolution_pointer_never_crashes_generation operation.
+    @param valid The valid argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     resolution(valid, target="/model_3d/required")
     assert validate_ir(
         valid,
@@ -824,6 +1475,16 @@ def test_scalar_resolution_pointer_never_crashes_generation(valid):
 
 @pytest.mark.parametrize("label", ["0402", "quantity-override"])
 def test_frozen_dependency_projections(valid, label):
+    """
+
+    @brief Implements the test_frozen_dependency_projections operation.
+    @param valid The valid argument.
+    @param label The label argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     data, parents = (
         (valid, ()) if label == "0402" else (override(valid), (valid,))
     )
@@ -846,7 +1507,18 @@ def test_frozen_dependency_projections(valid, label):
 
 
 def reordered_revision(before, order, key):
-    """Build a valid simultaneous reorder, retaining all historical links."""
+    """
+
+    @brief Build a valid simultaneous reorder, retaining all historical
+    links.
+    @param before The before argument.
+    @param order The order argument.
+    @param key The key argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     data = child(before, key)
     data["pins"] = [copy.deepcopy(before["pins"][i]) for i in order]
     data["package"]["pin_count"] = len(order)
@@ -871,6 +1543,18 @@ def reordered_revision(before, order, key):
 @pytest.mark.parametrize("target", ["/pins/0", "/pins/0/name"])
 @pytest.mark.parametrize("order", [(1, 0), (1,)])
 def test_projection_exclusion_tracks_rebound_candidate(valid, target, order):
+    """
+
+    @brief Implements the
+    test_projection_exclusion_tracks_rebound_candidate operation.
+    @param valid The valid argument.
+    @param target The target argument.
+    @param order The order argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     raw = copy.deepcopy(valid["evidence"][0])
     raw.update(id="E-RAW", candidate_targets=[])
     replacement = copy.deepcopy(raw)
@@ -894,6 +1578,15 @@ def test_projection_exclusion_tracks_rebound_candidate(valid, target, order):
     )
 
     def snapshot(root):
+        """
+
+        @brief Implements the snapshot operation.
+        @param root The root argument.
+        @return The callable result.
+        @details Implements the documented behavior without changing the
+        public contract.
+
+        """
         data = reordered_revision(root, order, "REORDERED")
         assert issues(data, root, context=context) == ()
         return dependency_projection(
@@ -915,6 +1608,17 @@ def test_projection_exclusion_tracks_rebound_candidate(valid, target, order):
 
 @pytest.mark.parametrize("first_binding", [0, 1])
 def test_projection_rebinding_tracks_entire_chain(valid, first_binding):
+    """
+
+    @brief Implements the test_projection_rebinding_tracks_entire_chain
+    operation.
+    @param valid The valid argument.
+    @param first_binding The first_binding argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     third = copy.deepcopy(valid["pins"][1])
     third.update(number="3", name="3")
     third["physical"]["topology_index"] = 1
@@ -928,6 +1632,15 @@ def test_projection_rebinding_tracks_entire_chain(valid, first_binding):
     )
 
     def snapshot(reason=None):
+        """
+
+        @brief Implements the snapshot operation.
+        @param reason The reason argument.
+        @return The callable result.
+        @details Implements the documented behavior without changing the
+        public contract.
+
+        """
         first = reordered_revision(valid, (1, 0, 2), "REORDER-1")
         if reason:
             first["revision"]["target_rebindings"][first_binding]["reason"] = (

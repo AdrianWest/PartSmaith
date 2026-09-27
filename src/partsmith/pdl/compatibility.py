@@ -1,13 +1,38 @@
-"""Deterministic Component IR to PDL compatibility checks."""
+"""
+
+@package src.partsmith.pdl.compatibility
+@brief Deterministic Component IR to PDL compatibility checks.
+@details Provides the module implementation and public interfaces.
+"""
 
 from partsmith.ir.errors import Issue
 
 
 def ir_pdl_issues(ir: dict, pdl: dict) -> tuple[Issue, ...]:
-    """Return topology and identity mismatches between validated records."""
+    """
+
+    @brief Return topology and identity mismatches between validated
+    records.
+    @param ir The ir argument.
+    @param pdl The pdl argument.
+    @return The tuple[Issue, ...] result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     issues = []
 
     def add(path: str, message: str) -> None:
+        """
+
+        @brief Implements the add operation.
+        @param path The path argument.
+        @param message The message argument.
+        @return The None result.
+        @details Implements the documented behavior without changing the
+        public contract.
+
+        """
         issues.append(Issue(path, "PDL_IR_MISMATCH", message))
 
     if ir["package"]["family"] != pdl["identity"]["family"]:

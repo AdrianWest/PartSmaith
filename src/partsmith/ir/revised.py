@@ -1,8 +1,12 @@
-"""IR 1.1 provenance and input-only generation requirements.
+"""
 
-Contexts are supplied by trusted, versioned PDL/generator adapters, never by
-the IR being validated. Phase 2 defines this protocol; later phases provide
-production adapters and their mandatory input declarations.
+@package src.partsmith.ir.revised
+@brief IR 1.1 provenance and input-only generation requirements.
+Contexts are supplied by trusted, versioned PDL/generator adapters,
+never by the IR being validated. Phase 2 defines this protocol;
+later phases provide production adapters and their mandatory input
+declarations.
+@details Provides the module implementation and public interfaces.
 """
 
 import re
@@ -14,7 +18,17 @@ UNRESOLVED = {"UNKNOWN", "INFERRED", "AMBIGUOUS", "CONFLICTING", "MISSING"}
 
 
 def resolve_pointer(data, path):
-    """Resolve strict RFC 6901 pointers, including escaped property names."""
+    """
+
+    @brief Resolve strict RFC 6901 pointers, including escaped property
+    names.
+    @param data The data argument.
+    @param path The path argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     if not isinstance(path, str) or not path.startswith("/"):
         raise ValueError("Expected a non-root JSON Pointer")
     node = data
@@ -52,6 +66,15 @@ class RequirementsContext:
 
 
 def _context_paths(context):
+    """
+
+    @brief Implements the _context_paths operation.
+    @param context The context argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     if not isinstance(context, RequirementsContext):
         return None
     if context.context_version != "1.0" or not all(
@@ -97,11 +120,33 @@ def _context_paths(context):
 
 def revised_issues(data, for_generation, requirements):
     # Imported here to avoid a module initialization cycle.
+    """
+
+    @brief Implements the revised_issues operation.
+    @param data The data argument.
+    @param for_generation The for_generation argument.
+    @param requirements The requirements argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     from partsmith.ir.model import _walk
 
     issues = []
 
     def add(path, code, message):
+        """
+
+        @brief Implements the add operation.
+        @param path The path argument.
+        @param code The code argument.
+        @param message The message argument.
+        @return The callable result.
+        @details Implements the documented behavior without changing the
+        public contract.
+
+        """
         issues.append(Issue(path, code, message))
 
     docs = {item["id"]: item for item in data["source"]["documents"]}
@@ -140,6 +185,17 @@ def revised_issues(data, for_generation, requirements):
             paths[key] = f"/{domain}/{i}"
 
     def references(node, path, owner=None):
+        """
+
+        @brief Implements the references operation.
+        @param node The node argument.
+        @param path The path argument.
+        @param owner The owner argument.
+        @return The callable result.
+        @details Implements the documented behavior without changing the
+        public contract.
+
+        """
         for location, item in _walk(node, path):
             for field, domain in (
                 ("evidence_ids", "evidence"),

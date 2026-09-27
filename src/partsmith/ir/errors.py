@@ -1,4 +1,9 @@
-"""Stable, value-free diagnostics for untrusted IR input."""
+"""
+
+@package src.partsmith.ir.errors
+@brief Stable, value-free diagnostics for untrusted IR input.
+@details Provides the module implementation and public interfaces.
+"""
 
 from dataclasses import dataclass
 
@@ -12,6 +17,15 @@ class Issue:
 
 class IRValidationError(ValueError):
     def __init__(self, issues: list[Issue] | tuple[Issue, ...]):
+        """
+
+        @brief Implements the __init__ operation.
+        @param issues The issues argument.
+        @return None.
+        @details Implements the documented behavior without changing the
+        public contract.
+
+        """
         self.issues = tuple(sorted(set(issues)))
         super().__init__(
             "; ".join(
@@ -22,9 +36,30 @@ class IRValidationError(ValueError):
 
 
 def fail(path: str, code: str, message: str):
+    """
+
+    @brief Implements the fail operation.
+    @param path The path argument.
+    @param code The code argument.
+    @param message The message argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     raise IRValidationError([Issue(path, code, message)])
 
 
 def pointer(path: str, key: str | int) -> str:
+    """
+
+    @brief Implements the pointer operation.
+    @param path The path argument.
+    @param key The key argument.
+    @return The str result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     token = str(key).replace("~", "~0").replace("/", "~1")
     return f"{path}/{token}"

@@ -1,4 +1,10 @@
-"""IR 1.2 typed decisions, applicability, page regions, and active inputs."""
+"""
+
+@package src.partsmith.ir.contract
+@brief IR 1.2 typed decisions, applicability, page regions, and
+active inputs.
+@details Provides the module implementation and public interfaces.
+"""
 
 from decimal import Decimal, localcontext
 
@@ -23,6 +29,15 @@ POINTER_ERRORS = (KeyError, IndexError, TypeError, ValueError)
 
 
 def record_refs(node):
+    """
+
+    @brief Implements the record_refs operation.
+    @param node The node argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     from partsmith.ir.model import _walk
 
     for _, record in _walk(node):
@@ -37,6 +52,16 @@ def record_refs(node):
 
 
 def _regions(data, add):
+    """
+
+    @brief Implements the _regions operation.
+    @param data The data argument.
+    @param add The add argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     for i, evidence in enumerate(data["evidence"]):
         source = evidence["source"]
         region, page = source["region"], source["page_geometry"]
@@ -88,6 +113,16 @@ def _regions(data, add):
 
 
 def _history_links(data, add):
+    """
+
+    @brief Implements the _history_links operation.
+    @param data The data argument.
+    @param add The add argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     for domain, field in (
         ("overrides", "supersedes_override_id"),
         ("resolutions", "supersedes_resolution_id"),
@@ -138,6 +173,17 @@ def _history_links(data, add):
 
 
 def active_decisions(data, chain, add):
+    """
+
+    @brief Implements the active_decisions operation.
+    @param data The data argument.
+    @param chain The chain argument.
+    @param add The add argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     active = {}
     deferred = chain is None and bool(data["revision"]["target_rebindings"])
     for domain, selector, field in (
@@ -199,6 +245,18 @@ def active_decisions(data, chain, add):
 
 
 def _decision_values(data, active, add, chain=None):
+    """
+
+    @brief Implements the _decision_values operation.
+    @param data The data argument.
+    @param active The active argument.
+    @param add The add argument.
+    @param chain The chain argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     from partsmith.ir.model import _walk
 
     for i, record in enumerate(data["overrides"]):
@@ -268,6 +326,17 @@ def _decision_values(data, active, add, chain=None):
 
 
 def _candidate_paths(data, chain, add):
+    """
+
+    @brief Implements the _candidate_paths operation.
+    @param data The data argument.
+    @param chain The chain argument.
+    @param add The add argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     assignments = {}
     for i, record in enumerate(data["evidence"]):
         owners = set()
@@ -294,9 +363,32 @@ def _candidate_paths(data, chain, add):
 
 def contract_issues(data, generation, requirements, revisions):
     # Shared IR 1.1 checks deliberately stop before its old decision rules.
+    """
+
+    @brief Implements the contract_issues operation.
+    @param data The data argument.
+    @param generation The generation argument.
+    @param requirements The requirements argument.
+    @param revisions The revisions argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     issues = revised_issues(data, False, None)
 
     def add(path, code, message):
+        """
+
+        @brief Implements the add operation.
+        @param path The path argument.
+        @param code The code argument.
+        @param message The message argument.
+        @return The callable result.
+        @details Implements the documented behavior without changing the
+        public contract.
+
+        """
         issues.append(Issue(path, code, message))
 
     with localcontext() as context:
@@ -375,6 +467,20 @@ def contract_issues(data, generation, requirements, revisions):
 
 
 def _generation(data, required, requirements, active, assignments, add):
+    """
+
+    @brief Implements the _generation operation.
+    @param data The data argument.
+    @param required The required argument.
+    @param requirements The requirements argument.
+    @param active The active argument.
+    @param assignments The assignments argument.
+    @param add The add argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     from partsmith.ir.model import _walk
 
     records = {

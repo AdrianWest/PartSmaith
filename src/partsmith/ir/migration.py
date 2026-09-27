@@ -1,4 +1,10 @@
-"""Explicit, evidence-supplied migration; no inferred engineering defaults."""
+"""
+
+@package src.partsmith.ir.migration
+@brief Explicit, evidence-supplied migration; no inferred
+engineering defaults.
+@details Provides the module implementation and public interfaces.
+"""
 
 from dataclasses import dataclass
 from hashlib import sha256
@@ -16,13 +22,22 @@ class MigrationResult:
 
 
 def migrate_v1_0_to_v1_1(ir, supplied_evidence) -> MigrationResult:
-    """Return a new immutable IR and canonical audit history, or stable issues.
+    """
 
-    supplied_evidence accepts source_document_id, document_revisions (complete
-    revision/revision_basis pairs keyed by document ID), land_pattern_source,
-    placement (complete convention-1.1 record), standards (complete records
-    keyed by ID), and reason. Supplied records are validated, never fetched.
-    A placement and reason are mandatory because 1.0 did not define its frame.
+    @brief Return a new immutable IR and canonical audit history, or
+    stable issues. supplied_evidence accepts source_document_id,
+    document_revisions (complete revision/revision_basis pairs keyed by
+    document ID), land_pattern_source, placement (complete
+    convention-1.1 record), standards (complete records keyed by ID),
+    and reason. Supplied records are validated, never fetched. A
+    placement and reason are mandatory because 1.0 did not define its
+    frame.
+    @param ir The ir argument.
+    @param supplied_evidence The supplied_evidence argument.
+    @return The MigrationResult result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
     """
     original = ir if isinstance(ir, ComponentIR) else ComponentIR(ir)
     issues = []
@@ -30,6 +45,16 @@ def migrate_v1_0_to_v1_1(ir, supplied_evidence) -> MigrationResult:
     supplied = normalize_json(supplied_evidence)
 
     def add(path, message):
+        """
+
+        @brief Implements the add operation.
+        @param path The path argument.
+        @param message The message argument.
+        @return The callable result.
+        @details Implements the documented behavior without changing the
+        public contract.
+
+        """
         issues.append(Issue(path, "IR_MIGRATION", message))
 
     if data["schema_version"] != "1.0":

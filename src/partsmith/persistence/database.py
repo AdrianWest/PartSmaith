@@ -1,4 +1,9 @@
-"""Connections and atomic, checksum-verified schema migrations."""
+"""
+
+@package src.partsmith.persistence.database
+@brief Connections and atomic, checksum-verified schema migrations.
+@details Provides the module implementation and public interfaces.
+"""
 
 import sqlite3
 from collections.abc import Iterator
@@ -9,7 +14,16 @@ from pathlib import Path
 
 
 def connect(path: str | Path) -> sqlite3.Connection:
-    """Open a connection with enforced relationships; caller must close it."""
+    """
+
+    @brief Open a connection with enforced relationships; caller must
+    close it.
+    @param path The path argument.
+    @return The sqlite3.Connection result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     connection = sqlite3.connect(path)
     try:
         connection.row_factory = sqlite3.Row
@@ -23,6 +37,14 @@ def connect(path: str | Path) -> sqlite3.Connection:
 
 
 def _migration_sql() -> str:
+    """
+
+    @brief Implements the _migration_sql operation.
+    @return The str result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     resource = files(__package__).joinpath("001_initial.sql")
     if resource.is_file():
         return resource.read_text(encoding="utf-8")
@@ -32,10 +54,17 @@ def _migration_sql() -> str:
 
 
 def migrate(connection: sqlite3.Connection) -> tuple[str, ...]:
-    """Apply 001 once, atomically; reject changed or unknown migrations.
+    """
 
-    Requires an idle connection with foreign keys enabled. An immediate
-    transaction serializes competing initializers. Never commits caller work.
+    @brief Apply 001 once, atomically; reject changed or unknown
+    migrations. Requires an idle connection with foreign keys enabled.
+    An immediate transaction serializes competing initializers. Never
+    commits caller work.
+    @param connection The connection argument.
+    @return The tuple[str, ...] result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
     """
     if connection.in_transaction:
         raise RuntimeError("Migration requires an idle connection")
@@ -85,7 +114,16 @@ def migrate(connection: sqlite3.Connection) -> tuple[str, ...]:
 
 @contextmanager
 def database(path: str | Path) -> Iterator[sqlite3.Connection]:
-    """Open/migrate, commit on success or roll back on error, always close."""
+    """
+
+    @brief Open/migrate, commit on success or roll back on error, always
+    close.
+    @param path The path argument.
+    @return The Iterator[sqlite3.Connection] result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     connection = connect(path)
     try:
         migrate(connection)
