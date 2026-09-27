@@ -1,0 +1,22 @@
+(kicad_symbol_lib
+  (version 20231120)
+  (generator kicad_symbol_editor)
+  (symbol "TEST-R-0402"
+    (property "Reference" "R")
+    (property "Value" "TEST-R-0402")
+    (symbol "TEST-R-0402_1_1"
+      (rectangle (start -1.27 1.27) (end 1.27 -1.27)
+        (stroke (width 0) (type default))
+        (fill (type none))
+      )
+    )
+      (pin passive line (at -2.54 0 0) (length 2.54)
+        (name "1" (effects (font (size 1.27 1.27))))
+        (number "1" (effects (font (size 1.27 1.27))))
+      )
+      (pin passive line (at 2.54 0 0) (length 2.54)
+        (name "2" (effects (font (size 1.27 1.27))))
+        (number "2" (effects (font (size 1.27 1.27))))
+      )
+  )
+)

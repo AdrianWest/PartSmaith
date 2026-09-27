@@ -1,0 +1,41 @@
+{
+  "specification": "0.9.6",
+  "phase": 4,
+  "status": "PASS",
+  "scope": "Local Windows verification; no remote CI run claimed",
+  "branch": "Phase-04-Development",
+  "base_commit": "bdc1320",
+  "python": "3.12.10",
+  "tools": {
+    "partsmith": "0.1.0",
+    "pytest": "8.4.2",
+    "ruff": "0.16.8",
+    "jsonschema": "4.26.0"
+  },
+  "tests": {
+    "source": 328,
+    "installed_wheel": 328,
+    "phase_4_symbol": 3
+  },
+  "symbol": {
+    "artifact_type": "SYMBOL",
+    "filename": "TEST-R-0402.kicad_sym",
+    "sha256": "19b9479eaaffbb94754c3b4bfbe269502b83cecea8361d1d361f39b54dff51ca",
+    "dependency_profile": "1.2",
+    "dependency_node": "SYMBOL"
+  },
+  "wheel": {
+    "filename": "partsmith-0.1.0-py3-none-any.whl",
+    "sha256": "520b133ddad5267be8bba37461338af2e75ffd847f795784ebd09c75f6a78132",
+    "availability": "Temporary local generated output"
+  },
+  "packaged_symbol_import_verified": true,
+  "sha256": {
+    "src/partsmith/symbol/__init__.py": "379ac8491ad8b92029343dd0962e8ba5f11a5700b3dd92887f598a5780a1e750",
+    "src/partsmith/symbol/model.py": "a6a9ad7834fee8169897394edff098e6c29c0ff13cf33943ac86beb6ca571cf3",
+    "tests/test_symbol.py": "ee9c5c3b61e32647b50fd536d26ed6f7ef1b74f6d20ad9cbdee79e26eacd63f7",
+    "fixtures/symbol/expected/0402.kicad_sym": "19b9479eaaffbb94754c3b4bfbe269502b83cecea8361d1d361f39b54dff51ca",
+    "docs/gates/phase-4-tests.xml": "edda56ea62f2fb283181d621fe03bec7df2942b6f52095a4f2d4c4d2f8ead44b",
+    "docs/gates/phase-4-wheel-tests.xml": "d6d415b63d401113ccc2d6fc8a85e4c862adb4aa37611bbfc3c41f3890c5f50b"
+  }
+}
