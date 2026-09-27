@@ -79,6 +79,45 @@ def _semantic_issues(data: dict) -> list[Issue]:
             "Side counts disagree with terminal map",
         )
 
+    topology = data["topology"]
+    if len(terminals) > 1 and topology["pitch_mm"] is None:
+        add(
+            "/topology/pitch_mm",
+            "PDL_TOPOLOGY",
+            "Multi-terminal packages require a pitch",
+        )
+    pin1 = next((item for item in terminals if item["number"] == "1"), None)
+    pin1_location = topology["pin1_location"].lower()
+    if pin1 is not None and pin1_location in side_counts:
+        if pin1_location != pin1["side"]:
+            add(
+                "/topology/pin1_location",
+                "PDL_TOPOLOGY",
+                "Pin-1 location disagrees with terminal 1 side",
+            )
+    if topology["numbering"] == "LINEAR":
+        numeric_numbers = [
+            int(item["number"])
+            for item in terminals
+            if item["number"].isdigit()
+        ]
+        if len(numeric_numbers) == len(
+            terminals
+        ) and numeric_numbers != sorted(numeric_numbers):
+            add(
+                "/topology/terminals",
+                "PDL_TOPOLOGY",
+                "Linear terminal numbering must be ascending",
+            )
+    if not topology["stagger"]:
+        slots = [(item["side"], item["topology_index"]) for item in terminals]
+        if len(set(slots)) != len(slots):
+            add(
+                "/topology/terminals",
+                "PDL_TOPOLOGY",
+                "Non-staggered terminals cannot share a side/index slot",
+            )
+
     group_ids = [item["id"] for item in groups]
     group_numbers = [item["terminal_number"] for item in groups]
     if len(set(group_ids)) != len(group_ids):
@@ -104,6 +143,36 @@ def _semantic_issues(data: dict) -> list[Issue]:
             "PDL_DUPLICATE_ID",
             "Pad shape IDs must be globally unique",
         )
+
+    terminal_id_set = set(terminal_ids)
+    for index, symmetry in enumerate(data["allowed_symmetries"]):
+        matrix = symmetry["matrix"]
+        if matrix[3] != [0, 0, 0, 1]:
+            add(
+                f"/allowed_symmetries/{index}/matrix",
+                "PDL_TOPOLOGY",
+                "Symmetry matrix must be affine",
+            )
+        determinant = (
+            matrix[0][0]
+            * (matrix[1][1] * matrix[2][2] - matrix[1][2] * matrix[2][1])
+            - matrix[0][1]
+            * (matrix[1][0] * matrix[2][2] - matrix[1][2] * matrix[2][0])
+            + matrix[0][2]
+            * (matrix[1][0] * matrix[2][1] - matrix[1][1] * matrix[2][0])
+        )
+        if abs(determinant) != 1:
+            add(
+                f"/allowed_symmetries/{index}/matrix",
+                "PDL_TOPOLOGY",
+                "Symmetry matrix must preserve or mirror scale",
+            )
+        if set(symmetry["terminal_mapping"]) != terminal_id_set:
+            add(
+                f"/allowed_symmetries/{index}/terminal_mapping",
+                "PDL_TOPOLOGY",
+                "Symmetry mapping must cover every terminal",
+            )
 
     source_ids = {item["id"] for item in data["sources"]}
     if len(source_ids) != len(data["sources"]):

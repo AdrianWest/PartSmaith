@@ -164,3 +164,13 @@ def test_ir_pdl_topology_mismatches_are_rejected(path, value):
         target = target[token]
     target[path[-1]] = value
     assert ir_pdl_issues(ir, load_pdl("synthetic-0402").data)
+
+
+def test_linear_terminal_order_is_validated(valid):
+    data = copy.deepcopy(valid)
+    data["topology"]["terminals"].reverse()
+    data["content_sha256"] = pdl_hash(data)
+    issues = validate_pdl(data)
+    assert ("/topology/terminals", "PDL_TOPOLOGY") in {
+        (item.path, item.code) for item in issues
+    }
