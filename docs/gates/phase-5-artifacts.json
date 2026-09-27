@@ -36,7 +36,7 @@
     "src/partsmith/footprint/__init__.py": "1e875df185d78e80e1dcdbee8fe1d36d7009609857e119b999e45f19b803215b",
     "src/partsmith/footprint/model.py": "a7247cd3e8fbeba0f29d79a8d55c0a3cefece5a8006243a0278e6fdd284ebb78",
     "tests/test_footprint.py": "4ad1691b23ac97fbe481f8aa0a80e96e73fcb776382835ab2d3a0ab4ff2ea987",
-    "fixtures/footprint/expected/0402.kicad_mod": "800e7311df6e931d17a9c91dcef6cf79f45860427a72ca1ed309c0ef7a8f2e2e",
+    "fixtures/footprint/expected/0402.kicad_mod": "7d250cb886b21f3b40088cd884e3892bb585185ee05c718160a147b16077da54",
     "fixtures/ir/v1.2/valid/0402.json": "ff8f8697ef789b694123385a73777787ec16b1b8ebb8d9c9fd590cc4078a1063",
     "pdl/entries/synthetic-0402@1.0.json": "199ad7042f45eda4dd0b839f8838a6135c2e0abc2bea0b1011658ab8495a811a",
     "pdl/release-profiles/mvp-1@1.0.json": "8798d9a552e5dab29f0c5985a4bfbf7b91fb148ac4e90c42f73952dcf8550b0a",
