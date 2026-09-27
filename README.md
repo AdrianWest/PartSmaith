@@ -180,6 +180,28 @@ See the [IR contract](docs/component-ir.md) and
 [IR 1.2 Phase 2 gate evidence against v0.9.5](docs/gates/phase-2-ir-1.2.md). The earlier
 [IR 1.1 PASS](docs/gates/phase-2-ir-1.1.md) retains its v0.9.4 baseline.
 
+## Package Definition Library (Phase 3)
+
+```python
+from partsmith.pdl import load_pdl, resolve_pdl
+
+pdl = load_pdl("synthetic-0402", "1.0")
+assert pdl.data["identity"]["variant"] == "0402"
+assert resolve_pdl("chip_resistor", "0402", {"1", "2"}) == pdl
+```
+
+PDL 1.0 provides a strict offline schema, immutable canonical records,
+content hashing, exact revision loading, deterministic package resolution,
+terminal/group/pad-shape topology validation, release-profile binding, and
+Component IR compatibility checks. The packaged `synthetic-0402@1.0` entry and
+`GOLD-0402-001` are deterministic bootstrap fixtures, not manufacturer evidence
+or production package approval.
+
+Inspect the installed catalog with `partsmith pdl list`,
+`partsmith pdl inspect synthetic-0402`, or
+`partsmith pdl validate synthetic-0402`. See the
+[Phase 3 gate evidence](docs/gates/phase-3.md).
+
 ## Specification
 
 The v0.9.6 implementation contract is maintained in

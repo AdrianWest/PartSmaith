@@ -10,6 +10,7 @@ from collections.abc import Sequence
 from dataclasses import asdict, dataclass
 
 from partsmith import __version__
+from partsmith.pdl import PDLValidationError, list_pdls, load_pdl
 
 
 @dataclass(frozen=True)
@@ -60,6 +61,37 @@ def _command_doctor(args: argparse.Namespace) -> int:
     return 0 if all(item.status == "PASS" for item in diagnostics) else 1
 
 
+def _command_pdl_list(_: argparse.Namespace) -> int:
+    for pdl_id, revision in list_pdls():
+        print(f"{pdl_id}@{revision}")
+    return 0
+
+
+def _load_cli_pdl(args: argparse.Namespace):
+    try:
+        return load_pdl(args.pdl_id, args.revision)
+    except PDLValidationError as error:
+        print(str(error), file=sys.stderr)
+        return None
+
+
+def _command_pdl_inspect(args: argparse.Namespace) -> int:
+    pdl = _load_cli_pdl(args)
+    if pdl is None:
+        return 2
+    print(pdl.canonical_bytes.decode("utf-8"))
+    return 0
+
+
+def _command_pdl_validate(args: argparse.Namespace) -> int:
+    pdl = _load_cli_pdl(args)
+    if pdl is None:
+        return 2
+    data = pdl.data
+    print(f"PASS {data['id']}@{data['revision']} {pdl.sha256}")
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     """Build the command-line parser."""
     parser = argparse.ArgumentParser(
@@ -82,6 +114,20 @@ def build_parser() -> argparse.ArgumentParser:
         help="emit diagnostics as canonical JSON",
     )
     doctor_parser.set_defaults(handler=_command_doctor)
+
+    pdl_parser = commands.add_parser("pdl", help="inspect package definitions")
+    pdl_commands = pdl_parser.add_subparsers(dest="pdl_command", required=True)
+    pdl_commands.add_parser(
+        "list", help="list installed PDL entries"
+    ).set_defaults(handler=_command_pdl_list)
+    for name, handler in (
+        ("inspect", _command_pdl_inspect),
+        ("validate", _command_pdl_validate),
+    ):
+        command = pdl_commands.add_parser(name, help=f"{name} one PDL entry")
+        command.add_argument("pdl_id")
+        command.add_argument("--revision")
+        command.set_defaults(handler=handler)
     return parser
 
 
