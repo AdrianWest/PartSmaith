@@ -17,8 +17,10 @@
     "file_sha256": "199ad7042f45eda4dd0b839f8838a6135c2e0abc2bea0b1011658ab8495a811a"
   },
   "release_profile": {
+    "path": "pdl/release-profiles/mvp-1@1.0.json",
     "id": "mvp-1",
     "version": "1.0",
-    "sha256": "6f6f53a32a731a03d4c396f7235c199887232e24a95728dd9d78db1c179edfd8"
+    "sha256": "6f6f53a32a731a03d4c396f7235c199887232e24a95728dd9d78db1c179edfd8",
+    "file_sha256": "8798d9a552e5dab29f0c5985a4bfbf7b91fb148ac4e90c42f73952dcf8550b0a"
   }
 }

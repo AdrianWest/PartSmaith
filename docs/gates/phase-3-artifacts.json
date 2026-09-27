@@ -58,7 +58,7 @@
     "pdl/entries/synthetic-0402@1.0.json": "199ad7042f45eda4dd0b839f8838a6135c2e0abc2bea0b1011658ab8495a811a",
     "pdl/release-profiles/mvp-1@1.0.json": "8798d9a552e5dab29f0c5985a4bfbf7b91fb148ac4e90c42f73952dcf8550b0a",
     "fixtures/pdl/source/synthetic-gold-0402.txt": "dd912c336c41538c8dcc95fd642542f3b6480ae632adc4cd649a6a6b54bf84df",
-    "fixtures/pdl/golden/GOLD-0402-001.json": "dcad0e3db45b2d2e01c7351284b2dd3cb25f5e39bb8ddd63b5602586faf176bb",
+    "fixtures/pdl/golden/GOLD-0402-001.json": "ab91406d804831ac5b396f4bd5b082b309bea5e86b032c058e6e8467c5577eff",
     "fixtures/pdl/invalid/cases.json": "0a2b8cffcc41c3291dd29ab2f0606cee9b2e959dd73c017370a9b67cb807629c",
     "fixtures/ir/v1.2/valid/0402.json": "ff8f8697ef789b694123385a73777787ec16b1b8ebb8d9c9fd590cc4078a1063",
     "src/partsmith/cli.py": "311947a8fac08de9b6f8661f1ab48b8fcb8655607426f645afbb1bb5c0680ffb",
@@ -70,10 +70,10 @@
     "src/partsmith/pdl/profiles.py": "bc03d30801a72f9eb459b2ed97e49110717411ff7e90ee34172561d096d1be03",
     "src/partsmith/pdl/schema.py": "af78eab755505cc497285fd51a555e65fae665e56562b4817aba60e0c3233265",
     "tests/test_cli.py": "942be02da2cfe27f57b5eb8911b43fbe67d6c29b185bdc020be2697ad3d0877d",
-    "tests/test_pdl.py": "92c4e37e6ee365ac7109ec90d4b5a42de47fbc6593b53d249e78809286a1ad80",
+    "tests/test_pdl.py": "8a68e4e6fb2341cf36096eabc8df8a391644d9982f2def4a7a51d6e0789944f2",
     "scripts/verify_phase2_manifest.py": "a840984893a066923e8cffd7dc4869c0e9479e08c4ee96f62daa0d229a641842",
     "docs/gates/phase-3.md": "73fa7034c24fc13cf4826694190b837fa3b3646679b56311fc4149422d00cb3c",
-    "docs/gates/phase-3-tests.xml": "389be44be1a76b34088543829d2dc51a2a69f53ff2576b53ceb85d65c0ea5d83",
-    "docs/gates/phase-3-wheel-tests.xml": "4119a5811e08fa375742c6e09748ea486b3d6918a6dd5dba34a6606fba290c19"
+    "docs/gates/phase-3-tests.xml": "84d42ed4a68535f59b6c8aa2835aa8ba18dbe8db7fdf0776d1a8918ff7c427f7",
+    "docs/gates/phase-3-wheel-tests.xml": "14f7f3d6219fe41836e8f48a00ce807dd00adf4b405b4f0422185f251a3c1ccb"
   }
 }

@@ -63,6 +63,7 @@ def test_golden_fixture_binds_exact_ir_and_pdl_bytes():
     golden = json.loads(GOLDEN.read_text(encoding="utf-8"))
     ir_path = ROOT / golden["component_ir"]["path"]
     source_path = ROOT / golden["source"]["path"]
+    profile_path = ROOT / golden["release_profile"]["path"]
     pdl = load_pdl(golden["pdl"]["id"], golden["pdl"]["revision"])
     assert golden["id"] == "GOLD-0402-001"
     assert golden["production_evidence"] is False
@@ -81,7 +82,14 @@ def test_golden_fixture_binds_exact_ir_and_pdl_bytes():
         sha256(ENTRY.read_bytes()).hexdigest() == golden["pdl"]["file_sha256"]
     )
     assert pdl.sha256 == golden["pdl"]["content_sha256"]
-    assert pdl.data["release_profile"] == golden["release_profile"]
+    assert (
+        sha256(profile_path.read_bytes()).hexdigest()
+        == golden["release_profile"]["file_sha256"]
+    )
+    assert pdl.data["release_profile"] == {
+        key: golden["release_profile"][key]
+        for key in ("id", "version", "sha256")
+    }
 
 
 @pytest.mark.parametrize(
