@@ -13,29 +13,29 @@
     "jsonschema": "4.26.0"
   },
   "tests": {
-    "source": 328,
-    "installed_wheel": 328,
-    "phase_4_symbol": 3
+    "source": 330,
+    "installed_wheel": 330,
+    "phase_4_symbol": 5
   },
   "symbol": {
     "artifact_type": "SYMBOL",
     "filename": "TEST-R-0402.kicad_sym",
-    "sha256": "19b9479eaaffbb94754c3b4bfbe269502b83cecea8361d1d361f39b54dff51ca",
+    "sha256": "25e1017ac38814bf025ae5dab90761beb10dd09b8b3e93d3e876bfc5d2fd6d31",
     "dependency_profile": "1.2",
     "dependency_node": "SYMBOL"
   },
   "wheel": {
     "filename": "partsmith-0.1.0-py3-none-any.whl",
-    "sha256": "520b133ddad5267be8bba37461338af2e75ffd847f795784ebd09c75f6a78132",
+    "sha256": "77fed75ec6ba3bf941efd3bbccbd45e8a0c29decf7580ee29cf89f5f1754e8ad",
     "availability": "Temporary local generated output"
   },
   "packaged_symbol_import_verified": true,
   "sha256": {
-    "src/partsmith/symbol/__init__.py": "379ac8491ad8b92029343dd0962e8ba5f11a5700b3dd92887f598a5780a1e750",
-    "src/partsmith/symbol/model.py": "a6a9ad7834fee8169897394edff098e6c29c0ff13cf33943ac86beb6ca571cf3",
-    "tests/test_symbol.py": "ee9c5c3b61e32647b50fd536d26ed6f7ef1b74f6d20ad9cbdee79e26eacd63f7",
-    "fixtures/symbol/expected/0402.kicad_sym": "19b9479eaaffbb94754c3b4bfbe269502b83cecea8361d1d361f39b54dff51ca",
-    "docs/gates/phase-4-tests.xml": "edda56ea62f2fb283181d621fe03bec7df2942b6f52095a4f2d4c4d2f8ead44b",
-    "docs/gates/phase-4-wheel-tests.xml": "d6d415b63d401113ccc2d6fc8a85e4c862adb4aa37611bbfc3c41f3890c5f50b"
+    "src/partsmith/symbol/__init__.py": "93a6d8d28ba5242aaa8d7e7a4c31332a35c4e491e51112fd674d374e85c768b3",
+    "src/partsmith/symbol/model.py": "fde012713b7d0f81e064f5003079ae29f755a6e67e3f44e377bb08fff216c772",
+    "tests/test_symbol.py": "d80700929674ffd18d7820d8e98082ac681338fc868eaf83ba6f677dfbfdae1f",
+    "fixtures/symbol/expected/0402.kicad_sym": "25e1017ac38814bf025ae5dab90761beb10dd09b8b3e93d3e876bfc5d2fd6d31",
+    "docs/gates/phase-4-tests.xml": "5c8f60f60d14972a7280e16bc8a9bc4fe567569ada59b24faeabe59474fec4b2",
+    "docs/gates/phase-4-wheel-tests.xml": "11d2a6f428232f3198acac6bd73bdca6389ab3a42fc2eb136a0d31a1ee731da7"
   }
 }

@@ -6,7 +6,7 @@ from typing import Protocol
 
 from partsmith.ir.canonical import canonical_json
 from partsmith.ir.errors import Issue
-from partsmith.ir.model import normalize_ir
+from partsmith.ir.model import ComponentIR, normalize_ir
 from partsmith.pdl import PDL, ir_pdl_issues
 
 
@@ -20,6 +20,25 @@ class SymbolContext:
     conventions_version: str = "1.0"
     naming_version: str = "1.0"
     assignment_version: str = "1.0"
+    python_version: str = "3.12"
+    configuration_schema_version: str = "1.0"
+    required_ir_paths: tuple[str, ...] = (
+        "/identity",
+        "/electrical",
+        "/pins",
+        "/symbol",
+    )
+    required_configuration_paths: tuple[str, ...] = (
+        "/generator_version",
+        "/serializer_version",
+        "/target_format",
+        "/conventions_version",
+        "/naming_version",
+        "/assignment_version",
+    )
+
+
+GeneratorContext = SymbolContext
 
 
 @dataclass(frozen=True)
@@ -40,31 +59,69 @@ class GeneratedArtifact:
 
 class SymbolGenerator(Protocol):
     def generate(
-        self, ir: dict, context: SymbolContext
+        self, ir: ComponentIR, context: SymbolContext
     ) -> GeneratedArtifact: ...
 
 
-def validate_symbol_inputs(ir: dict, pdl: PDL) -> tuple[Issue, ...]:
+class DeterministicSymbolGenerator:
+    """Concrete Phase 4 symbol generator implementation."""
+
+    def generate(
+        self, ir: ComponentIR, context: SymbolContext
+    ) -> GeneratedArtifact:
+        return serialize_symbol(ir, context)
+
+
+def _ir_data(ir: ComponentIR | dict) -> dict:
+    return ir.data if isinstance(ir, ComponentIR) else ir
+
+
+def validate_symbol_inputs(
+    ir: ComponentIR | dict, pdl: PDL
+) -> tuple[Issue, ...]:
     """Validate IR and its package compatibility before symbol generation."""
-    issues = list(ir_pdl_issues(ir, pdl.data))
     try:
-        normalize_ir(ir)
+        data = normalize_ir(_ir_data(ir))
     except ValueError as error:
-        issues.append(Issue("", "IR_INPUT", str(error)))
+        return tuple(
+            sorted(
+                set(
+                    getattr(
+                        error,
+                        "issues",
+                        (Issue("", "IR_INPUT", str(error)),),
+                    )
+                )
+            )
+        )
+    issues = list(ir_pdl_issues(data, pdl.data))
     return tuple(sorted(set(issues)))
 
 
-def symbol_projection(ir: dict, context: SymbolContext) -> dict:
+def symbol_projection(ir: ComponentIR | dict, context: SymbolContext) -> dict:
     """Project only IR and trusted symbol configuration."""
-    data = normalize_ir(ir)
+    data = normalize_ir(_ir_data(ir))
+    identity = {
+        key: value
+        for key, value in data["identity"].items()
+        if key != "component_id"
+    }
     return {
         "snapshot_profile": "1.2",
         "node_kind": "SYMBOL",
         "declaration": {
             "id": "partsmith.symbol",
             "version": context.generator_version,
+            "configuration_schema_version": (
+                context.configuration_schema_version
+            ),
+            "required_ir_paths": list(context.required_ir_paths),
+            "required_configuration_paths": list(
+                context.required_configuration_paths
+            ),
         },
         "configuration": {
+            "python_version": context.python_version,
             "generator_version": context.generator_version,
             "serializer_version": context.serializer_version,
             "target_format": context.target_format,
@@ -73,7 +130,7 @@ def symbol_projection(ir: dict, context: SymbolContext) -> dict:
             "assignment_version": context.assignment_version,
         },
         "inputs": {
-            "identity": data["identity"],
+            "identity": identity,
             "electrical": data["electrical"],
             "pins": data["pins"],
             "symbol": data["symbol"],
@@ -81,7 +138,9 @@ def symbol_projection(ir: dict, context: SymbolContext) -> dict:
     }
 
 
-def symbol_dependency_hash(ir: dict, context: SymbolContext) -> str:
+def symbol_dependency_hash(
+    ir: ComponentIR | dict, context: SymbolContext
+) -> str:
     """Hash the canonical symbol-only profile-1.2 projection."""
     return sha256(canonical_json(symbol_projection(ir, context))).hexdigest()
 
@@ -102,9 +161,11 @@ def _pin(number: str, name: str, electrical_type: str, x: int) -> str:
     )
 
 
-def serialize_symbol(ir: dict, context: SymbolContext) -> GeneratedArtifact:
+def serialize_symbol(
+    ir: ComponentIR | dict, context: SymbolContext
+) -> GeneratedArtifact:
     """Serialize a deterministic single-unit resistor-style KiCad symbol."""
-    data = normalize_ir(ir)
+    data = normalize_ir(_ir_data(ir))
     pins = data["pins"]
     reference = data["symbol"]["reference_prefix"]
     value = data["identity"]["mpn"]
@@ -128,8 +189,8 @@ def serialize_symbol(ir: dict, context: SymbolContext) -> GeneratedArtifact:
             "        (stroke (width 0) (type default))",
             "        (fill (type none))",
             "      )",
-            "    )",
             *pin_blocks,
+            "    )",
             "  )",
             ")",
             "",
@@ -146,7 +207,7 @@ def serialize_symbol(ir: dict, context: SymbolContext) -> GeneratedArtifact:
 
 
 def validate_symbol_artifact(
-    artifact: GeneratedArtifact, ir: dict
+    artifact: GeneratedArtifact, ir: ComponentIR | dict
 ) -> tuple[Issue, ...]:
     """Check deterministic symbol syntax and exact physical pin numbering."""
     issues = []
@@ -157,7 +218,7 @@ def validate_symbol_artifact(
                 "/artifact", "SYMBOL_SYNTAX", "Unbalanced KiCad symbol syntax"
             )
         )
-    expected = {pin["number"] for pin in normalize_ir(ir)["pins"]}
+    expected = {pin["number"] for pin in normalize_ir(_ir_data(ir))["pins"]}
     actual = set()
     for line in text.splitlines():
         if line.strip().startswith("(number "):

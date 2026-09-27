@@ -1,7 +1,9 @@
 """Deterministic KiCad symbol generation."""
 
 from partsmith.symbol.model import (
+    DeterministicSymbolGenerator,
     GeneratedArtifact,
+    GeneratorContext,
     SymbolContext,
     SymbolGenerator,
     serialize_symbol,
@@ -13,8 +15,10 @@ from partsmith.symbol.model import (
 
 __all__ = [
     "GeneratedArtifact",
+    "GeneratorContext",
     "SymbolContext",
     "SymbolGenerator",
+    "DeterministicSymbolGenerator",
     "serialize_symbol",
     "symbol_dependency_hash",
     "symbol_projection",
