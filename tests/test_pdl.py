@@ -147,6 +147,14 @@ def test_release_profile_requires_safe_identity(tmp_path, profile_id, version):
         load_release_profile(profile_id, version, root=tmp_path)
 
 
+def test_release_profile_rejects_non_object_json(tmp_path):
+    from partsmith.pdl import load_release_profile
+
+    (tmp_path / "mvp-1@1.0.json").write_text("[]", encoding="utf-8")
+    with pytest.raises(PDLValidationError, match="PDL_PROFILE"):
+        load_release_profile("mvp-1", "1.0", root=tmp_path)
+
+
 @pytest.mark.parametrize(
     ("path", "value"),
     [

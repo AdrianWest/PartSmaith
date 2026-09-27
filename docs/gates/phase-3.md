@@ -23,9 +23,9 @@ Manufacturer-backed production entries for all eight variants remain Phase 14 wo
 
 ## Results
 
-- Source installation: **324 passed**, no failures or skips.
-- Fresh installed wheel: **324 passed**, no failures or skips.
-- Phase 3 adds 32 PDL tests and 2 CLI tests.
+- Source installation: **325 passed**, no failures or skips.
+- Fresh installed wheel: **325 passed**, no failures or skips.
+- Phase 3 adds 33 PDL tests and 2 CLI tests.
 - The invalid corpus covers unsupported versions, unknown/missing fields,
   contradictory dimensions, count and side mismatches, duplicate terminal/shape
   identities, bad group bindings, unresolved source/feature references, broken

@@ -59,6 +59,12 @@ def load_release_profile(
             "Release profile was not found",
         )
     profile = parse_json(resource.read_bytes())
+    if not isinstance(profile, dict):
+        fail(
+            "/release_profile",
+            "PDL_PROFILE",
+            "Release profile must be a JSON object",
+        )
     if profile.get("id") != profile_id or profile.get("version") != version:
         fail(
             "/release_profile",
