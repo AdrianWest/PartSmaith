@@ -1,4 +1,9 @@
-"""Versioned PDL entry discovery and loading."""
+"""
+
+@package src.partsmith.pdl.loader
+@brief Versioned PDL entry discovery and loading.
+@details Provides the module implementation and public interfaces.
+"""
 
 import re
 from importlib.resources import files
@@ -9,6 +14,15 @@ from partsmith.pdl.model import PDL
 
 
 def _entry_root(root: str | Path | None = None):
+    """
+
+    @brief Implements the _entry_root operation.
+    @param root The root argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     if root is not None:
         return Path(root)
     packaged = files(__package__).joinpath("entries")
@@ -23,7 +37,17 @@ def load_pdl(
     *,
     root: str | Path | None = None,
 ) -> PDL:
-    """Load an exact PDL revision, or the sole available revision."""
+    """
+
+    @brief Load an exact PDL revision, or the sole available revision.
+    @param pdl_id The pdl_id argument.
+    @param revision The revision argument.
+    @param root The root argument.
+    @return The PDL result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     if not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9._-]*", pdl_id):
         fail("/id", "PDL_ID", "Invalid PDL identifier")
     entry_root = _entry_root(root)
@@ -56,7 +80,15 @@ def load_pdl(
 def list_pdls(
     *, root: str | Path | None = None
 ) -> tuple[tuple[str, str], ...]:
-    """List validated PDL identity/revision pairs deterministically."""
+    """
+
+    @brief List validated PDL identity/revision pairs deterministically.
+    @param root The root argument.
+    @return The tuple[tuple[str, str], ...] result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     entries = []
     for path in sorted(_entry_root(root).glob("*.json")):
         pdl = PDL.from_file(path)
@@ -79,7 +111,19 @@ def resolve_pdl(
     *,
     root: str | Path | None = None,
 ) -> PDL:
-    """Resolve one exact validated package; never use similarity scoring."""
+    """
+
+    @brief Resolve one exact validated package; never use similarity
+    scoring.
+    @param family The family argument.
+    @param variant The variant argument.
+    @param terminal_numbers The terminal_numbers argument.
+    @param root The root argument.
+    @return The PDL result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     matches = []
     for pdl_id, revision in list_pdls(root=root):
         candidate = load_pdl(pdl_id, revision, root=root)

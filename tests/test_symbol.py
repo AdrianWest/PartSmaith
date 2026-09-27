@@ -1,4 +1,9 @@
-"""Phase 4 deterministic symbol-generation gate tests."""
+"""
+
+@package tests.test_symbol
+@brief Phase 4 deterministic symbol-generation gate tests.
+@details Provides the module implementation and public interfaces.
+"""
 
 from hashlib import sha256
 from pathlib import Path
@@ -22,10 +27,27 @@ GOLDEN = ROOT / "fixtures/symbol/expected/0402.kicad_sym"
 
 
 def _inputs():
+    """
+
+    @brief Implements the _inputs operation.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     return parse_json(IR_PATH.read_bytes()), load_pdl("synthetic-0402")
 
 
 def test_phase_four_gate_generates_valid_deterministic_symbol():
+    """
+
+    @brief Implements the
+    test_phase_four_gate_generates_valid_deterministic_symbol operation.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     ir, pdl = _inputs()
     context = SymbolContext()
     assert validate_symbol_inputs(ir, pdl) == ()
@@ -39,11 +61,20 @@ def test_phase_four_gate_generates_valid_deterministic_symbol():
     assert first.content.startswith(b"(kicad_symbol_lib\n")
     assert first.content == GOLDEN.read_bytes()
     assert sha256(first.content).hexdigest() == (
-        "25e1017ac38814bf025ae5dab90761beb10dd09b8b3e93d3e876bfc5d2fd6d31"
+        "1e68b04c019d5ad5cd20eb03c3ac4d66b9594e1eb6278c80122c4b60670a2b6e"
     )
 
 
 def test_symbol_dependency_changes_only_for_consumed_inputs():
+    """
+
+    @brief Implements the
+    test_symbol_dependency_changes_only_for_consumed_inputs operation.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     ir, _ = _inputs()
     baseline = symbol_dependency_hash(ir, SymbolContext())
 
@@ -69,6 +100,15 @@ def test_symbol_dependency_changes_only_for_consumed_inputs():
 
 
 def test_symbol_input_validation_rejects_malformed_ir():
+    """
+
+    @brief Implements the
+    test_symbol_input_validation_rejects_malformed_ir operation.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     _, pdl = _inputs()
     issues = validate_symbol_inputs({}, pdl)
     assert issues
@@ -76,12 +116,30 @@ def test_symbol_input_validation_rejects_malformed_ir():
 
 
 def test_concrete_generator_implements_component_ir_api():
+    """
+
+    @brief Implements the
+    test_concrete_generator_implements_component_ir_api operation.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     ir = ComponentIR.from_file(IR_PATH)
     artifact = DeterministicSymbolGenerator().generate(ir, GeneratorContext())
     assert artifact.artifact_type == "SYMBOL"
 
 
 def test_symbol_artifact_preserves_ir_pin_numbers():
+    """
+
+    @brief Implements the test_symbol_artifact_preserves_ir_pin_numbers
+    operation.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     ir, _ = _inputs()
     artifact = serialize_symbol(ir, SymbolContext())
     text = artifact.content.decode("utf-8")

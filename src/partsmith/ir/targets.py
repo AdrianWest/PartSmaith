@@ -1,4 +1,10 @@
-"""Trusted IR 1.2 editable paths and provenance ownership, registry 1.0."""
+"""
+
+@package src.partsmith.ir.targets
+@brief Trusted IR 1.2 editable paths and provenance ownership,
+registry 1.0.
+@details Provides the module implementation and public interfaces.
+"""
 
 import re
 
@@ -17,6 +23,15 @@ ENGINEERING = {
 
 
 def engineering_path(path):
+    """
+
+    @brief Implements the engineering_path operation.
+    @param path The path argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     return isinstance(path, str) and (
         path.split("/")[1:2] in [[key] for key in ENGINEERING]
         or path.startswith("/validation/tolerances/")
@@ -24,7 +39,17 @@ def engineering_path(path):
 
 
 def owner_path(data, path):
-    """Resolve a leaf to its nearest provenance record; reject metadata."""
+    """
+
+    @brief Resolve a leaf to its nearest provenance record; reject
+    metadata.
+    @param data The data argument.
+    @param path The path argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     if not engineering_path(path):
         raise ValueError("Not an engineering input")
     resolve_pointer(data, path)
@@ -40,6 +65,16 @@ def owner_path(data, path):
 
 
 def overlaps(first, second):
+    """
+
+    @brief Implements the overlaps operation.
+    @param first The first argument.
+    @param second The second argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     return (
         first == second
         or first.startswith(second + "/")
@@ -48,7 +83,16 @@ def overlaps(first, second):
 
 
 def target_schema(path):
-    """Return the exact target schema and closed payload kind, or reject."""
+    """
+
+    @brief Return the exact target schema and closed payload kind, or
+    reject.
+    @param path The path argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     schema = load_schema("1.2")
     definitions = schema["$defs"]
     kind = None
@@ -110,7 +154,19 @@ def target_schema(path):
 
 
 def effective_path(data, path, base_id, chain=None):
-    """Follow retained, approved target rebindings in revision order."""
+    """
+
+    @brief Follow retained, approved target rebindings in revision
+    order.
+    @param data The data argument.
+    @param path The path argument.
+    @param base_id The base_id argument.
+    @param chain The chain argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     if chain is None:
         return path  # External ancestry is checked at generation, not loading.
     order = [r["revision"]["id"] for r in chain]

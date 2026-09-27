@@ -1,4 +1,10 @@
-"""Typed project, component, and build records with parameterized storage."""
+"""
+
+@package src.partsmith.persistence.records
+@brief Typed project, component, and build records with
+parameterized storage.
+@details Provides the module implementation and public interfaces.
+"""
 
 import sqlite3
 from dataclasses import asdict, dataclass
@@ -55,9 +61,27 @@ class Repository:
     """
 
     def __init__(self, connection: sqlite3.Connection):
+        """
+
+        @brief Implements the __init__ operation.
+        @param connection The connection argument.
+        @return None.
+        @details Implements the documented behavior without changing the
+        public contract.
+
+        """
         self.connection = connection
 
     def _insert(self, record: Project | Component | Build) -> None:
+        """
+
+        @brief Implements the _insert operation.
+        @param record The record argument.
+        @return The None result.
+        @details Implements the documented behavior without changing the
+        public contract.
+
+        """
         table = {
             Project: "projects",
             Component: "components",
@@ -72,6 +96,16 @@ class Repository:
         )
 
     def create_project(self, name: str, root_path: str) -> Project:
+        """
+
+        @brief Implements the create_project operation.
+        @param name The name argument.
+        @param root_path The root_path argument.
+        @return The Project result.
+        @details Implements the documented behavior without changing the
+        public contract.
+
+        """
         now = datetime.now(UTC).isoformat()
         record = Project(
             id=str(uuid4()),
@@ -91,6 +125,18 @@ class Repository:
         *,
         project_id: str | None = None,
     ) -> Component:
+        """
+
+        @brief Implements the create_component operation.
+        @param manufacturer The manufacturer argument.
+        @param mpn The mpn argument.
+        @param package_variant The package_variant argument.
+        @param project_id The project_id argument.
+        @return The Component result.
+        @details Implements the documented behavior without changing the
+        public contract.
+
+        """
         now = datetime.now(UTC).isoformat()
         record = Component(
             id=str(uuid4()),
@@ -120,6 +166,26 @@ class Repository:
         started_at: str | None = None,
         completed_at: str | None = None,
     ) -> Build:
+        """
+
+        @brief Implements the create_build operation.
+        @param component_id The component_id argument.
+        @param state The state argument.
+        @param bft_version The bft_version argument.
+        @param schema_version The schema_version argument.
+        @param pdl_revision The pdl_revision argument.
+        @param ai_provider The ai_provider argument.
+        @param ai_model The ai_model argument.
+        @param source_hash The source_hash argument.
+        @param ir_hash The ir_hash argument.
+        @param build_inputs_hash The build_inputs_hash argument.
+        @param started_at The started_at argument.
+        @param completed_at The completed_at argument.
+        @return The Build result.
+        @details Implements the documented behavior without changing the
+        public contract.
+
+        """
         now = datetime.now(UTC).isoformat()
         record = Build(
             id=str(uuid4()),
@@ -142,24 +208,60 @@ class Repository:
         return record
 
     def get_project(self, record_id: str) -> Project | None:
+        """
+
+        @brief Implements the get_project operation.
+        @param record_id The record_id argument.
+        @return The Project | None result.
+        @details Implements the documented behavior without changing the
+        public contract.
+
+        """
         row = self.connection.execute(
             "SELECT * FROM projects WHERE id = ?", (record_id,)
         ).fetchone()
         return Project(**dict(row)) if row is not None else None
 
     def get_component(self, record_id: str) -> Component | None:
+        """
+
+        @brief Implements the get_component operation.
+        @param record_id The record_id argument.
+        @return The Component | None result.
+        @details Implements the documented behavior without changing the
+        public contract.
+
+        """
         row = self.connection.execute(
             "SELECT * FROM components WHERE id = ?", (record_id,)
         ).fetchone()
         return Component(**dict(row)) if row is not None else None
 
     def get_build(self, record_id: str) -> Build | None:
+        """
+
+        @brief Implements the get_build operation.
+        @param record_id The record_id argument.
+        @return The Build | None result.
+        @details Implements the documented behavior without changing the
+        public contract.
+
+        """
         row = self.connection.execute(
             "SELECT * FROM builds WHERE id = ?", (record_id,)
         ).fetchone()
         return Build(**dict(row)) if row is not None else None
 
     def list_components(self, project_id: str) -> list[Component]:
+        """
+
+        @brief Implements the list_components operation.
+        @param project_id The project_id argument.
+        @return The list[Component] result.
+        @details Implements the documented behavior without changing the
+        public contract.
+
+        """
         return [
             Component(**dict(row))
             for row in self.connection.execute(
@@ -169,6 +271,15 @@ class Repository:
         ]
 
     def list_builds(self, component_id: str) -> list[Build]:
+        """
+
+        @brief Implements the list_builds operation.
+        @param component_id The component_id argument.
+        @return The list[Build] result.
+        @details Implements the documented behavior without changing the
+        public contract.
+
+        """
         return [
             Build(**dict(row))
             for row in self.connection.execute(

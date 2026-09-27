@@ -1,4 +1,10 @@
-"""Explicit source units with exact decimal conversion to mm/degrees."""
+"""
+
+@package src.partsmith.ir.units
+@brief Explicit source units with exact decimal conversion to
+mm/degrees.
+@details Provides the module implementation and public interfaces.
+"""
 
 from decimal import Decimal, localcontext
 
@@ -19,7 +25,16 @@ UNITS = {
 
 
 def normalize_quantity(value, unit: str) -> tuple[Decimal, str]:
-    """Return normalized value/unit without guessing or rounding."""
+    """
+
+    @brief Return normalized value/unit without guessing or rounding.
+    @param value The value argument.
+    @param unit The unit argument.
+    @return The tuple[Decimal, str] result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     if not isinstance(unit, str) or unit not in UNITS:
         fail("", "IR_UNIT", "Unsupported or missing source unit")
     target, factor = UNITS[unit]

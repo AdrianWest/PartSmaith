@@ -1,4 +1,9 @@
-"""Deterministic KiCad symbol generation."""
+"""
+
+@package src.partsmith.symbol.__init__
+@brief Deterministic KiCad symbol generation.
+@details Provides the module implementation and public interfaces.
+"""
 
 from partsmith.symbol.model import (
     DeterministicSymbolGenerator,

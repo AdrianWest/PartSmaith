@@ -1,4 +1,10 @@
-"""Immutable revision storage protocol and IR 1.2 transition validation."""
+"""
+
+@package src.partsmith.ir.history
+@brief Immutable revision storage protocol and IR 1.2 transition
+validation.
+@details Provides the module implementation and public interfaces.
+"""
 
 from hashlib import sha256
 from typing import Protocol
@@ -10,15 +16,41 @@ from partsmith.ir.schema import fragment_valid
 
 
 class RevisionStore(Protocol):
-    def get_revision(self, revision_id: str) -> dict: ...
+    def get_revision(self, revision_id: str) -> dict:
+        """
+        @brief Retrieves a revision by identifier.
+        @param revision_id Revision identifier to retrieve.
+        @return The revision data mapping.
+        @details Implementations must return a detached revision snapshot.
 
-    def get_inventory(self, digest: str) -> dict: ...
+        """
+        ...
+
+    def get_inventory(self, digest: str) -> dict:
+        """
+        @brief Retrieves an acquisition inventory by digest.
+        @param digest Inventory content digest to retrieve.
+        @return The acquisition inventory mapping.
+        @details Implementations must return a detached inventory snapshot.
+
+        """
+        ...
 
 
 class MemoryRevisionStore:
     """Detached snapshot store for imports/tests; no approval is fabricated."""
 
     def __init__(self, revisions=(), inventories=()):
+        """
+
+        @brief Implements the __init__ operation.
+        @param revisions The revisions argument.
+        @param inventories The inventories argument.
+        @return None.
+        @details Implements the documented behavior without changing the
+        public contract.
+
+        """
         from partsmith.ir.model import ComponentIR
 
         self._revisions = {}
@@ -38,13 +70,40 @@ class MemoryRevisionStore:
             self._inventories[sha256(blob).hexdigest()] = blob
 
     def get_revision(self, revision_id):
+        """
+
+        @brief Implements the get_revision operation.
+        @param revision_id The revision_id argument.
+        @return The callable result.
+        @details Implements the documented behavior without changing the
+        public contract.
+
+        """
         return parse_json(self._revisions[revision_id])
 
     def get_inventory(self, digest):
+        """
+
+        @brief Implements the get_inventory operation.
+        @param digest The digest argument.
+        @return The callable result.
+        @details Implements the documented behavior without changing the
+        public contract.
+
+        """
         return parse_json(self._inventories[digest])
 
 
 def as_data(value):
+    """
+
+    @brief Implements the as_data operation.
+    @param value The value argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     from partsmith.ir.model import ComponentIR, normalize_ir
 
     return (
@@ -53,7 +112,16 @@ def as_data(value):
 
 
 def validate_revision_transition(previous, current):
-    """Validate transitions with append-only historical records."""
+    """
+
+    @brief Validate transitions with append-only historical records.
+    @param previous The previous argument.
+    @param current The current argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     try:
         before, after = as_data(previous), as_data(current)
     except IRValidationError as error:
@@ -61,6 +129,16 @@ def validate_revision_transition(previous, current):
     issues = []
 
     def add(path, message):
+        """
+
+        @brief Implements the add operation.
+        @param path The path argument.
+        @param message The message argument.
+        @return The callable result.
+        @details Implements the documented behavior without changing the
+        public contract.
+
+        """
         issues.append(Issue(path, "IR_TRANSITION", message))
 
     if before["schema_version"] != "1.2" or after["schema_version"] != "1.2":
@@ -179,7 +257,17 @@ def validate_revision_transition(previous, current):
 
 
 def revision_chain(data, store):
-    """Load and validate ancestry, returning oldest first and stable issues."""
+    """
+
+    @brief Load and validate ancestry, returning oldest first and stable
+    issues.
+    @param data The data argument.
+    @param store The store argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     issues = []
     chain = [data]
     seen = {data["revision"]["id"]}
@@ -241,9 +329,31 @@ def revision_chain(data, store):
 
 
 def review_issues(data, store, chain):
+    """
+
+    @brief Implements the review_issues operation.
+    @param data The data argument.
+    @param store The store argument.
+    @param chain The chain argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     issues = []
 
     def add(path, code, message):
+        """
+
+        @brief Implements the add operation.
+        @param path The path argument.
+        @param code The code argument.
+        @param message The message argument.
+        @return The callable result.
+        @details Implements the documented behavior without changing the
+        public contract.
+
+        """
         issues.append(Issue(path, code, message))
 
     known = {r["revision"]["id"]: r for r in chain}

@@ -1,4 +1,9 @@
-"""Pinned release-profile loading and content hashing."""
+"""
+
+@package src.partsmith.pdl.profiles
+@brief Pinned release-profile loading and content hashing.
+@details Provides the module implementation and public interfaces.
+"""
 
 import re
 from hashlib import sha256
@@ -27,7 +32,18 @@ def load_release_profile(
     *,
     root: str | Path | None = None,
 ) -> dict:
-    """Load one exact release profile without implicit version selection."""
+    """
+
+    @brief Load one exact release profile without implicit version
+    selection.
+    @param profile_id The profile_id argument.
+    @param version The version argument.
+    @param root The root argument.
+    @return The dict result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     if not _SAFE_IDENTIFIER.fullmatch(profile_id):
         fail(
             "/release_profile/id",
@@ -82,5 +98,13 @@ def load_release_profile(
 
 
 def release_profile_hash(profile: dict) -> str:
-    """Hash canonical release-profile content."""
+    """
+
+    @brief Hash canonical release-profile content.
+    @param profile The profile argument.
+    @return The str result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     return sha256(canonical_json(profile)).hexdigest()

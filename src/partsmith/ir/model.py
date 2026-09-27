@@ -1,4 +1,10 @@
-"""Versioned Component IR loading, normalization, validation, and hashing."""
+"""
+
+@package src.partsmith.ir.model
+@brief Versioned Component IR loading, normalization, validation,
+and hashing.
+@details Provides the module implementation and public interfaces.
+"""
 
 from dataclasses import dataclass
 from hashlib import sha256
@@ -20,6 +26,16 @@ _PROPERTY_MAPS = {
 
 
 def _walk(value, path=""):
+    """
+
+    @brief Implements the _walk operation.
+    @param value The value argument.
+    @param path The path argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     if isinstance(value, dict):
         # Map keys are engineering names, not record fields. A property
         # named "status" or "source_unit" must not impersonate metadata.
@@ -33,6 +49,16 @@ def _walk(value, path=""):
 
 
 def _portable_path(value: str, path: str) -> str:
+    """
+
+    @brief Implements the _portable_path operation.
+    @param value The value argument.
+    @param path The path argument.
+    @return The str result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     value = value.replace("\\", "/")
     parts = value.split("/")
     if value.startswith("/") or ":" in value or ".." in parts:
@@ -50,10 +76,20 @@ def normalize_ir(
     requirements=None,
     revisions=None,
 ) -> dict:
-    """Return a validated copy. Candidate statuses remain explicit.
+    """
 
-    for_generation blocks unresolved provenance, but does not certify PDL,
-    geometry, KiCad compatibility, or grant IR_VALIDATED/APPROVED state.
+    @brief Return a validated copy. Candidate statuses remain explicit.
+    for_generation blocks unresolved provenance, but does not certify
+    PDL, geometry, KiCad compatibility, or grant IR_VALIDATED/APPROVED
+    state.
+    @param data The data argument.
+    @param for_generation The for_generation argument.
+    @param requirements The requirements argument.
+    @param revisions The revisions argument.
+    @return The dict result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
     """
     result = normalize_json(data)
     issues = schema_issues(result)
@@ -129,12 +165,43 @@ def normalize_ir(
 
 
 def _semantic_issues(data, for_generation):
+    """
+
+    @brief Implements the _semantic_issues operation.
+    @param data The data argument.
+    @param for_generation The for_generation argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     issues = []
 
     def add(path, code, message):
+        """
+
+        @brief Implements the add operation.
+        @param path The path argument.
+        @param code The code argument.
+        @param message The message argument.
+        @return The callable result.
+        @details Implements the documented behavior without changing the
+        public contract.
+
+        """
         issues.append(Issue(path, code, message))
 
     def index(records, path):
+        """
+
+        @brief Implements the index operation.
+        @param records The records argument.
+        @param path The path argument.
+        @return The callable result.
+        @details Implements the documented behavior without changing the
+        public contract.
+
+        """
         result = {}
         for i, record in enumerate(records):
             if record["id"] in result:
@@ -301,7 +368,19 @@ def validate_ir(
     requirements=None,
     revisions=None,
 ) -> tuple[Issue, ...]:
-    """Return stable diagnostics without promoting review/build state."""
+    """
+
+    @brief Return stable diagnostics without promoting review/build
+    state.
+    @param data The data argument.
+    @param for_generation The for_generation argument.
+    @param requirements The requirements argument.
+    @param revisions The revisions argument.
+    @return The tuple[Issue, ...] result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     try:
         normalize_ir(
             data,
@@ -315,10 +394,28 @@ def validate_ir(
 
 
 def canonical_ir(data: dict) -> bytes:
+    """
+
+    @brief Implements the canonical_ir operation.
+    @param data The data argument.
+    @return The bytes result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     return canonical_json(normalize_ir(data))
 
 
 def ir_hash(data: dict) -> str:
+    """
+
+    @brief Implements the ir_hash operation.
+    @param data The data argument.
+    @return The str result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     return sha256(canonical_ir(data)).hexdigest()
 
 
@@ -329,20 +426,63 @@ class ComponentIR:
     canonical_bytes: bytes
 
     def __init__(self, data: dict):
+        """
+
+        @brief Implements the __init__ operation.
+        @param data The data argument.
+        @return None.
+        @details Implements the documented behavior without changing the
+        public contract.
+
+        """
         object.__setattr__(self, "canonical_bytes", canonical_ir(data))
 
     @classmethod
     def from_json(cls, text: str | bytes) -> "ComponentIR":
+        """
+
+        @brief Implements the from_json operation.
+        @param text The text argument.
+        @return The 'ComponentIR' result.
+        @details Implements the documented behavior without changing the
+        public contract.
+
+        """
         return cls(parse_json(text))
 
     @classmethod
     def from_file(cls, path: str | Path) -> "ComponentIR":
+        """
+
+        @brief Implements the from_file operation.
+        @param path The path argument.
+        @return The 'ComponentIR' result.
+        @details Implements the documented behavior without changing the
+        public contract.
+
+        """
         return cls.from_json(Path(path).read_bytes())
 
     @property
     def data(self) -> dict:
+        """
+
+        @brief Implements the data operation.
+        @return The dict result.
+        @details Implements the documented behavior without changing the
+        public contract.
+
+        """
         return parse_json(self.canonical_bytes)
 
     @property
     def sha256(self) -> str:
+        """
+
+        @brief Implements the sha256 operation.
+        @return The str result.
+        @details Implements the documented behavior without changing the
+        public contract.
+
+        """
         return sha256(self.canonical_bytes).hexdigest()

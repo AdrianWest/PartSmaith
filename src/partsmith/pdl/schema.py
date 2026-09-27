@@ -1,4 +1,9 @@
-"""Packaged, offline PDL JSON Schema validation."""
+"""
+
+@package src.partsmith.pdl.schema
+@brief Packaged, offline PDL JSON Schema validation.
+@details Provides the module implementation and public interfaces.
+"""
 
 import json
 from datetime import date
@@ -15,7 +20,15 @@ SUPPORTED_VERSIONS = ("1.0",)
 
 
 def load_schema(version: str = "1.0") -> dict:
-    """Load one supported PDL schema without network access."""
+    """
+
+    @brief Load one supported PDL schema without network access.
+    @param version The version argument.
+    @return The dict result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     if version not in SUPPORTED_VERSIONS:
         raise ValueError(f"Unsupported PDL version: {version}")
     name = f"pdl-{version}.schema.json"
@@ -27,6 +40,15 @@ def load_schema(version: str = "1.0") -> dict:
 
 @lru_cache(maxsize=1)
 def _validator(version: str) -> Draft202012Validator:
+    """
+
+    @brief Implements the _validator operation.
+    @param version The version argument.
+    @return The Draft202012Validator result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     checker = Draft202012Validator.TYPE_CHECKER.redefine(
         "integer",
         lambda _, value: (
@@ -44,6 +66,15 @@ def _validator(version: str) -> Draft202012Validator:
 
     @formats.checks("date", raises=ValueError)
     def valid_date(value: object) -> bool:
+        """
+
+        @brief Implements the valid_date operation.
+        @param value The value argument.
+        @return The bool result.
+        @details Implements the documented behavior without changing the
+        public contract.
+
+        """
         if not isinstance(value, str):
             return True
         return date.fromisoformat(value).isoformat() == value
@@ -52,7 +83,15 @@ def _validator(version: str) -> Draft202012Validator:
 
 
 def schema_issues(data: object) -> list[Issue]:
-    """Return sorted, value-free schema diagnostics."""
+    """
+
+    @brief Return sorted, value-free schema diagnostics.
+    @param data The data argument.
+    @return The list[Issue] result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     version = data.get("schema_version") if isinstance(data, dict) else None
     if version not in SUPPORTED_VERSIONS:
         return [

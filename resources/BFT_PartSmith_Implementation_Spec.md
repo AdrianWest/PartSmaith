@@ -155,8 +155,9 @@ and pad shapes under section 93 and pins the section 31 release profile.
 **Phase 4 gate (blocking):** The known-good 0402 IR/PDL input generates
 a syntactically valid KiCad symbol with valid pin numbering and structure.
 At least two independent runs produce byte-identical output.
-Projection tests prove that symbol inputs/serializer changes invalidate its
-dependency hash, while CAD-only version/settings changes do not. Symbol
+Projection tests prove that symbol inputs and declared serializer/generator
+convention changes invalidate its dependency hash, while unrelated CAD-only
+settings do not. Symbol
 generation requires no fabricated or installed CAD runtime tuple.
 
 ## Phase 5 — Deterministic footprint generation
@@ -172,6 +173,17 @@ generation requires no fabricated or installed CAD runtime tuple.
 footprint-format validators pass.
 Changing a consumed land-pattern input invalidates the footprint dependency;
 CAD-only settings do not. Association dependencies are tracked separately.
+
+Phase 5 is the deterministic 0402 bootstrap gate, not the completion gate for
+the full footprint feature list in section 8. Its required subset is SMT pad
+count, numbering, supported pad shape, dimensions, positions, copper/paste/
+solder-mask layers, courtyard, fabrication graphics, silkscreen reference and
+value fields, native format markers, and land-pattern provenance. Thermal and
+exposed pads, through-hole drills, custom pad geometry, advanced mask/paste
+settings, and general footprint properties remain later extensions unless a
+PDL fixture explicitly supplies and tests them. Phase 14 is the production
+acceptance gate for the complete package matrix; the 0402 bootstrap must not be
+described as production coverage for all package variants.
 
 ## Phase 6 — CadQuery 3D backend spike
 
@@ -961,6 +973,11 @@ but they shall not be the sole source of a release build's dependency set.
 -   Supplier inventory monitoring
 -   Automatic part substitution
 -   Complete PCB design-rule analysis
+
+Component purchasing or distributor/manufacturer acquisition is also outside
+Phases 0–14. These phases process user-supplied datasheets, evidence, IR, and
+PDL; they do not place orders or claim procurement capability. Datasheet
+evidence acquisition is distinct from purchasing a physical component.
 -   Automatic schematic design
 -   Automatic PCB placement/routing
 
@@ -1337,6 +1354,12 @@ from package dimensions.
 
 The source and page of the selected land pattern must be recorded.
 
+The PDL records source identity, revision, reference, and content hash. The
+IR evidence record supplies the source document identity and page. A generated
+footprint records both sets of provenance in its deterministic metadata and
+dependency projection. If the selected source has no page, the artifact records
+that the page is not available; it must not invent a page number.
+
 If the datasheet contains insufficient information to safely generate a
 footprint, B.F.T. must stop and request additional information rather
 than silently inventing dimensions.
@@ -1630,7 +1653,7 @@ B.F.T. should use a B.F.T.-specific generator identifier.
 Example:
 
 ``` text
-generator = bft_component_builder
+generator = partsmith
 ```
 
 Never impersonate KiCad's own generator identifier.
@@ -2201,6 +2224,11 @@ context. It cannot be weakened by IR or user configuration.
 Additional languages/providers do not become claimed supported capabilities
 until their own fixtures pass the same suite. The language and provider choices
 are recorded configuration decisions, not implicit expansion to every example.
+
+The 0402 bootstrap row is a proof-of-pipeline scope for Phases 3–9. It does
+not satisfy the production-package row, and no Phase 3–9 gate may claim MVP
+production approval for the remaining seven STD-010 variants. Production
+approval is evaluated only by the Phase 14 gate.
 There is no requirement for every document difficulty to be crossed with every
 package/language; the corpus manifest records explicit coverage and expected
 outcomes. Each production package still needs its own full engineering corpus.
@@ -3341,6 +3369,12 @@ Generated 3D model → source geometry for footprint generation
 The generated artifacts may be compared after construction, but neither
 is allowed to become the authoritative input to the other.
 
+Symbol-to-footprint and footprint-to-3D mapping are owned by an independent
+post-generation mapping validator, not by either generator. The validator
+consumes the generated artifacts, the authoritative IR pin records, and the
+PDL terminal/group definitions. It runs only after independent generation and
+reports mapping status and diagnostics without becoming an input to a generator.
+
 # 90. Independent Artifact Contract
 
 Section 11 is the single normative independence rule. Sections 89 and
@@ -3678,6 +3712,13 @@ Compare semantic content
 ```
 
 A file that merely exists on disk is not considered valid.
+
+Phase 4–5 artifact validators shall perform deterministic structural parsing of
+the supported native s-expression subset, including wrapper/version markers,
+pad geometry and layers, required graphics, provenance metadata, and courtyard
+bounds. KiCad parser, open, and round-trip checks remain compatibility checks
+under later integration gates; balanced parentheses alone never constitutes
+native-format validation.
 
 # 102. Canonical Serialization and Hashing
 
@@ -4505,6 +4546,11 @@ Examples: `/pins/0/electrical_type` uses STRING with section 95's enum;
 the complete placement uses PLACEMENT_RECORD. The path registry must include
 these cases and the section 177 controls. Requests outside the registry fail.
 
+`/footprint/land_pattern_source` is not an editable override path. A typed
+override may adjust geometry while retaining the selected source category. A
+replacement land-pattern definition requires a new approved resolution and a
+new dependency/provenance projection; a silent source-enum change is invalid.
+
 `revision.active_override_ids` selects current approved overrides. Effective
 paths, after approved target rebindings, must be disjoint (no duplicate or
 ancestor/descendant overlap), resolve in the current revision, and match their
@@ -4533,6 +4579,11 @@ pin-leaf relevance resolves to that pin and quantity relevance to that quantity.
 Container requirements include candidate targets within their subtrees. Selected
 evidence must have a compatible candidate target. Empty targets mean unassigned
 evidence, not a reviewed assertion of irrelevance, and cannot support generation.
+
+An acquisition revision may be shared by multiple components when the immutable
+source inventory and evidence content are identical. Sharing is established by
+content hash and does not make the acquisition revision a component identity;
+component-specific candidate targets and review decisions remain separate.
 
 Before IR_VALIDATED, `revision.evidence_review` covers every acquired candidate.
 It is null for an unreviewed candidate revision; a reviewed revision requires an
@@ -5143,6 +5194,12 @@ then final-byte association/compatibility checks run under section 167. A prelim
 contain no 3D reference, or only a non-authoritative placeholder token.
 In all cases, 3D geometry must never drive pad generation.
 
+For Phases 4–5, the preliminary footprint contains no 3D model field. The
+finalizer introduced by Phase 8 owns the optional model field and its portable
+logical path. A placeholder is therefore not required by the bootstrap
+serializer; if a later adapter uses one, it must be replaced before final-byte
+hashing and may never be treated as a validated model reference.
+
 # 142. Land Pattern Algorithm
 
 For a package with a manufacturer land pattern:
@@ -5601,6 +5658,20 @@ Approval
 
 A dependency graph shall be stored for each build.
 
+The graph distinguishes regeneration, revalidation, and reuse. At minimum:
+
+| Changed input | Regenerate | Revalidate | Reuse |
+| --- | --- | --- | --- |
+| Symbol-only graphics | Symbol | Mapping/manifest as applicable | Footprint, 3D |
+| Pin mapping or terminal identity | Symbol, footprint | 3D when physical pin geometry changes; cross-validation | Unaffected evidence |
+| Body height | 3D | Cross-validation; footprint only when courtyard/clearance rules consume it | Symbol |
+| Footprint bytes or association path | None for independent geometry | Association, compatibility, cross-validation, manifest | Independent symbol/3D geometry |
+| Audit-only metadata | None | None | Unaffected engineering artifacts |
+
+Each graph edge records the dependency hash that caused the action. A retained
+artifact may be reused only when its declared dependency and artifact hashes
+still match the frozen build snapshot.
+
 # 162. Incremental Regeneration
 
 If only symbol graphics change:
@@ -5724,7 +5795,7 @@ The following hashes have distinct meanings:
 | --- | --- |
 | ir_record_hash (`ir_hash` API) | Entire normalized versioned IR, including history and metadata |
 | input_snapshot_hash | Canonical input snapshot defined below |
-| dependency_hash per generator | Declared projection of snapshot paths and recursively referenced active provenance plus generator/backend/configuration versions |
+| dependency_hash per generator | Declared projection of consumed snapshot paths and recursively referenced active provenance plus only output-affecting generator/backend/configuration inputs |
 | artifact_hash | SHA-256 of exact released artifact bytes; backend-equivalence results are recorded separately |
 | validation_semantics_hash | Final retained ARTIFACT/FINAL_ARTIFACT results only: sorted rule/category/stage/applicability/basis/reason/status/severity/measurement_mode, engineering measurements, expected values/tolerances, stable subject identity and exact artifact hashes, and validator versions; excludes preliminary/superseded, POST_MANIFEST, and REPRODUCIBILITY results, IDs, and execution times |
 | engineering_manifest_hash | Deterministic content manifest with snapshot, dependencies, artifacts, semantic validation, and target/runtime versions |
@@ -5757,14 +5828,16 @@ The complete build snapshot contains all actual runtime/configuration inputs
 listed above. Each node's dependency projection contains only its versioned
 trusted IR/provenance paths and configuration paths. A declaration has node
 kind, declaration ID/version, required IR paths, required configuration paths,
-and configuration schema/version; its canonical content/hash participates in
-the node dependency. Declarations are shipped with the adapter/generator/rules,
-not supplied or narrowed by an IR author, CLI flag, or arbitrary caller.
+and configuration schema/version. A declaration field participates in a node
+dependency only when it is also a consumed input that can affect the node's
+bytes or declared provenance. Declarations are shipped with the
+adapter/generator/rules, not supplied or narrowed by an IR author, CLI flag,
+or arbitrary caller.
 
 | Node | Required configuration scope |
 | --- | --- |
 | Symbol | Python/serializer/generator versions, target symbol format, symbol conventions, naming and consumed assignment inputs |
-| Footprint geometry | Python/serializer/generator versions, target footprint format, consumed PDL/land-pattern/graphics/clearance rules |
+| Footprint geometry | Only output-affecting target format, consumed PDL/land-pattern/graphics/clearance rules, and declared provenance |
 | Canonical STEP | Complete tested CAD/Python tuple and archive hashes, geometry adapter/generator, consumed PDL mechanics, numeric and STEP exporter settings |
 | Association/finalization | Finalizer and target format versions, input artifact hashes, logical reference paths/nicknames and placement conversion/settings |
 | Validation | Validator/rule/runtime versions, applicable PDL/profile declarations, tolerances, exact subject input/artifact hashes |
@@ -5778,7 +5851,8 @@ unchanged output. PDL content is projected by declared consumed fields while
 retaining its identity/revision and applicable rule versions.
 
 Symbol and footprint geometry projections must not require unused CAD versions,
-STEP exporter settings, or output-validator versions. Early phase fixtures
+STEP exporter settings, output-validator versions, Python versions, serializer
+versions, generator versions, or naming versions. Early phase fixtures
 declare only available actual inputs; they are not complete release snapshots
 and cannot receive release approval. Missing required node inputs fail rather
 than acquiring invented runtime placeholders. Phase 8 requires the full tuple.
@@ -5792,6 +5866,15 @@ configuration changes. Phase 9 exercises the complete dependency graph,
 including validator-only, CAD-only, placement-only, and audit-only changes.
 Profile 1.1 remains the scope of the existing Phase 2 projection evidence;
 profile 1.2 evidence is additional and records its own hashes.
+
+For the Phase 4–5 bootstrap generators, the profile 1.2 dependency hash is the
+SHA-256 of canonical JSON containing `snapshot_profile`, `node_kind`, and
+`inputs`. The projection may expose declaration and configuration metadata for
+auditability, but unused configuration metadata is excluded from the geometry
+dependency hash. The separate association dependency includes the declared
+symbol/pin and 3D-association inputs. This bootstrap rule is normative until a
+later profile 1.2 schema expands it without changing the frozen profile 1.1
+API or golden evidence.
 
 ### Projection edge rules (retained from profile 1.1)
 
@@ -6542,6 +6625,15 @@ provider:
 Credentials must come from secure environment/credential storage, never
 project YAML.
 
+Provider name, model identifier, pinned provider/model version, and provider
+schema version are engineering inputs when they can affect interpreted output;
+they belong in the frozen input snapshot and relevant dependency projections.
+Endpoint, timeout, retry policy, and local-processing execution mode are
+operational settings; they belong in the audit envelope and do not invalidate
+deterministic engineering artifacts unless a provider contract explicitly
+declares that they affect output. Credential material is never included in
+either category.
+
 # 197. Retry Policy
 
 Retry only transient failures:
@@ -7096,6 +7188,11 @@ mapping:
 
 The mapping report records MEASURED versus DECLARED_ONLY evidence and does not
 claim physical measurement for an absent model feature.
+
+The mapping engine is an independent post-generation validator. It consumes
+the generated symbol and footprint artifacts, authoritative IR pins, and PDL
+terminal/group definitions. It does not become an input to either generator,
+and it runs only after both independent artifacts pass their own validators.
 
 # 228. Mapping Failure Rules
 

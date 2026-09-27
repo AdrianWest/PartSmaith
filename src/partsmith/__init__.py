@@ -1,4 +1,10 @@
-"""PartSmith, the Board Forge Tools deterministic component builder."""
+"""
+
+@package src.partsmith.__init__
+@brief PartSmith, the Board Forge Tools deterministic component
+builder.
+@details Provides the module implementation and public interfaces.
+"""
 
 from importlib.metadata import PackageNotFoundError, version
 

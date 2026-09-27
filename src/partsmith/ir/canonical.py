@@ -1,4 +1,10 @@
-"""Exact decimal, NFC UTF-8 canonical JSON (PartSmith profile 1.0)."""
+"""
+
+@package src.partsmith.ir.canonical
+@brief Exact decimal, NFC UTF-8 canonical JSON (PartSmith profile
+1.0).
+@details Provides the module implementation and public interfaces.
+"""
 
 import json
 import math
@@ -9,6 +15,16 @@ from partsmith.ir.errors import fail, pointer
 
 
 def decimal_number(value, path: str = "") -> Decimal:
+    """
+
+    @brief Implements the decimal_number operation.
+    @param value The value argument.
+    @param path The path argument.
+    @return The Decimal result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     if isinstance(value, bool) or not isinstance(value, (int, float, Decimal)):
         fail(path, "IR_NUMBER", "Expected a JSON number")
     if isinstance(value, float) and not math.isfinite(value):
@@ -31,6 +47,15 @@ def decimal_number(value, path: str = "") -> Decimal:
 
 
 def normalize_text(value: str) -> str:
+    """
+
+    @brief Implements the normalize_text operation.
+    @param value The value argument.
+    @return The str result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     text = unicodedata.normalize(
         "NFC", value.replace("\r\n", "\n").replace("\r", "\n")
     )
@@ -42,7 +67,17 @@ def normalize_text(value: str) -> str:
 
 
 def normalize_json(value, path: str = ""):
-    """Copy JSON data; reject invalid types and normalized key collisions."""
+    """
+
+    @brief Copy JSON data; reject invalid types and normalized key
+    collisions.
+    @param value The value argument.
+    @param path The path argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     if value is None or isinstance(value, bool):
         return value
     if isinstance(value, str):
@@ -71,9 +106,27 @@ def normalize_json(value, path: str = ""):
 
 
 def canonical_json(value) -> bytes:
-    """Sort keys, preserve array order, and emit exact decimal tokens."""
+    """
+
+    @brief Sort keys, preserve array order, and emit exact decimal
+    tokens.
+    @param value The value argument.
+    @return The bytes result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
 
     def encode(item):
+        """
+
+        @brief Implements the encode operation.
+        @param item The item argument.
+        @return The callable result.
+        @details Implements the documented behavior without changing the
+        public contract.
+
+        """
         if item is None:
             return "null"
         if isinstance(item, bool):
@@ -99,7 +152,26 @@ def canonical_json(value) -> bytes:
 
 
 def parse_json(text: str | bytes):
+    """
+
+    @brief Implements the parse_json operation.
+    @param text The text argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
+
     def pairs(entries):
+        """
+
+        @brief Implements the pairs operation.
+        @param entries The entries argument.
+        @return The callable result.
+        @details Implements the documented behavior without changing the
+        public contract.
+
+        """
         result = {}
         for key, value in entries:
             if key in result:
@@ -108,6 +180,15 @@ def parse_json(text: str | bytes):
         return result
 
     def reject_constant(_):
+        """
+
+        @brief Implements the reject_constant operation.
+        @param _ The _ argument.
+        @return The callable result.
+        @details Implements the documented behavior without changing the
+        public contract.
+
+        """
         fail("", "IR_NUMBER", "Numbers must be finite")
 
     try:

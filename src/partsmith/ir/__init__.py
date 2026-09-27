@@ -1,4 +1,10 @@
-"""Versioned Component IR validation, migration, provenance, and hashing."""
+"""
+
+@package src.partsmith.ir.__init__
+@brief Versioned Component IR validation, migration, provenance, and
+hashing.
+@details Provides the module implementation and public interfaces.
+"""
 
 from partsmith.ir.canonical import canonical_json
 from partsmith.ir.errors import IRValidationError, Issue

@@ -1,4 +1,9 @@
-"""The Phase 0 PartSmith command-line interface."""
+"""
+
+@package src.partsmith.cli
+@brief The Phase 0 PartSmith command-line interface.
+@details Provides the module implementation and public interfaces.
+"""
 
 from __future__ import annotations
 
@@ -23,12 +28,27 @@ class Diagnostic:
 
 
 def is_supported_python(version: tuple[int, int]) -> bool:
-    """Return whether a Python major/minor version is supported."""
+    """
+
+    @brief Return whether a Python major/minor version is supported.
+    @param version The version argument.
+    @return The bool result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     return (3, 12) <= version < (3, 13)
 
 
 def collect_diagnostics() -> list[Diagnostic]:
-    """Collect Phase 0 diagnostics without external dependencies."""
+    """
+
+    @brief Collect Phase 0 diagnostics without external dependencies.
+    @return The list[Diagnostic] result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     checks = [
         (
             "python",
@@ -45,11 +65,29 @@ def collect_diagnostics() -> list[Diagnostic]:
 
 
 def _command_version(_: argparse.Namespace) -> int:
+    """
+
+    @brief Implements the _command_version operation.
+    @param _ The _ argument.
+    @return The int result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     print(__version__)
     return 0
 
 
 def _command_doctor(args: argparse.Namespace) -> int:
+    """
+
+    @brief Implements the _command_doctor operation.
+    @param args The args argument.
+    @return The int result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     diagnostics = collect_diagnostics()
     if args.json:
         payload = [asdict(item) for item in diagnostics]
@@ -62,12 +100,30 @@ def _command_doctor(args: argparse.Namespace) -> int:
 
 
 def _command_pdl_list(_: argparse.Namespace) -> int:
+    """
+
+    @brief Implements the _command_pdl_list operation.
+    @param _ The _ argument.
+    @return The int result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     for pdl_id, revision in list_pdls():
         print(f"{pdl_id}@{revision}")
     return 0
 
 
 def _load_cli_pdl(args: argparse.Namespace):
+    """
+
+    @brief Implements the _load_cli_pdl operation.
+    @param args The args argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     try:
         return load_pdl(args.pdl_id, args.revision)
     except PDLValidationError as error:
@@ -76,6 +132,15 @@ def _load_cli_pdl(args: argparse.Namespace):
 
 
 def _command_pdl_inspect(args: argparse.Namespace) -> int:
+    """
+
+    @brief Implements the _command_pdl_inspect operation.
+    @param args The args argument.
+    @return The int result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     pdl = _load_cli_pdl(args)
     if pdl is None:
         return 2
@@ -84,6 +149,15 @@ def _command_pdl_inspect(args: argparse.Namespace) -> int:
 
 
 def _command_pdl_validate(args: argparse.Namespace) -> int:
+    """
+
+    @brief Implements the _command_pdl_validate operation.
+    @param args The args argument.
+    @return The int result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     pdl = _load_cli_pdl(args)
     if pdl is None:
         return 2
@@ -93,7 +167,14 @@ def _command_pdl_validate(args: argparse.Namespace) -> int:
 
 
 def build_parser() -> argparse.ArgumentParser:
-    """Build the command-line parser."""
+    """
+
+    @brief Build the command-line parser.
+    @return The argparse.ArgumentParser result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     parser = argparse.ArgumentParser(
         prog="partsmith", description="PartSmith component builder"
     )
@@ -132,6 +213,14 @@ def build_parser() -> argparse.ArgumentParser:
 
 
 def main(argv: Sequence[str] | None = None) -> int:
-    """Run the PartSmith CLI and return its process status."""
+    """
+
+    @brief Run the PartSmith CLI and return its process status.
+    @param argv The argv argument.
+    @return The int result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     args = build_parser().parse_args(argv)
     return args.handler(args)

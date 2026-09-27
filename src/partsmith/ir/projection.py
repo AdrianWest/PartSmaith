@@ -1,4 +1,10 @@
-"""Snapshot-profile 1.1 dependency projections, without orchestration."""
+"""
+
+@package src.partsmith.ir.projection
+@brief Snapshot-profile 1.1 dependency projections, without
+orchestration.
+@details Provides the module implementation and public interfaces.
+"""
 
 from dataclasses import asdict
 from hashlib import sha256
@@ -13,11 +19,21 @@ from partsmith.ir.targets import effective_path, overlaps, owner_path
 
 
 def dependency_projection(data, *, requirements, revisions, configuration):
-    """Project declared engineering inputs using content references.
+    """
 
-    configuration contains trusted non-secret pdl, release_profile, runtime,
-    and exporter objects. Actual production PDL and CAD runtime checks
-    remain in later phases. This function never reads environment variables.
+    @brief Project declared engineering inputs using content references.
+    configuration contains trusted non-secret pdl, release_profile,
+    runtime, and exporter objects. Actual production PDL and CAD runtime
+    checks remain in later phases. This function never reads environment
+    variables.
+    @param data The data argument.
+    @param requirements The requirements argument.
+    @param revisions The revisions argument.
+    @param configuration The configuration argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
     """
     data = normalize_ir(
         data,
@@ -101,6 +117,16 @@ def dependency_projection(data, *, requirements, revisions, configuration):
     cache, visiting = {}, set()
 
     def digest(domain, key):
+        """
+
+        @brief Implements the digest operation.
+        @param domain The domain argument.
+        @param key The key argument.
+        @return The callable result.
+        @details Implements the documented behavior without changing the
+        public contract.
+
+        """
         ref = (domain, key)
         if ref in visiting:
             fail("", "IR_CYCLE", "Cyclic content projection")
@@ -164,6 +190,17 @@ def dependency_projection(data, *, requirements, revisions, configuration):
         return cache[ref]
 
     def project(node, path, self_override=None):
+        """
+
+        @brief Implements the project operation.
+        @param node The node argument.
+        @param path The path argument.
+        @param self_override The self_override argument.
+        @return The callable result.
+        @details Implements the documented behavior without changing the
+        public contract.
+
+        """
         if isinstance(node, list):
             return [
                 project(v, path + "/" + str(i), self_override)
@@ -222,6 +259,16 @@ def dependency_projection(data, *, requirements, revisions, configuration):
     # The full audit retains excluded bodies and predecessor IDs. The active
     # projection retains the substantive disposition/rebinding, not execution.
     def relevant_current_path(path, base_id):
+        """
+
+        @brief Implements the relevant_current_path operation.
+        @param path The path argument.
+        @param base_id The base_id argument.
+        @return The callable result.
+        @details Implements the documented behavior without changing the
+        public contract.
+
+        """
         current = effective_path(data, path, base_id, chain)
         return current is not None and any(
             overlaps(current, required_path) for required_path in required
@@ -268,6 +315,16 @@ def dependency_projection(data, *, requirements, revisions, configuration):
 
 
 def dependency_hash(data, **kwargs):
+    """
+
+    @brief Implements the dependency_hash operation.
+    @param data The data argument.
+    @param kwargs The kwargs argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     return sha256(
         canonical_json(dependency_projection(data, **kwargs))
     ).hexdigest()

@@ -1,4 +1,10 @@
-"""Explicit IR 1.1 to 1.2 migration preserving historical records."""
+"""
+
+@package src.partsmith.ir.migration_v12
+@brief Explicit IR 1.1 to 1.2 migration preserving historical
+records.
+@details Provides the module implementation and public interfaces.
+"""
 
 from hashlib import sha256
 
@@ -9,12 +15,20 @@ from partsmith.ir.model import ComponentIR
 
 
 def migrate_v1_1_to_v1_2(ir, supplied_evidence):
-    """Supply revision, accuracy, evidence additions, and decisions.
+    """
 
+    @brief Supply revision, accuracy, evidence additions, and decisions.
     Evidence additions are keyed by ID and contain acquisition revision,
-    candidate targets, and complete converted source coordinates. Decisions and
-    validation results are complete records retaining their original content.
-    Missing information yields issues; the input is never mutated or fetched.
+    candidate targets, and complete converted source coordinates.
+    Decisions and validation results are complete records retaining
+    their original content. Missing information yields issues; the input
+    is never mutated or fetched.
+    @param ir The ir argument.
+    @param supplied_evidence The supplied_evidence argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
     """
     original = ir if isinstance(ir, ComponentIR) else ComponentIR(ir)
     data = original.data
@@ -22,6 +36,16 @@ def migrate_v1_1_to_v1_2(ir, supplied_evidence):
     issues = []
 
     def add(path, message):
+        """
+
+        @brief Implements the add operation.
+        @param path The path argument.
+        @param message The message argument.
+        @return The callable result.
+        @details Implements the documented behavior without changing the
+        public contract.
+
+        """
         issues.append(Issue(path, "IR_MIGRATION", message))
 
     allowed = {

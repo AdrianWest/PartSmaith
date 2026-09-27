@@ -1,4 +1,9 @@
-"""Phase 1 gate and persistence failure-path tests."""
+"""
+
+@package tests.test_persistence
+@brief Phase 1 gate and persistence failure-path tests.
+@details Provides the module implementation and public interfaces.
+"""
 
 import importlib
 import sqlite3
@@ -14,6 +19,15 @@ database_module = importlib.import_module("partsmith.persistence.database")
 
 
 def test_phase_one_gate(tmp_path):
+    """
+
+    @brief Implements the test_phase_one_gate operation.
+    @param tmp_path The tmp_path argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     path = tmp_path / "partsmith.sqlite3"
     assert not path.exists()
     with closing(connect(path)) as connection:
@@ -81,6 +95,15 @@ def test_phase_one_gate(tmp_path):
 
 
 def test_parent_deletion_is_restricted(tmp_path):
+    """
+
+    @brief Implements the test_parent_deletion_is_restricted operation.
+    @param tmp_path The tmp_path argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     with database(tmp_path / "db") as connection:
         repository = Repository(connection)
         project = repository.create_project("Board", "/board")
@@ -99,6 +122,16 @@ def test_parent_deletion_is_restricted(tmp_path):
 
 
 def test_queries_are_parameterized_and_scoped(tmp_path):
+    """
+
+    @brief Implements the test_queries_are_parameterized_and_scoped
+    operation.
+    @param tmp_path The tmp_path argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     with database(tmp_path / "db") as connection:
         repository = Repository(connection)
         first = repository.create_project("First", "/first")
@@ -117,6 +150,16 @@ def test_queries_are_parameterized_and_scoped(tmp_path):
 
 
 def test_context_rolls_back_and_closes_on_error(tmp_path):
+    """
+
+    @brief Implements the test_context_rolls_back_and_closes_on_error
+    operation.
+    @param tmp_path The tmp_path argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     path = tmp_path / "db"
     with pytest.raises(ValueError, match="abort"):
         with database(path) as connection:
@@ -129,6 +172,15 @@ def test_context_rolls_back_and_closes_on_error(tmp_path):
 
 
 def test_success_closes_connection(tmp_path):
+    """
+
+    @brief Implements the test_success_closes_connection operation.
+    @param tmp_path The tmp_path argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     with database(tmp_path / "db") as connection:
         pass
     with pytest.raises(sqlite3.ProgrammingError):
@@ -136,6 +188,17 @@ def test_success_closes_connection(tmp_path):
 
 
 def test_failed_migration_is_atomic_and_retryable(tmp_path, monkeypatch):
+    """
+
+    @brief Implements the test_failed_migration_is_atomic_and_retryable
+    operation.
+    @param tmp_path The tmp_path argument.
+    @param monkeypatch The monkeypatch argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     original = database_module._migration_sql()
     with closing(connect(tmp_path / "db")) as connection:
         monkeypatch.setattr(
@@ -159,6 +222,16 @@ def test_failed_migration_is_atomic_and_retryable(tmp_path, monkeypatch):
 
 
 def test_changed_migration_is_rejected(tmp_path, monkeypatch):
+    """
+
+    @brief Implements the test_changed_migration_is_rejected operation.
+    @param tmp_path The tmp_path argument.
+    @param monkeypatch The monkeypatch argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     with database(tmp_path / "db") as connection:
         original = database_module._migration_sql()
         monkeypatch.setattr(
@@ -171,6 +244,15 @@ def test_changed_migration_is_rejected(tmp_path, monkeypatch):
 
 
 def test_unknown_migration_is_rejected(tmp_path):
+    """
+
+    @brief Implements the test_unknown_migration_is_rejected operation.
+    @param tmp_path The tmp_path argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     with database(tmp_path / "db") as connection:
         connection.execute("UPDATE schema_migrations SET version = '999'")
         connection.commit()
@@ -179,6 +261,16 @@ def test_unknown_migration_is_rejected(tmp_path):
 
 
 def test_migration_does_not_commit_caller_work(tmp_path):
+    """
+
+    @brief Implements the test_migration_does_not_commit_caller_work
+    operation.
+    @param tmp_path The tmp_path argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     with database(tmp_path / "db") as connection:
         repository = Repository(connection)
         project = repository.create_project("Board", "/board")
@@ -189,6 +281,15 @@ def test_migration_does_not_commit_caller_work(tmp_path):
 
 
 def test_migration_requires_foreign_keys():
+    """
+
+    @brief Implements the test_migration_requires_foreign_keys
+    operation.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     with closing(sqlite3.connect(":memory:")) as connection:
         connection.execute("PRAGMA foreign_keys = OFF")
         with pytest.raises(RuntimeError, match="foreign-key"):
@@ -196,9 +297,28 @@ def test_migration_requires_foreign_keys():
 
 
 def test_concurrent_initializers_apply_once(tmp_path):
+    """
+
+    @brief Implements the test_concurrent_initializers_apply_once
+    operation.
+    @param tmp_path The tmp_path argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     path = tmp_path / "db"
 
     def initialize(_):
+        """
+
+        @brief Implements the initialize operation.
+        @param _ The _ argument.
+        @return The callable result.
+        @details Implements the documented behavior without changing the
+        public contract.
+
+        """
         with closing(connect(path)) as connection:
             return migrate(connection)
 
@@ -209,6 +329,16 @@ def test_concurrent_initializers_apply_once(tmp_path):
 
 
 def test_required_ids_and_duplicate_ids_are_rejected(tmp_path):
+    """
+
+    @brief Implements the
+    test_required_ids_and_duplicate_ids_are_rejected operation.
+    @param tmp_path The tmp_path argument.
+    @return The callable result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
     with database(tmp_path / "db") as connection:
         project = Repository(connection).create_project("Board", "/board")
         for record_id in (None, project.id):
