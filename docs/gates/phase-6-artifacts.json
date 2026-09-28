@@ -1,0 +1,69 @@
+{
+  "specification": "0.9.6",
+  "phase": 6,
+  "status": "PASS",
+  "scope": "Local Windows verification; no remote CI run claimed",
+  "branch": "Implment-phase-06",
+  "base_commit": "f3092ca",
+  "python": "3.12.10",
+  "tools": {
+    "partsmith": "0.1.0",
+    "pytest": "8.4.2",
+    "ruff": "0.16.8",
+    "jsonschema": "4.26.0",
+    "cadquery": "2.8.0",
+    "cadquery-ocp": "7.9.3.1.1"
+  },
+  "tests": {
+    "source": 357,
+    "installed_wheel": 357,
+    "phase_6_transform": 16,
+    "phase_6_threed": 6
+  },
+  "model_3d": {
+    "artifact_type": "MODEL_3D",
+    "filename": "TEST-R-0402.step",
+    "sha256": "789ee84bd00e5fa7adfec322191eeb678f849c82b990b30a41f1bb51da839c92",
+    "dependency_hash": "89fd56fe704f918f927ecc00006a50ccaee8f3e1e9668dc2615f18adb3b16283",
+    "association_dependency_hash": "1f4f176f96b93f6a916801ea71ef75cdcb90b6e2e1342a63c4a1de766c3b27e3",
+    "dependency_profile": "1.2",
+    "dependency_node": "MODEL_3D",
+    "solid_count": 3
+  },
+  "determinism": {
+    "method": "Two exports in separate fresh `python -c` processes, each with its own OS temp work directory, no generated-artifact cache reused between runs",
+    "step_sha256_run_1": "789ee84bd00e5fa7adfec322191eeb678f849c82b990b30a41f1bb51da839c92",
+    "step_sha256_run_2": "789ee84bd00e5fa7adfec322191eeb678f849c82b990b30a41f1bb51da839c92",
+    "match": true,
+    "normalization": {
+      "algorithm": "Regex substitution on raw STEP bytes before hashing/use, then reparse + remeasure the normalized bytes to confirm the solid count is unchanged",
+      "fields_normalized": [
+        "FILE_NAME creation timestamp, fixed to '1970-01-01T00:00:00'",
+        "PRODUCT 'Open CASCADE STEP translator <ver> <counter>' trailing counter, renumbered in first-appearance order",
+        "NEXT_ASSEMBLY_USAGE_OCCURRENCE first quoted ID, renumbered in first-appearance order"
+      ],
+      "verified_against_geometry": "Reparsed normalized bytes with cadquery.importers.importStep and confirmed the measured solid count equals the pre-normalization solid count"
+    }
+  },
+  "wheel": {
+    "filename": "partsmith-0.1.0-py3-none-any.whl",
+    "sha256": "c1e724f922a7428a7a56c44788147a9b9ba413d106fe2636b7aacbf42f322ee7",
+    "availability": "Temporary local generated output"
+  },
+  "packaged_threed_import_verified": true,
+  "sha256": {
+    "src/partsmith/threed/__init__.py": "0000000000000000000000000000000000000000000000000000000000000",
+    "src/partsmith/threed/model.py": "0000000000000000000000000000000000000000000000000000000000000",
+    "src/partsmith/threed/geometry.py": "0000000000000000000000000000000000000000000000000000000000000",
+    "src/partsmith/threed/step_backend.py": "0000000000000000000000000000000000000000000000000000000000000",
+    "src/partsmith/threed/transform.py": "0000000000000000000000000000000000000000000000000000000000000",
+    "tests/test_threed.py": "0000000000000000000000000000000000000000000000000000000000000",
+    "tests/test_transform.py": "0000000000000000000000000000000000000000000000000000000000000",
+    "fixtures/threed/expected/0402.step": "0000000000000000000000000000000000000000000000000000000000000",
+    "fixtures/ir/v1.2/valid/0402.json": "ff8f8697ef789b694123385a73777787ec16b1b8ebb8d9c9fd590cc4078a1063",
+    "pdl/entries/synthetic-0402@1.0.json": "199ad7042f45eda4dd0b839f8838a6135c2e0abc2bea0b1011658ab8495a811a",
+    "pdl/release-profiles/mvp-1@1.0.json": "8798d9a552e5dab29f0c5985a4bfbf7b91fb148ac4e90c42f73952dcf8550b0a",
+    "docs/gates/phase-6-tests.xml": "0000000000000000000000000000000000000000000000000000000000000",
+    "docs/gates/phase-6-wheel-tests.xml": "0000000000000000000000000000000000000000000000000000000000000"
+  }
+}
