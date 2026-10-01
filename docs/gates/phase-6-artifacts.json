@@ -53,7 +53,7 @@
   "packaged_threed_import_verified": true,
   "sha256": {
     "src/partsmith/threed/__init__.py": "3503b2f59b295c08d7365438fecac1dae91c52ed955042c218b8eed63d6d6eee",
-    "src/partsmith/threed/model.py": "3161694f2648434c68df56b076838ff6d8f9b10773df00a4666549faf65f2dcb",
+    "src/partsmith/threed/model.py": "31fb5a4811ef7c6ea06cd4924b0b776caf236446de80428f3b4b336fcae92883",
     "src/partsmith/threed/geometry.py": "01d9c0859596c8a2d81212d78e2020707a4c5eaf2cb2272bee04bbd812b8f0f0",
     "src/partsmith/threed/step_backend.py": "50b931e3bc11313b92e0a7e7abe14f4c57497c2acd36c234f6564cfe74d4060e",
     "src/partsmith/threed/transform.py": "e8dd5c1bb514a67e4099299767a02d17ae86e120830e0b3102ef17db691cf9a2",
