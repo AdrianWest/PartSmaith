@@ -91,6 +91,11 @@ class GeneratedArtifact:
 
 
 class ThreeDGenerator(Protocol):
+    """@brief Defines the 3D model generation interface.
+    @details Implementations generate STEP artifacts independently of
+    footprints.
+    """
+
     def generate(
         self, ir: ComponentIR, pdl: PDL, context: ThreeDContext
     ) -> GeneratedArtifact:

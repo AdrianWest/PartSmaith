@@ -95,6 +95,10 @@ class GeneratedArtifact:
 
 
 class FootprintGenerator(Protocol):
+    """@brief Defines the footprint-generation interface.
+    @details Implementations serialize a footprint from IR, PDL, and context.
+    """
+
     def generate(
         self, ir: ComponentIR, pdl: PDL, context: FootprintContext
     ) -> GeneratedArtifact:

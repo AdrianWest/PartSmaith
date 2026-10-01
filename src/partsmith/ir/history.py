@@ -16,6 +16,10 @@ from partsmith.ir.schema import fragment_valid
 
 
 class RevisionStore(Protocol):
+    """@brief Defines immutable revision and inventory retrieval.
+    @details Implementations return detached snapshots by ID or content hash.
+    """
+
     def get_revision(self, revision_id: str) -> dict:
         """
         @brief Retrieves a revision by identifier.

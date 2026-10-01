@@ -16,6 +16,16 @@ from partsmith import __version__
 
 @dataclass(frozen=True, kw_only=True)
 class Project:
+    """@brief Represents a persisted PartSmith project.
+
+    Attributes:
+        id: Stable project identifier.
+        name: User-visible project name.
+        root_path: Project root path.
+        created_at: Creation timestamp.
+        updated_at: Most recent record update timestamp.
+    """
+
     id: str
     name: str
     root_path: str
@@ -25,6 +35,18 @@ class Project:
 
 @dataclass(frozen=True, kw_only=True)
 class Component:
+    """@brief Represents a component record associated with a project.
+
+    Attributes:
+        id: Stable component identifier.
+        project_id: Owning project identifier, if assigned.
+        manufacturer: Manufacturer name.
+        mpn: Manufacturer part number.
+        package_variant: Package variant identifier.
+        created_at: Creation timestamp.
+        updated_at: Most recent record update timestamp.
+    """
+
     id: str
     project_id: str | None
     manufacturer: str
@@ -36,6 +58,26 @@ class Component:
 
 @dataclass(frozen=True, kw_only=True)
 class Build:
+    """@brief Represents persisted build metadata.
+
+    Attributes:
+        id: Stable build identifier.
+        component_id: Component associated with the build.
+        state: Persisted build state label.
+        started_at: Build start timestamp.
+        bft_version: PartSmith version that created the build.
+        created_at: Creation timestamp.
+        updated_at: Most recent record update timestamp.
+        completed_at: Completion timestamp, when complete.
+        schema_version: Component IR schema version, when known.
+        pdl_revision: Selected PDL revision, when known.
+        ai_provider: Selected AI provider, when used.
+        ai_model: Selected AI model, when used.
+        source_hash: Source-document content hash, when available.
+        ir_hash: Component IR content hash, when available.
+        build_inputs_hash: Build-input snapshot hash, when available.
+    """
+
     id: str
     component_id: str
     state: str

@@ -72,6 +72,10 @@ class GeneratedArtifact:
 
 
 class SymbolGenerator(Protocol):
+    """@brief Defines the symbol-generation interface.
+    @details Implementations produce deterministic symbol artifacts from IR.
+    """
+
     def generate(
         self, ir: ComponentIR, context: SymbolContext
     ) -> GeneratedArtifact:
