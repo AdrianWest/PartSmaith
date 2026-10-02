@@ -207,6 +207,48 @@ class ConflictResolutionProposalRequest:
 
 
 @dataclass(frozen=True)
+class EvidenceExclusionProposalRequest:
+    """@brief Requests reviewed disposition of unassigned evidence.
+    @details Optional replacements must retain source and interpretation while
+    gaining explicit candidate targets under new evidence identities.
+    """
+
+    component_id: str
+    base_revision_id: str
+    base_revision_hash: str
+    expected_head_hash: str
+    evidence_id: str
+    replacement_evidence_ids: tuple[str, ...]
+    reason: str
+    schema_version: str = "1.0"
+
+    def __post_init__(self) -> None:
+        """@brief Validates this closed evidence-exclusion request.
+        @return None.
+        @details Replacement compatibility is checked against the exact base.
+        """
+        _validate_request(
+            "evidence_exclusion_proposal_request", self.to_dict()
+        )
+
+    def to_dict(self) -> dict:
+        """@brief Serializes this evidence-exclusion request.
+        @return JSON-compatible closed request mapping.
+        @details Reviewer, timestamp, approval state, and history are omitted.
+        """
+        return {
+            "schema_version": self.schema_version,
+            "component_id": self.component_id,
+            "base_revision_id": self.base_revision_id,
+            "base_revision_hash": self.base_revision_hash,
+            "expected_head_hash": self.expected_head_hash,
+            "evidence_id": self.evidence_id,
+            "replacement_evidence_ids": list(self.replacement_evidence_ids),
+            "reason": self.reason,
+        }
+
+
+@dataclass(frozen=True)
 class InputApprovalRequest:
     """@brief Requests approval of one exact persisted input proposal.
     @details The authenticated principal must match reviewer exactly.
@@ -866,6 +908,119 @@ class InputReviewService:
                 stored.canonical_sha256,
             )
 
+    def propose_evidence_exclusion(
+        self,
+        request: EvidenceExclusionProposalRequest,
+        principal: AuthenticatedPrincipal,
+    ) -> ProposalResult:
+        """@brief Persists one pending unassigned-evidence disposition.
+        @param request Exact current base, evidence, replacements, and reason.
+        @param principal Authenticated proposing principal.
+        @return Immutable proposal and generated candidate identities.
+        @details Assigned evidence cannot be excluded; replacements must retain
+        source and interpretation while declaring candidate targets.
+        """
+        with _savepoint(self.connection, "evidence_exclusion_proposal"):
+            _, base = self._require_current_base(
+                request.component_id,
+                request.base_revision_id,
+                request.base_revision_hash,
+                request.expected_head_hash,
+            )
+            evidence = {record["id"]: record for record in base["evidence"]}
+            record = evidence.get(request.evidence_id)
+            if record is None:
+                raise ValueError("Excluded evidence does not resolve")
+            if record["candidate_targets"]:
+                raise ValueError("Assigned evidence requires a resolution")
+            if any(
+                item["evidence_id"] == request.evidence_id
+                and item["approval_state"] == "APPROVED"
+                for item in base["revision"]["evidence_exclusions"]
+            ):
+                raise ValueError("Evidence already has an approved exclusion")
+            for replacement_id in request.replacement_evidence_ids:
+                replacement = evidence.get(replacement_id)
+                if (
+                    replacement is None
+                    or replacement_id == request.evidence_id
+                    or not replacement["candidate_targets"]
+                    or replacement["source"] != record["source"]
+                    or replacement["interpretation"]["status"]
+                    != record["interpretation"]["status"]
+                ):
+                    raise ValueError("Replacement evidence is not compatible")
+            timestamp = _now()
+            pending = {
+                "evidence_id": request.evidence_id,
+                "replacement_evidence_ids": sorted(
+                    request.replacement_evidence_ids
+                ),
+                "reason": request.reason,
+                "reviewer": principal.subject,
+                "timestamp": timestamp,
+                "approval_state": "PENDING",
+            }
+            candidate = copy.deepcopy(base)
+            candidate["revision"]["id"] = str(uuid4())
+            candidate["revision"]["parent_id"] = request.base_revision_id
+            candidate["revision"]["description"] = (
+                f"Pending exclusion for {request.evidence_id}"
+            )
+            candidate["revision"]["evidence_review"] = None
+            candidate["revision"]["evidence_exclusions"].append(pending)
+            candidate_document = ComponentIR(candidate)
+            transition_issues = validate_revision_transition(base, candidate)
+            if transition_issues:
+                raise ValueError("Invalid pending exclusion transition")
+            inventory_sha256 = base["revision"]["evidence_review"][
+                "inventory_sha256"
+            ]
+            self._inventory_matches(candidate, inventory_sha256)
+            stored = self.store.put_revision(
+                candidate,
+                inventory_sha256=inventory_sha256,
+                reviewed=False,
+            )
+            proposal_id = str(uuid4())
+            proposal_data = request.to_dict() | {
+                "proposal_id": proposal_id,
+                "candidate_revision_id": stored.revision_id,
+                "candidate_revision_hash": stored.canonical_sha256,
+                "inventory_sha256": inventory_sha256,
+                "pending_exclusion": pending,
+                "actions": ["EVIDENCE_EXCLUSION"],
+            }
+            blob = canonical_json(proposal_data)
+            digest = sha256(blob).hexdigest()
+            now = _now()
+            self.connection.execute(
+                "INSERT INTO review_proposals VALUES "
+                "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                (
+                    proposal_id,
+                    request.component_id,
+                    request.base_revision_id,
+                    request.base_revision_hash,
+                    stored.revision_id,
+                    stored.canonical_sha256,
+                    request.expected_head_hash,
+                    digest,
+                    blob,
+                    "PENDING",
+                    now,
+                    now,
+                ),
+            )
+            if candidate_document.sha256 != stored.canonical_sha256:
+                raise RuntimeError("Stored exclusion candidate hash mismatch")
+            return ProposalResult(
+                proposal_id,
+                digest,
+                stored.revision_id,
+                stored.canonical_sha256,
+            )
+
     def propose(
         self, request: InputReviewProposal, candidate_revision: dict
     ) -> ProposalResult:
@@ -1062,6 +1217,16 @@ class InputReviewService:
         }
         actions = proposal["actions"]
         if actions == ["EVIDENCE_REVIEW"]:
+            return approved
+        if actions == ["EVIDENCE_EXCLUSION"]:
+            pending = proposal["pending_exclusion"]
+            if pending not in approved["revision"]["evidence_exclusions"]:
+                raise ValueError("Pending evidence exclusion does not resolve")
+            approved_record = copy.deepcopy(pending)
+            approved_record["approval_state"] = "APPROVED"
+            approved_record["reviewer"] = request.reviewer
+            approved_record["timestamp"] = timestamp
+            approved["revision"]["evidence_exclusions"].append(approved_record)
             return approved
         if actions == ["CONFLICT_RESOLUTION"]:
             pending = next(

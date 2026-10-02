@@ -27,6 +27,7 @@ from partsmith.release import AuthenticatedPrincipal
 from partsmith.release.input_review import (
     NO_HEAD_HASH,
     ConflictResolutionProposalRequest,
+    EvidenceExclusionProposalRequest,
     InputApprovalRequest,
     InputRejectionRequest,
     InputReviewProposal,
@@ -177,6 +178,41 @@ def _conflicted_head_fixture(connection):
     conflicting["candidate_targets"] = [WIDTH]
     conflicting["interpretation"]["status"] = "CONFLICTING"
     data["evidence"].append(conflicting)
+    inventory = _inventory(data)
+    inventory_hash = sha256(canonical_json(inventory)).hexdigest()
+    data["revision"]["evidence_review"].update(
+        inventory_sha256=inventory_hash,
+        reviewed_evidence_ids=inventory["evidence_ids"],
+    )
+    store = ImmutableStore(connection)
+    assert store.put_inventory(inventory) == inventory_hash
+    stored = store.put_revision(
+        data,
+        inventory_sha256=inventory_hash,
+        reviewed=True,
+    )
+    store.compare_and_swap_head(component.id, stored.revision_id, None)
+    return component, stored, inventory_hash, InputReviewService(connection)
+
+
+def _unassigned_evidence_head_fixture(connection):
+    """@brief Persists a reviewed head with unassigned and replacement
+    evidence.
+    @param connection Active migrated SQLite connection.
+    @return Component, reviewed revision, inventory hash, and review service.
+    @details Both evidence identities remain in the complete acquisition
+    inventory.
+    """
+    component = Repository(connection).create_component(
+        "Synthetic", "0402", "0402"
+    )
+    data = json.loads(IR_PATH.read_text(encoding="utf-8"))
+    data["identity"]["component_id"] = component.id
+    raw = copy.deepcopy(data["evidence"][0])
+    raw.update(id="E-RAW", candidate_targets=[])
+    replacement = copy.deepcopy(raw)
+    replacement.update(id="E-REPLACEMENT", candidate_targets=[WIDTH])
+    data["evidence"].extend([raw, replacement])
     inventory = _inventory(data)
     inventory_hash = sha256(canonical_json(inventory)).hexdigest()
     data["revision"]["evidence_review"].update(
@@ -864,6 +900,162 @@ def test_conflict_resolution_rejects_invalid_evidence_dispositions(
             )
             service.propose_resolution(
                 request,
+                AuthenticatedPrincipal("proposer-1", "local-test"),
+            )
+        assert (
+            connection.execute("SELECT COUNT(*) FROM ir_revisions").fetchone()[
+                0
+            ]
+            == before
+        )
+        assert (
+            connection.execute(
+                "SELECT COUNT(*) FROM review_proposals"
+            ).fetchone()[0]
+            == 0
+        )
+
+
+def test_evidence_exclusion_retains_pending_and_approved_records(tmp_path):
+    """@brief Verifies reviewed disposition of unassigned evidence.
+    @param tmp_path Pytest temporary directory.
+    @return None.
+    @details A compatible assigned replacement remains explicitly linked.
+    """
+    with database(tmp_path / "db") as connection:
+        component, base, inventory_hash, service = (
+            _unassigned_evidence_head_fixture(connection)
+        )
+        result = service.propose_evidence_exclusion(
+            EvidenceExclusionProposalRequest(
+                component_id=component.id,
+                base_revision_id=base.revision_id,
+                base_revision_hash=base.canonical_sha256,
+                expected_head_hash=base.canonical_sha256,
+                evidence_id="E-RAW",
+                replacement_evidence_ids=("E-REPLACEMENT",),
+                reason="Assigned interpretation retained separately",
+            ),
+            AuthenticatedPrincipal("proposer-1", "local-test"),
+        )
+        store = ImmutableStore(connection)
+        candidate = store.get_revision(result.candidate_revision_id)
+        pending = candidate["revision"]["evidence_exclusions"][-1]
+        assert pending["approval_state"] == "PENDING"
+        assert pending["replacement_evidence_ids"] == ["E-REPLACEMENT"]
+
+        approved = service.approve_inputs(
+            _override_approval_request(
+                component,
+                base.canonical_sha256,
+                inventory_hash,
+                result,
+            ),
+            AuthenticatedPrincipal("reviewer-1", "local-test"),
+        )
+        data = store.get_revision(approved.revision_id)
+        exclusions = data["revision"]["evidence_exclusions"]
+        assert exclusions[-2] == pending
+        assert exclusions[-1]["approval_state"] == "APPROVED"
+        assert exclusions[-1]["reviewer"] == "reviewer-1"
+        assert exclusions[-1]["evidence_id"] == "E-RAW"
+        context = RequirementsContext(
+            "synthetic",
+            "test-1",
+            "test-1",
+            "test-1",
+            (WIDTH,),
+            (WIDTH,),
+        )
+        assert (
+            validate_ir(
+                data,
+                for_generation=True,
+                requirements=context,
+                revisions=store,
+            )
+            == ()
+        )
+
+
+def test_evidence_exclusion_allows_no_replacement(tmp_path):
+    """@brief Verifies irrelevant unassigned evidence may be excluded directly.
+    @param tmp_path Pytest temporary directory.
+    @return None.
+    @details The empty replacement list remains explicit in reviewed history.
+    """
+    with database(tmp_path / "db") as connection:
+        component, base, inventory_hash, service = (
+            _unassigned_evidence_head_fixture(connection)
+        )
+        result = service.propose_evidence_exclusion(
+            EvidenceExclusionProposalRequest(
+                component_id=component.id,
+                base_revision_id=base.revision_id,
+                base_revision_hash=base.canonical_sha256,
+                expected_head_hash=base.canonical_sha256,
+                evidence_id="E-RAW",
+                replacement_evidence_ids=(),
+                reason="Raw duplicate has no engineering assignment",
+            ),
+            AuthenticatedPrincipal("proposer-1", "local-test"),
+        )
+        approved = service.approve_inputs(
+            _override_approval_request(
+                component,
+                base.canonical_sha256,
+                inventory_hash,
+                result,
+            ),
+            AuthenticatedPrincipal("reviewer-1", "local-test"),
+        )
+        data = ImmutableStore(connection).get_revision(approved.revision_id)
+        assert (
+            data["revision"]["evidence_exclusions"][-1][
+                "replacement_evidence_ids"
+            ]
+            == []
+        )
+
+
+@pytest.mark.parametrize(
+    ("evidence_id", "replacement_ids", "message"),
+    [
+        ("E-001", (), "Assigned evidence"),
+        ("missing", (), "does not resolve"),
+        ("E-RAW", ("missing",), "not compatible"),
+        ("E-RAW", ("E-RAW",), "not compatible"),
+    ],
+)
+def test_evidence_exclusion_rejects_invalid_dispositions(
+    tmp_path, evidence_id, replacement_ids, message
+):
+    """@brief Verifies exclusions cannot hide assigned or invalid evidence.
+    @param tmp_path Pytest temporary directory.
+    @param evidence_id Proposed excluded evidence identity.
+    @param replacement_ids Proposed replacement evidence identities.
+    @param message Expected failure text.
+    @return None.
+    @details Invalid proposals leave no candidate or proposal records.
+    """
+    with database(tmp_path / "db") as connection:
+        component, base, _, service = _unassigned_evidence_head_fixture(
+            connection
+        )
+        before = connection.execute(
+            "SELECT COUNT(*) FROM ir_revisions"
+        ).fetchone()[0]
+        with pytest.raises(ValueError, match=message):
+            service.propose_evidence_exclusion(
+                EvidenceExclusionProposalRequest(
+                    component_id=component.id,
+                    base_revision_id=base.revision_id,
+                    base_revision_hash=base.canonical_sha256,
+                    expected_head_hash=base.canonical_sha256,
+                    evidence_id=evidence_id,
+                    replacement_evidence_ids=replacement_ids,
+                    reason="Invalid evidence disposition",
+                ),
                 AuthenticatedPrincipal("proposer-1", "local-test"),
             )
         assert (
