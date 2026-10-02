@@ -21,6 +21,7 @@ from partsmith.threed.step_backend import (
     OCP_VERSION,
     SolidMeasurement,
     StepMeasurement,
+    export_step_solids,
     generate_step_bytes,
     measure_step,
 )
@@ -38,6 +39,13 @@ from partsmith.threed.transform import (
     simple_placement_from_affine,
     to_affine,
 )
+from partsmith.threed.validation import (
+    ValidationResult,
+    cross_validate_footprint_3d,
+    validate_applicability_binding,
+    validate_model_3d,
+    validate_step_file,
+)
 
 __all__ = [
     "CADQUERY_VERSION",
@@ -52,11 +60,14 @@ __all__ = [
     "ThreeDContext",
     "ThreeDGenerator",
     "UnsupportedTransformError",
+    "ValidationResult",
     "apply_bbox",
     "apply_point",
     "apply_vector",
     "compose",
+    "cross_validate_footprint_3d",
     "equivalent_within_tolerance",
+    "export_step_solids",
     "generate_model_3d",
     "generate_step_bytes",
     "invert",
@@ -66,5 +77,8 @@ __all__ = [
     "threed_projection",
     "to_affine",
     "validate_step_artifact",
+    "validate_model_3d",
+    "validate_applicability_binding",
+    "validate_step_file",
     "validate_threed_inputs",
 ]

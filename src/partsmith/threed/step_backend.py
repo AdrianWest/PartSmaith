@@ -27,6 +27,29 @@ _TRANSLATOR_PATTERN = re.compile(
 _ASSEMBLY_OCCURRENCE_PATTERN = re.compile(
     rb"(NEXT_ASSEMBLY_USAGE_OCCURRENCE\(')\d+(')"
 )
+_LENGTH_UNIT_PATTERN = re.compile(
+    rb"LENGTH_UNIT\(\)\s+NAMED_UNIT\(\*\)\s+"
+    rb"SI_UNIT\((\.[A-Z]+\.|\$),\.METRE\.\)"
+)
+_SI_PREFIX_TO_MM = {
+    b".EXA.": 1e21,
+    b".PETA.": 1e18,
+    b".TERA.": 1e15,
+    b".GIGA.": 1e12,
+    b".MEGA.": 1e9,
+    b".KILO.": 1e6,
+    b".HECTO.": 1e5,
+    b".DECA.": 1e4,
+    b".DECI.": 1e2,
+    b".MILLI.": 1.0,
+    b".CENTI.": 10.0,
+    b".MICRO.": 1e-3,
+    b".NANO.": 1e-6,
+    b".PICO.": 1e-9,
+    b".FEMTO.": 1e-12,
+    b".ATTO.": 1e-15,
+    b"$": 1000.0,
+}
 
 
 def _normalize_step_bytes(raw: bytes) -> bytes:
@@ -143,6 +166,24 @@ def generate_step_bytes(pdl_data: dict) -> bytes:
     return normalized
 
 
+def export_step_solids(solids: list) -> bytes:
+    """@brief Deterministically export supplied solids as normalized STEP.
+    @param solids CadQuery solids to export.
+    @return Normalized STEP artifact bytes.
+    @details Uses the production normalization and verifies the parsed solid
+    count, allowing reproducible Phase 7 fault fixtures.
+    """
+    raw = _export_raw_step(solids)
+    normalized = _normalize_step_bytes(raw)
+    measured_count = _count_solids(normalized)
+    if measured_count != len(solids):
+        raise RuntimeError(
+            "STEP normalization altered solid count: expected "
+            f"{len(solids)}, measured {measured_count}"
+        )
+    return normalized
+
+
 Vec3 = tuple[float, float, float]
 
 
@@ -154,6 +195,33 @@ class SolidMeasurement:
 
     center_mm: Vec3
     size_mm: Vec3
+    minimum_mm: Vec3 | None = None
+    maximum_mm: Vec3 | None = None
+
+    def __post_init__(self) -> None:
+        """@brief Fill bounds omitted by Phase 6-compatible callers.
+        @return None.
+        @details Derives axis-aligned minimum and maximum points from the
+        public center/size constructor when explicit bounds are absent.
+        """
+        if self.minimum_mm is None:
+            object.__setattr__(
+                self,
+                "minimum_mm",
+                tuple(
+                    self.center_mm[axis] - self.size_mm[axis] / 2
+                    for axis in range(3)
+                ),
+            )
+        if self.maximum_mm is None:
+            object.__setattr__(
+                self,
+                "maximum_mm",
+                tuple(
+                    self.center_mm[axis] + self.size_mm[axis] / 2
+                    for axis in range(3)
+                ),
+            )
 
 
 @dataclass(frozen=True)
@@ -164,6 +232,7 @@ class StepMeasurement:
     """
 
     solids: tuple[SolidMeasurement, ...]
+    length_unit_mm: float = 1.0
 
     @property
     def solid_count(self) -> int:
@@ -188,6 +257,17 @@ def measure_step(step_bytes: bytes) -> StepMeasurement:
     solids.
 
     """
+    unit_matches = set(_LENGTH_UNIT_PATTERN.findall(step_bytes))
+    if len(unit_matches) != 1:
+        raise ValueError("STEP artifact has no unique SI length unit")
+    prefix = unit_matches.pop()
+    try:
+        length_unit_mm = _SI_PREFIX_TO_MM[prefix]
+    except KeyError as error:
+        raise ValueError(
+            f"Unsupported STEP SI length-unit prefix: {prefix.decode()}"
+        ) from error
+
     with tempfile.TemporaryDirectory() as directory:
         path = Path(directory) / "measure.step"
         path.write_bytes(step_bytes)
@@ -204,5 +284,7 @@ def measure_step(step_bytes: bytes) -> StepMeasurement:
             (box.zmin + box.zmax) / 2.0,
         )
         size = (box.xlen, box.ylen, box.zlen)
-        measurements.append(SolidMeasurement(center, size))
-    return StepMeasurement(tuple(measurements))
+        minimum = (box.xmin, box.ymin, box.zmin)
+        maximum = (box.xmax, box.ymax, box.zmax)
+        measurements.append(SolidMeasurement(center, size, minimum, maximum))
+    return StepMeasurement(tuple(measurements), length_unit_mm)
