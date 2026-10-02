@@ -31,10 +31,12 @@ packages = ["src/partsmith"]
 
 [tool.hatch.build.targets.wheel.force-include]
 "migrations/001_initial.sql" = "partsmith/persistence/001_initial.sql"
+"migrations/002_phase8.sql" = "partsmith/persistence/002_phase8.sql"
 "schemas/component-ir-1.0.schema.json" = "partsmith/ir/component-ir-1.0.schema.json"
 "schemas/component-ir-1.1.schema.json" = "partsmith/ir/component-ir-1.1.schema.json"
 "schemas/component-ir-1.2.schema.json" = "partsmith/ir/component-ir-1.2.schema.json"
 "schemas/pdl-1.0.schema.json" = "partsmith/pdl/pdl-1.0.schema.json"
+"schemas/phase8-contracts-1.0.schema.json" = "partsmith/release/phase8-contracts-1.0.schema.json"
 "pdl/entries" = "partsmith/pdl/entries"
 "pdl/release-profiles" = "partsmith/pdl/release-profiles"
 
