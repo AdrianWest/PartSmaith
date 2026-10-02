@@ -482,6 +482,152 @@
         "results"
       ],
       "additionalProperties": false
+    },
+    "input_review_proposal": {
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "const": "1.0"
+        },
+        "component_id": {
+          "$ref": "#/$defs/nonempty_string"
+        },
+        "base_revision_id": {
+          "$ref": "#/$defs/nonempty_string"
+        },
+        "base_revision_hash": {
+          "$ref": "#/$defs/sha256"
+        },
+        "expected_head_hash": {
+          "$ref": "#/$defs/sha256"
+        },
+        "candidate_revision_id": {
+          "$ref": "#/$defs/nonempty_string"
+        },
+        "candidate_revision_hash": {
+          "$ref": "#/$defs/sha256"
+        },
+        "inventory_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "reason": {
+          "$ref": "#/$defs/nonempty_string"
+        },
+        "actions": {
+          "type": "array",
+          "items": {
+            "const": "EVIDENCE_REVIEW"
+          },
+          "minItems": 1,
+          "maxItems": 1,
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "schema_version",
+        "component_id",
+        "base_revision_id",
+        "base_revision_hash",
+        "expected_head_hash",
+        "candidate_revision_id",
+        "candidate_revision_hash",
+        "inventory_sha256",
+        "reason",
+        "actions"
+      ],
+      "additionalProperties": false
+    },
+    "input_approval_request": {
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "const": "1.0"
+        },
+        "proposal_id": {
+          "$ref": "#/$defs/nonempty_string"
+        },
+        "proposal_hash": {
+          "$ref": "#/$defs/sha256"
+        },
+        "component_id": {
+          "$ref": "#/$defs/nonempty_string"
+        },
+        "candidate_revision_id": {
+          "$ref": "#/$defs/nonempty_string"
+        },
+        "candidate_revision_hash": {
+          "$ref": "#/$defs/sha256"
+        },
+        "expected_head_hash": {
+          "$ref": "#/$defs/sha256"
+        },
+        "inventory_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "reviewer": {
+          "$ref": "#/$defs/nonempty_string"
+        },
+        "reason": {
+          "$ref": "#/$defs/nonempty_string"
+        }
+      },
+      "required": [
+        "schema_version",
+        "proposal_id",
+        "proposal_hash",
+        "component_id",
+        "candidate_revision_id",
+        "candidate_revision_hash",
+        "expected_head_hash",
+        "inventory_sha256",
+        "reviewer",
+        "reason"
+      ],
+      "additionalProperties": false
+    },
+    "input_rejection_request": {
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "const": "1.0"
+        },
+        "proposal_id": {
+          "$ref": "#/$defs/nonempty_string"
+        },
+        "proposal_hash": {
+          "$ref": "#/$defs/sha256"
+        },
+        "component_id": {
+          "$ref": "#/$defs/nonempty_string"
+        },
+        "candidate_revision_id": {
+          "$ref": "#/$defs/nonempty_string"
+        },
+        "candidate_revision_hash": {
+          "$ref": "#/$defs/sha256"
+        },
+        "expected_head_hash": {
+          "$ref": "#/$defs/sha256"
+        },
+        "reviewer": {
+          "$ref": "#/$defs/nonempty_string"
+        },
+        "reason": {
+          "$ref": "#/$defs/nonempty_string"
+        }
+      },
+      "required": [
+        "schema_version",
+        "proposal_id",
+        "proposal_hash",
+        "component_id",
+        "candidate_revision_id",
+        "candidate_revision_hash",
+        "expected_head_hash",
+        "reviewer",
+        "reason"
+      ],
+      "additionalProperties": false
     }
   }
 }
