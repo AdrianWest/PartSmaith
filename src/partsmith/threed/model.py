@@ -355,6 +355,7 @@ def validate_step_artifact(step_bytes: bytes, pdl: PDL) -> tuple[Issue, ...]:
             feature
             for feature in pdl_data["reference_features"]
             if feature["kind"] == "TERMINAL_ANCHOR"
+            and feature["applicability"] == "REQUIRED"
         ),
         key=lambda feature: feature["terminal_id"],
     )

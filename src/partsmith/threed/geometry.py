@@ -52,6 +52,7 @@ def _terminal_features(pdl_data: dict) -> list[dict]:
         feature
         for feature in pdl_data["reference_features"]
         if feature["kind"] == "TERMINAL_ANCHOR"
+        and feature["applicability"] == "REQUIRED"
     ]
     if not features:
         raise ValueError("At least one TERMINAL_ANCHOR feature is required")

@@ -1,0 +1,70 @@
+{
+  "specification": "0.9.6",
+  "phase": 7,
+  "status": "PASS",
+  "scope": "Local Windows verification; no remote CI run claimed",
+  "branch": "Implment-Phase-7",
+  "base_commit": "cfeb9b0",
+  "python": "3.12.10",
+  "tools": {
+    "partsmith": "0.1.0",
+    "pytest": "8.4.2",
+    "ruff": "0.16.8",
+    "jsonschema": "4.26.0",
+    "cadquery": "2.8.0",
+    "cadquery-ocp": "7.9.3.1.1"
+  },
+  "tests": {
+    "source": 393,
+    "installed_wheel": 393,
+    "phase_7_threed": 38
+  },
+  "wheel": {
+    "filename": "partsmith-0.1.0-py3-none-any.whl",
+    "sha256": "a1fe0493344f0ddbadde74b2839e3c4525d0dbd0435e85ca974f37e94d300662",
+    "availability": "Temporary local generated output"
+  },
+  "fault_rules": {
+    "fault-offset.step": "step-offset",
+    "fault-rotate-90.step": "step-orientation",
+    "fault-rotate-180.step": "step-orientation",
+    "fault-mirror-x.step": "step-mirror",
+    "fault-mirror-y.step": "step-mirror",
+    "fault-scale-2x.step": "step-scale",
+    "fault-scale-0.5x.step": "step-scale",
+    "fault-height.step": "OBS-BODY-HEIGHT",
+    "fault-unit.step": "step-unit-scale"
+  },
+  "symmetry_positive": {
+    "artifact": "fixtures/phase7/step/symmetric-rotate-180.step",
+    "declared_transform": "ROTATE-Z-180",
+    "expected": "PASS"
+  },
+  "sha256": {
+    "src/partsmith/threed/__init__.py": "d043f5f1417b994b9115e40223879400b4df968ac45e9bb82672b18527f1b6a3",
+    "src/partsmith/threed/geometry.py": "5b6ac7e49ec70f7dae6fb0da60bfe83157e889d7b89dd3a20b2d9d9b28b1e308",
+    "src/partsmith/threed/model.py": "ded6271ad05cad8219705ca6f0810d34087e094b4224808b52d97be1f34bb253",
+    "src/partsmith/threed/step_backend.py": "e3c5cddd1e5cbc4b418b476dcfa8a76d465183e033d18ece87a88fc8bf503d34",
+    "src/partsmith/threed/transform.py": "50a497769d2284dc55b794f2869f32cd4170adfa951059fc594e9b16c57c5f27",
+    "src/partsmith/threed/validation.py": "854fa44cd971da4412068b81af13790e0c2958b2543de1dd17991d3946a04c44",
+    "tests/test_threed.py": "097d6b893055d23e5a011938289d1e8127155c13b21930abf1f394e40b284860",
+    "fixtures/phase7/ir/asymmetric-sot23.json": "3636afe39445bb53309770e0882a21372bca4e5db9cfccb41fefa13d29c0dcb0",
+    "fixtures/phase7/ir/symmetric-0402.json": "680db19d346cbb5a25c87196cc7fca989b5854f7c01a35d954bffbd30386002f",
+    "fixtures/phase7/pdl/synthetic-asymmetric-sot23@1.0.json": "92ea4b48fca4e0f05353edb55dbd62e0d2f8f642bb31113785bd2f9d8cf73899",
+    "fixtures/phase7/pdl/synthetic-0402-phase7@1.0.json": "d2f16e798e646a4da155206a62382050d6889ceaa32e9053d26a24eaff390a4c",
+    "fixtures/phase7/footprint/asymmetric-good.kicad_mod": "ff9c5e96f78b185d4e199222126d02e727ac6d1b84d59b64f39131ece0a8af62",
+    "fixtures/phase7/step/asymmetric-good.step": "4fa140fc5701142312bbee28f950c9e600fb2a68068f5ee4b47716a4964cef02",
+    "fixtures/phase7/step/fault-offset.step": "6749af1bb45e210e9b24f1351dc6b8cc539eca0854f9c5db0fdac09b2076d2d1",
+    "fixtures/phase7/step/fault-rotate-90.step": "50c1998b7fe466d3ba94fa80579a26f3a52e82320655dc4736f1345785c94c6b",
+    "fixtures/phase7/step/fault-rotate-180.step": "823cd9d98cc6e32422bf4a73987a0b574f3f00587a0300727997e0a67339b761",
+    "fixtures/phase7/step/fault-mirror-x.step": "23fc3f76510f12dce1207c2f3a72960661d5cf750ff34bedc2adb8833635b1fa",
+    "fixtures/phase7/step/fault-mirror-y.step": "c8107deb3234fb01587d6ad9c03007a1bcd79cc1dfc42bd87c7fec43d4ce63a0",
+    "fixtures/phase7/step/fault-scale-2x.step": "79a7e4a62afa811bda0252a01d274ccd22520a9be3365187b6a31300fe22afe8",
+    "fixtures/phase7/step/fault-scale-0.5x.step": "f8c29148ffaeeb426ea7253685f78cce0e7577e343c959d699f6a4ffaa077bf0",
+    "fixtures/phase7/step/fault-height.step": "0f3dddeb118e4e10d2657fbb4b8673d5523fcecfc3792074dfed3f76073e5cb0",
+    "fixtures/phase7/step/fault-unit.step": "fa21b93c34e42cc641a5af711b66ab99697bf60e3b7fa385b1e6af8b14d34de2",
+    "fixtures/phase7/step/symmetric-rotate-180.step": "3a37876e2cc2bbe33878047568fbd6ee0bc35c6747afdee7e66709506aa418bd",
+    "docs/gates/phase-7-tests.xml": "4069cc9b0b1d42f0f29cbf8687a4bdff48df0701a2c3d49ca68e7bbc8cefc15a",
+    "docs/gates/phase-7-wheel-tests.xml": "e91ae6b65f36dac0eabd5cc8da6d154e88ed8d891954778ae6e1b46c71fef751"
+  }
+}
