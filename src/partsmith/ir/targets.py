@@ -134,8 +134,6 @@ def target_schema(path):
         kind = "MIRROR_RECORD"
     elif re.fullmatch(r"/model_3d/placement/mirror/[xyz]", path):
         kind = "BOOLEAN"
-    elif path == "/footprint/land_pattern_source":
-        kind = "STRING"
     if kind is None:
         raise ValueError("Target is not in the editable registry")
     for token in path[1:].split("/"):

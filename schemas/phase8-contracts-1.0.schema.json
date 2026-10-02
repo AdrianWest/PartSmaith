@@ -628,6 +628,49 @@
         "reason"
       ],
       "additionalProperties": false
+    },
+    "override_proposal_request": {
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "const": "1.0"
+        },
+        "component_id": {
+          "$ref": "#/$defs/nonempty_string"
+        },
+        "base_revision_id": {
+          "$ref": "#/$defs/nonempty_string"
+        },
+        "base_revision_hash": {
+          "$ref": "#/$defs/sha256"
+        },
+        "expected_head_hash": {
+          "$ref": "#/$defs/sha256"
+        },
+        "path": {
+          "type": "string",
+          "pattern": "^/(?:[^~/]|~[01])*(?:/(?:[^~/]|~[01])*)*$"
+        },
+        "new_value": {},
+        "evidence_reference": {
+          "$ref": "#/$defs/nonempty_string"
+        },
+        "reason": {
+          "$ref": "#/$defs/nonempty_string"
+        }
+      },
+      "required": [
+        "schema_version",
+        "component_id",
+        "base_revision_id",
+        "base_revision_hash",
+        "expected_head_hash",
+        "path",
+        "new_value",
+        "evidence_reference",
+        "reason"
+      ],
+      "additionalProperties": false
     }
   }
 }

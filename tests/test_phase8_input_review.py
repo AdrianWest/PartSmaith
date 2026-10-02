@@ -25,6 +25,7 @@ from partsmith.release.input_review import (
     InputRejectionRequest,
     InputReviewProposal,
     InputReviewService,
+    OverrideProposalRequest,
 )
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -124,6 +125,59 @@ def _approval_request(component, request, result) -> InputApprovalRequest:
         inventory_sha256=request.inventory_sha256,
         reviewer="reviewer-1",
         reason="Evidence inventory is complete and correct",
+    )
+
+
+def _reviewed_head_fixture(connection):
+    """@brief Persists one reviewed current IR head for override tests.
+    @param connection Active migrated SQLite connection.
+    @return Component, reviewed revision, inventory hash, and review service.
+    @details The retained synthetic review and inventory are exact and valid.
+    """
+    component = Repository(connection).create_component(
+        "Synthetic", "0402", "0402"
+    )
+    data = json.loads(IR_PATH.read_text(encoding="utf-8"))
+    data["identity"]["component_id"] = component.id
+    store = ImmutableStore(connection)
+    inventory_hash = store.put_inventory(_inventory(data))
+    assert (
+        data["revision"]["evidence_review"]["inventory_sha256"]
+        == inventory_hash
+    )
+    stored = store.put_revision(
+        data,
+        inventory_sha256=inventory_hash,
+        reviewed=True,
+    )
+    store.compare_and_swap_head(component.id, stored.revision_id, None)
+    return component, stored, inventory_hash, InputReviewService(connection)
+
+
+def _override_approval_request(
+    component,
+    base_hash: str,
+    inventory_hash: str,
+    result,
+) -> InputApprovalRequest:
+    """@brief Builds an approval request for one override proposal.
+    @param component Persisted component record.
+    @param base_hash Expected current reviewed head hash.
+    @param inventory_hash Retained acquisition inventory digest.
+    @param result Persisted override proposal result.
+    @return Closed exact-hash approval request.
+    @details The request cannot alter captured override content.
+    """
+    return InputApprovalRequest(
+        proposal_id=result.proposal_id,
+        proposal_hash=result.proposal_hash,
+        component_id=component.id,
+        candidate_revision_id=result.candidate_revision_id,
+        candidate_revision_hash=result.candidate_revision_hash,
+        expected_head_hash=base_hash,
+        inventory_sha256=inventory_hash,
+        reviewer="reviewer-1",
+        reason="Approve typed engineering override",
     )
 
 
@@ -370,3 +424,218 @@ def test_proposal_hash_binds_generated_identity(tmp_path):
         data = json.loads(bytes(row["canonical_bytes"]))
         assert data["proposal_id"] == result.proposal_id
         assert canonical_json(data) == bytes(row["canonical_bytes"])
+
+
+def test_typed_override_captures_previous_value_and_retains_pending(tmp_path):
+    """@brief Verifies typed scalar override proposal and approval behavior.
+    @param tmp_path Pytest temporary directory.
+    @return None.
+    @details The target changes only in the reviewed child, while the pending
+    decision remains immutable history.
+    """
+    with database(tmp_path / "db") as connection:
+        component, base, inventory_hash, service = _reviewed_head_fixture(
+            connection
+        )
+        result = service.propose_override(
+            OverrideProposalRequest(
+                component_id=component.id,
+                base_revision_id=base.revision_id,
+                base_revision_hash=base.canonical_sha256,
+                expected_head_hash=base.canonical_sha256,
+                path="/pins/0/electrical_type",
+                new_value="input",
+                evidence_reference="E-001",
+                reason="Reviewed pin electrical behavior",
+            ),
+            AuthenticatedPrincipal("proposer-1", "local-test"),
+        )
+        store = ImmutableStore(connection)
+        candidate = store.get_revision(result.candidate_revision_id)
+        assert candidate["pins"][0]["electrical_type"] == "passive"
+        pending = candidate["overrides"][-1]
+        assert pending["approval_state"] == "PENDING"
+        assert pending["previous_value"] == "passive"
+        assert pending["new_value"] == "input"
+        assert pending["value_type"] == "STRING"
+        assert candidate["revision"]["active_override_ids"] == []
+
+        approved = service.approve_inputs(
+            _override_approval_request(
+                component,
+                base.canonical_sha256,
+                inventory_hash,
+                result,
+            ),
+            AuthenticatedPrincipal("reviewer-1", "local-test"),
+        )
+        data = store.get_revision(approved.revision_id)
+        assert data["pins"][0]["electrical_type"] == "input"
+        assert data["overrides"][-2] == pending
+        decision = data["overrides"][-1]
+        assert decision["id"] != pending["id"]
+        assert decision["approval_state"] == "APPROVED"
+        assert decision["user"] == "reviewer-1"
+        assert data["revision"]["active_override_ids"] == [decision["id"]]
+
+
+def test_quantity_override_gets_server_owned_self_binding(tmp_path):
+    """@brief Verifies record overrides receive trusted approval bindings.
+    @param tmp_path Pytest temporary directory.
+    @return None.
+    @details Callers do not supply decision IDs or USER_OVERRIDE metadata.
+    """
+    with database(tmp_path / "db") as connection:
+        component, base, inventory_hash, service = _reviewed_head_fixture(
+            connection
+        )
+        current = ImmutableStore(connection).get_revision(base.revision_id)
+        value = copy.deepcopy(current["package"]["mechanical"]["body_width"])
+        value["source_value"] = 550
+        value.pop("normalized_value")
+        value.pop("normalized_unit")
+        result = service.propose_override(
+            OverrideProposalRequest(
+                component_id=component.id,
+                base_revision_id=base.revision_id,
+                base_revision_hash=base.canonical_sha256,
+                expected_head_hash=base.canonical_sha256,
+                path="/package/mechanical/body_width",
+                new_value=value,
+                evidence_reference="E-001",
+                reason="Reviewed corrected package width",
+            ),
+            AuthenticatedPrincipal("proposer-1", "local-test"),
+        )
+        approved = service.approve_inputs(
+            _override_approval_request(
+                component,
+                base.canonical_sha256,
+                inventory_hash,
+                result,
+            ),
+            AuthenticatedPrincipal("reviewer-1", "local-test"),
+        )
+        data = ImmutableStore(connection).get_revision(approved.revision_id)
+        target = data["package"]["mechanical"]["body_width"]
+        decision = data["overrides"][-1]
+        assert target["source_value"] == 550
+        assert target["status"] == "USER_OVERRIDE"
+        assert target["override_id"] == decision["id"]
+        assert decision["new_value"] == target
+
+
+def test_replacing_override_preserves_history_and_supersedes_active(tmp_path):
+    """@brief Verifies an approved override can be explicitly replaced.
+    @param tmp_path Pytest temporary directory.
+    @return None.
+    @details Earlier pending and approved records remain byte-for-byte present.
+    """
+    with database(tmp_path / "db") as connection:
+        component, base, inventory_hash, service = _reviewed_head_fixture(
+            connection
+        )
+        first_proposal = service.propose_override(
+            OverrideProposalRequest(
+                component_id=component.id,
+                base_revision_id=base.revision_id,
+                base_revision_hash=base.canonical_sha256,
+                expected_head_hash=base.canonical_sha256,
+                path="/pins/0/electrical_type",
+                new_value="input",
+                evidence_reference="E-001",
+                reason="First reviewed pin override",
+            ),
+            AuthenticatedPrincipal("proposer-1", "local-test"),
+        )
+        first = service.approve_inputs(
+            _override_approval_request(
+                component,
+                base.canonical_sha256,
+                inventory_hash,
+                first_proposal,
+            ),
+            AuthenticatedPrincipal("reviewer-1", "local-test"),
+        )
+        store = ImmutableStore(connection)
+        first_data = store.get_revision(first.revision_id)
+        first_active = first_data["revision"]["active_override_ids"][0]
+        retained = copy.deepcopy(first_data["overrides"])
+
+        second_proposal = service.propose_override(
+            OverrideProposalRequest(
+                component_id=component.id,
+                base_revision_id=first.revision_id,
+                base_revision_hash=first.revision_hash,
+                expected_head_hash=first.revision_hash,
+                path="/pins/0/electrical_type",
+                new_value="output",
+                evidence_reference="E-001",
+                reason="Replace reviewed pin override",
+            ),
+            AuthenticatedPrincipal("proposer-2", "local-test"),
+        )
+        second = service.approve_inputs(
+            _override_approval_request(
+                component,
+                first.revision_hash,
+                inventory_hash,
+                second_proposal,
+            ),
+            AuthenticatedPrincipal("reviewer-1", "local-test"),
+        )
+        data = store.get_revision(second.revision_id)
+        assert data["overrides"][: len(retained)] == retained
+        assert data["pins"][0]["electrical_type"] == "output"
+        new_active = data["revision"]["active_override_ids"][0]
+        assert new_active != first_active
+        approved_record = next(
+            record
+            for record in data["overrides"]
+            if record["id"] == new_active
+        )
+        assert approved_record["supersedes_override_id"] == first_active
+
+
+@pytest.mark.parametrize(
+    "path",
+    ["/revision/description", "/footprint/land_pattern_source"],
+)
+def test_override_rejects_paths_outside_trusted_registry(tmp_path, path):
+    """@brief Verifies metadata and land-source edits are not overrides.
+    @param tmp_path Pytest temporary directory.
+    @param path Disallowed proposed target path.
+    @return None.
+    @details Invalid requests leave no candidate or proposal records.
+    """
+    with database(tmp_path / "db") as connection:
+        component, base, _, service = _reviewed_head_fixture(connection)
+        before = connection.execute(
+            "SELECT COUNT(*) FROM ir_revisions"
+        ).fetchone()[0]
+        with pytest.raises(ValueError, match="editable registry"):
+            service.propose_override(
+                OverrideProposalRequest(
+                    component_id=component.id,
+                    base_revision_id=base.revision_id,
+                    base_revision_hash=base.canonical_sha256,
+                    expected_head_hash=base.canonical_sha256,
+                    path=path,
+                    new_value="changed",
+                    evidence_reference="E-001",
+                    reason="Attempt disallowed edit",
+                ),
+                AuthenticatedPrincipal("proposer-1", "local-test"),
+            )
+        assert (
+            connection.execute("SELECT COUNT(*) FROM ir_revisions").fetchone()[
+                0
+            ]
+            == before
+        )
+        assert (
+            connection.execute(
+                "SELECT COUNT(*) FROM review_proposals"
+            ).fetchone()[0]
+            == 0
+        )

@@ -18,6 +18,9 @@ from uuid import uuid4
 from partsmith.ir import ComponentIR, canonical_json
 from partsmith.ir.canonical import parse_json
 from partsmith.ir.history import validate_revision_transition
+from partsmith.ir.revised import resolve_pointer
+from partsmith.ir.schema import fragment_valid
+from partsmith.ir.targets import overlaps, owner_path, target_schema
 from partsmith.persistence.immutable import ImmutableStore, StaleHeadError
 from partsmith.release.contracts import AuthenticatedPrincipal
 from partsmith.release.schema import schema_issues
@@ -108,6 +111,49 @@ class InputReviewProposal:
             "inventory_sha256": self.inventory_sha256,
             "reason": self.reason,
             "actions": list(self.actions),
+        }
+
+
+@dataclass(frozen=True)
+class OverrideProposalRequest:
+    """@brief Requests one typed engineering override proposal.
+    @details The trusted path registry derives value type and captures the
+    previous value; callers provide no history or active-selector fields.
+    """
+
+    component_id: str
+    base_revision_id: str
+    base_revision_hash: str
+    expected_head_hash: str
+    path: str
+    new_value: object
+    evidence_reference: str
+    reason: str
+    schema_version: str = "1.0"
+
+    def __post_init__(self) -> None:
+        """@brief Validates this closed override proposal request.
+        @return None.
+        @details Exact value typing is validated later against the trusted
+        target registry.
+        """
+        _validate_request("override_proposal_request", self.to_dict())
+
+    def to_dict(self) -> dict:
+        """@brief Serializes this override proposal request.
+        @return JSON-compatible closed request mapping.
+        @details Previous values, decision IDs, and actor metadata are absent.
+        """
+        return {
+            "schema_version": self.schema_version,
+            "component_id": self.component_id,
+            "base_revision_id": self.base_revision_id,
+            "base_revision_hash": self.base_revision_hash,
+            "expected_head_hash": self.expected_head_hash,
+            "path": self.path,
+            "new_value": self.new_value,
+            "evidence_reference": self.evidence_reference,
+            "reason": self.reason,
         }
 
 
@@ -355,6 +401,221 @@ class InputReviewService:
                 "Proposal cannot assert trusted evidence-review metadata"
             )
 
+    def _require_current_base(
+        self,
+        component_id: str,
+        base_revision_id: str,
+        base_revision_hash: str,
+        expected_head_hash: str,
+    ) -> tuple[sqlite3.Row, dict]:
+        """@brief Verifies and loads one exact reviewed current base.
+        @param component_id Component identity.
+        @param base_revision_id Expected current revision identity.
+        @param base_revision_hash Expected base revision digest.
+        @param expected_head_hash Exact mutable-head expectation.
+        @return Current head row and detached base revision.
+        @details Override proposals require an existing reviewed head.
+        """
+        head = self._require_expected_head(component_id, expected_head_hash)
+        if head is None:
+            raise StaleHeadError("Override proposal requires a reviewed head")
+        if (
+            head["revision_id"] != base_revision_id
+            or head["revision_hash"] != base_revision_hash
+        ):
+            raise StaleHeadError("Override base is not the current head")
+        base = self.store.get_revision(base_revision_id)
+        if (
+            ComponentIR(base).sha256 != base_revision_hash
+            or base["identity"]["component_id"] != component_id
+        ):
+            raise ValueError("Override base binding is stale")
+        return head, base
+
+    def _evidence_supports_path(
+        self, revision: dict, evidence_id: str, path: str
+    ) -> None:
+        """@brief Verifies evidence is a candidate for an override target.
+        @param revision Base revision containing evidence assignments.
+        @param evidence_id Supporting evidence identity.
+        @param path Trusted override target path.
+        @return None.
+        @details Pin leaves and quantity leaves compare by provenance owner.
+        """
+        evidence = next(
+            (
+                record
+                for record in revision["evidence"]
+                if record["id"] == evidence_id
+            ),
+            None,
+        )
+        if evidence is None:
+            raise ValueError("Override evidence does not resolve")
+        target_owner = owner_path(revision, path)
+        candidate_owners = set()
+        for candidate_path in evidence["candidate_targets"]:
+            try:
+                candidate_owners.add(owner_path(revision, candidate_path))
+            except (KeyError, IndexError, TypeError, ValueError):
+                continue
+        if target_owner not in candidate_owners:
+            raise ValueError("Override evidence does not support target")
+
+    def _active_override(self, revision: dict, path: str) -> dict | None:
+        """@brief Finds an exact active override or rejects overlap.
+        @param revision Reviewed base revision.
+        @param path Proposed trusted target path.
+        @return Existing exact active override or None.
+        @details Ancestor or descendant overlaps require a different explicit
+        review operation.
+        """
+        records = {record["id"]: record for record in revision["overrides"]}
+        matches = [
+            records[override_id]
+            for override_id in revision["revision"]["active_override_ids"]
+            if overlaps(records[override_id]["path"], path)
+        ]
+        if any(record["path"] != path for record in matches):
+            raise ValueError("Override target overlaps an active override")
+        if len(matches) > 1:
+            raise ValueError("Override target has ambiguous active decisions")
+        return matches[0] if matches else None
+
+    def _replace_pointer(
+        self, revision: dict, path: str, value: object
+    ) -> None:
+        """@brief Replaces one already trusted JSON Pointer target.
+        @param revision Mutable detached revision mapping.
+        @param path Trusted non-root target path.
+        @param value Replacement JSON-compatible value.
+        @return None.
+        @details The target registry and schema are validated before mutation.
+        """
+        parent_path, _, token = path.rpartition("/")
+        parent = (
+            resolve_pointer(revision, parent_path)
+            if parent_path
+            else (revision)
+        )
+        token = token.replace("~1", "/").replace("~0", "~")
+        if isinstance(parent, list):
+            parent[int(token)] = value
+        else:
+            parent[token] = value
+
+    def propose_override(
+        self,
+        request: OverrideProposalRequest,
+        principal: AuthenticatedPrincipal,
+    ) -> ProposalResult:
+        """@brief Persists one typed pending override proposal.
+        @param request Exact current base, target, value, and evidence binding.
+        @param principal Authenticated proposing principal.
+        @return Immutable proposal and generated candidate identities.
+        @details The service captures the previous value and type, retains the
+        engineering target unchanged, and appends a PENDING decision record.
+        """
+        with _savepoint(self.connection, "override_review_proposal"):
+            _, base = self._require_current_base(
+                request.component_id,
+                request.base_revision_id,
+                request.base_revision_hash,
+                request.expected_head_hash,
+            )
+            schema, value_type = target_schema(request.path)
+            self._evidence_supports_path(
+                base, request.evidence_reference, request.path
+            )
+            existing = self._active_override(base, request.path)
+            pending_id = str(uuid4())
+            new_value = copy.deepcopy(request.new_value)
+            if isinstance(new_value, dict) and "status" in new_value:
+                new_value["status"] = "USER_OVERRIDE"
+                new_value["override_id"] = pending_id
+            if not fragment_valid(new_value, schema):
+                raise ValueError("Override value does not match target schema")
+            previous_value = copy.deepcopy(resolve_pointer(base, request.path))
+            timestamp = _now()
+            candidate = copy.deepcopy(base)
+            candidate["revision"]["id"] = str(uuid4())
+            candidate["revision"]["parent_id"] = request.base_revision_id
+            candidate["revision"]["description"] = (
+                f"Pending override for {request.path}"
+            )
+            candidate["revision"]["evidence_review"] = None
+            candidate["overrides"].append(
+                {
+                    "id": pending_id,
+                    "path": request.path,
+                    "previous_value": previous_value,
+                    "new_value": new_value,
+                    "reason": request.reason,
+                    "user": principal.subject,
+                    "timestamp": timestamp,
+                    "evidence_reference": request.evidence_reference,
+                    "approval_state": "PENDING",
+                    "value_type": value_type,
+                    "base_revision_id": request.base_revision_id,
+                    "supersedes_override_id": (
+                        existing["id"] if existing is not None else None
+                    ),
+                }
+            )
+            candidate_document = ComponentIR(candidate)
+            transition_issues = validate_revision_transition(base, candidate)
+            if transition_issues:
+                raise ValueError("Invalid pending override transition")
+            inventory_sha256 = base["revision"]["evidence_review"][
+                "inventory_sha256"
+            ]
+            self._inventory_matches(candidate, inventory_sha256)
+            stored = self.store.put_revision(
+                candidate,
+                inventory_sha256=inventory_sha256,
+                reviewed=False,
+            )
+            proposal_id = str(uuid4())
+            proposal_data = request.to_dict() | {
+                "proposal_id": proposal_id,
+                "candidate_revision_id": stored.revision_id,
+                "candidate_revision_hash": stored.canonical_sha256,
+                "inventory_sha256": inventory_sha256,
+                "pending_override_id": pending_id,
+                "value_type": value_type,
+                "previous_value": previous_value,
+                "actions": ["OVERRIDE_REPLACEMENT"],
+            }
+            blob = canonical_json(proposal_data)
+            digest = sha256(blob).hexdigest()
+            now = _now()
+            self.connection.execute(
+                "INSERT INTO review_proposals VALUES "
+                "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                (
+                    proposal_id,
+                    request.component_id,
+                    request.base_revision_id,
+                    request.base_revision_hash,
+                    stored.revision_id,
+                    stored.canonical_sha256,
+                    request.expected_head_hash,
+                    digest,
+                    blob,
+                    "PENDING",
+                    now,
+                    now,
+                ),
+            )
+            if candidate_document.sha256 != stored.canonical_sha256:
+                raise RuntimeError("Stored override candidate hash mismatch")
+            return ProposalResult(
+                proposal_id,
+                digest,
+                stored.revision_id,
+                stored.canonical_sha256,
+            )
+
     def propose(
         self, request: InputReviewProposal, candidate_revision: dict
     ) -> ProposalResult:
@@ -521,6 +782,67 @@ class InputReviewService:
         )
         return event_id
 
+    def _approved_revision(
+        self,
+        candidate: dict,
+        proposal: dict,
+        request: InputApprovalRequest,
+        inventory: dict,
+        timestamp: str,
+    ) -> dict:
+        """@brief Constructs the reviewed child for one accepted proposal.
+        @param candidate Exact immutable proposal candidate.
+        @param proposal Parsed immutable proposal content.
+        @param request Authenticated exact approval request.
+        @param inventory Verified acquisition inventory.
+        @param timestamp Server-controlled approval timestamp.
+        @return Complete reviewed child revision mapping.
+        @details Pending override decisions remain unchanged; override approval
+        appends a new APPROVED record with a new identity.
+        """
+        approved = copy.deepcopy(candidate)
+        approved["revision"]["id"] = str(uuid4())
+        approved["revision"]["parent_id"] = request.candidate_revision_id
+        approved["revision"]["evidence_review"] = {
+            "inventory_sha256": request.inventory_sha256,
+            "reviewed_evidence_ids": list(inventory["evidence_ids"]),
+            "reviewer": request.reviewer,
+            "timestamp": timestamp,
+            "approval_state": "APPROVED",
+        }
+        actions = proposal["actions"]
+        if actions == ["EVIDENCE_REVIEW"]:
+            return approved
+        if actions != ["OVERRIDE_REPLACEMENT"]:
+            raise ValueError("Unsupported input proposal action")
+        pending = next(
+            (
+                record
+                for record in approved["overrides"]
+                if record["id"] == proposal["pending_override_id"]
+            ),
+            None,
+        )
+        if pending is None or pending["approval_state"] != "PENDING":
+            raise ValueError("Pending override does not resolve")
+        approved_record = copy.deepcopy(pending)
+        approved_record["id"] = str(uuid4())
+        approved_record["approval_state"] = "APPROVED"
+        approved_record["user"] = request.reviewer
+        approved_record["timestamp"] = timestamp
+        new_value = copy.deepcopy(approved_record["new_value"])
+        if isinstance(new_value, dict) and "status" in new_value:
+            new_value["override_id"] = approved_record["id"]
+            approved_record["new_value"] = copy.deepcopy(new_value)
+        approved["overrides"].append(approved_record)
+        self._replace_pointer(approved, approved_record["path"], new_value)
+        active = approved["revision"]["active_override_ids"]
+        prior_id = approved_record["supersedes_override_id"]
+        approved["revision"]["active_override_ids"] = [
+            override_id for override_id in active if override_id != prior_id
+        ] + [approved_record["id"]]
+        return approved
+
     def approve_inputs(
         self,
         request: InputApprovalRequest,
@@ -555,16 +877,14 @@ class InputReviewService:
                 candidate, request.inventory_sha256
             )
             timestamp = _now()
-            approved = copy.deepcopy(candidate)
-            approved["revision"]["id"] = str(uuid4())
-            approved["revision"]["parent_id"] = request.candidate_revision_id
-            approved["revision"]["evidence_review"] = {
-                "inventory_sha256": request.inventory_sha256,
-                "reviewed_evidence_ids": list(inventory["evidence_ids"]),
-                "reviewer": request.reviewer,
-                "timestamp": timestamp,
-                "approval_state": "APPROVED",
-            }
+            proposal = parse_json(bytes(row["canonical_bytes"]))
+            approved = self._approved_revision(
+                candidate,
+                proposal,
+                request,
+                inventory,
+                timestamp,
+            )
             transition_issues = validate_revision_transition(
                 candidate, approved
             )
