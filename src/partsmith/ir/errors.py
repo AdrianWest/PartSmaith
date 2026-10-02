@@ -10,12 +10,24 @@ from dataclasses import dataclass
 
 @dataclass(frozen=True, order=True)
 class Issue:
+    """@brief Represents one stable validation diagnostic.
+
+    Attributes:
+        path: JSON Pointer identifying the affected value.
+        code: Stable machine-readable diagnostic code.
+        message: Human-readable explanation of the issue.
+    """
+
     path: str
     code: str
     message: str
 
 
 class IRValidationError(ValueError):
+    """@brief Represents one or more Component IR validation failures.
+    @details The `issues` attribute contains sorted unique diagnostics.
+    """
+
     def __init__(self, issues: list[Issue] | tuple[Issue, ...]):
         """
 

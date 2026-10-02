@@ -15,7 +15,7 @@ classifiers = [
   "Programming Language :: Python :: 3",
   "Programming Language :: Python :: 3.12",
 ]
-dependencies = ["jsonschema==4.26.0"]
+dependencies = ["jsonschema==4.26.0", "cadquery==2.8.0"]
 
 [project.optional-dependencies]
 dev = [

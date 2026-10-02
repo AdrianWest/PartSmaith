@@ -16,6 +16,14 @@ from partsmith.ir.model import ComponentIR
 
 @dataclass(frozen=True)
 class MigrationResult:
+    """@brief Contains a migrated IR result and its audit evidence.
+
+    Attributes:
+        ir: The migrated IR, or None when migration is blocked.
+        history: Canonical audit-history bytes for the migration.
+        issues: Stable diagnostics explaining why migration was blocked.
+    """
+
     ir: ComponentIR | None
     history: bytes
     issues: tuple[Issue, ...]

@@ -1,0 +1,19 @@
+#!/bin/sh
+set -eu
+
+cd "$(git rev-parse --show-toplevel)"
+
+for phase in 5 6; do
+    manifest="docs/gates/phase-${phase}-artifacts.json"
+    if ! git diff --quiet HEAD -- "$manifest"; then
+        echo "Commit the Phase ${phase} manifest before pushing." >&2
+        exit 1
+    fi
+
+    python scripts/verify_phase2_manifest.py \
+        --manifest "$manifest" --source git || {
+        echo "Refresh the Phase ${phase} manifest from committed blobs, then commit it:" >&2
+        echo "python scripts/verify_phase2_manifest.py --manifest $manifest --source git --update" >&2
+        exit 1
+    }
+done
