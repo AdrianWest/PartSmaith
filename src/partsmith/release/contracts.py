@@ -355,3 +355,27 @@ class ReleaseReport(_CanonicalDocument):
     """
 
     schema_kind = "release_report"
+
+
+class PostManifestReport(_CanonicalDocument):
+    """@brief Frozen post-manifest verification report.
+    @details Every result is bound to the completed manifest and remains
+    outside the deterministic engineering manifest.
+    """
+
+    schema_kind = "post_manifest_report"
+
+    def __init__(self, data: dict[str, Any]):
+        """@brief Validates and freezes one post-manifest report.
+        @param data JSON-compatible report mapping.
+        @return None.
+        @details Rejects results from any stage other than POST_MANIFEST.
+        """
+        super().__init__(data)
+        if any(
+            result["stage"] != ValidationStage.POST_MANIFEST
+            for result in self.data["results"]
+        ):
+            raise ValueError(
+                "Post-manifest report contains a non-POST_MANIFEST result"
+            )

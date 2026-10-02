@@ -458,6 +458,30 @@
         "reproducibility"
       ],
       "additionalProperties": false
+    },
+    "post_manifest_report": {
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "const": "1.0"
+        },
+        "manifest_hash": {
+          "$ref": "#/$defs/sha256"
+        },
+        "results": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/validation_result"
+          },
+          "minItems": 1
+        }
+      },
+      "required": [
+        "schema_version",
+        "manifest_hash",
+        "results"
+      ],
+      "additionalProperties": false
     }
   }
 }

@@ -14,6 +14,10 @@ from partsmith.persistence.immutable import (
     StoredRevision,
 )
 from partsmith.persistence.records import Build, Component, Project, Repository
+from partsmith.persistence.release import (
+    ReleaseStore,
+    validation_semantics_hash,
+)
 
 __all__ = [
     "Build",
@@ -22,9 +26,11 @@ __all__ = [
     "ImmutableStore",
     "Project",
     "Repository",
+    "ReleaseStore",
     "StaleHeadError",
     "StoredRevision",
     "connect",
     "database",
     "migrate",
+    "validation_semantics_hash",
 ]
