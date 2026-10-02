@@ -10,6 +10,7 @@ import math
 import pytest
 
 from partsmith.threed.transform import (
+    AffineTransform,
     MirrorState,
     Placement,
     UnsupportedTransformError,
@@ -242,6 +243,45 @@ def test_invert_rejects_singular_matrix():
         to_affine(_placement(scale=(0.0, 1.0, 1.0)))
 
 
+@pytest.mark.parametrize(
+    "invalid_matrix",
+    [
+        (
+            (1.0, 0.0, 0.0, 0.0),
+            (0.0, 1.0, 0.0, 0.0),
+            (0.0, 0.0, 0.0, 0.0),
+            (0.0, 0.0, 0.0, 1.0),
+        ),
+        (
+            (math.nan, 0.0, 0.0, 0.0),
+            (0.0, 1.0, 0.0, 0.0),
+            (0.0, 0.0, 1.0, 0.0),
+            (0.0, 0.0, 0.0, 1.0),
+        ),
+        (
+            (math.inf, 0.0, 0.0, 0.0),
+            (0.0, 1.0, 0.0, 0.0),
+            (0.0, 0.0, 1.0, 0.0),
+            (0.0, 0.0, 0.0, 1.0),
+        ),
+        (
+            (1.0, 0.0, 0.0, 0.0),
+            (0.0, 1.0, 0.0, 0.0),
+            (0.0, 0.0, 1.0, 0.0),
+            (0.0, 0.0, 1.0, 1.0),
+        ),
+    ],
+)
+def test_affine_transform_rejects_invalid_matrix(invalid_matrix):
+    """@brief Reject invalid affine matrices during construction.
+    @param invalid_matrix A matrix violating an affine invariant.
+    @return None.
+    @details Covers singular, non-finite, and non-affine matrices.
+    """
+    with pytest.raises(UnsupportedTransformError):
+        AffineTransform(invalid_matrix, "A", "B")
+
+
 def test_bounding_box_transforms_all_eight_corners():
     """
 
@@ -322,8 +362,6 @@ def test_simple_placement_from_affine_rejects_shear():
     dropped.
 
     """
-    from partsmith.threed.transform import AffineTransform
-
     sheared = AffineTransform(
         (
             (1.0, 1.0, 0.0, 0.0),

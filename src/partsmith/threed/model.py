@@ -235,7 +235,6 @@ def threed_projection(
                 "model_3d": pdl_data["model_3d"],
                 "reference_features": pdl_data["reference_features"],
                 "coordinate_system": pdl_data["coordinate_system"],
-                "tolerances": pdl_data["validation"]["tolerances"],
             },
         },
     }
@@ -254,7 +253,8 @@ def threed_dependency_hash(
     @details Includes `configuration` (backend/runtime versions) unlike
     the footprint dependency hash: section 6 requires CAD backend/
     runtime settings to invalidate the 3D dependency, while placement
-    (association-only) stays excluded from `inputs`.
+    (association-only) and validator tolerances stay excluded from
+    `inputs`.
 
     """
     projection = threed_projection(ir, pdl, context)

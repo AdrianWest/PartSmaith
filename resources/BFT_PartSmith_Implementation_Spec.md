@@ -6547,103 +6547,6 @@ event:
 
 Secrets must be redacted.
 
-## 192.1 Plugin Boot Diagnostic Log
-
-Any PartSmith KiCad plugin or editor-hosted extension shall write a boot
-diagnostic log so that start-up failures are observable without a debugger
-and without a working plugin UI. This requirement exists because a plugin
-that fails during import is otherwise invisible: the host silently omits the
-toolbar action and the operator has no fault evidence.
-
-The boot log is operational telemetry, not engineering evidence. It is part
-of the audit envelope, never part of the frozen input snapshot, and never
-contributes to any artifact hash (section 195).
-
-Normative requirements:
-
-1. Logging shall be initialized as the first executable statement of the
-   plugin package entry point, before any PartSmith, KiCad, or third-party
-   import other than the standard library modules required to configure it
-   (`logging`, `pathlib`, `os`, `sys`, `platform`, `traceback`).
-2. Every import performed by the entry point, and the host registration call
-   itself, shall be wrapped so that any exception is recorded with a full
-   traceback via `logger.exception` before it is re-raised to the host. The
-   exception shall be re-raised; the plugin shall not silently degrade into a
-   half-registered state.
-3. Failures occurring before the file handler is attached shall be buffered
-   in memory and flushed to the log as soon as a handler exists. If no
-   handler can ever be attached, the buffered records shall be written to
-   standard error.
-4. Each start-up shall emit a session banner, delimited by a rule line, that
-   records at minimum:
-
-``` text
-PartSmith plugin version
-PartSmith core/schema versions
-host application and version (for example KiCad 10.x)
-Python version and executable path
-platform and architecture
-plugin installation directory
-resolved log file path
-availability of each required and optional dependency
-```
-
-5. The dependency availability block shall report one line per dependency
-   with an explicit available/unavailable result and, when unavailable, the
-   captured import error. Optional dependencies shall not abort start-up;
-   required dependencies shall mark the plugin as failed and surface the
-   failure under rule 7.
-6. The log record format shall be:
-
-``` text
-%(asctime)s %(levelname)-8s %(name)s %(message)s
-```
-
-   Timestamps shall be ISO-8601 with milliseconds. Structured event payloads
-   from section 192 may be emitted as the message body; the boot banner may
-   be plain text.
-7. A required dependency failure or a registration failure shall be surfaced
-   to the operator in the host UI with a message that names the failing
-   dependency or stage and states the absolute log file path. A failed
-   plugin shall not present a non-functional action silently.
-8. Secret redaction (section 192) applies to the boot log. Environment
-   variable dumps are prohibited; only explicitly allow-listed, non-secret
-   variables may be logged.
-
-## 192.2 Boot Log Location, Level, and Retention
-
-Log destination shall resolve in this order:
-
-``` text
-PARTSMITH_LOG_DIR environment variable
-→ host/user configuration directory for PartSmith
-→ plugin installation directory
-→ operating-system temporary directory
-```
-
-The first writable location wins. Writability shall be probed, not assumed;
-an unwritable candidate shall be skipped and the fallback recorded in the
-banner. Failure to open a log file shall never prevent the plugin from
-loading.
-
-The log file shall be named `partsmith_boot.log` and opened in append mode.
-It shall be size-bounded with rotation: a single rotation at 2 MiB retaining
-at most three previous files. Unbounded growth is prohibited.
-
-The default level shall be `INFO`. `PARTSMITH_LOG_LEVEL` shall override it
-with any standard level name; an unrecognized value shall fall back to
-`INFO` and log a warning rather than fail.
-
-The plugin shall expose the resolved log path to the operator through a
-diagnostics affordance that at minimum displays the path and offers to open
-the containing folder. The same resolution logic shall be exposed
-programmatically so that CLI diagnostics and bug reports can locate the log.
-
-Tests shall cover: banner emission on a clean start, traceback capture for a
-forced import failure, fallback when the preferred directory is unwritable,
-rotation at the size bound, level override through the environment, and
-absence of secrets in emitted records.
-
 # 193. Error Model
 
 All errors shall map to stable B.F.T. codes.
@@ -6664,13 +6567,7 @@ BFT-E010 KICAD_INCOMPATIBLE
 BFT-E011 HUMAN_REVIEW_REQUIRED
 BFT-E012 NOT_GENERATABLE
 BFT-E013 REPRODUCIBILITY_FAILED
-BFT-E014 PLUGIN_INIT_FAILED
 ```
-
-`PLUGIN_INIT_FAILED` covers host-plugin start-up faults: a missing required
-dependency, a failed entry-point import, or a failed host registration. It
-shall always be accompanied by a boot log entry carrying the full traceback
-(section 192.1).
 
 # 194. NOT_GENERATABLE Contract
 
@@ -6919,13 +6816,6 @@ Core schemas and validation rules remain B.F.T.-owned. Adapter replaceability
 does not authorize another CAD runtime. A different runtime requires an
 explicit specification revision; a changed approved runtime tuple requires
 fresh Phase 6 validation before release use.
-
-Any editor-hosted plugin packaging of PartSmith shall implement the boot
-diagnostic log defined in sections 192.1 and 192.2, including the start-up
-banner, dependency availability report, traceback capture for entry-point
-import and registration failures, and operator-visible log path. A plugin
-that cannot initialize shall fail visibly with `BFT-E014 PLUGIN_INIT_FAILED`
-rather than register a non-functional action.
 
 # 206. Version Compatibility
 

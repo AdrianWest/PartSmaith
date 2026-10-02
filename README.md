@@ -120,8 +120,8 @@ Enable the repository's pre-push gate once per clone:
 git config --local core.hooksPath .githooks
 ```
 
-When a committed Phase 6 input changes, refresh its recorded hashes from Git
-blobs, commit the manifest, and then push:
+When a committed phase-gate input changes, refresh its recorded hashes from
+Git blobs, commit the affected manifest, and then push. For example:
 
 ```powershell
 python scripts/verify_phase2_manifest.py --manifest docs/gates/phase-6-artifacts.json --source git --update
@@ -129,9 +129,9 @@ git add docs/gates/phase-6-artifacts.json
 git commit -m "Refresh Phase 6 input hashes"
 ```
 
-The hook is local to clones that enable it; CI still verifies the manifest on
-both operating systems. A failed gate requires investigation, not bypassing
-the check.
+The hook is local to clones that enable it; CI still verifies the Phase 5 and
+Phase 6 manifests on both operating systems. A failed gate requires
+investigation, not bypassing the check.
 
 `partsmith doctor` verifies the Phase 0 runtime foundation: supported Python,
 installed package version, and command-line availability.

@@ -130,6 +130,14 @@ def test_threed_dependency_changes_only_for_consumed_inputs():
     changed_pdl = type(pdl)(changed_mechanical)
     assert threed_dependency_hash(ir, changed_pdl, ThreeDContext()) != baseline
 
+    changed_tolerances = parse_json(pdl.canonical_bytes)
+    changed_tolerances["validation"]["tolerances"]["BODY"]["value"] = 9.99
+    changed_tolerances["content_sha256"] = pdl_hash(changed_tolerances)
+    tolerance_pdl = type(pdl)(changed_tolerances)
+    assert (
+        threed_dependency_hash(ir, tolerance_pdl, ThreeDContext()) == baseline
+    )
+
     changed_placement = parse_json(IR_PATH.read_bytes())
     changed_placement["model_3d"]["placement"]["translation_mm"][0] = 1
     assert (

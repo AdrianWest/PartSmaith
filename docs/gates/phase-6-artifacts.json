@@ -15,16 +15,16 @@
     "cadquery-ocp": "7.9.3.1.1"
   },
   "tests": {
-    "source": 357,
-    "installed_wheel": 357,
-    "phase_6_transform": 16,
+    "source": 361,
+    "installed_wheel": 361,
+    "phase_6_transform": 20,
     "phase_6_threed": 6
   },
   "model_3d": {
     "artifact_type": "MODEL_3D",
     "filename": "TEST-R-0402.step",
     "sha256": "789ee84bd00e5fa7adfec322191eeb678f849c82b990b30a41f1bb51da839c92",
-    "dependency_hash": "89fd56fe704f918f927ecc00006a50ccaee8f3e1e9668dc2615f18adb3b16283",
+    "dependency_hash": "c35d468b9126e11e62adf300f10ccaea35a29c2578e661374a1f176bd3a1a905",
     "association_dependency_hash": "1f4f176f96b93f6a916801ea71ef75cdcb90b6e2e1342a63c4a1de766c3b27e3",
     "dependency_profile": "1.2",
     "dependency_node": "MODEL_3D",
@@ -47,23 +47,23 @@
   },
   "wheel": {
     "filename": "partsmith-0.1.0-py3-none-any.whl",
-    "sha256": "c1e724f922a7428a7a56c44788147a9b9ba413d106fe2636b7aacbf42f322ee7",
+    "sha256": "d99502254db14fc4df7e8cc5966b41c763b0239296846d3bc7b289c6ab8ab92d",
     "availability": "Temporary local generated output"
   },
   "packaged_threed_import_verified": true,
   "sha256": {
     "src/partsmith/threed/__init__.py": "3503b2f59b295c08d7365438fecac1dae91c52ed955042c218b8eed63d6d6eee",
-    "src/partsmith/threed/model.py": "31fb5a4811ef7c6ea06cd4924b0b776caf236446de80428f3b4b336fcae92883",
+    "src/partsmith/threed/model.py": "2443547d659862098b9ee05cea4959a6220b805fb9917e9f2b09d0138b814057",
     "src/partsmith/threed/geometry.py": "01d9c0859596c8a2d81212d78e2020707a4c5eaf2cb2272bee04bbd812b8f0f0",
     "src/partsmith/threed/step_backend.py": "50b931e3bc11313b92e0a7e7abe14f4c57497c2acd36c234f6564cfe74d4060e",
-    "src/partsmith/threed/transform.py": "e8dd5c1bb514a67e4099299767a02d17ae86e120830e0b3102ef17db691cf9a2",
-    "tests/test_threed.py": "27024492494932a910707bcf5abeb5288ece7800890f716f986f9a1737ffad2f",
-    "tests/test_transform.py": "a74c4e91add5570fb046efeb55ea752c2c61a930457d1d0fd99c4a8dc4e32525",
+    "src/partsmith/threed/transform.py": "50a497769d2284dc55b794f2869f32cd4170adfa951059fc594e9b16c57c5f27",
+    "tests/test_threed.py": "4af93acf737d2b0e5c97a252fa4f0c7f3d466aac26d7c5bc0effc3fa31c2329d",
+    "tests/test_transform.py": "80c3cb72f8bcb3029b486c7ad01ee935df8a21d7972b17367d57128d56f28e3c",
     "fixtures/threed/expected/0402.step": "789ee84bd00e5fa7adfec322191eeb678f849c82b990b30a41f1bb51da839c92",
     "fixtures/ir/v1.2/valid/0402.json": "ff8f8697ef789b694123385a73777787ec16b1b8ebb8d9c9fd590cc4078a1063",
     "pdl/entries/synthetic-0402@1.0.json": "199ad7042f45eda4dd0b839f8838a6135c2e0abc2bea0b1011658ab8495a811a",
     "pdl/release-profiles/mvp-1@1.0.json": "8798d9a552e5dab29f0c5985a4bfbf7b91fb148ac4e90c42f73952dcf8550b0a",
-    "docs/gates/phase-6-tests.xml": "93fce10841206e548a57e7280a1ae8759ff035f61cf79dec5f5e9646c319eff4",
-    "docs/gates/phase-6-wheel-tests.xml": "c975828d3000eb338ce6c1593a224af49979fde2adbda1c75ad8b21d5cb334d8"
+    "docs/gates/phase-6-tests.xml": "cbfe37406118a48e74947feb58ec5d0dc39ce9fac03135a7cc19b6d124a58dca",
+    "docs/gates/phase-6-wheel-tests.xml": "cc671eee02c2be57b89b5fff555781030f153a9af474039883fbfb9b1f35b8b9"
   }
 }

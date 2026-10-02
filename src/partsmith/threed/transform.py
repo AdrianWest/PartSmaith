@@ -82,6 +82,43 @@ class AffineTransform:
     source_frame: str
     destination_frame: str
 
+    def __post_init__(self) -> None:
+        """@brief Validate the affine matrix invariants.
+        @return None.
+        @details Rejects malformed, non-finite, non-affine, and
+        singular matrices with UnsupportedTransformError.
+        """
+        if len(self.matrix) != 4 or any(len(row) != 4 for row in self.matrix):
+            raise UnsupportedTransformError(
+                "Affine transform matrix must be 4x4"
+            )
+        try:
+            finite = all(
+                math.isfinite(value) for row in self.matrix for value in row
+            )
+        except TypeError as error:
+            raise UnsupportedTransformError(
+                "Affine transform entries must be finite numbers"
+            ) from error
+        if not finite:
+            raise UnsupportedTransformError(
+                "Affine transform entries must be finite numbers"
+            )
+        if self.matrix[3] != (0.0, 0.0, 0.0, 1.0):
+            raise UnsupportedTransformError(
+                "Affine transform last row must be (0, 0, 0, 1)"
+            )
+        a, b, c = (row[:3] for row in self.matrix[:3])
+        determinant = (
+            a[0] * (b[1] * c[2] - b[2] * c[1])
+            - a[1] * (b[0] * c[2] - b[2] * c[0])
+            + a[2] * (b[0] * c[1] - b[1] * c[0])
+        )
+        if determinant == 0.0:
+            raise UnsupportedTransformError(
+                "Affine transform has a singular linear part"
+            )
+
 
 def _matmul(a: Matrix4x4, b: Matrix4x4) -> Matrix4x4:
     """
@@ -317,7 +354,8 @@ def invert(transform: AffineTransform) -> AffineTransform:
 def apply_point(transform: AffineTransform, point: Vec3) -> Vec3:
     """
 
-    @brief Map a destination-frame point (homogeneous w=1).
+    @brief Map a source-frame point into the destination frame
+    (homogeneous w=1).
     @param transform The transform argument.
     @param point The point argument.
     @return The Vec3 result.
