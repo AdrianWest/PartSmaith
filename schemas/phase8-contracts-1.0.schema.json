@@ -671,6 +671,76 @@
         "reason"
       ],
       "additionalProperties": false
+    },
+    "conflict_resolution_proposal_request": {
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "const": "1.0"
+        },
+        "component_id": {
+          "$ref": "#/$defs/nonempty_string"
+        },
+        "base_revision_id": {
+          "$ref": "#/$defs/nonempty_string"
+        },
+        "base_revision_hash": {
+          "$ref": "#/$defs/sha256"
+        },
+        "expected_head_hash": {
+          "$ref": "#/$defs/sha256"
+        },
+        "target_path": {
+          "type": "string",
+          "pattern": "^/(?:[^~/]|~[01])*(?:/(?:[^~/]|~[01])*)*$"
+        },
+        "selected_evidence_ids": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/nonempty_string"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "superseded_evidence_ids": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/nonempty_string"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "override_id": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/nonempty_string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "decision": {
+          "$ref": "#/$defs/nonempty_string"
+        },
+        "reason": {
+          "$ref": "#/$defs/nonempty_string"
+        }
+      },
+      "required": [
+        "schema_version",
+        "component_id",
+        "base_revision_id",
+        "base_revision_hash",
+        "expected_head_hash",
+        "target_path",
+        "selected_evidence_ids",
+        "superseded_evidence_ids",
+        "override_id",
+        "decision",
+        "reason"
+      ],
+      "additionalProperties": false
     }
   }
 }

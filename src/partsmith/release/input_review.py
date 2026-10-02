@@ -18,7 +18,7 @@ from uuid import uuid4
 from partsmith.ir import ComponentIR, canonical_json
 from partsmith.ir.canonical import parse_json
 from partsmith.ir.history import validate_revision_transition
-from partsmith.ir.revised import resolve_pointer
+from partsmith.ir.revised import UNRESOLVED, resolve_pointer
 from partsmith.ir.schema import fragment_valid
 from partsmith.ir.targets import overlaps, owner_path, target_schema
 from partsmith.persistence.immutable import ImmutableStore, StaleHeadError
@@ -153,6 +153,55 @@ class OverrideProposalRequest:
             "path": self.path,
             "new_value": self.new_value,
             "evidence_reference": self.evidence_reference,
+            "reason": self.reason,
+        }
+
+
+@dataclass(frozen=True)
+class ConflictResolutionProposalRequest:
+    """@brief Requests one typed provenance conflict resolution.
+    @details Selected evidence must match the target or active override while
+    superseded evidence must cover unresolved relevant candidates.
+    """
+
+    component_id: str
+    base_revision_id: str
+    base_revision_hash: str
+    expected_head_hash: str
+    target_path: str
+    selected_evidence_ids: tuple[str, ...]
+    superseded_evidence_ids: tuple[str, ...]
+    override_id: str | None
+    decision: str
+    reason: str
+    schema_version: str = "1.0"
+
+    def __post_init__(self) -> None:
+        """@brief Validates this closed resolution proposal request.
+        @return None.
+        @details Evidence compatibility and active bindings are verified by
+        the service against the exact base revision.
+        """
+        _validate_request(
+            "conflict_resolution_proposal_request", self.to_dict()
+        )
+
+    def to_dict(self) -> dict:
+        """@brief Serializes this resolution proposal request.
+        @return JSON-compatible closed request mapping.
+        @details Reviewer, timestamp, IDs, and supersession are server-owned.
+        """
+        return {
+            "schema_version": self.schema_version,
+            "component_id": self.component_id,
+            "base_revision_id": self.base_revision_id,
+            "base_revision_hash": self.base_revision_hash,
+            "expected_head_hash": self.expected_head_hash,
+            "target_path": self.target_path,
+            "selected_evidence_ids": list(self.selected_evidence_ids),
+            "superseded_evidence_ids": list(self.superseded_evidence_ids),
+            "override_id": self.override_id,
+            "decision": self.decision,
             "reason": self.reason,
         }
 
@@ -616,6 +665,207 @@ class InputReviewService:
                 stored.canonical_sha256,
             )
 
+    def _resolution_evidence(
+        self, revision: dict, target_path: str
+    ) -> tuple[dict, dict[str, dict], set[str]]:
+        """@brief Loads target and relevant evidence for one resolution.
+        @param revision Exact reviewed base revision.
+        @param target_path Provenance-owner resolution target.
+        @return Target record, evidence index, and relevant evidence IDs.
+        @details Candidate paths are normalized through the trusted owner
+        registry before comparison.
+        """
+        if owner_path(revision, target_path) != target_path:
+            raise ValueError("Resolution target must be a provenance owner")
+        target = resolve_pointer(revision, target_path)
+        if not isinstance(target, dict):
+            raise ValueError("Resolution target must be a record")
+        evidence = {record["id"]: record for record in revision["evidence"]}
+        relevant = set()
+        for evidence_id, record in evidence.items():
+            for candidate_path in record["candidate_targets"]:
+                try:
+                    if owner_path(revision, candidate_path) == target_path:
+                        relevant.add(evidence_id)
+                except (KeyError, IndexError, TypeError, ValueError):
+                    continue
+        return target, evidence, relevant
+
+    def _active_resolution(
+        self, revision: dict, target_path: str
+    ) -> dict | None:
+        """@brief Finds the active resolution for one exact owner.
+        @param revision Reviewed base revision.
+        @param target_path Provenance-owner target path.
+        @return Existing active resolution or None.
+        @details Multiple active decisions for one owner are rejected.
+        """
+        records = {record["id"]: record for record in revision["resolutions"]}
+        matches = [
+            records[resolution_id]
+            for resolution_id in revision["revision"]["active_resolution_ids"]
+            if records[resolution_id]["target_path"] == target_path
+        ]
+        if len(matches) > 1:
+            raise ValueError("Resolution target has ambiguous decisions")
+        return matches[0] if matches else None
+
+    def propose_resolution(
+        self,
+        request: ConflictResolutionProposalRequest,
+        principal: AuthenticatedPrincipal,
+    ) -> ProposalResult:
+        """@brief Persists one pending provenance conflict resolution.
+        @param request Exact current base, target, and evidence disposition.
+        @param principal Authenticated proposing principal.
+        @return Immutable proposal and generated candidate identities.
+        @details The service validates selected evidence against the current
+        target or active override and requires every unresolved candidate to
+        retain an explicit disposition.
+        """
+        with _savepoint(self.connection, "conflict_review_proposal"):
+            _, base = self._require_current_base(
+                request.component_id,
+                request.base_revision_id,
+                request.base_revision_hash,
+                request.expected_head_hash,
+            )
+            target, evidence, relevant = self._resolution_evidence(
+                base, request.target_path
+            )
+            selected = set(request.selected_evidence_ids)
+            superseded = set(request.superseded_evidence_ids)
+            if selected & superseded:
+                raise ValueError(
+                    "Selected and superseded evidence must be disjoint"
+                )
+            if not (selected | superseded) <= evidence.keys():
+                raise ValueError("Resolution evidence does not resolve")
+            if not superseded <= relevant:
+                raise ValueError(
+                    "Superseded evidence is not relevant to target"
+                )
+            active_overrides = {
+                record["id"]: record
+                for record in base["overrides"]
+                if record["id"] in base["revision"]["active_override_ids"]
+            }
+            if request.override_id is None:
+                expected_selected = set(target.get("evidence_ids", []))
+            else:
+                bound = active_overrides.get(request.override_id)
+                if (
+                    bound is None
+                    or owner_path(base, bound["path"]) != request.target_path
+                ):
+                    raise ValueError(
+                        "Resolution override does not bind the target"
+                    )
+                expected_selected = {bound["evidence_reference"]}
+            if selected != expected_selected:
+                raise ValueError(
+                    "Selected evidence does not match current target"
+                )
+            unresolved = {
+                evidence_id
+                for evidence_id in relevant
+                if evidence[evidence_id]["interpretation"]["status"]
+                in UNRESOLVED
+            }
+            if not unresolved <= superseded:
+                raise ValueError(
+                    "Resolution must disposition all unresolved candidates"
+                )
+            existing = self._active_resolution(base, request.target_path)
+            if (
+                existing is not None
+                and not set(existing["superseded_evidence_ids"]) <= superseded
+            ):
+                raise ValueError(
+                    "Replacement resolution lost conflict dispositions"
+                )
+            pending_id = str(uuid4())
+            timestamp = _now()
+            candidate = copy.deepcopy(base)
+            candidate["revision"]["id"] = str(uuid4())
+            candidate["revision"]["parent_id"] = request.base_revision_id
+            candidate["revision"]["description"] = (
+                f"Pending conflict resolution for {request.target_path}"
+            )
+            candidate["revision"]["evidence_review"] = None
+            candidate["resolutions"].append(
+                {
+                    "id": pending_id,
+                    "target_path": request.target_path,
+                    "superseded_evidence_ids": sorted(superseded),
+                    "selected_evidence_ids": sorted(selected),
+                    "override_id": request.override_id,
+                    "decision": request.decision,
+                    "reason": request.reason,
+                    "reviewer": principal.subject,
+                    "timestamp": timestamp,
+                    "approval_state": "PENDING",
+                    "base_revision_id": request.base_revision_id,
+                    "supersedes_resolution_id": (
+                        existing["id"] if existing is not None else None
+                    ),
+                }
+            )
+            candidate_document = ComponentIR(candidate)
+            transition_issues = validate_revision_transition(base, candidate)
+            if transition_issues:
+                raise ValueError("Invalid pending resolution transition")
+            inventory_sha256 = base["revision"]["evidence_review"][
+                "inventory_sha256"
+            ]
+            self._inventory_matches(candidate, inventory_sha256)
+            stored = self.store.put_revision(
+                candidate,
+                inventory_sha256=inventory_sha256,
+                reviewed=False,
+            )
+            proposal_id = str(uuid4())
+            proposal_data = request.to_dict() | {
+                "proposal_id": proposal_id,
+                "candidate_revision_id": stored.revision_id,
+                "candidate_revision_hash": stored.canonical_sha256,
+                "inventory_sha256": inventory_sha256,
+                "pending_resolution_id": pending_id,
+                "supersedes_resolution_id": (
+                    existing["id"] if existing is not None else None
+                ),
+                "actions": ["CONFLICT_RESOLUTION"],
+            }
+            blob = canonical_json(proposal_data)
+            digest = sha256(blob).hexdigest()
+            now = _now()
+            self.connection.execute(
+                "INSERT INTO review_proposals VALUES "
+                "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                (
+                    proposal_id,
+                    request.component_id,
+                    request.base_revision_id,
+                    request.base_revision_hash,
+                    stored.revision_id,
+                    stored.canonical_sha256,
+                    request.expected_head_hash,
+                    digest,
+                    blob,
+                    "PENDING",
+                    now,
+                    now,
+                ),
+            )
+            if candidate_document.sha256 != stored.canonical_sha256:
+                raise RuntimeError("Stored resolution candidate hash mismatch")
+            return ProposalResult(
+                proposal_id,
+                digest,
+                stored.revision_id,
+                stored.canonical_sha256,
+            )
+
     def propose(
         self, request: InputReviewProposal, candidate_revision: dict
     ) -> ProposalResult:
@@ -812,6 +1062,31 @@ class InputReviewService:
         }
         actions = proposal["actions"]
         if actions == ["EVIDENCE_REVIEW"]:
+            return approved
+        if actions == ["CONFLICT_RESOLUTION"]:
+            pending = next(
+                (
+                    record
+                    for record in approved["resolutions"]
+                    if record["id"] == proposal["pending_resolution_id"]
+                ),
+                None,
+            )
+            if pending is None or pending["approval_state"] != "PENDING":
+                raise ValueError("Pending resolution does not resolve")
+            approved_record = copy.deepcopy(pending)
+            approved_record["id"] = str(uuid4())
+            approved_record["approval_state"] = "APPROVED"
+            approved_record["reviewer"] = request.reviewer
+            approved_record["timestamp"] = timestamp
+            approved["resolutions"].append(approved_record)
+            prior_id = approved_record["supersedes_resolution_id"]
+            active = approved["revision"]["active_resolution_ids"]
+            approved["revision"]["active_resolution_ids"] = [
+                resolution_id
+                for resolution_id in active
+                if resolution_id != prior_id
+            ] + [approved_record["id"]]
             return approved
         if actions != ["OVERRIDE_REPLACEMENT"]:
             raise ValueError("Unsupported input proposal action")

@@ -11,7 +11,12 @@ from pathlib import Path
 
 import pytest
 
-from partsmith.ir import ComponentIR, canonical_json
+from partsmith.ir import (
+    ComponentIR,
+    RequirementsContext,
+    canonical_json,
+    validate_ir,
+)
 from partsmith.persistence import (
     ImmutableStore,
     Repository,
@@ -21,6 +26,7 @@ from partsmith.persistence import (
 from partsmith.release import AuthenticatedPrincipal
 from partsmith.release.input_review import (
     NO_HEAD_HASH,
+    ConflictResolutionProposalRequest,
     InputApprovalRequest,
     InputRejectionRequest,
     InputReviewProposal,
@@ -30,6 +36,7 @@ from partsmith.release.input_review import (
 
 ROOT = Path(__file__).resolve().parents[1]
 IR_PATH = ROOT / "fixtures" / "ir" / "v1.2" / "valid" / "0402.json"
+WIDTH = "/package/mechanical/body_width"
 
 
 def _inventory(data: dict) -> dict:
@@ -145,6 +152,39 @@ def _reviewed_head_fixture(connection):
         data["revision"]["evidence_review"]["inventory_sha256"]
         == inventory_hash
     )
+    stored = store.put_revision(
+        data,
+        inventory_sha256=inventory_hash,
+        reviewed=True,
+    )
+    store.compare_and_swap_head(component.id, stored.revision_id, None)
+    return component, stored, inventory_hash, InputReviewService(connection)
+
+
+def _conflicted_head_fixture(connection):
+    """@brief Persists one reviewed head with an unresolved width candidate.
+    @param connection Active migrated SQLite connection.
+    @return Component, reviewed revision, inventory hash, and review service.
+    @details The conflict is retained as independently assigned evidence.
+    """
+    component = Repository(connection).create_component(
+        "Synthetic", "0402", "0402"
+    )
+    data = json.loads(IR_PATH.read_text(encoding="utf-8"))
+    data["identity"]["component_id"] = component.id
+    conflicting = copy.deepcopy(data["evidence"][0])
+    conflicting["id"] = "E-CONFLICT"
+    conflicting["candidate_targets"] = [WIDTH]
+    conflicting["interpretation"]["status"] = "CONFLICTING"
+    data["evidence"].append(conflicting)
+    inventory = _inventory(data)
+    inventory_hash = sha256(canonical_json(inventory)).hexdigest()
+    data["revision"]["evidence_review"].update(
+        inventory_sha256=inventory_hash,
+        reviewed_evidence_ids=inventory["evidence_ids"],
+    )
+    store = ImmutableStore(connection)
+    assert store.put_inventory(inventory) == inventory_hash
     stored = store.put_revision(
         data,
         inventory_sha256=inventory_hash,
@@ -625,6 +665,205 @@ def test_override_rejects_paths_outside_trusted_registry(tmp_path, path):
                     evidence_reference="E-001",
                     reason="Attempt disallowed edit",
                 ),
+                AuthenticatedPrincipal("proposer-1", "local-test"),
+            )
+        assert (
+            connection.execute("SELECT COUNT(*) FROM ir_revisions").fetchone()[
+                0
+            ]
+            == before
+        )
+        assert (
+            connection.execute(
+                "SELECT COUNT(*) FROM review_proposals"
+            ).fetchone()[0]
+            == 0
+        )
+
+
+def test_conflict_resolution_retains_pending_and_activates_approval(tmp_path):
+    """@brief Verifies a complete conflict disposition becomes active.
+    @param tmp_path Pytest temporary directory.
+    @return None.
+    @details Pending and approved records remain separate immutable decisions.
+    """
+    with database(tmp_path / "db") as connection:
+        component, base, inventory_hash, service = _conflicted_head_fixture(
+            connection
+        )
+        result = service.propose_resolution(
+            ConflictResolutionProposalRequest(
+                component_id=component.id,
+                base_revision_id=base.revision_id,
+                base_revision_hash=base.canonical_sha256,
+                expected_head_hash=base.canonical_sha256,
+                target_path=WIDTH,
+                selected_evidence_ids=("E-001",),
+                superseded_evidence_ids=("E-CONFLICT",),
+                override_id=None,
+                decision="select",
+                reason="Manufacturer value is authoritative",
+            ),
+            AuthenticatedPrincipal("proposer-1", "local-test"),
+        )
+        store = ImmutableStore(connection)
+        candidate = store.get_revision(result.candidate_revision_id)
+        pending = candidate["resolutions"][-1]
+        assert pending["approval_state"] == "PENDING"
+        assert pending["selected_evidence_ids"] == ["E-001"]
+        assert pending["superseded_evidence_ids"] == ["E-CONFLICT"]
+        assert candidate["revision"]["active_resolution_ids"] == []
+
+        approved = service.approve_inputs(
+            _override_approval_request(
+                component,
+                base.canonical_sha256,
+                inventory_hash,
+                result,
+            ),
+            AuthenticatedPrincipal("reviewer-1", "local-test"),
+        )
+        data = store.get_revision(approved.revision_id)
+        assert data["resolutions"][-2] == pending
+        decision = data["resolutions"][-1]
+        assert decision["id"] != pending["id"]
+        assert decision["approval_state"] == "APPROVED"
+        assert data["revision"]["active_resolution_ids"] == [decision["id"]]
+        context = RequirementsContext(
+            "synthetic",
+            "test-1",
+            "test-1",
+            "test-1",
+            (WIDTH,),
+            (WIDTH,),
+        )
+        assert (
+            validate_ir(
+                data,
+                for_generation=True,
+                requirements=context,
+                revisions=store,
+            )
+            == ()
+        )
+
+
+def test_successive_resolution_preserves_prior_conflict_disposition(tmp_path):
+    """@brief Verifies replacement resolutions preserve prior dispositions.
+    @param tmp_path Pytest temporary directory.
+    @return None.
+    @details The previous approved decision remains retained but inactive.
+    """
+    with database(tmp_path / "db") as connection:
+        component, base, inventory_hash, service = _conflicted_head_fixture(
+            connection
+        )
+        first_proposal = service.propose_resolution(
+            ConflictResolutionProposalRequest(
+                component_id=component.id,
+                base_revision_id=base.revision_id,
+                base_revision_hash=base.canonical_sha256,
+                expected_head_hash=base.canonical_sha256,
+                target_path=WIDTH,
+                selected_evidence_ids=("E-001",),
+                superseded_evidence_ids=("E-CONFLICT",),
+                override_id=None,
+                decision="select",
+                reason="Initial conflict resolution",
+            ),
+            AuthenticatedPrincipal("proposer-1", "local-test"),
+        )
+        first = service.approve_inputs(
+            _override_approval_request(
+                component,
+                base.canonical_sha256,
+                inventory_hash,
+                first_proposal,
+            ),
+            AuthenticatedPrincipal("reviewer-1", "local-test"),
+        )
+        store = ImmutableStore(connection)
+        first_data = store.get_revision(first.revision_id)
+        first_active = first_data["revision"]["active_resolution_ids"][0]
+        retained = copy.deepcopy(first_data["resolutions"])
+
+        second_proposal = service.propose_resolution(
+            ConflictResolutionProposalRequest(
+                component_id=component.id,
+                base_revision_id=first.revision_id,
+                base_revision_hash=first.revision_hash,
+                expected_head_hash=first.revision_hash,
+                target_path=WIDTH,
+                selected_evidence_ids=("E-001",),
+                superseded_evidence_ids=("E-CONFLICT",),
+                override_id=None,
+                decision="retain",
+                reason="Reconfirm conflict disposition",
+            ),
+            AuthenticatedPrincipal("proposer-2", "local-test"),
+        )
+        second = service.approve_inputs(
+            _override_approval_request(
+                component,
+                first.revision_hash,
+                inventory_hash,
+                second_proposal,
+            ),
+            AuthenticatedPrincipal("reviewer-1", "local-test"),
+        )
+        data = store.get_revision(second.revision_id)
+        assert data["resolutions"][: len(retained)] == retained
+        active_id = data["revision"]["active_resolution_ids"][0]
+        assert active_id != first_active
+        active = next(
+            record
+            for record in data["resolutions"]
+            if record["id"] == active_id
+        )
+        assert active["supersedes_resolution_id"] == first_active
+        assert data["resolutions"][-2]["approval_state"] == "PENDING"
+
+
+@pytest.mark.parametrize(
+    ("selected", "superseded", "message"),
+    [
+        (("E-CONFLICT",), ("E-001",), "Selected evidence"),
+        (("E-001",), ("E-001",), "disjoint"),
+        (("E-001",), ("missing",), "does not resolve"),
+        (("E-001",), (), "Invalid conflict_resolution"),
+    ],
+)
+def test_conflict_resolution_rejects_invalid_evidence_dispositions(
+    tmp_path, selected, superseded, message
+):
+    """@brief Verifies conflict proposals require exact evidence disposition.
+    @param tmp_path Pytest temporary directory.
+    @param selected Proposed selected evidence identities.
+    @param superseded Proposed superseded evidence identities.
+    @param message Expected failure text.
+    @return None.
+    @details Invalid requests leave no candidate or proposal records.
+    """
+    with database(tmp_path / "db") as connection:
+        component, base, _, service = _conflicted_head_fixture(connection)
+        before = connection.execute(
+            "SELECT COUNT(*) FROM ir_revisions"
+        ).fetchone()[0]
+        with pytest.raises(ValueError, match=message):
+            request = ConflictResolutionProposalRequest(
+                component_id=component.id,
+                base_revision_id=base.revision_id,
+                base_revision_hash=base.canonical_sha256,
+                expected_head_hash=base.canonical_sha256,
+                target_path=WIDTH,
+                selected_evidence_ids=selected,
+                superseded_evidence_ids=superseded,
+                override_id=None,
+                decision="select",
+                reason="Invalid disposition",
+            )
+            service.propose_resolution(
+                request,
                 AuthenticatedPrincipal("proposer-1", "local-test"),
             )
         assert (
