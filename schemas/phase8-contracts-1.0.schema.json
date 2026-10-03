@@ -826,6 +826,100 @@
         "reason"
       ],
       "additionalProperties": false
+    },
+    "bundle_index": {
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "const": "1.0"
+        },
+        "bundle_id": {
+          "$ref": "#/$defs/nonempty_string"
+        },
+        "availability": {
+          "const": "OFFLINE_COMPLETE"
+        },
+        "component": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "$ref": "#/$defs/nonempty_string"
+            },
+            "manufacturer": {
+              "$ref": "#/$defs/nonempty_string"
+            },
+            "mpn": {
+              "$ref": "#/$defs/nonempty_string"
+            },
+            "package_variant": {
+              "$ref": "#/$defs/nonempty_string"
+            }
+          },
+          "required": [
+            "id",
+            "manufacturer",
+            "mpn",
+            "package_variant"
+          ],
+          "additionalProperties": false
+        },
+        "head_revision_id": {
+          "$ref": "#/$defs/nonempty_string"
+        },
+        "objects": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "identity": {
+                "$ref": "#/$defs/nonempty_string"
+              },
+              "kind": {
+                "enum": [
+                  "IR_REVISION",
+                  "ACQUISITION_INVENTORY"
+                ]
+              },
+              "schema_version": {
+                "$ref": "#/$defs/nonempty_string"
+              },
+              "path": {
+                "$ref": "#/$defs/nonempty_string"
+              },
+              "byte_length": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "sha256": {
+                "$ref": "#/$defs/sha256"
+              },
+              "metadata": {
+                "type": "object"
+              }
+            },
+            "required": [
+              "identity",
+              "kind",
+              "schema_version",
+              "path",
+              "byte_length",
+              "sha256",
+              "metadata"
+            ],
+            "additionalProperties": false
+          },
+          "minItems": 1
+        }
+      },
+      "required": [
+        "schema_version",
+        "bundle_id",
+        "availability",
+        "component",
+        "head_revision_id",
+        "objects"
+      ],
+      "additionalProperties": false
     }
   }
 }

@@ -379,3 +379,12 @@ class PostManifestReport(_CanonicalDocument):
             raise ValueError(
                 "Post-manifest report contains a non-POST_MANIFEST result"
             )
+
+
+class BundleIndex(_CanonicalDocument):
+    """@brief Frozen history-complete portable bundle index.
+    @details The index lists exact object bytes but excludes itself and any
+    transport envelope to avoid a packaging hash cycle.
+    """
+
+    schema_kind = "bundle_index"
