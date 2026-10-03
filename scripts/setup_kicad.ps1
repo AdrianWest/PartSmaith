@@ -1,6 +1,6 @@
 param(
     [string]$Version = "10.0.6",
-    [switch]$AddToGitHubPath
+    [switch]$AddToGitHubEnvironment
 )
 
 $ErrorActionPreference = "Stop"
@@ -56,14 +56,13 @@ if ($installedVersion -ne $Version) {
     throw "KiCad $Version is required; found $installedVersion"
 }
 
-if ($AddToGitHubPath) {
-    if ([string]::IsNullOrWhiteSpace($env:GITHUB_PATH)) {
-        throw "GITHUB_PATH is required when AddToGitHubPath is set"
+if ($AddToGitHubEnvironment) {
+    if ([string]::IsNullOrWhiteSpace($env:GITHUB_ENV)) {
+        throw "GITHUB_ENV is required when AddToGitHubEnvironment is set"
     }
-    $cliDirectory = Split-Path -Parent $cli
     [System.IO.File]::AppendAllText(
-        $env:GITHUB_PATH,
-        "$cliDirectory`n",
+        $env:GITHUB_ENV,
+        "PARTSMITH_KICAD_CLI=$cli`n",
         [System.Text.UTF8Encoding]::new($false)
     )
 }

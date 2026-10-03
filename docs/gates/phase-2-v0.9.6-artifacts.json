@@ -167,7 +167,7 @@
   },
   "sha256": {
     ".gitattributes": "32b1798dae7df64a5e40e95bd7d3363e5a27b72c7c9ccae6c2e268724158b696",
-    ".github/workflows/ci.yml": "ccc4df8228883c7f10e7c207e2230aefa446ca25703f48ff46726c73177b3ccf",
+    ".github/workflows/ci.yml": "bfe42fc32aab1f5c4f599d9b4158c5bdb01bb93955d8380ee53adaa30e21e9d1",
     "docs/component-ir.md": "34509a26158258789f4300e95768d2cdf18661ab780c0397dfcefd2908b85056",
     "docs/gates/phase-2-ir-1.1-tests.xml": "8dc084e0c42a3c997f57201c79ebf5d49e290ec917f097e11aa3d76c9f5469f2",
     "docs/gates/phase-2-ir-1.1-wheel-tests.xml": "4b41123dffaaf57af6c34fd96e937540a0c32225ab7818eda38ca95ec552affb",

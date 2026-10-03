@@ -33,11 +33,11 @@ jobs:
         if: runner.os == 'Windows'
         shell: pwsh
         run: |
-          .\scripts\setup_kicad.ps1 -Version 10.0.6 -AddToGitHubPath
+          .\scripts\setup_kicad.ps1 -Version 10.0.6 `
+            -AddToGitHubEnvironment
       - name: Verify mandatory native KiCad runtime
         run: |
-          kicad-cli version
-          python -c "import subprocess; version = subprocess.check_output(['kicad-cli', 'version'], text=True).strip(); assert version == '10.0.6', version"
+          python -c "import os, shutil, subprocess; executable = os.environ.get('PARTSMITH_KICAD_CLI') or shutil.which('kicad-cli'); assert executable, 'kicad-cli not found'; version = subprocess.check_output([executable, 'version'], text=True).strip(); assert version == '10.0.6', version"
       - name: Verify recorded Phase 5 input hashes
         run: python scripts/verify_phase2_manifest.py --manifest docs/gates/phase-5-artifacts.json
       - name: Verify recorded Phase 6 input hashes

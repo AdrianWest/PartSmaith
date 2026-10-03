@@ -37,10 +37,10 @@
     "availability": "Temporary local generated output"
   },
   "sha256": {
-    ".github/workflows/ci.yml": "ccc4df8228883c7f10e7c207e2230aefa446ca25703f48ff46726c73177b3ccf",
+    ".github/workflows/ci.yml": "bfe42fc32aab1f5c4f599d9b4158c5bdb01bb93955d8380ee53adaa30e21e9d1",
     "README.md": "f3b205dfb320dd56a870cac79a04553bd0aace5ac9b2dd7f7467b7697a166dde",
     "resources/BFT_PartSmith_Implementation_Spec.md": "81acdf5f31c0182bdc9d245abbe566319e46c955e358e4c57d3713f6f7485459",
-    "scripts/setup_kicad.ps1": "4ebaafd728c824bc855446155dddf89db87a9f33119ddb3c1ea9cc36ffbd4e6a",
+    "scripts/setup_kicad.ps1": "bf2e4d0539a8bdc815707408cda70af291193f74da49c1789b48b6bf062c731b",
     "schemas/phase8-contracts-1.0.schema.json": "889a07d7f251d6f7b6f89136aa037a071fc743a32843eb5975cdd9d70bb9c7cc",
     "migrations/002_phase8.sql": "aa2a81d676964a77a89158c8d40c64031c51f31412bd0bd8c3a0bc95acc5b42d",
     "src/partsmith/cli.py": "4b7510f93430bbb341ec15339144dc4e4850bef13cef7a798ca460d1988b9281",
