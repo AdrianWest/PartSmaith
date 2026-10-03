@@ -12,7 +12,7 @@ import os
 import sqlite3
 from dataclasses import asdict, dataclass
 from hashlib import sha256
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 
 from partsmith.footprint import (
     FootprintContext,
@@ -134,6 +134,46 @@ def _finalize_footprint(
     return (text[:-2] + block + "\n)\n").encode("utf-8")
 
 
+def _portable_model_path(value: str) -> str:
+    """@brief Validates one portable relative model association path.
+    @param value Candidate slash-separated logical path.
+    @return Normalized portable path.
+    @details Absolute, parent-traversing, and backslash paths are rejected.
+    """
+    path = PurePosixPath(value)
+    if (
+        not value
+        or "\\" in value
+        or path.is_absolute()
+        or ".." in path.parts
+        or "." in path.parts
+    ):
+        raise ValueError("Model path must be portable and relative")
+    return path.as_posix()
+
+
+def _final_footprint_dependency_hash(
+    geometry_hash: str, association_hash: str, model_path: str
+) -> str:
+    """@brief Binds final footprint geometry and association inputs.
+    @param geometry_hash Preliminary footprint dependency digest.
+    @param association_hash Placement and pin-association dependency digest.
+    @param model_path Portable logical STEP association path.
+    @return Final-footprint dependency digest.
+    @details Any geometry, placement, pin mapping, or path change invalidates
+    final footprint checks and release approval.
+    """
+    return sha256(
+        canonical_json(
+            {
+                "geometry": geometry_hash,
+                "association": association_hash,
+                "model_path": model_path,
+            }
+        )
+    ).hexdigest()
+
+
 class KnownGoodReleasePipeline:
     """@brief Runs the Phase 8 deterministic known-good component path.
     @details The pipeline stops at RELEASE review; authenticated approval is a
@@ -156,11 +196,14 @@ class KnownGoodReleasePipeline:
         component_id: str,
         revision_id: str,
         pdl: PDL,
+        *,
+        model_logical_path: str | None = None,
     ) -> ReleaseCandidate:
         """@brief Builds one reviewed component through release review.
         @param component_id Persisted component identity.
         @param revision_id Current reviewed IR revision identity.
         @param pdl Trusted selected package declaration.
+        @param model_logical_path Optional portable final STEP path.
         @return Build identity, manifest hash, and exact approval binding.
         @details Any input or final-byte blocker raises before review waiting.
         """
@@ -206,6 +249,14 @@ class KnownGoodReleasePipeline:
         symbol = serialize_symbol(ir, symbol_context)
         footprint = serialize_footprint(ir, pdl, footprint_context)
         model = generate_model_3d(ir, pdl, threed_context)
+        model_path = _portable_model_path(
+            model_logical_path or f"3d/{model.filename}"
+        )
+        final_footprint_dependency = _final_footprint_dependency_hash(
+            footprint.dependency_hash,
+            footprint.association_dependency_hash,
+            model_path,
+        )
         snapshot = {
             "schema_version": "1.0",
             "profile": "1.2",
@@ -223,6 +274,7 @@ class KnownGoodReleasePipeline:
                 "model_3d": json.loads(
                     json.dumps(asdict(threed_context))
                 ),
+                "association": {"model_path": model_path},
                 "kicad_target": ir.data["build"]["kicad_target"],
             },
         }
@@ -263,7 +315,6 @@ class KnownGoodReleasePipeline:
             BuildState.ARTIFACT_VALIDATION,
             "Preliminary artifacts complete",
         )
-        model_path = f"3d/{model.filename}"
         final_footprint = _finalize_footprint(
             footprint.content, model_path, ir
         )
@@ -284,7 +335,7 @@ class KnownGoodReleasePipeline:
                 "FINAL",
                 f"footprints/{footprint.filename}",
                 final_footprint,
-                dependency_hash=footprint.association_dependency_hash,
+                dependency_hash=final_footprint_dependency,
                 generator="partsmith.footprint.finalizer",
                 generator_version="1.0",
             ),
@@ -300,34 +351,37 @@ class KnownGoodReleasePipeline:
             ),
         }
         results = []
+        symbol_issues = validate_symbol_artifact(symbol, ir)
+        footprint_issues = validate_footprint_artifact(
+            type(footprint)(
+                artifact_type=footprint.artifact_type,
+                filename=footprint.filename,
+                content=final_footprint,
+                source_hash=footprint.source_hash,
+                dependency_hash=footprint.dependency_hash,
+                generator_version=footprint.generator_version,
+                association_dependency_hash=(
+                    footprint.association_dependency_hash
+                ),
+            ),
+            ir,
+            pdl,
+        )
+        step_issues = validate_step_artifact(model.content, pdl)
         checks = (
             (
                 "symbol-final",
-                validate_symbol_artifact(symbol, ir),
+                symbol_issues,
                 (hashes["symbol"],),
             ),
             (
                 "footprint-final",
-                validate_footprint_artifact(
-                    type(footprint)(
-                        artifact_type=footprint.artifact_type,
-                        filename=footprint.filename,
-                        content=final_footprint,
-                        source_hash=footprint.source_hash,
-                        dependency_hash=footprint.dependency_hash,
-                        generator_version=footprint.generator_version,
-                        association_dependency_hash=(
-                            footprint.association_dependency_hash
-                        ),
-                    ),
-                    ir,
-                    pdl,
-                ),
+                footprint_issues,
                 (hashes["footprint"],),
             ),
             (
                 "step-final",
-                validate_step_artifact(model.content, pdl),
+                step_issues,
                 (hashes["model_3d"],),
             ),
         )
@@ -349,15 +403,28 @@ class KnownGoodReleasePipeline:
             data = result.to_dict()
             data["stage"] = "FINAL_ARTIFACT"
             results.append(data)
+        compatibility_passed = (
+            ir.data["build"]["kicad_target"] == "10.x"
+            and not symbol_issues
+            and not footprint_issues
+            and not step_issues
+        )
         results.append(
             _validation_result(
                 "kicad-format-parser",
-                "PASS",
-                "PartSmith headless parsers accept final KiCad-format bytes",
+                "PASS" if compatibility_passed else "FAIL",
+                (
+                    "PartSmith headless parsers accept final KiCad 10 "
+                    "format bytes"
+                    if compatibility_passed
+                    else "Final bytes do not satisfy the KiCad 10 adapter"
+                ),
                 (hashes["symbol"], hashes["footprint"], hashes["model_3d"]),
                 category="compatibility",
             )
         )
+        for result in results:
+            result["id"] = f"{build.id}:{result['id']}"
         for result in results:
             self.release.put_validation_result(
                 build.id, "known-good-component", result
@@ -444,7 +511,7 @@ class KnownGoodReleasePipeline:
                     "dependency_hashes": {
                         "symbol": symbol.dependency_hash,
                         "footprint": footprint.dependency_hash,
-                        "association": footprint.association_dependency_hash,
+                        "association": final_footprint_dependency,
                         "model_3d": model.dependency_hash,
                     },
                 },
