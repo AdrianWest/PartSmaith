@@ -6,17 +6,19 @@ diagnostics.
 @details Provides the module implementation and public interfaces.
 """
 
-import json
 import re
 from datetime import datetime
-from decimal import Decimal
 from functools import lru_cache
-from importlib.resources import files
 from pathlib import Path
 
-from jsonschema import Draft202012Validator, FormatChecker, validators
+from jsonschema import FormatChecker
 
-from partsmith.ir.errors import Issue, fail, pointer
+from partsmith.ir.errors import Issue, fail
+from partsmith.schema_support import (
+    decimal_validator_class,
+    load_packaged_schema,
+    schema_error_path,
+)
 
 SUPPORTED_VERSIONS = ("1.0", "1.1", "1.2")
 
@@ -34,10 +36,8 @@ def load_schema(version: str = "1.0") -> dict:
     if version not in SUPPORTED_VERSIONS:
         fail("/schema_version", "IR_VERSION", "Unsupported IR version")
     name = f"component-ir-{version}.schema.json"
-    resource = files(__package__).joinpath(name)
-    if not resource.is_file():
-        resource = Path(__file__).resolve().parents[3] / "schemas" / name
-    return json.loads(resource.read_text(encoding="utf-8"))
+    fallback = Path(__file__).resolve().parents[3] / "schemas" / name
+    return load_packaged_schema(__package__, name, fallback)
 
 
 @lru_cache(maxsize=3)
@@ -51,17 +51,7 @@ def _validator(version):
     public contract.
 
     """
-    checker = Draft202012Validator.TYPE_CHECKER.redefine(
-        "integer",
-        lambda _, value: (
-            not isinstance(value, bool)
-            and isinstance(value, (int, float, Decimal))
-            and value == int(value)
-        ),
-    )
-    validator_class = validators.extend(
-        Draft202012Validator, type_checker=checker
-    )
+    validator_class = decimal_validator_class()
     schema = load_schema(version)
     validator_class.check_schema(schema)
     formats = FormatChecker()
@@ -123,9 +113,7 @@ def schema_issues(data) -> list[Issue]:
         ]
     issues = []
     for error in _validator(version).iter_errors(data):
-        path = ""
-        for key in error.absolute_path:
-            path = pointer(path, key)
+        path = schema_error_path(error)
         code = "IR_SCHEMA"
         if path == "/schema_version":
             code = "IR_VERSION"

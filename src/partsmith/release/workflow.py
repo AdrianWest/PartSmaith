@@ -7,10 +7,8 @@ service atomically verifies and records authenticated release decisions.
 from __future__ import annotations
 
 import sqlite3
-from collections.abc import Iterator
-from contextlib import contextmanager
-from datetime import UTC, datetime
 
+from partsmith.persistence.database import savepoint, utc_timestamp
 from partsmith.persistence.records import Build, Repository
 from partsmith.persistence.release import ReleaseStore
 from partsmith.release.contracts import (
@@ -63,33 +61,6 @@ _FAILURE_TRANSITIONS = {
 }
 
 
-def _now() -> str:
-    """@brief Returns one UTC state-transition timestamp.
-    @return ISO 8601 UTC timestamp.
-    @details Timestamps remain audit metadata outside engineering hashes.
-    """
-    return datetime.now(UTC).isoformat()
-
-
-@contextmanager
-def _savepoint(connection: sqlite3.Connection, name: str) -> Iterator[None]:
-    """@brief Protects one service operation with a SQLite savepoint.
-    @param connection Active SQLite connection.
-    @param name Savepoint identifier controlled by this module.
-    @return Iterator yielding control inside the savepoint.
-    @details Any exception removes partial decisions and state transitions.
-    """
-    connection.execute(f"SAVEPOINT {name}")
-    try:
-        yield
-    except BaseException:
-        connection.execute(f"ROLLBACK TO {name}")
-        connection.execute(f"RELEASE {name}")
-        raise
-    else:
-        connection.execute(f"RELEASE {name}")
-
-
 class BuildOrchestrator:
     """@brief Owns persisted build-state advancement.
     @details State changes append immutable transition records and reject
@@ -131,7 +102,7 @@ class BuildOrchestrator:
             "(build_id, from_state, to_state, review_stage, reason, "
             "created_at) "
             "VALUES (?, NULL, ?, NULL, ?, ?)",
-            (build.id, initial.value, reason, _now()),
+            (build.id, initial.value, reason, utc_timestamp()),
         )
         return build
 
@@ -176,7 +147,7 @@ class BuildOrchestrator:
                 )
         elif review_stage is not None:
             raise ValueError("Review stage is only valid for a waiting state")
-        now = _now()
+        now = utc_timestamp()
         completed_at = (
             now
             if to_state
@@ -248,7 +219,7 @@ class ReviewService:
         @details Stale bindings, blockers, or identity mismatches leave no
         decision or state transition behind.
         """
-        with _savepoint(self.connection, "release_approval"):
+        with savepoint(self.connection, "release_approval"):
             principal.require_reviewer(reviewer)
             self.store.verify_approval_binding(build_id, binding)
             decision_id = self.store.record_release_decision(
@@ -280,7 +251,7 @@ class ReviewService:
         @return Immutable release decision identity.
         @details Rejection requires authentication but no approval binding.
         """
-        with _savepoint(self.connection, "release_rejection"):
+        with savepoint(self.connection, "release_rejection"):
             principal.require_reviewer(reviewer)
             build = self.orchestrator.repository.get_build(build_id)
             if build is None:

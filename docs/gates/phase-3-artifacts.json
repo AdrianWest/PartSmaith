@@ -22,8 +22,18 @@
     "production_evidence": false
   },
   "tests": {
-    "source": { "tests": 325, "failures": 0, "errors": 0, "skipped": 0 },
-    "wheel": { "tests": 325, "failures": 0, "errors": 0, "skipped": 0 },
+    "source": {
+      "tests": 325,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "wheel": {
+      "tests": 325,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
     "phase_3_pdl": 33,
     "phase_3_cli": 2
   },
@@ -50,7 +60,7 @@
   "sha256": {
     ".gitattributes": "32b1798dae7df64a5e40e95bd7d3363e5a27b72c7c9ccae6c2e268724158b696",
     ".github/workflows/ci.yml": "d75774ebfb528fb9638e0b9f6a93815b6a0718f5ea13237bf868a321d543f4b6",
-    "README.md": "2f67b8474e2f926b5a3e2c4b6ab66110e0e53bc892979edc76eecf9ced2a8909",
+    "README.md": "f3b205dfb320dd56a870cac79a04553bd0aace5ac9b2dd7f7467b7697a166dde",
     "pyproject.toml": "ddcfd1ec6b94ae0357370b751bc20b1cd9287f7b9aad0c1bade52adfd40ef76f",
     "requirements-ci.txt": "ac773cdab39cfa6bd99576737561c0ee6fbc1c63a8b7f2e1365adbb9b7ce4422",
     "resources/BFT_PartSmith_Implementation_Spec.md": "46b01642c9ae9414974ec6f14b020e4b3a1a9d77f98c1bacbe0ec9692092effb",
@@ -68,7 +78,7 @@
     "src/partsmith/pdl/loader.py": "0bc20392555c7d484642f697d6a3ccc7bc8f23ed73429c52f2e0f4a17f0e22b7",
     "src/partsmith/pdl/model.py": "76df56d58e794efb46fdc227506a8bf45140ce725d6803059319657da3cd74ba",
     "src/partsmith/pdl/profiles.py": "bc03d30801a72f9eb459b2ed97e49110717411ff7e90ee34172561d096d1be03",
-    "src/partsmith/pdl/schema.py": "af78eab755505cc497285fd51a555e65fae665e56562b4817aba60e0c3233265",
+    "src/partsmith/pdl/schema.py": "45b78150927804a952690a689cac210f946cd2a6ab3f294470a49c8b5a8f2845",
     "tests/test_cli.py": "942be02da2cfe27f57b5eb8911b43fbe67d6c29b185bdc020be2697ad3d0877d",
     "tests/test_pdl.py": "8a68e4e6fb2341cf36096eabc8df8a391644d9982f2def4a7a51d6e0789944f2",
     "scripts/verify_phase2_manifest.py": "a840984893a066923e8cffd7dc4869c0e9479e08c4ee96f62daa0d229a641842",

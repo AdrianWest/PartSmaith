@@ -7,48 +7,19 @@ publishes complete revision ancestry transactionally.
 from __future__ import annotations
 
 import sqlite3
-from collections.abc import Iterator
-from contextlib import contextmanager
 from dataclasses import dataclass
-from datetime import UTC, datetime
 from hashlib import sha256
 from pathlib import PurePosixPath
 from uuid import uuid4
 
 from partsmith.ir import ComponentIR, canonical_json
 from partsmith.ir.canonical import parse_json
+from partsmith.persistence.database import savepoint, utc_timestamp
 from partsmith.persistence.immutable import (
     IdentityConflictError,
     ImmutableStore,
 )
 from partsmith.release.contracts import BundleIndex
-
-
-def _now() -> str:
-    """@brief Returns one UTC bundle audit timestamp.
-    @return ISO 8601 UTC timestamp.
-    @details Audit timestamps are not included in deterministic indexes.
-    """
-    return datetime.now(UTC).isoformat()
-
-
-@contextmanager
-def _savepoint(connection: sqlite3.Connection, name: str) -> Iterator[None]:
-    """@brief Protects bundle publication with a SQLite savepoint.
-    @param connection Active SQLite connection.
-    @param name Trusted internal savepoint name.
-    @return Iterator yielding control inside the savepoint.
-    @details Verification failures leave no component, object, or revision.
-    """
-    connection.execute(f"SAVEPOINT {name}")
-    try:
-        yield
-    except BaseException:
-        connection.execute(f"ROLLBACK TO {name}")
-        connection.execute(f"RELEASE {name}")
-        raise
-    else:
-        connection.execute(f"RELEASE {name}")
 
 
 def _safe_path(value: str) -> str:
@@ -238,7 +209,7 @@ class RevisionBundleService:
         @return Bundle import audit identity.
         @details Entire ancestry and inventories are staged before publication.
         """
-        with _savepoint(self.connection, "revision_bundle_import"):
+        with savepoint(self.connection, "revision_bundle_import"):
             entries = self._verified_objects(bundle)
             revisions = {}
             inventories = {}
@@ -289,7 +260,7 @@ class RevisionBundleService:
                 (component_data["id"],),
             ).fetchone()
             if existing is None:
-                now = _now()
+                now = utc_timestamp()
                 self.connection.execute(
                     "INSERT INTO components VALUES (?, NULL, ?, ?, ?, ?, ?)",
                     (
@@ -326,7 +297,7 @@ class RevisionBundleService:
             self.store.compare_and_swap_head(
                 component_data["id"], head.revision_id, None
             )
-            now = _now()
+            now = utc_timestamp()
             for entry, blob in entries.values():
                 self.connection.execute(
                     "INSERT INTO bundle_objects VALUES "

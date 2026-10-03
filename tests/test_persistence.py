@@ -13,9 +13,43 @@ from datetime import datetime
 
 import pytest
 
-from partsmith.persistence import Repository, connect, database, migrate
+from partsmith.persistence import (
+    Repository,
+    connect,
+    database,
+    migrate,
+    savepoint,
+    utc_timestamp,
+)
 
 database_module = importlib.import_module("partsmith.persistence.database")
+
+
+def test_shared_persistence_support(tmp_path):
+    """@brief Verifies shared timestamps and rollback-safe savepoints.
+    @param tmp_path Temporary test directory.
+    @return None.
+    @details Invalid savepoint names fail before SQL execution and exceptions
+    remove only work performed inside the savepoint.
+    """
+    assert datetime.fromisoformat(utc_timestamp()).utcoffset() is not None
+    with database(tmp_path / "support.sqlite3") as connection:
+        connection.execute("CREATE TABLE support_test (value TEXT NOT NULL)")
+        with pytest.raises(ValueError, match="savepoint name"):
+            with savepoint(connection, "invalid-name"):
+                pass
+        with pytest.raises(RuntimeError, match="rollback"):
+            with savepoint(connection, "support_test"):
+                connection.execute(
+                    "INSERT INTO support_test VALUES ('partial')"
+                )
+                raise RuntimeError("rollback")
+        assert (
+            connection.execute("SELECT COUNT(*) FROM support_test").fetchone()[
+                0
+            ]
+            == 0
+        )
 
 
 def test_phase_one_gate(tmp_path):

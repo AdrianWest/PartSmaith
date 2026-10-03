@@ -5,12 +5,46 @@
 @details Provides the module implementation and public interfaces.
 """
 
+import re
 import sqlite3
 from collections.abc import Iterator
 from contextlib import contextmanager
+from datetime import UTC, datetime
 from hashlib import sha256
 from importlib.resources import files
 from pathlib import Path
+
+_SAVEPOINT_NAME = re.compile(r"[A-Za-z_][A-Za-z0-9_]*\Z")
+
+
+def utc_timestamp() -> str:
+    """@brief Returns one server-controlled UTC audit timestamp.
+    @return ISO 8601 UTC timestamp.
+    @details The timestamp is suitable for non-engineering audit metadata.
+    """
+    return datetime.now(UTC).isoformat()
+
+
+@contextmanager
+def savepoint(connection: sqlite3.Connection, name: str) -> Iterator[None]:
+    """@brief Protects caller work with a named SQLite savepoint.
+    @param connection Active SQLite connection.
+    @param name Trusted identifier containing letters, digits, or underscores.
+    @return Iterator yielding control inside the savepoint.
+    @details Failures roll back partial work while preserving the caller's
+    outer transaction.
+    """
+    if not _SAVEPOINT_NAME.fullmatch(name):
+        raise ValueError("Invalid SQLite savepoint name")
+    connection.execute(f"SAVEPOINT {name}")
+    try:
+        yield
+    except BaseException:
+        connection.execute(f"ROLLBACK TO {name}")
+        connection.execute(f"RELEASE {name}")
+        raise
+    else:
+        connection.execute(f"RELEASE {name}")
 
 
 def connect(path: str | Path) -> sqlite3.Connection:

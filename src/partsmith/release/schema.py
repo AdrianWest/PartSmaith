@@ -4,15 +4,17 @@
 without network access.
 """
 
-import json
-from decimal import Decimal
 from functools import cache, lru_cache
-from importlib.resources import files
 from pathlib import Path
 
-from jsonschema import Draft202012Validator, validators
+from jsonschema import Draft202012Validator
 
-from partsmith.ir.errors import Issue, pointer
+from partsmith.ir.errors import Issue
+from partsmith.schema_support import (
+    decimal_validator_class,
+    load_packaged_schema,
+    schema_error_path,
+)
 
 SCHEMA_VERSION = "1.0"
 
@@ -24,10 +26,8 @@ def load_schema() -> dict:
     @details Editable installs fall back to the repository schema file.
     """
     name = f"phase8-contracts-{SCHEMA_VERSION}.schema.json"
-    resource = files(__package__).joinpath(name)
-    if not resource.is_file():
-        resource = Path(__file__).resolve().parents[3] / "schemas" / name
-    return json.loads(resource.read_text(encoding="utf-8"))
+    fallback = Path(__file__).resolve().parents[3] / "schemas" / name
+    return load_packaged_schema(__package__, name, fallback)
 
 
 @cache
@@ -40,17 +40,7 @@ def _validator(kind: str) -> Draft202012Validator:
     schema = load_schema()
     if kind not in schema["$defs"]:
         raise ValueError(f"Unsupported Phase 8 schema kind: {kind}")
-    checker = Draft202012Validator.TYPE_CHECKER.redefine(
-        "integer",
-        lambda _, value: (
-            not isinstance(value, bool)
-            and isinstance(value, (int, float, Decimal))
-            and value == int(value)
-        ),
-    )
-    validator_class = validators.extend(
-        Draft202012Validator, type_checker=checker
-    )
+    validator_class = decimal_validator_class()
     validator_class.check_schema(schema)
     return validator_class(
         {
@@ -70,9 +60,7 @@ def schema_issues(kind: str, data: object) -> tuple[Issue, ...]:
     """
     issues = []
     for error in _validator(kind).iter_errors(data):
-        path = ""
-        for key in error.absolute_path:
-            path = pointer(path, key)
+        path = schema_error_path(error)
         issues.append(
             Issue(
                 path,

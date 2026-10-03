@@ -29,8 +29,8 @@ footprint before the build can enter release review.
 
 ## Results
 
-- Source installation: **451 passed**, no failures or skips.
-- Fresh installed wheel: **451 passed**, no failures or skips.
+- Source installation: **452 passed**, no failures or skips.
+- Fresh installed wheel: **452 passed**, no failures or skips.
 - Focused Phase 8 and native KiCad suites: **51 passed**.
 - Ruff lint and format checks pass.
 - `pip check` reports no broken requirements.

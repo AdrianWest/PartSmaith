@@ -8,10 +8,10 @@ parameterized storage.
 
 import sqlite3
 from dataclasses import asdict, dataclass
-from datetime import UTC, datetime
 from uuid import uuid4
 
 from partsmith import __version__
+from partsmith.persistence.database import utc_timestamp
 
 
 @dataclass(frozen=True, kw_only=True)
@@ -148,7 +148,7 @@ class Repository:
         public contract.
 
         """
-        now = datetime.now(UTC).isoformat()
+        now = utc_timestamp()
         record = Project(
             id=str(uuid4()),
             name=name,
@@ -179,7 +179,7 @@ class Repository:
         public contract.
 
         """
-        now = datetime.now(UTC).isoformat()
+        now = utc_timestamp()
         record = Component(
             id=str(uuid4()),
             project_id=project_id,
@@ -228,7 +228,7 @@ class Repository:
         public contract.
 
         """
-        now = datetime.now(UTC).isoformat()
+        now = utc_timestamp()
         record = Build(
             id=str(uuid4()),
             component_id=component_id,

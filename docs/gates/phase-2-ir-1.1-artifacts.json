@@ -16,7 +16,7 @@
   "sha256": {
     ".github/workflows/ci.yml": "2c7167aa3c34493debcef78aec0703339f9b0ee595dd3e5b11d1ea30ea649409",
     ".tools/phase-2-ir11-dist/partsmith-0.1.0-py3-none-any.whl": "9d8eb4948f6481b5d981b6ae5b896f77dc3599b77b49c7c3b3cbbcfbea307203",
-    "README.md": "8578221e121a0742dc0c7789ad3e11adba3511f55fe7f8d373823e52062ae0da",
+    "README.md": "f3b205dfb320dd56a870cac79a04553bd0aace5ac9b2dd7f7467b7697a166dde",
     "docs/gates/phase-2-ir-1.1-tests.xml": "8dc084e0c42a3c997f57201c79ebf5d49e290ec917f097e11aa3d76c9f5469f2",
     "docs/gates/phase-2-ir-1.1-wheel-tests.xml": "4b41123dffaaf57af6c34fd96e937540a0c32225ab7818eda38ca95ec552affb",
     "fixtures/ir/v1.1/expected/0402.canonical.json": "1907fe7bb5f17bc48cf9539894162bcdaf84d625bf86d693180676b26924014a",
@@ -46,7 +46,7 @@
     "src/partsmith/ir/migration.py": "2d84dad20650a4a809ae80c829ad4e6dd885efe1bd105a617a0f3138ff5c261d",
     "src/partsmith/ir/model.py": "1bbd070956cb198931cbd7e14163e9622302cce1185a22de0883dc2add84198b",
     "src/partsmith/ir/revised.py": "ce8246e08c9257edd40b438b9d765c7eb63ae30f3dd0f79814e6ec1542458fbe",
-    "src/partsmith/ir/schema.py": "30fe6b77b1c3ea980677bb8be282dee1780d9ceaac8aadc1b2a34adc4b5a3056",
+    "src/partsmith/ir/schema.py": "da891157f0272d956c6d100db0247f3bfb543287c24dcf53d071061529c3dc47",
     "src/partsmith/ir/units.py": "d5f6bd41ad13c3861d774b4b5bd6b8fea5566486784182a46228aac2ce3d2166",
     "tests/test_ir.py": "ca8b1b6d4cb3aaa9d1d00caf26d1b4c2c6d409e8de848274b39122fd5156dd02",
     "tests/test_ir_v11.py": "068fa74fdd26dc204c4b26f0df2730bd3d0ba3545f28a124b8ba5ae761a13721"

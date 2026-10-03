@@ -7,12 +7,12 @@ and exact approval bindings without committing caller transactions.
 from __future__ import annotations
 
 import sqlite3
-from datetime import UTC, datetime
 from hashlib import sha256
 from pathlib import PurePosixPath
 from uuid import uuid4
 
 from partsmith.ir.canonical import canonical_json, parse_json
+from partsmith.persistence.database import utc_timestamp
 from partsmith.persistence.immutable import IdentityConflictError
 from partsmith.release.contracts import (
     ApprovalBinding,
@@ -35,14 +35,6 @@ _ARTIFACT_NAMES = {
     "FOOTPRINT": "footprint",
     "MODEL_3D": "model_3d",
 }
-
-
-def _now() -> str:
-    """@brief Returns one UTC audit timestamp.
-    @return ISO 8601 UTC timestamp.
-    @details Timestamps are excluded from deterministic engineering hashes.
-    """
-    return datetime.now(UTC).isoformat()
 
 
 def _require_sha256(name: str, value: str) -> None:
@@ -173,7 +165,7 @@ class ReleaseStore:
                     "Build snapshot is bound to different bytes"
                 )
             return digest
-        now = _now()
+        now = utc_timestamp()
         self.connection.execute(
             "INSERT INTO build_snapshots VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
             (
@@ -245,7 +237,7 @@ class ReleaseStore:
                     "Artifact identity is bound to different content"
                 )
             return digest
-        now = _now()
+        now = utc_timestamp()
         self.connection.execute(
             "INSERT INTO artifacts VALUES "
             "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
@@ -304,7 +296,7 @@ class ReleaseStore:
                     "Validation result hash is bound to another identity"
                 )
             return digest
-        now = _now()
+        now = utc_timestamp()
         self.connection.execute(
             "INSERT INTO validation_results VALUES "
             "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
@@ -429,7 +421,7 @@ class ReleaseStore:
                     "Build manifest is bound to different content"
                 )
             return manifest.sha256
-        now = _now()
+        now = utc_timestamp()
         self.connection.execute(
             "INSERT INTO engineering_manifests VALUES (?, ?, ?, ?, ?, ?)",
             (
@@ -475,7 +467,7 @@ class ReleaseStore:
                     "Post-manifest report hash is bound elsewhere"
                 )
             return report.sha256
-        now = _now()
+        now = utc_timestamp()
         self.connection.execute(
             "INSERT INTO post_manifest_reports VALUES (?, ?, ?, ?, ?, ?, ?)",
             (
@@ -636,7 +628,7 @@ class ReleaseStore:
             if binding is not None
             else sha256(canonical_json(None)).hexdigest()
         )
-        now = _now()
+        now = utc_timestamp()
         self.connection.execute(
             "INSERT INTO release_decisions VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
             (

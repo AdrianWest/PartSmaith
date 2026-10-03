@@ -8,12 +8,12 @@ from __future__ import annotations
 
 import sqlite3
 from dataclasses import dataclass
-from datetime import UTC, datetime
 from hashlib import sha256
 
 from partsmith.ir.canonical import canonical_json, parse_json
 from partsmith.ir.history import as_data
 from partsmith.ir.schema import fragment_valid
+from partsmith.persistence.database import utc_timestamp
 
 
 class IdentityConflictError(ValueError):
@@ -77,7 +77,7 @@ class ImmutableStore:
                     "Inventory digest is bound to different bytes"
                 )
             return digest
-        now = datetime.now(UTC).isoformat()
+        now = utc_timestamp()
         self.connection.execute(
             "INSERT INTO acquisition_inventories VALUES (?, ?, ?, ?)",
             (digest, blob, now, now),
@@ -144,7 +144,7 @@ class ImmutableStore:
                 raise ValueError(
                     "Revision parent belongs to another component"
                 )
-        now = datetime.now(UTC).isoformat()
+        now = utc_timestamp()
         self.connection.execute(
             "INSERT INTO ir_revisions VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
             (
@@ -227,7 +227,7 @@ class ImmutableStore:
             raise ValueError("Head revision belongs to another component")
         if not revision["reviewed"] or revision["inventory_sha256"] is None:
             raise ValueError("Current head must be a reviewed revision")
-        now = datetime.now(UTC).isoformat()
+        now = utc_timestamp()
         if expected_head_hash is None:
             try:
                 self.connection.execute(

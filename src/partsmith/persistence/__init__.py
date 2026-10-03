@@ -6,7 +6,13 @@ boundaries.
 @details Provides the module implementation and public interfaces.
 """
 
-from partsmith.persistence.database import connect, database, migrate
+from partsmith.persistence.database import (
+    connect,
+    database,
+    migrate,
+    savepoint,
+    utc_timestamp,
+)
 from partsmith.persistence.immutable import (
     IdentityConflictError,
     ImmutableStore,
@@ -32,5 +38,7 @@ __all__ = [
     "connect",
     "database",
     "migrate",
+    "savepoint",
+    "utc_timestamp",
     "validation_semantics_hash",
 ]

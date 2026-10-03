@@ -83,6 +83,12 @@ canonical serialization, and hashing. Package definitions, generators,
 artifact validation, KiCad integration, and the review
 experience follow in controlled phases.
 
+Shared infrastructure remains intentionally narrow. `partsmith.schema_support`
+provides offline schema loading, Decimal-compatible validator construction,
+and value-free error paths while each domain owns its validation policy.
+`partsmith.persistence.database` provides common UTC audit timestamps and
+rollback-safe SQLite savepoints while callers retain transaction ownership.
+
 The current specification is **v0.9.6**. The recorded IR 1.2 Phase 2 PASS covers
 the implementation against v0.9.5 and remains the prerequisite for Phase 3.
 The revised specification assigns new dependency projections, review services,

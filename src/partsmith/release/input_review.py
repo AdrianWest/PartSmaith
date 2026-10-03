@@ -8,11 +8,9 @@ from __future__ import annotations
 
 import copy
 import sqlite3
-from collections.abc import Iterator
-from contextlib import contextmanager
 from dataclasses import dataclass
-from datetime import UTC, datetime
 from hashlib import sha256
+from typing import Protocol
 from uuid import uuid4
 
 from partsmith.ir import ComponentIR, canonical_json
@@ -21,6 +19,7 @@ from partsmith.ir.history import validate_revision_transition
 from partsmith.ir.revised import UNRESOLVED, resolve_pointer
 from partsmith.ir.schema import fragment_valid
 from partsmith.ir.targets import overlaps, owner_path, target_schema
+from partsmith.persistence.database import savepoint, utc_timestamp
 from partsmith.persistence.immutable import ImmutableStore, StaleHeadError
 from partsmith.release.contracts import AuthenticatedPrincipal
 from partsmith.release.schema import schema_issues
@@ -28,12 +27,22 @@ from partsmith.release.schema import schema_issues
 NO_HEAD_HASH = "0" * 64
 
 
-def _now() -> str:
-    """@brief Returns one server-controlled UTC review timestamp.
-    @return ISO 8601 UTC timestamp.
-    @details Caller-supplied timestamps are never trusted review metadata.
+class _CandidateProposalRequest(Protocol):
+    """@brief Describes common exact-base proposal request bindings.
+    @details Typed proposal requests expose these fields and canonical data.
     """
-    return datetime.now(UTC).isoformat()
+
+    component_id: str
+    base_revision_id: str
+    base_revision_hash: str
+    expected_head_hash: str
+
+    def to_dict(self) -> dict:
+        """@brief Serializes the closed request contract.
+        @return JSON-compatible request mapping.
+        @details Implementations retain their proposal-specific fields.
+        """
+        ...
 
 
 def _validate_request(kind: str, data: dict) -> None:
@@ -49,25 +58,6 @@ def _validate_request(kind: str, data: dict) -> None:
             f"{issue.path or '/'}:{issue.code}" for issue in issues
         )
         raise ValueError(f"Invalid {kind}: {detail}")
-
-
-@contextmanager
-def _savepoint(connection: sqlite3.Connection, name: str) -> Iterator[None]:
-    """@brief Protects one input-review operation with a savepoint.
-    @param connection Active SQLite connection.
-    @param name Trusted internal savepoint name.
-    @return Iterator yielding control inside the savepoint.
-    @details Any failure removes partial candidates, events, and head changes.
-    """
-    connection.execute(f"SAVEPOINT {name}")
-    try:
-        yield
-    except BaseException:
-        connection.execute(f"ROLLBACK TO {name}")
-        connection.execute(f"RELEASE {name}")
-        raise
-    else:
-        connection.execute(f"RELEASE {name}")
 
 
 @dataclass(frozen=True)
@@ -494,6 +484,71 @@ class InputReviewService:
             raise ValueError("Inventory does not match candidate inputs")
         return inventory
 
+    def _publish_candidate_proposal(
+        self,
+        request: _CandidateProposalRequest,
+        candidate: dict,
+        candidate_sha256: str,
+        inventory_sha256: str,
+        proposal_fields: dict,
+        mismatch_message: str,
+    ) -> ProposalResult:
+        """@brief Persists one generated candidate and its closed proposal.
+        @param request Exact base and head bindings for the proposal.
+        @param candidate Complete unreviewed candidate revision mapping.
+        @param candidate_sha256 Pre-storage canonical candidate digest.
+        @param inventory_sha256 Exact acquisition inventory digest.
+        @param proposal_fields Proposal-specific canonical fields.
+        @param mismatch_message Stable stored-candidate mismatch message.
+        @return Immutable proposal and candidate identities.
+        @details Inventory coverage, immutable storage, proposal hashing, and
+        stored-byte verification are shared; domain validation remains with
+        each proposal method.
+        """
+        self._inventory_matches(candidate, inventory_sha256)
+        stored = self.store.put_revision(
+            candidate,
+            inventory_sha256=inventory_sha256,
+            reviewed=False,
+        )
+        proposal_id = str(uuid4())
+        proposal_data = request.to_dict() | {
+            "proposal_id": proposal_id,
+            "candidate_revision_id": stored.revision_id,
+            "candidate_revision_hash": stored.canonical_sha256,
+            "inventory_sha256": inventory_sha256,
+        }
+        proposal_data.update(proposal_fields)
+        blob = canonical_json(proposal_data)
+        digest = sha256(blob).hexdigest()
+        now = utc_timestamp()
+        self.connection.execute(
+            "INSERT INTO review_proposals VALUES "
+            "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+            (
+                proposal_id,
+                request.component_id,
+                request.base_revision_id,
+                request.base_revision_hash,
+                stored.revision_id,
+                stored.canonical_sha256,
+                request.expected_head_hash,
+                digest,
+                blob,
+                "PENDING",
+                now,
+                now,
+            ),
+        )
+        if candidate_sha256 != stored.canonical_sha256:
+            raise RuntimeError(mismatch_message)
+        return ProposalResult(
+            proposal_id,
+            digest,
+            stored.revision_id,
+            stored.canonical_sha256,
+        )
+
     def _require_review_only_transition(
         self, base: dict, candidate: dict
     ) -> None:
@@ -646,7 +701,7 @@ class InputReviewService:
         @details The service captures the previous value and type, retains the
         engineering target unchanged, and appends a PENDING decision record.
         """
-        with _savepoint(self.connection, "override_review_proposal"):
+        with savepoint(self.connection, "override_review_proposal"):
             _, base = self._require_current_base(
                 request.component_id,
                 request.base_revision_id,
@@ -666,7 +721,7 @@ class InputReviewService:
             if not fragment_valid(new_value, schema):
                 raise ValueError("Override value does not match target schema")
             previous_value = copy.deepcopy(resolve_pointer(base, request.path))
-            timestamp = _now()
+            timestamp = utc_timestamp()
             candidate = copy.deepcopy(base)
             candidate["revision"]["id"] = str(uuid4())
             candidate["revision"]["parent_id"] = request.base_revision_id
@@ -699,51 +754,18 @@ class InputReviewService:
             inventory_sha256 = base["revision"]["evidence_review"][
                 "inventory_sha256"
             ]
-            self._inventory_matches(candidate, inventory_sha256)
-            stored = self.store.put_revision(
+            return self._publish_candidate_proposal(
+                request,
                 candidate,
-                inventory_sha256=inventory_sha256,
-                reviewed=False,
-            )
-            proposal_id = str(uuid4())
-            proposal_data = request.to_dict() | {
-                "proposal_id": proposal_id,
-                "candidate_revision_id": stored.revision_id,
-                "candidate_revision_hash": stored.canonical_sha256,
-                "inventory_sha256": inventory_sha256,
-                "pending_override_id": pending_id,
-                "value_type": value_type,
-                "previous_value": previous_value,
-                "actions": ["OVERRIDE_REPLACEMENT"],
-            }
-            blob = canonical_json(proposal_data)
-            digest = sha256(blob).hexdigest()
-            now = _now()
-            self.connection.execute(
-                "INSERT INTO review_proposals VALUES "
-                "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-                (
-                    proposal_id,
-                    request.component_id,
-                    request.base_revision_id,
-                    request.base_revision_hash,
-                    stored.revision_id,
-                    stored.canonical_sha256,
-                    request.expected_head_hash,
-                    digest,
-                    blob,
-                    "PENDING",
-                    now,
-                    now,
-                ),
-            )
-            if candidate_document.sha256 != stored.canonical_sha256:
-                raise RuntimeError("Stored override candidate hash mismatch")
-            return ProposalResult(
-                proposal_id,
-                digest,
-                stored.revision_id,
-                stored.canonical_sha256,
+                candidate_document.sha256,
+                inventory_sha256,
+                {
+                    "pending_override_id": pending_id,
+                    "value_type": value_type,
+                    "previous_value": previous_value,
+                    "actions": ["OVERRIDE_REPLACEMENT"],
+                },
+                "Stored override candidate hash mismatch",
             )
 
     def _resolution_evidence(
@@ -804,7 +826,7 @@ class InputReviewService:
         target or active override and requires every unresolved candidate to
         retain an explicit disposition.
         """
-        with _savepoint(self.connection, "conflict_review_proposal"):
+        with savepoint(self.connection, "conflict_review_proposal"):
             _, base = self._require_current_base(
                 request.component_id,
                 request.base_revision_id,
@@ -866,7 +888,7 @@ class InputReviewService:
                     "Replacement resolution lost conflict dispositions"
                 )
             pending_id = str(uuid4())
-            timestamp = _now()
+            timestamp = utc_timestamp()
             candidate = copy.deepcopy(base)
             candidate["revision"]["id"] = str(uuid4())
             candidate["revision"]["parent_id"] = request.base_revision_id
@@ -899,52 +921,19 @@ class InputReviewService:
             inventory_sha256 = base["revision"]["evidence_review"][
                 "inventory_sha256"
             ]
-            self._inventory_matches(candidate, inventory_sha256)
-            stored = self.store.put_revision(
+            return self._publish_candidate_proposal(
+                request,
                 candidate,
-                inventory_sha256=inventory_sha256,
-                reviewed=False,
-            )
-            proposal_id = str(uuid4())
-            proposal_data = request.to_dict() | {
-                "proposal_id": proposal_id,
-                "candidate_revision_id": stored.revision_id,
-                "candidate_revision_hash": stored.canonical_sha256,
-                "inventory_sha256": inventory_sha256,
-                "pending_resolution_id": pending_id,
-                "supersedes_resolution_id": (
-                    existing["id"] if existing is not None else None
-                ),
-                "actions": ["CONFLICT_RESOLUTION"],
-            }
-            blob = canonical_json(proposal_data)
-            digest = sha256(blob).hexdigest()
-            now = _now()
-            self.connection.execute(
-                "INSERT INTO review_proposals VALUES "
-                "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-                (
-                    proposal_id,
-                    request.component_id,
-                    request.base_revision_id,
-                    request.base_revision_hash,
-                    stored.revision_id,
-                    stored.canonical_sha256,
-                    request.expected_head_hash,
-                    digest,
-                    blob,
-                    "PENDING",
-                    now,
-                    now,
-                ),
-            )
-            if candidate_document.sha256 != stored.canonical_sha256:
-                raise RuntimeError("Stored resolution candidate hash mismatch")
-            return ProposalResult(
-                proposal_id,
-                digest,
-                stored.revision_id,
-                stored.canonical_sha256,
+                candidate_document.sha256,
+                inventory_sha256,
+                {
+                    "pending_resolution_id": pending_id,
+                    "supersedes_resolution_id": (
+                        existing["id"] if existing is not None else None
+                    ),
+                    "actions": ["CONFLICT_RESOLUTION"],
+                },
+                "Stored resolution candidate hash mismatch",
             )
 
     def propose_evidence_exclusion(
@@ -959,7 +948,7 @@ class InputReviewService:
         @details Assigned evidence cannot be excluded; replacements must retain
         source and interpretation while declaring candidate targets.
         """
-        with _savepoint(self.connection, "evidence_exclusion_proposal"):
+        with savepoint(self.connection, "evidence_exclusion_proposal"):
             _, base = self._require_current_base(
                 request.component_id,
                 request.base_revision_id,
@@ -989,7 +978,7 @@ class InputReviewService:
                     != record["interpretation"]["status"]
                 ):
                     raise ValueError("Replacement evidence is not compatible")
-            timestamp = _now()
+            timestamp = utc_timestamp()
             pending = {
                 "evidence_id": request.evidence_id,
                 "replacement_evidence_ids": sorted(
@@ -1015,49 +1004,16 @@ class InputReviewService:
             inventory_sha256 = base["revision"]["evidence_review"][
                 "inventory_sha256"
             ]
-            self._inventory_matches(candidate, inventory_sha256)
-            stored = self.store.put_revision(
+            return self._publish_candidate_proposal(
+                request,
                 candidate,
-                inventory_sha256=inventory_sha256,
-                reviewed=False,
-            )
-            proposal_id = str(uuid4())
-            proposal_data = request.to_dict() | {
-                "proposal_id": proposal_id,
-                "candidate_revision_id": stored.revision_id,
-                "candidate_revision_hash": stored.canonical_sha256,
-                "inventory_sha256": inventory_sha256,
-                "pending_exclusion": pending,
-                "actions": ["EVIDENCE_EXCLUSION"],
-            }
-            blob = canonical_json(proposal_data)
-            digest = sha256(blob).hexdigest()
-            now = _now()
-            self.connection.execute(
-                "INSERT INTO review_proposals VALUES "
-                "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-                (
-                    proposal_id,
-                    request.component_id,
-                    request.base_revision_id,
-                    request.base_revision_hash,
-                    stored.revision_id,
-                    stored.canonical_sha256,
-                    request.expected_head_hash,
-                    digest,
-                    blob,
-                    "PENDING",
-                    now,
-                    now,
-                ),
-            )
-            if candidate_document.sha256 != stored.canonical_sha256:
-                raise RuntimeError("Stored exclusion candidate hash mismatch")
-            return ProposalResult(
-                proposal_id,
-                digest,
-                stored.revision_id,
-                stored.canonical_sha256,
+                candidate_document.sha256,
+                inventory_sha256,
+                {
+                    "pending_exclusion": pending,
+                    "actions": ["EVIDENCE_EXCLUSION"],
+                },
+                "Stored exclusion candidate hash mismatch",
             )
 
     def propose_pin_reorder(
@@ -1072,7 +1028,7 @@ class InputReviewService:
         @details The pending candidate retains the current pin order; approved
         rebindings and reordering are applied together in the reviewed child.
         """
-        with _savepoint(self.connection, "pin_reorder_proposal"):
+        with savepoint(self.connection, "pin_reorder_proposal"):
             _, base = self._require_current_base(
                 request.component_id,
                 request.base_revision_id,
@@ -1092,7 +1048,7 @@ class InputReviewService:
             new_positions = {
                 number: index for index, number in enumerate(requested_order)
             }
-            timestamp = _now()
+            timestamp = utc_timestamp()
             pending = [
                 {
                     "old_path": f"/pins/{old_index}",
@@ -1119,49 +1075,16 @@ class InputReviewService:
             inventory_sha256 = base["revision"]["evidence_review"][
                 "inventory_sha256"
             ]
-            self._inventory_matches(candidate, inventory_sha256)
-            stored = self.store.put_revision(
+            return self._publish_candidate_proposal(
+                request,
                 candidate,
-                inventory_sha256=inventory_sha256,
-                reviewed=False,
-            )
-            proposal_id = str(uuid4())
-            proposal_data = request.to_dict() | {
-                "proposal_id": proposal_id,
-                "candidate_revision_id": stored.revision_id,
-                "candidate_revision_hash": stored.canonical_sha256,
-                "inventory_sha256": inventory_sha256,
-                "pending_rebindings": pending,
-                "actions": ["PIN_REORDER"],
-            }
-            blob = canonical_json(proposal_data)
-            digest = sha256(blob).hexdigest()
-            now = _now()
-            self.connection.execute(
-                "INSERT INTO review_proposals VALUES "
-                "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-                (
-                    proposal_id,
-                    request.component_id,
-                    request.base_revision_id,
-                    request.base_revision_hash,
-                    stored.revision_id,
-                    stored.canonical_sha256,
-                    request.expected_head_hash,
-                    digest,
-                    blob,
-                    "PENDING",
-                    now,
-                    now,
-                ),
-            )
-            if candidate_document.sha256 != stored.canonical_sha256:
-                raise RuntimeError("Stored pin-reorder candidate mismatch")
-            return ProposalResult(
-                proposal_id,
-                digest,
-                stored.revision_id,
-                stored.canonical_sha256,
+                candidate_document.sha256,
+                inventory_sha256,
+                {
+                    "pending_rebindings": pending,
+                    "actions": ["PIN_REORDER"],
+                },
+                "Stored pin-reorder candidate mismatch",
             )
 
     def propose(
@@ -1174,7 +1097,7 @@ class InputReviewService:
         @details The candidate is persisted unreviewed and no approval metadata
         or current-head change is created.
         """
-        with _savepoint(self.connection, "input_review_proposal"):
+        with savepoint(self.connection, "input_review_proposal"):
             head = self._require_expected_head(
                 request.component_id, request.expected_head_hash
             )
@@ -1218,7 +1141,7 @@ class InputReviewService:
             proposal_data = request.to_dict() | {"proposal_id": proposal_id}
             blob = canonical_json(proposal_data)
             digest = sha256(blob).hexdigest()
-            now = _now()
+            now = utc_timestamp()
             self.connection.execute(
                 "INSERT INTO review_proposals VALUES "
                 "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
@@ -1459,7 +1382,7 @@ class InputReviewService:
         @details Revision insertion, event append, and head compare-and-swap
         occur atomically and never approve generated artifacts.
         """
-        with _savepoint(self.connection, "input_review_approval"):
+        with savepoint(self.connection, "input_review_approval"):
             principal.require_reviewer(request.reviewer)
             row = self._proposal(request.proposal_id, request.proposal_hash)
             self._request_matches_proposal(
@@ -1480,7 +1403,7 @@ class InputReviewService:
             inventory = self._inventory_matches(
                 candidate, request.inventory_sha256
             )
-            timestamp = _now()
+            timestamp = utc_timestamp()
             proposal = parse_json(bytes(row["canonical_bytes"]))
             approved = self._approved_revision(
                 candidate,
@@ -1537,7 +1460,7 @@ class InputReviewService:
         @return Immutable rejection event identity.
         @details Rejection does not modify the candidate or component head.
         """
-        with _savepoint(self.connection, "input_review_rejection"):
+        with savepoint(self.connection, "input_review_rejection"):
             principal.require_reviewer(request.reviewer)
             row = self._proposal(request.proposal_id, request.proposal_hash)
             self._request_matches_proposal(
@@ -1567,6 +1490,6 @@ class InputReviewService:
                         request.candidate_revision_hash
                     ),
                 },
-                _now(),
+                utc_timestamp(),
             )
             return InputReviewResult(request.proposal_id, event_id, "REJECT")
