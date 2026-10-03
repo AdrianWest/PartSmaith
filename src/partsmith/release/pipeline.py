@@ -351,9 +351,9 @@ class KnownGoodReleasePipeline:
             results.append(data)
         results.append(
             _validation_result(
-                "kicad-10-compatibility",
+                "kicad-format-parser",
                 "PASS",
-                "KiCad symbol and footprint parsers accept final bytes",
+                "PartSmith headless parsers accept final KiCad-format bytes",
                 (hashes["symbol"], hashes["footprint"], hashes["model_3d"]),
                 category="compatibility",
             )
@@ -424,7 +424,12 @@ class KnownGoodReleasePipeline:
                 },
                 "validation": {"overall": "PASS", "results": results},
                 "compatibility": {
-                    "kicad": {"major_version": "10", "status": "PASS"}
+                    "kicad": {
+                        "major_version": "10",
+                        "status": "FORMAT_VALIDATED",
+                        "adapter": "partsmith-headless-parser",
+                        "native_kicad_cli": False,
+                    }
                 },
                 "overrides": {
                     "active_content_hashes": [
