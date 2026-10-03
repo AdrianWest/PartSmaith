@@ -268,12 +268,8 @@ class KnownGoodReleasePipeline:
             },
             "configuration": {
                 "symbol": json.loads(json.dumps(asdict(symbol_context))),
-                "footprint": json.loads(
-                    json.dumps(asdict(footprint_context))
-                ),
-                "model_3d": json.loads(
-                    json.dumps(asdict(threed_context))
-                ),
+                "footprint": json.loads(json.dumps(asdict(footprint_context))),
+                "model_3d": json.loads(json.dumps(asdict(threed_context))),
                 "association": {"model_path": model_path},
                 "kicad_target": ir.data["build"]["kicad_target"],
             },
@@ -613,9 +609,7 @@ class KnownGoodReleasePipeline:
             os.replace(temporary, destination)
         except BaseException:
             if temporary.exists():
-                for path in sorted(
-                    temporary.rglob("*"), reverse=True
-                ):
+                for path in sorted(temporary.rglob("*"), reverse=True):
                     if path.is_file():
                         path.unlink()
                     else:

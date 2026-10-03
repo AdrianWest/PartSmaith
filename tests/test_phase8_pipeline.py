@@ -46,9 +46,7 @@ def test_known_good_component_approves_and_exports_exact_bytes(tmp_path):
             inventory_sha256=inventory_hash,
             reviewed=True,
         )
-        store.compare_and_swap_head(
-            component.id, revision.revision_id, None
-        )
+        store.compare_and_swap_head(component.id, revision.revision_id, None)
         pipeline = KnownGoodReleasePipeline(connection)
         candidate = pipeline.run(
             component.id,
@@ -268,9 +266,7 @@ def test_silkscreen_only_revision_preserves_step_and_invalidates_approval(
             placed_revision.revision_id,
             child.canonical_sha256,
         )
-        with pytest.raises(
-            ValueError, match="final-byte validation failed"
-        ):
+        with pytest.raises(ValueError, match="final-byte validation failed"):
             pipeline.run(
                 component.id,
                 placed_revision.revision_id,
