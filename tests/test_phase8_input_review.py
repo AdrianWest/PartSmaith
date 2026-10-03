@@ -33,6 +33,7 @@ from partsmith.release.input_review import (
     InputReviewProposal,
     InputReviewService,
     OverrideProposalRequest,
+    PinReorderProposalRequest,
 )
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -1056,6 +1057,125 @@ def test_evidence_exclusion_rejects_invalid_dispositions(
                     replacement_evidence_ids=replacement_ids,
                     reason="Invalid evidence disposition",
                 ),
+                AuthenticatedPrincipal("proposer-1", "local-test"),
+            )
+        assert (
+            connection.execute("SELECT COUNT(*) FROM ir_revisions").fetchone()[
+                0
+            ]
+            == before
+        )
+        assert (
+            connection.execute(
+                "SELECT COUNT(*) FROM review_proposals"
+            ).fetchone()[0]
+            == 0
+        )
+
+
+def test_pin_reorder_creates_reviewed_target_rebindings(tmp_path):
+    """@brief Verifies pin order changes preserve terminal identities.
+    @param tmp_path Pytest temporary directory.
+    @return None.
+    @details Pending rebindings remain immutable and approved mappings move
+    every affected historical pin path.
+    """
+    with database(tmp_path / "db") as connection:
+        component, base, inventory_hash, service = _reviewed_head_fixture(
+            connection
+        )
+        result = service.propose_pin_reorder(
+            PinReorderProposalRequest(
+                component_id=component.id,
+                base_revision_id=base.revision_id,
+                base_revision_hash=base.canonical_sha256,
+                expected_head_hash=base.canonical_sha256,
+                terminal_order=("2", "1"),
+                reason="Match reviewed physical terminal ordering",
+            ),
+            AuthenticatedPrincipal("proposer-1", "local-test"),
+        )
+        store = ImmutableStore(connection)
+        candidate = store.get_revision(result.candidate_revision_id)
+        assert [pin["number"] for pin in candidate["pins"]] == ["1", "2"]
+        pending = candidate["revision"]["target_rebindings"][-2:]
+        assert {binding["approval_state"] for binding in pending} == {
+            "PENDING"
+        }
+        assert {
+            (binding["old_path"], binding["new_path"]) for binding in pending
+        } == {("/pins/0", "/pins/1"), ("/pins/1", "/pins/0")}
+
+        reviewed = service.approve_inputs(
+            _override_approval_request(
+                component,
+                base.canonical_sha256,
+                inventory_hash,
+                result,
+            ),
+            AuthenticatedPrincipal("reviewer-1", "local-test"),
+        )
+        data = store.get_revision(reviewed.revision_id)
+        assert [pin["number"] for pin in data["pins"]] == ["2", "1"]
+        assert data["revision"]["target_rebindings"][-4:-2] == pending
+        approved = data["revision"]["target_rebindings"][-2:]
+        assert {binding["approval_state"] for binding in approved} == {
+            "APPROVED"
+        }
+        context = RequirementsContext(
+            "synthetic",
+            "test-1",
+            "test-1",
+            "test-1",
+            ("/pins",),
+            ("/pins",),
+        )
+        assert (
+            validate_ir(
+                data,
+                for_generation=True,
+                requirements=context,
+                revisions=store,
+            )
+            == ()
+        )
+
+
+@pytest.mark.parametrize(
+    ("order", "message"),
+    [
+        (("1",), "exact terminal identities"),
+        (("1", "3"), "exact terminal identities"),
+        (("1", "2"), "must change persisted order"),
+        (("1", "1"), "Invalid pin_reorder"),
+    ],
+)
+def test_pin_reorder_rejects_invalid_or_ambiguous_orders(
+    tmp_path, order, message
+):
+    """@brief Verifies reorder cannot add, remove, duplicate, or no-op pins.
+    @param tmp_path Pytest temporary directory.
+    @param order Proposed terminal-number order.
+    @param message Expected failure text.
+    @return None.
+    @details Invalid requests leave no candidate or proposal records.
+    """
+    with database(tmp_path / "db") as connection:
+        component, base, _, service = _reviewed_head_fixture(connection)
+        before = connection.execute(
+            "SELECT COUNT(*) FROM ir_revisions"
+        ).fetchone()[0]
+        with pytest.raises(ValueError, match=message):
+            request = PinReorderProposalRequest(
+                component_id=component.id,
+                base_revision_id=base.revision_id,
+                base_revision_hash=base.canonical_sha256,
+                expected_head_hash=base.canonical_sha256,
+                terminal_order=order,
+                reason="Invalid pin reorder",
+            )
+            service.propose_pin_reorder(
+                request,
                 AuthenticatedPrincipal("proposer-1", "local-test"),
             )
         assert (

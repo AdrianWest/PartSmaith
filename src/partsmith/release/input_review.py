@@ -249,6 +249,45 @@ class EvidenceExclusionProposalRequest:
 
 
 @dataclass(frozen=True)
+class PinReorderProposalRequest:
+    """@brief Requests a pin-array reorder by stable terminal identity.
+    @details This operation cannot renumber, add, or retire terminals and
+    creates explicit target rebindings for every moved pin.
+    """
+
+    component_id: str
+    base_revision_id: str
+    base_revision_hash: str
+    expected_head_hash: str
+    terminal_order: tuple[str, ...]
+    reason: str
+    schema_version: str = "1.0"
+
+    def __post_init__(self) -> None:
+        """@brief Validates this closed pin-reorder request.
+        @return None.
+        @details Exact terminal inventory is checked against the current base.
+        """
+        _validate_request("pin_reorder_proposal_request", self.to_dict())
+
+    def to_dict(self) -> dict:
+        """@brief Serializes this pin-reorder request.
+        @return JSON-compatible closed request mapping.
+        @details Paths, previous positions, reviewer, and time are
+        server-owned.
+        """
+        return {
+            "schema_version": self.schema_version,
+            "component_id": self.component_id,
+            "base_revision_id": self.base_revision_id,
+            "base_revision_hash": self.base_revision_hash,
+            "expected_head_hash": self.expected_head_hash,
+            "terminal_order": list(self.terminal_order),
+            "reason": self.reason,
+        }
+
+
+@dataclass(frozen=True)
 class InputApprovalRequest:
     """@brief Requests approval of one exact persisted input proposal.
     @details The authenticated principal must match reviewer exactly.
@@ -1021,6 +1060,110 @@ class InputReviewService:
                 stored.canonical_sha256,
             )
 
+    def propose_pin_reorder(
+        self,
+        request: PinReorderProposalRequest,
+        principal: AuthenticatedPrincipal,
+    ) -> ProposalResult:
+        """@brief Persists one pending pin-order and rebinding proposal.
+        @param request Exact current base and requested terminal order.
+        @param principal Authenticated proposing principal.
+        @return Immutable proposal and generated candidate identities.
+        @details The pending candidate retains the current pin order; approved
+        rebindings and reordering are applied together in the reviewed child.
+        """
+        with _savepoint(self.connection, "pin_reorder_proposal"):
+            _, base = self._require_current_base(
+                request.component_id,
+                request.base_revision_id,
+                request.base_revision_hash,
+                request.expected_head_hash,
+            )
+            current_order = [pin["number"] for pin in base["pins"]]
+            requested_order = list(request.terminal_order)
+            if len(requested_order) != len(current_order) or set(
+                requested_order
+            ) != set(current_order):
+                raise ValueError(
+                    "Pin reorder must preserve exact terminal identities"
+                )
+            if requested_order == current_order:
+                raise ValueError("Pin reorder must change persisted order")
+            new_positions = {
+                number: index for index, number in enumerate(requested_order)
+            }
+            timestamp = _now()
+            pending = [
+                {
+                    "old_path": f"/pins/{old_index}",
+                    "new_path": f"/pins/{new_positions[number]}",
+                    "base_revision_id": request.base_revision_id,
+                    "reason": request.reason,
+                    "reviewer": principal.subject,
+                    "timestamp": timestamp,
+                    "approval_state": "PENDING",
+                }
+                for old_index, number in enumerate(current_order)
+                if new_positions[number] != old_index
+            ]
+            candidate = copy.deepcopy(base)
+            candidate["revision"]["id"] = str(uuid4())
+            candidate["revision"]["parent_id"] = request.base_revision_id
+            candidate["revision"]["description"] = "Pending pin reorder"
+            candidate["revision"]["evidence_review"] = None
+            candidate["revision"]["target_rebindings"].extend(pending)
+            candidate_document = ComponentIR(candidate)
+            transition_issues = validate_revision_transition(base, candidate)
+            if transition_issues:
+                raise ValueError("Invalid pending pin-reorder transition")
+            inventory_sha256 = base["revision"]["evidence_review"][
+                "inventory_sha256"
+            ]
+            self._inventory_matches(candidate, inventory_sha256)
+            stored = self.store.put_revision(
+                candidate,
+                inventory_sha256=inventory_sha256,
+                reviewed=False,
+            )
+            proposal_id = str(uuid4())
+            proposal_data = request.to_dict() | {
+                "proposal_id": proposal_id,
+                "candidate_revision_id": stored.revision_id,
+                "candidate_revision_hash": stored.canonical_sha256,
+                "inventory_sha256": inventory_sha256,
+                "pending_rebindings": pending,
+                "actions": ["PIN_REORDER"],
+            }
+            blob = canonical_json(proposal_data)
+            digest = sha256(blob).hexdigest()
+            now = _now()
+            self.connection.execute(
+                "INSERT INTO review_proposals VALUES "
+                "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                (
+                    proposal_id,
+                    request.component_id,
+                    request.base_revision_id,
+                    request.base_revision_hash,
+                    stored.revision_id,
+                    stored.canonical_sha256,
+                    request.expected_head_hash,
+                    digest,
+                    blob,
+                    "PENDING",
+                    now,
+                    now,
+                ),
+            )
+            if candidate_document.sha256 != stored.canonical_sha256:
+                raise RuntimeError("Stored pin-reorder candidate mismatch")
+            return ProposalResult(
+                proposal_id,
+                digest,
+                stored.revision_id,
+                stored.canonical_sha256,
+            )
+
     def propose(
         self, request: InputReviewProposal, candidate_revision: dict
     ) -> ProposalResult:
@@ -1217,6 +1360,27 @@ class InputReviewService:
         }
         actions = proposal["actions"]
         if actions == ["EVIDENCE_REVIEW"]:
+            return approved
+        if actions == ["PIN_REORDER"]:
+            pending = proposal["pending_rebindings"]
+            if any(
+                binding not in approved["revision"]["target_rebindings"]
+                for binding in pending
+            ):
+                raise ValueError("Pending target rebindings do not resolve")
+            approved_bindings = []
+            for binding in pending:
+                reviewed = copy.deepcopy(binding)
+                reviewed["approval_state"] = "APPROVED"
+                reviewed["base_revision_id"] = request.candidate_revision_id
+                reviewed["reviewer"] = request.reviewer
+                reviewed["timestamp"] = timestamp
+                approved_bindings.append(reviewed)
+            approved["revision"]["target_rebindings"].extend(approved_bindings)
+            pins = {pin["number"]: pin for pin in approved["pins"]}
+            approved["pins"] = [
+                pins[number] for number in proposal["terminal_order"]
+            ]
             return approved
         if actions == ["EVIDENCE_EXCLUSION"]:
             pending = proposal["pending_exclusion"]
