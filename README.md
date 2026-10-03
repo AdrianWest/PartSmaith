@@ -83,6 +83,12 @@ canonical serialization, and hashing. Package definitions, generators,
 artifact validation, KiCad integration, and the review
 experience follow in controlled phases.
 
+Shared infrastructure remains intentionally narrow. `partsmith.schema_support`
+provides offline schema loading, Decimal-compatible validator construction,
+and value-free error paths while each domain owns its validation policy.
+`partsmith.persistence.database` provides common UTC audit timestamps and
+rollback-safe SQLite savepoints while callers retain transaction ownership.
+
 The current specification is **v0.9.6**. The recorded IR 1.2 Phase 2 PASS covers
 the implementation against v0.9.5 and remains the prerequisite for Phase 3.
 The revised specification assigns new dependency projections, review services,
@@ -102,7 +108,12 @@ py -3.12 -m venv .venv
 .\.venv\Scripts\Activate.ps1
 python -m pip install --requirement requirements-ci.txt
 python -m pip install -e . --no-deps
+.\scripts\setup_kicad.ps1
 ```
+
+Phase 8 and later release validation requires native KiCad 10.0.6. Internal
+PartSmith syntax parsers cannot replace `kicad-cli`; `partsmith doctor` fails
+when the pinned target runtime is missing or incompatible.
 
 Run the local quality checks before contributing:
 
@@ -129,9 +140,9 @@ git add docs/gates/phase-6-artifacts.json
 git commit -m "Refresh Phase 6 input hashes"
 ```
 
-The hook is local to clones that enable it; CI still verifies the Phase 5 and
-Phase 6 manifests on both operating systems. A failed gate requires
-investigation, not bypassing the check.
+The hook is local to clones that enable it; CI still verifies the recorded
+phase manifests and native KiCad compatibility on both operating systems. A
+failed gate requires investigation, not bypassing the check.
 
 `partsmith doctor` verifies the Phase 0 runtime foundation: supported Python,
 installed package version, and command-line availability.

@@ -41,6 +41,7 @@ def test_doctor_reports_passing_foundation_checks(capsys):
     diagnostics = json.loads(capsys.readouterr().out)
     assert {item["name"] for item in diagnostics} == {
         "cli",
+        "kicad",
         "package",
         "python",
     }

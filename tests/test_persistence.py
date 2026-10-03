@@ -13,9 +13,43 @@ from datetime import datetime
 
 import pytest
 
-from partsmith.persistence import Repository, connect, database, migrate
+from partsmith.persistence import (
+    Repository,
+    connect,
+    database,
+    migrate,
+    savepoint,
+    utc_timestamp,
+)
 
 database_module = importlib.import_module("partsmith.persistence.database")
+
+
+def test_shared_persistence_support(tmp_path):
+    """@brief Verifies shared timestamps and rollback-safe savepoints.
+    @param tmp_path Temporary test directory.
+    @return None.
+    @details Invalid savepoint names fail before SQL execution and exceptions
+    remove only work performed inside the savepoint.
+    """
+    assert datetime.fromisoformat(utc_timestamp()).utcoffset() is not None
+    with database(tmp_path / "support.sqlite3") as connection:
+        connection.execute("CREATE TABLE support_test (value TEXT NOT NULL)")
+        with pytest.raises(ValueError, match="savepoint name"):
+            with savepoint(connection, "invalid-name"):
+                pass
+        with pytest.raises(RuntimeError, match="rollback"):
+            with savepoint(connection, "support_test"):
+                connection.execute(
+                    "INSERT INTO support_test VALUES ('partial')"
+                )
+                raise RuntimeError("rollback")
+        assert (
+            connection.execute("SELECT COUNT(*) FROM support_test").fetchone()[
+                0
+            ]
+            == 0
+        )
 
 
 def test_phase_one_gate(tmp_path):
@@ -32,22 +66,23 @@ def test_phase_one_gate(tmp_path):
     assert not path.exists()
     with closing(connect(path)) as connection:
         assert connection.execute("PRAGMA foreign_keys").fetchone()[0] == 1
-        assert migrate(connection) == ("001",)
-        original = tuple(
-            connection.execute("SELECT * FROM schema_migrations").fetchone()
-        )
+        assert migrate(connection) == ("001", "002")
+        original = [
+            tuple(row)
+            for row in connection.execute(
+                "SELECT * FROM schema_migrations ORDER BY version"
+            )
+        ]
         assert migrate(connection) == ()
 
     with database(path) as connection:
         assert migrate(connection) == ()
-        assert (
-            tuple(
-                connection.execute(
-                    "SELECT * FROM schema_migrations"
-                ).fetchone()
+        assert [
+            tuple(row)
+            for row in connection.execute(
+                "SELECT * FROM schema_migrations ORDER BY version"
             )
-            == original
-        )
+        ] == original
         assert connection.execute("PRAGMA foreign_keys").fetchone()[0] == 1
         repository = Repository(connection)
         project = repository.create_project("Board 'α'", "/projects/board")
@@ -86,7 +121,7 @@ def test_phase_one_gate(tmp_path):
             connection.execute(
                 "SELECT COUNT(*) FROM schema_migrations"
             ).fetchone()[0]
-            == 1
+            == 2
         )
         with pytest.raises(sqlite3.IntegrityError):
             repository.create_component("X", "Y", "Z", project_id="missing")
@@ -218,7 +253,7 @@ def test_failed_migration_is_atomic_and_retryable(tmp_path, monkeypatch):
         monkeypatch.setattr(
             database_module, "_migration_sql", lambda: original
         )
-        assert migrate(connection) == ("001",)
+        assert migrate(connection) == ("001", "002")
 
 
 def test_changed_migration_is_rejected(tmp_path, monkeypatch):
@@ -254,7 +289,10 @@ def test_unknown_migration_is_rejected(tmp_path):
 
     """
     with database(tmp_path / "db") as connection:
-        connection.execute("UPDATE schema_migrations SET version = '999'")
+        connection.execute(
+            "UPDATE schema_migrations SET version = '999' "
+            "WHERE version = '002'"
+        )
         connection.commit()
         with pytest.raises(RuntimeError, match="unsupported"):
             migrate(connection)
@@ -324,7 +362,7 @@ def test_concurrent_initializers_apply_once(tmp_path):
 
     with ThreadPoolExecutor(max_workers=4) as executor:
         results = list(executor.map(initialize, range(4)))
-    assert results.count(("001",)) == 1
+    assert results.count(("001", "002")) == 1
     assert results.count(()) == 3
 
 

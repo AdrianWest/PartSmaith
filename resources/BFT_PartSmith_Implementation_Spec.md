@@ -244,7 +244,9 @@ justified non-applicability.
 2. Generate symbol, footprint, and STEP independently; run preliminary checks.
 3. Implement the orchestrator and persisted states in section 159.
 4. Finalize associations, then run final artifact, mapping, cross-validation,
-   and KiCad compatibility checks on the released bytes under section 167.
+   and mandatory native target-KiCad CLI compatibility checks on the released
+   bytes under section 167. Internal syntax parsers are preliminary checks and
+   cannot satisfy this requirement.
 5. Freeze artifact hashes and construct the deterministic engineering manifest.
 6. Run post-manifest verification; store its results outside that manifest.
 7. Implement headless approval/rejection bound to exact manifest/artifact hashes.
@@ -256,8 +258,13 @@ justified non-applicability.
     define section 174.1 installation identities without mutating source bundles.
 
 **Phase 8 gate (blocking):** One known-good component completes the pipeline
-without AI, passes all applicable validators and KiCad compatibility checks,
-and receives explicit recorded human approval through the headless service.
+without AI, passes all applicable validators and native target-KiCad CLI
+compatibility checks, and receives explicit recorded human approval through
+the headless service. The gate environment shall contain the requested KiCad
+major version. Missing or wrong-version `kicad-cli` is a blocking failure;
+PartSmith's internal parsers cannot be substituted for native compatibility.
+The Phase 8 reference gate pins KiCad 10.0.6. A different patch version
+requires regenerating native compatibility and gate evidence.
 The approved package and manifest exist. Negative approval tests prove that
 blocking results or stale final-byte checks cannot become APPROVED. CI may replay a recorded decision
 only when it is bound to the exact input and artifact hashes being checked.
@@ -715,6 +722,10 @@ source of engineering geometry.
 The repository shall use `kicad-cli` where it provides deterministic
 validation, conversion, export, rendering, or compatibility checks that
 are appropriate to the PartSmith acceptance pipeline.
+
+Phase 8 and later release gates shall use the native CLI for symbol and
+footprint parse/round-trip and render checks. Passing an internal PartSmith
+syntax parser is necessary but not sufficient for KiCad compatibility.
 
 CLI availability and version shall be recorded in the validation
 manifest.
@@ -5570,6 +5581,12 @@ platform
 The build shall fail early with a clear compatibility error if the
 requested KiCad target is unavailable.
 
+Phase 8 requires native CLI discovery before a persisted build attempt starts.
+The discovered major version shall equal the IR target major version. The
+validation result and engineering manifest shall record the native CLI version
+and operations. Executable paths and platform details are audit metadata and
+shall not affect deterministic engineering hashes.
+
 # 159. Build State Machine
 
 Persisted progress states:
@@ -5935,11 +5952,14 @@ The build graph shall use this order:
 3. On preliminary success, attach the final model path/placement and finalize
    all released bytes. Paths are portable logical paths; export relocation must
    preserve their resolution without rewriting the approved files.
-4. Run final artifact/mapping/cross-validation and KiCad compatibility checks
-   against those bytes, including referenced STEP existence/hash and association
-   transform. Retain ARTIFACT/FINAL_ARTIFACT results bound to exact artifact
-   hashes. Unchanged independent geometry checks may be reused only with exact
-   declared input/artifact hash equality; changed footprint bytes require new
+4. Run final artifact/mapping/cross-validation and native target-KiCad CLI
+   compatibility checks against those bytes. Native checks shall parse,
+   force-round-trip, and render the final symbol and footprint libraries.
+   Internal format checks run first but cannot produce compatibility PASS.
+   Also check referenced STEP existence/hash and association transform. Retain
+   ARTIFACT/FINAL_ARTIFACT results bound to exact artifact hashes. Unchanged
+   independent geometry checks may be reused only with exact declared
+   input/artifact hash equality; changed footprint bytes require new
    footprint/association/compatibility checks. Preliminary results for different
    bytes do not enter validation_semantics_hash.
 5. Freeze final artifact hashes and validation_semantics_hash. Construct/hash
