@@ -18,7 +18,7 @@
   "canonical_ir_sha256": "ff7a2362e1556909a074023aafed9acdfe63b6e60f036f24a4e64297e302cc0a",
   "dependency_sha256": "328f88062ccc8c2ead97e304e126562dcdc7e7913b78caf7a661fc78f439d7aa",
   "sha256": {
-    ".github/workflows/ci.yml": "2c7167aa3c34493debcef78aec0703339f9b0ee595dd3e5b11d1ea30ea649409",
+    ".github/workflows/ci.yml": "2ee62c4a4ade04d029d729197735e69f6b6a3c78678bb9c83530f773ac13bc3a",
     ".tools/phase-2-ir12-dist/partsmith-0.1.0-py3-none-any.whl": "4e05f0815387f24570bbf48486c164edc7dda0832ac5d12b6d657b084fce6650",
     "README.md": "f3b205dfb320dd56a870cac79a04553bd0aace5ac9b2dd7f7467b7697a166dde",
     "docs/component-ir.md": "4d31930b9d831d49e04562c20d7b6e7ce481d9812f0f698bc5300271d9a99a32",
