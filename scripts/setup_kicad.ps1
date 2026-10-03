@@ -1,23 +1,71 @@
 param(
-    [string]$Version = "10.0.6"
+    [string]$Version = "10.0.6",
+    [switch]$AddToGitHubPath
 )
 
 $ErrorActionPreference = "Stop"
-$cli = "C:\Program Files\KiCad\10.0\bin\kicad-cli.exe"
 
-if (-not (Test-Path -LiteralPath $cli)) {
+function Find-KiCadCli([string]$RequiredVersion) {
+    $candidates = @()
+    $command = Get-Command kicad-cli.exe -ErrorAction SilentlyContinue
+    if ($null -ne $command) {
+        $candidates += $command.Source
+    }
+
+    $roots = @(
+        (Join-Path $env:ProgramFiles "KiCad"),
+        (Join-Path $env:LOCALAPPDATA "Programs\KiCad")
+    )
+    foreach ($root in $roots) {
+        if (-not (Test-Path -LiteralPath $root)) {
+            continue
+        }
+        $candidates += Get-ChildItem -LiteralPath $root `
+            -Filter kicad-cli.exe `
+            -File -Recurse -ErrorAction SilentlyContinue |
+            Sort-Object FullName |
+            Select-Object -ExpandProperty FullName
+    }
+    foreach ($candidate in $candidates | Select-Object -Unique) {
+        try {
+            if ((& $candidate version).Trim() -eq $RequiredVersion) {
+                return $candidate
+            }
+        }
+        catch {
+            continue
+        }
+    }
+    return $null
+}
+
+$cli = Find-KiCadCli $Version
+if ($null -eq $cli) {
     winget install --id KiCad.KiCad --version $Version --exact `
         --source winget --silent --accept-package-agreements `
         --accept-source-agreements
+    $cli = Find-KiCadCli $Version
 }
 
-if (-not (Test-Path -LiteralPath $cli)) {
-    throw "KiCad CLI was not installed at the required location: $cli"
+if ($null -eq $cli) {
+    throw "KiCad CLI was not found after installing KiCad $Version"
 }
 
 $installedVersion = (& $cli version).Trim()
 if ($installedVersion -ne $Version) {
     throw "KiCad $Version is required; found $installedVersion"
+}
+
+if ($AddToGitHubPath) {
+    if ([string]::IsNullOrWhiteSpace($env:GITHUB_PATH)) {
+        throw "GITHUB_PATH is required when AddToGitHubPath is set"
+    }
+    $cliDirectory = Split-Path -Parent $cli
+    [System.IO.File]::AppendAllText(
+        $env:GITHUB_PATH,
+        "$cliDirectory`n",
+        [System.Text.UTF8Encoding]::new($false)
+    )
 }
 
 Write-Output "KiCad $installedVersion is ready at $cli"

@@ -33,13 +33,7 @@ jobs:
         if: runner.os == 'Windows'
         shell: pwsh
         run: |
-          .\scripts\setup_kicad.ps1 -Version 10.0.6
-          $cliDirectory = "C:\Program Files\KiCad\10.0\bin"
-          [System.IO.File]::AppendAllText(
-            $env:GITHUB_PATH,
-            "$cliDirectory`n",
-            [System.Text.UTF8Encoding]::new($false)
-          )
+          .\scripts\setup_kicad.ps1 -Version 10.0.6 -AddToGitHubPath
       - name: Verify mandatory native KiCad runtime
         run: |
           kicad-cli version

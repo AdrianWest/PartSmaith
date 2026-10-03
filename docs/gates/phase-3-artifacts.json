@@ -59,7 +59,7 @@
   ],
   "sha256": {
     ".gitattributes": "32b1798dae7df64a5e40e95bd7d3363e5a27b72c7c9ccae6c2e268724158b696",
-    ".github/workflows/ci.yml": "2ee62c4a4ade04d029d729197735e69f6b6a3c78678bb9c83530f773ac13bc3a",
+    ".github/workflows/ci.yml": "ccc4df8228883c7f10e7c207e2230aefa446ca25703f48ff46726c73177b3ccf",
     "README.md": "f3b205dfb320dd56a870cac79a04553bd0aace5ac9b2dd7f7467b7697a166dde",
     "pyproject.toml": "ddcfd1ec6b94ae0357370b751bc20b1cd9287f7b9aad0c1bade52adfd40ef76f",
     "requirements-ci.txt": "ac773cdab39cfa6bd99576737561c0ee6fbc1c63a8b7f2e1365adbb9b7ce4422",
