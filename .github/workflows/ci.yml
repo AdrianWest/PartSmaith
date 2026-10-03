@@ -26,14 +26,14 @@ jobs:
         run: |
           sudo add-apt-repository --yes ppa:kicad/kicad-10.0-releases
           sudo apt-get update
-          KICAD_VERSION="$(apt-cache madison kicad | awk '$3 ~ /^10\.0\.5/ {print $3; exit}')"
+          KICAD_VERSION="$(apt-cache madison kicad | awk '$3 ~ /^10\.0\.6/ {print $3; exit}')"
           test -n "$KICAD_VERSION"
           sudo apt-get install --yes "kicad=$KICAD_VERSION"
       - name: Install pinned KiCad 10 on Windows
         if: runner.os == 'Windows'
         shell: pwsh
         run: |
-          winget install --id KiCad.KiCad --version 10.0.5 --exact `
+          winget install --id KiCad.KiCad --version 10.0.6 --exact `
             --source winget --silent --accept-package-agreements `
             --accept-source-agreements
           "C:\Program Files\KiCad\10.0\bin" |
@@ -41,7 +41,7 @@ jobs:
       - name: Verify mandatory native KiCad runtime
         run: |
           kicad-cli version
-          python -c "import subprocess; version = subprocess.check_output(['kicad-cli', 'version'], text=True).strip(); assert version == '10.0.5', version"
+          python -c "import subprocess; version = subprocess.check_output(['kicad-cli', 'version'], text=True).strip(); assert version == '10.0.6', version"
       - name: Verify recorded Phase 5 input hashes
         run: python scripts/verify_phase2_manifest.py --manifest docs/gates/phase-5-artifacts.json
       - name: Verify recorded Phase 6 input hashes

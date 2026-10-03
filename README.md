@@ -105,7 +105,7 @@ python -m pip install -e . --no-deps
 .\scripts\setup_kicad.ps1
 ```
 
-Phase 8 and later release validation requires native KiCad 10.0.5. Internal
+Phase 8 and later release validation requires native KiCad 10.0.6. Internal
 PartSmith syntax parsers cannot replace `kicad-cli`; `partsmith doctor` fails
 when the pinned target runtime is missing or incompatible.
 

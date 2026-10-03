@@ -13,7 +13,7 @@ The Phase 7 prerequisite remains satisfied.
 | Independent generation | Symbol, preliminary footprint, and STEP are generated independently from the reviewed IR and pinned PDL |
 | Final association | The portable STEP path and placement are attached only during final footprint construction |
 | Final-byte validation | Symbol, finalized footprint, STEP, strict 3D checks, and footprint-to-3D checks run against released bytes |
-| KiCad compatibility | Native `kicad-cli` 10.0.5 force-round-trips and renders the exact final symbol and footprint; missing or wrong-version KiCad blocks before build creation |
+| KiCad compatibility | Native `kicad-cli` 10.0.6 force-round-trips and renders the exact final symbol and footprint; missing or wrong-version KiCad blocks before build creation |
 | Manifest ordering | Exact final hashes and validation semantics are frozen before the engineering manifest; post-manifest results remain separate |
 | Human review | Authenticated approval and rejection are immutable and approval binds the snapshot, manifest, semantic results, final artifacts, and post-manifest report |
 | Approved export | Only APPROVED builds export; every persisted byte and approval binding is rehashed before atomic publication |
@@ -22,7 +22,7 @@ The Phase 7 prerequisite remains satisfied.
 | Persistence safety | Review, approval, bundle import, and head changes use atomic SQLite transactions/savepoints with rollback tests |
 | Portable bundles | History-complete revision and inventory closure round trips with path, hash, ancestry, identity, and tamper validation |
 
-The compatibility gate uses native `kicad-cli` 10.0.5. Internal PartSmith
+The compatibility gate uses native `kicad-cli` 10.0.6. Internal PartSmith
 syntax validation runs first but cannot produce compatibility PASS. Native
 KiCad must parse, force-round-trip, and SVG-render the exact final symbol and
 footprint before the build can enter release review.
@@ -43,7 +43,7 @@ footprint before the build can enter release review.
 - Stale review bases, immutable pending proposals, failed transaction rollback,
   incomplete bundles, and tampered parents or inventories fail explicitly.
 
-Environment: Windows, Python 3.12.10, PartSmith 0.1.0, KiCad CLI 10.0.5,
+Environment: Windows, Python 3.12.10, PartSmith 0.1.0, KiCad CLI 10.0.6,
 CadQuery 2.8.0, jsonschema 4.26.0, pytest 8.4.2, and Ruff 0.16.8.
 
 ## Evidence

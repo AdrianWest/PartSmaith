@@ -24,7 +24,7 @@ def test_discovers_required_native_kicad_10():
     """
     runtime = discover_kicad()
     assert runtime.major_version == 10
-    assert runtime.version == "10.0.5"
+    assert runtime.version == "10.0.6"
     assert runtime.executable.is_file()
 
 

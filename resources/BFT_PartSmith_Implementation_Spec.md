@@ -263,7 +263,7 @@ compatibility checks, and receives explicit recorded human approval through
 the headless service. The gate environment shall contain the requested KiCad
 major version. Missing or wrong-version `kicad-cli` is a blocking failure;
 PartSmith's internal parsers cannot be substituted for native compatibility.
-The Phase 8 reference gate pins KiCad 10.0.5. A different patch version
+The Phase 8 reference gate pins KiCad 10.0.6. A different patch version
 requires regenerating native compatibility and gate evidence.
 The approved package and manifest exist. Negative approval tests prove that
 blocking results or stale final-byte checks cannot become APPROVED. CI may replay a recorded decision

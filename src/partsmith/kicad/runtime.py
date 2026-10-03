@@ -109,7 +109,7 @@ def _candidate_paths() -> tuple[Path, ...]:
     return tuple(dict.fromkeys(candidates))
 
 
-def discover_kicad(required_version: str = "10.0.5") -> KiCadRuntime:
+def discover_kicad(required_version: str = "10.0.6") -> KiCadRuntime:
     """@brief Discovers the pinned native KiCad CLI.
     @param required_version Required exact KiCad version.
     @return Verified runtime identity.
