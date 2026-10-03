@@ -15,6 +15,7 @@ from collections.abc import Sequence
 from dataclasses import asdict, dataclass
 
 from partsmith import __version__
+from partsmith.kicad import KiCadCompatibilityError, discover_kicad
 from partsmith.pdl import PDLValidationError, list_pdls, load_pdl
 
 
@@ -58,6 +59,18 @@ def collect_diagnostics() -> list[Diagnostic]:
         ("package", bool(__version__), f"partsmith {__version__}"),
         ("cli", True, "command interface available"),
     ]
+    try:
+        runtime = discover_kicad()
+    except KiCadCompatibilityError as error:
+        checks.append(("kicad", False, str(error)))
+    else:
+        checks.append(
+            (
+                "kicad",
+                True,
+                f"{runtime.version} at {runtime.executable}",
+            )
+        )
     return [
         Diagnostic(name, "PASS" if passed else "FAIL", detail)
         for name, passed, detail in checks

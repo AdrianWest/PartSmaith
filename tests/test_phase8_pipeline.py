@@ -53,6 +53,19 @@ def test_known_good_component_approves_and_exports_exact_bytes(tmp_path):
             revision.revision_id,
             load_pdl("synthetic-0402"),
         )
+        compatibility = connection.execute(
+            "SELECT canonical_bytes FROM validation_results "
+            "WHERE build_id = ? AND rule_id = "
+            "'kicad-native-compatibility'",
+            (candidate.build_id,),
+        ).fetchone()
+        assert compatibility is not None
+        compatibility_data = json.loads(
+            bytes(compatibility["canonical_bytes"])
+        )
+        assert compatibility_data["status"] == "PASS"
+        assert compatibility_data["validator"]["id"] == "kicad-cli"
+        assert compatibility_data["validator"]["version"].startswith("10.")
         ReviewService(connection).approve(
             candidate.build_id,
             "reviewer-1",

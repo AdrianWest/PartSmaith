@@ -21,6 +21,12 @@ from partsmith.footprint import (
     validate_footprint_inputs,
 )
 from partsmith.ir import ComponentIR, canonical_json
+from partsmith.kicad import (
+    KiCadCompatibilityError,
+    KiCadRuntime,
+    discover_kicad,
+    validate_native_artifacts,
+)
 from partsmith.pdl import PDL
 from partsmith.persistence import ImmutableStore, ReleaseStore
 from partsmith.release.contracts import (
@@ -180,16 +186,23 @@ class KnownGoodReleasePipeline:
     separate explicit service operation.
     """
 
-    def __init__(self, connection: sqlite3.Connection):
+    def __init__(
+        self,
+        connection: sqlite3.Connection,
+        *,
+        kicad_runtime: KiCadRuntime | None = None,
+    ):
         """@brief Initializes the deterministic release pipeline.
         @param connection Migrated SQLite connection.
+        @param kicad_runtime Optional pre-discovered native KiCad runtime.
         @return None.
-        @details The caller owns the transaction and connection lifetime.
+        @details Missing target KiCad fails before any build is created.
         """
         self.connection = connection
         self.revisions = ImmutableStore(connection)
         self.release = ReleaseStore(connection)
         self.orchestrator = BuildOrchestrator(connection)
+        self.kicad_runtime = kicad_runtime or discover_kicad()
 
     def run(
         self,
@@ -399,26 +412,60 @@ class KnownGoodReleasePipeline:
             data = result.to_dict()
             data["stage"] = "FINAL_ARTIFACT"
             results.append(data)
-        compatibility_passed = (
+        native_validation = None
+        native_error = None
+        internal_compatibility_passed = (
             ir.data["build"]["kicad_target"] == "10.x"
             and not symbol_issues
             and not footprint_issues
             and not step_issues
         )
-        results.append(
-            _validation_result(
-                "kicad-format-parser",
-                "PASS" if compatibility_passed else "FAIL",
-                (
-                    "PartSmith headless parsers accept final KiCad 10 "
-                    "format bytes"
-                    if compatibility_passed
-                    else "Final bytes do not satisfy the KiCad 10 adapter"
-                ),
-                (hashes["symbol"], hashes["footprint"], hashes["model_3d"]),
-                category="compatibility",
-            )
+        if internal_compatibility_passed:
+            try:
+                native_validation = validate_native_artifacts(
+                    self.kicad_runtime,
+                    target=ir.data["build"]["kicad_target"],
+                    symbol_filename=symbol.filename,
+                    symbol_content=symbol.content,
+                    footprint_filename=footprint.filename,
+                    footprint_content=final_footprint,
+                    model_path=model_path,
+                    model_content=model.content,
+                )
+            except KiCadCompatibilityError as error:
+                native_error = str(error)
+        compatibility_result = _validation_result(
+            "kicad-native-compatibility",
+            "PASS" if native_validation is not None else "FAIL",
+            (
+                "Native KiCad parsed, round-tripped, and rendered final bytes"
+                if native_validation is not None
+                else native_error
+                or "Final bytes failed pre-native KiCad format validation"
+            ),
+            (hashes["symbol"], hashes["footprint"], hashes["model_3d"]),
+            category="compatibility",
         )
+        compatibility_result["validator"] = {
+            "id": "kicad-cli",
+            "version": self.kicad_runtime.version,
+        }
+        compatibility_result["measured"] = (
+            {
+                "target": ir.data["build"]["kicad_target"],
+                "runtime_version": self.kicad_runtime.version,
+                "operations": list(native_validation.operations),
+            }
+            if native_validation is not None
+            else None
+        )
+        compatibility_result["expected"] = {
+            "target_major": 10,
+            "native_parse": True,
+            "native_round_trip": True,
+            "native_render": True,
+        }
+        results.append(compatibility_result)
         for result in results:
             result["id"] = f"{build.id}:{result['id']}"
         for result in results:
@@ -489,9 +536,11 @@ class KnownGoodReleasePipeline:
                 "compatibility": {
                     "kicad": {
                         "major_version": "10",
-                        "status": "FORMAT_VALIDATED",
-                        "adapter": "partsmith-headless-parser",
-                        "native_kicad_cli": False,
+                        "version": self.kicad_runtime.version,
+                        "status": "NATIVE_VALIDATED",
+                        "adapter": "kicad-cli",
+                        "native_kicad_cli": True,
+                        "operations": list(native_validation.operations),
                     }
                 },
                 "overrides": {

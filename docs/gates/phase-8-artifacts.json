@@ -4,48 +4,64 @@
   "status": "PASS",
   "scope": "Local Windows verification; no remote CI run claimed",
   "branch": "Implment-phase-8",
-  "base_commit": "2613426",
+  "base_commit": "17528d1",
   "python": "3.12.10",
   "tools": {
     "partsmith": "0.1.0",
     "pytest": "8.4.2",
     "ruff": "0.16.8",
     "jsonschema": "4.26.0",
-    "cadquery": "2.8.0"
+    "cadquery": "2.8.0",
+    "kicad-cli": "10.0.5"
   },
   "tests": {
-    "source": 447,
-    "installed_wheel": 447,
-    "phase_8": 47
+    "source": 451,
+    "installed_wheel": 451,
+    "phase_8_native": 51
   },
   "compatibility": {
     "target": "KiCad 10.x",
-    "adapter": "partsmith-headless-parser",
-    "native_kicad_cli": false,
-    "status": "FORMAT_VALIDATED"
+    "runtime": "kicad-cli 10.0.5",
+    "native_kicad_cli": true,
+    "status": "NATIVE_VALIDATED",
+    "operations": [
+      "sym-upgrade",
+      "sym-export-svg",
+      "fp-upgrade",
+      "fp-export-svg"
+    ]
   },
   "wheel": {
     "filename": "partsmith-0.1.0-py3-none-any.whl",
-    "sha256": "42fcaf462c175cf6421e6c5ade095bf0db92d99c543740444799c4e20721555b",
+    "sha256": "7147780477d54c89de56050798681792a80a9ee3a3f58bd28c2ba7f48783d5fd",
     "availability": "Temporary local generated output"
   },
   "sha256": {
+    ".github/workflows/ci.yml": "f779ad3bcc22ecf92497bec92c685a4ba858a8cd567815d020ba1e26004d1471",
+    "README.md": "d80b4f87f103bba907e18f94267e48c10d67d57327a819315e40d675dedc7371",
+    "resources/BFT_PartSmith_Implementation_Spec.md": "010f88d89373dd97aa7fee4379c722a95e2ead8c81aa203734d09d59a8e8a69c",
+    "scripts/setup_kicad.ps1": "4eef8aceeedf73b69c54db6adced0d365fc32526694d3fce8f58baf01da19ec2",
     "schemas/phase8-contracts-1.0.schema.json": "0097b42ac82bb479b1d7e0f941ddb3266d4c40df9f7b43db45db3a1783b3435d",
     "migrations/002_phase8.sql": "6e281d15426d55c827c9aa593fcd3630a9bc9d740db703dd4fc38020cc6b9f35",
+    "src/partsmith/cli.py": "4b7510f93430bbb341ec15339144dc4e4850bef13cef7a798ca460d1988b9281",
+    "src/partsmith/kicad/__init__.py": "ec0fdcec9b84e97b1cd2a351bec2c5f340d0fc8be82f484fc6564f403f00e688",
+    "src/partsmith/kicad/runtime.py": "7528cbf1e3147c1f267a10d786416822ff3d97bbfb7b5ba481f0e69103a6ba40",
     "src/partsmith/persistence/immutable.py": "cacc2441d250bd7422aa77583849e58c6b415e049c6d0c2685eef816de24c07b",
     "src/partsmith/persistence/release.py": "fd9f69158beddc21fbc38d9612ebd18c10474ca410734bbbf80b320a35f0056a",
     "src/partsmith/release/contracts.py": "584cb119cc973aae80887804fbadef35c87d8ed3b53e9bec27c8ed59179d9f2b",
     "src/partsmith/release/workflow.py": "84da8e69f96ffb61658acd3564bea6b3262953e728d7640ede36842a95dd9c89",
     "src/partsmith/release/input_review.py": "7558779952a5a0d5c947dfdda304704e003527cc40990fa42e52aa427c258388",
     "src/partsmith/release/bundle.py": "802c935cb7820e0c88562fb06bd202e98f8938ac23e868fdd7303612392dd27d",
-    "src/partsmith/release/pipeline.py": "42a1ed7e5e1f80ecc9ef0aad8543737d183120904727d6ec4fdd1a45b391378a",
+    "src/partsmith/release/pipeline.py": "f0c3f43d3af2d9de05558def3cee15ba32585664a2dbc93bba565fc794d39732",
     "src/partsmith/ir/targets.py": "578e50af5e41d00252a119bc7f5f61a5b07092edc887022c59b9a8627b80fd38",
+    "tests/test_cli.py": "23ae12da06601f203818dcfd53b6604efb23d60837aa9103abf7ad9863a394d4",
+    "tests/test_kicad_runtime.py": "a7f606eb1a1153115798a04fe881f37050c895bf04bb002d1ef8c60fd86b095d",
     "tests/test_phase8_persistence.py": "ec6ff39a3c12b992e1df0e13b8d6783de6544f4b6a2f6391fbc21ab8e996dc01",
     "tests/test_phase8_release_workflow.py": "31c4d18f499d02bd5c136bba8ea287ed36afa3758d6696e8a2c8c35b9f85decc",
     "tests/test_phase8_input_review.py": "9f846e1a455a353dcfb7015b87c69e39df81796718df0d5978e907e10918ef35",
     "tests/test_phase8_bundle.py": "81d0a19e5be0e61bbdd9a16d4f7404cc4af0f8704ee58c96b2c51d53cad87701",
-    "tests/test_phase8_pipeline.py": "b96b245128feab9df32c1325f1aedb9f9907417084ce42d44127a8061db1eaa6",
-    "docs/gates/phase-8-tests.xml": "846bddc06e14c03c3c105f4946b96efd4cfd72855f319f7c6d3d98e9ce369e3e",
-    "docs/gates/phase-8-wheel-tests.xml": "6d2b39bd872cf959bb789bfe20c3df2963b535aa36498dfb152caa8ca1d7d0f2"
+    "tests/test_phase8_pipeline.py": "27186a935aa83303d19f08f10e9992fc10ac4eaab351c792041cac16edcc9c2a",
+    "docs/gates/phase-8-tests.xml": "c8863463642fe3d5a131c01843d870a55f376e887f02c5b4196c3df2090e4c24",
+    "docs/gates/phase-8-wheel-tests.xml": "d98058efe5a1eaed24690b4c6925aa8301bb411609d4caece08ff33a8fd5fcdb"
   }
 }
