@@ -491,21 +491,30 @@ class ReleaseStore:
         return report.sha256
 
     def verify_approval_binding(
-        self, build_id: str, binding: ApprovalBinding
+        self,
+        build_id: str,
+        binding: ApprovalBinding,
+        *,
+        allow_approved: bool = False,
     ) -> None:
         """@brief Verifies all deterministic content required for approval.
         @param build_id Build proposed for release approval.
         @param binding Exact content binding supplied by the decision.
+        @param allow_approved Permit re-verification before approved export.
         @return None.
         @details Blocking validation, stale bytes, or failed manifest checks
         prevent approval.
         """
         build = self._require_build(build_id)
-        if build["state"] != "HUMAN_REVIEW_REQUIRED":
+        allowed_states = {"HUMAN_REVIEW_REQUIRED"}
+        if allow_approved:
+            allowed_states.add("APPROVED")
+        if build["state"] not in allowed_states:
             raise ValueError("Build is not waiting for review")
         transition = self.connection.execute(
             "SELECT review_stage FROM build_state_transitions "
-            "WHERE build_id = ? ORDER BY id DESC LIMIT 1",
+            "WHERE build_id = ? AND to_state = 'HUMAN_REVIEW_REQUIRED' "
+            "ORDER BY id DESC LIMIT 1",
             (build_id,),
         ).fetchone()
         if transition is None or transition["review_stage"] != "RELEASE":
