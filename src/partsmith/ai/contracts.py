@@ -1,6 +1,7 @@
 """Immutable, versioned provider requests and untrusted candidate contracts."""
 
 import json
+import re
 from dataclasses import dataclass
 from decimal import Decimal
 from hashlib import sha256
@@ -16,7 +17,7 @@ from partsmith.ir.targets import target_schema
 from .errors import AIError
 
 SCHEMA_VERSION = "ai-result-1.0"
-PROMPT_VERSION = "partsmith-ai-1.0"
+PROMPT_VERSION = "partsmith-ai-1.1"
 TASKS = (
     "extract_pin_table",
     "interpret_pin_description",
@@ -207,7 +208,7 @@ class AIRequest:
 
     @property
     def data(self):
-        return json.loads(self._snapshot)
+        return parse(self._snapshot.decode("utf-8"))
 
     @property
     def input_hash(self):
@@ -220,7 +221,7 @@ class AIResult:
 
     @property
     def data(self):
-        return json.loads(self._snapshot)
+        return parse(self._snapshot.decode("utf-8"))
 
     @property
     def canonical_bytes(self):
@@ -260,11 +261,23 @@ def _no_authority(value):
             _no_authority(item)
 
 
+def _contains_order_number(text, part_number):
+    hyphens = str.maketrans("−–‑", "---")
+    part = part_number.strip().translate(hyphens)
+    return (
+        re.search(
+            r"(?<![\w./+-])" + re.escape(part) + r"(?![\w./+-])",
+            text.translate(hyphens),
+        )
+        is not None
+    )
+
+
 def normalize(payload, request):
     """Validate references and value types before accepting candidates."""
     if not Draft202012Validator(OUTPUT_SCHEMA).is_valid(payload):
         raise AIError("AI output does not match the candidate schema.")
-    payload = json.loads(canonical_json(payload))
+    payload = parse(canonical_json(payload).decode("utf-8"))
     data = request.data
     sources = {item["id"]: item for item in data["evidence"]}
     ids = [item["id"] for item in payload["candidates"]]
@@ -336,6 +349,28 @@ def normalize(payload, request):
                 raise AIError(
                     "AI package candidate differs from the full order number."
                 )
+            if not any(
+                _contains_order_number(quote["quote"], data["part_number"])
+                for quote in candidate["supporting_quotes"]
+            ):
+                if candidate["status"] != "CONFLICTING":
+                    candidate["status"] = "UNKNOWN"
+                message = (
+                    "Full order number is absent from cited source quotes; "
+                    "package interpretation remains unresolved."
+                )
+                if not any(
+                    issue["message"] == message
+                    and candidate["id"] in issue["candidate_ids"]
+                    for issue in payload["ambiguities"]
+                ):
+                    payload["ambiguities"].append(
+                        {
+                            "message": message,
+                            "candidate_ids": [candidate["id"]],
+                            "evidence_ids": candidate["evidence_ids"],
+                        }
+                    )
         elif kind == "TRANSLATION":
             schema = obj(
                 {

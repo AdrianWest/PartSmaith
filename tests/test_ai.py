@@ -2,6 +2,7 @@
 
 import copy
 import json
+from decimal import Decimal
 from pathlib import Path
 from threading import Event
 
@@ -90,13 +91,137 @@ def response(payload, **updates):
                 "type": "message",
                 "role": "assistant",
                 "content": [
-                    {"type": "output_text", "text": json.dumps(payload)}
+                    {
+                        "type": "output_text",
+                        "text": canonical_json(payload).decode("utf-8"),
+                    }
                 ],
             }
         ],
     }
     data.update(updates)
     return json.dumps(data)
+
+
+@pytest.mark.parametrize(
+    "source_text",
+    [
+        "Order number OTHER-QFN-16R; Package QFN-16.",
+        "Order number TEST-QFN-16R-ALT; Package QFN-16.",
+        "Order number PREFIX-TEST-QFN-16R; Package QFN-16.",
+        "Order number TEST-QFN-16R/NOPB; Package QFN-16.",
+        "Order number TEST-QFN-16R.TR; Package QFN-16.",
+        "Order number TEST-QFN-16R+T; Package QFN-16.",
+    ],
+)
+def test_package_without_exact_order_anchor_stays_unresolved(
+    evidence, source_text
+):
+    evidence["extracted"]["text"] = source_text
+    request = AIRequest.create("identify_package", "TEST-QFN-16R", [evidence])
+    payload = package_payload(request)
+    normalized = normalize(payload, request)
+    assert normalized["candidates"][0]["status"] == "UNKNOWN"
+    assert normalized["ambiguities"][0]["candidate_ids"] == ["candidate-1"]
+    assert normalize(normalized, request) == normalized
+    provider, _ = provider_for(request, payload)
+    bundle = candidate_evidence(request, provider.analyze(request))
+    assert bundle["candidate_evidence"][0]["interpretation"]["status"] != (
+        "INFERRED"
+    )
+    assert bundle["result"]["ambiguities"]
+    assert bundle["review_state"] == "UNREVIEWED"
+
+
+def test_package_anchor_must_be_in_supporting_quote(ai_request):
+    payload = package_payload(ai_request)
+    payload["candidates"][0]["supporting_quotes"][0]["quote"] = "Width 3 mm."
+    normalized = normalize(payload, ai_request)
+    assert normalized["candidates"][0]["status"] == "UNKNOWN"
+    assert normalized["ambiguities"]
+
+
+def test_typographic_hyphen_full_order_anchor_is_retained(evidence):
+    evidence["extracted"]["text"] = "Order TEST−QFN−16R; Package QFN-16."
+    request = AIRequest.create("identify_package", "TEST-QFN-16R", [evidence])
+    assert (
+        normalize(package_payload(request), request)["candidates"][0]["status"]
+        == "INFERRED"
+    )
+
+
+def test_exact_decimals_survive_transport_bundle_and_replay(evidence):
+    from partsmith.ai import RecordedProvider
+
+    value = Decimal("0.9876543210987654321")
+    evidence["extracted"]["value"] = value
+    request = AIRequest.create("identify_package", "TEST-QFN-16R", [evidence])
+    payload = package_payload(request)
+    payload["confidence"] = payload["candidates"][0]["confidence"] = value
+    provider, transport = provider_for(request, payload)
+    result = provider.analyze(request)
+    assert result.data["input_hash"] == request.input_hash
+    body = parse(transport.calls[0][0].decode("utf-8"))
+    sent = parse(body["input"][0]["content"][0]["text"])
+    assert sent["evidence"][0]["extracted"]["value"] == value
+    bundle = candidate_evidence(request, result)
+    restored = parse(canonical_json(bundle).decode("utf-8"))
+    assert restored["source_evidence"][0]["extracted"]["value"] == value
+    assert restored["candidate_evidence"][0]["confidence"]["score"] == value
+    assert RecordedProvider(result).analyze(request).canonical_bytes == (
+        result.canonical_bytes
+    )
+
+
+def test_noncanonical_snapshot_is_rejected_before_credentials(ai_request):
+    data = ai_request.data
+    data["prompt_version"] = "obsolete-prompt"
+    request = AIRequest(canonical_json(data))
+    credentials = []
+    transport = FakeTransport()
+    provider = OpenAIProvider(
+        lambda: credentials.append(True), transport=transport
+    )
+    with pytest.raises(AIError, match="canonical binding"):
+        provider.analyze(request)
+    assert not credentials and not transport.calls
+
+
+def test_cli_preserves_exact_decimal_evidence(evidence, tmp_path, monkeypatch):
+    value = Decimal("0.9876543210987654321")
+    evidence["extracted"]["value"] = value
+    request = AIRequest.create("identify_package", "TEST-QFN-16R", [evidence])
+    extraction = {
+        "document": {"sha256": evidence["source"]["document_hash"]},
+        "selected_pages": [evidence["source"]["page"]],
+        "evidence": [evidence],
+    }
+    source = tmp_path / "extraction.json"
+    source.write_bytes(canonical_json(extraction))
+    output = tmp_path / "candidates.json"
+    provider, _ = provider_for(request)
+    monkeypatch.setattr(
+        "partsmith.ai.OpenAIProvider", lambda *a, **k: provider
+    )
+    assert (
+        main(
+            [
+                "ai",
+                "analyze",
+                str(source),
+                "--task",
+                "identify_package",
+                "--part-number",
+                "TEST-QFN-16R",
+                "--output",
+                str(output),
+            ]
+        )
+        == 0
+    )
+    bundle = parse(output.read_text("utf-8"))
+    assert bundle["request"]["evidence"][0]["extracted"]["value"] == value
+    assert bundle["result"]["input_hash"] == request.input_hash
 
 
 class FakeTransport:
@@ -601,6 +726,9 @@ def test_packaged_adapter_manifest():
     assert manifest["model"] == MODEL
     assert manifest["endpoint"] == ENDPOINT
     assert manifest["data_handling"]["store"] is False
+    config = ProviderConfig().engineering_inputs
+    assert manifest["adapter_version"] == config["adapter_version"]
+    assert manifest["prompt_version"] == config["prompt_version"]
 
 
 def test_cli_candidate_output_and_local_mode(

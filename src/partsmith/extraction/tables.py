@@ -1,7 +1,12 @@
-"""Conservative ruled-grid OCR tables; no fabricated cells or values."""
+"""@package partsmith.extraction.tables
+@brief Read conservative ruled-grid OCR candidates with Pillow and NumPy.
+@details Preserve recognized cells without importing a native PDF parser.
+"""
+
+from io import BytesIO
 
 import numpy as np
-import pymupdf
+from PIL import Image
 
 
 def _centers(indices):
@@ -15,17 +20,19 @@ def _centers(indices):
 
 
 def ruled_tables(image, words):
-    """Recognize one complete ruled grid only when its lines intersect.
-
+    """@brief Recognize a complete ruled grid only when its lines intersect.
+    @param image Rendered PNG bytes.
+    @param words Recognized OCR words and their pixel boxes.
+    @return List of ruled-grid candidates containing rows and pixel bounds.
+    @details Empty cells stay empty; never fabricate engineering values.
     Borderless, merged, damaged, or disconnected grids remain image/OCR
     candidates. Empty cells stay empty and carry no invented engineering data.
     """
-    pix = pymupdf.Pixmap(image)
-    samples = np.frombuffer(pix.samples, dtype=np.uint8).reshape(
-        pix.height, pix.width, pix.n
-    )
+    with Image.open(BytesIO(image)) as decoded:
+        samples = np.asarray(decoded.convert("RGB"))
+    _, width = samples.shape[:2]
     ink = np.max(samples[:, :, :3], axis=2) < 160
-    ys = _centers(np.flatnonzero(ink.sum(axis=1) > pix.width * 0.4))
+    ys = _centers(np.flatnonzero(ink.sum(axis=1) > width * 0.4))
     if len(ys) < 3:
         return []
     top, bottom = int(ys[0]), int(ys[-1])

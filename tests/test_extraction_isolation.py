@@ -1,12 +1,17 @@
-"""Native extraction failures must not kill the application process."""
+"""@package tests.test_extraction_isolation
+@brief Verify extraction isolation, cancellation and parser independence.
+@details Native failures must not kill the application process.
+"""
 
 import subprocess
 import sys
+from pathlib import Path
 from threading import Event
 
 import pymupdf
 import pytest
 
+import partsmith.extraction
 from partsmith.extraction.isolated import extract_isolated
 from partsmith.extraction.ocr import ExtractionCancelled
 
@@ -69,3 +74,33 @@ def test_isolated_cancellation_reaps_worker(pdf, monkeypatch):
 def test_isolated_input_error_is_preserved(pdf):
     with pytest.raises(ValueError, match="DPI"):
         extract_isolated(pdf, dpi=0)
+
+
+def test_production_reader_does_not_load_mupdf(pdf):
+    """@brief Exercise the production reader with MuPDF imports blocked.
+    @param pdf Native test document path.
+    @return None.
+    @details Verify both page reading and rendering in a fresh Python process.
+    """
+    package_root = Path(partsmith.extraction.__file__).resolve().parents[2]
+    code = """
+import builtins, sys
+sys.path.insert(0, sys.argv[1])
+real_import = builtins.__import__
+def guarded(name, *args, **kwargs):
+    if name == 'fitz' or name == 'pymupdf' or name.startswith('pymupdf.'):
+        raise AssertionError('Production must not import MuPDF')
+    return real_import(name, *args, **kwargs)
+builtins.__import__ = guarded
+from partsmith.extraction import extract_document
+result = extract_document(sys.argv[2], pages=[1], dpi=100)
+assert any(e['type'] == 'TEXT' for e in result['evidence'])
+assert result['pages'][0]['render_transform']['renderer'] == 'PDFium'
+assert not any(n == 'pymupdf' or n.startswith('pymupdf.') for n in sys.modules)
+"""
+    subprocess.run(
+        [sys.executable, "-c", code, str(package_root), str(pdf)],
+        check=True,
+        capture_output=True,
+        text=True,
+    )

@@ -1,4 +1,7 @@
-"""Phase 10 corpus, real multilingual OCR, coordinates and failures."""
+"""@package tests.test_extraction
+@brief Verify Phase 10 PDF content, OCR, coordinates and failure behavior.
+@details Exercise real manufacturer tables and the multilingual corpus.
+"""
 
 import base64
 import json
@@ -8,6 +11,7 @@ from hashlib import sha256
 from pathlib import Path
 from threading import Event, Timer
 
+import pdfplumber
 import pymupdf
 import pytest
 from jsonschema import Draft202012Validator
@@ -126,6 +130,65 @@ def test_selected_page_and_table_content(path, page, token):
     assert {e["source"]["page"] for e in result["evidence"]} == {page}
     tables = [e for e in result["evidence"] if e["type"] == "TABLE"]
     assert any(token in e["extracted"]["text"] for e in tables)
+
+
+def test_open_table_preserves_parameter_value_and_unit_columns(monkeypatch):
+    """@brief Keep all five columns of an open manufacturer table.
+    @param monkeypatch Pytest patch helper.
+    @return None.
+    @details Check parameter/value/unit associations and merged-cell nulls.
+    """
+
+    def native_crash(*args, **kwargs):
+        """@brief Reject the formerly crashing MuPDF table path.
+        @param args Positional arguments.
+        @param kwargs Keyword arguments.
+        @return None.
+        @details Fail if extraction attempts to use the retired detector.
+        """
+        raise AssertionError("MuPDF table detection must not be called")
+
+    monkeypatch.setattr(pymupdf.Page, "find_tables", native_crash)
+    result = extract_document(
+        ROOT / "test_data_sheets/infineon_iaucn04s7n010g_datasheet_en.pdf",
+        pages=[3],
+        dpi=100,
+    )
+    rows = next(
+        record["payload"]["rows"]
+        for record in result["records"]
+        if record["payload"]
+        and "Continuous drain current" in str(record["payload"].get("rows"))
+    )
+    assert rows[0] == ["Parameter", "Symbol", "Conditions", "Value", "Unit"]
+    assert rows[1][0] == "Continuous drain current"
+    assert rows[1][3] == "252"
+    assert rows[1][4] == "A"
+    assert rows[2][0] is None  # Preserve merged cells, do not fill them.
+    assert [row[3] for row in rows[1:5]] == ["252", "175", "37", "748"]
+    avalanche = next(
+        row for row in rows if row[0] == "Avalanche energy, single pulse2)"
+    )
+    assert avalanche[3:] == ["140", "mJ"]
+    validate_evidence(result)
+
+
+def test_native_table_failure_does_not_return_partial_success(
+    language_pdf, monkeypatch
+):
+    """@brief Reject extraction when native table detection fails.
+    @param language_pdf Native/scanned language fixture path.
+    @param monkeypatch Pytest patch helper.
+    @return None.
+    @details An internal detector error must not silently drop table evidence.
+    """
+    monkeypatch.setattr(
+        pdfplumber.page.Page, "find_tables", lambda *a, **kw: None
+    )
+    with pytest.raises(
+        ValueError, match="content extraction failed on page 1"
+    ):
+        extract_document(language_pdf, pages=[1], dpi=100)
 
 
 @pytest.fixture(scope="module")
@@ -255,6 +318,44 @@ def ordering_pdf(path, ambiguous=False):
             page.insert_text((x, 65 + i * 40), text)
     doc.save(path)
     doc.close()
+
+
+@pytest.mark.parametrize("rotation", [0, 90, 180, 270])
+@pytest.mark.parametrize("unit", [1, 2])
+def test_native_table_shift_crop_rotation_and_user_unit(
+    tmp_path, rotation, unit
+):
+    """@brief Preserve table coordinates across the alternate parser boundary.
+    @param tmp_path Pytest temporary directory.
+    @param rotation Original display rotation in degrees.
+    @param unit Original physical PDF point scale.
+    @return None.
+    @details Check independent table bounds with shifted MediaBox and CropBox.
+    """
+    original = tmp_path / "ordering.pdf"
+    ordering_pdf(original)
+    source = tmp_path / "shifted.pdf"
+    with pymupdf.open(original) as pdf:
+        page = pdf[0]
+        pdf.xref_set_key(page.xref, "MediaBox", "[10 20 430 320]")
+        pdf.xref_set_key(page.xref, "CropBox", "[15 25 415 315]")
+        pdf.xref_set_key(page.xref, "UserUnit", str(unit))
+        page.set_rotation(rotation)
+        pdf.save(source)
+    result = extract_document(source, dpi=100)
+    evidence = next(e for e in result["evidence"] if e["type"] == "TABLE")
+    assert evidence["source"]["region"] == pytest.approx(
+        {
+            "x": 10 * unit,
+            "y": 120 * unit,
+            "width": 380 * unit,
+            "height": 120 * unit,
+        },
+        abs=0.01,
+    )
+    assert evidence["extractor"]["method"] == "pdfplumber/lines"
+    assert resolve_package(result, "EXAMPLE-QFN-32R")["package"] == "QFN-32"
+    validate_evidence(result)
 
 
 def test_multi_package_exact_mapping_and_gui_boundary(tmp_path):

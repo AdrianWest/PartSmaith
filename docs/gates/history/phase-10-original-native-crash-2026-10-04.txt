@@ -1,0 +1,22 @@
+Independent review combined installed-wheel attempt, 2026-10-04.
+Python process exit code: 1. No completed JUnit report was written.
+17 corpus cases completed before termination (progress output).
+
+Windows fatal exception: access violation
+Current thread stack (key frames from tool output):
+  pymupdf/extra.py:195 page_get_textpage
+  pymupdf/__init__.py:9987 _get_textpage
+  pymupdf/__init__.py:12189 get_textpage
+  pymupdf/utils.py:484 get_text
+  pymupdf/__init__.py:12167 get_text
+  pymupdf/table.py:1724 row_has_bold
+  pymupdf/table.py:1755 _get_header
+  pymupdf/table.py:1500 __init__
+  pymupdf/table.py:2020 __init__
+  pymupdf/table.py:2669 find_tables
+  .tools/python/Lib/site-packages/partsmith/extraction/document.py:320 extract_document
+  tests/test_extraction.py:86 test_supplied_corpus_ingestion_and_selected_pages
+
+No wheel installation or production source edit occurred during this attempt.
+The earlier full source/native suite passed 638 cases before this attempt.
+This is a transcribed failure record, not raw captured stderr or a completed test report.

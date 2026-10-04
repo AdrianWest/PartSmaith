@@ -81,6 +81,8 @@ jobs:
           python -c "import partsmith.threed"
           python -c "from importlib.resources import files; from pathlib import Path; root = files('partsmith.release'); assert root.joinpath('runtime-lock-1.0.json').read_bytes() == Path('src/partsmith/release/runtime-lock-1.0.json').read_bytes(); assert root.joinpath('runtime-constraints.txt').read_bytes() == Path('requirements-ci.txt').read_bytes(); assert root.joinpath('replay-bundle-1.0.schema.json').read_bytes() == Path('schemas/replay-bundle-1.0.schema.json').read_bytes()"
           python -m pytest --junitxml=wheel-gate-results.xml
+      - name: Repeat combined installed-wheel PDF stability gate
+        run: python scripts/verify_pdf_stability.py --rounds 3 --output pdf-stability-results
       - name: Check command-line entry point
         run: |
           partsmith version
@@ -93,3 +95,6 @@ jobs:
           path: |
             *gate-results.xml
             dist/*.whl
+            pdf-stability-results/*.json
+            pdf-stability-results/*.txt
+            pdf-stability-results/*.xml

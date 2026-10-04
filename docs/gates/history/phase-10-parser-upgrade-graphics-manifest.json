@@ -1,0 +1,27 @@
+{
+  "status": "FAIL",
+  "rounds_requested": 3,
+  "suite": [
+    "tests/test_extraction.py",
+    "tests/test_extraction_isolation.py",
+    "tests/test_ai.py",
+    "tests/test_ai_transport.py",
+    "tests/test_cli.py",
+    "tests/test_gui.py",
+    "tests/test_kicad_runtime.py",
+    "scripts/verify_gui.py"
+  ],
+  "attempts": [
+    {
+      "round": 1,
+      "exit_code": 3221225477,
+      "timed_out": false,
+      "complete_junit": false,
+      "artifacts": {
+        "round-1.stdout.txt": "3686932e09f78d8a046941852a1bde9aebf9256e6e1bceab6eb3b9e2369b433e",
+        "round-1.stderr.txt": "b79b5b51f6f6c08a2675404d3917964ecbfb58ed062643a34b98ae28188702f9"
+      },
+      "status": "FAIL"
+    }
+  ]
+}

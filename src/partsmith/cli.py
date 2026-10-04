@@ -213,6 +213,8 @@ def _command_extract(args):
 
 
 def _command_ai_analyze(args):
+    from decimal import Decimal
+
     from partsmith.ai import (
         AIError,
         AIRequest,
@@ -221,6 +223,7 @@ def _command_ai_analyze(args):
         candidate_evidence,
     )
     from partsmith.ai.credentials import user_credential
+    from partsmith.ir import canonical_json
 
     try:
         with Path(args.evidence).open("rb") as source:
@@ -228,7 +231,7 @@ def _command_ai_analyze(args):
         if len(raw) > 100 * 1024 * 1024:
             raise AIError("Extraction file exceeds the ingestion limit.")
         # Extraction bundles may contain page PNGs; only Evidence is sent.
-        extraction = json.loads(raw)
+        extraction = json.loads(raw, parse_float=Decimal)
         request = AIRequest.from_extraction(
             extraction,
             args.task,
@@ -247,7 +250,7 @@ def _command_ai_analyze(args):
             log=lambda text: print(text, file=sys.stderr),
         )
         bundle = candidate_evidence(request, provider.analyze(request))
-        data = json.dumps(bundle, ensure_ascii=False, indent=2) + "\n"
+        data = canonical_json(bundle).decode("utf-8") + "\n"
         if args.output:
             Path(args.output).write_text(data, encoding="utf-8")
         elif hasattr(sys.stdout, "buffer"):

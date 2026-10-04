@@ -1,4 +1,7 @@
-"""PDF ingestion and extraction into provenance-linked evidence candidates."""
+"""@package partsmith.extraction.document
+@brief Extract PDF content into provenance-linked evidence candidates.
+@details Preserve original source coordinates, table cells and render assets.
+"""
 
 import base64
 import json
@@ -8,15 +11,21 @@ from collections import defaultdict
 from hashlib import sha256
 from io import BytesIO
 from pathlib import Path
+from threading import RLock
 
-import pymupdf
+import pdfminer
+import pdfplumber
+import pypdfium2 as pdfium
 from pypdf import PdfReader
 
 from partsmith.extraction.coordinates import bounds, validate_region
+from partsmith.extraction.native_page import read_page
 from partsmith.extraction.ocr import TesseractOCR, check_cancel
 from partsmith.extraction.tables import ruled_tables
 from partsmith.ir.canonical import canonical_json
 from partsmith.pdl.profiles import load_release_profile, release_profile_hash
+
+_RENDER_LOCK = RLock()
 
 
 def languages(text, hints):
@@ -56,6 +65,11 @@ class PDFDocument:
     """Immutable byte snapshot, including the original source identity."""
 
     def __init__(self, source):
+        """@brief Snapshot and validate original PDF bytes with pypdf.
+        @param source PDF filesystem path.
+        @return None.
+        @details Enforce byte/page limits and reject password-required input.
+        """
         with Path(source).open("rb") as stream:
             self.data = stream.read(100 * 1024 * 1024 + 1)
         if len(self.data) > 100 * 1024 * 1024:
@@ -65,9 +79,6 @@ class PDFDocument:
         self.sha256 = sha256(self.data).hexdigest()
         self.id = "pdf-" + self.sha256
         try:
-            with pymupdf.open(stream=self.data, filetype="pdf") as pdf:
-                if pdf.needs_pass:
-                    raise ValueError("Encrypted PDF requires a password.")
             self.reader = PdfReader(BytesIO(self.data), strict=True)
             if self.reader.is_encrypted and not self.reader.decrypt(""):
                 raise ValueError("Encrypted PDF requires a password.")
@@ -134,11 +145,30 @@ def _native_mapping(geometry):
 
 
 def _render(page, geometry, dpi, assets):
+    """@brief Render the original cropped, rotated page with PDFium.
+    @param page PDFium page handle.
+    @param geometry Original page geometry, including UserUnit.
+    @param dpi Physical rendering resolution.
+    @param assets Content-addressed PNG collection to extend.
+    @return PNG bytes and a pixel-to-original-page affine transform.
+    @details Close bitmap handles explicitly and retain physical DPI in PNGs.
+    """
     scale = dpi / 72
-    if page.rect.width * page.rect.height * scale**2 > 40_000_000:
+    if (
+        page.get_width()
+        * page.get_height()
+        * (scale * geometry["user_unit"]) ** 2
+        > 40_000_000
+    ):
         raise ValueError("Rendered page exceeds the 40 megapixel limit.")
-    pix = page.get_pixmap(dpi=dpi, alpha=False)
-    png = pix.tobytes("png")
+    bitmap = page.render(scale=scale * geometry["user_unit"], draw_annots=True)
+    try:
+        stream = BytesIO()
+        bitmap.to_pil().save(stream, format="PNG", dpi=(dpi, dpi))
+        png = stream.getvalue()
+        width_px, height_px = bitmap.width, bitmap.height
+    finally:
+        bitmap.close()
     digest = sha256(png).hexdigest()
     assets[digest] = base64.b64encode(png).decode("ascii")
     # Pixel edges -> rotated page -> unrotated crop -> canonical MediaBox.
@@ -149,9 +179,8 @@ def _render(page, geometry, dpi, assets):
     rotation = geometry["rotation_deg"]
 
     def convert(x, y):
-        rx, ry = (x + pix.x) / scale, (y + pix.y) / scale
-        # PyMuPDF's derotation translation can omit UserUnit. Use physical
-        # crop dimensions explicitly for every orthogonal page rotation.
+        rx, ry = x / scale, y / scale
+        # Use physical crop dimensions for every orthogonal page rotation.
         nx, ny = {
             0: (rx, ry),
             90: (ry, height - rx),
@@ -168,12 +197,12 @@ def _render(page, geometry, dpi, assets):
     ]
     return png, {
         "image_sha256": digest,
-        "width_px": pix.width,
-        "height_px": pix.height,
+        "width_px": width_px,
+        "height_px": height_px,
         "dpi_x": dpi,
         "dpi_y": dpi,
-        "renderer": "PyMuPDF",
-        "version": pymupdf.VersionBind,
+        "renderer": "PDFium",
+        "version": str(pdfium.PDFIUM_INFO),
         "pixel_to_page": matrix,
     }
 
@@ -190,14 +219,22 @@ def extract_document(
     cancel=None,
     log=lambda _message: None,
 ):
-    """Return JSON-safe Evidence plus lossless, content-addressed PNG assets.
-
-    Page selection is explicit, one-based, and validated before any work.
+    """@brief Return JSON-safe Evidence and content-addressed PNG assets.
+    @param source Original PDF filesystem path.
+    @param pages Unique one-based pages, or None for every page.
+    @param dpi Rendering resolution between 72 and 600.
+    @param ocr Optional local OCR adapter.
+    @param force_ocr Recognize text even on pages containing native text.
+    @param language_hints Release-profile OCR languages, or None for defaults.
+    @param acquisition_revision_id Identity retained on every Evidence record.
+    @param cancel Optional cancellation event.
+    @param log Progress callback.
+    @return Dictionary of Evidence, supporting records and lossless PNG assets.
+    @details Validate page selection first and fail on table detection errors.
     Native tables and vector clusters are candidates, never engineering truth.
     Scanned ruled tables retain OCR cells; other diagrams remain candidates.
     """
     check_cancel(cancel)
-    pymupdf.no_recommend_layout()
     if (
         not isinstance(dpi, int)
         or isinstance(dpi, bool)
@@ -253,7 +290,7 @@ def extract_document(
         payload=None,
         render=None,
         confidence=1,
-        method="PyMuPDF",
+        method="pdfminer/native",
         version=None,
     ):
         validate_region(region, geometry)
@@ -272,7 +309,7 @@ def extract_document(
             "interpretation": {"normalized_value": None, "status": "UNKNOWN"},
             "extractor": {
                 "method": method,
-                "version": version or pymupdf.VersionBind,
+                "version": version or pdfminer.__version__,
             },
             "confidence": {
                 "score": confidence,
@@ -296,49 +333,75 @@ def extract_document(
             result["records"].append(record)
 
     ids = set()
-    with pymupdf.open(stream=document.data, filetype="pdf") as pdf:
+    # Serialize PDFium within a process and close every native handle.
+    with _RENDER_LOCK, pdfium.PdfDocument(document.data, password="") as pdf:
+        pdf.init_forms()
         for number in selected:
             check_cancel(cancel)
             log(f"Extracting page {number} of {document.page_count}.")
             check_cancel(cancel)
             page = pdf[number - 1]
             geometry = document.geometry(number - 1)
-            page.set_rotation(0)
             mapping = _native_mapping(geometry)
-            blocks = page.get_text("blocks")
+            try:
+                content = read_page(
+                    document.reader.pages[number - 1], geometry
+                )
+            except Exception as error:
+                raise ValueError(
+                    f"PDF content extraction failed on page {number}."
+                ) from error
+            blocks = content["blocks"]
             texts = []
             for block in blocks:
-                if block[6] == 0 and block[4].strip():
-                    texts.append(block[4])
+                if block["text"].strip():
+                    texts.append(block["text"])
                     emit(
                         "TEXT",
                         number,
                         geometry,
-                        bounds(mapping, block[:4]),
-                        block[4],
+                        bounds(mapping, block["bbox"]),
+                        block["text"],
                     )
-            tables = page.find_tables().tables
+            vector_regions = content["graphics"]
+            envelopes = content["envelopes"]
+            tables = content["tables"]
             for table in tables:
                 check_cancel(cancel)
-                rows = table.extract()
+                rows = table["rows"]
                 emit(
                     "TABLE",
                     number,
                     geometry,
-                    bounds(mapping, table.bbox),
+                    bounds(mapping, table["bbox"]),
                     json.dumps(rows, ensure_ascii=False),
-                    payload={"rows": rows},
+                    payload={
+                        "rows": rows,
+                        "detection": {
+                            "strategy": "lines",
+                            "graphics_envelopes": envelopes,
+                            "coordinate_convention": "unrotated-crop-top-left",
+                        },
+                        "detector_region": {
+                            "bbox": table["original_bbox"],
+                            "coordinate_convention": "pdfminer-page-top-left",
+                            "visible_intersection": table[
+                                "visible_intersection"
+                            ],
+                        },
+                    },
+                    method="pdfplumber/lines",
+                    version=pdfplumber.__version__,
                 )
-            images = page.get_image_info()
-            vector_regions = page.cluster_drawings()
-            # Render original crop/rotation. Native rectangles are unrotated.
-            page.set_rotation(geometry["rotation_deg"])
+            images = content["images"]
+            # Render original crop/rotation. Parser rectangles are unrotated.
             png, render = _render(page, geometry, dpi, result["assets"])
-            visual = [("IMAGE", i["bbox"]) for i in images]
+            page.close()
+            visual = [("IMAGE", box) for box in images]
             visual += [
                 ("DIAGRAM", tuple(r))
                 for r in vector_regions
-                if r.width > 2 and r.height > 2
+                if r[2] - r[0] > 2 and r[3] - r[1] > 2
             ]
             for kind, box in visual:
                 check_cancel(cancel)

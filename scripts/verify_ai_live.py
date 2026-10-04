@@ -9,9 +9,13 @@ import pytest
 from partsmith.ai import AIRequest, OpenAIProvider, candidate_evidence
 from partsmith.ai.contracts import digest
 from partsmith.extraction.isolated import extract_isolated
+from partsmith.ir import canonical_json
 from partsmith.ir.schema import fragment_valid
 
 ROOT = Path(__file__).resolve().parents[1]
+OUTPUT = Path(
+    os.environ.get("PARTSMITH_AI_LIVE_OUTPUT", ROOT / ".tools/phase11/live")
+)
 
 
 def load_test_credential(root=ROOT):
@@ -57,13 +61,13 @@ def ordering_evidence():
 
 def retain(name, request, result, key):
     bundle = candidate_evidence(request, result)
-    serialized = json.dumps(bundle, ensure_ascii=False, indent=2) + "\n"
+    serialized = canonical_json(bundle).decode("utf-8") + "\n"
     if key in serialized:
         pytest.fail(
             "Credential material in live result; export blocked.",
             pytrace=False,
         )
-    output = ROOT / ".tools/phase11/live"
+    output = OUTPUT
     output.mkdir(parents=True, exist_ok=True)
     (output / f"{name}.json").write_text(serialized, "utf-8")
     for record in bundle["candidate_evidence"]:
@@ -87,6 +91,7 @@ def test_live_real_order_number_package_candidate(live_key, ordering_evidence):
     packages = [
         json.loads(item["value_json"])
         for item in bundle["result"]["candidates"]
+        if item["status"] == "INFERRED"
     ]
     assert any(
         item["part_number"] == "LM2575TV-ADJG"

@@ -4,3 +4,12 @@
 *.sql text eol=lf
 *.json text eol=lf
 fixtures/ir/source/*.txt text eol=lf
+
+# Gate artifacts bind exact captured bytes, including native crash output.
+docs/gates/phase-10-parser-fix-2026-10-04-*.xml -text
+docs/gates/phase-10-parser-fix-2026-10-04-*.txt -text
+docs/gates/history/phase-10-parser-upgrade-* -text
+docs/gates/history/phase-10-pure-table-initial-source-results-2026-10-04.xml -text
+docs/gates/history/phase-10-original-native-crash-2026-10-04.txt -text
+docs/gates/history/phase-6-artifacts-before-parser-fix-2026-10-04.json -text
+docs/gates/history/phase-8-artifacts-before-parser-fix-2026-10-04.json -text

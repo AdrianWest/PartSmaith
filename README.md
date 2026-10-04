@@ -389,8 +389,22 @@ Scanned ruled grids can become OCR table candidates; borderless/merged/damaged
 grids remain image/OCR candidates for later interpretation. Non-affine dewarping
 is unsupported.
 
-See [Phase 10 gate evidence](docs/gates/phase-10.md). Run
+The supported PDF runtime uses PDFium via pypdfium2 5.14.0 for rendering and
+pdfplumber 0.11.10/pdfminer.six 20260107 for native text, graphics and tables.
+Production extraction does not import MuPDF. Text-containing graphics bounds retain
+open outer parameter/unit columns; cell text, merged-cell nulls, source
+coordinates and detection settings are preserved. Detector errors fail
+extraction explicitly.
+
+See [Phase 10 parser correction and revalidation](docs/gates/phase-10-parser-fix-2026-10-04.md)
+and [the original Phase 10 evidence](docs/gates/phase-10.md). Run
 `python -m pytest tests/test_extraction.py` for the corpus and targeted fixtures.
+After building and installing the wheel, run
+`python scripts/verify_pdf_stability.py --rounds 3 --output pdf-stability-results`.
+Add `--desktop` to include native wx and credential checks in a Windows desktop
+session with the GUI dependencies installed. Each round retains its JUnit
+report and raw output; a failure stops the gate without retrying. Use a fresh
+output directory for each invocation.
 
 ## Specification
 

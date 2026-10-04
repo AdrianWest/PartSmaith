@@ -1,0 +1,6 @@
+{"package": "C:\\GIT_HUB\\PartSmaith\\.tools\\python\\Lib\\site-packages\\partsmith", "pymupdf": "1.28.2"}
+........................................................................ [ 38%]
+........................................................................ [ 77%]
+.........................................                                [100%]
+- generated xml file: C:\GIT_HUB\PartSmaith\.tools\pdf-stability\wheel-final\round-1.xml -
+185 passed in 86.18s (0:01:26)

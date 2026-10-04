@@ -45,6 +45,8 @@ value_json is serialized JSON matching that target's supplied IR schema, with
 status INFERRED (or UNKNOWN/AMBIGUOUS/CONFLICTING) and supplied evidence_ids.
 PACKAGE value_json contains exactly part_number and package; preserve the full
 order-number suffix and report ambiguity if no exact mapping exists.
+For each PACKAGE candidate, include an exact supporting quote containing the
+full order number, not just the package name or a different ordering entry.
 TRANSLATION value_json contains translated_text, source_language and
 target_language. Preserve source meaning and numerals; do not invent units.
 EXPLANATION value_json is a JSON string. All candidates remain subject to human
@@ -98,7 +100,7 @@ class ProviderConfig:
             "provider": self.name,
             "model": self.model,
             "api_version": "responses-v1",
-            "adapter_version": "1.0",
+            "adapter_version": "1.1",
             "schema_version": SCHEMA_VERSION,
             "prompt_version": PROMPT_VERSION,
             "instructions_hash": digest(INSTRUCTIONS),
@@ -217,13 +219,16 @@ class OpenAIProvider:
             )
         # Revalidate even if a caller instantiated a snapshot directly.
         data = request.data
-        request = AIRequest.create(
+        validated_request = AIRequest.create(
             data["task"],
             data["part_number"],
             data["evidence"],
             data["targets"],
             data["target_language"],
         )
+        if validated_request.input_hash != request.input_hash:
+            raise AIError("AI request differs from its canonical binding.")
+        request = validated_request
         try:
             key = self.credential()
         except Exception:

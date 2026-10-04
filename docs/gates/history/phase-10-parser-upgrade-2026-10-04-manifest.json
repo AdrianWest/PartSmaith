@@ -1,0 +1,63 @@
+{
+  "status": "FAIL",
+  "rounds_requested": 3,
+  "suite": [
+    "tests/test_extraction.py",
+    "tests/test_extraction_isolation.py",
+    "tests/test_ai.py",
+    "tests/test_ai_transport.py",
+    "tests/test_cli.py",
+    "tests/test_gui.py",
+    "tests/test_kicad_runtime.py",
+    "scripts/verify_gui.py"
+  ],
+  "attempts": [
+    {
+      "round": 1,
+      "exit_code": 0,
+      "timed_out": false,
+      "complete_junit": true,
+      "artifacts": {
+        "round-1.stdout.txt": "dde9bf52d924054a8b06db94fa9fbc71c6f2293f53e50941aa7af4409d372874",
+        "round-1.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "round-1.xml": "56942d7f7a96d0102447a0554265cc3e42f426c14a5e5514b787a2c0899ad12a"
+      },
+      "tests": {
+        "tests": 185,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "status": "PASS"
+    },
+    {
+      "round": 2,
+      "exit_code": 0,
+      "timed_out": false,
+      "complete_junit": true,
+      "artifacts": {
+        "round-2.stdout.txt": "a5bddcd3ef26502dd7b2880eaa018d1ddc8cd5763908734194db4794a9701f10",
+        "round-2.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "round-2.xml": "0923911871641ec89c1d5c21efb6710eecae24d3343b84ed0b134ecfc5e3118c"
+      },
+      "tests": {
+        "tests": 185,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "status": "PASS"
+    },
+    {
+      "round": 3,
+      "exit_code": 3221225477,
+      "timed_out": false,
+      "complete_junit": false,
+      "artifacts": {
+        "round-3.stdout.txt": "e10594b94b48b79ce4047f5b90ab4763759f5ec15fa0651d564a0ad889636286",
+        "round-3.stderr.txt": "0d98bc78f30842acf3df92b9f7ac751a6772441b8b2ced09077da47a278ceea1"
+      },
+      "status": "FAIL"
+    }
+  ]
+}
