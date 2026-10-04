@@ -156,6 +156,13 @@ def test_redacts_authorization_and_api_key_fields():
 
 
 def test_unavailable_stages_do_not_report_success(processing_request):
+    # Phase 10 now parses the PDF; use an actual document at this boundary.
+    import pymupdf
+
+    with pymupdf.open() as pdf:
+        page = pdf.new_page()
+        page.insert_text((50, 50), "EXAMPLE-QFN-32R datasheet")
+        pdf.save(processing_request.datasheet)
     job = JobController()
     job.start(processing_request)
     events = finish(job)

@@ -49,7 +49,13 @@ class Redactor:
 
 
 def process_datasheet(request, log, cancel):
-    """Preflight only until Phase 10/11 supply extraction/interpretation."""
+    """Extract evidence and report the remaining interpretation boundary."""
+    from partsmith.extraction import (
+        ExtractionCancelled,
+        resolve_package,
+    )
+    from partsmith.extraction.isolated import extract_isolated
+
     request.validate()
     if cancel.is_set():
         return "cancelled"
@@ -58,9 +64,19 @@ def process_datasheet(request, log, cancel):
     log("Package suffixes retained; no default package will be selected.")
     if cancel.is_set():
         return "cancelled"
+    try:
+        result = extract_isolated(request.datasheet, cancel=cancel, log=log)
+    except ExtractionCancelled:
+        return "cancelled"
+    log(f"Extracted {len(result['evidence'])} unreviewed evidence records.")
+    mapping = resolve_package(result, request.part_number)
+    if mapping["status"] != "RESOLVED":
+        log(f"BLOCKED: Package mapping is {mapping['status']}.")
+    else:
+        log(f"Ordering-table package: {mapping['package']}")
     log(
-        "UNAVAILABLE: PDF extraction (Phase 10) and AI interpretation "
-        "(Phase 11) are not implemented. No component was built."
+        "UNAVAILABLE: AI interpretation (Phase 11) is not implemented. "
+        "No component was built."
     )
     return "unavailable"
 

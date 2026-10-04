@@ -65,7 +65,7 @@
     "pdl/release-profiles/mvp-1@1.0.json": "8798d9a552e5dab29f0c5985a4bfbf7b91fb148ac4e90c42f73952dcf8550b0a",
     "docs/gates/phase-6-tests.xml": "cbfe37406118a48e74947feb58ec5d0dc39ce9fac03135a7cc19b6d124a58dca",
     "docs/gates/phase-6-wheel-tests.xml": "cc671eee02c2be57b89b5fff555781030f153a9af474039883fbfb9b1f35b8b9",
-    "pyproject.toml": "45f87c96c5e61adc2a66d83d5374f4d8e8e48d648c2c59ce13fc071d4559d6a7",
+    "pyproject.toml": "f25fbbffafce750108da08d03fde3dd8abfe9cc1c6b8a72f958b946c80e32349",
     "requirements-ci.txt": "df99cf3dc1ac9c11e29b7303972fb7368517a435df3c9c39e7afdb080ca29ccb",
     "src/partsmith/ir/projection.py": "b7de58f69e667496564a96ccf3c68c73e28921134f5aebb9dc103c9788730db6",
     "src/partsmith/release/runtime.py": "27414f9fa7479f3d33703be98bd890fd7b7705a6bccbf0b2a858ab16d4e60893",
@@ -134,6 +134,20 @@
       "docs/gates/phase-8-revalidation.md": {
         "before": "70267d4ccc58b4b814c664255a57132d2ba57bed4114a9e41a8e5d107e41fe77",
         "after": "267470ae11db10a34994c0cf775faa90fe6ca63958909112a207f747101cf8fa"
+      }
+    }
+  },
+  "phase_10_revalidation": {
+    "date": "2026-10-04",
+    "report": "docs/gates/phase-10.md",
+    "scope": "Shared CLI/GUI, documentation, CI and PDF packaging changes. Frozen CAD constraints/generators unchanged. Prior wheel and gate identities retain their historical scope.",
+    "source_tests": 570,
+    "installed_wheel_checks": 98,
+    "historical_manifest": "docs/gates/history/phase-6-artifacts-before-phase-10-2026-10-04.json",
+    "changed_inputs": {
+      "pyproject.toml": {
+        "before": "45f87c96c5e61adc2a66d83d5374f4d8e8e48d648c2c59ce13fc071d4559d6a7",
+        "after": "f25fbbffafce750108da08d03fde3dd8abfe9cc1c6b8a72f958b946c80e32349"
       }
     }
   }

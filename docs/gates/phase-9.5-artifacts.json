@@ -94,15 +94,15 @@
     }
   },
   "sha256": {
-    "README.md": "7d4e06b8ecc43be7d839e64b82eabb987dd75be2b01c0e1dabf02719eec149c9",
+    "README.md": "c60fc5f3f0fb8603777461f15d558cc2fab7ed5e7d4d9fc1962c11689577fa6b",
     "docs/gates/history/phase-6-artifacts-before-phase-9.5-2026-10-04.json": "fb9623680e2578ae7741ea61675832a2ee07fa02a7dc859ceb9b03889af68fac",
     "docs/gates/history/phase-7-artifacts-before-phase-9.5-2026-10-04.json": "45d2703e920d1181bbc65019b783cfb2bb850d6a7f539e16f9d726d9d00b491a",
     "docs/gates/history/phase-8-artifacts-before-phase-9.5-2026-10-04.json": "a2da3f70d2e5beb75f125bda60985ef1d86bf6339b85b485785a08d7c7f50287",
     "docs/gates/history/phase-9-artifacts-before-phase-9.5-2026-10-04.json": "949af03767bb2929d8d372d2613ac619086b6fc37d163d9aa1beafeb0b27611d",
-    "docs/gates/phase-6-artifacts.json": "ad3ffec35c51d6d36829fdf934a062d99523967a97a1a19c43a5bb363b81d24b",
+    "docs/gates/phase-6-artifacts.json": "6dae9ec13715086b3830ab91aff80ebcd2d8796f896c2ee004757e4fe72930bb",
     "docs/gates/phase-7-artifacts.json": "e7596572912fcdee2400f5ca3d23631efcece9eede3000905a2476cacc667665",
-    "docs/gates/phase-8-artifacts.json": "4992478503b79629ce229b6fcb526dbd712b89428ccc1b28e5708ab38e400ae9",
-    "docs/gates/phase-9-artifacts.json": "b0f80853b5983c445462509a0de02f246cd8bee35c2bf7edd514db62287dcfd5",
+    "docs/gates/phase-8-artifacts.json": "0bcbfc2d4fb7b0510b8d51a3ef802250ae6aa37ed657617e66148f07fe36bf63",
+    "docs/gates/phase-9-artifacts.json": "6309dd7be18fa00d9fef073d2f3151fe692ce3830439e277d474e8f25e17cb41",
     "docs/gates/phase-9.5-gui-results.xml": "24ed13923cc0a775fcfc3c4afe9b8a88fc6ed24233c1f0be2ea89d3fe68491c7",
     "docs/gates/phase-9.5-kicad-launch.png": "b1d1e94e40b2693fa1c6e74fb3d975da793185241f54acaceca0af7255c5178c",
     "docs/gates/phase-9.5-source-results.xml": "d35c8acd2c9af0137e0e0872b7af96d5b1b95936f2c3213a7778ea31403cc98a",
@@ -110,19 +110,61 @@
     "docs/gates/phase-9.5-wheel-gui-results.xml": "6a1027a5312ffabdea14b6c1d7e787fded156f19bf719b1b10d0566f7d878daa",
     "docs/gates/phase-9.5.md": "101d4a886d0fde224f6dc260d2efac4c39e787074b83bf1e875a419584153d93",
     "integrations/kicad/partsmith_setup/__init__.py": "c2d83596eac735dea5999aa66b1fdb111955ece8f981b6cba9b6872967a189e5",
-    "pyproject.toml": "45f87c96c5e61adc2a66d83d5374f4d8e8e48d648c2c59ce13fc071d4559d6a7",
+    "pyproject.toml": "f25fbbffafce750108da08d03fde3dd8abfe9cc1c6b8a72f958b946c80e32349",
     "requirements-gui-windows.txt": "c2f01ac82069ac46385fbf2ef83f6928048d5e2cbd132fcfed62a24b7b67da52",
     "resources/BFT_PartSmith_Implementation_Spec.md": "b92bb9f7ff1b6e871f8305244134978c2c36f83dde60d49edd5ac30bac362d4a",
     "resources/PartSmail-Banner.png": "816ac87337b9981db68b1b4b06d50317c5918bc99a6493895d609bb4b3ad8ff7",
     "scripts/install_kicad_gui.py": "0e5683f2f6ad11e2e9f680c87636f1b35e7810a05dff1ded74a27e8b0c62b313",
     "scripts/partsmith_gui.py": "298ae6123daacdf964747a149a47f7fcc273c3353bf5e9dfdeea2490f1e2ed16",
-    "scripts/verify_gui.py": "0e32c8bd4db1ee7836ff4de8a2fd4d0e7cb6057ae6f8d3177e02a6eec634631c",
+    "scripts/verify_gui.py": "59a6c241ec70257e7cef0b9c4e6eb0f618bb9973e804044cbf0cbf2d7d5bdecb",
     "src/partsmith/gui/__init__.py": "30213ef127eaa460428918cdd98ee4080c2af03b2f61a21366676bbf2753a19f",
     "src/partsmith/gui/__main__.py": "7899c82dc1e1956eb15b959dce39504048443fc5252db7862ca1a219bdcae6b9",
     "src/partsmith/gui/app.py": "fb2c3fe566c7d3c3fcd4ea6e2193a676aa10373c0820531b10d53762b13f9a1c",
     "src/partsmith/gui/credentials.py": "dc3f713beb757579a9f32fbc8d583c1a5ec9f43b39fdf8db380ff4771d76b907",
     "src/partsmith/gui/install_kicad.py": "24f304a0817a63e5fb6c210c410094fa138d80ff800851892d2f7acc6d784251",
-    "src/partsmith/gui/processing.py": "cc1549b3cadf1a16b4ca9207c4d3e01a84eebed69a964ebd1f69248de6654b30",
-    "tests/test_gui.py": "7121ec195acee6c08f313cfc3c808f4781c734a48896f1cbe349f198c9d67508"
+    "src/partsmith/gui/processing.py": "15a3b26db828038a5870967bbb7f313618618b60bb89c4a688d5800e501bf63b",
+    "tests/test_gui.py": "c8b2daff07a82f9b42a8db0e02468630e1b6a4b6bce80eeec69d8da71117dd10"
+  },
+  "phase_10_revalidation": {
+    "date": "2026-10-04",
+    "report": "docs/gates/phase-10.md",
+    "scope": "Shared CLI/GUI, documentation, CI and PDF packaging changes. Frozen CAD constraints/generators unchanged. Prior wheel and gate identities retain their historical scope.",
+    "source_tests": 570,
+    "installed_wheel_checks": 98,
+    "historical_manifest": "docs/gates/history/phase-9.5-artifacts-before-phase-10-2026-10-04.json",
+    "changed_inputs": {
+      "README.md": {
+        "before": "7d4e06b8ecc43be7d839e64b82eabb987dd75be2b01c0e1dabf02719eec149c9",
+        "after": "c60fc5f3f0fb8603777461f15d558cc2fab7ed5e7d4d9fc1962c11689577fa6b"
+      },
+      "docs/gates/phase-6-artifacts.json": {
+        "before": "ad3ffec35c51d6d36829fdf934a062d99523967a97a1a19c43a5bb363b81d24b",
+        "after": "6dae9ec13715086b3830ab91aff80ebcd2d8796f896c2ee004757e4fe72930bb"
+      },
+      "docs/gates/phase-8-artifacts.json": {
+        "before": "4992478503b79629ce229b6fcb526dbd712b89428ccc1b28e5708ab38e400ae9",
+        "after": "0bcbfc2d4fb7b0510b8d51a3ef802250ae6aa37ed657617e66148f07fe36bf63"
+      },
+      "docs/gates/phase-9-artifacts.json": {
+        "before": "b0f80853b5983c445462509a0de02f246cd8bee35c2bf7edd514db62287dcfd5",
+        "after": "6309dd7be18fa00d9fef073d2f3151fe692ce3830439e277d474e8f25e17cb41"
+      },
+      "pyproject.toml": {
+        "before": "45f87c96c5e61adc2a66d83d5374f4d8e8e48d648c2c59ce13fc071d4559d6a7",
+        "after": "f25fbbffafce750108da08d03fde3dd8abfe9cc1c6b8a72f958b946c80e32349"
+      },
+      "scripts/verify_gui.py": {
+        "before": "0e32c8bd4db1ee7836ff4de8a2fd4d0e7cb6057ae6f8d3177e02a6eec634631c",
+        "after": "59a6c241ec70257e7cef0b9c4e6eb0f618bb9973e804044cbf0cbf2d7d5bdecb"
+      },
+      "src/partsmith/gui/processing.py": {
+        "before": "cc1549b3cadf1a16b4ca9207c4d3e01a84eebed69a964ebd1f69248de6654b30",
+        "after": "15a3b26db828038a5870967bbb7f313618618b60bb89c4a688d5800e501bf63b"
+      },
+      "tests/test_gui.py": {
+        "before": "7121ec195acee6c08f313cfc3c808f4781c734a48896f1cbe349f198c9d67508",
+        "after": "c8b2daff07a82f9b42a8db0e02468630e1b6a4b6bce80eeec69d8da71117dd10"
+      }
+    }
   }
 }

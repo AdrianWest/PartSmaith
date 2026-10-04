@@ -13,6 +13,7 @@ import platform
 import sys
 from collections.abc import Sequence
 from dataclasses import asdict, dataclass
+from pathlib import Path
 
 from partsmith import __version__
 from partsmith.kicad import KiCadCompatibilityError, discover_kicad
@@ -179,6 +180,38 @@ def _command_pdl_validate(args: argparse.Namespace) -> int:
     return 0
 
 
+def _command_extract(args):
+    from partsmith.extraction import (
+        resolve_package,
+    )
+    from partsmith.extraction.isolated import extract_isolated
+
+    try:
+        result = extract_isolated(
+            args.source,
+            pages=args.pages,
+            dpi=args.dpi,
+            force_ocr=args.ocr,
+            language_hints=args.languages,
+            ocr_layout=args.ocr_layout,
+        )
+        if args.part_number:
+            result["package_resolution"] = resolve_package(
+                result, args.part_number
+            )
+        data = json.dumps(result, ensure_ascii=False, indent=2) + "\n"
+        if args.output:
+            Path(args.output).write_text(data, encoding="utf-8")
+        elif hasattr(sys.stdout, "buffer"):
+            sys.stdout.buffer.write(data.encode("utf-8"))
+        else:
+            print(data, end="")
+    except (ValueError, OSError) as error:
+        print(f"Extraction failed: {error}", file=sys.stderr)
+        return 2
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     """
 
@@ -208,6 +241,28 @@ def build_parser() -> argparse.ArgumentParser:
         help="emit diagnostics as canonical JSON",
     )
     doctor_parser.set_defaults(handler=_command_doctor)
+
+    extraction = commands.add_parser("extract", help="extract PDF evidence")
+    extraction.add_argument("source")
+    extraction.add_argument("--pages", type=int, nargs="+")
+    extraction.add_argument("--dpi", type=int, default=200)
+    extraction.add_argument(
+        "--ocr", action="store_true", help="also OCR native pages"
+    )
+    extraction.add_argument(
+        "--languages", nargs="+", choices=["eng", "deu", "chi_sim"]
+    )
+    extraction.add_argument("--part-number")
+    extraction.add_argument(
+        "--ocr-layout",
+        type=int,
+        choices=[3, 6, 11],
+        help="Tesseract page segmentation (3 is default)",
+    )
+    extraction.add_argument(
+        "--output", help="UTF-8 JSON with embedded PNG assets"
+    )
+    extraction.set_defaults(handler=_command_extract)
 
     pdl_parser = commands.add_parser("pdl", help="inspect package definitions")
     pdl_commands = pdl_parser.add_subparsers(dest="pdl_command", required=True)

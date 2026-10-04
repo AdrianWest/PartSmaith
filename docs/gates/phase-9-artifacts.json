@@ -29,8 +29,8 @@
     "availability": "Local generated output"
   },
   "sha256": {
-    ".github/workflows/ci.yml": "25e16da149df2e6d1348fde6d6bfe0ad140b7f67c62ac3a0199c7cb8b1a53896",
-    "README.md": "7d4e06b8ecc43be7d839e64b82eabb987dd75be2b01c0e1dabf02719eec149c9",
+    ".github/workflows/ci.yml": "98e154559d535334f95a16b813d01364a9b68f09fb6514c903cc3d4fdf48a927",
+    "README.md": "c60fc5f3f0fb8603777461f15d558cc2fab7ed5e7d4d9fc1962c11689577fa6b",
     "docs/gates/phase-9-comparison.json": "dc5688267042b97b1a60cdd2df89c1c59261dcc0618e041a19882ab255c390b7",
     "docs/gates/phase-9-source-results.xml": "dd719739b01edccd74fd0f8318047507cc5e03c74a4987ef86bcb3fc4208326c",
     "docs/gates/phase-9-wheel-results.xml": "2f961cb8ef5b9f6aa11039ac9d950976f68d5371ddf30910114ca5613fc18e22",
@@ -113,7 +113,7 @@
     "migrations/004_node_cache.sql": "67b2a1549f1b746eea39df81a764aa5861e988a27549f24081b971390a90fc18",
     "pdl/entries/synthetic-0402@1.0.json": "199ad7042f45eda4dd0b839f8838a6135c2e0abc2bea0b1011658ab8495a811a",
     "pdl/release-profiles/mvp-1@1.0.json": "8798d9a552e5dab29f0c5985a4bfbf7b91fb148ac4e90c42f73952dcf8550b0a",
-    "pyproject.toml": "45f87c96c5e61adc2a66d83d5374f4d8e8e48d648c2c59ce13fc071d4559d6a7",
+    "pyproject.toml": "f25fbbffafce750108da08d03fde3dd8abfe9cc1c6b8a72f958b946c80e32349",
     "requirements-ci.txt": "df99cf3dc1ac9c11e29b7303972fb7368517a435df3c9c39e7afdb080ca29ccb",
     "resources/BFT_PartSmith_Implementation_Spec.md": "b92bb9f7ff1b6e871f8305244134978c2c36f83dde60d49edd5ac30bac362d4a",
     "schemas/component-ir-1.0.schema.json": "c58e687cd2e324edcec83eff1e0e7b5dbbb86ad95cecef3315679a28b8c82e6d",
@@ -126,7 +126,7 @@
     "scripts/verify_phase2_manifest.py": "28b8e28c51c74a71ca20d7c570f402eef1e12468abaf1b0e77e5161abf72a1fc",
     "src/partsmith/__init__.py": "b537bd5dcdce0ffaf3da13b8108e9a71f0e9789ed00949c1efa131c1f113f5ad",
     "src/partsmith/__main__.py": "369be25b672f3b7d33a8dfff1a3b972ef35bf67fe9ad60a36abf70302f363b7f",
-    "src/partsmith/cli.py": "4b7510f93430bbb341ec15339144dc4e4850bef13cef7a798ca460d1988b9281",
+    "src/partsmith/cli.py": "8cf1eca6a1b7914ee945b6565c7e5893af473aae1aa9b88baf7001c834b9d519",
     "src/partsmith/footprint/__init__.py": "1e875df185d78e80e1dcdbee8fe1d36d7009609857e119b999e45f19b803215b",
     "src/partsmith/footprint/model.py": "936436661f10d10002d80fb3857e05269af0e0d965de371d62fbd27ad020470a",
     "src/partsmith/ir/__init__.py": "0d32100d0dbac10233fa63c79f669de9ee125b519e8fe6a2b23a849857af3acc",
@@ -233,6 +233,32 @@
       "resources/BFT_PartSmith_Implementation_Spec.md": {
         "before": "81acdf5f31c0182bdc9d245abbe566319e46c955e358e4c57d3713f6f7485459",
         "after": "b92bb9f7ff1b6e871f8305244134978c2c36f83dde60d49edd5ac30bac362d4a"
+      }
+    }
+  },
+  "phase_10_revalidation": {
+    "date": "2026-10-04",
+    "report": "docs/gates/phase-10.md",
+    "scope": "Shared CLI/GUI, documentation, CI and PDF packaging changes. Frozen CAD constraints/generators unchanged. Prior wheel and gate identities retain their historical scope.",
+    "source_tests": 570,
+    "installed_wheel_checks": 98,
+    "historical_manifest": "docs/gates/history/phase-9-artifacts-before-phase-10-2026-10-04.json",
+    "changed_inputs": {
+      ".github/workflows/ci.yml": {
+        "before": "25e16da149df2e6d1348fde6d6bfe0ad140b7f67c62ac3a0199c7cb8b1a53896",
+        "after": "98e154559d535334f95a16b813d01364a9b68f09fb6514c903cc3d4fdf48a927"
+      },
+      "README.md": {
+        "before": "7d4e06b8ecc43be7d839e64b82eabb987dd75be2b01c0e1dabf02719eec149c9",
+        "after": "c60fc5f3f0fb8603777461f15d558cc2fab7ed5e7d4d9fc1962c11689577fa6b"
+      },
+      "pyproject.toml": {
+        "before": "45f87c96c5e61adc2a66d83d5374f4d8e8e48d648c2c59ce13fc071d4559d6a7",
+        "after": "f25fbbffafce750108da08d03fde3dd8abfe9cc1c6b8a72f958b946c80e32349"
+      },
+      "src/partsmith/cli.py": {
+        "before": "4b7510f93430bbb341ec15339144dc4e4850bef13cef7a798ca460d1988b9281",
+        "after": "8cf1eca6a1b7914ee945b6565c7e5893af473aae1aa9b88baf7001c834b9d519"
       }
     }
   }

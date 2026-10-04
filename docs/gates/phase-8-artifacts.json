@@ -39,13 +39,13 @@
     "availability": "Local generated output"
   },
   "sha256": {
-    ".github/workflows/ci.yml": "25e16da149df2e6d1348fde6d6bfe0ad140b7f67c62ac3a0199c7cb8b1a53896",
-    "README.md": "7d4e06b8ecc43be7d839e64b82eabb987dd75be2b01c0e1dabf02719eec149c9",
+    ".github/workflows/ci.yml": "98e154559d535334f95a16b813d01364a9b68f09fb6514c903cc3d4fdf48a927",
+    "README.md": "c60fc5f3f0fb8603777461f15d558cc2fab7ed5e7d4d9fc1962c11689577fa6b",
     "resources/BFT_PartSmith_Implementation_Spec.md": "b92bb9f7ff1b6e871f8305244134978c2c36f83dde60d49edd5ac30bac362d4a",
     "scripts/setup_kicad.ps1": "bf2e4d0539a8bdc815707408cda70af291193f74da49c1789b48b6bf062c731b",
     "schemas/phase8-contracts-1.0.schema.json": "05f33abea360a4920eca783eca2b553d4b6e6c3496e10d3fda122cc8f1d92893",
     "migrations/002_phase8.sql": "aa2a81d676964a77a89158c8d40c64031c51f31412bd0bd8c3a0bc95acc5b42d",
-    "src/partsmith/cli.py": "4b7510f93430bbb341ec15339144dc4e4850bef13cef7a798ca460d1988b9281",
+    "src/partsmith/cli.py": "8cf1eca6a1b7914ee945b6565c7e5893af473aae1aa9b88baf7001c834b9d519",
     "src/partsmith/kicad/__init__.py": "ec0fdcec9b84e97b1cd2a351bec2c5f340d0fc8be82f484fc6564f403f00e688",
     "src/partsmith/kicad/runtime.py": "b49105f573c2609ecfd76bdac12ea76da05a8f051fadd9d6c3dd9c1142992503",
     "src/partsmith/persistence/immutable.py": "f8e16d74391ba96e99f2cb1a568b2e4a945fd71410b9156268608c1e83389204",
@@ -73,7 +73,7 @@
     "src/partsmith/persistence/records.py": "d34b9f6481c436aeb97327738cf568b4b05ae0fef1bf6996e917debe5fa87142",
     "src/partsmith/release/schema.py": "cb3768f4d904318a0333dc6c9c3e51f28c14d5052cb5fbb1d49cee666ecbf6dd",
     "tests/test_persistence.py": "881336e7dcb53bcf856a3107fef29b1d81d549166f081989ef539c47d06d7045",
-    "pyproject.toml": "45f87c96c5e61adc2a66d83d5374f4d8e8e48d648c2c59ce13fc071d4559d6a7",
+    "pyproject.toml": "f25fbbffafce750108da08d03fde3dd8abfe9cc1c6b8a72f958b946c80e32349",
     "requirements-ci.txt": "df99cf3dc1ac9c11e29b7303972fb7368517a435df3c9c39e7afdb080ca29ccb",
     "src/partsmith/ir/projection.py": "b7de58f69e667496564a96ccf3c68c73e28921134f5aebb9dc103c9788730db6",
     "src/partsmith/threed/step_backend.py": "77a8fd6663695742b08f5490fa04cfb9d92019dcd7fda2a3a67a4ed5ef658ff5",
@@ -157,6 +157,32 @@
       "pyproject.toml": {
         "before": "be17362b3813079c06e251c7dba3ca3e594b8c541d7b717ae6e76fa827c3fc8b",
         "after": "45f87c96c5e61adc2a66d83d5374f4d8e8e48d648c2c59ce13fc071d4559d6a7"
+      }
+    }
+  },
+  "phase_10_revalidation": {
+    "date": "2026-10-04",
+    "report": "docs/gates/phase-10.md",
+    "scope": "Shared CLI/GUI, documentation, CI and PDF packaging changes. Frozen CAD constraints/generators unchanged. Prior wheel and gate identities retain their historical scope.",
+    "source_tests": 570,
+    "installed_wheel_checks": 98,
+    "historical_manifest": "docs/gates/history/phase-8-artifacts-before-phase-10-2026-10-04.json",
+    "changed_inputs": {
+      ".github/workflows/ci.yml": {
+        "before": "25e16da149df2e6d1348fde6d6bfe0ad140b7f67c62ac3a0199c7cb8b1a53896",
+        "after": "98e154559d535334f95a16b813d01364a9b68f09fb6514c903cc3d4fdf48a927"
+      },
+      "README.md": {
+        "before": "7d4e06b8ecc43be7d839e64b82eabb987dd75be2b01c0e1dabf02719eec149c9",
+        "after": "c60fc5f3f0fb8603777461f15d558cc2fab7ed5e7d4d9fc1962c11689577fa6b"
+      },
+      "src/partsmith/cli.py": {
+        "before": "4b7510f93430bbb341ec15339144dc4e4850bef13cef7a798ca460d1988b9281",
+        "after": "8cf1eca6a1b7914ee945b6565c7e5893af473aae1aa9b88baf7001c834b9d519"
+      },
+      "pyproject.toml": {
+        "before": "45f87c96c5e61adc2a66d83d5374f4d8e8e48d648c2c59ce13fc071d4559d6a7",
+        "after": "f25fbbffafce750108da08d03fde3dd8abfe9cc1c6b8a72f958b946c80e32349"
       }
     }
   }

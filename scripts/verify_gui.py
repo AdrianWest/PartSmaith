@@ -270,10 +270,16 @@ def test_job_terminal_statuses(frame, tmp_path, result):
 
 
 def test_start_requires_part_number_and_valid_source(frame, tmp_path):
+    import pymupdf
+
     frame.on_start(None)
     assert not frame.job.active
     assert "required part number" in frame.logs.GetValue()
     fill(frame, tmp_path)
+    with pymupdf.open() as pdf:
+        page = pdf.new_page()
+        page.insert_text((50, 50), "EXAMPLE-QFN-32R datasheet")
+        pdf.save(frame.source.GetValue())
     frame.on_start(None)
     pump(lambda: frame.status.GetLabel() == "Unavailable")
     assert frame.status.GetLabel() == "Unavailable"

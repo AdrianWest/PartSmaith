@@ -110,8 +110,9 @@ top, secure **Set AI API Key** entry, a local PDF chooser, **Required Part
 Number**, **Start**, **Cancel**, and a live log panel. Enter the complete
 manufacturer order number, including package suffixes: one datasheet can cover
 multiple package styles. The number is passed intact to the processing service.
-Start currently performs PDF/input preflight and reports that Phase 10 extraction
-and Phase 11 interpretation are unavailable; it does not build a component.
+Start performs local PDF extraction and reports the exact ordering-table package
+mapping or a blocked unrecognized/ambiguous mapping. AI interpretation remains
+Phase 11; extraction does not build a component.
 
 With the existing Python 3.12 environment, install the optional Windows runtime:
 
@@ -294,6 +295,56 @@ Inspect the installed catalog with `partsmith pdl list`,
 `partsmith pdl inspect synthetic-0402`, or
 `partsmith pdl validate synthetic-0402`. See the
 [Phase 3 gate evidence](docs/gates/phase-3.md).
+
+## Document extraction (Phase 10)
+
+The GUI and CLI run PDF extraction in a separate worker process. A native
+parser failure reports an extraction error without closing the application.
+Progress and cancellation cross the process boundary; cancellation reaps the
+worker. Windows crash dialogs are disabled only inside that worker. Run native
+PDF/KiCad checks from a normal desktop shell with access to installed libraries
+and configuration files.
+
+```powershell
+partsmith extract test_data_sheets/LM2575-D.PDF --pages 24 --dpi 200 --part-number LM2575TV-ADJG --output evidence.json
+partsmith extract scanned.pdf --dpi 300 --languages chi_sim eng --ocr-layout 6 --output evidence.json
+```
+
+`extract_document()` snapshots and hashes the original PDF, validates one-based
+page selection, and produces IR 1.2-compatible, unreviewed Evidence records for
+native text, tables, vector diagrams, images, and local OCR. Its JSON result
+retains table cells, word boxes/confidence, language candidates, and embedded
+content-addressed PNGs. Engineering quantities stay unknown; no Component IR,
+symbol, footprint, or STEP is generated. Package candidates are resolved only
+from exact full order numbers in recognized table columns; unrecognized and
+ambiguous mappings remain blocked.
+
+Install the pins in `requirements-ci.txt` and `requirements-extraction.txt`.
+OCR also needs
+Tesseract 5 with `eng`, `deu`, and `chi_sim` trained data. On Windows the adapter
+checks `C:/Program Files/Tesseract-OCR/tesseract.exe`; on other systems use PATH,
+or set `PARTSMITH_TESSERACT`. `TESSDATA_PREFIX` can select a model directory.
+For a short text block, choose `--ocr-layout 6`; default mode 3 analyzes a full
+page and mode 11 extracts sparse text. Use 300 DPI for the multilingual OCR
+reference fixtures. Language candidates use script/keyword hints and may remain
+uncertain. Explicit translations retain original text and provider/model/time
+provenance; this phase does not call a translation provider.
+
+The versioned `mvp-1@1.1` extraction profile pins English, German, and Simplified
+Chinese. Earlier deterministic package fixtures retain `mvp-1@1.0`. Canonical
+source regions use physical PDF points in the original unrotated MediaBox;
+render mappings preserve crop, rotation, UserUnit, DPI, and pixel-edge offsets.
+Image/vector objects extending beyond a page retain their original object bounds
+alongside the visible source region. PDFs that open with an empty password are
+supported; password-required PDFs fail explicitly. Ingestion permits up to
+100 MiB and 5,000 pages, with a 40 megapixel limit per rendered page. Use
+`--pages` to select relevant pages from long manuals.
+Scanned ruled grids can become OCR table candidates; borderless/merged/damaged
+grids remain image/OCR candidates for later interpretation. Non-affine dewarping
+is unsupported.
+
+See [Phase 10 gate evidence](docs/gates/phase-10.md). Run
+`python -m pytest tests/test_extraction.py` for the corpus and targeted fixtures.
 
 ## Specification
 

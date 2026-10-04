@@ -1,0 +1,170 @@
+{
+  "specification": "0.9.6",
+  "phase": "9.5",
+  "status": "PASS",
+  "date": "2026-10-04",
+  "scope": "Local Windows AMD64; no remote CI claim",
+  "runtime": {
+    "python": "3.12.10",
+    "wxPython": "4.3.1",
+    "keyring": "25.7.0",
+    "kicad": "10.0.6"
+  },
+  "tests": {
+    "source": {
+      "passed": 490,
+      "seconds": "181.636"
+    },
+    "source_gui": {
+      "passed": 26,
+      "seconds": "1.981"
+    },
+    "installed_wheel_gui": {
+      "passed": 26,
+      "seconds": "1.978"
+    }
+  },
+  "checks": {
+    "lint": "PASS",
+    "format": "PASS",
+    "pip_check": "PASS",
+    "packaged_banner": "PASS",
+    "native_kicad_menu_launch": "PASS",
+    "standalone_script_launch": "PASS",
+    "credential_restart": "PASS",
+    "live_logs": "PASS",
+    "cancellation_and_cleanup": "PASS",
+    "full_part_number_routing": "PASS",
+    "historical_manifest_revalidation": "PASS"
+  },
+  "report": "docs/gates/phase-9.5.md",
+  "wheel": {
+    "path": ".tools/phase95/dist/partsmith-0.1.0-py3-none-any.whl",
+    "sha256": "643fbf40d0a0690709e24d1a50b31a580bc537db546613316195d97a8ed0868f",
+    "availability": "Local generated output"
+  },
+  "prior_manifest_refreshes": {
+    "6": {
+      "pyproject.toml": {
+        "before": "be17362b3813079c06e251c7dba3ca3e594b8c541d7b717ae6e76fa827c3fc8b",
+        "after": "45f87c96c5e61adc2a66d83d5374f4d8e8e48d648c2c59ce13fc071d4559d6a7"
+      },
+      "docs/gates/phase-8.md": {
+        "before": "d1d81ed0ef1cfc335ad6459dc5db78d6097483246a6ca855f95c55160922dcd2",
+        "after": "b93118ffcec24be65d27d8ab9cc170173552919bde1eba1304d6e681591fd0a2"
+      },
+      "docs/gates/phase-8-revalidation.md": {
+        "before": "70267d4ccc58b4b814c664255a57132d2ba57bed4114a9e41a8e5d107e41fe77",
+        "after": "267470ae11db10a34994c0cf775faa90fe6ca63958909112a207f747101cf8fa"
+      }
+    },
+    "7": {
+      "docs/gates/phase-8-revalidation.md": {
+        "before": "70267d4ccc58b4b814c664255a57132d2ba57bed4114a9e41a8e5d107e41fe77",
+        "after": "267470ae11db10a34994c0cf775faa90fe6ca63958909112a207f747101cf8fa"
+      }
+    },
+    "8": {
+      "README.md": {
+        "before": "7e6ee129040aaab3dbd4ef691357d79bcb956e6768b3990f6f0b3a17fdfa9cc0",
+        "after": "7d4e06b8ecc43be7d839e64b82eabb987dd75be2b01c0e1dabf02719eec149c9"
+      },
+      "resources/BFT_PartSmith_Implementation_Spec.md": {
+        "before": "81acdf5f31c0182bdc9d245abbe566319e46c955e358e4c57d3713f6f7485459",
+        "after": "b92bb9f7ff1b6e871f8305244134978c2c36f83dde60d49edd5ac30bac362d4a"
+      },
+      "pyproject.toml": {
+        "before": "be17362b3813079c06e251c7dba3ca3e594b8c541d7b717ae6e76fa827c3fc8b",
+        "after": "45f87c96c5e61adc2a66d83d5374f4d8e8e48d648c2c59ce13fc071d4559d6a7"
+      }
+    },
+    "9": {
+      "README.md": {
+        "before": "7e6ee129040aaab3dbd4ef691357d79bcb956e6768b3990f6f0b3a17fdfa9cc0",
+        "after": "7d4e06b8ecc43be7d839e64b82eabb987dd75be2b01c0e1dabf02719eec149c9"
+      },
+      "pyproject.toml": {
+        "before": "be17362b3813079c06e251c7dba3ca3e594b8c541d7b717ae6e76fa827c3fc8b",
+        "after": "45f87c96c5e61adc2a66d83d5374f4d8e8e48d648c2c59ce13fc071d4559d6a7"
+      },
+      "resources/BFT_PartSmith_Implementation_Spec.md": {
+        "before": "81acdf5f31c0182bdc9d245abbe566319e46c955e358e4c57d3713f6f7485459",
+        "after": "b92bb9f7ff1b6e871f8305244134978c2c36f83dde60d49edd5ac30bac362d4a"
+      }
+    }
+  },
+  "sha256": {
+    "README.md": "eb085370da902a9bee4a37d9322249cf631e00aa1114f3d6afceea82c82432f0",
+    "docs/gates/history/phase-6-artifacts-before-phase-9.5-2026-10-04.json": "fb9623680e2578ae7741ea61675832a2ee07fa02a7dc859ceb9b03889af68fac",
+    "docs/gates/history/phase-7-artifacts-before-phase-9.5-2026-10-04.json": "45d2703e920d1181bbc65019b783cfb2bb850d6a7f539e16f9d726d9d00b491a",
+    "docs/gates/history/phase-8-artifacts-before-phase-9.5-2026-10-04.json": "a2da3f70d2e5beb75f125bda60985ef1d86bf6339b85b485785a08d7c7f50287",
+    "docs/gates/history/phase-9-artifacts-before-phase-9.5-2026-10-04.json": "949af03767bb2929d8d372d2613ac619086b6fc37d163d9aa1beafeb0b27611d",
+    "docs/gates/phase-6-artifacts.json": "d28a06653e0e55999bc392d178b710e8f7727551e68746d13e36c09aea6c3020",
+    "docs/gates/phase-7-artifacts.json": "e7596572912fcdee2400f5ca3d23631efcece9eede3000905a2476cacc667665",
+    "docs/gates/phase-8-artifacts.json": "8579b16b6316be4988669cb9b781ad57034950ba07801f586893e65010ecadd2",
+    "docs/gates/phase-9-artifacts.json": "3387397360aee2b37afe17229bef6db0c9d21fcee1ccbbec729eb6374d932257",
+    "docs/gates/phase-9.5-gui-results.xml": "24ed13923cc0a775fcfc3c4afe9b8a88fc6ed24233c1f0be2ea89d3fe68491c7",
+    "docs/gates/phase-9.5-kicad-launch.png": "b1d1e94e40b2693fa1c6e74fb3d975da793185241f54acaceca0af7255c5178c",
+    "docs/gates/phase-9.5-source-results.xml": "d35c8acd2c9af0137e0e0872b7af96d5b1b95936f2c3213a7778ea31403cc98a",
+    "docs/gates/phase-9.5-standalone-launch.png": "02af67b0979e65dc1fde051e5c4613f315d95b13c3dcef75506e5338220cc211",
+    "docs/gates/phase-9.5-wheel-gui-results.xml": "6a1027a5312ffabdea14b6c1d7e787fded156f19bf719b1b10d0566f7d878daa",
+    "docs/gates/phase-9.5.md": "101d4a886d0fde224f6dc260d2efac4c39e787074b83bf1e875a419584153d93",
+    "integrations/kicad/partsmith_setup/__init__.py": "c2d83596eac735dea5999aa66b1fdb111955ece8f981b6cba9b6872967a189e5",
+    "pyproject.toml": "f25fbbffafce750108da08d03fde3dd8abfe9cc1c6b8a72f958b946c80e32349",
+    "requirements-gui-windows.txt": "c2f01ac82069ac46385fbf2ef83f6928048d5e2cbd132fcfed62a24b7b67da52",
+    "resources/BFT_PartSmith_Implementation_Spec.md": "b92bb9f7ff1b6e871f8305244134978c2c36f83dde60d49edd5ac30bac362d4a",
+    "resources/PartSmail-Banner.png": "816ac87337b9981db68b1b4b06d50317c5918bc99a6493895d609bb4b3ad8ff7",
+    "scripts/install_kicad_gui.py": "0e5683f2f6ad11e2e9f680c87636f1b35e7810a05dff1ded74a27e8b0c62b313",
+    "scripts/partsmith_gui.py": "298ae6123daacdf964747a149a47f7fcc273c3353bf5e9dfdeea2490f1e2ed16",
+    "scripts/verify_gui.py": "59a6c241ec70257e7cef0b9c4e6eb0f618bb9973e804044cbf0cbf2d7d5bdecb",
+    "src/partsmith/gui/__init__.py": "30213ef127eaa460428918cdd98ee4080c2af03b2f61a21366676bbf2753a19f",
+    "src/partsmith/gui/__main__.py": "7899c82dc1e1956eb15b959dce39504048443fc5252db7862ca1a219bdcae6b9",
+    "src/partsmith/gui/app.py": "fb2c3fe566c7d3c3fcd4ea6e2193a676aa10373c0820531b10d53762b13f9a1c",
+    "src/partsmith/gui/credentials.py": "dc3f713beb757579a9f32fbc8d583c1a5ec9f43b39fdf8db380ff4771d76b907",
+    "src/partsmith/gui/install_kicad.py": "24f304a0817a63e5fb6c210c410094fa138d80ff800851892d2f7acc6d784251",
+    "src/partsmith/gui/processing.py": "757f8db99c56782db1da48134959c03334e12e7966fe6af49694222ce08aa6fa",
+    "tests/test_gui.py": "c8b2daff07a82f9b42a8db0e02468630e1b6a4b6bce80eeec69d8da71117dd10"
+  },
+  "phase_10_revalidation": {
+    "date": "2026-10-04",
+    "report": "docs/gates/phase-10.md",
+    "scope": "Shared CLI/GUI, documentation, CI and PDF packaging changes. Frozen CAD constraints/generators unchanged. Prior wheel and gate identities retain their historical scope.",
+    "source_tests": 561,
+    "installed_wheel_checks": 89,
+    "historical_manifest": "docs/gates/history/phase-9.5-artifacts-before-phase-10-2026-10-04.json",
+    "changed_inputs": {
+      "README.md": {
+        "before": "7d4e06b8ecc43be7d839e64b82eabb987dd75be2b01c0e1dabf02719eec149c9",
+        "after": "eb085370da902a9bee4a37d9322249cf631e00aa1114f3d6afceea82c82432f0"
+      },
+      "docs/gates/phase-6-artifacts.json": {
+        "before": "ad3ffec35c51d6d36829fdf934a062d99523967a97a1a19c43a5bb363b81d24b",
+        "after": "d28a06653e0e55999bc392d178b710e8f7727551e68746d13e36c09aea6c3020"
+      },
+      "docs/gates/phase-8-artifacts.json": {
+        "before": "4992478503b79629ce229b6fcb526dbd712b89428ccc1b28e5708ab38e400ae9",
+        "after": "8579b16b6316be4988669cb9b781ad57034950ba07801f586893e65010ecadd2"
+      },
+      "docs/gates/phase-9-artifacts.json": {
+        "before": "b0f80853b5983c445462509a0de02f246cd8bee35c2bf7edd514db62287dcfd5",
+        "after": "3387397360aee2b37afe17229bef6db0c9d21fcee1ccbbec729eb6374d932257"
+      },
+      "pyproject.toml": {
+        "before": "45f87c96c5e61adc2a66d83d5374f4d8e8e48d648c2c59ce13fc071d4559d6a7",
+        "after": "f25fbbffafce750108da08d03fde3dd8abfe9cc1c6b8a72f958b946c80e32349"
+      },
+      "scripts/verify_gui.py": {
+        "before": "0e32c8bd4db1ee7836ff4de8a2fd4d0e7cb6057ae6f8d3177e02a6eec634631c",
+        "after": "59a6c241ec70257e7cef0b9c4e6eb0f618bb9973e804044cbf0cbf2d7d5bdecb"
+      },
+      "src/partsmith/gui/processing.py": {
+        "before": "cc1549b3cadf1a16b4ca9207c4d3e01a84eebed69a964ebd1f69248de6654b30",
+        "after": "757f8db99c56782db1da48134959c03334e12e7966fe6af49694222ce08aa6fa"
+      },
+      "tests/test_gui.py": {
+        "before": "7121ec195acee6c08f313cfc3c808f4781c734a48896f1cbe349f198c9d67508",
+        "after": "c8b2daff07a82f9b42a8db0e02468630e1b6a4b6bce80eeec69d8da71117dd10"
+      }
+    }
+  }
+}

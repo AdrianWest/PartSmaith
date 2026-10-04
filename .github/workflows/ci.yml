@@ -21,6 +21,22 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
+      - name: Install local multilingual OCR on Ubuntu
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes tesseract-ocr tesseract-ocr-eng tesseract-ocr-deu tesseract-ocr-chi-sim
+      - name: Install local multilingual OCR on Windows
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          choco install tesseract --yes --no-progress
+          $ocrDirectory = Join-Path $env:ProgramFiles 'Tesseract-OCR'
+          "$ocrDirectory" | Out-File -FilePath $env:GITHUB_PATH -Append
+          foreach ($language in @('eng', 'deu', 'chi_sim')) {
+            $model = Join-Path $ocrDirectory "tessdata/$language.traineddata"
+            Invoke-WebRequest "https://raw.githubusercontent.com/tesseract-ocr/tessdata_fast/4.1.0/$language.traineddata" -OutFile $model
+          }
       - name: Install pinned KiCad 10 on Ubuntu
         if: runner.os == 'Linux'
         run: |
@@ -47,6 +63,7 @@ jobs:
       - name: Install pinned CI tools and project
         run: |
           python -m pip install --requirement requirements-ci.txt
+          python -m pip install --requirement requirements-extraction.txt
           python -m pip install -e . --no-deps
       - name: Lint
         run: python -m ruff check .

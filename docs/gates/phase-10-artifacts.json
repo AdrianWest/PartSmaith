@@ -1,0 +1,237 @@
+{
+  "specification": "0.9.6",
+  "phase": "10",
+  "status": "PASS",
+  "date": "2026-10-04",
+  "scope": "Local Windows AMD64. No remote CI or Linux/macOS run claimed.",
+  "runtime": {
+    "python": "3.12.10",
+    "kicad": "10.0.6",
+    "tesseract": "5.5.0.20241111",
+    "PyMuPDF": "1.26.7",
+    "pypdf": "6.1.3",
+    "cryptography": "46.0.3",
+    "cffi": "2.0.0",
+    "pycparser": "2.23",
+    "wxPython": "4.3.1",
+    "keyring": "25.7.0"
+  },
+  "tests": {
+    "source": {
+      "passed": 570,
+      "seconds": "274.046"
+    },
+    "extraction_service": {
+      "passed": 82,
+      "seconds": "89.344"
+    },
+    "installed_wheel": {
+      "passed": 98,
+      "seconds": "98.201"
+    },
+    "native_desktop_rerun": {
+      "passed": 16,
+      "seconds": "8.100"
+    }
+  },
+  "checks": {
+    "lint": "PASS",
+    "format": "PASS",
+    "pip_check": "PASS",
+    "packaged_extraction_profile": "PASS",
+    "original_document_hashes": "PASS",
+    "IR_1_2_evidence_schema": "PASS",
+    "language_matrix": "PASS",
+    "coordinate_overlays": "PASS",
+    "exact_part_number_mapping": "PASS",
+    "no_engineering_artifacts": "PASS",
+    "native_kicad": "PASS",
+    "credential_restart": "PASS",
+    "historical_manifests": "PASS",
+    "native_crash_containment": "PASS"
+  },
+  "corpus": {
+    "policy": "all pages through 32; first/middle/last for longer PDFs",
+    "document_count": 24,
+    "total_original_pages": 4102,
+    "selected_page_count": 279
+  },
+  "report": "docs/gates/phase-10.md",
+  "wheel": {
+    "path": ".tools/phase10/dist/partsmith-0.1.0-py3-none-any.whl",
+    "sha256": "d061c17bf32d7333a40d22ccca7caeeedde6d8f147ba19899b3b28f13018b8d4",
+    "availability": "Local generated output"
+  },
+  "cli_sample": {
+    "path": ".tools/phase10/LM2575-evidence.json",
+    "sha256": "70d3f7fd928767e186e7518ed249e735f78a90b6d9aaec2dfda7aef6fbad02ad",
+    "evidence_records": 48,
+    "availability": "Local generated output with embedded PNG assets"
+  },
+  "ocr_runtime_sha256": {
+    "tesseract.exe": "ccd044d6cf16eaaad151260e1fcc5e3e1504cd1b8644e940b4f7ae3e315dd0d3",
+    "eng.traineddata": "7d4322bd2a7749724879683fc3912cb542f19906c83bcc1a52132556427170b2",
+    "deu.traineddata": "19d219bbb6672c869d20a9636c6816a81eb9a71796cb93ebe0cb1530e2cdb22d",
+    "chi_sim.traineddata": "a5fcb6f0db1e1d6d8522f39db4e848f05984669172e584e8d76b6b3141e1f730"
+  },
+  "historical_manifest_refreshes": {
+    "6": {
+      "historical_manifest": "docs/gates/history/phase-6-artifacts-before-phase-10-2026-10-04.json",
+      "changed_inputs": {
+        "pyproject.toml": {
+          "before": "45f87c96c5e61adc2a66d83d5374f4d8e8e48d648c2c59ce13fc071d4559d6a7",
+          "after": "f25fbbffafce750108da08d03fde3dd8abfe9cc1c6b8a72f958b946c80e32349"
+        }
+      }
+    },
+    "8": {
+      "historical_manifest": "docs/gates/history/phase-8-artifacts-before-phase-10-2026-10-04.json",
+      "changed_inputs": {
+        ".github/workflows/ci.yml": {
+          "before": "25e16da149df2e6d1348fde6d6bfe0ad140b7f67c62ac3a0199c7cb8b1a53896",
+          "after": "98e154559d535334f95a16b813d01364a9b68f09fb6514c903cc3d4fdf48a927"
+        },
+        "README.md": {
+          "before": "7d4e06b8ecc43be7d839e64b82eabb987dd75be2b01c0e1dabf02719eec149c9",
+          "after": "c60fc5f3f0fb8603777461f15d558cc2fab7ed5e7d4d9fc1962c11689577fa6b"
+        },
+        "src/partsmith/cli.py": {
+          "before": "4b7510f93430bbb341ec15339144dc4e4850bef13cef7a798ca460d1988b9281",
+          "after": "8cf1eca6a1b7914ee945b6565c7e5893af473aae1aa9b88baf7001c834b9d519"
+        },
+        "pyproject.toml": {
+          "before": "45f87c96c5e61adc2a66d83d5374f4d8e8e48d648c2c59ce13fc071d4559d6a7",
+          "after": "f25fbbffafce750108da08d03fde3dd8abfe9cc1c6b8a72f958b946c80e32349"
+        }
+      }
+    },
+    "9": {
+      "historical_manifest": "docs/gates/history/phase-9-artifacts-before-phase-10-2026-10-04.json",
+      "changed_inputs": {
+        ".github/workflows/ci.yml": {
+          "before": "25e16da149df2e6d1348fde6d6bfe0ad140b7f67c62ac3a0199c7cb8b1a53896",
+          "after": "98e154559d535334f95a16b813d01364a9b68f09fb6514c903cc3d4fdf48a927"
+        },
+        "README.md": {
+          "before": "7d4e06b8ecc43be7d839e64b82eabb987dd75be2b01c0e1dabf02719eec149c9",
+          "after": "c60fc5f3f0fb8603777461f15d558cc2fab7ed5e7d4d9fc1962c11689577fa6b"
+        },
+        "pyproject.toml": {
+          "before": "45f87c96c5e61adc2a66d83d5374f4d8e8e48d648c2c59ce13fc071d4559d6a7",
+          "after": "f25fbbffafce750108da08d03fde3dd8abfe9cc1c6b8a72f958b946c80e32349"
+        },
+        "src/partsmith/cli.py": {
+          "before": "4b7510f93430bbb341ec15339144dc4e4850bef13cef7a798ca460d1988b9281",
+          "after": "8cf1eca6a1b7914ee945b6565c7e5893af473aae1aa9b88baf7001c834b9d519"
+        }
+      }
+    },
+    "9.5": {
+      "historical_manifest": "docs/gates/history/phase-9.5-artifacts-before-phase-10-2026-10-04.json",
+      "changed_inputs": {
+        "README.md": {
+          "before": "7d4e06b8ecc43be7d839e64b82eabb987dd75be2b01c0e1dabf02719eec149c9",
+          "after": "c60fc5f3f0fb8603777461f15d558cc2fab7ed5e7d4d9fc1962c11689577fa6b"
+        },
+        "docs/gates/phase-6-artifacts.json": {
+          "before": "ad3ffec35c51d6d36829fdf934a062d99523967a97a1a19c43a5bb363b81d24b",
+          "after": "6dae9ec13715086b3830ab91aff80ebcd2d8796f896c2ee004757e4fe72930bb"
+        },
+        "docs/gates/phase-8-artifacts.json": {
+          "before": "4992478503b79629ce229b6fcb526dbd712b89428ccc1b28e5708ab38e400ae9",
+          "after": "0bcbfc2d4fb7b0510b8d51a3ef802250ae6aa37ed657617e66148f07fe36bf63"
+        },
+        "docs/gates/phase-9-artifacts.json": {
+          "before": "b0f80853b5983c445462509a0de02f246cd8bee35c2bf7edd514db62287dcfd5",
+          "after": "6309dd7be18fa00d9fef073d2f3151fe692ce3830439e277d474e8f25e17cb41"
+        },
+        "pyproject.toml": {
+          "before": "45f87c96c5e61adc2a66d83d5374f4d8e8e48d648c2c59ce13fc071d4559d6a7",
+          "after": "f25fbbffafce750108da08d03fde3dd8abfe9cc1c6b8a72f958b946c80e32349"
+        },
+        "scripts/verify_gui.py": {
+          "before": "0e32c8bd4db1ee7836ff4de8a2fd4d0e7cb6057ae6f8d3177e02a6eec634631c",
+          "after": "59a6c241ec70257e7cef0b9c4e6eb0f618bb9973e804044cbf0cbf2d7d5bdecb"
+        },
+        "src/partsmith/gui/processing.py": {
+          "before": "cc1549b3cadf1a16b4ca9207c4d3e01a84eebed69a964ebd1f69248de6654b30",
+          "after": "15a3b26db828038a5870967bbb7f313618618b60bb89c4a688d5800e501bf63b"
+        },
+        "tests/test_gui.py": {
+          "before": "7121ec195acee6c08f313cfc3c808f4781c734a48896f1cbe349f198c9d67508",
+          "after": "c8b2daff07a82f9b42a8db0e02468630e1b6a4b6bce80eeec69d8da71117dd10"
+        }
+      }
+    }
+  },
+  "sha256": {
+    ".github/workflows/ci.yml": "98e154559d535334f95a16b813d01364a9b68f09fb6514c903cc3d4fdf48a927",
+    "docs/gates/phase-10-corpus.json": "54f5dc9461a7b49114b1e34e8d7d60514b3d4b1d0a44da94817014b893e606ab",
+    "docs/gates/phase-10-extraction-results.xml": "401b1ab06f1f091a53d65f97c1025f2ca542c015e9c0cce3fc3342a54cdc6a82",
+    "docs/gates/phase-10-native-results.xml": "52856791c49911079b780f90e1796c779ad7999a090b80136c0c6da944590601",
+    "docs/gates/phase-10-source-results.xml": "2b367668b007eeef6d7fb9d1a030e40e8d1325283c63d55a554b251b308104b7",
+    "docs/gates/phase-10-wheel-results.xml": "a6ae6e84e0bcde1a55cd121406f2559873bad5590ec4139c759e757bfc29e6dc",
+    "docs/gates/phase-10.md": "671c1cfa559cd775ad6ab2f61e97f94976e92031536196dc0939d9cfa41c6556",
+    "fixtures/extraction/language-matrix.json": "76808c8b8ae494c974f59715c44bf7fdf753a94ab56404c6218027c6f9749134",
+    "fixtures/extraction/language-matrix.pdf": "723ad9215c9c9894a74d880c9b1631b484ce9b07dd0a638aacacc0b5f99f492a",
+    "fixtures/extraction/README.md": "35df918bc227195264d56ca2f07c18d8b942aded42e30b60838e7e45d2741170",
+    "pdl/release-profiles/mvp-1@1.0.json": "8798d9a552e5dab29f0c5985a4bfbf7b91fb148ac4e90c42f73952dcf8550b0a",
+    "pdl/release-profiles/mvp-1@1.1.json": "49067f4f31972e42be52a3217007c661f7cf036ab0f9a28e9140d2b0b68234b6",
+    "pyproject.toml": "f25fbbffafce750108da08d03fde3dd8abfe9cc1c6b8a72f958b946c80e32349",
+    "README.md": "c60fc5f3f0fb8603777461f15d558cc2fab7ed5e7d4d9fc1962c11689577fa6b",
+    "requirements-ci.txt": "df99cf3dc1ac9c11e29b7303972fb7368517a435df3c9c39e7afdb080ca29ccb",
+    "requirements-extraction.txt": "00de9bdaa172329894e6f9a62247b322dd2f0f05b11d1c9163b6682d9912bb6b",
+    "schemas/component-ir-1.2.schema.json": "4a26d6bd925fbf91862f5eeeae27989ea59a1c4b2f8924a23743f6d1a464a8c1",
+    "scripts/generate_extraction_fixtures.py": "c24d58ce4371cb3b38c763b6d83659142677ca7b00866fa94f1a3319186d8204",
+    "scripts/verify_gui.py": "59a6c241ec70257e7cef0b9c4e6eb0f618bb9973e804044cbf0cbf2d7d5bdecb",
+    "src/partsmith/cli.py": "8cf1eca6a1b7914ee945b6565c7e5893af473aae1aa9b88baf7001c834b9d519",
+    "src/partsmith/extraction/__init__.py": "5b5f90784b414182f3ebb942132dfd13d57fe7b7d95881f8b890f8c16aa0b566",
+    "src/partsmith/extraction/coordinates.py": "9c6ecc31f60e9593bf37819adf59a4a472eb8e75a643dcfc20a7fd8903ad773d",
+    "src/partsmith/extraction/document.py": "8f3780e2019b3fc170641ee7e4b766e636d96fbba42771a9c3661e09d67934a6",
+    "src/partsmith/extraction/ocr.py": "8c402e7a6fd16fa08716ff722957d56a5e9365eaf4229a5e72b709e577b71408",
+    "src/partsmith/extraction/packages.py": "669e25d4354bfce044c07db1f00971f9e125cf72e8b3d31d16128987adbc4fda",
+    "src/partsmith/extraction/tables.py": "ac6ccc124a88ca6a648163f1fcc74b52f527c947f49ac86e0c11174a678ba781",
+    "src/partsmith/extraction/translation.py": "6616131015539fb82868f26f9151b2d8d72b0c674a23d3ff5502b217760b3d17",
+    "src/partsmith/gui/processing.py": "15a3b26db828038a5870967bbb7f313618618b60bb89c4a688d5800e501bf63b",
+    "test_data_sheets/APA102-2020_SMD_LED.pdf": "d5ae0e04e28a481e77753f6f6d27ce4acd5d768f049b46767c0c0edd339d53cd",
+    "test_data_sheets/AVR32LA14-20-28-32-DataSheet-DS40002684.pdf": "a1765c14b549de6bff739c3eb10cff8949966ab33d86d0e3f553de66aa38f56c",
+    "test_data_sheets/DS_16911_RGB_LED_Clear_Lens_Common_Cathode_5mm.pdf": "906e7e93379f9fb634fae29e5a6bd7ea7b9fb1acc91d2640038cb1e95967f831",
+    "test_data_sheets/FAN7380-D.PDF": "d5cb182971f1351d42b989b787484f0cbe61e221b27875f1c0e9ee8a751ab263",
+    "test_data_sheets/FSL336LR-D.PDF": "7384dadd3d752e71541ed7690b02a936a07681ac0b53ae48ebe9f938036915cc",
+    "test_data_sheets/infineon_iaucn04s7n010g_datasheet_en.pdf": "6fcb63d3f9ad5a7557b124948f475f83d1258c9aabc683f5105b3c457c45617e",
+    "test_data_sheets/ISL9V5036S3ST-D.PDF": "666d60cbe181e0a49bcd6bda6a8a29254a31ce1d9947a60d91a37751647ecf77",
+    "test_data_sheets/KA324-D.pdf": "7e0494bf1bca8f913e9912b37f2a5edf3f21b6eb6712e0da9ee0756ea276b755",
+    "test_data_sheets/LM2575-D.PDF": "55f4ada7c4f8037a3ba64acb5fd3cdd3b382af05358eb8bbd73854ec9acf73af",
+    "test_data_sheets/MC33275-D.PDF": "a90c2b53053109ed3d093866e9ae8dd9b9be55bdd9c4424d53a1cc6d3606c244",
+    "test_data_sheets/NCD83591-D.PDF": "cb59549c13e282a2387a2b62e44734676648d9a45596d186047848019d061988",
+    "test_data_sheets/NCP161-D.PDF": "387fda57cf05337ce1a262c738d82c4418e4f5e510e6b2325f025993f8b8a586",
+    "test_data_sheets/NCP167-D.PDF": "a8074bcd7accef8663d5146b2711c9ef7586373f514ea19f01558eb3a21fa3ed",
+    "test_data_sheets/NCP4307-D.PDF": "7dfb1cd591adbaedf156cb441f653fe9c3028130be90a053ee2374f7c2a8c01d",
+    "test_data_sheets/NXV08V110DB1-D.PDF": "5b8870e5ab3f2efa3a546fe0ff518465d17bec59fc4a547e20200bbbd0571845",
+    "test_data_sheets/PIC18F24-25-44-45-54-55Q35-Microcontroller-Data-Sheet-DS40002678.pdf": "0371683211d5a10fc2a5627fb7505187c16443d07487dabb20b6ac72a0013cf2",
+    "test_data_sheets/PIC32CZ-CA70-MC70-Family-Data-Sheet-DS60001825.pdf": "a394a9a17f2c03989cf53b680d41eff5659cfc4353b51c4033756c90ce9f654a",
+    "test_data_sheets/SK9822_SHIJI.pdf": "c87f7bb1fe86155e5cfaeca62494ab1089a7fb555a3fc24f93a33ac757fe8afa",
+    "test_data_sheets/XE232_1024_FB374_Datasheet_1_16.pdf": "20e4d57a60d9f9eecfd4c81c68b5e9b95ffc649c9b1b4dfbaff9404b08ab0e14",
+    "tests/test_extraction.py": "13d047a613c2626cff244392d3442892dcaaa06a8587376afee6829938801897",
+    "tests/test_gui.py": "c8b2daff07a82f9b42a8db0e02468630e1b6a4b6bce80eeec69d8da71117dd10",
+    "test_data_sheets/150crz.pdf": "c579d2f2f13e3390951dbbc4eaaecb142f5cb7d6265589a1bc6e10942b810181",
+    "test_data_sheets/190rtl.pdf": "c3a87cafa0a5ac7bb6327c34faed6025bf165ef2064bad0d188e13c117d611ea",
+    "test_data_sheets/Bourns_07-15-2026_SRP2510PA.pdf": "6e32c6de0b523b6d13396b0d908c4200914279c884cab5a4ae9906d43439e2e2",
+    "test_data_sheets/ds180_7Series_Overview.pdf": "8222e0f32bc0a22ca63d2241c148249327384cd2f87f0fe0bc2e95cc3d9b6e26",
+    "test_data_sheets/KEM_T2091_A700-A720.pdf": "2f00efbc3dd637d4bd096ba972051f4d1ee04211d600cdc8334a8b5777a1f2c9",
+    "src/partsmith/extraction/isolated.py": "5a20486b544c821a299b0433d3ffec6bb717b3792ff4b628dd7d22d4d8ccde23",
+    "tests/test_extraction_isolation.py": "549fc8056d9e0a41c29703e2bc12178f80cf55c76d01174237f6e4af802a1d15",
+    "docs/gates/phase-10-parser-trial-results.xml": "4437932b7a5a28e4c628f3fa78483407e9bbb4b8f80f5786eac074d113e816a6",
+    "docs/gates/phase-10-source-install-interference-results.xml": "f2c96d3c8dfc4acb7fb6ba826e16cf4d763e1ee97d48c07ed808991386dc2c50"
+  },
+  "corpus_expansion": {
+    "previous_documents": 19,
+    "added_documents": 5,
+    "added_pages_checked": 72,
+    "historical_manifest": "docs/gates/history/phase-10-artifacts-before-corpus-expansion-2026-10-04.json",
+    "restricted_native_parser_runs": "Two access violations in PyMuPDF graphics/table extraction; normal desktop expanded wheel checks passed.",
+    "containment": "GUI/CLI use a separate cancellable worker; abrupt exit becomes an error without terminating the application.",
+    "new_parser_trial": "PyMuPDF 1.28.2 failed the existing drain-current table content oracle. Retained 1.26.7.",
+    "source_install_interference": "569 passed and one resource-read failure while the runtime wheel was replaced. Full suite rerun with installation complete."
+  }
+}
