@@ -1,0 +1,438 @@
+{
+  "environment": "Local Windows AMD64; Python 3.12.10; KiCad CLI 10.0.6",
+  "hash_seeds": [
+    11,
+    97
+  ],
+  "clean_build_comparison": {
+    "schema_version": "1.0",
+    "stage": "REPRODUCIBILITY",
+    "status": "PASS",
+    "left": {
+      "artifact_hashes": {
+        "FOOTPRINT": "3d5463370032e6f730924fe00355fe96da79301b093c7ae4b6733d33d7fcef8e",
+        "MODEL_3D": "789ee84bd00e5fa7adfec322191eeb678f849c82b990b30a41f1bb51da839c92",
+        "SYMBOL": "1e68b04c019d5ad5cd20eb03c3ac4d66b9594e1eb6278c80122c4b60670a2b6e"
+      },
+      "dependency_hashes": {
+        "association": "39de6b1434b9dd18a60ec921ea5b8e13876a2c10c0c64959dfc1fd54f6c3449d",
+        "footprint": "a6b15618558f092970966ee254f42f4b4c4511f0dfe892892044c7a92d29794e",
+        "model_3d": "cbd60323818a066c20c8dea4f76e9b35f1b704c49fad6a2b83c9f366d33ab9f7",
+        "symbol": "fad806ba25b1d3254b9cc3357be5fa143069a061a6f9b751fc6b9b1175916552"
+      },
+      "engineering_manifest_hash": "05a7a9347f14ae20ea92e8773e58d19804ff675f345fcd3fc397f17e51dc1e6f",
+      "input_snapshot_hash": "efdcf1915173875c28dd4b2a8f5c1edbf8579c9489c0147ac43973b4ad889020",
+      "validation_semantics_hash": "69830c43a77b7077e4daa20127424db0db1dc25376ff7045717941b3edf85ba7"
+    },
+    "right": {
+      "artifact_hashes": {
+        "FOOTPRINT": "3d5463370032e6f730924fe00355fe96da79301b093c7ae4b6733d33d7fcef8e",
+        "MODEL_3D": "789ee84bd00e5fa7adfec322191eeb678f849c82b990b30a41f1bb51da839c92",
+        "SYMBOL": "1e68b04c019d5ad5cd20eb03c3ac4d66b9594e1eb6278c80122c4b60670a2b6e"
+      },
+      "dependency_hashes": {
+        "association": "39de6b1434b9dd18a60ec921ea5b8e13876a2c10c0c64959dfc1fd54f6c3449d",
+        "footprint": "a6b15618558f092970966ee254f42f4b4c4511f0dfe892892044c7a92d29794e",
+        "model_3d": "cbd60323818a066c20c8dea4f76e9b35f1b704c49fad6a2b83c9f366d33ab9f7",
+        "symbol": "fad806ba25b1d3254b9cc3357be5fa143069a061a6f9b751fc6b9b1175916552"
+      },
+      "engineering_manifest_hash": "05a7a9347f14ae20ea92e8773e58d19804ff675f345fcd3fc397f17e51dc1e6f",
+      "input_snapshot_hash": "efdcf1915173875c28dd4b2a8f5c1edbf8579c9489c0147ac43973b4ad889020",
+      "validation_semantics_hash": "69830c43a77b7077e4daa20127424db0db1dc25376ff7045717941b3edf85ba7"
+    },
+    "matches": {
+      "artifact_hashes": true,
+      "dependency_hashes": true,
+      "engineering_manifest_hash": true,
+      "input_snapshot_hash": true,
+      "validation_semantics_hash": true
+    },
+    "audit": {
+      "left_run": "02c9bc7c-f9c4-4175-9c0b-949aa6bb0572",
+      "right_run": "da6d7295-9607-418c-8698-c265ef0f80c8",
+      "compared_at": "2026-10-03T21:49:12.466218+00:00",
+      "left_created_at": "2026-10-03T21:46:26.194178+00:00",
+      "right_created_at": "2026-10-03T21:46:39.850273+00:00",
+      "run_ids_distinct": true,
+      "timestamps_distinct": true
+    }
+  },
+  "source_runs": [
+    {
+      "hashes": {
+        "artifact_hashes": {
+          "FOOTPRINT": "3d5463370032e6f730924fe00355fe96da79301b093c7ae4b6733d33d7fcef8e",
+          "MODEL_3D": "789ee84bd00e5fa7adfec322191eeb678f849c82b990b30a41f1bb51da839c92",
+          "SYMBOL": "1e68b04c019d5ad5cd20eb03c3ac4d66b9594e1eb6278c80122c4b60670a2b6e"
+        },
+        "dependency_hashes": {
+          "association": "39de6b1434b9dd18a60ec921ea5b8e13876a2c10c0c64959dfc1fd54f6c3449d",
+          "footprint": "a6b15618558f092970966ee254f42f4b4c4511f0dfe892892044c7a92d29794e",
+          "model_3d": "cbd60323818a066c20c8dea4f76e9b35f1b704c49fad6a2b83c9f366d33ab9f7",
+          "symbol": "fad806ba25b1d3254b9cc3357be5fa143069a061a6f9b751fc6b9b1175916552"
+        },
+        "engineering_manifest_hash": "05a7a9347f14ae20ea92e8773e58d19804ff675f345fcd3fc397f17e51dc1e6f",
+        "input_snapshot_hash": "efdcf1915173875c28dd4b2a8f5c1edbf8579c9489c0147ac43973b4ad889020",
+        "validation_semantics_hash": "69830c43a77b7077e4daa20127424db0db1dc25376ff7045717941b3edf85ba7"
+      },
+      "network": "Python socket/DNS APIs denied by audit hook",
+      "replay": {
+        "audit": {
+          "compared_at": "2026-10-03T21:46:37.367178+00:00",
+          "left_run": "02c9bc7c-f9c4-4175-9c0b-949aa6bb0572",
+          "right_run": "a87913c1-574d-452a-a975-07c9b4f79cb6"
+        },
+        "left": {
+          "artifact_hashes": {
+            "FOOTPRINT": "3d5463370032e6f730924fe00355fe96da79301b093c7ae4b6733d33d7fcef8e",
+            "MODEL_3D": "789ee84bd00e5fa7adfec322191eeb678f849c82b990b30a41f1bb51da839c92",
+            "SYMBOL": "1e68b04c019d5ad5cd20eb03c3ac4d66b9594e1eb6278c80122c4b60670a2b6e"
+          },
+          "dependency_hashes": {
+            "association": "39de6b1434b9dd18a60ec921ea5b8e13876a2c10c0c64959dfc1fd54f6c3449d",
+            "footprint": "a6b15618558f092970966ee254f42f4b4c4511f0dfe892892044c7a92d29794e",
+            "model_3d": "cbd60323818a066c20c8dea4f76e9b35f1b704c49fad6a2b83c9f366d33ab9f7",
+            "symbol": "fad806ba25b1d3254b9cc3357be5fa143069a061a6f9b751fc6b9b1175916552"
+          },
+          "engineering_manifest_hash": "05a7a9347f14ae20ea92e8773e58d19804ff675f345fcd3fc397f17e51dc1e6f",
+          "input_snapshot_hash": "efdcf1915173875c28dd4b2a8f5c1edbf8579c9489c0147ac43973b4ad889020",
+          "validation_semantics_hash": "69830c43a77b7077e4daa20127424db0db1dc25376ff7045717941b3edf85ba7"
+        },
+        "matches": {
+          "artifact_hashes": true,
+          "dependency_hashes": true,
+          "engineering_manifest_hash": true,
+          "input_snapshot_hash": true,
+          "validation_semantics_hash": true
+        },
+        "right": {
+          "artifact_hashes": {
+            "FOOTPRINT": "3d5463370032e6f730924fe00355fe96da79301b093c7ae4b6733d33d7fcef8e",
+            "MODEL_3D": "789ee84bd00e5fa7adfec322191eeb678f849c82b990b30a41f1bb51da839c92",
+            "SYMBOL": "1e68b04c019d5ad5cd20eb03c3ac4d66b9594e1eb6278c80122c4b60670a2b6e"
+          },
+          "dependency_hashes": {
+            "association": "39de6b1434b9dd18a60ec921ea5b8e13876a2c10c0c64959dfc1fd54f6c3449d",
+            "footprint": "a6b15618558f092970966ee254f42f4b4c4511f0dfe892892044c7a92d29794e",
+            "model_3d": "cbd60323818a066c20c8dea4f76e9b35f1b704c49fad6a2b83c9f366d33ab9f7",
+            "symbol": "fad806ba25b1d3254b9cc3357be5fa143069a061a6f9b751fc6b9b1175916552"
+          },
+          "engineering_manifest_hash": "05a7a9347f14ae20ea92e8773e58d19804ff675f345fcd3fc397f17e51dc1e6f",
+          "input_snapshot_hash": "efdcf1915173875c28dd4b2a8f5c1edbf8579c9489c0147ac43973b4ad889020",
+          "validation_semantics_hash": "69830c43a77b7077e4daa20127424db0db1dc25376ff7045717941b3edf85ba7"
+        },
+        "schema_version": "1.0",
+        "stage": "REPRODUCIBILITY",
+        "status": "PASS"
+      },
+      "run": "02c9bc7c-f9c4-4175-9c0b-949aa6bb0572"
+    },
+    {
+      "hashes": {
+        "artifact_hashes": {
+          "FOOTPRINT": "3d5463370032e6f730924fe00355fe96da79301b093c7ae4b6733d33d7fcef8e",
+          "MODEL_3D": "789ee84bd00e5fa7adfec322191eeb678f849c82b990b30a41f1bb51da839c92",
+          "SYMBOL": "1e68b04c019d5ad5cd20eb03c3ac4d66b9594e1eb6278c80122c4b60670a2b6e"
+        },
+        "dependency_hashes": {
+          "association": "39de6b1434b9dd18a60ec921ea5b8e13876a2c10c0c64959dfc1fd54f6c3449d",
+          "footprint": "a6b15618558f092970966ee254f42f4b4c4511f0dfe892892044c7a92d29794e",
+          "model_3d": "cbd60323818a066c20c8dea4f76e9b35f1b704c49fad6a2b83c9f366d33ab9f7",
+          "symbol": "fad806ba25b1d3254b9cc3357be5fa143069a061a6f9b751fc6b9b1175916552"
+        },
+        "engineering_manifest_hash": "05a7a9347f14ae20ea92e8773e58d19804ff675f345fcd3fc397f17e51dc1e6f",
+        "input_snapshot_hash": "efdcf1915173875c28dd4b2a8f5c1edbf8579c9489c0147ac43973b4ad889020",
+        "validation_semantics_hash": "69830c43a77b7077e4daa20127424db0db1dc25376ff7045717941b3edf85ba7"
+      },
+      "network": "Python socket/DNS APIs denied by audit hook",
+      "replay": {
+        "audit": {
+          "compared_at": "2026-10-03T21:46:51.111285+00:00",
+          "left_run": "da6d7295-9607-418c-8698-c265ef0f80c8",
+          "right_run": "4c8b3128-6664-4a61-aebb-01de19934297"
+        },
+        "left": {
+          "artifact_hashes": {
+            "FOOTPRINT": "3d5463370032e6f730924fe00355fe96da79301b093c7ae4b6733d33d7fcef8e",
+            "MODEL_3D": "789ee84bd00e5fa7adfec322191eeb678f849c82b990b30a41f1bb51da839c92",
+            "SYMBOL": "1e68b04c019d5ad5cd20eb03c3ac4d66b9594e1eb6278c80122c4b60670a2b6e"
+          },
+          "dependency_hashes": {
+            "association": "39de6b1434b9dd18a60ec921ea5b8e13876a2c10c0c64959dfc1fd54f6c3449d",
+            "footprint": "a6b15618558f092970966ee254f42f4b4c4511f0dfe892892044c7a92d29794e",
+            "model_3d": "cbd60323818a066c20c8dea4f76e9b35f1b704c49fad6a2b83c9f366d33ab9f7",
+            "symbol": "fad806ba25b1d3254b9cc3357be5fa143069a061a6f9b751fc6b9b1175916552"
+          },
+          "engineering_manifest_hash": "05a7a9347f14ae20ea92e8773e58d19804ff675f345fcd3fc397f17e51dc1e6f",
+          "input_snapshot_hash": "efdcf1915173875c28dd4b2a8f5c1edbf8579c9489c0147ac43973b4ad889020",
+          "validation_semantics_hash": "69830c43a77b7077e4daa20127424db0db1dc25376ff7045717941b3edf85ba7"
+        },
+        "matches": {
+          "artifact_hashes": true,
+          "dependency_hashes": true,
+          "engineering_manifest_hash": true,
+          "input_snapshot_hash": true,
+          "validation_semantics_hash": true
+        },
+        "right": {
+          "artifact_hashes": {
+            "FOOTPRINT": "3d5463370032e6f730924fe00355fe96da79301b093c7ae4b6733d33d7fcef8e",
+            "MODEL_3D": "789ee84bd00e5fa7adfec322191eeb678f849c82b990b30a41f1bb51da839c92",
+            "SYMBOL": "1e68b04c019d5ad5cd20eb03c3ac4d66b9594e1eb6278c80122c4b60670a2b6e"
+          },
+          "dependency_hashes": {
+            "association": "39de6b1434b9dd18a60ec921ea5b8e13876a2c10c0c64959dfc1fd54f6c3449d",
+            "footprint": "a6b15618558f092970966ee254f42f4b4c4511f0dfe892892044c7a92d29794e",
+            "model_3d": "cbd60323818a066c20c8dea4f76e9b35f1b704c49fad6a2b83c9f366d33ab9f7",
+            "symbol": "fad806ba25b1d3254b9cc3357be5fa143069a061a6f9b751fc6b9b1175916552"
+          },
+          "engineering_manifest_hash": "05a7a9347f14ae20ea92e8773e58d19804ff675f345fcd3fc397f17e51dc1e6f",
+          "input_snapshot_hash": "efdcf1915173875c28dd4b2a8f5c1edbf8579c9489c0147ac43973b4ad889020",
+          "validation_semantics_hash": "69830c43a77b7077e4daa20127424db0db1dc25376ff7045717941b3edf85ba7"
+        },
+        "schema_version": "1.0",
+        "stage": "REPRODUCIBILITY",
+        "status": "PASS"
+      },
+      "run": "da6d7295-9607-418c-8698-c265ef0f80c8"
+    }
+  ],
+  "installed_wheel_runs": [
+    {
+      "hashes": {
+        "artifact_hashes": {
+          "FOOTPRINT": "3d5463370032e6f730924fe00355fe96da79301b093c7ae4b6733d33d7fcef8e",
+          "MODEL_3D": "789ee84bd00e5fa7adfec322191eeb678f849c82b990b30a41f1bb51da839c92",
+          "SYMBOL": "1e68b04c019d5ad5cd20eb03c3ac4d66b9594e1eb6278c80122c4b60670a2b6e"
+        },
+        "dependency_hashes": {
+          "association": "39de6b1434b9dd18a60ec921ea5b8e13876a2c10c0c64959dfc1fd54f6c3449d",
+          "footprint": "a6b15618558f092970966ee254f42f4b4c4511f0dfe892892044c7a92d29794e",
+          "model_3d": "cbd60323818a066c20c8dea4f76e9b35f1b704c49fad6a2b83c9f366d33ab9f7",
+          "symbol": "fad806ba25b1d3254b9cc3357be5fa143069a061a6f9b751fc6b9b1175916552"
+        },
+        "engineering_manifest_hash": "05a7a9347f14ae20ea92e8773e58d19804ff675f345fcd3fc397f17e51dc1e6f",
+        "input_snapshot_hash": "efdcf1915173875c28dd4b2a8f5c1edbf8579c9489c0147ac43973b4ad889020",
+        "validation_semantics_hash": "69830c43a77b7077e4daa20127424db0db1dc25376ff7045717941b3edf85ba7"
+      },
+      "network": "Python socket/DNS APIs denied by audit hook",
+      "replay": {
+        "audit": {
+          "compared_at": "2026-10-03T21:48:04.131579+00:00",
+          "left_run": "99e358e9-faa7-467f-8bde-f8013b7f70da",
+          "right_run": "439d1303-b529-484a-8d86-9d94c5f436dd"
+        },
+        "left": {
+          "artifact_hashes": {
+            "FOOTPRINT": "3d5463370032e6f730924fe00355fe96da79301b093c7ae4b6733d33d7fcef8e",
+            "MODEL_3D": "789ee84bd00e5fa7adfec322191eeb678f849c82b990b30a41f1bb51da839c92",
+            "SYMBOL": "1e68b04c019d5ad5cd20eb03c3ac4d66b9594e1eb6278c80122c4b60670a2b6e"
+          },
+          "dependency_hashes": {
+            "association": "39de6b1434b9dd18a60ec921ea5b8e13876a2c10c0c64959dfc1fd54f6c3449d",
+            "footprint": "a6b15618558f092970966ee254f42f4b4c4511f0dfe892892044c7a92d29794e",
+            "model_3d": "cbd60323818a066c20c8dea4f76e9b35f1b704c49fad6a2b83c9f366d33ab9f7",
+            "symbol": "fad806ba25b1d3254b9cc3357be5fa143069a061a6f9b751fc6b9b1175916552"
+          },
+          "engineering_manifest_hash": "05a7a9347f14ae20ea92e8773e58d19804ff675f345fcd3fc397f17e51dc1e6f",
+          "input_snapshot_hash": "efdcf1915173875c28dd4b2a8f5c1edbf8579c9489c0147ac43973b4ad889020",
+          "validation_semantics_hash": "69830c43a77b7077e4daa20127424db0db1dc25376ff7045717941b3edf85ba7"
+        },
+        "matches": {
+          "artifact_hashes": true,
+          "dependency_hashes": true,
+          "engineering_manifest_hash": true,
+          "input_snapshot_hash": true,
+          "validation_semantics_hash": true
+        },
+        "right": {
+          "artifact_hashes": {
+            "FOOTPRINT": "3d5463370032e6f730924fe00355fe96da79301b093c7ae4b6733d33d7fcef8e",
+            "MODEL_3D": "789ee84bd00e5fa7adfec322191eeb678f849c82b990b30a41f1bb51da839c92",
+            "SYMBOL": "1e68b04c019d5ad5cd20eb03c3ac4d66b9594e1eb6278c80122c4b60670a2b6e"
+          },
+          "dependency_hashes": {
+            "association": "39de6b1434b9dd18a60ec921ea5b8e13876a2c10c0c64959dfc1fd54f6c3449d",
+            "footprint": "a6b15618558f092970966ee254f42f4b4c4511f0dfe892892044c7a92d29794e",
+            "model_3d": "cbd60323818a066c20c8dea4f76e9b35f1b704c49fad6a2b83c9f366d33ab9f7",
+            "symbol": "fad806ba25b1d3254b9cc3357be5fa143069a061a6f9b751fc6b9b1175916552"
+          },
+          "engineering_manifest_hash": "05a7a9347f14ae20ea92e8773e58d19804ff675f345fcd3fc397f17e51dc1e6f",
+          "input_snapshot_hash": "efdcf1915173875c28dd4b2a8f5c1edbf8579c9489c0147ac43973b4ad889020",
+          "validation_semantics_hash": "69830c43a77b7077e4daa20127424db0db1dc25376ff7045717941b3edf85ba7"
+        },
+        "schema_version": "1.0",
+        "stage": "REPRODUCIBILITY",
+        "status": "PASS"
+      },
+      "run": "99e358e9-faa7-467f-8bde-f8013b7f70da"
+    },
+    {
+      "hashes": {
+        "artifact_hashes": {
+          "FOOTPRINT": "3d5463370032e6f730924fe00355fe96da79301b093c7ae4b6733d33d7fcef8e",
+          "MODEL_3D": "789ee84bd00e5fa7adfec322191eeb678f849c82b990b30a41f1bb51da839c92",
+          "SYMBOL": "1e68b04c019d5ad5cd20eb03c3ac4d66b9594e1eb6278c80122c4b60670a2b6e"
+        },
+        "dependency_hashes": {
+          "association": "39de6b1434b9dd18a60ec921ea5b8e13876a2c10c0c64959dfc1fd54f6c3449d",
+          "footprint": "a6b15618558f092970966ee254f42f4b4c4511f0dfe892892044c7a92d29794e",
+          "model_3d": "cbd60323818a066c20c8dea4f76e9b35f1b704c49fad6a2b83c9f366d33ab9f7",
+          "symbol": "fad806ba25b1d3254b9cc3357be5fa143069a061a6f9b751fc6b9b1175916552"
+        },
+        "engineering_manifest_hash": "05a7a9347f14ae20ea92e8773e58d19804ff675f345fcd3fc397f17e51dc1e6f",
+        "input_snapshot_hash": "efdcf1915173875c28dd4b2a8f5c1edbf8579c9489c0147ac43973b4ad889020",
+        "validation_semantics_hash": "69830c43a77b7077e4daa20127424db0db1dc25376ff7045717941b3edf85ba7"
+      },
+      "network": "Python socket/DNS APIs denied by audit hook",
+      "replay": {
+        "audit": {
+          "compared_at": "2026-10-03T21:48:18.429496+00:00",
+          "left_run": "fa8ecb80-3969-4376-97cf-9925ea8583c8",
+          "right_run": "03acbe73-9ed5-414d-85b6-41656acdf2b6"
+        },
+        "left": {
+          "artifact_hashes": {
+            "FOOTPRINT": "3d5463370032e6f730924fe00355fe96da79301b093c7ae4b6733d33d7fcef8e",
+            "MODEL_3D": "789ee84bd00e5fa7adfec322191eeb678f849c82b990b30a41f1bb51da839c92",
+            "SYMBOL": "1e68b04c019d5ad5cd20eb03c3ac4d66b9594e1eb6278c80122c4b60670a2b6e"
+          },
+          "dependency_hashes": {
+            "association": "39de6b1434b9dd18a60ec921ea5b8e13876a2c10c0c64959dfc1fd54f6c3449d",
+            "footprint": "a6b15618558f092970966ee254f42f4b4c4511f0dfe892892044c7a92d29794e",
+            "model_3d": "cbd60323818a066c20c8dea4f76e9b35f1b704c49fad6a2b83c9f366d33ab9f7",
+            "symbol": "fad806ba25b1d3254b9cc3357be5fa143069a061a6f9b751fc6b9b1175916552"
+          },
+          "engineering_manifest_hash": "05a7a9347f14ae20ea92e8773e58d19804ff675f345fcd3fc397f17e51dc1e6f",
+          "input_snapshot_hash": "efdcf1915173875c28dd4b2a8f5c1edbf8579c9489c0147ac43973b4ad889020",
+          "validation_semantics_hash": "69830c43a77b7077e4daa20127424db0db1dc25376ff7045717941b3edf85ba7"
+        },
+        "matches": {
+          "artifact_hashes": true,
+          "dependency_hashes": true,
+          "engineering_manifest_hash": true,
+          "input_snapshot_hash": true,
+          "validation_semantics_hash": true
+        },
+        "right": {
+          "artifact_hashes": {
+            "FOOTPRINT": "3d5463370032e6f730924fe00355fe96da79301b093c7ae4b6733d33d7fcef8e",
+            "MODEL_3D": "789ee84bd00e5fa7adfec322191eeb678f849c82b990b30a41f1bb51da839c92",
+            "SYMBOL": "1e68b04c019d5ad5cd20eb03c3ac4d66b9594e1eb6278c80122c4b60670a2b6e"
+          },
+          "dependency_hashes": {
+            "association": "39de6b1434b9dd18a60ec921ea5b8e13876a2c10c0c64959dfc1fd54f6c3449d",
+            "footprint": "a6b15618558f092970966ee254f42f4b4c4511f0dfe892892044c7a92d29794e",
+            "model_3d": "cbd60323818a066c20c8dea4f76e9b35f1b704c49fad6a2b83c9f366d33ab9f7",
+            "symbol": "fad806ba25b1d3254b9cc3357be5fa143069a061a6f9b751fc6b9b1175916552"
+          },
+          "engineering_manifest_hash": "05a7a9347f14ae20ea92e8773e58d19804ff675f345fcd3fc397f17e51dc1e6f",
+          "input_snapshot_hash": "efdcf1915173875c28dd4b2a8f5c1edbf8579c9489c0147ac43973b4ad889020",
+          "validation_semantics_hash": "69830c43a77b7077e4daa20127424db0db1dc25376ff7045717941b3edf85ba7"
+        },
+        "schema_version": "1.0",
+        "stage": "REPRODUCIBILITY",
+        "status": "PASS"
+      },
+      "run": "fa8ecb80-3969-4376-97cf-9925ea8583c8"
+    }
+  ],
+  "installed_wheel_clean_build_comparison": {
+    "schema_version": "1.0",
+    "stage": "REPRODUCIBILITY",
+    "status": "PASS",
+    "left": {
+      "artifact_hashes": {
+        "FOOTPRINT": "3d5463370032e6f730924fe00355fe96da79301b093c7ae4b6733d33d7fcef8e",
+        "MODEL_3D": "789ee84bd00e5fa7adfec322191eeb678f849c82b990b30a41f1bb51da839c92",
+        "SYMBOL": "1e68b04c019d5ad5cd20eb03c3ac4d66b9594e1eb6278c80122c4b60670a2b6e"
+      },
+      "dependency_hashes": {
+        "association": "39de6b1434b9dd18a60ec921ea5b8e13876a2c10c0c64959dfc1fd54f6c3449d",
+        "footprint": "a6b15618558f092970966ee254f42f4b4c4511f0dfe892892044c7a92d29794e",
+        "model_3d": "cbd60323818a066c20c8dea4f76e9b35f1b704c49fad6a2b83c9f366d33ab9f7",
+        "symbol": "fad806ba25b1d3254b9cc3357be5fa143069a061a6f9b751fc6b9b1175916552"
+      },
+      "engineering_manifest_hash": "05a7a9347f14ae20ea92e8773e58d19804ff675f345fcd3fc397f17e51dc1e6f",
+      "input_snapshot_hash": "efdcf1915173875c28dd4b2a8f5c1edbf8579c9489c0147ac43973b4ad889020",
+      "validation_semantics_hash": "69830c43a77b7077e4daa20127424db0db1dc25376ff7045717941b3edf85ba7"
+    },
+    "right": {
+      "artifact_hashes": {
+        "FOOTPRINT": "3d5463370032e6f730924fe00355fe96da79301b093c7ae4b6733d33d7fcef8e",
+        "MODEL_3D": "789ee84bd00e5fa7adfec322191eeb678f849c82b990b30a41f1bb51da839c92",
+        "SYMBOL": "1e68b04c019d5ad5cd20eb03c3ac4d66b9594e1eb6278c80122c4b60670a2b6e"
+      },
+      "dependency_hashes": {
+        "association": "39de6b1434b9dd18a60ec921ea5b8e13876a2c10c0c64959dfc1fd54f6c3449d",
+        "footprint": "a6b15618558f092970966ee254f42f4b4c4511f0dfe892892044c7a92d29794e",
+        "model_3d": "cbd60323818a066c20c8dea4f76e9b35f1b704c49fad6a2b83c9f366d33ab9f7",
+        "symbol": "fad806ba25b1d3254b9cc3357be5fa143069a061a6f9b751fc6b9b1175916552"
+      },
+      "engineering_manifest_hash": "05a7a9347f14ae20ea92e8773e58d19804ff675f345fcd3fc397f17e51dc1e6f",
+      "input_snapshot_hash": "efdcf1915173875c28dd4b2a8f5c1edbf8579c9489c0147ac43973b4ad889020",
+      "validation_semantics_hash": "69830c43a77b7077e4daa20127424db0db1dc25376ff7045717941b3edf85ba7"
+    },
+    "matches": {
+      "artifact_hashes": true,
+      "dependency_hashes": true,
+      "engineering_manifest_hash": true,
+      "input_snapshot_hash": true,
+      "validation_semantics_hash": true
+    },
+    "audit": {
+      "left_run": "99e358e9-faa7-467f-8bde-f8013b7f70da",
+      "right_run": "fa8ecb80-3969-4376-97cf-9925ea8583c8",
+      "compared_at": "2026-10-03T21:50:37.807710+00:00"
+    }
+  },
+  "source_wheel_comparison": {
+    "schema_version": "1.0",
+    "stage": "REPRODUCIBILITY",
+    "status": "PASS",
+    "left": {
+      "artifact_hashes": {
+        "FOOTPRINT": "3d5463370032e6f730924fe00355fe96da79301b093c7ae4b6733d33d7fcef8e",
+        "MODEL_3D": "789ee84bd00e5fa7adfec322191eeb678f849c82b990b30a41f1bb51da839c92",
+        "SYMBOL": "1e68b04c019d5ad5cd20eb03c3ac4d66b9594e1eb6278c80122c4b60670a2b6e"
+      },
+      "dependency_hashes": {
+        "association": "39de6b1434b9dd18a60ec921ea5b8e13876a2c10c0c64959dfc1fd54f6c3449d",
+        "footprint": "a6b15618558f092970966ee254f42f4b4c4511f0dfe892892044c7a92d29794e",
+        "model_3d": "cbd60323818a066c20c8dea4f76e9b35f1b704c49fad6a2b83c9f366d33ab9f7",
+        "symbol": "fad806ba25b1d3254b9cc3357be5fa143069a061a6f9b751fc6b9b1175916552"
+      },
+      "engineering_manifest_hash": "05a7a9347f14ae20ea92e8773e58d19804ff675f345fcd3fc397f17e51dc1e6f",
+      "input_snapshot_hash": "efdcf1915173875c28dd4b2a8f5c1edbf8579c9489c0147ac43973b4ad889020",
+      "validation_semantics_hash": "69830c43a77b7077e4daa20127424db0db1dc25376ff7045717941b3edf85ba7"
+    },
+    "right": {
+      "artifact_hashes": {
+        "FOOTPRINT": "3d5463370032e6f730924fe00355fe96da79301b093c7ae4b6733d33d7fcef8e",
+        "MODEL_3D": "789ee84bd00e5fa7adfec322191eeb678f849c82b990b30a41f1bb51da839c92",
+        "SYMBOL": "1e68b04c019d5ad5cd20eb03c3ac4d66b9594e1eb6278c80122c4b60670a2b6e"
+      },
+      "dependency_hashes": {
+        "association": "39de6b1434b9dd18a60ec921ea5b8e13876a2c10c0c64959dfc1fd54f6c3449d",
+        "footprint": "a6b15618558f092970966ee254f42f4b4c4511f0dfe892892044c7a92d29794e",
+        "model_3d": "cbd60323818a066c20c8dea4f76e9b35f1b704c49fad6a2b83c9f366d33ab9f7",
+        "symbol": "fad806ba25b1d3254b9cc3357be5fa143069a061a6f9b751fc6b9b1175916552"
+      },
+      "engineering_manifest_hash": "05a7a9347f14ae20ea92e8773e58d19804ff675f345fcd3fc397f17e51dc1e6f",
+      "input_snapshot_hash": "efdcf1915173875c28dd4b2a8f5c1edbf8579c9489c0147ac43973b4ad889020",
+      "validation_semantics_hash": "69830c43a77b7077e4daa20127424db0db1dc25376ff7045717941b3edf85ba7"
+    },
+    "matches": {
+      "artifact_hashes": true,
+      "dependency_hashes": true,
+      "engineering_manifest_hash": true,
+      "input_snapshot_hash": true,
+      "validation_semantics_hash": true
+    },
+    "audit": {
+      "left_run": "02c9bc7c-f9c4-4175-9c0b-949aa6bb0572",
+      "right_run": "99e358e9-faa7-467f-8bde-f8013b7f70da",
+      "compared_at": "2026-10-03T21:50:37.807710+00:00"
+    }
+  }
+}

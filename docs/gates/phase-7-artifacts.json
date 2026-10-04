@@ -43,8 +43,8 @@
   "sha256": {
     "src/partsmith/threed/__init__.py": "d043f5f1417b994b9115e40223879400b4df968ac45e9bb82672b18527f1b6a3",
     "src/partsmith/threed/geometry.py": "5b6ac7e49ec70f7dae6fb0da60bfe83157e889d7b89dd3a20b2d9d9b28b1e308",
-    "src/partsmith/threed/model.py": "ded6271ad05cad8219705ca6f0810d34087e094b4224808b52d97be1f34bb253",
-    "src/partsmith/threed/step_backend.py": "e3c5cddd1e5cbc4b418b476dcfa8a76d465183e033d18ece87a88fc8bf503d34",
+    "src/partsmith/threed/model.py": "2b5c5df4d345d138cfb725ae666417cc6e04a468c2c0d9badc7995f8e2fab680",
+    "src/partsmith/threed/step_backend.py": "77a8fd6663695742b08f5490fa04cfb9d92019dcd7fda2a3a67a4ed5ef658ff5",
     "src/partsmith/threed/transform.py": "50a497769d2284dc55b794f2869f32cd4170adfa951059fc594e9b16c57c5f27",
     "src/partsmith/threed/validation.py": "854fa44cd971da4412068b81af13790e0c2958b2543de1dd17991d3946a04c44",
     "tests/test_threed.py": "097d6b893055d23e5a011938289d1e8127155c13b21930abf1f394e40b284860",
@@ -65,6 +65,63 @@
     "fixtures/phase7/step/fault-unit.step": "fa21b93c34e42cc641a5af711b66ab99697bf60e3b7fa385b1e6af8b14d34de2",
     "fixtures/phase7/step/symmetric-rotate-180.step": "3a37876e2cc2bbe33878047568fbd6ee0bc35c6747afdee7e66709506aa418bd",
     "docs/gates/phase-7-tests.xml": "4069cc9b0b1d42f0f29cbf8687a4bdff48df0701a2c3d49ca68e7bbc8cefc15a",
-    "docs/gates/phase-7-wheel-tests.xml": "e91ae6b65f36dac0eabd5cc8da6d154e88ed8d891954778ae6e1b46c71fef751"
+    "docs/gates/phase-7-wheel-tests.xml": "e91ae6b65f36dac0eabd5cc8da6d154e88ed8d891954778ae6e1b46c71fef751",
+    "src/partsmith/release/runtime.py": "27414f9fa7479f3d33703be98bd890fd7b7705a6bccbf0b2a858ab16d4e60893",
+    "src/partsmith/release/runtime-lock-1.0.json": "a3e60c9207bd6bfa98d0ab5bb941ec8a026d062ad6556a762422bd373362cfec",
+    "migrations/003_manifest_rebuilds.sql": "800b114e6cea14278f4a37a091c9fa99f11a1c9ef93ce39484fa02ed83f8ed39",
+    "tests/test_phase8_snapshot.py": "4b4e51e5c70a6ee37715162211b1dcd8f1db7a0ec14a3829c170b3941cac2629",
+    "docs/gates/phase-8-revalidation.md": "267470ae11db10a34994c0cf775faa90fe6ca63958909112a207f747101cf8fa",
+    "docs/gates/phase-8-revalidation-comparison.json": "34cb2b5bcc285cb495c0d49bee419a3cd17d2e69173649231952b62a71b31e19",
+    "docs/gates/phase-8-revalidation-tests.xml": "b56d7d1c2e6d3a48760513dd89e30b033ea359389b6f2fc4a9047096f690fcc9",
+    "docs/gates/phase-8-revalidation-lf-tests.xml": "06d61d3b6d4200f05ed7a1d929436fedbb6ad12a3789fc4f465b48b7c94c4741",
+    "docs/gates/phase-8-revalidation-wheel-tests.xml": "c8e43a29316394e1123dfb333229756fc3de719635f792db4a8f9a64a217a6d4",
+    "docs/gates/history/phase-7-artifacts-before-2026-10-03.json": "c1ad475ea37b8f6d082167268225630a8bcb8ff3c517ce5fde3628a6d74cf6de"
+  },
+  "revalidation": {
+    "date": "2026-10-03",
+    "base_commit": "0b2fc25",
+    "report": "docs/gates/phase-8-revalidation.md",
+    "source_tests": 459,
+    "installed_wheel_tests": 459,
+    "lf_source_regressions": 7,
+    "environment": "Local Windows AMD64; existing pinned dependency environment",
+    "archived_previous_manifest": "docs/gates/history/phase-7-artifacts-before-2026-10-03.json",
+    "commands": [
+      ".venv/Scripts/python.exe -m ruff check .",
+      ".venv/Scripts/python.exe -m ruff format --check .",
+      ".venv/Scripts/python.exe -m pip check",
+      ".venv/Scripts/python.exe -m partsmith doctor --json",
+      ".venv/Scripts/python.exe -m pytest -p no:cacheprovider --junitxml=.tools/phase8-fix/source-final-tests.xml",
+      ".venv/Scripts/python.exe -m pytest tests/test_phase8_snapshot.py tests/test_phase8_pipeline.py -p no:cacheprovider --junitxml=.tools/phase8-fix/source-lf-regressions.xml",
+      "PYTHONHASHSEED=11: .venv/Scripts/python.exe .tools/gate-audit/probe.py .tools/phase8-fix/lf-build-a",
+      "PYTHONHASHSEED=97: .venv/Scripts/python.exe .tools/gate-audit/probe.py .tools/phase8-fix/lf-build-b",
+      ".venv/Scripts/python.exe -m pip wheel . --no-deps --wheel-dir .tools/phase8-fix/lf-dist",
+      ".venv/Scripts/python.exe -m pip install --no-deps --target .tools/phase8-fix/lf-wheel-site .tools/phase8-fix/lf-dist/partsmith-0.1.0-py3-none-any.whl",
+      "With PYTHONPATH=.tools/phase8-fix/lf-wheel-site (absolute) and packaged resource byte checks: .venv/Scripts/python.exe -m pytest -p no:cacheprovider --junitxml=.tools/phase8-fix/wheel-lf-tests.xml"
+    ],
+    "phase9_status": "PENDING"
+  },
+  "phase9_revalidation": {
+    "date": "2026-10-03",
+    "report": "docs/gates/phase-9.md",
+    "source_tests": 476,
+    "installed_wheel_tests": 476,
+    "archived_previous_manifest": "docs/gates/history/phase-7-artifacts-before-phase-9-2026-10-03.json",
+    "status": "PASS",
+    "scope": "Local Windows AMD64; pinned runtime"
+  },
+  "phase_9_5_revalidation": {
+    "date": "2026-10-04",
+    "report": "docs/gates/phase-9.5.md",
+    "scope": "Shared documentation/GUI packaging bytes; core unchanged",
+    "source_regressions": 490,
+    "gui_checks": 26,
+    "historical_manifest": "docs/gates/history/phase-7-artifacts-before-phase-9.5-2026-10-04.json",
+    "changed_inputs": {
+      "docs/gates/phase-8-revalidation.md": {
+        "before": "70267d4ccc58b4b814c664255a57132d2ba57bed4114a9e41a8e5d107e41fe77",
+        "after": "267470ae11db10a34994c0cf775faa90fe6ca63958909112a207f747101cf8fa"
+      }
+    }
   }
 }

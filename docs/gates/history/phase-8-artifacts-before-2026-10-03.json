@@ -1,0 +1,75 @@
+{
+  "specification": "0.9.6",
+  "phase": 8,
+  "status": "PASS",
+  "scope": "Local Windows verification; no remote CI run claimed",
+  "branch": "Implment-phase-8",
+  "base_commit": "17528d1",
+  "python": "3.12.10",
+  "tools": {
+    "partsmith": "0.1.0",
+    "pytest": "8.4.2",
+    "ruff": "0.16.8",
+    "jsonschema": "4.26.0",
+    "cadquery": "2.8.0",
+    "kicad-cli": "10.0.6"
+  },
+  "tests": {
+    "source": 452,
+    "installed_wheel": 452,
+    "phase_8_native": 51
+  },
+  "compatibility": {
+    "target": "KiCad 10.x",
+    "runtime": "kicad-cli 10.0.6",
+    "native_kicad_cli": true,
+    "status": "NATIVE_VALIDATED",
+    "operations": [
+      "sym-upgrade",
+      "sym-export-svg",
+      "fp-upgrade",
+      "fp-export-svg"
+    ]
+  },
+  "wheel": {
+    "filename": "partsmith-0.1.0-py3-none-any.whl",
+    "sha256": "459a7558855baaabc2666fe14554d109f8a082f7792714ac1286af840f895cd1",
+    "availability": "Temporary local generated output"
+  },
+  "sha256": {
+    ".github/workflows/ci.yml": "bfe42fc32aab1f5c4f599d9b4158c5bdb01bb93955d8380ee53adaa30e21e9d1",
+    "README.md": "f3b205dfb320dd56a870cac79a04553bd0aace5ac9b2dd7f7467b7697a166dde",
+    "resources/BFT_PartSmith_Implementation_Spec.md": "81acdf5f31c0182bdc9d245abbe566319e46c955e358e4c57d3713f6f7485459",
+    "scripts/setup_kicad.ps1": "bf2e4d0539a8bdc815707408cda70af291193f74da49c1789b48b6bf062c731b",
+    "schemas/phase8-contracts-1.0.schema.json": "889a07d7f251d6f7b6f89136aa037a071fc743a32843eb5975cdd9d70bb9c7cc",
+    "migrations/002_phase8.sql": "aa2a81d676964a77a89158c8d40c64031c51f31412bd0bd8c3a0bc95acc5b42d",
+    "src/partsmith/cli.py": "4b7510f93430bbb341ec15339144dc4e4850bef13cef7a798ca460d1988b9281",
+    "src/partsmith/kicad/__init__.py": "ec0fdcec9b84e97b1cd2a351bec2c5f340d0fc8be82f484fc6564f403f00e688",
+    "src/partsmith/kicad/runtime.py": "b49105f573c2609ecfd76bdac12ea76da05a8f051fadd9d6c3dd9c1142992503",
+    "src/partsmith/persistence/immutable.py": "f8e16d74391ba96e99f2cb1a568b2e4a945fd71410b9156268608c1e83389204",
+    "src/partsmith/persistence/release.py": "243f3f3773808098647b0ca2b93965320641434cdc6c5171c1fe99e606179333",
+    "src/partsmith/release/contracts.py": "584cb119cc973aae80887804fbadef35c87d8ed3b53e9bec27c8ed59179d9f2b",
+    "src/partsmith/release/workflow.py": "d67536daa42c22078a5b72d587c5307d6f8e9ab86e16fbab9d42453041048df8",
+    "src/partsmith/release/input_review.py": "b2f533953d8a5c5911bb150b1cc8b4ddb13d631e6b0df5e243948bca60223175",
+    "src/partsmith/release/bundle.py": "8713096c30426e879515860f89c04015a25beb3abae0a41ff7023d9d32b2f5aa",
+    "src/partsmith/release/pipeline.py": "f0c3f43d3af2d9de05558def3cee15ba32585664a2dbc93bba565fc794d39732",
+    "src/partsmith/ir/targets.py": "578e50af5e41d00252a119bc7f5f61a5b07092edc887022c59b9a8627b80fd38",
+    "tests/test_cli.py": "23ae12da06601f203818dcfd53b6604efb23d60837aa9103abf7ad9863a394d4",
+    "tests/test_kicad_runtime.py": "1d3517cc6b012e9cdb3e09fefa11b2bc6ddb84283e26c9408d4d73482deb42ca",
+    "tests/test_phase8_persistence.py": "ec6ff39a3c12b992e1df0e13b8d6783de6544f4b6a2f6391fbc21ab8e996dc01",
+    "tests/test_phase8_release_workflow.py": "31c4d18f499d02bd5c136bba8ea287ed36afa3758d6696e8a2c8c35b9f85decc",
+    "tests/test_phase8_input_review.py": "9f846e1a455a353dcfb7015b87c69e39df81796718df0d5978e907e10918ef35",
+    "tests/test_phase8_bundle.py": "81d0a19e5be0e61bbdd9a16d4f7404cc4af0f8704ee58c96b2c51d53cad87701",
+    "tests/test_phase8_pipeline.py": "27186a935aa83303d19f08f10e9992fc10ac4eaab351c792041cac16edcc9c2a",
+    "docs/gates/phase-8-tests.xml": "7c9cb2d59ef830ae84c76f9d39bb53536553140b813777d3cb1715a1c6c6fa32",
+    "docs/gates/phase-8-wheel-tests.xml": "a6a095d27d66ea828b27ea4ac241f86fb7f102440389c2f88dde0e4273f14d1d",
+    "src/partsmith/schema_support.py": "e2054a13f827018f6c86409685bf2ca28455a7f4bd9a3e4cd83db3f89bea4489",
+    "src/partsmith/ir/schema.py": "da891157f0272d956c6d100db0247f3bfb543287c24dcf53d071061529c3dc47",
+    "src/partsmith/pdl/schema.py": "45b78150927804a952690a689cac210f946cd2a6ab3f294470a49c8b5a8f2845",
+    "src/partsmith/persistence/__init__.py": "e88b56d35e918a09b8393050909198ce84bb6284755431180cc35bcdc2272862",
+    "src/partsmith/persistence/database.py": "8c3834e4b8e98b4d26a7eac5910d832f5cb57ed8eaf40d69157e524136d670e3",
+    "src/partsmith/persistence/records.py": "d34b9f6481c436aeb97327738cf568b4b05ae0fef1bf6996e917debe5fa87142",
+    "src/partsmith/release/schema.py": "cb3768f4d904318a0333dc6c9c3e51f28c14d5052cb5fbb1d49cee666ecbf6dd",
+    "tests/test_persistence.py": "6368b65ed3a8c266d21ba8def32f59aef6c8cf3c2d845be5047d5b44c702bc05"
+  }
+}

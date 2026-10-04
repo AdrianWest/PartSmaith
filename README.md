@@ -89,14 +89,68 @@ and value-free error paths while each domain owns its validation policy.
 `partsmith.persistence.database` provides common UTC audit timestamps and
 rollback-safe SQLite savepoints while callers retain transaction ownership.
 
-The current specification is **v0.9.6**. The recorded IR 1.2 Phase 2 PASS covers
-the implementation against v0.9.5 and remains the prerequisite for Phase 3.
-The revised specification assigns new dependency projections, review services,
-portable rebuild bundles, and installation behavior to later phases; these
-features are not yet implemented.
+The current specification is **v0.9.6**. Phases 0–9 have recorded gate evidence.
+The deterministic release pipeline includes scoped dependency projections,
+immutable input review, native KiCad validation, exact-byte release approval,
+and history-complete revision/inventory import and export. Revision bundles
+remain `RETRIEVAL_REQUIRED`. Phase 9 adds separate verified `OFFLINE_COMPLETE`
+replay bundles, network-disabled multi-revision rebuild tests, clean-build hash
+comparisons, and selective reuse with scoped invalidation. The Phase 9 gate
+passes locally on Windows AMD64; shared-library installation remains Phase 13
+work. See the [Phase 9 gate report](docs/gates/phase-9.md) and
+[Phase 8 revalidation](docs/gates/phase-8-revalidation.md).
 
 AI-assisted document interpretation is intentionally later in the plan. The
 first end-to-end component path must be deterministic and AI-free.
+
+## Setup GUI (Phase 9.5)
+
+The optional wxPython setup window displays the PartSmail banner across the
+top, secure **Set AI API Key** entry, a local PDF chooser, **Required Part
+Number**, **Start**, **Cancel**, and a live log panel. Enter the complete
+manufacturer order number, including package suffixes: one datasheet can cover
+multiple package styles. The number is passed intact to the processing service.
+Start currently performs PDF/input preflight and reports that Phase 10 extraction
+and Phase 11 interpretation are unavailable; it does not build a component.
+
+With the existing Python 3.12 environment, install the optional Windows runtime:
+
+```powershell
+.\.venv\Scripts\python.exe -m pip install -r requirements-gui-windows.txt
+.\.venv\Scripts\python.exe -m pip install -e ".[gui]" --no-deps
+.\.venv\Scripts\python.exe scripts\partsmith_gui.py
+```
+
+After installation, `python -m partsmith.gui` or `partsmith-gui` also launches
+the window. All launch paths resolve the packaged banner independently of the
+working directory. Keys are saved in the operating system's secure credential
+store (Windows Credential Manager on the verified Windows runtime). The key
+dialog always opens blank, masks new input, saves on **OK**, and preserves the
+existing key on **Cancel**. Saved keys are never displayed or written to logs.
+
+For KiCad 10.0.6 on Windows, install the launch-only action plugin:
+
+```powershell
+.\.venv\Scripts\python.exe -m partsmith.gui.install_kicad --plugin-dir "$env:APPDATA\kicad\10.0\scripting\plugins"
+```
+
+Restart the PCB Editor, then select **Tools → External Plugins → PartSmith
+Setup**. If your KiCad uses another configuration directory, use the scripting
+plugin directory reported by the PCB Editor's Action Plugins preferences.
+The entry starts PartSmith's Python 3.12 environment as a separate process;
+it imports no PartSmith CAD dependencies into KiCad's embedded Python.
+Reinstall the entry if the PartSmith environment moves. The installed
+`launcher.json` contains only the interpreter path. The installer also works
+from a wheel using `partsmith-kicad-setup --plugin-dir <directory>`.
+
+The launch entry follows KiCad's
+[documented action-plugin interface](https://dev-docs.kicad.org/en/apis-and-binding/pcbnew/index.html);
+broader IPC integration remains Phase 13. This desktop runtime is verified on
+Windows AMD64; Linux/macOS GUI installation and native keyring availability
+have not been verified. For desktop integration checks, run
+`python -m pytest scripts/verify_gui.py -v`; the ordinary test suite also checks
+the processing and launch contracts without needing wxPython or a desktop.
+See [Phase 9.5 verification](docs/gates/phase-9.5.md) for evidence and scope.
 
 ## For contributors
 
@@ -114,6 +168,14 @@ python -m pip install -e . --no-deps
 Phase 8 and later release validation requires native KiCad 10.0.6. Internal
 PartSmith syntax parsers cannot replace `kicad-cli`; `partsmith doctor` fails
 when the pinned target runtime is missing or incompatible.
+
+PartSmith uses its own Python 3.12.x environment and invokes KiCad through the
+native CLI. The installed Windows KiCad 10.0.6 bundles Python 3.11.5; its
+embedded interpreter is separate from PartSmith's supported Python baseline.
+Release snapshots record the actual Python patch/build and executable hash,
+the pinned KiCad CLI version/hash, and the verified CadQuery/OCP/OCCT tuple.
+The packaged runtime lock contains Windows/Linux CAD wheel hashes and file
+identities; release generation rejects mismatched installed runtime bytes.
 
 Run the local quality checks before contributing:
 
@@ -201,8 +263,9 @@ synthetic, not production approvals. Production PDL contexts, affine transforms,
 CAD generation, artifact validators, the build orchestrator, and approval services
 remain in their specified later phases.
 Specification v0.9.6 introduces snapshot profile 1.2 for configuration scoped
-to each generator and validation step. Its implementation and verification are
-assigned to Phases 4–6 and 8–9; the current helpers still produce profile 1.1.
+to each generator and validation step. The Phase 8 pipeline freezes complete
+profile 1.2 release snapshots before generation. The original profile 1.1
+helpers and golden hashes remain supported.
 
 Run `python -m pytest tests/test_ir.py tests/test_ir_v11.py tests/test_ir_v12.py`
 for all IR versions.

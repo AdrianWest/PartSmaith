@@ -25,6 +25,83 @@ from partsmith.persistence import (
 database_module = importlib.import_module("partsmith.persistence.database")
 
 
+def test_rebuild_migration_preserves_existing_snapshots_and_manifests(
+    tmp_path, monkeypatch
+):
+    """Upgrade a populated 002 database without changing approved bytes."""
+    all_migrations = database_module._migrations()
+    with closing(connect(tmp_path / "old.db")) as connection:
+        with monkeypatch.context() as scoped:
+            scoped.setattr(
+                database_module, "_migrations", lambda: all_migrations[:2]
+            )
+            assert migrate(connection) == ("001", "002")
+        repository = Repository(connection)
+        component = repository.create_component("Synthetic", "0402", "0402")
+        build = repository.create_build(component.id, "APPROVED")
+        now = utc_timestamp()
+        snapshot = (
+            build.id,
+            "a" * 64,
+            "b" * 64,
+            "pdl",
+            "1.0",
+            "c" * 64,
+            b'{"old":"snapshot"}',
+            now,
+            now,
+        )
+        manifest = (
+            build.id,
+            "d" * 64,
+            "e" * 64,
+            b'{"old":"approved manifest"}',
+            now,
+            now,
+        )
+        connection.execute(
+            "INSERT INTO build_snapshots VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+            snapshot,
+        )
+        connection.execute(
+            "INSERT INTO engineering_manifests VALUES (?, ?, ?, ?, ?, ?)",
+            manifest,
+        )
+        connection.commit()
+        assert migrate(connection) == ("003", "004")
+        assert migrate(connection) == ()
+        assert (
+            tuple(
+                connection.execute("SELECT * FROM build_snapshots").fetchone()
+            )
+            == snapshot
+        )
+        assert (
+            tuple(
+                connection.execute(
+                    "SELECT * FROM engineering_manifests"
+                ).fetchone()
+            )
+            == manifest
+        )
+        assert connection.execute("PRAGMA foreign_key_check").fetchall() == []
+        second = repository.create_build(component.id, "DRAFT")
+        connection.execute(
+            "INSERT INTO build_snapshots VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+            (second.id, *snapshot[1:]),
+        )
+        connection.execute(
+            "INSERT INTO engineering_manifests VALUES (?, ?, ?, ?, ?, ?)",
+            (second.id, *manifest[1:]),
+        )
+        assert (
+            connection.execute(
+                "SELECT COUNT(*) FROM engineering_manifests"
+            ).fetchone()[0]
+            == 2
+        )
+
+
 def test_shared_persistence_support(tmp_path):
     """@brief Verifies shared timestamps and rollback-safe savepoints.
     @param tmp_path Temporary test directory.
@@ -66,7 +143,7 @@ def test_phase_one_gate(tmp_path):
     assert not path.exists()
     with closing(connect(path)) as connection:
         assert connection.execute("PRAGMA foreign_keys").fetchone()[0] == 1
-        assert migrate(connection) == ("001", "002")
+        assert migrate(connection) == ("001", "002", "003", "004")
         original = [
             tuple(row)
             for row in connection.execute(
@@ -121,7 +198,7 @@ def test_phase_one_gate(tmp_path):
             connection.execute(
                 "SELECT COUNT(*) FROM schema_migrations"
             ).fetchone()[0]
-            == 2
+            == 4
         )
         with pytest.raises(sqlite3.IntegrityError):
             repository.create_component("X", "Y", "Z", project_id="missing")
@@ -253,7 +330,7 @@ def test_failed_migration_is_atomic_and_retryable(tmp_path, monkeypatch):
         monkeypatch.setattr(
             database_module, "_migration_sql", lambda: original
         )
-        assert migrate(connection) == ("001", "002")
+        assert migrate(connection) == ("001", "002", "003", "004")
 
 
 def test_changed_migration_is_rejected(tmp_path, monkeypatch):
@@ -362,7 +439,7 @@ def test_concurrent_initializers_apply_once(tmp_path):
 
     with ThreadPoolExecutor(max_workers=4) as executor:
         results = list(executor.map(initialize, range(4)))
-    assert results.count(("001", "002")) == 1
+    assert results.count(("001", "002", "003", "004")) == 1
     assert results.count(()) == 3
 
 

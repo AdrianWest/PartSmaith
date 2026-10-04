@@ -48,8 +48,8 @@ class RevisionBundle:
 
 class RevisionBundleService:
     """@brief Exports and imports complete immutable revision histories.
-    @details Current Phase 8 support is OFFLINE_COMPLETE and materializes every
-    referenced revision and acquisition inventory locally.
+    @details Phase 8 materializes revision/inventory history. Rebuild/source
+    inspection dependencies remain RETRIEVAL_REQUIRED until Phase 9 hydration.
     """
 
     def __init__(self, connection: sqlite3.Connection):
@@ -157,7 +157,7 @@ class RevisionBundleService:
             {
                 "schema_version": "1.0",
                 "bundle_id": bundle_id,
-                "availability": "OFFLINE_COMPLETE",
+                "availability": "RETRIEVAL_REQUIRED",
                 "component": {
                     "id": component["id"],
                     "manufacturer": component["manufacturer"],
@@ -210,6 +210,10 @@ class RevisionBundleService:
         @details Entire ancestry and inventories are staged before publication.
         """
         with savepoint(self.connection, "revision_bundle_import"):
+            if bundle.index.data["availability"] == "OFFLINE_COMPLETE":
+                raise ValueError(
+                    "Revision-only bundle cannot prove offline completeness"
+                )
             entries = self._verified_objects(bundle)
             revisions = {}
             inventories = {}
@@ -318,11 +322,12 @@ class RevisionBundleService:
             import_id = str(uuid4())
             self.connection.execute(
                 "INSERT INTO bundle_imports VALUES "
-                "(?, ?, ?, 'OFFLINE_COMPLETE', 'IMPORTED', ?, ?, ?)",
+                "(?, ?, ?, ?, 'IMPORTED', ?, ?, ?)",
                 (
                     import_id,
                     bundle.index.data["bundle_id"],
                     bundle.index.sha256,
+                    bundle.index.data["availability"],
                     bundle.index.canonical_bytes,
                     now,
                     now,

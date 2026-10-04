@@ -1,0 +1,9 @@
+# Optional Phase 9.5 desktop runtime, verified Windows AMD64 / Python 3.12.
+# Kept separate from the deterministic CAD/runtime constraints.
+wxPython==4.3.1
+keyring==25.7.0
+pywin32-ctypes==0.2.3
+jaraco.classes==3.4.0
+jaraco.context==6.1.2
+jaraco.functools==4.6.0
+more-itertools==11.1.0

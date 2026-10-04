@@ -35,6 +35,33 @@ def dependency_projection(data, *, requirements, revisions, configuration):
     public contract.
 
     """
+    return _dependency_projection(
+        data,
+        requirements=requirements,
+        revisions=revisions,
+        configuration=configuration,
+        snapshot_profile="1.1",
+    )
+
+
+def release_projection(data, *, requirements, revisions, configuration):
+    """Project complete release inputs with the profile 1.2 edge rules.
+
+    Profile 1.1 retains its original API and golden bytes. The trusted release
+    declaration supplies all engineering paths and the full configuration.
+    """
+    return _dependency_projection(
+        data,
+        requirements=requirements,
+        revisions=revisions,
+        configuration=configuration,
+        snapshot_profile="1.2",
+    )
+
+
+def _dependency_projection(
+    data, *, requirements, revisions, configuration, snapshot_profile
+):
     data = normalize_ir(
         data,
         for_generation=True,
@@ -114,7 +141,7 @@ def dependency_projection(data, *, requirements, revisions, configuration):
     records.update(
         {("documents", r["id"]): r for r in data["source"]["documents"]}
     )
-    cache, visiting = {}, set()
+    cache, visiting, contents = {}, set(), {}
 
     def digest(domain, key):
         """
@@ -186,6 +213,7 @@ def dependency_projection(data, *, requirements, revisions, configuration):
                     )
                 content = project(record, "/" + domain)
             cache[ref] = sha256(canonical_json(content)).hexdigest()
+            contents.setdefault(domain, {})[cache[ref]] = content
             visiting.remove(ref)
         return cache[ref]
 
@@ -291,8 +319,8 @@ def dependency_projection(data, *, requirements, revisions, configuration):
                     ),
                 }
             )
-    return {
-        "snapshot_profile": "1.1",
+    result = {
+        "snapshot_profile": snapshot_profile,
         "canonical_profile": "1.0",
         "ir_schema": "1.2",
         "requirements": {
@@ -312,6 +340,9 @@ def dependency_projection(data, *, requirements, revisions, configuration):
             )
         ],
     }
+    if snapshot_profile == "1.2":
+        result["provenance"] = contents
+    return result
 
 
 def dependency_hash(data, **kwargs):

@@ -105,7 +105,24 @@ def _migrations() -> tuple[tuple[str, str], ...]:
     @details Existing migration bytes are loaded independently and never
     concatenated before checksum verification.
     """
-    return (("001", _migration_sql()), ("002", _migration_sql_002()))
+    resource = files(__package__).joinpath("003_manifest_rebuilds.sql")
+    if not resource.is_file():
+        resource = (
+            Path(__file__).resolve().parents[3]
+            / "migrations/003_manifest_rebuilds.sql"
+        )
+    cache_resource = files(__package__).joinpath("004_node_cache.sql")
+    if not cache_resource.is_file():
+        cache_resource = (
+            Path(__file__).resolve().parents[3]
+            / "migrations/004_node_cache.sql"
+        )
+    return (
+        ("001", _migration_sql()),
+        ("002", _migration_sql_002()),
+        ("003", resource.read_text(encoding="utf-8")),
+        ("004", cache_resource.read_text(encoding="utf-8")),
+    )
 
 
 def migrate(connection: sqlite3.Connection) -> tuple[str, ...]:

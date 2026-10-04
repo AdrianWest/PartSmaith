@@ -1,5 +1,10 @@
 # Phase 8 — First Complete Deterministic Component: PASS
 
+Current verification: [2026-10-03 Phase 8 revalidation](phase-8-revalidation.md)
+corrects snapshot timing/content, deterministic manifests, rebuild persistence,
+and premature offline-completeness claims. The results below retain the original
+2026-10-02 run; the current artifact manifest records the revalidation inputs.
+
 Recorded 2026-10-02 on `Implment-phase-8` against specification v0.9.6.
 This is local Windows verification; no remote GitHub Actions run is claimed.
 The Phase 7 prerequisite remains satisfied.
