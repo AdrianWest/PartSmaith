@@ -178,13 +178,13 @@
     "pdl/release-profiles/mvp-1@1.0.json": "8798d9a552e5dab29f0c5985a4bfbf7b91fb148ac4e90c42f73952dcf8550b0a",
     "pdl/release-profiles/mvp-1@1.1.json": "49067f4f31972e42be52a3217007c661f7cf036ab0f9a28e9140d2b0b68234b6",
     "pyproject.toml": "f25fbbffafce750108da08d03fde3dd8abfe9cc1c6b8a72f958b946c80e32349",
-    "README.md": "13d83de33be894e7c71e243d3181338b989d62cdb62125f2b775236ea9b50ed8",
+    "README.md": "c60fc5f3f0fb8603777461f15d558cc2fab7ed5e7d4d9fc1962c11689577fa6b",
     "requirements-ci.txt": "df99cf3dc1ac9c11e29b7303972fb7368517a435df3c9c39e7afdb080ca29ccb",
     "requirements-extraction.txt": "00de9bdaa172329894e6f9a62247b322dd2f0f05b11d1c9163b6682d9912bb6b",
     "schemas/component-ir-1.2.schema.json": "4a26d6bd925fbf91862f5eeeae27989ea59a1c4b2f8924a23743f6d1a464a8c1",
     "scripts/generate_extraction_fixtures.py": "c24d58ce4371cb3b38c763b6d83659142677ca7b00866fa94f1a3319186d8204",
-    "scripts/verify_gui.py": "bf5a549c32cd6c3cfdb651d4d35166d545df23cfeaf91732440b7fe09f161200",
-    "src/partsmith/cli.py": "6eabccd4e74a9485535c22282bb51fd5c384be4f4edf1f9e4d1e4df606a09c08",
+    "scripts/verify_gui.py": "59a6c241ec70257e7cef0b9c4e6eb0f618bb9973e804044cbf0cbf2d7d5bdecb",
+    "src/partsmith/cli.py": "8cf1eca6a1b7914ee945b6565c7e5893af473aae1aa9b88baf7001c834b9d519",
     "src/partsmith/extraction/__init__.py": "5b5f90784b414182f3ebb942132dfd13d57fe7b7d95881f8b890f8c16aa0b566",
     "src/partsmith/extraction/coordinates.py": "9c6ecc31f60e9593bf37819adf59a4a472eb8e75a643dcfc20a7fd8903ad773d",
     "src/partsmith/extraction/document.py": "8f3780e2019b3fc170641ee7e4b766e636d96fbba42771a9c3661e09d67934a6",
@@ -192,7 +192,7 @@
     "src/partsmith/extraction/packages.py": "669e25d4354bfce044c07db1f00971f9e125cf72e8b3d31d16128987adbc4fda",
     "src/partsmith/extraction/tables.py": "ac6ccc124a88ca6a648163f1fcc74b52f527c947f49ac86e0c11174a678ba781",
     "src/partsmith/extraction/translation.py": "6616131015539fb82868f26f9151b2d8d72b0c674a23d3ff5502b217760b3d17",
-    "src/partsmith/gui/processing.py": "0721b9c0b89efd1d9a986a1be195ea1f45fd86aced2ac247e78a31c359967d06",
+    "src/partsmith/gui/processing.py": "15a3b26db828038a5870967bbb7f313618618b60bb89c4a688d5800e501bf63b",
     "test_data_sheets/APA102-2020_SMD_LED.pdf": "d5ae0e04e28a481e77753f6f6d27ce4acd5d768f049b46767c0c0edd339d53cd",
     "test_data_sheets/AVR32LA14-20-28-32-DataSheet-DS40002684.pdf": "a1765c14b549de6bff739c3eb10cff8949966ab33d86d0e3f553de66aa38f56c",
     "test_data_sheets/DS_16911_RGB_LED_Clear_Lens_Common_Cathode_5mm.pdf": "906e7e93379f9fb634fae29e5a6bd7ea7b9fb1acc91d2640038cb1e95967f831",
@@ -233,31 +233,5 @@
     "containment": "GUI/CLI use a separate cancellable worker; abrupt exit becomes an error without terminating the application.",
     "new_parser_trial": "PyMuPDF 1.28.2 failed the existing drain-current table content oracle. Retained 1.26.7.",
     "source_install_interference": "569 passed and one resource-read failure while the runtime wheel was replaced. Full suite rerun with installation complete."
-  },
-  "phase_11_revalidation": {
-    "date": "2026-10-04",
-    "report": "docs/gates/phase-11.md",
-    "scope": "Shared CLI/GUI/documentation only. Historical suites and wheel identities retain their original scope. Full Phase 11 regression evidence covers current files.",
-    "historical_manifest": "docs/gates/history/phase-10-artifacts-before-phase-11-2026-10-04.json",
-    "changed_inputs": {
-      "README.md": {
-        "before": "c60fc5f3f0fb8603777461f15d558cc2fab7ed5e7d4d9fc1962c11689577fa6b",
-        "after": "13d83de33be894e7c71e243d3181338b989d62cdb62125f2b775236ea9b50ed8"
-      },
-      "scripts/verify_gui.py": {
-        "before": "59a6c241ec70257e7cef0b9c4e6eb0f618bb9973e804044cbf0cbf2d7d5bdecb",
-        "after": "bf5a549c32cd6c3cfdb651d4d35166d545df23cfeaf91732440b7fe09f161200"
-      },
-      "src/partsmith/cli.py": {
-        "before": "8cf1eca6a1b7914ee945b6565c7e5893af473aae1aa9b88baf7001c834b9d519",
-        "after": "6eabccd4e74a9485535c22282bb51fd5c384be4f4edf1f9e4d1e4df606a09c08"
-      },
-      "src/partsmith/gui/processing.py": {
-        "before": "15a3b26db828038a5870967bbb7f313618618b60bb89c4a688d5800e501bf63b",
-        "after": "0721b9c0b89efd1d9a986a1be195ea1f45fd86aced2ac247e78a31c359967d06"
-      }
-    },
-    "source_checks": 638,
-    "wheel_checks": 108
   }
 }

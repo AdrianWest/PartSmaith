@@ -40,12 +40,12 @@
   },
   "sha256": {
     ".github/workflows/ci.yml": "98e154559d535334f95a16b813d01364a9b68f09fb6514c903cc3d4fdf48a927",
-    "README.md": "13d83de33be894e7c71e243d3181338b989d62cdb62125f2b775236ea9b50ed8",
+    "README.md": "c60fc5f3f0fb8603777461f15d558cc2fab7ed5e7d4d9fc1962c11689577fa6b",
     "resources/BFT_PartSmith_Implementation_Spec.md": "b92bb9f7ff1b6e871f8305244134978c2c36f83dde60d49edd5ac30bac362d4a",
     "scripts/setup_kicad.ps1": "bf2e4d0539a8bdc815707408cda70af291193f74da49c1789b48b6bf062c731b",
     "schemas/phase8-contracts-1.0.schema.json": "05f33abea360a4920eca783eca2b553d4b6e6c3496e10d3fda122cc8f1d92893",
     "migrations/002_phase8.sql": "aa2a81d676964a77a89158c8d40c64031c51f31412bd0bd8c3a0bc95acc5b42d",
-    "src/partsmith/cli.py": "6eabccd4e74a9485535c22282bb51fd5c384be4f4edf1f9e4d1e4df606a09c08",
+    "src/partsmith/cli.py": "8cf1eca6a1b7914ee945b6565c7e5893af473aae1aa9b88baf7001c834b9d519",
     "src/partsmith/kicad/__init__.py": "ec0fdcec9b84e97b1cd2a351bec2c5f340d0fc8be82f484fc6564f403f00e688",
     "src/partsmith/kicad/runtime.py": "b49105f573c2609ecfd76bdac12ea76da05a8f051fadd9d6c3dd9c1142992503",
     "src/partsmith/persistence/immutable.py": "f8e16d74391ba96e99f2cb1a568b2e4a945fd71410b9156268608c1e83389204",
@@ -185,23 +185,5 @@
         "after": "f25fbbffafce750108da08d03fde3dd8abfe9cc1c6b8a72f958b946c80e32349"
       }
     }
-  },
-  "phase_11_revalidation": {
-    "date": "2026-10-04",
-    "report": "docs/gates/phase-11.md",
-    "scope": "Shared CLI/GUI/documentation only. Historical suites and wheel identities retain their original scope. Full Phase 11 regression evidence covers current files.",
-    "historical_manifest": "docs/gates/history/phase-8-artifacts-before-phase-11-2026-10-04.json",
-    "changed_inputs": {
-      "README.md": {
-        "before": "c60fc5f3f0fb8603777461f15d558cc2fab7ed5e7d4d9fc1962c11689577fa6b",
-        "after": "13d83de33be894e7c71e243d3181338b989d62cdb62125f2b775236ea9b50ed8"
-      },
-      "src/partsmith/cli.py": {
-        "before": "8cf1eca6a1b7914ee945b6565c7e5893af473aae1aa9b88baf7001c834b9d519",
-        "after": "6eabccd4e74a9485535c22282bb51fd5c384be4f4edf1f9e4d1e4df606a09c08"
-      }
-    },
-    "source_checks": 638,
-    "wheel_checks": 108
   }
 }

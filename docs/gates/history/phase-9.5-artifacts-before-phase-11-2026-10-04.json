@@ -94,15 +94,15 @@
     }
   },
   "sha256": {
-    "README.md": "13d83de33be894e7c71e243d3181338b989d62cdb62125f2b775236ea9b50ed8",
+    "README.md": "c60fc5f3f0fb8603777461f15d558cc2fab7ed5e7d4d9fc1962c11689577fa6b",
     "docs/gates/history/phase-6-artifacts-before-phase-9.5-2026-10-04.json": "fb9623680e2578ae7741ea61675832a2ee07fa02a7dc859ceb9b03889af68fac",
     "docs/gates/history/phase-7-artifacts-before-phase-9.5-2026-10-04.json": "45d2703e920d1181bbc65019b783cfb2bb850d6a7f539e16f9d726d9d00b491a",
     "docs/gates/history/phase-8-artifacts-before-phase-9.5-2026-10-04.json": "a2da3f70d2e5beb75f125bda60985ef1d86bf6339b85b485785a08d7c7f50287",
     "docs/gates/history/phase-9-artifacts-before-phase-9.5-2026-10-04.json": "949af03767bb2929d8d372d2613ac619086b6fc37d163d9aa1beafeb0b27611d",
     "docs/gates/phase-6-artifacts.json": "6dae9ec13715086b3830ab91aff80ebcd2d8796f896c2ee004757e4fe72930bb",
     "docs/gates/phase-7-artifacts.json": "e7596572912fcdee2400f5ca3d23631efcece9eede3000905a2476cacc667665",
-    "docs/gates/phase-8-artifacts.json": "b9dbf03e901be594af208c34cba0e3f3358c0dcd42840c321b35c07328c5b163",
-    "docs/gates/phase-9-artifacts.json": "7be29ab4e555cb8aa0e6dfda01e910145cfc164cd747bd3bf3902cca3dd8845d",
+    "docs/gates/phase-8-artifacts.json": "0bcbfc2d4fb7b0510b8d51a3ef802250ae6aa37ed657617e66148f07fe36bf63",
+    "docs/gates/phase-9-artifacts.json": "6309dd7be18fa00d9fef073d2f3151fe692ce3830439e277d474e8f25e17cb41",
     "docs/gates/phase-9.5-gui-results.xml": "24ed13923cc0a775fcfc3c4afe9b8a88fc6ed24233c1f0be2ea89d3fe68491c7",
     "docs/gates/phase-9.5-kicad-launch.png": "b1d1e94e40b2693fa1c6e74fb3d975da793185241f54acaceca0af7255c5178c",
     "docs/gates/phase-9.5-source-results.xml": "d35c8acd2c9af0137e0e0872b7af96d5b1b95936f2c3213a7778ea31403cc98a",
@@ -116,13 +116,13 @@
     "resources/PartSmail-Banner.png": "816ac87337b9981db68b1b4b06d50317c5918bc99a6493895d609bb4b3ad8ff7",
     "scripts/install_kicad_gui.py": "0e5683f2f6ad11e2e9f680c87636f1b35e7810a05dff1ded74a27e8b0c62b313",
     "scripts/partsmith_gui.py": "298ae6123daacdf964747a149a47f7fcc273c3353bf5e9dfdeea2490f1e2ed16",
-    "scripts/verify_gui.py": "bf5a549c32cd6c3cfdb651d4d35166d545df23cfeaf91732440b7fe09f161200",
+    "scripts/verify_gui.py": "59a6c241ec70257e7cef0b9c4e6eb0f618bb9973e804044cbf0cbf2d7d5bdecb",
     "src/partsmith/gui/__init__.py": "30213ef127eaa460428918cdd98ee4080c2af03b2f61a21366676bbf2753a19f",
     "src/partsmith/gui/__main__.py": "7899c82dc1e1956eb15b959dce39504048443fc5252db7862ca1a219bdcae6b9",
-    "src/partsmith/gui/app.py": "d9224413e3ad0c713cdf4efb0476c77f5bc5da7ef4fedb09ac6b11c07313431f",
+    "src/partsmith/gui/app.py": "fb2c3fe566c7d3c3fcd4ea6e2193a676aa10373c0820531b10d53762b13f9a1c",
     "src/partsmith/gui/credentials.py": "dc3f713beb757579a9f32fbc8d583c1a5ec9f43b39fdf8db380ff4771d76b907",
     "src/partsmith/gui/install_kicad.py": "24f304a0817a63e5fb6c210c410094fa138d80ff800851892d2f7acc6d784251",
-    "src/partsmith/gui/processing.py": "0721b9c0b89efd1d9a986a1be195ea1f45fd86aced2ac247e78a31c359967d06",
+    "src/partsmith/gui/processing.py": "15a3b26db828038a5870967bbb7f313618618b60bb89c4a688d5800e501bf63b",
     "tests/test_gui.py": "c8b2daff07a82f9b42a8db0e02468630e1b6a4b6bce80eeec69d8da71117dd10"
   },
   "phase_10_revalidation": {
@@ -166,39 +166,5 @@
         "after": "c8b2daff07a82f9b42a8db0e02468630e1b6a4b6bce80eeec69d8da71117dd10"
       }
     }
-  },
-  "phase_11_revalidation": {
-    "date": "2026-10-04",
-    "report": "docs/gates/phase-11.md",
-    "scope": "Shared CLI/GUI/documentation only. Historical suites and wheel identities retain their original scope. Full Phase 11 regression evidence covers current files.",
-    "historical_manifest": "docs/gates/history/phase-9.5-artifacts-before-phase-11-2026-10-04.json",
-    "changed_inputs": {
-      "README.md": {
-        "before": "c60fc5f3f0fb8603777461f15d558cc2fab7ed5e7d4d9fc1962c11689577fa6b",
-        "after": "13d83de33be894e7c71e243d3181338b989d62cdb62125f2b775236ea9b50ed8"
-      },
-      "docs/gates/phase-8-artifacts.json": {
-        "before": "0bcbfc2d4fb7b0510b8d51a3ef802250ae6aa37ed657617e66148f07fe36bf63",
-        "after": "b9dbf03e901be594af208c34cba0e3f3358c0dcd42840c321b35c07328c5b163"
-      },
-      "docs/gates/phase-9-artifacts.json": {
-        "before": "6309dd7be18fa00d9fef073d2f3151fe692ce3830439e277d474e8f25e17cb41",
-        "after": "7be29ab4e555cb8aa0e6dfda01e910145cfc164cd747bd3bf3902cca3dd8845d"
-      },
-      "scripts/verify_gui.py": {
-        "before": "59a6c241ec70257e7cef0b9c4e6eb0f618bb9973e804044cbf0cbf2d7d5bdecb",
-        "after": "bf5a549c32cd6c3cfdb651d4d35166d545df23cfeaf91732440b7fe09f161200"
-      },
-      "src/partsmith/gui/app.py": {
-        "before": "fb2c3fe566c7d3c3fcd4ea6e2193a676aa10373c0820531b10d53762b13f9a1c",
-        "after": "d9224413e3ad0c713cdf4efb0476c77f5bc5da7ef4fedb09ac6b11c07313431f"
-      },
-      "src/partsmith/gui/processing.py": {
-        "before": "15a3b26db828038a5870967bbb7f313618618b60bb89c4a688d5800e501bf63b",
-        "after": "0721b9c0b89efd1d9a986a1be195ea1f45fd86aced2ac247e78a31c359967d06"
-      }
-    },
-    "source_checks": 638,
-    "wheel_checks": 108
   }
 }

@@ -254,6 +254,30 @@ def test_running_controls_live_logs_and_cancel(frame, tmp_path):
     assert frame.status.GetLabel() == "Cancelled"
 
 
+def test_provider_disclosure_local_default_and_candidate_retention(frame):
+    assert not frame.ai_enabled.GetValue()
+    assert "gpt-4.1-mini-2025-04-14" in frame.ai_disclosure.GetLabel()
+    assert "store=false" in frame.ai_disclosure.GetLabel()
+    bundle = {"review_state": "UNREVIEWED", "candidate_evidence": []}
+    frame.job.events.put(("candidates", bundle))
+    frame.poll(None)
+    assert frame.ai_candidates == bundle
+
+
+def test_local_job_can_start_without_secure_store(frame, tmp_path):
+    from partsmith.gui.credentials import CredentialError
+
+    def unavailable_store():
+        raise CredentialError("Secure credential storage is unavailable.")
+
+    frame.store.read_for_processing = unavailable_store
+    frame.job.worker = lambda request, log, cancel: "unavailable"
+    fill(frame, tmp_path)
+    frame.on_start(None)
+    pump(lambda: not frame.job.active)
+    assert frame.status.GetLabel() == "Unavailable"
+
+
 @pytest.mark.parametrize("result", ["success", "failed", "unavailable"])
 def test_job_terminal_statuses(frame, tmp_path, result):
     def worker(request, log, cancel):

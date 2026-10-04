@@ -8,7 +8,12 @@ import wx
 from wx.lib.scrolledpanel import ScrolledPanel
 
 from .credentials import CredentialError, CredentialStore
-from .processing import JobController, ProcessingRequest, Redactor
+from .processing import (
+    JobController,
+    ProcessingRequest,
+    Redactor,
+    process_datasheet,
+)
 
 
 def banner_bytes():
@@ -106,6 +111,15 @@ class SetupFrame(wx.Frame):
         self.SetMinSize((620, 740))
         self.store = store or CredentialStore()
         self.job = JobController() if worker is None else JobController(worker)
+        if worker is None:
+            self.job.worker = lambda request, log, cancel: process_datasheet(
+                request,
+                log,
+                cancel,
+                self.store.read_for_processing,
+                lambda bundle: self.job.events.put(("candidates", bundle)),
+            )
+        self.ai_candidates = None
         self.redact = Redactor()
         self.closing = False
         self.starting = False
@@ -137,6 +151,23 @@ class SetupFrame(wx.Frame):
         self.part = wx.TextCtrl(panel)
         self.part.SetHint("Full manufacturer part number, including suffixes")
         layout.Add(self.part, 0, wx.EXPAND | wx.ALL, 12)
+        self.ai_enabled = wx.CheckBox(
+            panel, label="Send selected Evidence to OpenAI for interpretation"
+        )
+        layout.Add(self.ai_enabled, 0, wx.LEFT | wx.RIGHT, 12)
+        from partsmith.ai.openai import MODEL
+
+        disclosure = self.ai_disclosure = wx.StaticText(
+            panel,
+            label=(
+                f"OpenAI / {MODEL}: selected extracted text and provenance; "
+                "local OCR. "
+                "store=false; provider retention follows account terms. "
+                "API charges paid to OpenAI. Candidates require human review."
+            ),
+        )
+        disclosure.Wrap(550)
+        layout.Add(disclosure, 0, wx.EXPAND | wx.ALL, 12)
         controls = wx.BoxSizer(wx.HORIZONTAL)
         self.start = wx.Button(panel, label="Start")
         self.cancel = wx.Button(panel, label="Cancel")
@@ -185,6 +216,7 @@ class SetupFrame(wx.Frame):
             self.key_button,
             self.file_button,
             self.part,
+            self.ai_enabled,
         ):
             control.Enable(not running)
         self.cancel.Enable(running)
@@ -216,14 +248,22 @@ class SetupFrame(wx.Frame):
             return
         self.starting = True
         request = ProcessingRequest(
-            Path(self.source.GetValue()), self.part.GetValue()
+            Path(self.source.GetValue()),
+            self.part.GetValue(),
+            self.ai_enabled.GetValue(),
         )
         try:
             request.validate()
-            key = self.store.read_for_processing()
+            try:
+                key = self.store.read_for_processing()
+            except CredentialError:
+                if request.use_ai:
+                    raise
+                key = None
             self.redact = Redactor((key,))
             self.set_running(True)
             self.status.SetLabel("Running")
+            self.ai_candidates = None
             self.job.start(request, secrets=(key,))
         except (ValueError, CredentialError, RuntimeError) as error:
             self.set_running(False)
@@ -243,6 +283,8 @@ class SetupFrame(wx.Frame):
         for kind, message in self.job.drain():
             if kind == "log":
                 self.append_log(message)
+            elif kind == "candidates":
+                self.ai_candidates = message
             else:
                 self.status.SetLabel(message.capitalize())
         if not self.job.active:

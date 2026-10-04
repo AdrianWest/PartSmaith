@@ -12,8 +12,11 @@ from threading import Event, Thread
 class ProcessingRequest:
     datasheet: Path
     part_number: str
+    use_ai: bool = False
 
     def validate(self):
+        if type(self.use_ai) is not bool:
+            raise ValueError("AI processing selection must be boolean.")
         if not self.part_number.strip():
             raise ValueError("Enter the full required part number.")
         if self.datasheet.suffix.lower() != ".pdf":
@@ -48,8 +51,8 @@ class Redactor:
         )
 
 
-def process_datasheet(request, log, cancel):
-    """Extract evidence and report the remaining interpretation boundary."""
+def process_datasheet(request, log, cancel, credential=None, publish=None):
+    """Extract Evidence; optionally retain unreviewed AI package candidates."""
     from partsmith.extraction import (
         ExtractionCancelled,
         resolve_package,
@@ -74,8 +77,39 @@ def process_datasheet(request, log, cancel):
         log(f"BLOCKED: Package mapping is {mapping['status']}.")
     else:
         log(f"Ordering-table package: {mapping['package']}")
+    if request.use_ai:
+        from partsmith.ai import (
+            AICancelled,
+            AIRequest,
+            OpenAIProvider,
+            candidate_evidence,
+        )
+        from partsmith.ai.credentials import user_credential
+
+        ai_request = AIRequest.from_extraction(
+            result, "identify_package", request.part_number
+        )
+        provider = OpenAIProvider(
+            credential or user_credential, cancel=cancel, log=log
+        )
+        try:
+            bundle = candidate_evidence(
+                ai_request, provider.analyze(ai_request)
+            )
+        except AICancelled:
+            return "cancelled"
+        if publish is not None:
+            publish(bundle)
+        count = len(bundle["candidate_evidence"])
+        log(f"AI returned {count} unreviewed candidates.")
+        log(
+            f"Ambiguities: {len(bundle['result']['ambiguities'])}; "
+            f"conflicts: {len(bundle['result']['conflicts'])}."
+        )
+    else:
+        log("Local processing: no Evidence sent to an AI provider.")
     log(
-        "UNAVAILABLE: AI interpretation (Phase 11) is not implemented. "
+        "UNAVAILABLE: Human review/application (Phase 12) remains required. "
         "No component was built."
     )
     return "unavailable"

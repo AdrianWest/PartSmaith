@@ -212,6 +212,61 @@ def _command_extract(args):
     return 0
 
 
+def _command_ai_analyze(args):
+    from partsmith.ai import (
+        AIError,
+        AIRequest,
+        OpenAIProvider,
+        ProviderConfig,
+        candidate_evidence,
+    )
+    from partsmith.ai.credentials import user_credential
+
+    try:
+        with Path(args.evidence).open("rb") as source:
+            raw = source.read(100 * 1024 * 1024 + 1)
+        if len(raw) > 100 * 1024 * 1024:
+            raise AIError("Extraction file exceeds the ingestion limit.")
+        # Extraction bundles may contain page PNGs; only Evidence is sent.
+        extraction = json.loads(raw)
+        request = AIRequest.from_extraction(
+            extraction,
+            args.task,
+            args.part_number,
+            args.evidence_ids,
+            args.targets or (),
+            args.target_language,
+        )
+        provider = OpenAIProvider(
+            user_credential,
+            ProviderConfig(
+                timeout_seconds=args.timeout,
+                max_retries=args.max_retries,
+                local_processing=args.local,
+            ),
+            log=lambda text: print(text, file=sys.stderr),
+        )
+        bundle = candidate_evidence(request, provider.analyze(request))
+        data = json.dumps(bundle, ensure_ascii=False, indent=2) + "\n"
+        if args.output:
+            Path(args.output).write_text(data, encoding="utf-8")
+        elif hasattr(sys.stdout, "buffer"):
+            sys.stdout.buffer.write(data.encode("utf-8"))
+        else:
+            print(data, end="")
+    except AIError as error:
+        print(str(error), file=sys.stderr)
+        return 2
+    except Exception:
+        # Input/parser/native store exceptions can contain secrets or text.
+        print(
+            "AI interpretation failed. Check Evidence and configuration.",
+            file=sys.stderr,
+        )
+        return 2
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     """
 
@@ -263,6 +318,33 @@ def build_parser() -> argparse.ArgumentParser:
         "--output", help="UTF-8 JSON with embedded PNG assets"
     )
     extraction.set_defaults(handler=_command_extract)
+
+    from partsmith.ai import TASKS
+
+    ai = commands.add_parser(
+        "ai", help="interpret Evidence into review candidates"
+    )
+    ai_commands = ai.add_subparsers(dest="ai_command", required=True)
+    analyze = ai_commands.add_parser(
+        "analyze", help="send selected Evidence to OpenAI"
+    )
+    analyze.add_argument("evidence", help="JSON bundle from partsmith extract")
+    analyze.add_argument("--task", choices=TASKS, required=True)
+    analyze.add_argument("--part-number", required=True)
+    analyze.add_argument("--evidence-ids", nargs="+")
+    analyze.add_argument(
+        "--targets", nargs="+", help="trusted IR target paths"
+    )
+    analyze.add_argument(
+        "--target-language", choices=["en", "de", "zh-Hans"], default="en"
+    )
+    analyze.add_argument("--timeout", type=float, default=45)
+    analyze.add_argument("--max-retries", type=int, default=2)
+    analyze.add_argument(
+        "--local", action="store_true", help="keep data local; AI unavailable"
+    )
+    analyze.add_argument("--output", help="unreviewed candidate bundle JSON")
+    analyze.set_defaults(handler=_command_ai_analyze)
 
     pdl_parser = commands.add_parser("pdl", help="inspect package definitions")
     pdl_commands = pdl_parser.add_subparsers(dest="pdl_command", required=True)

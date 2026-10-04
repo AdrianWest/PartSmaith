@@ -30,7 +30,7 @@
   },
   "sha256": {
     ".github/workflows/ci.yml": "98e154559d535334f95a16b813d01364a9b68f09fb6514c903cc3d4fdf48a927",
-    "README.md": "13d83de33be894e7c71e243d3181338b989d62cdb62125f2b775236ea9b50ed8",
+    "README.md": "c60fc5f3f0fb8603777461f15d558cc2fab7ed5e7d4d9fc1962c11689577fa6b",
     "docs/gates/phase-9-comparison.json": "dc5688267042b97b1a60cdd2df89c1c59261dcc0618e041a19882ab255c390b7",
     "docs/gates/phase-9-source-results.xml": "dd719739b01edccd74fd0f8318047507cc5e03c74a4987ef86bcb3fc4208326c",
     "docs/gates/phase-9-wheel-results.xml": "2f961cb8ef5b9f6aa11039ac9d950976f68d5371ddf30910114ca5613fc18e22",
@@ -126,7 +126,7 @@
     "scripts/verify_phase2_manifest.py": "28b8e28c51c74a71ca20d7c570f402eef1e12468abaf1b0e77e5161abf72a1fc",
     "src/partsmith/__init__.py": "b537bd5dcdce0ffaf3da13b8108e9a71f0e9789ed00949c1efa131c1f113f5ad",
     "src/partsmith/__main__.py": "369be25b672f3b7d33a8dfff1a3b972ef35bf67fe9ad60a36abf70302f363b7f",
-    "src/partsmith/cli.py": "6eabccd4e74a9485535c22282bb51fd5c384be4f4edf1f9e4d1e4df606a09c08",
+    "src/partsmith/cli.py": "8cf1eca6a1b7914ee945b6565c7e5893af473aae1aa9b88baf7001c834b9d519",
     "src/partsmith/footprint/__init__.py": "1e875df185d78e80e1dcdbee8fe1d36d7009609857e119b999e45f19b803215b",
     "src/partsmith/footprint/model.py": "936436661f10d10002d80fb3857e05269af0e0d965de371d62fbd27ad020470a",
     "src/partsmith/ir/__init__.py": "0d32100d0dbac10233fa63c79f669de9ee125b519e8fe6a2b23a849857af3acc",
@@ -261,23 +261,5 @@
         "after": "8cf1eca6a1b7914ee945b6565c7e5893af473aae1aa9b88baf7001c834b9d519"
       }
     }
-  },
-  "phase_11_revalidation": {
-    "date": "2026-10-04",
-    "report": "docs/gates/phase-11.md",
-    "scope": "Shared CLI/GUI/documentation only. Historical suites and wheel identities retain their original scope. Full Phase 11 regression evidence covers current files.",
-    "historical_manifest": "docs/gates/history/phase-9-artifacts-before-phase-11-2026-10-04.json",
-    "changed_inputs": {
-      "README.md": {
-        "before": "c60fc5f3f0fb8603777461f15d558cc2fab7ed5e7d4d9fc1962c11689577fa6b",
-        "after": "13d83de33be894e7c71e243d3181338b989d62cdb62125f2b775236ea9b50ed8"
-      },
-      "src/partsmith/cli.py": {
-        "before": "8cf1eca6a1b7914ee945b6565c7e5893af473aae1aa9b88baf7001c834b9d519",
-        "after": "6eabccd4e74a9485535c22282bb51fd5c384be4f4edf1f9e4d1e4df606a09c08"
-      }
-    },
-    "source_checks": 638,
-    "wheel_checks": 108
   }
 }

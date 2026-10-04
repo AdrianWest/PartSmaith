@@ -111,8 +111,9 @@ Number**, **Start**, **Cancel**, and a live log panel. Enter the complete
 manufacturer order number, including package suffixes: one datasheet can cover
 multiple package styles. The number is passed intact to the processing service.
 Start performs local PDF extraction and reports the exact ordering-table package
-mapping or a blocked unrecognized/ambiguous mapping. AI interpretation remains
-Phase 11; extraction does not build a component.
+mapping or a blocked unrecognized/ambiguous mapping. The optional OpenAI
+checkbox adds unreviewed Phase 11 interpretation candidates. Phase 12 human
+review/application remains required before a component can be built.
 
 With the existing Python 3.12 environment, install the optional Windows runtime:
 
@@ -295,6 +296,51 @@ Inspect the installed catalog with `partsmith pdl list`,
 `partsmith pdl inspect synthetic-0402`, or
 `partsmith pdl validate synthetic-0402`. See the
 [Phase 3 gate evidence](docs/gates/phase-3.md).
+
+## AI interpretation (Phase 11)
+
+PartSmith includes one released provider adapter: OpenAI Responses API using
+the pinned `gpt-4.1-mini-2025-04-14` model. It sends selected extracted Evidence
+text and provenance, with local OCR and `store=false`. OpenAI account retention
+and abuse monitoring terms still apply; the user pays API charges directly.
+It sends no PDF files, page images, local paths, or tools.
+
+Set a customer key through **Set AI API Key** in the GUI (native OS credential
+storage), or set `OPENAI_API_KEY` securely in the process environment. Keys are
+never command arguments, project settings, candidate exports, logs, or hashes.
+The GUI defaults to local extraction. Its explicit OpenAI checkbox enables
+interpretation; candidates remain in the window's job state for later review.
+
+```powershell
+partsmith extract test_data_sheets/LM2575-D.PDF --pages 24 --dpi 100 --output extraction.json
+partsmith ai analyze extraction.json --task identify_package --part-number LM2575TV-ADJG --output candidates.json
+```
+
+Use `--evidence-ids` to restrict records, and `--targets` for IR value tasks.
+Supported narrow tasks cover pins, packages, mechanical/land-pattern text,
+symbol properties, conflict/ambiguity explanations, and English/German/Chinese
+translation. Drawing tasks use supplied text/OCR; image-only interpretation is
+not implemented. `--local` sends nothing and reports AI unavailable.
+
+Results contain typed, source-linked candidates, exact source quotations,
+provider/model/request metadata, input/output hashes, and conflicts or
+ambiguities. The adapter rejects unrequested targets, fabricated references,
+approval fields, invalid value types, and credential material. Confidence is
+advisory; candidates cannot approve an IR or generate production artifacts.
+Phase 12 review/application remains required. `RecordedProvider` reuses a
+validated immutable `AIResult` offline, retaining its original audit envelope
+and rejecting changed request or adapter bindings.
+
+Offline tests run with the normal suite. The opt-in live gate loads only
+`BFT_TOKEN` from repository `.env` for development testing (AI-005); the app
+does not load that file. Missing credentials fail the live gate clearly.
+
+```powershell
+.tools/python/python.exe -c "import sys; sys.path[:0]=['src','.']; import pytest; raise SystemExit(pytest.main(['scripts/verify_ai_live.py','-q']))"
+```
+
+See [Phase 11 gate evidence](docs/gates/phase-11.md) and the packaged
+[adapter manifest](src/partsmith/ai/adapter-manifest-1.0.json).
 
 ## Document extraction (Phase 10)
 
