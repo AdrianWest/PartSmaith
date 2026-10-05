@@ -12,6 +12,13 @@ uses 300 DPI and Tesseract text-block segmentation mode 6. Tests require known
 language tokens and numerals, retain word confidence, and leave engineering
 interpretation UNKNOWN. OCR is not asserted to be error-free.
 
+The mixed sample uses `chi_sim+eng+deu`, with its dominant Chinese text as the
+primary OCR language. Tesseract's recognition depends on language order; using
+English first misses the Chinese title on Ubuntu's Tesseract 5.3.4. The test
+requires the Chinese title, English package label, full test order number, and
+numerals rather than assuming every engine produces identical text. See
+[Tesseract's language-order documentation](https://tesseract-ocr.github.io/tessdoc/Command-Line-Usage.html#order-of-multiple-languages).
+
 Rebuild the PDF with `python scripts/generate_extraction_fixtures.py`. If its
 bytes change, review and update the JSON source hash and retained translations.
 The generator uses PyMuPDF's built-in Latin and Chinese fonts and lossless

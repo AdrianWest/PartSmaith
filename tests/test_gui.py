@@ -1,4 +1,6 @@
-"""Phase 9.5 service contracts without requiring a desktop or wxPython."""
+"""@file test_gui.py
+@brief Verify GUI service contracts without a desktop or wxPython.
+"""
 
 import importlib.util
 import json
@@ -220,9 +222,14 @@ def test_kicad_launch_uses_external_runtime_and_removes_embedded_paths(
 
 
 def test_installer_copies_launch_only_plugin_and_runtime_path(tmp_path):
+    """@brief Verify the launch-only plugin and resolved runtime path.
+    @param tmp_path Temporary plugin installation directory.
+    @return None.
+    @details Interpreter symlinks are resolved before writing launcher.json.
+    """
     target = install(tmp_path, sys.executable)
     assert json.loads((target / "launcher.json").read_text("utf-8")) == {
-        "python": sys.executable
+        "python": str(Path(sys.executable).resolve())
     }
     assert (target / "__init__.py").is_file()
     assert not (target / "__pycache__").exists()

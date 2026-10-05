@@ -202,7 +202,8 @@ def language_pdf():
         (1, 2, "eng", "voltage"),
         (3, 4, "deu", "Spannung"),
         (5, 6, "chi_sim", "产品规格"),
-        (7, 8, "eng+deu+chi_sim", "产品规格"),
+        # Chinese dominates this page; Tesseract's primary language matters.
+        (7, 8, "chi_sim+eng+deu", "产品规格"),
     ],
 )
 def test_real_native_and_scanned_language_matrix(
@@ -228,6 +229,9 @@ def test_real_native_and_scanned_language_matrix(
     text = " ".join(e["extracted"]["text"] for e in ocr)
     assert token in text
     assert "5" in text
+    if native == 7:
+        assert "Package" in text
+        assert "TEST-32R" in text
     assert any(e["confidence"]["score"] > 0.5 for e in ocr)
     validate_evidence(original)
     validate_evidence(scan)
