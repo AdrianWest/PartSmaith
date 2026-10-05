@@ -41,7 +41,7 @@
   "sha256": {
     ".github/workflows/ci.yml": "5ba41fb430b6fcfc40d244af60b1158ebdd5f4d2ca0f3f889b7d82de9250376b",
     "README.md": "9bb7c24aec37689408f3db31802f52f56826459e3c656ca04cc6828d2f2749bc",
-    "resources/BFT_PartSmith_Implementation_Spec.md": "b92bb9f7ff1b6e871f8305244134978c2c36f83dde60d49edd5ac30bac362d4a",
+    "resources/BFT_PartSmith_Implementation_Spec.md": "91404458dc4e8ecdf392fff4e6a1900da3bb06195460cf564caa4b3e5dbc35ac",
     "scripts/setup_kicad.ps1": "bf2e4d0539a8bdc815707408cda70af291193f74da49c1789b48b6bf062c731b",
     "schemas/phase8-contracts-1.0.schema.json": "05f33abea360a4920eca783eca2b553d4b6e6c3496e10d3fda122cc8f1d92893",
     "migrations/002_phase8.sql": "aa2a81d676964a77a89158c8d40c64031c51f31412bd0bd8c3a0bc95acc5b42d",
@@ -242,6 +242,18 @@
       "gui_service_tests": 14,
       "manifest_verifier_tests": 4,
       "lint_and_format": "PASS"
+    }
+  },
+  "phase_12_spec_input_refresh": {
+    "date": "2026-10-04",
+    "spec_commit": "9f3df5a9603c57c17e856bb6314d9b6f30d78ffd",
+    "reason": "Records the committed Phase 12 viewer, banner and scripting-log requirements in the shared specification.",
+    "scope": "Specification hash only. Historical Phase 8 test and wheel identities retain their original scope; this does not certify Phase 12 implementation.",
+    "changed_inputs": {
+      "resources/BFT_PartSmith_Implementation_Spec.md": {
+        "before": "b92bb9f7ff1b6e871f8305244134978c2c36f83dde60d49edd5ac30bac362d4a",
+        "after": "91404458dc4e8ecdf392fff4e6a1900da3bb06195460cf564caa4b3e5dbc35ac"
+      }
     }
   }
 }
