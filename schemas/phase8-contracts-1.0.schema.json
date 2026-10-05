@@ -837,7 +837,7 @@
           "$ref": "#/$defs/nonempty_string"
         },
         "availability": {
-          "const": "OFFLINE_COMPLETE"
+          "enum": ["OFFLINE_COMPLETE", "RETRIEVAL_REQUIRED"]
         },
         "component": {
           "type": "object",

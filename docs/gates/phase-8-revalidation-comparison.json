@@ -1,0 +1,50 @@
+{
+  "scope": "Phase 8 regression verification; Phase 9 remains pending",
+  "date": "2026-10-03",
+  "process_hash_seeds": [
+    11,
+    97
+  ],
+  "build_a": {
+    "build_id": "340b3551-f7a0-4d00-a604-f7fa06e12bc8",
+    "input_snapshot_hash": "db4a6e58b7ad5fb1a8184c805b7728775a606d3b92c20b252aa5ee0c2f4e5ccf",
+    "artifact_hashes": [
+      "1e68b04c019d5ad5cd20eb03c3ac4d66b9594e1eb6278c80122c4b60670a2b6e",
+      "3d5463370032e6f730924fe00355fe96da79301b093c7ae4b6733d33d7fcef8e",
+      "789ee84bd00e5fa7adfec322191eeb678f849c82b990b30a41f1bb51da839c92"
+    ],
+    "validation_semantics_hash": "fe9f6139151b3469843b0afd727d1ce99c97eddd46bba255d997b827f08552a2",
+    "engineering_manifest_hash": "79ca2e81211ef1ab2f32c9b5f568b8651087c02c8ae5de82f2ac81b43b744632",
+    "dependency_hashes": {
+      "association": "7eee0b4d58a52acc73a987925f95e717bac3d38e059f2d3afa376dd4b12239f1",
+      "footprint": "ff16242f9605238d4b439744741773496b1a5e2723b26a7636c6b004342886e2",
+      "model_3d": "3d78f3557034042e268ddb396b6e3ff2fc9e102e1e4a35716614a4b5c8eac6b5",
+      "symbol": "a84897c3d963f39469d926bf888c0a17b06f2fcb6efa4ff653f89009e1d24b63"
+    }
+  },
+  "build_b": {
+    "build_id": "d22fb79a-c757-4173-ac13-1d657f55a579",
+    "input_snapshot_hash": "db4a6e58b7ad5fb1a8184c805b7728775a606d3b92c20b252aa5ee0c2f4e5ccf",
+    "artifact_hashes": [
+      "1e68b04c019d5ad5cd20eb03c3ac4d66b9594e1eb6278c80122c4b60670a2b6e",
+      "3d5463370032e6f730924fe00355fe96da79301b093c7ae4b6733d33d7fcef8e",
+      "789ee84bd00e5fa7adfec322191eeb678f849c82b990b30a41f1bb51da839c92"
+    ],
+    "validation_semantics_hash": "fe9f6139151b3469843b0afd727d1ce99c97eddd46bba255d997b827f08552a2",
+    "engineering_manifest_hash": "79ca2e81211ef1ab2f32c9b5f568b8651087c02c8ae5de82f2ac81b43b744632",
+    "dependency_hashes": {
+      "association": "7eee0b4d58a52acc73a987925f95e717bac3d38e059f2d3afa376dd4b12239f1",
+      "footprint": "ff16242f9605238d4b439744741773496b1a5e2723b26a7636c6b004342886e2",
+      "model_3d": "3d78f3557034042e268ddb396b6e3ff2fc9e102e1e4a35716614a4b5c8eac6b5",
+      "symbol": "a84897c3d963f39469d926bf888c0a17b06f2fcb6efa4ff653f89009e1d24b63"
+    }
+  },
+  "comparison": {
+    "input_snapshot_hash": true,
+    "artifact_hashes": true,
+    "validation_semantics_hash": true,
+    "engineering_manifest_hash": true,
+    "dependency_hashes": true
+  },
+  "result": "PASS"
+}

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="2" skipped="0" tests="2" time="0.341" timestamp="2026-10-04T17:49:10.126476-04:00" hostname="DESKTOP-CIC0QVQ"><testcase classname="scripts.verify_phase11_review" name="test_missing_full_order_number_cannot_be_inferred" time="0.066"><failure message="AssertionError: An absent order number was accepted as an inferred package without an issue&#10;assert not True&#10; +  where True = any(&lt;generator object test_missing_full_order_number_cannot_be_inferred.&lt;locals&gt;.&lt;genexpr&gt; at 0x000001C956EF79F0&gt;)">scripts\verify_phase11_review.py:35: in test_missing_full_order_number_cannot_be_inferred
+    assert not any(
+E   AssertionError: An absent order number was accepted as an inferred package without an issue
+E   assert not True
+E    +  where True = any(&lt;generator object test_missing_full_order_number_cannot_be_inferred.&lt;locals&gt;.&lt;genexpr&gt; at 0x000001C956EF79F0&gt;)</failure></testcase><testcase classname="scripts.verify_phase11_review" name="test_exact_request_binding_survives_provider_validation" time="0.004"><failure message="AssertionError: Provider revalidation changed the immutable request hash&#10;assert '60a9a4ecffb1...8133c10e155c6' == '930dbd3de7e8...ee832ea5af39e'&#10;  &#10;  - 930dbd3de7e850aeaf90d9c221f236cc4c0e3c25bbec5ac7107ee832ea5af39e&#10;  + 60a9a4ecffb12b98f9e3090e1001a3b3d8ab76972179c647aa58133c10e155c6">scripts\verify_phase11_review.py:53: in test_exact_request_binding_survives_provider_validation
+    assert result.data["input_hash"] == request.input_hash, (
+E   AssertionError: Provider revalidation changed the immutable request hash
+E   assert '60a9a4ecffb1...8133c10e155c6' == '930dbd3de7e8...ee832ea5af39e'
+E     
+E     - 930dbd3de7e850aeaf90d9c221f236cc4c0e3c25bbec5ac7107ee832ea5af39e
+E     + 60a9a4ecffb12b98f9e3090e1001a3b3d8ab76972179c647aa58133c10e155c6</failure></testcase></testsuite></testsuites>

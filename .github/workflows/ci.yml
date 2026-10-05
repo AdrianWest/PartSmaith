@@ -21,6 +21,22 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
+      - name: Install local multilingual OCR on Ubuntu
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes tesseract-ocr tesseract-ocr-eng tesseract-ocr-deu tesseract-ocr-chi-sim
+      - name: Install local multilingual OCR on Windows
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          choco install tesseract --yes --no-progress
+          $ocrDirectory = Join-Path $env:ProgramFiles 'Tesseract-OCR'
+          "$ocrDirectory" | Out-File -FilePath $env:GITHUB_PATH -Append
+          foreach ($language in @('eng', 'deu', 'chi_sim')) {
+            $model = Join-Path $ocrDirectory "tessdata/$language.traineddata"
+            Invoke-WebRequest "https://raw.githubusercontent.com/tesseract-ocr/tessdata_fast/4.1.0/$language.traineddata" -OutFile $model
+          }
       - name: Install pinned KiCad 10 on Ubuntu
         if: runner.os == 'Linux'
         run: |
@@ -47,6 +63,7 @@ jobs:
       - name: Install pinned CI tools and project
         run: |
           python -m pip install --requirement requirements-ci.txt
+          python -m pip install --requirement requirements-extraction.txt
           python -m pip install -e . --no-deps
       - name: Lint
         run: python -m ruff check .
@@ -58,11 +75,15 @@ jobs:
         run: |
           python -m pip wheel . --no-deps --wheel-dir dist
           python -c "import pathlib, subprocess, sys; wheels = list(pathlib.Path('dist').glob('*.whl')); assert len(wheels) == 1, f'Expected exactly one built wheel, found {len(wheels)}'; subprocess.run([sys.executable, '-m', 'pip', 'install', '--force-reinstall', '--no-deps', str(wheels[0])], check=True)"
-          python -c "from importlib.resources import files; assert files('partsmith.persistence').joinpath('001_initial.sql').is_file()"
+          python -c "from importlib.resources import files; from pathlib import Path; assert files('partsmith.gui').joinpath('PartSmith-Banner.png').read_bytes() == Path('resources/PartSmith-Banner.png').read_bytes()"
+          python -c "from importlib.resources import files; from pathlib import Path; assert all(files('partsmith.persistence').joinpath(name).read_bytes() == Path(f'migrations/{name}').read_bytes() for name in ('001_initial.sql', '002_phase8.sql', '003_manifest_rebuilds.sql', '004_node_cache.sql'))"
           python -c "from importlib.resources import files; from pathlib import Path; import partsmith.ir; from partsmith.ir import SUPPORTED_VERSIONS; assert 'site-packages' in str(Path(partsmith.ir.__file__).resolve()); assert all(files('partsmith.ir').joinpath(f'component-ir-{v}.schema.json').read_bytes() == Path(f'schemas/component-ir-{v}.schema.json').read_bytes() for v in SUPPORTED_VERSIONS)"
           python -c "from importlib.resources import files; from pathlib import Path; import partsmith.pdl; root = files('partsmith.pdl'); assert root.joinpath('pdl-1.0.schema.json').read_bytes() == Path('schemas/pdl-1.0.schema.json').read_bytes(); assert root.joinpath('entries/synthetic-0402@1.0.json').read_bytes() == Path('pdl/entries/synthetic-0402@1.0.json').read_bytes(); assert root.joinpath('release-profiles/mvp-1@1.0.json').read_bytes() == Path('pdl/release-profiles/mvp-1@1.0.json').read_bytes()"
           python -c "import partsmith.threed"
+          python -c "from importlib.resources import files; from pathlib import Path; root = files('partsmith.release'); assert root.joinpath('runtime-lock-1.0.json').read_bytes() == Path('src/partsmith/release/runtime-lock-1.0.json').read_bytes(); assert root.joinpath('runtime-constraints.txt').read_bytes() == Path('requirements-ci.txt').read_bytes(); assert root.joinpath('replay-bundle-1.0.schema.json').read_bytes() == Path('schemas/replay-bundle-1.0.schema.json').read_bytes()"
           python -m pytest --junitxml=wheel-gate-results.xml
+      - name: Repeat combined installed-wheel PDF stability gate
+        run: python scripts/verify_pdf_stability.py --rounds 3 --output pdf-stability-results
       - name: Check command-line entry point
         run: |
           partsmith version
@@ -75,3 +96,6 @@ jobs:
           path: |
             *gate-results.xml
             dist/*.whl
+            pdf-stability-results/*.json
+            pdf-stability-results/*.txt
+            pdf-stability-results/*.xml

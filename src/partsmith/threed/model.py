@@ -37,6 +37,7 @@ class ThreeDContext:
     target_format: str = "step"
     conventions_version: str = "1.0"
     python_version: str = "3.12"
+    step_precision_mode: int = 0
     configuration_schema_version: str = "1.0"
     required_ir_paths: tuple[str, ...] = ("/identity", "/package")
     required_pdl_paths: tuple[str, ...] = (
@@ -202,7 +203,7 @@ def threed_projection(
         for key, value in data["identity"].items()
         if key != "component_id"
     }
-    return {
+    result = {
         "snapshot_profile": "1.2",
         "node_kind": "MODEL_3D",
         "declaration": {
@@ -238,6 +239,11 @@ def threed_projection(
             },
         },
     }
+    if context.step_precision_mode != 0:
+        result["configuration"]["step_precision_mode"] = (
+            context.step_precision_mode
+        )
+    return result
 
 
 def threed_dependency_hash(
@@ -290,7 +296,9 @@ def generate_model_3d(
         )
     data = normalize_ir(_ir_data(ir))
     identity = data["identity"]
-    content = generate_step_bytes(pdl.data)
+    content = generate_step_bytes(
+        pdl.data, precision_mode=context.step_precision_mode
+    )
     source_hash = sha256(canonical_json(data)).hexdigest()
     dependency_hash = threed_dependency_hash(ir, pdl, context)
     filename = f"{identity['normalized_mpn'].upper()}.step"

@@ -98,6 +98,7 @@ def test_multi_revision_bundle_round_trips_exact_bytes(tmp_path):
     @details Revision, inventory, component, and current-head identities match.
     """
     bundle, revision_ids = _export_fixture(tmp_path / "source.db")
+    assert bundle.index.data["availability"] == "RETRIEVAL_REQUIRED"
     with database(tmp_path / "target.db") as connection:
         import_id = RevisionBundleService(connection).import_bundle(bundle)
         store = ImmutableStore(connection)
@@ -118,6 +119,27 @@ def test_multi_revision_bundle_round_trips_exact_bytes(tmp_path):
         assert connection.execute(
             "SELECT COUNT(*) FROM bundle_objects"
         ).fetchone()[0] == len(bundle.index.data["objects"])
+        assert (
+            connection.execute(
+                "SELECT availability FROM bundle_imports"
+            ).fetchone()[0]
+            == "RETRIEVAL_REQUIRED"
+        )
+
+
+def test_revision_only_bundle_cannot_claim_offline_completeness(tmp_path):
+    """Reject a self-consistent legacy claim before publishing any history."""
+    bundle, _ = _export_fixture(tmp_path / "source.db")
+    data = bundle.index.data
+    data["availability"] = "OFFLINE_COMPLETE"
+    claimed = RevisionBundle(BundleIndex(data), bundle.objects)
+    with database(tmp_path / "target.db") as connection:
+        with pytest.raises(ValueError, match="offline completeness"):
+            RevisionBundleService(connection).import_bundle(claimed)
+        assert (
+            connection.execute("SELECT COUNT(*) FROM components").fetchone()[0]
+            == 0
+        )
 
 
 def test_tampered_bundle_object_rolls_back_import(tmp_path):

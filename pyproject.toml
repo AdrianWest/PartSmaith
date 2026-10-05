@@ -15,30 +15,43 @@ classifiers = [
   "Programming Language :: Python :: 3",
   "Programming Language :: Python :: 3.12",
 ]
-dependencies = ["jsonschema==4.26.0", "cadquery==2.8.0"]
+dependencies = [
+  "jsonschema==4.26.0", "cadquery==2.8.0",
+  "pypdf[crypto]==6.1.3", "pdfplumber==0.11.10", "pypdfium2==5.14.0",
+]
 
 [project.optional-dependencies]
+gui = ["wxPython==4.3.1", "keyring==25.7.0"]
 dev = [
+  "PyMuPDF==1.28.2",
   "pytest==8.4.2",
   "ruff==0.16.8",
 ]
 
 [project.scripts]
 partsmith = "partsmith.cli:main"
+partsmith-gui = "partsmith.gui.__main__:main"
+partsmith-kicad-setup = "partsmith.gui.install_kicad:main"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/partsmith"]
 
 [tool.hatch.build.targets.wheel.force-include]
+"resources/PartSmith-Banner.png" = "partsmith/gui/PartSmith-Banner.png"
+"integrations/kicad/partsmith_setup" = "partsmith/gui/kicad_plugin"
 "migrations/001_initial.sql" = "partsmith/persistence/001_initial.sql"
 "migrations/002_phase8.sql" = "partsmith/persistence/002_phase8.sql"
+"migrations/003_manifest_rebuilds.sql" = "partsmith/persistence/003_manifest_rebuilds.sql"
+"migrations/004_node_cache.sql" = "partsmith/persistence/004_node_cache.sql"
 "schemas/component-ir-1.0.schema.json" = "partsmith/ir/component-ir-1.0.schema.json"
 "schemas/component-ir-1.1.schema.json" = "partsmith/ir/component-ir-1.1.schema.json"
 "schemas/component-ir-1.2.schema.json" = "partsmith/ir/component-ir-1.2.schema.json"
 "schemas/pdl-1.0.schema.json" = "partsmith/pdl/pdl-1.0.schema.json"
 "schemas/phase8-contracts-1.0.schema.json" = "partsmith/release/phase8-contracts-1.0.schema.json"
+"schemas/replay-bundle-1.0.schema.json" = "partsmith/release/replay-bundle-1.0.schema.json"
 "pdl/entries" = "partsmith/pdl/entries"
 "pdl/release-profiles" = "partsmith/pdl/release-profiles"
+"requirements-ci.txt" = "partsmith/release/runtime-constraints.txt"
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

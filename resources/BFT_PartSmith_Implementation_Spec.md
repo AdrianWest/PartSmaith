@@ -70,8 +70,9 @@ every numbered work item in that phase is complete, every listed gate
 condition passes, and the commands, artifact hashes where applicable,
 and test results are recorded in the repository or CI evidence.
 
-Implementation work for phase *N+1* shall not begin until phase *N* has
-a recorded PASS. A failing, skipped, unrecorded, or manually assumed
+Implementation work for the next listed phase shall not begin until the
+preceding listed phase has a recorded PASS. Phase 9.5 follows Phase 9 and
+must pass before Phase 10 begins. A failing, skipped, unrecorded, or manually assumed
 check is a gate failure. A waived gate requires an explicit specification
 revision that identifies the risk owner, scope, rationale, and expiry;
 a waiver is not a PASS.
@@ -298,6 +299,98 @@ CAD-only updates preserve unrelated generator dependencies; validator-only
 updates rerun affected checks without regenerating unchanged engineering files.
 Required replay objects must be available locally and verified before execution.
 
+## Phase 9.5 — wxPython setup and processing GUI
+
+Provide a launchable setup GUI using **wxPython (wx)**. The same GUI shall
+launch either from KiCad through a supported, version-tested launch integration
+or independently through a Python script. Keep processing in shared PartSmith
+services so both launch paths use the same configuration and workflow.
+
+1. Add a standalone Python launcher and a KiCad launch entry. Document the
+   commands, installation steps, and supported runtime for both launch paths.
+   The KiCad entry shall launch the PartSmith runtime defined by the runtime
+   baseline; it shall not require loading CAD dependencies into KiCad's Python
+   process. This phase covers launching the setup GUI; broader live KiCad
+   operations remain in Phase 13.
+2. Display `resources\PartSmail-Banner.png` as a banner at the top of the
+   window, spanning the complete window width without side margins. Preserve
+   its aspect ratio when scaling and size its height accordingly. Package the
+   image and
+   resolve its location independently of the current working directory for
+   both launch paths.
+3. Add a **Set AI API Key** button. Clicking it opens a modal dialog with a
+   password-style text box and **OK** and **Cancel** buttons. The text box
+   shall always open blank, including when a key has already been saved;
+   never prefill, retrieve for display, or reveal the saved key. Typed input
+   shall be masked, with no reveal control. **OK** with a nonblank key shall
+   save or replace the configured provider's key in the operating system's
+   secure credential store under AI-001–AI-003 and section 34. Blank input
+   shall show a validation message without changing the saved key. **Cancel**
+   shall discard the input without changing the saved key. Close the dialog
+   only after a successful save or cancellation; report save failures without
+   exposing credentials. The main window may show only a configured/not
+   configured status and the provider identity. Never log entered or saved
+   keys, include them in exception text, or persist them in ordinary settings.
+4. Add a **Select Datasheet** button that opens a file chooser for a local PDF
+   datasheet to be processed. Show the selected file path in a read-only field.
+   Cancelling the chooser shall preserve any previous selection. Check that
+   the selected file exists and is readable before starting processing.
+5. Add a labeled **Required Part Number** text box for the full manufacturer
+   part/order number the user needs from the selected datasheet, including
+   suffixes that identify the package variant. A datasheet may cover multiple
+   package styles; the required part number determines which package, pinout,
+   and package dimensions to extract and use. Require a nonblank value before
+   Start and preserve the complete part number when passing it with the
+   selected source to the processing service. Once extraction is available,
+   resolve the package using the datasheet's ordering information or
+   part-number/package mapping. An unrecognized or ambiguous mapping shall
+   produce a clear review/error status and block package-dependent generation
+   until resolved; never silently choose the first or a default package.
+6. Add a read-only, multiline, scrollable log text box at the bottom of the
+   GUI. Route script/service progress, warnings, errors, and completion or
+   cancellation messages to this box while work is running. Include captured
+   subprocess output where scripts are used, applying credential redaction
+   before display or persistence. Update wx controls on the GUI thread and
+   run processing outside that thread so the window remains responsive.
+7. Add **Start** and **Cancel** buttons above the bottom log box. Start shall
+   validate the inputs and launch at most one processing job at a time;
+   prevent duplicate starts and changes to job inputs or credentials while
+   running. Cancel shall request cancellation of the active job, stop managed
+   child work safely, log the resulting status, and return the GUI to an idle
+   state. Disable Cancel when no job is running. Closing the window during a
+   job shall use the same cancellation and cleanup path.
+8. Define a processing-service boundary accepting the datasheet path, part
+   number, progress/log callback, and cancellation signal. This phase shall
+   demonstrate it with an offline test worker and any already available
+   services. PDF extraction and AI interpretation remain Phase 10 and Phase 11
+   deliverables; Start shall report unavailable stages explicitly until they
+   are implemented and shall not claim a successful component build. Once
+   available, connect those stages through the same boundary, retaining all
+   existing validation and review gates. Before any external AI submission,
+   identify the selected provider/model and data-handling configuration under
+   AI-004.
+
+**Phase 9.5 gate (blocking):** Both the standalone Python script and the
+supported KiCad launch entry open the same wxPython GUI from a working
+directory outside the repository, with the packaged banner at the top.
+Record launch commands and runtime/version evidence. Verify that the API-key
+dialog opens blank on every invocation, masks typed input, saves on OK,
+preserves the prior key on Cancel or blank input, handles save failures, and
+retains the saved key across application restarts without displaying it.
+Use a dummy credential for tests and verify it is absent from logs, errors,
+ordinary settings, and generated artifacts. Datasheet selection and part-number
+validation work; Start passes the full required part number, including package
+suffixes, and the exact selected source to the worker and blocks duplicate
+jobs. Offline fixtures representing a datasheet with multiple package styles
+verify that distinct full part numbers remain distinct processing requests.
+Actual datasheet-to-package resolution is verified when extraction becomes
+available in Phase 10; its tests must cover correct package selection and
+blocked unrecognized or ambiguous mappings. An offline worker demonstrates live log updates,
+responsive controls, success and failure reporting, cancellation, and cleanup
+on window close. Unavailable processing stages produce a clear status rather
+than a false success. Record automated checks and manual GUI/launch evidence;
+no live AI credential or provider call is required for this gate.
+
 ## Phase 10 — Document extraction
 
 Only after the deterministic component path works:
@@ -309,6 +402,13 @@ Only after the deterministic component path works:
 5. Add diagram/image extraction.
 6. Convert extraction results into Evidence objects.
 7. Add evidence tests using the document corpus.
+
+The repository-root `test_data_sheets/` directory contains real-part PDF
+datasheets supplied as representative examples for Phase 10 testing. Use
+these PDFs as the document corpus for ingestion and extraction tests,
+including page selection, tables, diagrams/images, and Evidence provenance
+where applicable. Add targeted fixtures where these datasheets do not
+cover required OCR, language, or crop/rotation/DPI cases.
 
 **Phase 10 gate (blocking):** The document corpus tests demonstrate PDF
 ingestion, selected-page extraction, OCR, tables, and diagram/image
@@ -327,6 +427,9 @@ are mandatory; evidence overlays must resolve to the same original-page region.
 6. Add prompt-injection/security tests.
 7. Add conflict and ambiguity handling.
 
+Live GPT/OpenAI provider tests shall use the testing credential defined in
+the repository-root `.env` file as `BFT_TOKEN`, as specified in AI-005.
+
 **Phase 11 gate (blocking):** The configured provider produces typed,
 provenance-linked Evidence/IR candidates with provider/model metadata;
 credential-handling and prompt-injection tests pass; conflicts and
@@ -336,13 +439,83 @@ additional providers are optional and must pass the same contract suite.
 
 ## Phase 12 — Human review and application UI
 
+Extend the Phase 9.5 setup and processing GUI as the main application window
+and central scripting-log surface. Open the section 12 viewer as a separate
+popup owned by that GUI.
+
 1. Display evidence.
 2. Display conflicts.
 3. Display IR.
 4. Display generated symbol/footprint.
-5. Display 3D placement.
+5. Display 3D placement in the separate section 12 viewer window.
 6. Support explicit overrides.
 7. Connect the UI to the existing Phase 8 review/approval states and services.
+8. Use `resources/PartSmith-Banner3.png` across the full width of the section 12
+   viewer popup under the following window, packaging, and resize contract.
+9. Route all Phase 12 scripting logs to the existing read-only, multiline,
+   scrollable log box in the Phase 9.5 GUI under the following logging contract.
+
+### Phase 12 viewer window and banner
+
+- An **Open 3D Placement Viewer** action in the main GUI shall open section
+  12's viewer in a separate, resizable, modeless wx window owned by the Phase
+  9.5 GUI. The main GUI remains usable while the popup is open. The popup
+  has its own client dimensions and resize handling; closing it closes only
+  the viewer. This banner requirement applies to the viewer popup; the Phase
+  9.5 setup window retains its existing banner requirement.
+- Display the complete banner at the top of the viewer popup at client
+  coordinates `(0, 0)`, above its placement controls and viewer content. Its
+  displayed width shall equal the popup's full **client-area width**, excluding
+  operating-system borders, with no left/right padding or margins. Keep the
+  banner outside split panes and scrollable content so scrolling or adjusting
+  the viewer layout does not narrow or move it.
+- Preserve the source image's aspect ratio and show the entire image without
+  cropping, tiling, or stretching either axis independently. For positive
+  client width `W` and source dimensions `Iw` by `Ih`, set the displayed width
+  to `W` and height to `max(1, round(W * Ih / Iw))`. Here `W` is the popup's
+  client width. The source asset is currently 2057 by 765 pixels; derive
+  dimensions from the loaded image rather than hard-coding them. Resample from
+  the original image with high-quality scaling, including when enlarging it.
+- Recompute banner dimensions on initial layout, popup resize, maximize,
+  restore, and display/DPI changes. Update layout and painting on the wx GUI
+  thread; use consistent client-coordinate units for width and height and
+  account for the display scale when creating the bitmap. Ignore transient
+  zero-size events during minimization and restore the correct dimensions
+  when the window becomes visible. Resize the content below the banner to
+  use the remaining height and provide scrolling where needed to keep review
+  controls accessible at the supported minimum window size.
+- Include the exact `PartSmith-Banner3.png` asset in source distributions and
+  installed wheels as the `partsmith.gui` package resource
+  `partsmith/gui/PartSmith-Banner3.png`, and carry it into the production
+  application bundle in Phase 14. Load installed assets through package
+  resources; a source-checkout launch may resolve `resources/PartSmith-Banner3.png`
+  relative to the application files. Both the standalone and KiCad launch
+  paths shall work from an unrelated current working directory, without
+  requiring a repository checkout or downloading the image. A missing or
+  unreadable asset shall produce a clear viewer-open error identifying the
+  resource and leave the main GUI usable; do not silently substitute an older
+  banner.
+
+### Phase 12 scripting logs
+
+- Use the Phase 9.5 GUI's existing log box as the shared destination for all
+  scripts and services invoked by Phase 12 actions, whether started from the
+  main GUI or the viewer popup. This includes extraction/AI processing,
+  generation, validation, review/override operations, and placement checks.
+  Connect every worker and managed subprocess to the same logging sink.
+- Stream progress, informational messages, warnings, errors, exceptions,
+  completion, and cancellation/cleanup messages while work is running.
+  Capture both subprocess stdout and stderr incrementally, including output
+  produced before a failure or nonzero exit; report the resulting exit status.
+  Identify the originating action or worker so popup activity is recognizable
+  in the main log box. Keep the existing log history when opening, closing,
+  or reopening the viewer.
+- Apply the Phase 9.5 credential-redaction rules before displaying or
+  persisting messages from any source, including captured subprocess output
+  and exceptions. Dispatch log updates onto the wx GUI thread and keep work
+  and pipe reading outside that thread so both windows remain responsive.
+  A viewer-open failure, including a missing/unreadable banner, shall also be
+  reported in the Phase 9.5 log box.
 
 **Phase 12 gate (blocking):** End-to-end UI tests demonstrate that a user
 can inspect evidence, conflicts, IR, symbol, footprint, 3D placement,
@@ -351,6 +524,27 @@ deterministic build.
 Tests start with unreviewed evidence, approve inputs before generation, and
 approve final outputs separately. Pin edits exercise section 121.7's supported
 reorder, renumber, and removal operations without retargeting historical evidence.
+
+Verify that source distributions and installed wheels contain Banner3 with
+bytes matching the repository asset, then launch the installed GUI through
+both supported launch paths from outside the repository and open the separate
+viewer popup. Automated layout checks and recorded visual inspection shall
+cover initial display, minimum supported size, enlargement, repeated resizing,
+maximize/restore, closing/reopening the popup, and supported display/DPI changes.
+The banner remains at `(0, 0)`, spans the popup's full client width, shows the
+complete image, and has proportional height within one client pixel; placement
+controls remain accessible and both windows remain responsive. Closing the
+popup leaves the main GUI running. Negative resource checks verify the reported
+missing/unreadable-banner viewer-open error and continued main-GUI usability.
+Phase 14 shall repeat the packaging and launch checks against the production
+application bundle.
+
+Log-routing tests shall start work from both the main GUI and viewer popup and
+demonstrate live messages in the Phase 9.5 log box before completion. Cover
+service callbacks, subprocess stdout/stderr, failure/nonzero exit, cancellation
+and cleanup, and viewer-open errors. Verify action/source identification,
+preserved log history after popup close/reopen, responsive controls, and dummy
+credential redaction before display or persistence.
 
 ## Phase 13 — KiCad integration
 
@@ -468,6 +662,20 @@ reports.
 Before external documents or document-derived content are sent to an AI
 provider, PartSmith shall identify the selected provider/model and the
 applicable data-handling configuration.
+
+## AI-005 — GPT API credential for testing
+
+For development and testing, `BFT_TOKEN` in the repository-root `.env`
+file is the GPT/OpenAI API key. Live GPT/OpenAI provider tests shall load
+this variable into the test process and use its value to authenticate
+with the OpenAI provider adapter. This credential is for testing only;
+customer credentials remain user-supplied under AI-001.
+
+The `.env` file and the value of `BFT_TOKEN` shall not be committed to
+source control or copied into the specification, test fixtures, logs,
+or generated outputs. AI-003 applies to this testing credential. Tests
+requiring live provider access shall report a missing credential clearly
+when `BFT_TOKEN` is unset or empty; offline tests shall not require it.
 
 # PartSmith Runtime, Dependencies, Licensing, and Installation
 
@@ -1558,6 +1766,19 @@ Validator**. Its purpose is not merely to display a model; it is an
 engineering validation interface for determining whether the
 independently generated 3D model correctly belongs on the independently
 generated footprint.
+
+## Viewer window and banner
+
+The viewer shall open as a separate, resizable, modeless popup from the Phase
+9.5 GUI extended in Phase 12, with `resources/PartSmith-Banner3.png` across the
+popup's full client width. The
+[Phase 12 viewer-window contract](#phase-12-viewer-window-and-banner) defines
+the window behavior and banner placement, aspect ratio, packaging, resizing,
+and acceptance checks. Placement controls and the 3D viewport occupy the
+content area below the banner.
+
+All viewer-triggered scripting logs shall stream to the Phase 9.5 GUI's log
+box under the [Phase 12 scripting-log contract](#phase-12-scripting-logs).
 
 ## Viewer capabilities
 
@@ -7327,7 +7548,8 @@ reproducibility:
 
 # 235. Implementation Milestones
 
-The numbered Phases 0–14 are the sole implementation order and gate authority.
+The numbered Phases 0–14, including Phase 9.5 between Phases 9 and 10, are the
+sole implementation order and gate authority.
 These milestones summarize them and create no competing prerequisites:
 
 | Milestone | Phases and scope |
@@ -7336,6 +7558,7 @@ These milestones summarize them and create no competing prerequisites:
 | First PDL | 3: the entry referenced by GOLD-0402-001, loader and validation |
 | Deterministic component | 4–8: input checks, generators, CAD spike, validators, minimal approval and KiCad compatibility |
 | Reproducibility | 9: snapshots, dependency invalidation, deterministic comparisons |
+| Setup GUI | 9.5: wxPython GUI, standalone/KiCad launch, secure API-key entry, datasheet and part-number inputs, live logs and cancellation |
 | Document intelligence | 10–11: extraction, evidence, provider adapter |
 | Review UI | 12: UI over existing review/approval services |
 | Extended integration | 13: broader CLI, IPC, round-trip and installation |
@@ -7343,7 +7566,7 @@ These milestones summarize them and create no competing prerequisites:
 
 # 236. MVP Definition of Done
 
-PartSmith MVP is complete only when all Phases 0–14 pass and at least one
+PartSmith MVP is complete only when all Phases 0–14, including Phase 9.5, pass and at least one
 manufacturer-backed golden component for each of the eight STD-010 variants can:
 
 ``` text

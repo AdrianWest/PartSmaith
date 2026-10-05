@@ -18,6 +18,12 @@ from partsmith.threed.geometry import build_solids
 
 CADQUERY_VERSION = cq.__version__
 OCP_VERSION = version("cadquery-ocp")
+STEP_EXPORT_SETTINGS = {
+    "unit": "MM",
+    "outputUnit": "MM",
+    "write_pcurves": True,
+    "precision_mode": 0,
+}
 
 _TIMESTAMP_PATTERN = re.compile(rb"'\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}'")
 _FIXED_TIMESTAMP = b"'1970-01-01T00:00:00'"
@@ -107,7 +113,7 @@ def _normalize_step_bytes(raw: bytes) -> bytes:
     return _ASSEMBLY_OCCURRENCE_PATTERN.sub(_renumber_assembly, normalized)
 
 
-def _export_raw_step(solids: list) -> bytes:
+def _export_raw_step(solids: list, *, precision_mode: int = 0) -> bytes:
     """
 
     @brief Export a list of solids as one compound STEP file.
@@ -120,7 +126,10 @@ def _export_raw_step(solids: list) -> bytes:
     compound = cq.Compound.makeCompound(solids)
     with tempfile.TemporaryDirectory() as directory:
         path = Path(directory) / "model.step"
-        compound.exportStep(str(path))
+        if type(precision_mode) is not int or precision_mode not in {-1, 0, 1}:
+            raise ValueError("Unsupported STEP precision mode")
+        settings = STEP_EXPORT_SETTINGS | {"precision_mode": precision_mode}
+        compound.exportStep(str(path), **settings)
         return path.read_bytes()
 
 
@@ -141,7 +150,7 @@ def _count_solids(step_bytes: bytes) -> int:
         return len(workplane.solids().vals())
 
 
-def generate_step_bytes(pdl_data: dict) -> bytes:
+def generate_step_bytes(pdl_data: dict, *, precision_mode: int = 0) -> bytes:
     """
 
     @brief Deterministically generate a normalized STEP artifact.
@@ -155,7 +164,7 @@ def generate_step_bytes(pdl_data: dict) -> bytes:
 
     """
     solids = build_solids(pdl_data)
-    raw = _export_raw_step(solids)
+    raw = _export_raw_step(solids, precision_mode=precision_mode)
     normalized = _normalize_step_bytes(raw)
     measured_count = _count_solids(normalized)
     if measured_count != len(solids):

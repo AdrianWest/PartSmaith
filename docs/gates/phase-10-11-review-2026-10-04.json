@@ -1,0 +1,156 @@
+{
+  "specification": "0.9.6",
+  "date": "2026-10-04",
+  "phase_10": "UNSTABLE",
+  "phase_11": "REQUIRES_CHANGES",
+  "all_gates_met": false,
+  "scope": "Local Windows AMD64; no remote CI or other operating systems verified.",
+  "report": "docs/gates/phase-10-11-review-2026-10-04.md",
+  "production_code_changed_by_review": false,
+  "findings": [
+    {
+      "priority": "P2",
+      "location": "src/partsmith/ai/contracts.py:329",
+      "problem": "Missing full order number accepted as INFERRED without ambiguity."
+    },
+    {
+      "priority": "P2",
+      "location": "src/partsmith/ai/contracts.py:210",
+      "related_location": "src/partsmith/ai/openai.py:220",
+      "problem": "Exact decimal source value rounded and immutable request binding changed during provider revalidation."
+    },
+    {
+      "priority": "P2",
+      "location": "src/partsmith/extraction/document.py:320",
+      "problem": "Combined installed-wheel corpus run terminated with a native PyMuPDF access violation; verification is unstable."
+    }
+  ],
+  "tests": {
+    "source": {
+      "path": "docs/gates/phase-10-11-review-2026-10-04-source-results.xml",
+      "tests": 638,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 638,
+      "sha256": "8971416682830eccd6bf628383ba7dc9d291ef5c45ee21661202e23d2e4de17b"
+    },
+    "wheel": {
+      "path": "docs/gates/phase-10-11-review-2026-10-04-wheel-results.xml",
+      "tests": 108,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 108,
+      "sha256": "4e7b6d93d453e3e74cfc80aae27bdc9e06990905a303999c8c2636421720e3b3"
+    },
+    "wheel_extraction": {
+      "path": "docs/gates/phase-10-11-review-2026-10-04-wheel_extraction-results.xml",
+      "tests": 64,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 64,
+      "sha256": "bc2f0a9ffdc669a0ff4a380db55a78cf74c36ef469eb11fff2a8f479a7d05299"
+    },
+    "live": {
+      "path": "docs/gates/phase-10-11-review-2026-10-04-live-results.xml",
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 3,
+      "sha256": "099687f96d3be54de02118d0f5be2e33472663548ea7eacf1b63f46ffd8cf52d"
+    },
+    "probes": {
+      "path": "docs/gates/phase-10-11-review-2026-10-04-probes-results.xml",
+      "tests": 2,
+      "failures": 2,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 0,
+      "sha256": "1fc0ed0a7841003894f17e1593dace425c4a3886ee1a886927c601f2ed8a61f3"
+    }
+  },
+  "checks": {
+    "lint": "PASS",
+    "format": "PASS",
+    "pip_check": "PASS",
+    "git_diff_check": "PASS",
+    "source_matches_phase11_wheel": {
+      "status": "PASS",
+      "files": 75
+    },
+    "phase10_ocr_runtime_hashes": "PASS",
+    "phase10_cli_sample_hash": "PASS",
+    "credential_export_scan": {
+      "status": "PASS",
+      "files_checked": 18,
+      "wheel_checked": true,
+      "credential_value_retained": false
+    }
+  },
+  "artifact_manifests": {
+    "6": {
+      "status": "PASS",
+      "entries_checked": 29,
+      "manifest_sha256": "6dae9ec13715086b3830ab91aff80ebcd2d8796f896c2ee004757e4fe72930bb"
+    },
+    "8": {
+      "status": "PASS",
+      "entries_checked": 50,
+      "manifest_sha256": "b9dbf03e901be594af208c34cba0e3f3358c0dcd42840c321b35c07328c5b163"
+    },
+    "9": {
+      "status": "PASS",
+      "entries_checked": 174,
+      "manifest_sha256": "7be29ab4e555cb8aa0e6dfda01e910145cfc164cd747bd3bf3902cca3dd8845d"
+    },
+    "9.5": {
+      "status": "PASS",
+      "entries_checked": 30,
+      "manifest_sha256": "2ee20f89ef1fae612d96ea1018b675da470ca140711e6e47e20b500488840d4d"
+    },
+    "10": {
+      "status": "PASS",
+      "entries_checked": 58,
+      "manifest_sha256": "27ea913d0384484fa99d225a702e59f83bff1efa263eba48d87ad2fa2d7079bd"
+    },
+    "11": {
+      "status": "PASS",
+      "entries_checked": 36,
+      "manifest_sha256": "f7761aef45c7507abaa22672abd803fd9f6bef3ff5d744cbe69c0bdc66b7a15d"
+    }
+  },
+  "review_probe": {
+    "path": "scripts/verify_phase11_review.py",
+    "sha256": "9d0b0055896af3facdd444a09a2157d559dc33f4d68358205f8d3857db64f2f6"
+  },
+  "wheel": {
+    "path": ".tools/phase11/dist/partsmith-0.1.0-py3-none-any.whl",
+    "sha256": "8f5d46a1e15b590cef970d598391542aec6453e44ce5052f54f2cc58c21c5cf9"
+  },
+  "fresh_live_outputs": {
+    ".tools/review1011/live/missing-order.json": "4c77dbb561995f04f8925f218a149fb9bbb67bb831738fc69d363ddad1fdd9bf",
+    ".tools/review1011/live/real-ordering.json": "ce529286b39a38fdd93013bf5146c15a19a2b61063ddd93d0ae611f2388462e6",
+    ".tools/review1011/live/synthetic-injection.json": "b9087fb191a778a4b6f1cf2a0e420d4421c569f4f92afb10165f1bee22e9dd0e"
+  },
+  "historical_live_output_hashes": {
+    ".tools/phase11/live/missing-order.json": "785a9df0481df71c1ad9eae5d2f97754b6d0f2026a7a24e30d3ae4a57338e40d",
+    ".tools/phase11/live/real-ordering.json": "6afe8e81edda7a682a0d64e336572f09c82f7ac05a1b9df49734672e2b206434",
+    ".tools/phase11/live/synthetic-injection.json": "207a788ce9195967294d17c7e253948ce8721d0cebd24d681e00d3b458456478"
+  },
+  "live_output_note": "The existing live runner regenerated its ignored output files. Fresh results are copied under .tools/review1011/live and have their own identities; they are not the historical recorded output files.",
+  "excluded_attempt": {
+    "path": ".tools/review1011/source-results.xml",
+    "reason": "Missing pytest temporary-directory parent; corrected rerun used for acceptance."
+  },
+  "failed_combined_wheel_attempt": {
+    "exit_code": 1,
+    "complete_junit_available": false,
+    "record": ".tools/review1011/wheel-combined-crash.txt",
+    "record_kind": "Transcribed key frames from tool output; not raw captured stderr.",
+    "sha256": "2447cf47f269b8f6a49bc3f923e881e9ab0078adb4658c838dcf4e2b2a91466b"
+  },
+  "report_sha256": "1445dbcc0702c27e61db8c7b98d015b5ed744ba996338ff114af54fffc05b0fc"
+}

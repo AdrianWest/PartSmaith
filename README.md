@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="resources/PartSmail-Banner.png" alt="PartSmith — AI-Driven Component Builder" width="100%">
+  <img src="resources/PartSmith-Banner.png" alt="PartSmith — AI-Driven Component Builder" width="100%">
 </p>
 
 <p align="center">
@@ -89,14 +89,70 @@ and value-free error paths while each domain owns its validation policy.
 `partsmith.persistence.database` provides common UTC audit timestamps and
 rollback-safe SQLite savepoints while callers retain transaction ownership.
 
-The current specification is **v0.9.6**. The recorded IR 1.2 Phase 2 PASS covers
-the implementation against v0.9.5 and remains the prerequisite for Phase 3.
-The revised specification assigns new dependency projections, review services,
-portable rebuild bundles, and installation behavior to later phases; these
-features are not yet implemented.
+The current specification is **v0.9.6**. Phases 0–9 have recorded gate evidence.
+The deterministic release pipeline includes scoped dependency projections,
+immutable input review, native KiCad validation, exact-byte release approval,
+and history-complete revision/inventory import and export. Revision bundles
+remain `RETRIEVAL_REQUIRED`. Phase 9 adds separate verified `OFFLINE_COMPLETE`
+replay bundles, network-disabled multi-revision rebuild tests, clean-build hash
+comparisons, and selective reuse with scoped invalidation. The Phase 9 gate
+passes locally on Windows AMD64; shared-library installation remains Phase 13
+work. See the [Phase 9 gate report](docs/gates/phase-9.md) and
+[Phase 8 revalidation](docs/gates/phase-8-revalidation.md).
 
 AI-assisted document interpretation is intentionally later in the plan. The
 first end-to-end component path must be deterministic and AI-free.
+
+## Setup GUI (Phase 9.5)
+
+The optional wxPython setup window displays the PartSmith banner across the
+top, secure **Set AI API Key** entry, a local PDF chooser, **Required Part
+Number**, **Start**, **Cancel**, and a live log panel. Enter the complete
+manufacturer order number, including package suffixes: one datasheet can cover
+multiple package styles. The number is passed intact to the processing service.
+Start performs local PDF extraction and reports the exact ordering-table package
+mapping or a blocked unrecognized/ambiguous mapping. The optional OpenAI
+checkbox adds unreviewed Phase 11 interpretation candidates. Phase 12 human
+review/application remains required before a component can be built.
+
+With the existing Python 3.12 environment, install the optional Windows runtime:
+
+```powershell
+.\.venv\Scripts\python.exe -m pip install -r requirements-gui-windows.txt
+.\.venv\Scripts\python.exe -m pip install -e ".[gui]" --no-deps
+.\.venv\Scripts\python.exe scripts\partsmith_gui.py
+```
+
+After installation, `python -m partsmith.gui` or `partsmith-gui` also launches
+the window. All launch paths resolve the packaged banner independently of the
+working directory. Keys are saved in the operating system's secure credential
+store (Windows Credential Manager on the verified Windows runtime). The key
+dialog always opens blank, masks new input, saves on **OK**, and preserves the
+existing key on **Cancel**. Saved keys are never displayed or written to logs.
+
+For KiCad 10.0.6 on Windows, install the launch-only action plugin:
+
+```powershell
+.\.venv\Scripts\python.exe -m partsmith.gui.install_kicad --plugin-dir "$env:APPDATA\kicad\10.0\scripting\plugins"
+```
+
+Restart the PCB Editor, then select **Tools → External Plugins → PartSmith
+Setup**. If your KiCad uses another configuration directory, use the scripting
+plugin directory reported by the PCB Editor's Action Plugins preferences.
+The entry starts PartSmith's Python 3.12 environment as a separate process;
+it imports no PartSmith CAD dependencies into KiCad's embedded Python.
+Reinstall the entry if the PartSmith environment moves. The installed
+`launcher.json` contains only the interpreter path. The installer also works
+from a wheel using `partsmith-kicad-setup --plugin-dir <directory>`.
+
+The launch entry follows KiCad's
+[documented action-plugin interface](https://dev-docs.kicad.org/en/apis-and-binding/pcbnew/index.html);
+broader IPC integration remains Phase 13. This desktop runtime is verified on
+Windows AMD64; Linux/macOS GUI installation and native keyring availability
+have not been verified. For desktop integration checks, run
+`python -m pytest scripts/verify_gui.py -v`; the ordinary test suite also checks
+the processing and launch contracts without needing wxPython or a desktop.
+See [Phase 9.5 verification](docs/gates/phase-9.5.md) for evidence and scope.
 
 ## For contributors
 
@@ -114,6 +170,14 @@ python -m pip install -e . --no-deps
 Phase 8 and later release validation requires native KiCad 10.0.6. Internal
 PartSmith syntax parsers cannot replace `kicad-cli`; `partsmith doctor` fails
 when the pinned target runtime is missing or incompatible.
+
+PartSmith uses its own Python 3.12.x environment and invokes KiCad through the
+native CLI. The installed Windows KiCad 10.0.6 bundles Python 3.11.5; its
+embedded interpreter is separate from PartSmith's supported Python baseline.
+Release snapshots record the actual Python patch/build and executable hash,
+the pinned KiCad CLI version/hash, and the verified CadQuery/OCP/OCCT tuple.
+The packaged runtime lock contains Windows/Linux CAD wheel hashes and file
+identities; release generation rejects mismatched installed runtime bytes.
 
 Run the local quality checks before contributing:
 
@@ -201,8 +265,9 @@ synthetic, not production approvals. Production PDL contexts, affine transforms,
 CAD generation, artifact validators, the build orchestrator, and approval services
 remain in their specified later phases.
 Specification v0.9.6 introduces snapshot profile 1.2 for configuration scoped
-to each generator and validation step. Its implementation and verification are
-assigned to Phases 4–6 and 8–9; the current helpers still produce profile 1.1.
+to each generator and validation step. The Phase 8 pipeline freezes complete
+profile 1.2 release snapshots before generation. The original profile 1.1
+helpers and golden hashes remain supported.
 
 Run `python -m pytest tests/test_ir.py tests/test_ir_v11.py tests/test_ir_v12.py`
 for all IR versions.
@@ -231,6 +296,115 @@ Inspect the installed catalog with `partsmith pdl list`,
 `partsmith pdl inspect synthetic-0402`, or
 `partsmith pdl validate synthetic-0402`. See the
 [Phase 3 gate evidence](docs/gates/phase-3.md).
+
+## AI interpretation (Phase 11)
+
+PartSmith includes one released provider adapter: OpenAI Responses API using
+the pinned `gpt-4.1-mini-2025-04-14` model. It sends selected extracted Evidence
+text and provenance, with local OCR and `store=false`. OpenAI account retention
+and abuse monitoring terms still apply; the user pays API charges directly.
+It sends no PDF files, page images, local paths, or tools.
+
+Set a customer key through **Set AI API Key** in the GUI (native OS credential
+storage), or set `OPENAI_API_KEY` securely in the process environment. Keys are
+never command arguments, project settings, candidate exports, logs, or hashes.
+The GUI defaults to local extraction. Its explicit OpenAI checkbox enables
+interpretation; candidates remain in the window's job state for later review.
+
+```powershell
+partsmith extract test_data_sheets/LM2575-D.PDF --pages 24 --dpi 100 --output extraction.json
+partsmith ai analyze extraction.json --task identify_package --part-number LM2575TV-ADJG --output candidates.json
+```
+
+Use `--evidence-ids` to restrict records, and `--targets` for IR value tasks.
+Supported narrow tasks cover pins, packages, mechanical/land-pattern text,
+symbol properties, conflict/ambiguity explanations, and English/German/Chinese
+translation. Drawing tasks use supplied text/OCR; image-only interpretation is
+not implemented. `--local` sends nothing and reports AI unavailable.
+
+Results contain typed, source-linked candidates, exact source quotations,
+provider/model/request metadata, input/output hashes, and conflicts or
+ambiguities. The adapter rejects unrequested targets, fabricated references,
+approval fields, invalid value types, and credential material. Confidence is
+advisory; candidates cannot approve an IR or generate production artifacts.
+Phase 12 review/application remains required. `RecordedProvider` reuses a
+validated immutable `AIResult` offline, retaining its original audit envelope
+and rejecting changed request or adapter bindings.
+
+Offline tests run with the normal suite. The opt-in live gate loads only
+`BFT_TOKEN` from repository `.env` for development testing (AI-005); the app
+does not load that file. Missing credentials fail the live gate clearly.
+
+```powershell
+.tools/python/python.exe -c "import sys; sys.path[:0]=['src','.']; import pytest; raise SystemExit(pytest.main(['scripts/verify_ai_live.py','-q']))"
+```
+
+See [Phase 11 gate evidence](docs/gates/phase-11.md) and the packaged
+[adapter manifest](src/partsmith/ai/adapter-manifest-1.0.json).
+
+## Document extraction (Phase 10)
+
+The GUI and CLI run PDF extraction in a separate worker process. A native
+parser failure reports an extraction error without closing the application.
+Progress and cancellation cross the process boundary; cancellation reaps the
+worker. Windows crash dialogs are disabled only inside that worker. Run native
+PDF/KiCad checks from a normal desktop shell with access to installed libraries
+and configuration files.
+
+```powershell
+partsmith extract test_data_sheets/LM2575-D.PDF --pages 24 --dpi 200 --part-number LM2575TV-ADJG --output evidence.json
+partsmith extract scanned.pdf --dpi 300 --languages chi_sim eng --ocr-layout 6 --output evidence.json
+```
+
+`extract_document()` snapshots and hashes the original PDF, validates one-based
+page selection, and produces IR 1.2-compatible, unreviewed Evidence records for
+native text, tables, vector diagrams, images, and local OCR. Its JSON result
+retains table cells, word boxes/confidence, language candidates, and embedded
+content-addressed PNGs. Engineering quantities stay unknown; no Component IR,
+symbol, footprint, or STEP is generated. Package candidates are resolved only
+from exact full order numbers in recognized table columns; unrecognized and
+ambiguous mappings remain blocked.
+
+Install the pins in `requirements-ci.txt` and `requirements-extraction.txt`.
+OCR also needs
+Tesseract 5 with `eng`, `deu`, and `chi_sim` trained data. On Windows the adapter
+checks `C:/Program Files/Tesseract-OCR/tesseract.exe`; on other systems use PATH,
+or set `PARTSMITH_TESSERACT`. `TESSDATA_PREFIX` can select a model directory.
+For a short text block, choose `--ocr-layout 6`; default mode 3 analyzes a full
+page and mode 11 extracts sparse text. Use 300 DPI for the multilingual OCR
+reference fixtures. Language candidates use script/keyword hints and may remain
+uncertain. Explicit translations retain original text and provider/model/time
+provenance; this phase does not call a translation provider.
+
+The versioned `mvp-1@1.1` extraction profile pins English, German, and Simplified
+Chinese. Earlier deterministic package fixtures retain `mvp-1@1.0`. Canonical
+source regions use physical PDF points in the original unrotated MediaBox;
+render mappings preserve crop, rotation, UserUnit, DPI, and pixel-edge offsets.
+Image/vector objects extending beyond a page retain their original object bounds
+alongside the visible source region. PDFs that open with an empty password are
+supported; password-required PDFs fail explicitly. Ingestion permits up to
+100 MiB and 5,000 pages, with a 40 megapixel limit per rendered page. Use
+`--pages` to select relevant pages from long manuals.
+Scanned ruled grids can become OCR table candidates; borderless/merged/damaged
+grids remain image/OCR candidates for later interpretation. Non-affine dewarping
+is unsupported.
+
+The supported PDF runtime uses PDFium via pypdfium2 5.14.0 for rendering and
+pdfplumber 0.11.10/pdfminer.six 20260107 for native text, graphics and tables.
+Production extraction does not import MuPDF. Text-containing graphics bounds retain
+open outer parameter/unit columns; cell text, merged-cell nulls, source
+coordinates and detection settings are preserved. Detector errors fail
+extraction explicitly.
+
+See [Phase 10 parser correction and revalidation](docs/gates/phase-10-parser-fix-2026-10-04.md)
+and [the original Phase 10 evidence](docs/gates/phase-10.md). Run
+`python -m pytest tests/test_extraction.py` for the corpus and targeted fixtures.
+After building and installing the wheel, run
+`python scripts/verify_pdf_stability.py --rounds 3 --output pdf-stability-results`.
+Add `--desktop` to include native wx and credential checks in a Windows desktop
+session with the GUI dependencies installed. Each round retains its JUnit
+report and raw output; a failure stops the gate without retrying. Use a fresh
+output directory for each invocation.
 
 ## Specification
 

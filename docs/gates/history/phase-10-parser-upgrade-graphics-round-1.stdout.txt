@@ -1,0 +1,22 @@
+{"package": "C:\\GIT_HUB\\PartSmaith\\.tools\\python\\Lib\\site-packages\\partsmith", "pymupdf": "1.28.2", "pdfplumber": "0.11.10", "pdfminer": "20260107"}
+============================= test session starts =============================
+platform win32 -- Python 3.12.10, pytest-8.4.2, pluggy-1.6.0 -- C:\GIT_HUB\PartSmaith\.tools\python\python.exe
+cachedir: .tools\pdf-stability\release-wheel\cache
+rootdir: C:\GIT_HUB\PartSmaith
+configfile: pyproject.toml
+collecting ... collected 193 items
+
+tests/test_extraction.py::test_supplied_corpus_ingestion_and_selected_pages[150crz.pdf] PASSED [  0%]
+tests/test_extraction.py::test_supplied_corpus_ingestion_and_selected_pages[190rtl.pdf] PASSED [  1%]
+tests/test_extraction.py::test_supplied_corpus_ingestion_and_selected_pages[APA102-2020_SMD_LED.pdf] PASSED [  1%]
+tests/test_extraction.py::test_supplied_corpus_ingestion_and_selected_pages[AVR32LA14-20-28-32-DataSheet-DS40002684.pdf] PASSED [  2%]
+tests/test_extraction.py::test_supplied_corpus_ingestion_and_selected_pages[Bourns_07-15-2026_SRP2510PA.pdf] PASSED [  2%]
+tests/test_extraction.py::test_supplied_corpus_ingestion_and_selected_pages[ds180_7Series_Overview.pdf] PASSED [  3%]
+tests/test_extraction.py::test_supplied_corpus_ingestion_and_selected_pages[DS_16911_RGB_LED_Clear_Lens_Common_Cathode_5mm.pdf] PASSED [  3%]
+tests/test_extraction.py::test_supplied_corpus_ingestion_and_selected_pages[FAN7380-D.PDF] PASSED [  4%]
+tests/test_extraction.py::test_supplied_corpus_ingestion_and_selected_pages[FSL336LR-D.PDF] PASSED [  4%]
+tests/test_extraction.py::test_supplied_corpus_ingestion_and_selected_pages[infineon_iaucn04s7n010g_datasheet_en.pdf] PASSED [  5%]
+tests/test_extraction.py::test_supplied_corpus_ingestion_and_selected_pages[ISL9V5036S3ST-D.PDF] PASSED [  5%]
+tests/test_extraction.py::test_supplied_corpus_ingestion_and_selected_pages[KA324-D.pdf] PASSED [  6%]
+tests/test_extraction.py::test_supplied_corpus_ingestion_and_selected_pages[KEM_T2091_A700-A720.pdf] PASSED [  6%]
+tests/test_extraction.py::test_supplied_corpus_ingestion_and_selected_pages[LM2575-D.PDF] 
