@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="resources/PartSmail-Banner.png" alt="PartSmith — AI-Driven Component Builder" width="100%">
+  <img src="resources/PartSmith-Banner.png" alt="PartSmith — AI-Driven Component Builder" width="100%">
 </p>
 
 <p align="center">
@@ -105,7 +105,7 @@ first end-to-end component path must be deterministic and AI-free.
 
 ## Setup GUI (Phase 9.5)
 
-The optional wxPython setup window displays the PartSmail banner across the
+The optional wxPython setup window displays the PartSmith banner across the
 top, secure **Set AI API Key** entry, a local PDF chooser, **Required Part
 Number**, **Start**, **Cancel**, and a live log panel. Enter the complete
 manufacturer order number, including package suffixes: one datasheet can cover

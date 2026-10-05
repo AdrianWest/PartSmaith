@@ -439,13 +439,83 @@ additional providers are optional and must pass the same contract suite.
 
 ## Phase 12 — Human review and application UI
 
+Extend the Phase 9.5 setup and processing GUI as the main application window
+and central scripting-log surface. Open the section 12 viewer as a separate
+popup owned by that GUI.
+
 1. Display evidence.
 2. Display conflicts.
 3. Display IR.
 4. Display generated symbol/footprint.
-5. Display 3D placement.
+5. Display 3D placement in the separate section 12 viewer window.
 6. Support explicit overrides.
 7. Connect the UI to the existing Phase 8 review/approval states and services.
+8. Use `resources/PartSmith-Banner3.png` across the full width of the section 12
+   viewer popup under the following window, packaging, and resize contract.
+9. Route all Phase 12 scripting logs to the existing read-only, multiline,
+   scrollable log box in the Phase 9.5 GUI under the following logging contract.
+
+### Phase 12 viewer window and banner
+
+- An **Open 3D Placement Viewer** action in the main GUI shall open section
+  12's viewer in a separate, resizable, modeless wx window owned by the Phase
+  9.5 GUI. The main GUI remains usable while the popup is open. The popup
+  has its own client dimensions and resize handling; closing it closes only
+  the viewer. This banner requirement applies to the viewer popup; the Phase
+  9.5 setup window retains its existing banner requirement.
+- Display the complete banner at the top of the viewer popup at client
+  coordinates `(0, 0)`, above its placement controls and viewer content. Its
+  displayed width shall equal the popup's full **client-area width**, excluding
+  operating-system borders, with no left/right padding or margins. Keep the
+  banner outside split panes and scrollable content so scrolling or adjusting
+  the viewer layout does not narrow or move it.
+- Preserve the source image's aspect ratio and show the entire image without
+  cropping, tiling, or stretching either axis independently. For positive
+  client width `W` and source dimensions `Iw` by `Ih`, set the displayed width
+  to `W` and height to `max(1, round(W * Ih / Iw))`. Here `W` is the popup's
+  client width. The source asset is currently 2057 by 765 pixels; derive
+  dimensions from the loaded image rather than hard-coding them. Resample from
+  the original image with high-quality scaling, including when enlarging it.
+- Recompute banner dimensions on initial layout, popup resize, maximize,
+  restore, and display/DPI changes. Update layout and painting on the wx GUI
+  thread; use consistent client-coordinate units for width and height and
+  account for the display scale when creating the bitmap. Ignore transient
+  zero-size events during minimization and restore the correct dimensions
+  when the window becomes visible. Resize the content below the banner to
+  use the remaining height and provide scrolling where needed to keep review
+  controls accessible at the supported minimum window size.
+- Include the exact `PartSmith-Banner3.png` asset in source distributions and
+  installed wheels as the `partsmith.gui` package resource
+  `partsmith/gui/PartSmith-Banner3.png`, and carry it into the production
+  application bundle in Phase 14. Load installed assets through package
+  resources; a source-checkout launch may resolve `resources/PartSmith-Banner3.png`
+  relative to the application files. Both the standalone and KiCad launch
+  paths shall work from an unrelated current working directory, without
+  requiring a repository checkout or downloading the image. A missing or
+  unreadable asset shall produce a clear viewer-open error identifying the
+  resource and leave the main GUI usable; do not silently substitute an older
+  banner.
+
+### Phase 12 scripting logs
+
+- Use the Phase 9.5 GUI's existing log box as the shared destination for all
+  scripts and services invoked by Phase 12 actions, whether started from the
+  main GUI or the viewer popup. This includes extraction/AI processing,
+  generation, validation, review/override operations, and placement checks.
+  Connect every worker and managed subprocess to the same logging sink.
+- Stream progress, informational messages, warnings, errors, exceptions,
+  completion, and cancellation/cleanup messages while work is running.
+  Capture both subprocess stdout and stderr incrementally, including output
+  produced before a failure or nonzero exit; report the resulting exit status.
+  Identify the originating action or worker so popup activity is recognizable
+  in the main log box. Keep the existing log history when opening, closing,
+  or reopening the viewer.
+- Apply the Phase 9.5 credential-redaction rules before displaying or
+  persisting messages from any source, including captured subprocess output
+  and exceptions. Dispatch log updates onto the wx GUI thread and keep work
+  and pipe reading outside that thread so both windows remain responsive.
+  A viewer-open failure, including a missing/unreadable banner, shall also be
+  reported in the Phase 9.5 log box.
 
 **Phase 12 gate (blocking):** End-to-end UI tests demonstrate that a user
 can inspect evidence, conflicts, IR, symbol, footprint, 3D placement,
@@ -454,6 +524,27 @@ deterministic build.
 Tests start with unreviewed evidence, approve inputs before generation, and
 approve final outputs separately. Pin edits exercise section 121.7's supported
 reorder, renumber, and removal operations without retargeting historical evidence.
+
+Verify that source distributions and installed wheels contain Banner3 with
+bytes matching the repository asset, then launch the installed GUI through
+both supported launch paths from outside the repository and open the separate
+viewer popup. Automated layout checks and recorded visual inspection shall
+cover initial display, minimum supported size, enlargement, repeated resizing,
+maximize/restore, closing/reopening the popup, and supported display/DPI changes.
+The banner remains at `(0, 0)`, spans the popup's full client width, shows the
+complete image, and has proportional height within one client pixel; placement
+controls remain accessible and both windows remain responsive. Closing the
+popup leaves the main GUI running. Negative resource checks verify the reported
+missing/unreadable-banner viewer-open error and continued main-GUI usability.
+Phase 14 shall repeat the packaging and launch checks against the production
+application bundle.
+
+Log-routing tests shall start work from both the main GUI and viewer popup and
+demonstrate live messages in the Phase 9.5 log box before completion. Cover
+service callbacks, subprocess stdout/stderr, failure/nonzero exit, cancellation
+and cleanup, and viewer-open errors. Verify action/source identification,
+preserved log history after popup close/reopen, responsive controls, and dummy
+credential redaction before display or persistence.
 
 ## Phase 13 — KiCad integration
 
@@ -1675,6 +1766,19 @@ Validator**. Its purpose is not merely to display a model; it is an
 engineering validation interface for determining whether the
 independently generated 3D model correctly belongs on the independently
 generated footprint.
+
+## Viewer window and banner
+
+The viewer shall open as a separate, resizable, modeless popup from the Phase
+9.5 GUI extended in Phase 12, with `resources/PartSmith-Banner3.png` across the
+popup's full client width. The
+[Phase 12 viewer-window contract](#phase-12-viewer-window-and-banner) defines
+the window behavior and banner placement, aspect ratio, packaging, resizing,
+and acceptance checks. Placement controls and the 3D viewport occupy the
+content area below the banner.
+
+All viewer-triggered scripting logs shall stream to the Phase 9.5 GUI's log
+box under the [Phase 12 scripting-log contract](#phase-12-scripting-logs).
 
 ## Viewer capabilities
 

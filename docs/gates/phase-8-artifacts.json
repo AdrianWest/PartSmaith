@@ -39,8 +39,8 @@
     "availability": "Local generated output"
   },
   "sha256": {
-    ".github/workflows/ci.yml": "600c3d6edaed61160b335360652b54c59584237d8ed3ca0cb6345bb5036604b4",
-    "README.md": "0db8d7c8dbd1ed50afa0c6eab5d947ff6d33c7e8012c5a4b2670887224dc98ff",
+    ".github/workflows/ci.yml": "5ba41fb430b6fcfc40d244af60b1158ebdd5f4d2ca0f3f889b7d82de9250376b",
+    "README.md": "9bb7c24aec37689408f3db31802f52f56826459e3c656ca04cc6828d2f2749bc",
     "resources/BFT_PartSmith_Implementation_Spec.md": "b92bb9f7ff1b6e871f8305244134978c2c36f83dde60d49edd5ac30bac362d4a",
     "scripts/setup_kicad.ps1": "bf2e4d0539a8bdc815707408cda70af291193f74da49c1789b48b6bf062c731b",
     "schemas/phase8-contracts-1.0.schema.json": "05f33abea360a4920eca783eca2b553d4b6e6c3496e10d3fda122cc8f1d92893",
@@ -73,7 +73,7 @@
     "src/partsmith/persistence/records.py": "d34b9f6481c436aeb97327738cf568b4b05ae0fef1bf6996e917debe5fa87142",
     "src/partsmith/release/schema.py": "cb3768f4d904318a0333dc6c9c3e51f28c14d5052cb5fbb1d49cee666ecbf6dd",
     "tests/test_persistence.py": "881336e7dcb53bcf856a3107fef29b1d81d549166f081989ef539c47d06d7045",
-    "pyproject.toml": "fcbba6ea527c5503128c1c07284398339b5a233c72702c588105af91e28fac5f",
+    "pyproject.toml": "ede343525dbd0f6f2d40a06dc7e1e8681af0284871182d0dd9862ab91cf28426",
     "requirements-ci.txt": "df99cf3dc1ac9c11e29b7303972fb7368517a435df3c9c39e7afdb080ca29ccb",
     "src/partsmith/ir/projection.py": "b7de58f69e667496564a96ccf3c68c73e28921134f5aebb9dc103c9788730db6",
     "src/partsmith/threed/step_backend.py": "77a8fd6663695742b08f5490fa04cfb9d92019dcd7fda2a3a67a4ed5ef658ff5",
@@ -215,5 +215,33 @@
       "src/partsmith/cli.py",
       "pyproject.toml"
     ]
+  },
+  "banner_rename_input_refresh": {
+    "date": "2026-10-04",
+    "reason": "Packaging, GUI loading and README references now match the tracked PartSmith-Banner.png rename; CI verifies the installed banner bytes.",
+    "scope": "Changed packaging/README/CI inputs only. Historical gate identities retain their original scope.",
+    "changed_inputs": {
+      "pyproject.toml": {
+        "before": "fcbba6ea527c5503128c1c07284398339b5a233c72702c588105af91e28fac5f",
+        "after": "ede343525dbd0f6f2d40a06dc7e1e8681af0284871182d0dd9862ab91cf28426"
+      },
+      "README.md": {
+        "before": "0db8d7c8dbd1ed50afa0c6eab5d947ff6d33c7e8012c5a4b2670887224dc98ff",
+        "after": "9bb7c24aec37689408f3db31802f52f56826459e3c656ca04cc6828d2f2749bc"
+      },
+      ".github/workflows/ci.yml": {
+        "before": "600c3d6edaed61160b335360652b54c59584237d8ed3ca0cb6345bb5036604b4",
+        "after": "5ba41fb430b6fcfc40d244af60b1158ebdd5f4d2ca0f3f889b7d82de9250376b"
+      }
+    },
+    "validation": {
+      "python": "3.12.10",
+      "platform": "Windows AMD64",
+      "editable_install": "PASS",
+      "wheel_build_and_banner_loading": "PASS",
+      "gui_service_tests": 14,
+      "manifest_verifier_tests": 4,
+      "lint_and_format": "PASS"
+    }
   }
 }

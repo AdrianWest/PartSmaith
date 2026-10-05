@@ -37,7 +37,7 @@ partsmith-kicad-setup = "partsmith.gui.install_kicad:main"
 packages = ["src/partsmith"]
 
 [tool.hatch.build.targets.wheel.force-include]
-"resources/PartSmail-Banner.png" = "partsmith/gui/PartSmail-Banner.png"
+"resources/PartSmith-Banner.png" = "partsmith/gui/PartSmith-Banner.png"
 "integrations/kicad/partsmith_setup" = "partsmith/gui/kicad_plugin"
 "migrations/001_initial.sql" = "partsmith/persistence/001_initial.sql"
 "migrations/002_phase8.sql" = "partsmith/persistence/002_phase8.sql"

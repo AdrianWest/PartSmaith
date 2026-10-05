@@ -17,13 +17,13 @@ from .processing import (
 
 
 def banner_bytes():
-    resource = files("partsmith.gui").joinpath("PartSmail-Banner.png")
+    resource = files("partsmith.gui").joinpath("PartSmith-Banner.png")
     if resource.is_file():
         return resource.read_bytes()
     return (
         Path(__file__).resolve().parents[3]
         / "resources"
-        / "PartSmail-Banner.png"
+        / "PartSmith-Banner.png"
     ).read_bytes()
 
 
