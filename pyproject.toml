@@ -21,7 +21,9 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-gui = ["wxPython==4.3.1", "keyring==25.7.0"]
+gui = [
+  "wxPython==4.3.1", "keyring==25.7.0", "Pillow==12.3.0", "numpy==2.5.3",
+]
 dev = [
   "PyMuPDF==1.28.2",
   "pytest==8.4.2",
@@ -36,8 +38,19 @@ partsmith-kicad-setup = "partsmith.gui.install_kicad:main"
 [tool.hatch.build.targets.wheel]
 packages = ["src/partsmith"]
 
+[tool.hatch.build.targets.sdist]
+# Gate receipts hash distributions and remain in the repository.
+exclude = ["docs/gates"]
+
+[tool.hatch.build.targets.sdist.force-include]
+"resources/PartSmith-Banner3.png" = "resources/PartSmith-Banner3.png"
+
 [tool.hatch.build.targets.wheel.force-include]
 "resources/PartSmith-Banner.png" = "partsmith/gui/PartSmith-Banner.png"
+"resources/PartSmith-Banner3.png" = "partsmith/gui/PartSmith-Banner3.png"
+"fixtures/threed/expected/0402.step" = "partsmith/gui/prototype/0402.step"
+"fixtures/footprint/expected/0402.kicad_mod" = "partsmith/gui/prototype/0402.kicad_mod"
+"fixtures/viewer/0402-placement.json" = "partsmith/gui/prototype/0402-placement.json"
 "integrations/kicad/partsmith_setup" = "partsmith/gui/kicad_plugin"
 "migrations/001_initial.sql" = "partsmith/persistence/001_initial.sql"
 "migrations/002_phase8.sql" = "partsmith/persistence/002_phase8.sql"

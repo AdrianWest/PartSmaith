@@ -31,11 +31,44 @@
   },
   "packaged_symbol_import_verified": true,
   "sha256": {
-    "src/partsmith/symbol/__init__.py": "93a6d8d28ba5242aaa8d7e7a4c31332a35c4e491e51112fd674d374e85c768b3",
-    "src/partsmith/symbol/model.py": "fde012713b7d0f81e064f5003079ae29f755a6e67e3f44e377bb08fff216c772",
-    "tests/test_symbol.py": "d80700929674ffd18d7820d8e98082ac681338fc868eaf83ba6f677dfbfdae1f",
-    "fixtures/symbol/expected/0402.kicad_sym": "25e1017ac38814bf025ae5dab90761beb10dd09b8b3e93d3e876bfc5d2fd6d31",
+    "src/partsmith/symbol/__init__.py": "f0205dde5c013c32318edb337e0ac180812fe1f2e780599f610bcb5755d24c46",
+    "src/partsmith/symbol/model.py": "d6bfc27fcb1cf6c61e926153b4e20eaaca08e0a716433b5b96684d3196da9ac3",
+    "tests/test_symbol.py": "2abd72dbc9e27620af53773376bb31375bc67e4d512c6bb1c89d84f0ca7abd85",
+    "fixtures/symbol/expected/0402.kicad_sym": "1e68b04c019d5ad5cd20eb03c3ac4d66b9594e1eb6278c80122c4b60670a2b6e",
     "docs/gates/phase-4-tests.xml": "5c8f60f60d14972a7280e16bc8a9bc4fe567569ada59b24faeabe59474fec4b2",
     "docs/gates/phase-4-wheel-tests.xml": "11d2a6f428232f3198acac6bd73bdca6389ab3a42fc2eb136a0d31a1ee731da7"
+  },
+  "phase_12_input_refresh": {
+    "date": "2026-10-05",
+    "reason": "Full Phase 12 implementation, validation and shared-input closeout.",
+    "scope": "Current input-map identities revalidated by the final source/wheel suites. Historical status, test results, generated wheel and golden artifact identities retain their original acceptance scope. The Phase 12.1 failed combined run remains historical failure evidence.",
+    "historical_manifest": "docs/gates/history/phase-4-artifacts-before-phase-12-2026-10-05.json",
+    "report": "docs/gates/phase-12.md",
+    "changes": {
+      "sha256/src/partsmith/symbol/__init__.py": {
+        "before": "93a6d8d28ba5242aaa8d7e7a4c31332a35c4e491e51112fd674d374e85c768b3",
+        "after": "f0205dde5c013c32318edb337e0ac180812fe1f2e780599f610bcb5755d24c46"
+      },
+      "sha256/src/partsmith/symbol/model.py": {
+        "before": "fde012713b7d0f81e064f5003079ae29f755a6e67e3f44e377bb08fff216c772",
+        "after": "d6bfc27fcb1cf6c61e926153b4e20eaaca08e0a716433b5b96684d3196da9ac3"
+      },
+      "sha256/tests/test_symbol.py": {
+        "before": "d80700929674ffd18d7820d8e98082ac681338fc868eaf83ba6f677dfbfdae1f",
+        "after": "2abd72dbc9e27620af53773376bb31375bc67e4d512c6bb1c89d84f0ca7abd85"
+      },
+      "sha256/fixtures/symbol/expected/0402.kicad_sym": {
+        "before": "25e1017ac38814bf025ae5dab90761beb10dd09b8b3e93d3e876bfc5d2fd6d31",
+        "after": "1e68b04c019d5ad5cd20eb03c3ac4d66b9594e1eb6278c80122c4b60670a2b6e"
+      }
+    }
+  },
+  "phase_12_symbol_revalidation": {
+    "reason": "Pre-existing manifest drift from the committed Phase 6 symbol adaptation.",
+    "source_checks": "docs/gates/phase-12-symbol-revalidation-results.xml",
+    "installed_checks": "docs/gates/phase-12-wheel-final-results.xml",
+    "current_fixture_sha256": "1e68b04c019d5ad5cd20eb03c3ac4d66b9594e1eb6278c80122c4b60670a2b6e",
+    "historical_fixture": "docs/gates/history/phase-4-original-0402.kicad_sym",
+    "historical_fixture_sha256": "25e1017ac38814bf025ae5dab90761beb10dd09b8b3e93d3e876bfc5d2fd6d31"
   }
 }

@@ -306,7 +306,9 @@ def _semantic_issues(data, for_generation):
             )
         positions.add(position)
     package = data["package"]
-    if package["pin_count"] != len(data["pins"]):
+    if package["pin_count"] is not None and package["pin_count"] != len(
+        data["pins"]
+    ):
         add(
             "/package/pin_count",
             "IR_TOPOLOGY",
@@ -352,7 +354,9 @@ def _semantic_issues(data, for_generation):
                     "Distances/tolerances cannot be negative",
                 )
     transform = data["model_3d"]["placement"]
-    if any(scale <= 0 for scale in transform["scale"]):
+    if transform is not None and any(
+        scale <= 0 for scale in transform["scale"]
+    ):
         add(
             "/model_3d/placement/scale",
             "IR_TRANSFORM",

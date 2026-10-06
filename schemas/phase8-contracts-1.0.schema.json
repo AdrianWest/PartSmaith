@@ -837,7 +837,10 @@
           "$ref": "#/$defs/nonempty_string"
         },
         "availability": {
-          "enum": ["OFFLINE_COMPLETE", "RETRIEVAL_REQUIRED"]
+          "enum": [
+            "OFFLINE_COMPLETE",
+            "RETRIEVAL_REQUIRED"
+          ]
         },
         "component": {
           "type": "object",
@@ -918,6 +921,47 @@
         "component",
         "head_revision_id",
         "objects"
+      ],
+      "additionalProperties": false
+    },
+    "pin_removal_proposal_request": {
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "const": "1.0"
+        },
+        "component_id": {
+          "$ref": "#/$defs/nonempty_string"
+        },
+        "base_revision_id": {
+          "$ref": "#/$defs/nonempty_string"
+        },
+        "base_revision_hash": {
+          "$ref": "#/$defs/sha256"
+        },
+        "expected_head_hash": {
+          "$ref": "#/$defs/sha256"
+        },
+        "terminal_order": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/nonempty_string"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "reason": {
+          "$ref": "#/$defs/nonempty_string"
+        }
+      },
+      "required": [
+        "schema_version",
+        "component_id",
+        "base_revision_id",
+        "base_revision_hash",
+        "expected_head_hash",
+        "terminal_order",
+        "reason"
       ],
       "additionalProperties": false
     }

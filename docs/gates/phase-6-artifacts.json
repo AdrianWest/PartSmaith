@@ -65,7 +65,7 @@
     "pdl/release-profiles/mvp-1@1.0.json": "8798d9a552e5dab29f0c5985a4bfbf7b91fb148ac4e90c42f73952dcf8550b0a",
     "docs/gates/phase-6-tests.xml": "cbfe37406118a48e74947feb58ec5d0dc39ce9fac03135a7cc19b6d124a58dca",
     "docs/gates/phase-6-wheel-tests.xml": "cc671eee02c2be57b89b5fff555781030f153a9af474039883fbfb9b1f35b8b9",
-    "pyproject.toml": "ede343525dbd0f6f2d40a06dc7e1e8681af0284871182d0dd9862ab91cf28426",
+    "pyproject.toml": "861a31f7a0cf66015c7635e7aeb97a49f43da0b652485c4f804ca4b4afff7e8e",
     "requirements-ci.txt": "df99cf3dc1ac9c11e29b7303972fb7368517a435df3c9c39e7afdb080ca29ccb",
     "src/partsmith/ir/projection.py": "b7de58f69e667496564a96ccf3c68c73e28921134f5aebb9dc103c9788730db6",
     "src/partsmith/release/runtime.py": "27414f9fa7479f3d33703be98bd890fd7b7705a6bccbf0b2a858ab16d4e60893",
@@ -178,6 +178,32 @@
       "gui_service_tests": 14,
       "manifest_verifier_tests": 4,
       "lint_and_format": "PASS"
+    }
+  },
+  "phase_12_1_input_refresh": {
+    "date": "2026-10-04",
+    "reason": "Phase 12 startup/prototype and prior committed shared-input changes.",
+    "scope": "Current input-map identities only. Historical status, tests, wheel, canonical and engineering identities retain their original acceptance scope. Separate core/PDF and targeted viewer checks passed; the combined full-source native crash remains unresolved.",
+    "historical_manifest": "docs/gates/history/phase-6-artifacts-before-phase-12.1-2026-10-04.json",
+    "report": "docs/gates/phase-12.1.md",
+    "changes": {
+      "sha256/pyproject.toml": {
+        "before": "ede343525dbd0f6f2d40a06dc7e1e8681af0284871182d0dd9862ab91cf28426",
+        "after": "3cf64183de05ba5651721a642cba6527389472f58614aa2ad231c447d02c4aeb"
+      }
+    }
+  },
+  "phase_12_input_refresh": {
+    "date": "2026-10-05",
+    "reason": "Full Phase 12 implementation, validation and shared-input closeout.",
+    "scope": "Current input-map identities revalidated by the final source/wheel suites. Historical status, test results, generated wheel and golden artifact identities retain their original acceptance scope. The Phase 12.1 failed combined run remains historical failure evidence.",
+    "historical_manifest": "docs/gates/history/phase-6-artifacts-before-phase-12-2026-10-05.json",
+    "report": "docs/gates/phase-12.md",
+    "changes": {
+      "sha256/pyproject.toml": {
+        "before": "3cf64183de05ba5651721a642cba6527389472f58614aa2ad231c447d02c4aeb",
+        "after": "861a31f7a0cf66015c7635e7aeb97a49f43da0b652485c4f804ca4b4afff7e8e"
+      }
     }
   }
 }

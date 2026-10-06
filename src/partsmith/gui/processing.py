@@ -1,4 +1,7 @@
-"""Cancellable processing boundary with thread-safe, redacted progress."""
+"""@package partsmith.gui.processing
+@brief Runs cancellable processing with redacted progress and retained data.
+@details Desktop sessions retain complete local results before provider work.
+"""
 
 import re
 from collections.abc import Callable
@@ -15,6 +18,10 @@ class ProcessingRequest:
     use_ai: bool = False
 
     def validate(self):
+        """@brief Validate.
+        @return Result of this operation.
+        @details Retains the documented processing and redaction contract.
+        """
         if type(self.use_ai) is not bool:
             raise ValueError("AI processing selection must be boolean.")
         if not self.part_number.strip():
@@ -33,11 +40,21 @@ class Redactor:
     """Remove known credentials and common credential-shaped log fields."""
 
     def __init__(self, secrets=()):
+        """@brief Init.
+        @param secrets Secrets input.
+        @return Result of this operation.
+        @details Retains the documented processing and redaction contract.
+        """
         self.secrets = tuple(
             sorted(filter(None, secrets), key=len, reverse=True)
         )
 
     def __call__(self, message):
+        """@brief Call.
+        @param message Message input.
+        @return Result of this operation.
+        @details Retains the documented processing and redaction contract.
+        """
         text = str(message)
         for secret in self.secrets:
             text = text.replace(secret, "[REDACTED]")
@@ -51,8 +68,26 @@ class Redactor:
         )
 
 
-def process_datasheet(request, log, cancel, credential=None, publish=None):
-    """Extract Evidence; optionally retain unreviewed AI package candidates."""
+def process_datasheet(
+    request,
+    log,
+    cancel,
+    credential=None,
+    publish=None,
+    retain=None,
+    options=None,
+):
+    """@brief Extracts evidence and optionally requests AI candidates.
+    @param request Validated immutable-source processing request.
+    @param log Redacted progress callback.
+    @param cancel Cancellation event.
+    @param credential Optional credential lookup callable.
+    @param publish Optional AI result callback.
+    @param retain Optional complete local extraction callback.
+    @param options Explicit acquisition settings passed to extraction.
+    @return Operational status without granting an engineering approval.
+    @details Publishes local evidence before any provider failure or cancel.
+    """
     from partsmith.extraction import (
         ExtractionCancelled,
         resolve_package,
@@ -68,9 +103,13 @@ def process_datasheet(request, log, cancel, credential=None, publish=None):
     if cancel.is_set():
         return "cancelled"
     try:
-        result = extract_isolated(request.datasheet, cancel=cancel, log=log)
+        result = extract_isolated(
+            request.datasheet, cancel=cancel, log=log, **(options or {})
+        )
     except ExtractionCancelled:
         return "cancelled"
+    if retain is not None:
+        retain(result)
     log(f"Extracted {len(result['evidence'])} unreviewed evidence records.")
     mapping = resolve_package(result, request.part_number)
     if mapping["status"] != "RESOLVED":
@@ -122,6 +161,11 @@ class JobController:
     """One job at a time; the GUI drains events on its own thread."""
 
     def __init__(self, worker: Worker = process_datasheet):
+        """@brief Init.
+        @param worker Worker input.
+        @return Result of this operation.
+        @details Retains the documented processing and redaction contract.
+        """
         self.worker = worker
         self.cancel_signal = Event()
         self.events = Queue()
@@ -129,9 +173,19 @@ class JobController:
 
     @property
     def active(self):
+        """@brief Active.
+        @return Result of this operation.
+        @details Retains the documented processing and redaction contract.
+        """
         return self.thread is not None
 
     def start(self, request, secrets=()):
+        """@brief Start.
+        @param request Request input.
+        @param secrets Secrets input.
+        @return Result of this operation.
+        @details Retains the documented processing and redaction contract.
+        """
         if self.active:
             raise ValueError("A processing job is already running.")
         request.validate()
@@ -139,9 +193,18 @@ class JobController:
         self.cancel_signal.clear()
 
         def log(message):
+            """@brief Log.
+            @param message Message input.
+            @return Result of this operation.
+            @details Retains the documented processing and redaction contract.
+            """
             self.events.put(("log", redact(message)))
 
         def run():
+            """@brief Run.
+            @return Result of this operation.
+            @details Retains the documented processing and redaction contract.
+            """
             try:
                 log("Processing started.")
                 status = self.worker(request, log, self.cancel_signal)
@@ -164,12 +227,20 @@ class JobController:
             raise RuntimeError("Could not start processing.") from None
 
     def cancel(self):
+        """@brief Cancel.
+        @return Result of this operation.
+        @details Retains the documented processing and redaction contract.
+        """
         if self.active and not self.cancel_signal.is_set():
             self.events.put(("log", "Cancellation requested."))
             self.cancel_signal.set()
 
     def drain(self):
         # Polling never blocks the GUI thread.
+        """@brief Drain.
+        @return Result of this operation.
+        @details Retains the documented processing and redaction contract.
+        """
         if self.thread is not None and not self.thread.is_alive():
             self.thread.join()
             self.thread = None

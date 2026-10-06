@@ -13,3 +13,6 @@ docs/gates/history/phase-10-pure-table-initial-source-results-2026-10-04.xml -te
 docs/gates/history/phase-10-original-native-crash-2026-10-04.txt -text
 docs/gates/history/phase-6-artifacts-before-parser-fix-2026-10-04.json -text
 docs/gates/history/phase-8-artifacts-before-parser-fix-2026-10-04.json -text
+docs/gates/phase-12-pdf-stability/* -text
+docs/gates/history/phase-12-viewer-performance*.xml -text
+docs/gates/history/*-before-viewer-performance-2026-10-05.json -text

@@ -11,10 +11,30 @@ import platform
 import re
 import shutil
 import subprocess
+from contextlib import contextmanager
+from contextvars import ContextVar
 from dataclasses import dataclass
 from hashlib import sha256
 from pathlib import Path
 from tempfile import TemporaryDirectory
+
+from partsmith.process import run_process
+
+_LOG = ContextVar("partsmith_native_log", default=None)
+
+
+@contextmanager
+def native_output(log):
+    """@brief Connects native CLI output to the current progress sink.
+    @param log Incremental redacting stdout/stderr progress callback.
+    @return Context-manager iterator.
+    @details Scope is process/thread-local and cannot affect other sessions.
+    """
+    token = _LOG.set(log)
+    try:
+        yield
+    finally:
+        _LOG.reset(token)
 
 
 class KiCadCompatibilityError(RuntimeError):
@@ -44,6 +64,7 @@ class NativeKiCadValidation:
     runtime: KiCadRuntime
     output_hashes: tuple[str, ...]
     operations: tuple[str, ...]
+    previews: tuple[tuple[str, bytes], ...] = ()
 
 
 def _run(
@@ -60,14 +81,22 @@ def _run(
     @details Nonzero exits and timeouts become explicit compatibility errors.
     """
     try:
-        result = subprocess.run(
-            [str(executable), *arguments],
-            cwd=cwd,
-            check=False,
-            capture_output=True,
-            text=True,
-            timeout=120,
-        )
+        if _LOG.get() is not None:
+            result = run_process(
+                [str(executable), *arguments],
+                log=_LOG.get(),
+                cwd=cwd,
+                timeout=120,
+            )
+        else:
+            result = subprocess.run(
+                [str(executable), *arguments],
+                cwd=cwd,
+                check=False,
+                capture_output=True,
+                text=True,
+                timeout=120,
+            )
     except (OSError, subprocess.TimeoutExpired) as error:
         raise KiCadCompatibilityError(
             f"KiCad CLI operation failed to execute: {arguments[0]}"
@@ -275,5 +304,13 @@ def validate_native_artifacts(
                 "sym-export-svg",
                 "fp-upgrade",
                 "fp-export-svg",
+            ),
+            previews=tuple(
+                (kind, path.read_bytes())
+                for kind, directory in (
+                    ("SYMBOL", symbol_render),
+                    ("FOOTPRINT", footprint_render),
+                )
+                for path in sorted(directory.rglob("*.svg"))
             ),
         )

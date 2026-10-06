@@ -454,6 +454,21 @@ def contract_issues(data, generation, requirements, revisions):
                 )
     if not generation:
         return issues
+    incomplete = (
+        not data["pins"]
+        or not data["package"]["mechanical"]
+        or data["package"]["pin_count"] is None
+        or data["package"]["family"] is None
+        or data["package"]["variant"] is None
+        or data["identity"]["manufacturer"]["name"] is None
+        or data["symbol"]["reference_prefix"] is None
+        or data["model_3d"]["required"] is None
+        or data["model_3d"]["placement"] is None
+        or data["model_3d"]["accuracy_class"] is None
+    )
+    if incomplete:
+        add("", "IR_INCOMPLETE", "Missing engineering facts block generation")
+        return issues
     required = _context_paths(requirements)
     if required is None:
         add(

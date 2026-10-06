@@ -19,17 +19,17 @@
     "PyMuPDF": "1.28.2"
   },
   "source_sha256": {
-    "pyproject.toml": "fcbba6ea527c5503128c1c07284398339b5a233c72702c588105af91e28fac5f",
+    "pyproject.toml": "861a31f7a0cf66015c7635e7aeb97a49f43da0b652485c4f804ca4b4afff7e8e",
     "requirements-extraction.txt": "104015d4659ae8a58dc6787842651f438f32ca2b0fb753fdae92bf89b6d0201d",
     "src/partsmith/extraction/document.py": "da15c6a4e4d46c7b93039375a7e7a80abfde66d16ddc2dc0f3b240a3f4f85a60",
     "src/partsmith/extraction/native_page.py": "68265065abe07914deb0089e09b1045a1c84b6c540813d8e6b72ad1f0b24e682",
     "src/partsmith/extraction/tables.py": "5be1cfd16e85bf12bf54a6ee06fdb4e93ef0f146a2c7326da9c3e063c94da199",
-    "tests/test_extraction.py": "9de9c29d078ab73476951e877e8d53a2cace2b10bfd46df3cd86d62541c69097",
+    "tests/test_extraction.py": "339a1dac80aeab59de8c01a8bb5777439a4b66c9ae1ddd0555685448fadaa907",
     "tests/test_extraction_isolation.py": "eeeb609359c2422fa9b55a3932766ef9851f6714521d36cee09f5eac3a6c786c",
     "scripts/verify_pdf_stability.py": "f6eae7a7e198ec9307e7ffc5555cd4f28824bb75e60f1d058dd3ae09ecd46293",
-    ".github/workflows/ci.yml": "600c3d6edaed61160b335360652b54c59584237d8ed3ca0cb6345bb5036604b4",
-    ".gitattributes": "263337eb3aaf780ac77c7769c9056908eca51d01a157d3840b9efb7cfa4ba509",
-    "README.md": "0db8d7c8dbd1ed50afa0c6eab5d947ff6d33c7e8012c5a4b2670887224dc98ff"
+    ".github/workflows/ci.yml": "8ab5a65662be3e3c631ba2171db9230b05a05fc4b387cf31170f7fee75300961",
+    ".gitattributes": "44a19d704861ec047282322e3edad133eb0275ed65bf348545836c4d907da315",
+    "README.md": "26a1db3c3f21a016e62b1acc796635c3db28b4516669eefa2fe1a8fef3e2db0c"
   },
   "tests": {
     "source": {
@@ -303,5 +303,134 @@
       "path": "docs/gates/history/phase-8-artifacts-before-parser-fix-2026-10-04.json",
       "sha256": "b9dbf03e901be594af208c34cba0e3f3358c0dcd42840c321b35c07328c5b163"
     }
-  ]
+  ],
+  "phase_12_1_input_refresh": {
+    "date": "2026-10-04",
+    "reason": "Phase 12 startup/prototype and prior committed shared-input changes.",
+    "scope": "Current input-map identities only. Historical status, tests, wheel, canonical and engineering identities retain their original acceptance scope. Separate core/PDF and targeted viewer checks passed; the combined full-source native crash remains unresolved.",
+    "historical_manifest": "docs/gates/history/phase-10-parser-fix-2026-10-04-before-phase-12.1-2026-10-04.json",
+    "report": "docs/gates/phase-12.1.md",
+    "changes": {
+      "source_sha256/pyproject.toml": {
+        "before": "fcbba6ea527c5503128c1c07284398339b5a233c72702c588105af91e28fac5f",
+        "after": "3cf64183de05ba5651721a642cba6527389472f58614aa2ad231c447d02c4aeb"
+      },
+      "source_sha256/tests/test_extraction.py": {
+        "before": "9de9c29d078ab73476951e877e8d53a2cace2b10bfd46df3cd86d62541c69097",
+        "after": "339a1dac80aeab59de8c01a8bb5777439a4b66c9ae1ddd0555685448fadaa907"
+      },
+      "source_sha256/.github/workflows/ci.yml": {
+        "before": "600c3d6edaed61160b335360652b54c59584237d8ed3ca0cb6345bb5036604b4",
+        "after": "5ba41fb430b6fcfc40d244af60b1158ebdd5f4d2ca0f3f889b7d82de9250376b"
+      },
+      "source_sha256/README.md": {
+        "before": "0db8d7c8dbd1ed50afa0c6eab5d947ff6d33c7e8012c5a4b2670887224dc98ff",
+        "after": "44384077684e3f7024d832d42f9d6f48bf1be56de0a69a4fcda7772e6b60df62"
+      }
+    }
+  },
+  "phase_12_input_refresh": {
+    "date": "2026-10-05",
+    "reason": "Full Phase 12 implementation, validation and shared-input closeout.",
+    "scope": "Current input-map identities revalidated by the final source/wheel suites. Historical status, test results, generated wheel and golden artifact identities retain their original acceptance scope. The Phase 12.1 failed combined run remains historical failure evidence.",
+    "historical_manifest": "docs/gates/history/phase-10-parser-fix-2026-10-04-before-phase-12-2026-10-05.json",
+    "report": "docs/gates/phase-12.md",
+    "changes": {
+      "source_sha256/pyproject.toml": {
+        "before": "3cf64183de05ba5651721a642cba6527389472f58614aa2ad231c447d02c4aeb",
+        "after": "861a31f7a0cf66015c7635e7aeb97a49f43da0b652485c4f804ca4b4afff7e8e"
+      },
+      "source_sha256/.github/workflows/ci.yml": {
+        "before": "5ba41fb430b6fcfc40d244af60b1158ebdd5f4d2ca0f3f889b7d82de9250376b",
+        "after": "8ab5a65662be3e3c631ba2171db9230b05a05fc4b387cf31170f7fee75300961"
+      },
+      "source_sha256/.gitattributes": {
+        "before": "263337eb3aaf780ac77c7769c9056908eca51d01a157d3840b9efb7cfa4ba509",
+        "after": "78f38e3b2ce18c051461055b9cbe619751486bc326ebc0fe27ff5f7485fa941d"
+      },
+      "source_sha256/README.md": {
+        "before": "44384077684e3f7024d832d42f9d6f48bf1be56de0a69a4fcda7772e6b60df62",
+        "after": "8548f42c1a521004eb63e4ce14774df2b86dd69ec7d14969e5c0bc6230bb60cf"
+      }
+    }
+  },
+  "banner_layout_input_refresh": {
+    "date": "2026-10-05",
+    "report": "docs/gates/phase-12-banner-update.md",
+    "historical_manifest": "docs/gates/history/phase-10-parser-fix-2026-10-04-before-banner-update-2026-10-05.json",
+    "reason": "User-requested Banner3 on the Phase 9.5 main GUI; no Phase 12 viewer banner; updated specification and layout checks.",
+    "scope": "Final input-map bytes revalidated by scoped GUI checks. Original full-gate tests, distributions and other historical evidence retain their acceptance scope.",
+    "changes": {
+      "source_sha256/README.md": {
+        "before": "8548f42c1a521004eb63e4ce14774df2b86dd69ec7d14969e5c0bc6230bb60cf",
+        "after": "a982261618eb203fc10a0c09125072b90b8e1af3cbdb3240de2f632cf3ef7d9b"
+      }
+    }
+  },
+  "phase_12_finding_fixes_input_refresh": {
+    "date": "2026-10-05",
+    "report": "docs/gates/phase-12-finding-fixes-2026-10-05.md",
+    "reason": "Document bound identity and committed approval behavior",
+    "scope": "Current shared input map only; original tests/wheels retain scope",
+    "historical_manifest": "docs/gates/history/phase-10-parser-fix-2026-10-04-before-phase-12-finding-fixes-2026-10-05.json",
+    "changes": {
+      "README.md": {
+        "before": "a982261618eb203fc10a0c09125072b90b8e1af3cbdb3240de2f632cf3ef7d9b",
+        "after": "b23c4234a222e3c3dd6c138d1b9fe5043fbdca1e5b847be5a8991c44c8b32c5d"
+      }
+    },
+    "prior_mismatch": "README map still described the earlier banner amendment; current source and installed regressions include extraction checks"
+  },
+  "spec_v097_input_refresh": {
+    "date": "2026-10-05",
+    "report": "docs/spec-phase-13-review-v0.9.7.md",
+    "historical_manifest": "docs/gates/history/phase-10-parser-fix-2026-10-04-before-spec-v0.9.7-2026-10-05.json",
+    "reason": "Update current specification and Phase 13 delivery ownership",
+    "scope": "Shared current input bytes only; original parser tests/binaries retain scope",
+    "changes": {
+      "README.md": {
+        "before": "b23c4234a222e3c3dd6c138d1b9fe5043fbdca1e5b847be5a8991c44c8b32c5d",
+        "after": "5debdba8af19a25f05e639cc650361c6ebad2b93133c4772b438e5b9af0f10b2"
+      }
+    }
+  },
+  "pcm_spec_input_refresh": {
+    "date": "2026-10-05",
+    "reason": "Phase 13 PCM installation correction",
+    "scope": "Current documentation inputs; historical parser tests unchanged",
+    "historical_manifest": "docs/gates/history/phase-10-parser-fix-2026-10-04-before-pcm-spec-update-2026-10-05.json",
+    "report": "docs/spec-phase-13-pcm-installation-update-2026-10-05.md",
+    "changes": {
+      "README.md": {
+        "before": "5debdba8af19a25f05e639cc650361c6ebad2b93133c4772b438e5b9af0f10b2",
+        "after": "171de95f57362a8bc1f63ed7786bb421c5f88d1af19e89b47304528404dd6f5c"
+      }
+    }
+  },
+  "pcm_only_input_refresh": {
+    "date": "2026-10-05",
+    "reason": "Phase 13 PartSmith wheel retirement",
+    "scope": "Current documentation inputs; historical parser tests unchanged",
+    "historical_manifest": "docs/gates/history/phase-10-parser-fix-2026-10-04-before-pcm-only-spec-update-2026-10-05.json",
+    "report": "docs/spec-phase-13-pcm-only-update-2026-10-05.md",
+    "changes": {
+      "README.md": {
+        "before": "171de95f57362a8bc1f63ed7786bb421c5f88d1af19e89b47304528404dd6f5c",
+        "after": "26a1db3c3f21a016e62b1acc796635c3db28b4516669eefa2fe1a8fef3e2db0c"
+      }
+    }
+  },
+  "viewer_performance_input_refresh": {
+    "date": "2026-10-05",
+    "reason": "Persistent renderer and continuous-navigation frame delivery.",
+    "scope": "Current input-map refresh validated by the scoped source/wheel amendment. Historical tests, package identities and gate statuses retain their original acceptance scope.",
+    "historical_manifest": "docs/gates/history/phase-10-parser-fix-2026-10-04-before-viewer-performance-2026-10-05.json",
+    "report": "docs/gates/phase-12-viewer-performance.md",
+    "changes": {
+      "source_sha256/.gitattributes": {
+        "before": "78f38e3b2ce18c051461055b9cbe619751486bc326ebc0fe27ff5f7485fa941d",
+        "after": "44a19d704861ec047282322e3edad133eb0275ed65bf348545836c4d907da315"
+      }
+    }
+  }
 }

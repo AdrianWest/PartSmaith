@@ -1,5 +1,6 @@
 """@package partsmith.release.input_review
-@brief Authenticated Phase 8 input evidence-review operations.
+@brief Authenticated immutable input evidence and engineering review
+operations.
 @details Persists immutable candidates and decisions, verifies exact revision
 and inventory bindings, and advances reviewed heads with atomic stale checks.
 """
@@ -275,6 +276,21 @@ class PinReorderProposalRequest:
             "terminal_order": list(self.terminal_order),
             "reason": self.reason,
         }
+
+
+@dataclass(frozen=True)
+class PinRemovalProposalRequest(PinReorderProposalRequest):
+    """@brief Requests explicit terminal retirement with stable evidence paths.
+    @details Remaining terminals retain their original relative order; retired
+    terminal targets gain explicit null rebindings in the reviewed child.
+    """
+
+    def __post_init__(self) -> None:
+        """@brief Validates the closed terminal-removal request.
+        @return None.
+        @details Uses the same exact-base fields as the pin-order contract.
+        """
+        _validate_request("pin_removal_proposal_request", self.to_dict())
 
 
 @dataclass(frozen=True)
@@ -1087,6 +1103,75 @@ class InputReviewService:
                 "Stored pin-reorder candidate mismatch",
             )
 
+    def propose_pin_removal(
+        self,
+        request: PinRemovalProposalRequest,
+        principal: AuthenticatedPrincipal,
+    ) -> ProposalResult:
+        """@brief Proposes explicit retirement of a proper terminal subset.
+        @param request Exact-base retained terminal order and explicit reason.
+        @param principal Authenticated proposing OS or service principal.
+        @return Immutable pending removal proposal result.
+        @details Historical evidence stays unchanged and retirement bindings
+        are applied only after an explicit authenticated approval.
+        """
+        with savepoint(self.connection, "pin_removal_proposal"):
+            _, base = self._require_current_base(
+                request.component_id,
+                request.base_revision_id,
+                request.base_revision_hash,
+                request.expected_head_hash,
+            )
+            current = [pin["number"] for pin in base["pins"]]
+            remaining = list(request.terminal_order)
+            if (
+                not set(remaining) < set(current)
+                or [number for number in current if number in remaining]
+                != remaining
+            ):
+                raise ValueError(
+                    "Removal must retain an ordered proper terminal subset"
+                )
+            positions = {
+                number: index for index, number in enumerate(remaining)
+            }
+            timestamp = utc_timestamp()
+            pending = [
+                {
+                    "old_path": f"/pins/{index}",
+                    "new_path": f"/pins/{positions[number]}"
+                    if number in positions
+                    else None,
+                    "base_revision_id": request.base_revision_id,
+                    "reason": request.reason,
+                    "reviewer": principal.subject,
+                    "timestamp": timestamp,
+                    "approval_state": "PENDING",
+                }
+                for index, number in enumerate(current)
+                if positions.get(number) != index
+            ]
+            candidate = copy.deepcopy(base)
+            candidate["revision"].update(
+                id=str(uuid4()),
+                parent_id=request.base_revision_id,
+                description="Pending terminal removal",
+                evidence_review=None,
+            )
+            candidate["revision"]["target_rebindings"].extend(pending)
+            document = ComponentIR(candidate)
+            if validate_revision_transition(base, candidate):
+                raise ValueError("Invalid pending terminal-removal transition")
+            inventory = base["revision"]["evidence_review"]["inventory_sha256"]
+            return self._publish_candidate_proposal(
+                request,
+                candidate,
+                document.sha256,
+                inventory,
+                {"pending_rebindings": pending, "actions": ["PIN_REMOVAL"]},
+                "Stored terminal-removal candidate mismatch",
+            )
+
     def propose(
         self, request: InputReviewProposal, candidate_revision: dict
     ) -> ProposalResult:
@@ -1284,7 +1369,7 @@ class InputReviewService:
         actions = proposal["actions"]
         if actions == ["EVIDENCE_REVIEW"]:
             return approved
-        if actions == ["PIN_REORDER"]:
+        if actions in (["PIN_REORDER"], ["PIN_REMOVAL"]):
             pending = proposal["pending_rebindings"]
             if any(
                 binding not in approved["revision"]["target_rebindings"]
@@ -1304,6 +1389,8 @@ class InputReviewService:
             approved["pins"] = [
                 pins[number] for number in proposal["terminal_order"]
             ]
+            if actions == ["PIN_REMOVAL"]:
+                approved["package"]["pin_count"] = len(approved["pins"])
             return approved
         if actions == ["EVIDENCE_EXCLUSION"]:
             pending = proposal["pending_exclusion"]

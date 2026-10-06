@@ -75,6 +75,40 @@ files. The approved source bundles retain their original bytes and hashes.
 
 ## Development status
 
+Phase 12 provides durable **Save Session / Load Session**, local evidence
+inspection, deliberate selected-evidence AI requests, typed input proposals,
+native generation/previews, and a separate exact release decision. Start with
+a PDF and its full ordering number; select pages/DPI/OCR explicitly. Local
+extraction retains original evidence before any optional AI request. Missing
+engineering facts remain missing until supplied and reviewed. Component Data
+accepts explicit engineering sections and provenance assignments, followed by
+typed override, pin reorder/removal, exclusion and conflict-resolution requests.
+Select an exact compatible PDL and **Approve Inputs** before generation.
+After assembly, **Required Part Number** stays bound to that component. Use
+**New / Clear Component** to process another ordering number from the same PDF;
+the transition offers Save, Discard, or Cancel. A recovery checkpoint warning
+does not undo or relabel a committed input or release approval.
+
+**Open 3D Placement Viewer** becomes available for an actual retained footprint,
+STEP and explicit placement. Its window has no banner and provides camera
+presets, layers, pin/pad selection, measurements and exact decimal placement
+drafts. A **Symbol / Pin Mapping** page also displays the actual generated
+symbol, native preview, pin names/electrical types, mapping discrepancies and
+bound validation results for a complete part inspection. Missing or stale
+symbol data remains labeled. **Propose Placement** requires explicit input
+review; draft preview and camera changes
+grant no approval. **Approve Exact Release** separately checks final artifact,
+manifest and validation bindings against the authenticated OS reviewer.
+Archives restore unfinished work into fresh operational sessions, including
+source assets, immutable history, proposals, artifacts, camera and draft state.
+Loading never runs a provider, generation or an approval automatically.
+
+Launch `.tools/python/python.exe -m partsmith.gui` or the installed
+`partsmith-gui` entry. The 12.1 synthetic rendering experiment remains available
+as a separate diagnostic control. See the [Phase 12 gate](docs/gates/phase-12.md)
+and [12.1 rendering decision](docs/gates/phase-12.1.md). Desktop acceptance is
+scoped to Windows AMD64; other desktop platforms and remote CI are not claimed.
+
 PartSmith is currently advancing through a gated implementation plan. The
 foundation provides the Python package, command-line entry point, formatting,
 linting, tests, continuous integration, and SQLite persistence for projects,
@@ -89,7 +123,7 @@ and value-free error paths while each domain owns its validation policy.
 `partsmith.persistence.database` provides common UTC audit timestamps and
 rollback-safe SQLite savepoints while callers retain transaction ownership.
 
-The current specification is **v0.9.6**. Phases 0–9 have recorded gate evidence.
+The current specification is **v0.9.7**. Phases 0–9 have recorded gate evidence.
 The deterministic release pipeline includes scoped dependency projections,
 immutable input review, native KiCad validation, exact-byte release approval,
 and history-complete revision/inventory import and export. Revision bundles
@@ -100,12 +134,29 @@ passes locally on Windows AMD64; shared-library installation remains Phase 13
 work. See the [Phase 9 gate report](docs/gates/phase-9.md) and
 [Phase 8 revalidation](docs/gates/phase-8-revalidation.md).
 
+Phase 13 now has eight ordered milestones, beginning with the installation
+contracts, fixtures, source regressions and isolated PCM contract-payload checks
+needed to close **R13-01**.
+The project-owner specification revision assigns those contracts to Phase 13.1;
+later planning, installation and publication work requires that checkpoint's
+PASS. The contracts and installer remain pending implementation. See the
+[plugin/data review and revised plan](docs/spec-phase-13-review-v0.9.7.md).
+
+The [2026-10-05 PCM correction](docs/spec-phase-13-pcm-installation-update-2026-10-05.md)
+requires a KiCad Plugin and Content Manager ZIP and real install, preparation,
+launch, update, uninstall and reinstall checks in Phase 13. The subsequent
+[PCM-only validation update](docs/spec-phase-13-pcm-only-update-2026-10-05.md)
+removes PartSmith wheel builds/tests from that phase and assigns retirement of
+wheel automation to 13.2, with source/PCM resource coverage. Customers install
+through PCM. Production
+clean-machine/offline packaging remains Phase 14 work.
+
 AI-assisted document interpretation is intentionally later in the plan. The
 first end-to-end component path must be deterministic and AI-free.
 
 ## Setup GUI (Phase 9.5)
 
-The optional wxPython setup window displays the PartSmith banner across the
+The optional wxPython setup window displays PartSmith-Banner3.png across the
 top, secure **Set AI API Key** entry, a local PDF chooser, **Required Part
 Number**, **Start**, **Cancel**, and a live log panel. Enter the complete
 manufacturer order number, including package suffixes: one datasheet can cover
@@ -308,8 +359,9 @@ It sends no PDF files, page images, local paths, or tools.
 Set a customer key through **Set AI API Key** in the GUI (native OS credential
 storage), or set `OPENAI_API_KEY` securely in the process environment. Keys are
 never command arguments, project settings, candidate exports, logs, or hashes.
-The GUI defaults to local extraction. Its explicit OpenAI checkbox enables
-interpretation; candidates remain in the window's job state for later review.
+The GUI defaults to local extraction. Its OpenAI disclosure checkbox and
+**Send Selected Evidence** action authorize only the previewed selection;
+candidates remain unreviewed in the saved session for later application.
 
 ```powershell
 partsmith extract test_data_sheets/LM2575-D.PDF --pages 24 --dpi 100 --output extraction.json
@@ -408,7 +460,7 @@ output directory for each invocation.
 
 ## Specification
 
-The v0.9.6 implementation contract is maintained in
+The v0.9.7 implementation contract is maintained in
 [the PartSmith Implementation Specification](resources/BFT_PartSmith_Implementation_Spec.md).
 It defines the phase gates, engineering authority model, deterministic output
 requirements, and CadQuery-based 3D architecture.

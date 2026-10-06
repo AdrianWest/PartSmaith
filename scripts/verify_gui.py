@@ -1,8 +1,12 @@
-"""Desktop integration checks: python -m pytest scripts/verify_gui.py -v."""
+"""@file verify_gui.py
+@brief Verifies setup controls, credential storage and desktop launch behavior.
+@details Uses isolated working sessions and explicit scripted test teardown.
+"""
 
 import subprocess
 import sys
 import time
+from pathlib import Path
 from threading import Event
 from uuid import uuid4
 
@@ -11,17 +15,34 @@ import wx
 
 from partsmith.gui.app import KeyDialog, SetupFrame, banner_bytes
 from partsmith.gui.credentials import CredentialStore
+from partsmith.gui.session import Session
 
 
 class Backend:
     def __init__(self):
+        """@brief Init.
+        @return Result of this operation.
+        @details Retains the documented processing and redaction contract.
+        """
         self.value = "dummy-saved-key"
         self.fail = False
 
     def get_password(self, *_args):
+        """@brief Get password.
+        @param _args  args input.
+        @return Result of this operation.
+        @details Retains the documented processing and redaction contract.
+        """
         return self.value
 
     def set_password(self, _service, _account, value):
+        """@brief Set password.
+        @param _service  service input.
+        @param _account  account input.
+        @param value Value input.
+        @return Result of this operation.
+        @details Retains the documented processing and redaction contract.
+        """
         if self.fail:
             raise RuntimeError("dummy-secret-in-backend-error")
         self.value = value
@@ -29,23 +50,45 @@ class Backend:
 
 @pytest.fixture(scope="session")
 def app():
+    """@brief App.
+    @return Result of this operation.
+    @details Retains the documented processing and redaction contract.
+    """
     result = wx.App(False)
     result.SetExitOnFrameDelete(False)
     return result
 
 
 @pytest.fixture
-def frame(app):
-    result = SetupFrame(store=CredentialStore(backend=Backend()))
+def frame(app, tmp_path):
+    """@brief Frame.
+    @param app App input.
+    @param tmp_path Isolated operational session root.
+    @return Result of this operation.
+    @details Retains the documented processing and redaction contract.
+    """
+    result = SetupFrame(
+        store=CredentialStore(backend=Backend()),
+        session=Session(tmp_path / "sessions"),
+        recover=False,
+    )
     result.Show()
     wx.Yield()
     yield result
     if result:
+        result.closing = True
+        result.session.dirty = False
         result.Close()
         pump(lambda: not result)
 
 
 def pump(condition, timeout=5):
+    """@brief Pump.
+    @param condition Condition input.
+    @param timeout Timeout input.
+    @return Result of this operation.
+    @details Retains the documented processing and redaction contract.
+    """
     end = time.monotonic() + timeout
     errors = []
     app = wx.GetApp()
@@ -53,6 +96,10 @@ def pump(condition, timeout=5):
     active = True
 
     def check():
+        """@brief Check.
+        @return Result of this operation.
+        @details Retains the documented processing and redaction contract.
+        """
         if not active:
             return
         try:
@@ -85,9 +132,19 @@ def pump(condition, timeout=5):
 
 
 def modal(dialog, operation):
+    """@brief Modal.
+    @param dialog Dialog input.
+    @param operation Operation input.
+    @return Result of this operation.
+    @details Retains the documented processing and redaction contract.
+    """
     errors = []
 
     def run():
+        """@brief Run.
+        @return Result of this operation.
+        @details Retains the documented processing and redaction contract.
+        """
         try:
             operation()
         except Exception as error:
@@ -104,8 +161,21 @@ def modal(dialog, operation):
 def test_banner_and_layout_from_unrelated_working_directory(
     frame, tmp_path, monkeypatch
 ):
+    """@brief Test banner and layout from unrelated working directory.
+    @param frame Frame input.
+    @param tmp_path Tmp path input.
+    @param monkeypatch Monkeypatch input.
+    @return Result of this operation.
+    @details Retains the documented processing and redaction contract.
+    """
     monkeypatch.chdir(tmp_path)
-    assert banner_bytes().startswith(b"\x89PNG")
+    assert (
+        banner_bytes()
+        == (
+            Path(__file__).resolve().parents[1]
+            / "resources/PartSmith-Banner3.png"
+        ).read_bytes()
+    )
     assert frame.banner.image.IsOk()
     assert frame.banner.GetPosition().y == 0
     assert frame.banner.GetPosition().x == 0
@@ -124,25 +194,44 @@ def test_banner_and_layout_from_unrelated_working_directory(
     assert not frame.source.IsEditable()
     assert not frame.cancel.IsEnabled()
     assert "dummy-saved-key" not in frame.key_status.GetLabel()
-    frame.SetSize((1050, 900))
-    wx.Yield()
-    assert frame.banner.GetSize().width == frame.GetClientSize().width
-    assert (
-        abs(
-            frame.banner.GetSize().height
-            - frame.banner.GetSize().width * ratio
+    for size in ((620, 740), (1050, 900), (1280, 960)):
+        frame.SetSize(size)
+        wx.Yield()
+        assert frame.banner.ClientToScreen((0, 0)) == frame.ClientToScreen(
+            (0, 0)
         )
-        <= 1
-    )
+        assert frame.banner.GetSize().width == frame.GetClientSize().width
+        assert (
+            abs(
+                frame.banner.GetSize().height
+                - frame.banner.GetSize().width * ratio
+            )
+            <= 1
+        )
+    for factor in (1, 1.25, 1.5, 2):
+        bitmap = frame.banner.display_bitmap(540, factor)
+        assert bitmap.GetWidth() == round(540 * factor)
+        assert bitmap.GetScaleFactor() == factor
+        assert abs(bitmap.GetHeight() - round(bitmap.GetWidth() * ratio)) <= 1
 
 
 def test_key_dialog_always_blank_and_masked_with_cancel(frame):
+    """@brief Test key dialog always blank and masked with cancel.
+    @param frame Frame input.
+    @return Result of this operation.
+    @details Retains the documented processing and redaction contract.
+    """
     for _ in range(2):
         with KeyDialog(frame, frame.store) as dialog:
             assert dialog.key.GetValue() == ""
             assert dialog.key.GetWindowStyle() & wx.TE_PASSWORD
 
             def cancel():
+                """@brief Cancel.
+                @return Result of this operation.
+                @details Retains the documented processing and redaction
+                contract.
+                """
                 dialog.key.ChangeValue("dummy-discarded-key")
                 dialog.on_cancel(None)
 
@@ -152,9 +241,18 @@ def test_key_dialog_always_blank_and_masked_with_cancel(frame):
 
 
 def test_key_dialog_ok_persists_and_next_dialog_blank(frame):
+    """@brief Test key dialog ok persists and next dialog blank.
+    @param frame Frame input.
+    @return Result of this operation.
+    @details Retains the documented processing and redaction contract.
+    """
     with KeyDialog(frame, frame.store) as dialog:
 
         def save():
+            """@brief Save.
+            @return Result of this operation.
+            @details Retains the documented processing and redaction contract.
+            """
             dialog.key.ChangeValue("dummy-replacement-key")
             dialog.on_save(None)
 
@@ -167,11 +265,22 @@ def test_key_dialog_ok_persists_and_next_dialog_blank(frame):
 
 
 def test_key_dialog_blank_or_save_failure_stays_open(frame):
+    """@brief Test key dialog blank or save failure stays open.
+    @param frame Frame input.
+    @return Result of this operation.
+    @details Retains the documented processing and redaction contract.
+    """
     for failure in (False, True):
         frame.store.backend.fail = failure
         with KeyDialog(frame, frame.store) as dialog:
 
             def attempt(failure=failure):
+                """@brief Attempt.
+                @param failure Failure input.
+                @return Result of this operation.
+                @details Retains the documented processing and redaction
+                contract.
+                """
                 if failure:
                     dialog.key.ChangeValue("dummy-new-key")
                 dialog.on_save(None)
@@ -185,33 +294,70 @@ def test_key_dialog_blank_or_save_failure_stays_open(frame):
 
 
 def test_file_selection_and_cancel_preserve_source(frame, monkeypatch):
+    """@brief Test file selection and cancel preserve source.
+    @param frame Frame input.
+    @param monkeypatch Monkeypatch input.
+    @return Result of this operation.
+    @details Retains the documented processing and redaction contract.
+    """
+
     class FileDialog:
         result = wx.ID_OK
 
         def __init__(self, *_args, **_kwargs):
+            """@brief Init.
+            @param _args  args input.
+            @param _kwargs  kwargs input.
+            @return Result of this operation.
+            @details Retains the documented processing and redaction contract.
+            """
             pass
 
         def __enter__(self):
+            """@brief Enter.
+            @return Result of this operation.
+            @details Retains the documented processing and redaction contract.
+            """
             return self
 
         def __exit__(self, *_args):
+            """@brief Exit.
+            @param _args  args input.
+            @return Result of this operation.
+            @details Retains the documented processing and redaction contract.
+            """
             pass
 
         def ShowModal(self):
+            """@brief Showmodal.
+            @return Result of this operation.
+            @details Retains the documented processing and redaction contract.
+            """
             return self.result
 
         def GetPath(self):
+            """@brief Getpath.
+            @return Result of this operation.
+            @details Retains the documented processing and redaction contract.
+            """
             return "selected-datasheet.pdf"
 
     monkeypatch.setattr(wx, "FileDialog", FileDialog)
     frame.on_file(None)
     assert frame.source.GetValue() == "selected-datasheet.pdf"
     FileDialog.result = wx.ID_CANCEL
+    frame.session.dirty = False
     frame.on_file(None)
     assert frame.source.GetValue() == "selected-datasheet.pdf"
 
 
 def fill(frame, tmp_path):
+    """@brief Fill.
+    @param frame Frame input.
+    @param tmp_path Tmp path input.
+    @return Result of this operation.
+    @details Retains the documented processing and redaction contract.
+    """
     source = tmp_path / "multiple-packages.pdf"
     source.write_bytes(b"%PDF-1.4\nSynthetic fixture")
     frame.source.ChangeValue(str(source))
@@ -220,10 +366,23 @@ def fill(frame, tmp_path):
 
 
 def test_running_controls_live_logs_and_cancel(frame, tmp_path):
+    """@brief Test running controls live logs and cancel.
+    @param frame Frame input.
+    @param tmp_path Tmp path input.
+    @return Result of this operation.
+    @details Retains the documented processing and redaction contract.
+    """
     entered = Event()
     seen = []
 
     def worker(request, log, cancel):
+        """@brief Worker.
+        @param request Request input.
+        @param log Log input.
+        @param cancel Cancel input.
+        @return Result of this operation.
+        @details Retains the documented processing and redaction contract.
+        """
         seen.append(request)
         log("Offline worker progress: dummy-saved-key")
         entered.set()
@@ -247,7 +406,11 @@ def test_running_controls_live_logs_and_cancel(frame, tmp_path):
     assert seen[0].datasheet == source
     frame.on_cancel(None)
     pump(
-        lambda: not frame.job.active and frame.status.GetLabel() == "Cancelled"
+        lambda: (
+            not frame.job.active
+            and not frame.actions.active
+            and frame.status.GetLabel() == "Cancelled"
+        )
     )
     assert frame.start.IsEnabled()
     assert not frame.cancel.IsEnabled()
@@ -255,6 +418,11 @@ def test_running_controls_live_logs_and_cancel(frame, tmp_path):
 
 
 def test_provider_disclosure_local_default_and_candidate_retention(frame):
+    """@brief Test provider disclosure local default and candidate retention.
+    @param frame Frame input.
+    @return Result of this operation.
+    @details Retains the documented processing and redaction contract.
+    """
     assert not frame.ai_enabled.GetValue()
     assert "gpt-4.1-mini-2025-04-14" in frame.ai_disclosure.GetLabel()
     assert "store=false" in frame.ai_disclosure.GetLabel()
@@ -265,9 +433,19 @@ def test_provider_disclosure_local_default_and_candidate_retention(frame):
 
 
 def test_local_job_can_start_without_secure_store(frame, tmp_path):
+    """@brief Test local job can start without secure store.
+    @param frame Frame input.
+    @param tmp_path Tmp path input.
+    @return Result of this operation.
+    @details Retains the documented processing and redaction contract.
+    """
     from partsmith.gui.credentials import CredentialError
 
     def unavailable_store():
+        """@brief Unavailable store.
+        @return Result of this operation.
+        @details Retains the documented processing and redaction contract.
+        """
         raise CredentialError("Secure credential storage is unavailable.")
 
     frame.store.read_for_processing = unavailable_store
@@ -280,7 +458,22 @@ def test_local_job_can_start_without_secure_store(frame, tmp_path):
 
 @pytest.mark.parametrize("result", ["success", "failed", "unavailable"])
 def test_job_terminal_statuses(frame, tmp_path, result):
+    """@brief Test job terminal statuses.
+    @param frame Frame input.
+    @param tmp_path Tmp path input.
+    @param result Result input.
+    @return Result of this operation.
+    @details Retains the documented processing and redaction contract.
+    """
+
     def worker(request, log, cancel):
+        """@brief Worker.
+        @param request Request input.
+        @param log Log input.
+        @param cancel Cancel input.
+        @return Result of this operation.
+        @details Retains the documented processing and redaction contract.
+        """
         if result == "failed":
             raise RuntimeError("dummy-saved-key")
         return result
@@ -294,6 +487,12 @@ def test_job_terminal_statuses(frame, tmp_path, result):
 
 
 def test_start_requires_part_number_and_valid_source(frame, tmp_path):
+    """@brief Test start requires part number and valid source.
+    @param frame Frame input.
+    @param tmp_path Tmp path input.
+    @return Result of this operation.
+    @details Retains the documented processing and redaction contract.
+    """
     import pymupdf
 
     frame.on_start(None)
@@ -310,11 +509,25 @@ def test_start_requires_part_number_and_valid_source(frame, tmp_path):
     assert "No component was built" in frame.logs.GetValue()
 
 
-def test_window_close_waits_for_worker_cleanup(frame, tmp_path):
+def test_window_close_waits_for_worker_cleanup(frame, tmp_path, monkeypatch):
+    """@brief Test window close waits for worker cleanup.
+    @param frame Frame input.
+    @param tmp_path Tmp path input.
+    @param monkeypatch Monkeypatch input.
+    @return Result of this operation.
+    @details Retains the documented processing and redaction contract.
+    """
     entered = Event()
     cleaned = Event()
 
     def worker(request, log, cancel):
+        """@brief Worker.
+        @param request Request input.
+        @param log Log input.
+        @param cancel Cancel input.
+        @return Result of this operation.
+        @details Retains the documented processing and redaction contract.
+        """
         entered.set()
         assert cancel.wait(5)
         cleaned.set()
@@ -324,6 +537,7 @@ def test_window_close_waits_for_worker_cleanup(frame, tmp_path):
     fill(frame, tmp_path)
     frame.on_start(None)
     assert entered.wait(5)
+    monkeypatch.setattr(frame, "transition", lambda callback: callback())
     frame.Close()
     pump(lambda: not frame)
     assert cleaned.is_set()
@@ -331,6 +545,10 @@ def test_window_close_waits_for_worker_cleanup(frame, tmp_path):
 
 def test_native_credential_store_persists_across_process_restart():
     # Unique service avoids touching the user's actual provider credentials.
+    """@brief Test native credential store persists across process restart.
+    @return Result of this operation.
+    @details Retains the documented processing and redaction contract.
+    """
     store = CredentialStore(provider=f"Phase9.5-test-{uuid4()}")
     dummy = "dummy-phase95-credential-not-a-live-key"
     try:

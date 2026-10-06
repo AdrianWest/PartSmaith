@@ -37,17 +37,23 @@
       "items": {
         "$ref": "#/$defs/pin"
       },
-      "minItems": 1
+      "minItems": 0
     },
     "package": {
       "type": "object",
       "properties": {
         "family": {
-          "type": "string",
+          "type": [
+            "string",
+            "null"
+          ],
           "minLength": 1
         },
         "variant": {
-          "type": "string",
+          "type": [
+            "string",
+            "null"
+          ],
           "minLength": 1
         },
         "pdl_id": {
@@ -59,7 +65,10 @@
           "minLength": 1
         },
         "pin_count": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "null"
+          ],
           "minimum": 1
         },
         "mechanical": {
@@ -67,7 +76,7 @@
           "additionalProperties": {
             "$ref": "#/$defs/quantity"
           },
-          "minProperties": 1
+          "minProperties": 0
         },
         "status": {
           "enum": [
@@ -118,7 +127,10 @@
       "type": "object",
       "properties": {
         "reference_prefix": {
-          "type": "string",
+          "type": [
+            "string",
+            "null"
+          ],
           "minLength": 1
         },
         "properties": {
@@ -222,7 +234,10 @@
       "type": "object",
       "properties": {
         "required": {
-          "type": "boolean"
+          "type": [
+            "boolean",
+            "null"
+          ]
         },
         "placement": {
           "$ref": "#/$defs/transform"
@@ -231,7 +246,8 @@
           "enum": [
             "CLASS_A",
             "CLASS_B",
-            "CLASS_C"
+            "CLASS_C",
+            null
           ]
         }
       },
@@ -559,11 +575,17 @@
           "type": "object",
           "properties": {
             "name": {
-              "type": "string",
+              "type": [
+                "string",
+                "null"
+              ],
               "minLength": 1
             },
             "normalized_name": {
-              "type": "string",
+              "type": [
+                "string",
+                "null"
+              ],
               "minLength": 1
             }
           },
@@ -585,7 +607,10 @@
           "type": "string"
         },
         "package_variant": {
-          "type": "string",
+          "type": [
+            "string",
+            "null"
+          ],
           "minLength": 1
         },
         "temperature_grade": {
@@ -2093,7 +2118,10 @@
       "maxItems": 3
     },
     "transform": {
-      "type": "object",
+      "type": [
+        "object",
+        "null"
+      ],
       "properties": {
         "source_coordinate_system": {
           "type": "string",

@@ -1,9 +1,20 @@
-"""Document-page-1.0 affine coordinates, independent of engineering mm."""
+"""@package partsmith.extraction.coordinates
+@brief Maps document source regions through retained affine transforms.
+@details Accepts original floating coordinates and exact session Decimals.
+"""
 
 import math
+from decimal import Decimal
 
 
 def transform_point(matrix, x, y):
+    """@brief Transform point.
+    @param matrix Matrix input.
+    @param x X input.
+    @param y Y input.
+    @return Result of this operation.
+    @details Retains the documented processing and redaction contract.
+    """
     return (
         matrix[0][0] * x + matrix[0][1] * y + matrix[0][2],
         matrix[1][0] * x + matrix[1][1] * y + matrix[1][2],
@@ -11,6 +22,11 @@ def transform_point(matrix, x, y):
 
 
 def inverse(matrix):
+    """@brief Inverse.
+    @param matrix Matrix input.
+    @return Result of this operation.
+    @details Retains the documented processing and redaction contract.
+    """
     a, b, c = matrix[0]
     d, e, f = matrix[1]
     if matrix[2] != [0, 0, 1] or not all(
@@ -28,6 +44,12 @@ def inverse(matrix):
 
 
 def bounds(matrix, box):
+    """@brief Bounds.
+    @param matrix Matrix input.
+    @param box Box input.
+    @return Result of this operation.
+    @details Retains the documented processing and redaction contract.
+    """
     x0, y0, x1, y1 = box
     if x1 <= x0 or y1 <= y0:
         raise ValueError("Source regions require positive area.")
@@ -45,6 +67,11 @@ def bounds(matrix, box):
 
 
 def region_box(region):
+    """@brief Region box.
+    @param region Region input.
+    @return Result of this operation.
+    @details Retains the documented processing and redaction contract.
+    """
     return (
         region["x"],
         region["y"],
@@ -54,24 +81,35 @@ def region_box(region):
 
 
 def validate_region(region, geometry):
+    """@brief Validate region.
+    @param region Region input.
+    @param geometry Geometry input.
+    @return Result of this operation.
+    @details Retains the documented processing and redaction contract.
+    """
     box = region_box(region)
     media = geometry["media_box"]
     width = (media[2] - media[0]) * geometry["user_unit"]
     height = (media[3] - media[1]) * geometry["user_unit"]
+    epsilon = Decimal("0.0000001") if isinstance(width, Decimal) else 1e-7
     if (
         not all(math.isfinite(v) for v in box)
         or region["width"] <= 0
         or region["height"] <= 0
-        or box[0] < -1e-7
-        or box[1] < -1e-7
-        or box[2] > width + 1e-7
-        or box[3] > height + 1e-7
+        or box[0] < -epsilon
+        or box[1] < -epsilon
+        or box[2] > width + epsilon
+        or box[3] > height + epsilon
     ):
         raise ValueError("Source region lies outside the original MediaBox.")
 
 
 def overlay_box(source):
-    """Recover the recorded region in the retained rendered image."""
+    """@brief Recover the recorded region in the retained rendered image.
+    @param source Source input.
+    @return Result of this operation.
+    @details Retains the documented processing and redaction contract.
+    """
     render = source["render_transform"]
     if render is None:
         raise ValueError("This evidence has no rendered image.")

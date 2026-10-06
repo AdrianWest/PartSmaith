@@ -214,10 +214,18 @@ class KnownGoodReleasePipeline:
         connection: sqlite3.Connection,
         *,
         kicad_runtime: KiCadRuntime | None = None,
+        progress=None,
+        cancel=None,
+        preview=None,
     ):
         """@brief Initializes the deterministic release pipeline.
         @param connection Migrated SQLite connection.
         @param kicad_runtime Optional pre-discovered native KiCad runtime.
+        @param progress Optional consistent-stage callback accepting
+        stage/build.
+        @param cancel Optional cancellation predicate checked between stages.
+        @param preview Optional exact native preview callback accepting
+        type/bytes.
         @return None.
         @details Missing target KiCad fails before any build is created.
         """
@@ -226,6 +234,24 @@ class KnownGoodReleasePipeline:
         self.release = ReleaseStore(connection)
         self.orchestrator = BuildOrchestrator(connection)
         self.kicad_runtime = kicad_runtime or discover_kicad()
+        self.progress = progress
+        self.cancel = cancel
+        self.preview = preview
+
+    def _notify(self, stage, build_id):
+        """@brief Publishes a consistent completed pipeline stage.
+        @param stage Concrete pipeline stage name.
+        @param build_id Persisted build-attempt identity.
+        @return None.
+        @details The optional adapter may commit/checkpoint this boundary;
+        default headless callers retain their existing transaction ownership.
+        """
+        if self.progress is not None:
+            self.progress(stage, build_id)
+        if self.cancel is not None and self.cancel():
+            raise InterruptedError(
+                "Generation cancelled at a consistent boundary"
+            )
 
     def run(
         self,
@@ -236,12 +262,16 @@ class KnownGoodReleasePipeline:
         model_logical_path: str | None = None,
         configuration: BuildConfiguration | None = None,
         reuse: bool = True,
+        build_id: str | None = None,
     ) -> ReleaseCandidate:
         """@brief Builds one reviewed component through release review.
         @param component_id Persisted component identity.
         @param revision_id Current reviewed IR revision identity.
         @param pdl Trusted selected package declaration.
         @param model_logical_path Optional portable final STEP path.
+        @param configuration Optional deterministic build configuration.
+        @param reuse Whether declared matching dependency nodes may be reused.
+        @param build_id Optional orchestrator-created desktop attempt identity.
         @return Build identity, manifest hash, and exact approval binding.
         @details Any input or final-byte blocker raises before review waiting.
         """
@@ -260,9 +290,21 @@ class KnownGoodReleasePipeline:
         ):
             raise ValueError("Pipeline requires the current reviewed revision")
         ir = ComponentIR(self.revisions.get_revision(revision_id))
-        build = self.orchestrator.start(
-            component_id, supplied_reviewed_inputs=True
-        )
+        if build_id is None:
+            build = self.orchestrator.start(
+                component_id, supplied_reviewed_inputs=True
+            )
+        else:
+            build = self.orchestrator.repository.get_build(build_id)
+            if (
+                build is None
+                or build.component_id != component_id
+                or build.state != BuildState.IR_BUILT
+            ):
+                raise ValueError(
+                    "Desktop attempt does not match the IR_BUILT component"
+                )
+        self._notify("BUILD_CREATED", build.id)
         self.orchestrator.advance(
             build.id, BuildState.PACKAGE_IDENTIFIED, "PDL selected"
         )
@@ -281,6 +323,7 @@ class KnownGoodReleasePipeline:
         self.orchestrator.advance(
             build.id, BuildState.IR_VALIDATED, "Inputs validated"
         )
+        self._notify("IR_VALIDATED", build.id)
         settings = configuration or BuildConfiguration()
         runtime = runtime_configuration(self.kicad_runtime)
         symbol_context = SymbolContext(python_version=runtime["python"])
@@ -421,7 +464,21 @@ class KnownGoodReleasePipeline:
         cache = NodeCache(self.connection, build.id)
 
         def generate(kind, name, factory, producer):
+            """@brief Generate.
+            @param kind Kind input.
+            @param name Name input.
+            @param factory Factory input.
+            @param producer Producer input.
+            @return Result of this operation.
+            @details Retains the documented processing and redaction contract.
+            """
+
             def produce():
+                """@brief Produce.
+                @return Result of this operation.
+                @details Retains the documented processing and redaction
+                contract.
+                """
                 artifact = producer()
                 if artifact.dependency_hash != preliminary_dependencies[name]:
                     raise RuntimeError(
@@ -454,29 +511,35 @@ class KnownGoodReleasePipeline:
                 )
             return factory(**kwargs)
 
-        symbol = generate(
-            "SYMBOL",
-            "symbol",
-            SymbolArtifact,
-            lambda: serialize_symbol(ir, symbol_context),
-        )
-        footprint = generate(
-            "FOOTPRINT",
-            "footprint",
-            FootprintArtifact,
-            lambda: serialize_footprint(ir, pdl, footprint_context),
-        )
-        model = generate(
-            "MODEL_3D",
-            "model_3d",
-            ModelArtifact,
-            lambda: generate_model_3d(ir, pdl, threed_context),
-        )
-        for artifact, artifact_type, directory in (
-            (symbol, "SYMBOL", "symbols"),
-            (footprint, "FOOTPRINT", "footprints"),
-            (model, "MODEL_3D", "3d"),
+        generated = {}
+        for artifact_type, name, factory, producer, directory, state in (
+            (
+                "SYMBOL",
+                "symbol",
+                SymbolArtifact,
+                lambda: serialize_symbol(ir, symbol_context),
+                "symbols",
+                BuildState.SYMBOL_GENERATED,
+            ),
+            (
+                "FOOTPRINT",
+                "footprint",
+                FootprintArtifact,
+                lambda: serialize_footprint(ir, pdl, footprint_context),
+                "footprints",
+                BuildState.FOOTPRINT_GENERATED,
+            ),
+            (
+                "MODEL_3D",
+                "model_3d",
+                ModelArtifact,
+                lambda: generate_model_3d(ir, pdl, threed_context),
+                "3d",
+                BuildState.MODEL_3D_GENERATED,
+            ),
         ):
+            artifact = generate(artifact_type, name, factory, producer)
+            generated[name] = artifact
             self.release.put_artifact(
                 build.id,
                 artifact_type,
@@ -487,14 +550,12 @@ class KnownGoodReleasePipeline:
                 generator=f"partsmith.{artifact_type.lower()}",
                 generator_version=artifact.generator_version,
             )
-        self.orchestrator.advance(
-            build.id, BuildState.SYMBOL_GENERATED, "Symbol generated"
-        )
-        self.orchestrator.advance(
-            build.id, BuildState.FOOTPRINT_GENERATED, "Footprint generated"
-        )
-        self.orchestrator.advance(
-            build.id, BuildState.MODEL_3D_GENERATED, "STEP generated"
+            self.orchestrator.advance(
+                build.id, state, f"{artifact_type} generated"
+            )
+            self._notify(state.value, build.id)
+        symbol, footprint, model = (
+            generated[key] for key in ("symbol", "footprint", "model_3d")
         )
         self.orchestrator.advance(
             build.id,
@@ -554,6 +615,7 @@ class KnownGoodReleasePipeline:
                 "target": ir.data["build"]["kicad_target"],
             }
         )
+        self._notify("FINAL_ARTIFACTS_READY", build.id)
         results = cache.obtain(
             "VALIDATION",
             validation_dependency,
@@ -571,7 +633,7 @@ class KnownGoodReleasePipeline:
                 ),
                 settings.measurement_decimal_places,
             ),
-            reuse=reuse,
+            reuse=reuse and self.preview is None,
         )
         compatibility_result = results[-1]
         for result in results:
@@ -590,6 +652,7 @@ class KnownGoodReleasePipeline:
                 BuildState.ARTIFACT_VALIDATION_FAILED,
                 "Final-byte validation failed",
             )
+            self._notify("FINAL_VALIDATION_FAILED", build.id)
             raise ValueError("Known-good final-byte validation failed")
         self.orchestrator.advance(
             build.id, BuildState.CROSS_VALIDATION, "Final bytes validated"
@@ -708,6 +771,7 @@ class KnownGoodReleasePipeline:
             "Verified release awaits explicit approval",
             review_stage=ReviewStage.RELEASE,
         )
+        self._notify("RELEASE_REVIEW_READY", build.id)
         return ReleaseCandidate(
             build.id,
             manifest_hash,
@@ -731,7 +795,19 @@ class KnownGoodReleasePipeline:
         hashes,
         model_path,
     ):
-        """Validate the exact final bytes before recording reusable results."""
+        """@brief Validate the exact final bytes before recording reusable
+        results.
+        @param ir Ir input.
+        @param pdl Pdl input.
+        @param symbol Symbol input.
+        @param footprint Footprint input.
+        @param model Model input.
+        @param final_footprint Final footprint input.
+        @param hashes Hashes input.
+        @param model_path Model path input.
+        @return Result of this operation.
+        @details Retains the documented processing and redaction contract.
+        """
         results = []
         symbol_issues = validate_symbol_artifact(symbol, ir)
         footprint_issues = validate_footprint_artifact(
@@ -806,6 +882,9 @@ class KnownGoodReleasePipeline:
                     model_path=model_path,
                     model_content=model.content,
                 )
+                if self.preview is not None:
+                    for kind, content in native_validation.previews:
+                        self.preview(kind, content)
             except KiCadCompatibilityError as error:
                 native_error = str(error)
         compatibility_result = _validation_result(

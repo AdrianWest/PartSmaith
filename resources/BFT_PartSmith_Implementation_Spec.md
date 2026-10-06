@@ -1,18 +1,36 @@
 # PartSmith Implementation Specification
 
-**Specification version:** v0.9.6
-**Status:** Implementation baseline — IR 1.2 implemented against v0.9.5; downstream revisions pending
-**Document date:** 2026-09-20
+**Specification version:** v0.9.7
+**Status:** Implementation baseline — Phase 13 contracts and integration pending
+**Document date:** 2026-10-05
 
-**Revision purpose:** Resolve D095-01–D095-06 and the consistency remnants in
-[the downstream impact review](../docs/spec-downstream-impact-review-v0.9.5.md).
-Define installation aggregates, input-review services, portable history, scoped
-dependency projections, final-byte invalidation, and early STEP determinism.
-Component IR 1.2, canonical JSON profile 1.0, and placement convention 1.1 remain
-unchanged. Snapshot profile 1.2 is a new later-phase contract; section 246 records
-the resolutions and their implementation gates.
+**Revision purpose:** Incorporate the project owner's requested R13-01 work
+into Phase 13, review the current launch plugin and retained data, and make
+installation contracts, plugin/IPC boundaries, publication and acceptance
+explicit. Phase 13 now proceeds through eight ordered milestones. Its first
+milestone delivers the missing contracts and their revalidation; later
+installation work depends on that milestone's recorded PASS.
+Component IR 1.2, canonical JSON profile 1.0, snapshot profile 1.2, placement
+convention 1.1 and the CadQuery runtime selection retain their existing
+versions. This revision changes delivery ownership and fills integration
+requirements; implementation evidence retains its recorded runtime scope.
+The [v0.9.6 specification snapshot](history/BFT_PartSmith_Implementation_Spec_v0.9.6_before_Phase13_2026-10-05.md)
+preserves the previous contract assignment and gate requirements.
 
-## v0.9.6 Normative Baseline
+**Phase 13 PCM correction, 2026-10-05:** KiCad's Plugin and Content Manager
+(PCM) ZIP is the customer plugin installation artifact. Milestone 13.2 now
+defines package/runtime preparation and the PCM lifecycle; 13.7/13.8 require
+real installed-package acceptance. The subsequent project-owner correction
+removes PartSmith wheel builds/tests from Phase 13; source, PCM payload and
+installed PCM runtime checks are its validation paths. This is an addendum to
+v0.9.7; no runtime implementation or Phase 13 PASS is asserted. See the
+[installation correction](../docs/spec-phase-13-pcm-installation-update-2026-10-05.md)
+and [pre-correction snapshot](history/BFT_PartSmith_Implementation_Spec_v0.9.7_before_PCM_2026-10-05.md).
+The [PCM-only validation update](../docs/spec-phase-13-pcm-only-update-2026-10-05.md)
+and [pre-retirement snapshot](history/BFT_PartSmith_Implementation_Spec_v0.9.7_before_PCM_only_2026-10-05.md)
+preserve the explicit removal of the former internal wheel requirement.
+
+## v0.9.7 Normative Baseline
 
 Current sections and numbered phase gates are authoritative. Abbreviated
 YAML/JSON and directory examples explain those contracts; they are not
@@ -20,20 +38,21 @@ alternative schemas. Historical material is preserved unchanged in the
 [non-normative archive](history/BFT_PartSmith_Historical_Appendix_v0.9.4.md).
 Version labels inside that archive describe its original context only.
 
-**Implementation status:** IR 1.2 schema, validation, explicit migration,
-revision-store protocol, snapshot-profile-1.1 dependency projections, and
-fixtures are implemented against v0.9.5. Phase 3's PDL 1.0 schema, versioned
-loader, deterministic validation, synthetic 0402 bootstrap entry, and inspection
-CLI are implemented against v0.9.6.
-[The revised Phase 2 report](../docs/gates/phase-2-ir-1.2.md) records that scope.
-Those Phase 2 requirements remain unchanged and its PASS satisfied Phase 3's
-prerequisite. The Phase 3 PASS is recorded separately and does not claim
-manufacturer-backed production package approval. Snapshot profile 1.2 must be implemented and tested incrementally in
-Phases 4–6 and 8–9, not claimed by that report. The earlier
-[IR 1.1 PASS](../docs/gates/phase-2-ir-1.1.md) remains tied to v0.9.4. Earlier
-reports and hashes retain their original scope. Unchanged Phase 0/1 requirements
-retain their previous evidence. Later phases still need their own implementation
-and gate results; this status does not assert product release readiness.
+**Implementation status:** Repository receipts cover the implemented Phases
+0–12 within their stated platforms and test scopes. Phase 12's R12-01/R12-02
+corrections have source and installed-wheel regression evidence. The existing
+KiCad entry is a launch-only action plugin; native CLI validation, immutable
+release/revision bundles and desktop session transport are implemented.
+Installation-plan/manifest/authorization contracts, a PCM package, an IPC client,
+an aggregate publisher and rollback are pending Phase 13 work. See the
+[current plugin/data review](../docs/spec-phase-13-review-v0.9.7.md) and
+[Phase 12 handoff](../docs/gates/phase-12.md).
+
+Earlier [IR 1.1](../docs/gates/phase-2-ir-1.1.md),
+[IR 1.2](../docs/gates/phase-2-ir-1.2.md), PDL and later gate receipts retain
+their original specification versions, fixture limitations and runtime scopes.
+Refreshing a current input map does not recertify their historical binaries or
+test runs. Phase 14 still owns production packaging and the full package matrix.
 
 ## Current-section navigation
 
@@ -41,7 +60,7 @@ Section numbers are stable identifiers, not a continuous implementation checklis
 The numbered phase plan is the sole gate/order authority.
 
 - [Implementation strategy and phases](#implementation-strategy--small-testable-increments)
-- [Standards and runtime baseline](#v096-standards-lock-and-implementation-baseline)
+- [Standards and runtime baseline](#v097-standards-lock-and-implementation-baseline)
 - [Scope and release matrix](#31-component-package-types)
 - [Independent artifact workflow](#11-independent-footprint-and-3d-generation)
 - [IR contract, migration, and provenance](#121-component-ir-json-schema-and-contract)
@@ -51,6 +70,7 @@ The numbered phase plan is the sole gate/order authority.
 - [Build hashes and finalization](#166-reproducible-build-algorithm)
 - [Input and release review services](#172-review-decision-api)
 - [Installation aggregates](#1741-installation-aggregates-and-approval-boundaries)
+- [Phase 13 milestones](#phase-13--kicad-integration)
 - [Portable replay bundles](#175-project-packaging)
 - [Release milestones](#235-implementation-milestones)
 - [Finding resolutions](#246-consistency-resolution-register)
@@ -76,6 +96,16 @@ must pass before Phase 10 begins. A failing, skipped, unrecorded, or manually as
 check is a gate failure. A waived gate requires an explicit specification
 revision that identifies the risk owner, scope, rationale, and expiry;
 a waiver is not a PASS.
+
+The v0.9.7 sequencing decision moves section 174.1's installation-contract
+delivery from Phase 8 to Phase 13.1, at the project/specification owner's
+request on 2026-10-05. Phase 8 retains immutable release and bundle verification;
+Phase 12 retains its full desktop gate. R13-01 is **REASSIGNED_OPEN** to 13.1,
+not an implemented contract or a passed Phase 13 gate. The bounded sequencing
+risk is entering Phase 13 without those schemas; no installation-dependent
+milestone may start until 13.1 completes validation and hash closeout. This
+dependency ends only when 13.1 records PASS. Historical v0.9.6 findings remain
+available in the archived specification and review receipts.
 
 ## Phase 0 — Repository and build foundation
 
@@ -255,8 +285,10 @@ justified non-applicability.
    when associations, paths, geometry, or approval bindings change.
 9. Implement section 172's input-review/proposal/revision operations and section
    163's immutable SQLite store using a forward migration.
-10. Implement section 175's history-complete bundle index and import validation;
-    define section 174.1 installation identities without mutating source bundles.
+10. Implement section 175's history-complete bundle index and import validation,
+    preserving immutable source bytes. Section 174.1's installation contracts
+    are delivered and revalidated in Phase 13.1 under the v0.9.7 sequencing
+    decision; they are not a Phase 8 or Phase 12 entry prerequisite.
 
 **Phase 8 gate (blocking):** One known-good component completes the pipeline
 without AI, passes all applicable validators and native target-KiCad CLI
@@ -312,12 +344,14 @@ services so both launch paths use the same configuration and workflow.
    baseline; it shall not require loading CAD dependencies into KiCad's Python
    process. This phase covers launching the setup GUI; broader live KiCad
    operations remain in Phase 13.
-2. Display `resources\PartSmail-Banner.png` as a banner at the top of the
-   window, spanning the complete window width without side margins. Preserve
-   its aspect ratio when scaling and size its height accordingly. Package the
-   image and
-   resolve its location independently of the current working directory for
-   both launch paths.
+2. Display `resources/PartSmith-Banner3.png` as a banner at the top of the
+   Phase 9.5 main window, spanning its complete client-area width at `(0, 0)`
+   without side margins or padding. The banner shall reach both client edges
+   and expand or shrink with the GUI while preserving the entire image and
+   its aspect ratio. Size its height proportionally from the loaded image.
+   Keep the banner outside scrollable controls and resolve its packaged
+   location independently of the current working directory for both launch
+   paths. The separate Phase 12 viewer shall have no banner.
 3. Add a **Set AI API Key** button. Clicking it opens a modal dialog with a
    password-style text box and **OK** and **Cancel** buttons. The text box
    shall always open blank, including when a key has already been saved;
@@ -447,13 +481,491 @@ popup owned by that GUI.
 2. Display conflicts.
 3. Display IR.
 4. Display generated symbol/footprint.
-5. Display 3D placement in the separate section 12 viewer window.
+5. Display the generated symbol, its pin-to-pad mapping, and 3D placement
+   in the separate section 12 viewer window for a complete part inspection.
 6. Support explicit overrides.
 7. Connect the UI to the existing Phase 8 review/approval states and services.
-8. Use `resources/PartSmith-Banner3.png` across the full width of the section 12
-   viewer popup under the following window, packaging, and resize contract.
+8. Use `resources/PartSmith-Banner3.png` across the full width of the Phase 9.5
+   main GUI under the following packaging and resize contract. The section 12
+   viewer popup shall have no banner.
 9. Route all Phase 12 scripting logs to the existing read-only, multiline,
    scrollable log box in the Phase 9.5 GUI under the following logging contract.
+10. Add a button in the Phase 9.5 GUI that appears or becomes enabled when the
+    Phase 12 viewer is ready to display the current session, and lets the user
+    reopen it after closing it under the following main-window control contract.
+11. Add **Save** and **Load** buttons to the Phase 9.5 GUI to preserve and
+    restore all session data collected or produced up to that point under the
+    following saved-session contract. These additions are Phase 12 deliverables.
+12. Implement the input-assembly, document-selection, worker-execution,
+    session-recovery, and reviewer-identity contracts below. Inspection of
+    incomplete or failed work shall remain separate from permission to generate
+    or approve it.
+
+### Phase 12 UI layout and workflow
+
+- The Phase 9.5 main window shall retain its setup controls, display Banner3
+  edge to edge at the top with proportional scaling as the GUI resizes, add
+  **Save**, **Load**, and **Open 3D Placement Viewer**, and provide review tabs
+  for **Evidence**, **Conflicts**, **Component Data**, **Symbol/Footprint**, and
+  **Validation/Release Review**. Keep processing status and the existing shared
+  log box visible and usable while review or viewer work is running.
+- The separate viewer shall have no banner. Its client area shall contain a
+  large 3D viewport, camera and visibility controls, placement controls,
+  measurements, validation feedback, and a **Symbol / Pin Mapping** review
+  page alongside **3D / Footprint**. All controls shall remain accessible
+  under the viewer's minimum-size, scrolling, resize, and DPI contract.
+- Follow the workflow: inspect evidence, review inputs, generate artifacts,
+  inspect symbol, footprint and 3D placement, validate, then explicitly approve
+  or reject the release.
+  Evidence/input review shall be available before generated artifacts exist;
+  opening the viewer requires the data needed to display footprint/model
+  placement, not release approval. Retain unresolved issues and incomplete
+  stages without presenting them as successful builds.
+- Begin integration with the existing deterministic 0402 fixture, then connect
+  local extraction and AI-assisted sessions. Use the existing generation,
+  validation, persistence, and review services; UI actions shall not directly
+  advance build states or grant approval. Keep processing, CAD preparation,
+  and subprocess reading outside the GUI thread, with UI updates dispatched
+  onto that thread under the shared logging and cancellation contracts.
+
+### Phase 12 implementation milestones
+
+Implement Phase 12 in the following order. Each milestone shall produce a
+working increment with recorded completion checks before the next milestone
+begins. These are checkpoints within Phase 12, not replacements for the numbered
+phase-gate policy. Confirm the preceding Phase 11 PASS and applicable correction
+evidence before starting implementation. No rendering backend is selected by
+this specification; milestone 12.1 establishes and records that decision.
+
+#### 12.1 — Prove the 3D rendering approach
+
+Build a small wxPython prototype displaying an existing STEP model together
+with its independently generated footprint. Establish the scene's units,
+origin, axes, orientation, placement transform, and rendering adapter. Record
+the selected rendering dependency, pinned version, supported runtime,
+distribution/license implications, and feasibility of installed-wheel use.
+Establish the native-failure containment and graphics-resource lifecycle under
+the worker-execution contract below.
+
+**Completion check:** The known 0402 fixture displays with correct physical
+scale, orientation, pin-1 relationship, and footprint/model placement. Rotation,
+zoom, resizing, and repeated window open/close work in an installed-wheel
+prototype without blocking the main window or changing source artifacts.
+Malformed STEP input, native preparation-worker termination, unavailable
+graphics support, and renderer initialization/context errors leave the main
+GUI and session usable. Repeated close/reopen releases native resources.
+
+#### 12.2 — Session foundation and Save/Load
+
+Retain complete local extraction results in both local-only and AI-assisted
+processing, rather than retaining only AI candidates or log messages. Introduce
+one shared session containing available inputs, results, draft edits, history,
+and UI/viewer state. Add the main-window **Save** and **Load** buttons under the
+saved-session contract below. Extend the versioned session schema and round-trip
+coverage as each later milestone adds data.
+Define a session-specific transport schema, isolated working database, immutable
+source/asset store, worker-owned database connections, and recovery checkpoints
+under the contracts below; reviewed revision bundles alone are insufficient.
+
+**Completion check:** Setup-only and extracted sessions survive save, application
+restart, and load with their original source paths unavailable. Local mode
+retains its full extraction data. Busy-state disabling, cancellation, atomic
+save/load failure handling, and dummy-credential exclusion pass; loading does
+not restart processing or submit data to a provider.
+Repeated loading of the same save and loading an older save after newer work
+restore separate working sessions without identity collisions or rewriting
+retained history. Source-file replacement after extraction cannot change saved
+source bytes or provenance. Interrupted checkpoint writes preserve recovery.
+
+#### 12.3 — Evidence and conflict review
+
+Add the Evidence, Conflicts, and Component Data tabs. Show source pages/crops,
+extracted values, provenance, AI candidates, and unresolved ambiguities or
+conflicts. Link displayed facts to the original document-page regions under
+section 124, retaining original text alongside translations where present.
+Add page-range, OCR/DPI, and evidence-selection controls with visible processing
+and provider limits under the document-selection contract below.
+
+**Completion check:** Selecting evidence highlights the correct original-page
+region, including the existing crop/rotation/DPI fixtures. Conflicting values
+and unavailable information remain visible and cannot silently become accepted
+engineering inputs. Both local-only and AI-candidate sessions are inspectable.
+Large-document and oversized-AI-selection cases remain responsive and report
+limits without silently dropping evidence or submitting an altered request.
+
+#### 12.4 — Editable IR and input approval
+
+Connect extracted facts and AI candidates to Component IR through explicit
+user actions and the existing input-review services. Add supported field edits,
+pin reorder/renumber/removal, typed overrides with evidence and reasons,
+proposals, approval, and rejection. Separate unapplied drafts, pending proposals,
+and reviewed revisions; preserve immutable history and exact-base bindings.
+Implement initial IR/root and inventory creation plus exact PDL selection under
+the input-assembly contract below. Obtain reviewer identity from the trusted
+desktop adapter, and use exact decimal editors under the control contract.
+
+**Completion check:** A user can assemble and review a valid input revision.
+Missing required information or unresolved blockers prevent generation. Stale
+edits fail without partial changes; pin edits obey section 121.7 without
+retargeting historical evidence. Input approval does not grant release approval.
+An extracted session can enter initial review without pre-existing fixture IR;
+unsupported/ambiguous PDL cases remain inspectable and blocked. Unchanged
+decimal fields round-trip exactly, and missing/mismatched identity blocks a
+decision without partial writes.
+
+#### 12.5 — Generation and 2D previews
+
+Expose generation after input approval through the existing orchestrator. Add
+symbol and footprint previews, pin/pad mappings, dimensions, and validation
+results. Stream progress to the main log box and keep generation cancellable.
+Previews shall derive from the actual generated artifacts and identify their
+bound build/revision, rather than substitute idealized package graphics.
+Add progress/cancellation adapters at the service boundary. Publish attempt
+identities, completed artifacts, and structured outcomes even when a later
+stage fails, under the worker-execution contract.
+
+**Completion check:** The reviewed fixture generates through the existing
+pipeline. Symbol/footprint previews match the generated files and their pin/pad
+identities. Failure and cancellation preserve truthful states and retained data;
+logs update live and the main window remains responsive.
+Cross-thread connection misuse is prevented; cancellation before and after a
+commit reports the actual outcome. Native timeout/failure preserves inspectable
+completed artifacts. Events from superseded sessions/revisions are ignored.
+
+#### 12.6 — Integrate the viewer window
+
+Turn the rendering prototype into the separate resizable, modeless viewer owned
+by the main GUI. Implement Banner3 packaging and main-window layout, the
+banner-free viewer, the viewer-button
+readiness rule, singleton popup ownership, and retained close/reopen state.
+Connect the scene to the current session's actual footprint, STEP model, and
+explicit placement metadata. Include the bound generated symbol and its native
+2D preview on the viewer's separate **Symbol / Pin Mapping** page.
+
+**Completion check:** The viewer button becomes available when required data
+exists. Closing/reopening retains session data and edits; clicking while open
+foregrounds the existing popup. Banner, resize/DPI, missing-resource, standalone,
+and KiCad launch checks pass without rerunning processing to reopen the viewer.
+Parseable footprint/model pairs from failed validation attempts remain available
+for diagnostic viewing, with stage/failure labels and release approval blocked.
+Missing, malformed, unsupported or stale symbol data remains explicitly labeled;
+it cannot substitute another attempt's symbol or prevent diagnostic 3D inspection.
+
+#### 12.7 — Navigation, layers, and inspection
+
+Implement the camera presets, visibility toggles, pin/pad selection, axes,
+package dimensions, and distance measurement under the viewer-control contract
+below. Inspect actual symbol pin numbers, names and electrical types against
+reviewed IR and the displayed footprint pads, with explicit missing, extra,
+duplicate and mismatched mapping diagnostics. Keep camera and review-page state
+separate from engineering placement metadata.
+
+**Completion check:** All navigation and visibility controls work on the known
+fixture. Selected pin/pad identities and measured distances/dimensions match
+known geometry within recorded tolerances. View changes leave IR, engineering
+artifact bytes, dependency hashes, and approval bindings unchanged.
+The full placement, including unit and nonuniform X/Y/Z scale and mirror flags,
+is displayed accurately without modifying stored values.
+The separate viewer displays actual symbol bytes/properties and a native preview
+bound to the same build/revision/stage as the footprint/model. Symbol pin
+selection highlights its existing footprint pad; it never changes pin data.
+
+#### 12.8 — Placement editing and feedback
+
+Add X/Y/Z position, X/Y/Z rotation, and supported mirror controls under sections
+121.6/177. Preview draft edits, display discrepancies, allow draft discard, and
+submit explicit typed proposals with reasons for review. On accepted revisions,
+rerun affected association/final-byte checks and invalidate the applicable
+manifest and release approval under sections 166–167. Placement edits update
+metadata rather than the underlying canonical STEP geometry.
+Numeric placement edits shall preserve canonical decimal semantics; scale shall
+remain visible even when its editing is unsupported.
+
+**Completion check:** Injected offset, rotation, mirror, and height faults
+produce their intended diagnostics. Draft edits never silently become approved
+build data. Accepted changes retain history and invalidate affected results;
+unchanged STEP geometry is reused only when its declared dependency permits it.
+
+#### 12.9 — Final review and complete recovery
+
+Add the final review screen with artifact previews, validation results,
+blockers, and explicit release approval/rejection through the existing services.
+Complete saved-session coverage for artifacts, pending edits/proposals, review
+decisions, immutable history, and viewer state introduced by milestones 12.3–12.8.
+
+**Completion check:** Input and release approvals remain distinct. Changed
+inputs or artifact bytes cannot inherit stale approval. A restart restores
+unfinished review work and a ready viewer without provider calls or automatic
+approval; restored approvals retain exact valid bindings. An offline fixture
+completes the inspect/review/generate/validate/release-review workflow.
+Main-window close, session clear/replacement, and starting another component
+exercise Save/Discard/Cancel behavior. Recovery after process termination opens
+the last complete checkpoint for inspection without restarting work or decisions.
+
+#### 12.10 — Full Phase 12 gate
+
+Run the entire Phase 12 gate below, including source and installed-wheel checks,
+both supported launch paths, visual inspection, resize/DPI checks, credential
+redaction, and failure/cancellation cases. Record commands, runtime scope, test
+results, screenshots where applicable, and input/artifact identities. Apply the
+repository's gate-closeout instructions to preserve historical evidence,
+refresh applicable active manifest hashes, and verify the required manifests.
+
+**Completion check:** All milestone checks and the complete Phase 12 gate pass
+against the final bytes. Only this completed closeout may record the overall
+Phase 12 PASS; individual checkpoint results do not authorize Phase 13 work.
+
+### Phase 12 viewer controls and engineering state
+
+- **Complete part inspection:** The separate viewer shall provide a generated
+  symbol review page as well as footprint/3D inspection. Show the actual KiCad
+  symbol drawing, exact symbol bytes and hash, symbol properties, pin numbers,
+  names, electrical types, and mapping to actual footprint pad numbers. Compare
+  generated pin fields with the immutable reviewed IR for the displayed revision;
+  show missing, extra, duplicate and mismatched identities without replacing
+  actual generated fields with expected values. Show retained validation results
+  bound to these symbol bytes. Display build, revision, stage and stale status;
+  never mix artifacts or previews from different attempts or use final previews
+  for preliminary bytes. Missing or unreadable previews preserve textual
+  inspection, and unavailable symbol data remains diagnostic. Camera/page/pin
+  selection grants no approval and leaves engineering bytes unchanged.
+
+- **Camera:** Rotate, pan, zoom, fit/reset view, and top, bottom, front, back,
+  left, right, and isometric presets. Camera movement and reset shall change
+  only the view, leaving engineering placement and review decisions intact.
+- **Visibility:** Toggle the 3D model body, footprint pads, silkscreen,
+  courtyard, fabrication graphics, origin, coordinate axes, and pin-1 marker.
+  Show the independently generated model and footprint in the same scene.
+- **Inspection:** Select/highlight individual pins and pads, display their
+  identities and mapping, inspect package dimensions, and measure distances
+  with explicit units. Rendered-mesh measurements shall declare their tolerance;
+  geometric validators remain authoritative under sections 178–179.
+- **Placement:** Show X/Y/Z offsets in millimetres, X/Y/Z rotations in degrees,
+  dimensionless X/Y/Z scale factors, and the supported explicit mirror settings.
+  Scale shall be visible at least read-only; editing it requires the supported
+  typed override path and its normal review/validation. Preserve nonunit scale
+  on load, display, draft discard, and unrelated edits. Distinguish draft values
+  from reviewed placement. Reject unsupported transforms instead of silently
+  approximating them; retain the coordinate contract in sections 92/150.
+- **Numeric values:** Parse engineering edits from text into exact Decimal
+  values under section 121.3, with explicit units and input syntax. Reject
+  ambiguous, non-finite, and out-of-profile values. Display rounding, locale
+  formatting, or float-based wx controls shall not rewrite unchanged inputs.
+  Convert to rendering floats only at the display boundary; never reconstruct
+  stored engineering values from a mesh, camera matrix, or formatted label.
+- **Actions:** Discard draft placement changes, propose changes with a reason
+  and required evidence through the typed review service, and run placement
+  checks. Draft discard restores the current reviewed values; it shall not
+  erase reviewed decisions or silently reset approved placement to zero.
+- **Feedback:** Show model floating/below-board, unexpected orientation or
+  mirror, pin-1 mismatch, centre mismatch, height mismatch, and pin-to-pad
+  alignment results as applicable. Identify draft or stale results, preserve
+  discrepancies, and display blocking, failed, passed, and justified
+  non-applicable results distinctly. Visual appearance cannot override checks.
+
+### Phase 12 input assembly and reviewer identity
+
+- Create the initial Component IR through an explicit assembly operation that
+  registers the component identity, structural IR/root revision, source
+  documents, evidence, acquisition revision, and exact acquisition inventory
+  under sections 121/163. Allow structurally valid incomplete candidates with
+  missing values explicitly represented. Field/pin assignment shall record
+  supporting evidence and interpretation status; never fabricate facts, units,
+  pins, review metadata, or approved decisions to make a candidate buildable.
+- Persist the unreviewed initial root and matching inventory before submitting
+  an evidence-review child to the existing input-review service. That service's
+  EVIDENCE_REVIEW operation cannot change engineering content. Initial assembly
+  precedes it; subsequent engineering changes use typed proposal/revision
+  operations under sections 121.6–121.8/172, preserving history and head checks.
+- Bind **Required Part Number** to the assembled immutable component identity.
+  Disable editing after assembly; processing another ordering number requires
+  **New / Clear Component** and the Save/Discard/Cancel transition. Reject a
+  bypassed setup/identity mismatch before extraction, generation, release
+  approval or archive restoration can act on the old reviewed component.
+- Distinguish a datasheet's package label from a validated PDL selection. Resolve
+  the exact family, variant, and terminal topology against supported PDL entries,
+  then retain the selected entry's ID, revision, and content hash. Present
+  missing/ambiguous matches and unsupported generator strategies with the
+  missing information and affected artifacts. Permit review and saving while
+  generation is blocked. The Phase 12 bootstrap shall not imply support for
+  arbitrary datasheets or completion of Phase 14's production package matrix.
+- The trusted desktop adapter shall obtain the current reviewer's stable
+  identity from the authenticated operating-system session and supply the
+  corresponding AuthenticatedPrincipal and mechanism to the review services.
+  Display the actor and require an explicit reason for approval/rejection.
+  Editable display names, document/AI content, saved-session fields, and
+  historical audit actors cannot authenticate the current user. Re-establish
+  current identity after load/recovery; identity failure blocks decisions while
+  inspection and saving remain available. Record historical actor/time unchanged.
+
+### Phase 12 document selection and resource limits
+
+- Provide explicit one-based page/range selection, an **All Pages** option,
+  OCR/force-OCR and supported language options, and DPI selection before
+  extraction or deliberate re-extraction. Show the page count and selected
+  settings, validate them before starting, and retain them with the acquisition
+  identity. Re-extraction creates separately bound results and cannot silently
+  replace evidence referenced by retained review decisions.
+- Let the user select the Evidence records and trusted target fields for each
+  supported AI task. Show provider/model, selected record count, serialized
+  request size, and data-handling disclosure before submission. The current
+  adapter permits 1–128 Evidence records and at most 512 KiB of canonical request
+  bytes; use its actual declared limits if a versioned adapter changes them.
+  Oversized selections shall remain local and produce an actionable message.
+  Never silently truncate, take the first 128 records, or split submissions.
+  Any future batching requires an explicit operation with retained request and
+  provenance bindings for each batch. Unselected evidence/conflicts remain in
+  the session and retain their applicable review obligations.
+- Apply recorded, configurable limits under section 190 to aggregate decoded
+  images, render/mesh caches, STEP preparation, log display, session transport
+  size/object count, and archive expansion where compression is used. Load
+  page thumbnails/images and display meshes on demand; eviction may remove
+  derived display caches but not the session's retained source/artifact bytes.
+  Store bulk assets by content hash instead of duplicating them in every UI
+  record. Validate sizes before allocation/import, report limit failures with
+  retained data, and record responsiveness/resource checks for large fixtures.
+
+### Phase 12 worker execution and failure inspection
+
+- Serialize mutating processing/review/build work for each working session.
+  Create and close each SQLite connection in its owning worker/thread; do not
+  pass a GUI-thread connection to another thread or bypass ownership by merely
+  disabling SQLite's thread check. Use separate read connections or immutable
+  snapshots for inspection, and keep transaction/commit ownership in the service
+  adapter. Schema migrations and session switching require an idle database.
+- Extend/adapt the build and native-tool service boundaries to expose progress,
+  safe cancellation, bounded timeouts, and structured outcomes. Include action,
+  session-instance, revision, and build-attempt identities where available,
+  stage, outcome/error code, credential-redacted diagnostic detail, and retained
+  artifact/result references. Publish an attempt ID when created and completed
+  artifact references at consistent stage boundaries, including before later
+  failure. GUI callbacks shall discard events for superseded sessions/revisions
+  or destroyed windows. A generic failure message alone is insufficient.
+- Check cancellation at declared safe points and stop managed native child work
+  with bounded cleanup. A review/approval commit is non-cancellable once its
+  atomic transaction starts: finish or roll back the transaction and report its
+  actual outcome. Cancellation arriving after successful completion shall not
+  relabel committed work as cancelled. Track operational cancelled/interrupted
+  status separately from the existing engineering BuildState enum, retaining
+  the last consistent build stage and audit history. Retry/resume is explicit
+  through the orchestrator with rechecked bindings; startup/load never resumes
+  a worker or replays a decision automatically.
+- Separate a completed operation from subsequent log/recovery persistence.
+  A failed checkpoint after an input or release commit emits a recovery warning
+  while preserving the actual decision, engineering status and result payload.
+  Late cancellation cannot reclassify that commit. A checkpoint-only failure
+  still reports failed checkpoint creation without changing engineering state.
+- Retain completed artifacts and diagnostics from failed or interrupted
+  attempts, with exact revision/hash/stage bindings. Expose 2D previews whenever
+  their corresponding artifacts are parseable, and enable the 3D viewer whenever
+  a parseable footprint/STEP pair and placement metadata exist, even if validation
+  failed. Label preliminary, failed, draft, or stale content; keep release
+  approval blocked. Missing or unparseable artifacts produce a clear inspection
+  status, never substitute geometry or a false valid scene.
+- Prepare native STEP imports/tessellation in a bounded isolated process so a
+  malformed input or CAD worker termination cannot kill the desktop application.
+  Record the chosen renderer's native-failure boundary and resource ownership.
+  Graphics initialization/context failures shall disable or close the affected
+  viewport with a logged error, leaving the main session inspectable/saveable.
+  Release subprocesses, CAD handles, meshes, textures, graphics contexts, and
+  callbacks on failure/close/session change. Inject preparation crashes/timeouts
+  and renderer initialization/context errors in acceptance checks; UI-thread
+  separation alone is not native-failure containment.
+
+### Phase 12 main-window controls and saved sessions
+
+- The **Open 3D Placement Viewer** action shall be a button on the Phase 9.5
+  main GUI. It may initially be hidden or disabled, but shall appear or become
+  enabled as soon as the viewer's required data is available for the current
+  session, including failed attempts with parseable artifacts under the worker
+  contract above. Readiness shall not require successful validation or final
+  release approval. Keep the button
+  available while that session remains ready, including after the popup is
+  closed. Clicking it shall reopen the popup with the current session's data
+  and retained review/placement state, without rerunning extraction, AI
+  interpretation, or generation. If the popup is already open, bring it to the
+  foreground instead of creating a duplicate. Closing the popup shall not
+  discard session data, review edits, or log history. Recompute availability
+  when the current session changes, is cleared, or is loaded.
+- **Save** shall open a destination chooser and write a versioned session file
+  or bundle containing all data available at the time of saving. Support
+  partially completed and unapproved sessions, including setup-only sessions;
+  saving shall not require a generated component or release approval. Include
+  the selected source PDF and its identity, full required part number, non-secret
+  processing settings, extraction results and source regions/images, Evidence,
+  AI candidates and provider/model metadata, conflicts, IR and revision history,
+  pending review proposals and unapplied edits, overrides and review/approval
+  records, build/progress states, generated artifacts, validation results and
+  manifests where present, review/placement UI state, and the redacted log
+  history. Retain immutable identities, provenance, hashes, and decision bindings
+  under sections 163/175. Stages that have not run remain incomplete; saving
+  shall not fabricate results or approvals. Embed or package the session's
+  source and data files so restoration does not depend on their original paths.
+- **Load** shall open a saved-session chooser and restore the saved inputs,
+  results, unfinished work, review/placement state, and log history, including
+  after an application restart. Restore available data without automatically
+  rerunning processing or submitting data to an AI provider. Validate the session
+  format/schema versions, required objects, hashes, and retained references
+  before replacing the current session. Restore approval bindings only when
+  their exact inputs/artifacts remain valid under the existing review services;
+  loading shall not grant approval or bypass validation. Recompute viewer-button
+  readiness from the restored session so a ready popup can be opened again.
+- Disable **Save** and **Load** while a processing or review/build worker is
+  changing session data; re-enable them after completion, failure, or cancellation
+  cleanup so saves capture a consistent state. Loading shall never restart an
+  in-flight worker automatically. Confirm before replacing unsaved session
+  changes. Cancelled choosers leave the current session unchanged. Write saves
+  atomically and stage/validate loads before applying them; a failed save leaves
+  any previous saved file intact, and a failed load leaves the current session
+  intact. Report success, cancellation, and read/write or validation failures
+  through the main GUI and its existing log box.
+- Saved sessions shall exclude API keys and other credentials, including from
+  settings, logs, errors, and provider metadata. Keep credentials in the existing
+  secure credential store; loading a session shall not overwrite or reveal them.
+
+### Phase 12 session format, source snapshots, and recovery
+
+- Define a versioned saved-session transport schema/index that supports every
+  stage, including no IR, incomplete/unreviewed IR, drafts, pending proposals,
+  and failed/interrupted builds. Separate mutable draft/UI/task state from exact
+  immutable engineering/history objects, with paths, object kinds, lengths,
+  versions, and hashes. Reuse sections 163/175's verified immutable contracts
+  where applicable, but do not require a reviewed head or an approved release
+  to save. Existing revision/replay bundles alone cannot represent this scope.
+  Reject incompatible versions or use an explicit, audited migration that
+  retains original bytes; never silently reinterpret approved content.
+- Each working session shall own an isolated local SQLite database and asset
+  store in a user-writable application location independent of the checkout or
+  current directory. Stage a load into a fresh working database/store, validate
+  the entire transport, then switch the UI atomically. Repeated loads and older
+  saves open separate working instances; preserve saved engineering/audit IDs
+  and hashes, assigning a fresh operational instance ID for callbacks. Loading
+  shall not collide with or rewind a newer retained database/head. Imports into
+  another existing project's history remain separate explicit service operations
+  with normal identity/head checks, not implicit effects of **Load**.
+- Capture immutable source PDF bytes into the session asset store no later than
+  processing or the first setup-only save, and process that snapshot. Its SHA-256
+  shall match the document identity referenced by extraction/evidence. Save the
+  retained snapshot, never reread a mutable original path to reconstruct an
+  extracted session. Original-path modification/deletion leaves old provenance
+  intact; accepting changed source bytes requires an explicit new acquisition.
+- Track unsaved changes and offer **Save**, **Discard**, or **Cancel** before
+  main-window close, session clear/replacement, or starting another component.
+  Cancel aborts the requested transition. Save completes successfully before
+  switching/destroying; failure retains the session. Discard affects unsaved
+  draft/session changes, not retained reviewed history. Closing during work
+  shall finish the safe cancellation/commit-cleanup path before final teardown;
+  the viewer's close alone never discards the main session.
+- Write atomic recovery checkpoints at consistent boundaries after extraction,
+  completed build stages, review commits, and failure/cancellation cleanup, plus
+  idle draft-edit checkpoints under a recorded policy. Internal checkpointing
+  uses the owning worker's stable snapshot/transaction boundary even while the
+  manual **Save**/**Load** controls are disabled. A checkpoint is not an explicit
+  user save and does not clear unsaved-change status. On restart after abnormal
+  termination, offer inspection/recovery of the last complete verified checkpoint;
+  ignore incomplete writes and retain the preceding good checkpoint. Recovery
+  re-establishes session/principal/readiness bindings without automatically
+  starting processing, provider calls, retries, or review/approval actions.
 
 ### Phase 12 viewer window and banner
 
@@ -461,22 +973,23 @@ popup owned by that GUI.
   12's viewer in a separate, resizable, modeless wx window owned by the Phase
   9.5 GUI. The main GUI remains usable while the popup is open. The popup
   has its own client dimensions and resize handling; closing it closes only
-  the viewer. This banner requirement applies to the viewer popup; the Phase
-  9.5 setup window retains its existing banner requirement.
-- Display the complete banner at the top of the viewer popup at client
-  coordinates `(0, 0)`, above its placement controls and viewer content. Its
-  displayed width shall equal the popup's full **client-area width**, excluding
-  operating-system borders, with no left/right padding or margins. Keep the
-  banner outside split panes and scrollable content so scrolling or adjusting
-  the viewer layout does not narrow or move it.
+  the viewer. The Phase 12 viewer popup shall have no banner; its scrollable
+  viewport and review controls shall use the complete available client area.
+- Display the complete `resources/PartSmith-Banner3.png` banner at the top of
+  the Phase 9.5 main GUI at client coordinates `(0, 0)`. Its displayed width
+  shall equal the main window's full **client-area width**, excluding
+  operating-system borders, with no left/right padding or margins. It shall
+  reach both client edges and expand or shrink with the GUI. Keep the banner
+  outside split panes and scrollable content so scrolling or adjusting the
+  controls does not narrow or move it.
 - Preserve the source image's aspect ratio and show the entire image without
   cropping, tiling, or stretching either axis independently. For positive
   client width `W` and source dimensions `Iw` by `Ih`, set the displayed width
-  to `W` and height to `max(1, round(W * Ih / Iw))`. Here `W` is the popup's
-  client width. The source asset is currently 2057 by 765 pixels; derive
-  dimensions from the loaded image rather than hard-coding them. Resample from
+  to `W` and height to `max(1, round(W * Ih / Iw))`. Here `W` is the main GUI's
+  client width. Derive source dimensions from the loaded image rather than
+  hard-coding them. Resample from
   the original image with high-quality scaling, including when enlarging it.
-- Recompute banner dimensions on initial layout, popup resize, maximize,
+- Recompute banner dimensions on initial layout, main-window resize, maximize,
   restore, and display/DPI changes. Update layout and painting on the wx GUI
   thread; use consistent client-coordinate units for width and height and
   account for the display scale when creating the bitmap. Ignore transient
@@ -492,9 +1005,9 @@ popup owned by that GUI.
   relative to the application files. Both the standalone and KiCad launch
   paths shall work from an unrelated current working directory, without
   requiring a repository checkout or downloading the image. A missing or
-  unreadable asset shall produce a clear viewer-open error identifying the
-  resource and leave the main GUI usable; do not silently substitute an older
-  banner.
+  unreadable asset shall produce a clear main-GUI log message identifying the
+  resource and leave setup, review and the banner-free viewer usable; do not
+  silently substitute an older banner.
 
 ### Phase 12 scripting logs
 
@@ -514,16 +1027,63 @@ popup owned by that GUI.
   persisting messages from any source, including captured subprocess output
   and exceptions. Dispatch log updates onto the wx GUI thread and keep work
   and pipe reading outside that thread so both windows remain responsive.
-  A viewer-open failure, including a missing/unreadable banner, shall also be
+  A viewer-open failure or missing/unreadable main banner shall also be
   reported in the Phase 9.5 log box.
 
 **Phase 12 gate (blocking):** End-to-end UI tests demonstrate that a user
 can inspect evidence, conflicts, IR, symbol, footprint, 3D placement,
 overrides, and validation results, then explicitly approve the
 deterministic build.
+All milestones 12.1–12.10 require recorded completion evidence, including the
+viewer navigation/inspection controls and placement fault checks above.
+Complete part checkout includes the generated symbol, footprint and 3D model;
+footprint/model placement inspection alone is insufficient. Source and installed
+wheel checks shall cover actual symbol previews/pin mapping in the separate
+viewer, missing/malformed/stale symbol diagnostics, mapping faults, and offline
+restoration with retained viewer page selection and unchanged approval bindings.
 Tests start with unreviewed evidence, approve inputs before generation, and
 approve final outputs separately. Pin edits exercise section 121.7's supported
 reorder, renumber, and removal operations without retargeting historical evidence.
+
+Main-window control tests shall cover the viewer button before readiness, its
+appearance/enabling when ready, closing and reopening with retained data and
+edits, foregrounding an existing popup without duplication, and readiness
+changes after clearing or loading a session. Save/load round trips shall cover
+setup-only, extracted/AI-candidate, pending-review, and generated/validated
+sessions. After an application restart, restore all saved data and bindings,
+unfinished edits, and log history with the original source paths unavailable;
+verify no automatic processing/provider call or new approval occurs and that a
+ready viewer can be reopened. Cover busy-state disabling, cancelled choosers,
+unsaved-change confirmation, unsupported versions, missing/tampered objects,
+and read/write failures with no partial replacement or loss of prior data.
+Use dummy credentials and verify they are absent from saved session content.
+
+Additional integration checks shall cover all of the following:
+
+- Initial component/root/inventory assembly from extracted evidence without
+  fixture IR; exact supported PDL binding; incomplete, missing/ambiguous PDL, and
+  unsupported-strategy cases that remain inspectable but cannot generate.
+- Per-worker SQLite ownership and rollback, streamed structured stage outcomes,
+  cancellation before/during/after atomic commits, late callbacks from replaced
+  sessions, native timeout/termination, and retained failed-build artifacts.
+- Diagnostic viewer access after deliberate validation failure, with exact
+  artifact/stage bindings and no release approval or substituted geometry.
+- Exact decimal no-change save/load/review round trips, deliberate unit edits,
+  invalid numeric input, and displayed unit/nonuniform scale and mirror values.
+- Selected-page/OCR/DPI retention and original-page overlays, provider selections
+  at and above record/byte limits without automatic truncation/submission, and
+  bounded large-document/cache/session-load behavior under recorded budgets.
+- Source modification/deletion after extraction, repeated loads, older-save
+  loads after newer work, incompatible versions, and object/identity integrity.
+- Malformed STEP, isolated CAD preparation failure, unavailable graphics,
+  renderer context errors, repeated viewer close/reopen, resource cleanup, and
+  continued main-window inspection/save access.
+- Save/Discard/Cancel on main close, clear, replacement, and new-component start;
+  termination during checkpoint writes and after review commits; recovery of
+  the last complete checkpoint with no automatic work or duplicated decisions.
+- Trusted local reviewer identity, mismatched/missing principal, nonempty
+  decision reasons, and forged session/document actor fields that cannot grant
+  current authority or change retained audit identities.
 
 Verify that source distributions and installed wheels contain Banner3 with
 bytes matching the repository asset, then launch the installed GUI through
@@ -531,11 +1091,13 @@ both supported launch paths from outside the repository and open the separate
 viewer popup. Automated layout checks and recorded visual inspection shall
 cover initial display, minimum supported size, enlargement, repeated resizing,
 maximize/restore, closing/reopening the popup, and supported display/DPI changes.
-The banner remains at `(0, 0)`, spans the popup's full client width, shows the
-complete image, and has proportional height within one client pixel; placement
-controls remain accessible and both windows remain responsive. Closing the
-popup leaves the main GUI running. Negative resource checks verify the reported
-missing/unreadable-banner viewer-open error and continued main-GUI usability.
+The main GUI's Banner3 remains at `(0, 0)`, reaches both client edges, spans its
+full client width, shows the complete image, and has proportional height within
+one client pixel as the GUI expands or shrinks. The separate Phase 12 viewer
+contains no banner and uses its available client area for the scene and controls.
+Placement controls remain accessible and both windows remain responsive. Closing
+the popup leaves the main GUI running. Negative resource checks verify the
+reported missing/unreadable main-banner log message and continued usability.
 Phase 14 shall repeat the packaging and launch checks against the production
 application bundle.
 
@@ -548,22 +1110,384 @@ credential redaction before display or persistence.
 
 ## Phase 13 — KiCad integration
 
-1. Extend the Phase 8 versioned KiCad adapter.
-2. Expand CLI compatibility/validation coverage.
-3. Add supported IPC operations.
-4. Add round-trip tests.
-5. Add installation/export workflow.
+Extend the verified launch-only entry, native CLI adapter and immutable release
+services into an explicit project/library integration workflow. Installation
+creates separately validated and authorized aggregate bytes under section 174.1.
+The Phase 12 viewer and input/release decisions remain component review surfaces;
+opening them or loading a saved session does not authorize project installation.
 
-**Phase 13 gate (blocking):** The versioned KiCad adapter, CLI validation,
-and supported IPC operations pass integration and round-trip tests. An
-approved component is installed/exported and usable in the supported
-KiCad 10.x environment.
-Tests install two approved components into one packed symbol library, update
-one while preserving the other, reject stale integration plans, and recover
-from failed publication. Installed aggregate hashes, source bindings, relocation,
-and rollback obey sections 174.1 and 216–218; source bundles remain byte-identical.
+**Entry check:** Record a current Phase 12 PASS, review its R12-01/R12-02
+correction evidence, and inventory the actual plugin/runtime/data formats.
+Under v0.9.7, missing installation contracts are Phase 13.1 work, so R13-01 does
+not block entry to that milestone. Its obligation remains open until 13.1 PASS.
+Record the exact KiCad build, platform, PartSmith Python/CAD tuple and existing
+source/runtime and historical evidence identities. Distinguish implementation
+evidence from planned work.
+
+**Phase 13 build/test scope — PCM only:** Build the KiCad PCM ZIP and validate
+its payload and installed/prepared runtime. Phase 13 does not build, install or
+test a PartSmith wheel, require a wheel artifact, or use wheel resource-parity
+results as its acceptance path. Supersede earlier Phase 13 source/wheel language,
+including overlapping packaging clauses in referenced sections, with source/
+PCM checks. Earlier Phase 0–12 test results and distributions retain their
+historical identities and scope; affected engineering regressions are rerun
+through the Phase 13 validation paths without rebuilding historical wheels.
+Third-party binary dependencies remain part of the selected runtime provision.
+
+### Phase 13 numbered work items
+
+1. Deliver the closed, versioned integration-plan, installation-manifest,
+   authorization-binding, validation/audit and journal contracts in section
+   174.1, with typed Python APIs, canonical hashes, fixtures and packaged schemas.
+2. Prove source bundle/export/import byte preservation and revalidate affected
+   Phase 8/12 contracts. Close R13-01 only after source and isolated PCM contract-
+   payload checks, evidence archival and all affected input/artifact hashes pass.
+3. Extend the versioned KiCad adapter with a tested capability matrix, bounded
+   native CLI checks and real supported PCB Editor IPC operations.
+4. Define and validate plugin registration, versioned launcher configuration,
+   PCM ZIP metadata/layout, dependency/runtime provisioning, install/update/
+   uninstall, runtime isolation, IPC session identity and transient credentials.
+   Retire the PartSmith wheel build/test path from active Phase 13 automation
+   and replace its resource coverage with PCM ZIP/installed-runtime checks.
+5. Implement read-only planning/dry run, exact target/base checks, collision
+   detection, immutable integration persistence and explicit scoped targets.
+6. Stage deterministic packed symbols, footprints and unchanged STEP bytes;
+   validate all references and semantic preservation against approved sources.
+7. Implement explicit integration authorization, complete-generation publication,
+   recoverable journaling, concurrent-edit rejection and complete rollback.
+8. Connect the desktop/headless services to deliberate install/update/rollback
+   operations, preserving component review and source-bundle identities.
+9. Prove real target-KiCad usability, CLI/IPC round trips, two-component update
+   preservation, negative cases, fault recovery and final source/PCM closeout.
+
+### Phase 13 ordered implementation milestones
+
+Complete these checkpoints in order. A checkpoint PASS authorizes the next
+milestone, not the overall Phase 13 PASS. Preparatory capability discovery may
+remain read-only; target-mutating work starts only after its dependencies pass.
+
+#### 13.1 — Integration contracts and R13-01 closure
+
+Implement section 174.1's schema-version-1.0 objects as closed Draft 2020-12
+schemas and frozen typed contracts. Declare the canonical profile, deterministic
+identities, ordering and null/absence rules before adding a planner or publisher.
+Package every schema and fixture dependency needed to validate offline.
+Authorization binds exact plan/content/target/base/check identities; actor/time
+are separate audit data. Component release approval cannot supply that binding.
+
+Add valid, invalid and golden fixtures covering unknown/omitted fields,
+unsupported versions, bad digests, changed source/installed hashes, stale bases,
+wrong targets, duplicate/colliding paths, forbidden self-hashes and hash cycles.
+Test that identical deterministic inputs produce identical canonical bytes and
+hashes while new audit actor/time/attempt IDs do not change engineering content.
+Verify export/import preserves approved source manifests/artifacts/history
+byte-for-byte; revision-only and unfinished desktop archives cannot masquerade
+as approved installation sources.
+
+Re-run affected Phase 8 bundle/release and Phase 12 identity/decision checks
+against source. Also exercise the contract/schema/resource checks from an
+isolated PCM payload fixture, without a repository fallback or PartSmith wheel;
+compare exact schema/resource bytes and verify offline reference resolution.
+This contract-only fixture uses the intended PCM payload layout and the declared
+test runtime. It does not require the complete installed plugin/IPC runtime
+which 13.2 delivers; full installed-runtime regressions remain due in 13.8.
+Archive the prior finding and receipts, record commands/results/current artifact
+identities, refresh all affected active hashes including CI's manifests, and
+verify them under the repository closeout instructions. Existing distributions
+and historical checks retain their scope. Document any remaining failure.
+
+**Completion check:** Every contract case, immutable-source check, affected
+regression and final hash check passes. Record 13.1 PASS and mark R13-01 RESOLVED.
+Defining requirements or refreshing a hash alone cannot close the finding.
+
+#### 13.2 — Pinned adapter, plugin and target feasibility
+
+Record installed KiCad CLI/API capabilities, adapter/serializer versions and a
+pinned official Python IPC binding with its locked dependencies. The initial
+desktop target remains Windows AMD64 and KiCad 10.0.6. Additional platforms or
+KiCad patches require separate executable evidence before being advertised.
+KiCad 10 IPC checks use a running PCB Editor. Do not require a headless IPC
+server or schematic-editor IPC based on newer-development documentation.
+Record native/API units and coordinate frames; version the conversion to the
+exact-decimal IR/placement conventions in STD-005 and section 92. Known-unit,
+angle/orientation and conversion round-trip fixtures detect scale/axis mistakes.
+
+Preserve external PartSmith Python 3.12/CAD execution. Choose and document the
+supported launch mechanism for the pinned build and PCM package: the current
+legacy ActionPlugin is a development launch entry; an IPC action uses KiCad's
+version-matched `plugin.json` and a tested Python or executable runtime boundary.
+Keep that registration separate from PartSmith's versioned launcher configuration
+in section 174.1.5. A KiCad-managed external Python environment is acceptable
+only after the interpreter, dependencies and CAD tuple pass the same engineering
+runtime checks; generation cannot use the embedded legacy `pcbnew` interpreter.
+
+##### PCM package and runtime installation contract
+
+Use KiCad PCM as the primary plugin installation/update/removal path. Deliver
+an exact-layout ZIP with root `metadata.json` and plugin content directly under
+`plugins/`; PCM creates the installed package namespace. Include only owned
+payload/resources and validate against the schemas shipped with KiCad 10.0.6.
+The package manifest and IPC `plugins/plugin.json` are distinct contracts.
+The PCM version entry declares `runtime: "ipc"` for an IPC package; the action
+registration separately declares Python or executable launch behavior. Existing
+manual-copy/`partsmith-kicad-setup` instructions remain development/legacy paths.
+Customers do not install a PartSmith wheel, clone the repository, or run pip.
+Phase 13 builds and tests the PCM package directly; there is no internal
+PartSmith wheel build, install, regression run or required wheel receipt.
+Carry schema/migration/asset/plugin byte-parity and offline loading coverage
+into PCM payload and installed-runtime checks so that resource omissions fail.
+
+Retire the active `Verify installed wheel and packaged resources` CI step,
+PartSmith wheel build/reinstall commands and wheel-specific verification harness
+paths when implementing this milestone. Include the installed-wheel PDF
+stability job, `dist/*.whl` upload, and the wheel-resource assumptions in
+`scripts/verify_pdf_stability.py` and `scripts/verify_viewer_prototype.py`.
+Source-test setup must also avoid creating an editable/release PartSmith wheel;
+load the declared source tree directly. Replace these paths with deterministic PCM ZIP
+construction, inventory/schema checks and checkout-independent payload/runtime
+tests. Retarget shared tests rather than deleting engineering assertions. Record
+the retired entry points and replacement commands; no active Phase 13 command
+may invoke PartSmith wheel generation or depend on a wheel installation. Retain
+historical gate logs/artifacts and their hashes. Third-party dependency wheels
+may still supply the verified runtime; they are not PartSmith release artifacts.
+
+Use a stable package identity and explicit version, license, compatible KiCad/
+platform range and packaged-size inventory. Archive metadata has exactly one
+version; repository metadata adds download URL/size/SHA-256 after ZIP creation.
+Exclude `download_*` fields from archive metadata to avoid a self-hash. Build
+ZIPs deterministically and record final inventory/hash. Validate repository
+fixtures offline; hosted release/submission is separate work and not required
+for the local PCM test. Official repository listing is not assumed.
+
+For Python IPC, ship `plugins/requirements.txt` with pinned dependency closure;
+KiCad prepares the per-plugin environment in the background. Verify its actual
+Python 3.12 interpreter and binary-package availability for the declared OS/ABI.
+The pinned 10.0.6 loader uses pip's binary-only requirement installation, so a
+source-build fallback cannot satisfy readiness. Do not rely on `min_version`
+alone to enforce the interpreter. An executable IPC package may instead carry
+an owned bundled runtime/application, provided its real PCM launch and complete
+runtime/license/resource inventory pass. Select and record the supported
+mechanism in 13.2; a separate customer runtime installer is not the default.
+
+Declare first-load network/download behavior, dependency provenance and the
+offline production path. For offline acceptance, use a tested local binary
+dependency supply or a bundled executable/runtime; an offline ZIP alone does
+not prove Python environment preparation. Show preparation, ready and failed
+states; actions become usable only after runtime/schema/CAD diagnostics pass.
+Test denied network, incompatible/missing binaries, interrupted preparation,
+environment recreation and retry without touching component history or secrets.
+
+Exercise **Install from File** and configured-repository fixtures where offered.
+For repository install/update/removal, exercise the Pending/Apply workflow;
+record the actual local-file behavior rather than assuming identical queuing.
+Verify PCM's installed version and the plugin action after restart/reload.
+Test update, uninstall and reinstall through PCM, including an active action
+and failed preparation. Keep databases, credentials, journals and generated
+project libraries outside disposable package/environment paths. Updating plugin
+code must not publish or roll back a component library. Document environment
+cache cleanup and recovery; do not edit PCM's installed-package registry directly.
+
+Documentation basis: [KiCad addon packaging](https://dev-docs.kicad.org/en/addons/index.html),
+[KiCad 10 PCM workflow](https://docs.kicad.org/10.0/en/kicad/kicad.html#_installing_packages)
+and [IPC runtime guide](https://dev-docs.kicad.org/en/apis-and-binding/ipc-api/for-addon-developers/).
+Use the [10.0.6 loader](https://gitlab.com/kicad/code/kicad/-/raw/10.0.6/common/api/api_plugin_manager.cpp)
+and installed schemas to resolve version-specific behavior; current web schemas
+and development documentation cannot add unsupported capabilities to that target.
+
+Bind an IPC connection to the launching/explicitly selected KiCad instance,
+verified project/board context and API version. Multiple instances, changed
+boards, restart, missing API, denied access and connection loss fail clearly.
+Endpoint/token values remain transient; redact the IPC token from logs and
+exclude it from plans, archives, manifests, hashes and journals. Standalone
+launch without an IPC session retains inspection/export/planning; connection is
+explicit and missing live capabilities are shown without inventing a session.
+
+Before committing an installer layout, prove a feasible publication boundary
+covering the whole library/reference/table set on the claimed filesystem.
+Declare how KiCad resolves the active generation and refreshes cached libraries.
+A prototype that only rejects UNSUPPORTED_ATOMIC_INSTALL cannot pass the final
+gate; at least one real supported target must work through publication/recovery.
+
+**Completion check:** Source and installed launch/resource checks pass; a real
+PCM ZIP install, first-load preparation, launch, update, uninstall and reinstall
+pass on the declared target, with metadata/schema/layout/dependency parity,
+failure/recreation checks and separate plugin/project-data ownership recorded.
+A real PCB Editor session completes capability/version discovery and a supported
+read/inspection operation against the intended board. Wrong-session, restart,
+token-redaction, unavailable-operation and timeout cases pass. The publication
+feasibility result and exact supported target matrix are recorded.
+
+#### 13.3 — Plan, target inventory and immutable integration store
+
+Use a complete approved release package, resolving immutable source approval,
+manifest, all three final artifact hashes and required validation objects.
+Never infer approval from a saved GUI label, a reviewed IR or a proposal.
+Keep source-object hydration/import explicit, bounded and hash-verified.
+
+Snapshot the exact target identity, installed generation, file/table hashes and
+expected absences. Detect project/global table scope, nickname/name collisions,
+unmanaged content, existing/concurrent edits, unsafe path aliases and removals.
+The first supported installation scope is project-local; global-table mutation
+requires its own explicit scope/capability and publication proof. Existing
+unrelated entries and components remain intact.
+
+Freeze/hash the plan before staging. Dry run reports create/modify/delete,
+nickname/path/table changes, source identities, conflicts and intended generation
+without altering target files, library tables, component BuildState or approvals.
+Persist immutable plan/manifest/check/decision objects and append-only attempt
+events in an application-owned integration store via a forward migration.
+Migrations preserve existing releases and use normal SQLite transaction ownership.
+Keep publication state separate from component BuildState and desktop task state.
+
+**Completion check:** First install, two-source plan, update/removal, identical
+no-op and stale/concurrent-base fixtures have explicit results. Unsafe paths,
+duplicate aliases and unmanaged collisions are rejected. Dry-run hashes of the
+entire target and component store remain unchanged, and migration/reopen tests
+preserve prior immutable records.
+
+#### 13.4 — Deterministic staging and exact semantic validation
+
+Stage the complete proposed generation in an owned isolated directory. Combine
+the declared components into `BFT_Symbols.kicad_sym`, assemble the declared
+`.pretty` library and STEP/reference layout, and preserve unmanaged entries only
+under a declared, verified policy. Apply only the versioned namespace/path
+relocation allowlist; retain component originals in their content-addressed store.
+
+Verify native KiCad parsing, required symbol-to-footprint/pin-to-pad mappings,
+model path resolution, placement and versioned semantic comparisons on exact
+staged bytes. Compare engineering fields, including geometry and symbol/pin
+properties, for all source and previously installed retained components. Copy
+STEP bytes unchanged. A changed electrical/geometry/placement value requires a
+new component release; integration cannot silently repair it. Diagnostic renders
+or previews do not become the source of replacement engineering data.
+
+Produce the deterministic installation manifest after final files/checks are
+fixed; verify it separately and retain post-manifest results in audit. The
+generation identity is its external canonical hash, not a self-field or random
+run ID. Do not embed that hash into file bytes which determine the same hash.
+Any staged-byte or mapping change invalidates bound checks and authorization.
+
+**Completion check:** Two clean staging runs with fixed source/target/base inputs
+have identical file, deterministic-check and manifest hashes. Allowed relocations
+pass; pin/type/mapping, geometry, placement, reference, extra/missing entry and
+tampered STEP faults fail. Updating one of two components preserves the other's
+engineering content/source bindings and all immutable source hashes.
+
+#### 13.5 — Exact integration review and authorization
+
+Show the frozen plan, source approvals, expected base, semantic differences,
+final file/manifest hashes and required check results. Obtain a fresh trusted
+AuthenticatedPrincipal and a deliberate approve/reject decision with a reason.
+Store the authorization binding and actor/time/decision in separate immutable
+audit objects. Block approval for stale/incomplete/failed or wrong-target content.
+
+Reusing authorization requires identical plan, manifest, target, expected base
+and required check bindings. Changes require a new plan/staging/check/review
+cycle. An idempotent retry resolves the existing exact decision/publication
+receipt; it does not duplicate an approval or silently approve changed content.
+Late cancellation and checkpoint/log failure report the actual committed outcome
+with separate recovery warnings, applying the Phase 12 decision rule.
+
+**Completion check:** Input approval, release approval, saved actor/label and
+inspection alone cannot authorize installation. Authenticated decisions bind the
+exact content; stale-base/changed-target/hash/check failures are rejected.
+Decision rollback, storage failure, late cancellation and retry cases preserve
+one truthful immutable decision and the prior recoverable state.
+
+#### 13.6 — Atomic publication, conflict handling and rollback
+
+Implement the supported complete-generation mechanism from 13.2 under sections
+216–218. Lock the installation target, recheck expected base and all staged
+hashes/check/authorization bindings, persist a recoverable journal, and perform
+one declared publication boundary covering files and library-table references.
+Sequential per-file replacements cannot be reported as atomic publication.
+Unknown files, external edits or a changed base fail without overwriting them.
+
+Journal previous/new manifest/generation hashes, authorization and publication
+intent before switching. On restart, reconcile only a complete verified old or
+new generation, preserve failed attempts, and complete audit consistently.
+Rollback checks the current base under the same lock and restores the complete
+prior generation and table/reference state, recording a new audit event.
+Cancellation before publication cleans owned staging; once the publication
+boundary starts, resolve its real committed outcome before reporting or closing.
+
+**Completion check:** Test faults before staging, after checks, before/during
+publication and after the switch before audit completion. Inject process crash,
+disk/write/permission failure, lock conflict and concurrent target edits. Every
+case retains or recovers a complete verified generation without partial success,
+duplicate authorization or lost history. Complete rollback and unsupported-target
+rejection pass on the declared platform/filesystem.
+
+#### 13.7 — Project workflow, IPC round trips and safe recovery
+
+Expose deliberate plan/dry-run, stage/inspect, authorize, publish/update and
+rollback through shared headless/desktop services. Keep their controls and status
+separate from **Approve Inputs** and **Approve Exact Release**. Save/load may
+retain integration object references and unfinished drafts under an explicit
+versioned session extension; it never restores live authority or auto-publishes.
+Recheck source approvals, current target/base and current principal on resume.
+
+Before target changes, detect an unsaved or actively edited KiCad project. Offer
+an explicit save/reload/close or Cancel policy for supported operations; never
+discard editor changes or trust only an old on-disk snapshot. Refresh/reopen
+libraries using the declared tested mechanism, and invalidate readiness when
+the connected board/project or source release changes. Keep blocking reasons
+visible while allowing inspection and session saving.
+
+In a disposable real project, install and use the component in the schematic
+and PCB with its installed footprint and STEP references. Check native save/
+reopen and CLI compatibility, then use supported PCB Editor IPC to inspect the
+installed component instance and compare its pin/pad/placement semantics to the
+declared source/mapping. Schematic usability is native-editor/CLI evidence for
+KiCad 10, not an invented schematic IPC operation. Board writes, if offered,
+need an explicit supported transaction/undo contract and extra acceptance cases.
+
+**Completion check:** Source and installed entries exercise standalone and
+PCM-installed KiCad workflows without a repository checkout or PartSmith wheel
+installation. Correct-session IPC, native save/reopen, two-component
+installation/update and project-relative relocation. Unsaved-work Cancel,
+disconnection, switched board, session load and repeated invocation preserve
+project data, immutable approvals and truthful installation state.
+
+#### 13.8 — Full Phase 13 gate and evidence closeout
+
+Run all milestone checks plus relevant Phase 8/9/12 regressions against final
+source and installed PCM runtime bytes. Keep offline contract/CLI checks and
+real PCM/desktop/IPC integration evidence distinct. Test the exact final PCM ZIP,
+its payload and prepared/bundled runtime,
+resource identities, upgrade/removal/reinstall and declared network/offline path.
+Mocks are useful negative tests;
+they cannot replace the required real supported KiCad target. Record commands,
+runtime/capability locks, schema/plugin/data resource parity, target fixtures,
+canonical/golden hashes, semantic results, authorization/publication/rollback
+receipts and failure-injection evidence. Capture usable installed components
+and native project round trips. Apply the repository's hash closeout, including
+all affected active and CI manifests and artifact identities outside input maps.
+Record the 13.1 contract checkpoint in `docs/gates/phase-13.1-artifacts.json`
+and the full gate in `docs/gates/phase-13-artifacts.json`. Add their implemented
+offline contract/native-CLI source/PCM checks and input-map verification to
+CI when those receipts exist. Real desktop/IPC acceptance needs separately
+recorded supervised target evidence; a headless CI skip is not that evidence.
+
+**Phase 13 gate (blocking):** All numbered work items and milestones 13.1–13.8
+pass. Two approved components are usable in one installed packed symbol library;
+one can be updated while the other remains semantically unchanged. Source bundle
+bytes/approvals remain immutable. Required CLI/PCB IPC/native-editor round trips,
+exact authorization, stale-plan/concurrent-edit rejection, complete atomic
+publication, crash recovery and rollback pass on at least one declared target.
+All mandatory negative cases and final source/PCM/hash checks pass. Only this
+complete recorded gate permits Phase 14; 13.1 PASS alone closes R13-01. PCM package
+install/prepare/launch/update/uninstall/reinstall acceptance is mandatory; a
+successful manual plugin copy cannot substitute for it. Verify that Phase 13
+automation and gate receipts contain no new PartSmith wheel build/test dependency.
 
 ## Phase 14 — Packaging and clean installation
+
+Build on Phase 13's verified PCM package/runtime mechanism. The production
+plugin artifact remains a PCM ZIP; bundled runtime/dependency requirements
+below may be satisfied inside a PCM executable package or another proven PCM
+layout. They do not mandate a separate OS installer or a customer wheel/pip
+step. Phase 14 adds clean-machine, offline and complete production-matrix proof.
 
 1. Build the production application.
 2. Bundle the selected CAD runtime.
@@ -599,7 +1523,7 @@ with a deferred Component Acquisition extension\
 **Primary output:** Native KiCad symbol + footprint + 3D model, packaged
 as a usable component library through the PartSmith build workflow.
 Purchase from B.F.T. is a post-MVP extension, outside Phases 0–14.\
-**Original product-description date:** 2026-09-18; revised baseline date: 2026-09-20
+**Original product-description date:** 2026-09-18; revised baseline date: 2026-10-05
 
 ------------------------------------------------------------------------
 
@@ -689,6 +1613,11 @@ merely to use the supported PartSmith 3D-generation workflow.
 The installer shall provision the exact runtime dependencies required by
 the selected production backend.
 
+For the KiCad plugin, this installation starts in PCM under Phase 13.2.
+Runtime provisioning may use a verified managed Python environment or a bundled
+executable/runtime. Phase 14 must prove the complete production/offline path;
+"single installation" does not require a separate OS installer or manual wheel.
+
 ## INSTALL-002 — Development versus customer runtime
 
 Development environments may use package managers, Conda/Miniforge,
@@ -737,11 +1666,12 @@ The selected 3D backend and all runtime components capable of affecting
 generated STEP geometry shall be recorded in the build manifest and
 included in reproducibility metadata.
 
-# v0.9.6 Standards Lock and Implementation Baseline
+# v0.9.7 Standards Lock and Implementation Baseline
 
-## v0.9.6 External Reference Baseline
+## v0.9.7 External Reference Baseline
 
-The standards-lock review used the following current public documentation:
+The v0.9.6 standards lock is retained, with KiCad plugin/IPC capability references
+reviewed on 2026-10-05 for the Phase 13 plan. Its roles remain:
 
 - KiCad 10 documentation — native KiCad component/library concepts and
   KiCad 10 CLI behavior.
@@ -919,8 +1849,11 @@ the official KiCad IPC API and its maintained Python bindings.
 The adapter shall isolate KiCad-specific API objects from the core
 Component IR and validation model.
 
-Headless `kicad-cli api-server` operation may be used by automated tests
-where supported.
+For the pinned KiCad 10.0.6 target, IPC acceptance uses a running PCB Editor;
+the installed CLI does not offer `api-server`. Schematic-editor IPC and headless
+IPC available in a later KiCad release are outside this target's acceptance.
+Any future target requires a fresh installed-build capability record before
+using those operations. Supported CLI validation remains a separate boundary.
 
 The IPC adapter is an integration mechanism; it is not the authoritative
 source of engineering geometry.
@@ -1767,15 +2700,28 @@ engineering validation interface for determining whether the
 independently generated 3D model correctly belongs on the independently
 generated footprint.
 
+Complete part inspection also includes the actual generated schematic symbol.
+The same separate viewer shall provide **Symbol / Pin Mapping** alongside
+**3D / Footprint**, showing the native symbol preview, exact bytes/properties,
+pin numbers, names and electrical types, and correspondence to footprint pads.
+Follow the [Phase 12 inspection contract](#phase-12-viewer-controls-and-engineering-state)
+for artifact bindings, discrepancies, stale/missing data and read-only behavior.
+
 ## Viewer window and banner
 
 The viewer shall open as a separate, resizable, modeless popup from the Phase
-9.5 GUI extended in Phase 12, with `resources/PartSmith-Banner3.png` across the
-popup's full client width. The
+9.5 GUI extended in Phase 12. The viewer popup shall have no banner;
+`resources/PartSmith-Banner3.png` shall span the main Phase 9.5 GUI's complete
+client width, reaching both edges and scaling proportionally with that GUI. The
 [Phase 12 viewer-window contract](#phase-12-viewer-window-and-banner) defines
 the window behavior and banner placement, aspect ratio, packaging, resizing,
 and acceptance checks. Placement controls and the 3D viewport occupy the
-content area below the banner.
+viewer's full available client area.
+
+The main GUI's viewer button shall become available when the current session
+is ready and remain available after popup close. Its reopen behavior and the
+main GUI's **Save**/**Load** buttons follow the
+[Phase 12 main-window control and saved-session contract](#phase-12-main-window-controls-and-saved-sessions).
 
 All viewer-triggered scripting logs shall stream to the Phase 9.5 GUI's log
 box under the [Phase 12 scripting-log contract](#phase-12-scripting-logs).
@@ -1793,6 +2739,8 @@ The viewer should provide:
 -   Show coordinate origin and X/Y/Z axes
 -   Measure distances
 -   Inspect package dimensions
+-   Inspect the generated symbol and its actual pin-to-pad mapping
+-   Show symbol properties, pin names/electrical types and bound validation
 
 ## Placement controls
 
@@ -4410,7 +5358,7 @@ compatibility tests govern supported KiCad capabilities.
 
 ## Purpose
 
-v0.9.6 defines the revised implementation contract and phase-gate requirements.
+v0.9.7 defines the current implementation contract and phase-gate requirements.
 
 This document defines:
 
@@ -4510,6 +5458,7 @@ partsmith/
 │       │   └── model3d/
 │       ├── validation/
 │       ├── kicad/
+│       ├── integration/
 │       ├── build/
 │       ├── persistence/
 │       ├── viewer/
@@ -4546,6 +5495,7 @@ partsmith/
   `generators.model3d`     CadQuery/STEP generation
   `validation`             Deterministic validators
   `kicad`                  Version-specific KiCad adapters
+  `integration`            Plans, aggregate contracts, authorization/publication
   `build`                  State machine and dependency invalidation
   `persistence`            SQLite/project artifact storage
   `viewer`                 3D/2D review UI
@@ -4574,12 +5524,14 @@ review_id
 IDs should be UUIDv7 or another sortable UUID format.
 
 Human-readable names are separate from stable IDs.
+Integration plan and generation identities are canonical content hashes under
+section 174.1. Operational attempt/decision IDs remain separate audit identities.
 
 # 121. Component IR JSON Schema and Contract
 
 ## 121.1 Normative Component IR 1.2 contract
 
-IR 1.2 remains the v0.9.6 target. Its implemented Draft 2020-12
+IR 1.2 remains the v0.9.7 target. Its implemented Draft 2020-12
 [schema](../schemas/component-ir-1.2.schema.json) has ID
 `bft://schemas/component-ir/1.2` and `schema_version: "1.2"`. The existing
 [IR 1.0](../schemas/component-ir-1.0.schema.json) and
@@ -5764,6 +6716,13 @@ class KiCadAdapter(Protocol):
 ```
 
 The adapter must be version-specific.
+Phase 13 extends this boundary with a closed capability record and explicit
+PCB IPC session operations. The protocol above is illustrative; its existence
+does not prove that a particular KiCad build implements any listed operation.
+Core integration services own plans, approval bindings and publication policy;
+adapter code owns native serialization/comparison, target discovery and tested
+filesystem/editor mechanisms. Neither the launch plugin nor API clients may
+bypass those services to write approved installation content.
 
 # 157. KiCad Integration Strategy
 
@@ -6405,11 +7364,222 @@ authorization is allowed only for identical plan/content/target/base bindings.
 Publish through section 216 after rechecking bytes and the expected base.
 Changing the target mappings or base generation requires a new plan and checks.
 
-Phase 8 defines these schemas and proves that bundle export preserves source
-bytes. Phase 13 implements shared-library installation, semantic preservation,
-authorization, conflict detection, and rollback. Subsequent library updates do
-not invalidate the source component releases; they create new installation
-generations and preserve earlier installation manifests in history.
+Phase 8 retains verified immutable component export/import. Phase 13.1 defines
+the following installation contracts and revalidates source byte preservation;
+the rest of Phase 13 implements shared-library installation, semantic
+preservation, authorization, conflict detection and rollback. Subsequent library
+updates create new installation generations and retain earlier manifests/history
+without rewriting source component releases.
+
+### 174.1.1 Versioned objects and canonical identities
+
+Deliver a dedicated `schemas/integration-contracts-1.0.schema.json` with closed
+Draft 2020-12 definitions and typed `partsmith.integration` contracts. The schema
+must be packaged for offline validation; loader behavior follows the shared
+schema support conventions. New objects have explicit `schema_version: "1.0"`.
+Unknown fields/versions, missing required data, malformed hashes and invalid
+cross-object bindings fail. Existing Phase 8 and desktop schemas retain their
+identities; the integration schema does not silently extend their old meanings.
+
+Use canonical JSON profile 1.0 and lowercase SHA-256. Declare sorted unique
+ordering for source components, normalized relative files, nicknames, required
+rules and removals. Ordered engineering arrays retain their declared semantics.
+An object's identity is the hash of its canonical bytes in an external reference;
+plan/manifest objects have no own-hash field. The published generation identity
+is the installation-manifest hash. Run IDs, actor/time, temporary/absolute paths
+and IPC state are operational audit fields, excluded from deterministic objects.
+Filename/reference rules must avoid embedding a generation/manifest digest into
+artifact bytes whose hashes determine that same digest. Record logical mappings
+in the plan and runtime root resolution in audit.
+
+Freeze/hash in this dependency order: plan, staged files and deterministic
+pre-manifest checks, installation manifest, separate post-manifest verification,
+authorization binding and decision audit, then publication journal/receipt.
+Post-manifest results bind the finished manifest and remain outside it.
+
+| Object | Required identity/content bindings |
+| --- | --- |
+| IntegrationPlan | Stable project/library target IDs and scope; expected base generation/manifest, managed file/table hashes and absences; approved component IDs/revisions, release-manifest and all three artifact hashes; adapter/serializer/comparison versions; logical-to-target relative paths/nicknames; create/modify/delete and table operations |
+| InstallationManifest | Plan hash and same target IDs; complete retained/added source-component bindings; exact final relative file/table hashes and lengths; target/runtime/adapter versions; required deterministic validation and semantic-validation identities |
+| IntegrationAuthorizationBinding | Plan hash, installation-manifest hash, target identity, expected base generation/manifest and exact successful required-check identities; no editable actor or implicit component approval |
+| IntegrationValidationReport | Rule-set/comparator versions; source, target and staged content bindings; applicability and measured results for every required native/mapping/path/semantic rule; deterministic result content separated from run telemetry |
+| IntegrationAuditEnvelope | Unique decision/event/attempt IDs, operation sequence, authenticated subject/mechanism, time, reason, decision/outcome, object/check references and local execution/root-resolution metadata; no credentials |
+| IntegrationJournal | Target, exact expected previous and intended new generation/manifest/check/authorization references, owned staging location, recoverable publication intent/state and audit attempt identity; validated under its own version |
+
+For initial installation, expected base generation/manifest are paired nulls
+and newly created managed files declare expected absence; a file already present
+violates that precondition. Existing project library tables and unrelated
+content still require an exact pre-change inventory/hash and preservation under
+declared table operations. Null generation does not authorize clearing them.
+An existing owned installation without a resolvable manifest is an unknown base
+and must not be overwritten. For an update, both base values resolve to a
+verified generation and its complete inventory. A mixed null/present pair is
+invalid. Empty removal/check arrays are explicit; required checks cannot be
+omitted or empty merely to permit approval. Reject duplicate component identities
+with different releases, duplicate/colliding normalized paths and nicknames, and
+manifest files which lack a declared plan/source/managed-content basis.
+
+### 174.1.2 Binding validation and approval boundaries
+
+Schema validation verifies shape; services independently resolve referenced
+bytes/approvals and compare cross-object identities. Require complete exact
+final component releases and their successful required checks before staging.
+Verify the plan, manifest, validation report and authorization all refer to the
+same target, source set, mappings and expected base. A copied hash string or
+saved approval label is not evidence that the referenced object exists/passes.
+
+Approved source releases are immutable installation inputs. The revision bundle
+index may contain only history/inventories; RETRIEVAL_REQUIRED is not proof of
+locally available final artifacts. Resolve and hash-verify every object needed
+for the requested installation/validation before proceeding. Explicit bounded
+hydration may supply missing data without changing source bytes or approvals.
+Unfinished desktop session/proposal data cannot substitute for those releases.
+
+Actor/time/decision are authenticated through an immutable audit envelope bound
+to the authorization object. An imported historical actor, CLI text field, IPC
+token, launch action or component release approval cannot authenticate a new
+integration reviewer or authorize changed aggregate bytes. Reject unsupported
+versions or perform an explicit audited migration retaining the original object;
+migrated content requires fresh applicable checks/authorization.
+
+### 174.1.3 Persistence, state and idempotent recovery
+
+Use a forward SQLite migration for immutable integration objects, current-target
+generation bindings, authorization events and publication/recovery attempts.
+Do not edit applied migrations or rewrite existing build/review records.
+Current-generation updates use compare-and-swap on the exact expected base;
+an unrelated newer generation is a conflict. Store typed/hash-verified object
+references and retain the full prior generation/table state needed for rollback.
+
+Keep integration lifecycle separate from component BuildState. Its minimum
+operational states are PLANNED, STAGED, VALIDATED, AUTHORIZED, PUBLISHING,
+PUBLISHED, REJECTED, FAILED, CANCELLED, RECOVERY_REQUIRED and ROLLED_BACK.
+Record legal transitions and immutable sequence events. A later step cannot be
+claimed before its bound predecessor succeeds. Inspection and saving do not
+advance authorization/publication state; rollback preserves the failed attempt.
+
+The filesystem publication boundary and SQLite/audit commit are not one database
+transaction. Persist the journal/intent first and reconcile interruption into a
+complete verified old or new generation before recording final outcome. Bind
+retry keys to exact operation/plan/target/base/content identities. A repeated
+request for an already committed identical operation returns its verified receipt
+without duplicating decisions; changed bindings require a new attempt/review.
+Uncertain publication status is RECOVERY_REQUIRED, never an inferred success.
+
+### 174.1.4 Target, path and semantic validation
+
+Use stable logical target IDs and declared project/global library scope.
+Resolve local roots through the trusted adapter and bind that execution to the
+selected target in audit; a matching relative layout cannot authorize another
+project. Default Phase 13 acceptance is project-local. Changes to global tables
+or other scopes require explicit selection and separate capability/publication
+tests. Retain unrelated table entries, source bindings and installed components.
+
+Normalize relative path spelling, reject parent/absolute/drive paths and escaping
+symlink/reparse destinations, and test case/Unicode aliases on the actual target
+filesystem. Refuse nickname/filename collisions or unmanaged overwrites instead
+of silently renaming. Every relocation/removal is declared before plan freezing.
+Each final reference resolves within the declared complete generation/root scope.
+Recheck concurrent changes and editor dirty state before publication.
+
+Version the semantic comparator and its closed relocation-field allowlist.
+Cover every retained symbol/footprint entry, pin number/type and mapping,
+engineering property/graphic, pad shape/location/layer, model association and
+placement. Define measured decimal/tolerance rules from the pinned source/PDL
+and native-unit convention; do not loosen tolerances during installation.
+STEP bytes remain exact. Unrecognized or changed engineering fields fail,
+including changes to the unmodified component in a packed-library update.
+
+### 174.1.5 Plugin configuration, IPC and saved integration data
+
+The current `integrations/kicad/partsmith_setup` ActionPlugin and
+`launcher.json` containing only `python` are legacy launch-only data. They grant
+no live session identity, project scope, authorization or installed generation.
+Where PartSmith manages an external interpreter launcher, Phase 13 introduces
+a closed PartSmith launcher schema with
+`schema_version: "partsmith-launcher-1.0"`, an absolute verified `python` path,
+a declared `launch_mode` (`standalone` or `ipc`) and adapter compatibility version.
+It contains no provider/IPC credentials or implicit target/approval flags.
+Read the legacy one-field form only as standalone launch configuration; upgrading
+it is an explicit installer operation. Reject unknown versions or unsafe runtime
+commands. Keep interpreter/local-path metadata out of engineering hashes.
+Verify the selected Python 3.12 runtime, PartSmith/package compatibility and
+declared dependency lock before engineering operations; existence of a file
+alone is insufficient. Use fixed argument vectors without a shell, strip embedded
+Python path overrides and report moved/missing/incompatible runtimes clearly.
+
+PCM packaging follows milestone 13.2, with root `metadata.json`, installed
+package ownership and actual lifecycle checks. Python IPC may use KiCad's
+verified per-plugin environment; executable IPC may bundle a verified runtime.
+Do not generate a machine-specific launcher path inside a portable release ZIP.
+If a PartSmith launcher is needed, provision it as local non-secret operational
+data and retain explicit legacy migration; `plugin.json` alone is sufficient
+for registration and does not require a second PartSmith launcher file.
+
+IPC actions provide `plugin.json` satisfying the pinned KiCad
+registration schema. Record stable plugin/action identifiers, compatible target
+version, runtime entry and declared dependencies; validate source/PCM/installed
+metadata/resource parity. KiCad's registration file and PartSmith's launcher file
+are distinct formats, and neither replaces PCM package metadata. PartSmith
+verifies its Python/CAD tuple regardless of who provisions it. Any first-load
+dependency download follows the declared pinned provenance/network policy.
+PCM manages package files; persistent application state and generated libraries
+stay outside its disposable directories. Plugin install/update/removal never
+removes component history, API credentials or unrelated plugins.
+
+IPC endpoint/token/session values are transient process state. Bind version and
+board/project/instance before use, recheck after restart or context changes, and
+fail disconnected/ambiguous requests without selecting an arbitrary default
+socket. Bound worker deadlines/cleanup; use existing central redacted logs and
+service event identities. Required KiCad 10 IPC operations are discovery and a
+real PCB/component read/inspection; additional mutations require supported API
+transaction/undo and dirty-state tests. Standalone operation remains useful when
+the user has not explicitly connected to an IPC instance.
+
+The Phase 12 desktop index `partsmith-session-1.0` currently has no integration
+fields. Extend saved integration drafts/references through an explicit new
+transport version, retaining a supported 1.0 reader and original bytes during
+migration. Reference immutable plan/manifest/audit objects by hash; never save
+IPC tokens, active connections or a reusable live publication permission.
+Load creates a fresh operational session and rechecks target/base/source/principal
+before any resumed decision. The installation store/journal is authoritative
+for publication recovery; an older desktop save cannot rewind an installed
+generation, replay a decision or automatically reconnect/publish.
+
+### 174.1.6 Bounded operations and error outcomes
+
+Freeze an integration resource policy during Phase 13.1 and include its version
+in implementation evidence. Initial defaults reuse the desktop limits: 128 MiB
+per object, 1 GiB total staged/expanded data, 10,000 declared objects and 2 MiB
+of retained redacted logs. Record bounded IPC/native-worker deadlines and owned
+staging cleanup, with explicit non-secret configuration overrides. Limit tests
+cover cumulative sizes, object counts, malformed data, timeouts and disk failure;
+overrides do not bypass semantic or authorization requirements.
+
+Provide stable machine-readable failure categories for invalid schema/version,
+missing/unapproved/tampered source, stale base, target/namespace/path conflict,
+failed semantic/native checks, unavailable/wrong IPC session, authentication
+failure, resource limit, UNSUPPORTED_ATOMIC_INSTALL, publication failure and
+RECOVERY_REQUIRED. Each includes its action/attempt/target and safe object/check
+references. Preserve exact committed outcomes when later diagnostics/recovery
+writes fail; show recovery warnings independently. No failure path overwrites
+unrelated target content or presents a partial installation as successful.
+
+### 174.1.7 Service and acceptance surface
+
+Provide typed internal operations for plan/dry run, stage/validate, approve/reject
+integration, publish, inspect current generation, recover and rollback. Headless
+and GUI adapters call the same services; optional HTTP endpoints in section 203
+do not require a network server for the desktop MVP. A source package export is
+distinct from installation/publication of an aggregate.
+
+Acceptance evidence maps every contract and failure category to Phase 13.1–13.8
+fixtures/checks, with source, PCM payload and installed-runtime identities. Include an
+initial install, two-component aggregate, unchanged no-op, one-component update,
+explicit removal and full rollback; repeat deterministic staging, actual CLI/
+PCB IPC/native-editor round trips and fault recovery. Skip/unsupported/mocked
+success cannot satisfy a required real operation. Historical Phase 8/12 receipts
+remain available and shared-file hashes are refreshed at each relevant closeout.
 
 # 175. Project Packaging
 
@@ -7007,6 +8177,9 @@ POST /builds/{id}/export
 POST /integration-plans
 POST /integration-plans/{id}/authorize
 POST /integration-plans/{id}/publish
+POST /integration-targets/{id}/recover
+POST /integration-targets/{id}/rollback
+GET  /integration-targets/{id}/generation
 GET  /builds/{id}/manifest
 GET  /builds/{id}/evidence
 GET  /builds/{id}/artifacts
@@ -7017,6 +8190,10 @@ boundaries shall support it.
 Input-review endpoints use section 172's typed requests and stale-head checks;
 build approval remains release approval. Integration endpoints use section
 174.1's exact plan/content/target bindings and section 216's publication checks.
+Integration service operations are Phase 13 deliverables. Planning, staging,
+authorization, publication and recovery are distinct requests/results; loading a
+component/session cannot implicitly invoke them. Rollback carries an expected
+current-generation binding and uses the same authenticated, journaled boundary.
 
 # 204. Event Model
 
@@ -7039,6 +8216,11 @@ Exported
 ```
 
 Events should contain build ID and monotonic sequence number.
+Integration events additionally bind attempt/target/plan/generation identities
+and an immutable per-attempt sequence. Distinguish planned, staged, validated,
+authorized, publishing, published, conflicted, failed, recovery-required and
+rolled-back outcomes. After a committed decision/switch, later cancellation or
+log/checkpoint failure cannot rewrite the event as an uncommitted cancellation.
 
 # 205. Plugin/Extension Model
 
@@ -7057,6 +8239,9 @@ Core schemas and validation rules remain B.F.T.-owned. Adapter replaceability
 does not authorize another CAD runtime. A different runtime requires an
 explicit specification revision; a changed approved runtime tuple requires
 fresh Phase 6 validation before release use.
+The PartSmith KiCad launch plugin is a separate adapter entry, not a schema,
+component-release service or installation authorization. Phase 13.2/174.1.5
+define its runtime/configuration/IPC data boundaries and compatibility evidence.
 
 # 206. Version Compatibility
 
@@ -7073,7 +8258,10 @@ AI provider/model
 
 A build made with a newer schema shall not be silently loaded as an
 older schema. IR 1.0/1.1 remain readable under their own versioned rules;
-v0.9.6 production inputs require explicit migration to IR 1.2 (section 121.4).
+v0.9.7 production inputs require explicit migration to IR 1.2 (section 121.4).
+Specification v0.9.7 is distinct from IR/PDL/schema versions. The new integration
+contracts start at 1.0; existing Component IR, PDL, replay and session versions
+change only through their own explicit schema/migration decisions.
 
 # 207. Schema Migration
 
@@ -7561,7 +8749,7 @@ These milestones summarize them and create no competing prerequisites:
 | Setup GUI | 9.5: wxPython GUI, standalone/KiCad launch, secure API-key entry, datasheet and part-number inputs, live logs and cancellation |
 | Document intelligence | 10–11: extraction, evidence, provider adapter |
 | Review UI | 12: UI over existing review/approval services |
-| Extended integration | 13: broader CLI, IPC, round-trip and installation |
+| Extended integration | 13.1–13.8: installation contracts/R13-01 closure, PCM package/lifecycle and verified runtime, planning, semantic staging, authorization, atomic publication/recovery, project/IPC workflow and full gate |
 | Production release | 14: packaging plus all eight production variants and full release corpus |
 
 # 236. MVP Definition of Done
@@ -7728,7 +8916,7 @@ for failed builds.
 
 # 244. Engineering Review Checklist
 
-Before declaring the v0.9.6 production implementation release-ready after Phase 14:
+Before declaring the v0.9.7 production implementation release-ready after Phase 14:
 
 -   [ ] Component IR schema frozen
 -   [ ] Evidence schema frozen
@@ -7765,12 +8953,14 @@ requirements. A future acquisition revision must define exact identity matching,
 immutable released-package verification, acquisition metadata separate from
 engineering hashes, and a commerce boundary outside the engineering core.
 
-The v0.9.5 IR 1.2 schema/code/migration/fixtures and profile 1.1 projections are
-implemented. Their unchanged Phase 2 scope supplies the prerequisite for Phase 3.
-The IR 1.1 PASS remains tied to v0.9.4. No earlier gate hash is rewritten to imply
-verification of this revision. v0.9.6 profile 1.2 projections and downstream
-services/storage/install contracts remain pending at their assigned later-phase
-gates. Specification-level resolution is not an implementation PASS.
+The IR/PDL, profile 1.2 pipeline, immutable review/bundle services and desktop
+workflow have scoped Phase 0–12 evidence; review its actual source/wheel/runtime
+bindings rather than assuming broader product coverage. Earlier gate versions
+and distribution identities remain historical. The v0.9.7 current-input refresh
+records this specification revision and ownership change, not a rerun of old
+tests. Installation contracts and execution remain due at Phase 13.1–13.8;
+production packaging/corpus completion remains Phase 14. Specification-level
+resolution is not an installation implementation PASS.
 
 # 246. Consistency Resolution Register
 
@@ -7839,15 +9029,34 @@ gates. The earlier resolution tables describe their original revision scopes.
 
 | Finding | Concrete solution | Sections and delivery gates |
 | --- | --- | --- |
-| D095-01 | Preserve immutable component bundles; separately hash, validate, authorize and atomically publish packed installation aggregates with source bindings and rollback | 167/174.1/175/212/216–218; contracts in Phase 8, shared installation in Phase 13 |
+| D095-01 | Preserve immutable component bundles; separately hash, validate, authorize and atomically publish packed installation aggregates with source bindings and rollback | 167/174.1/175/212/216–218; v0.9.7 moves installation contracts to Phase 13.1, followed by shared installation in 13.2–13.8; Phase 8 retains source-bundle verification |
 | D095-02 | Typed input proposal/approval/rejection services bound to revision/inventory hashes, distinct from release approval; append approved decisions and reject stale heads | 2.1/159/163/168/172/203; service Phase 8, UI Phase 12 |
 | D095-03 | Retain immutable ancestry/inventories, transactional forward migrations, versioned bundle object index, verified closure import and explicit offline availability | 163/175; persistence/import Phase 8, offline replay Phase 9 |
 | D095-04 | Snapshot profile 1.2 scopes trusted configuration per generator/validator/finalizer while the full snapshot retains complete runtime inputs; retain profile 1.1 hashes unchanged | 166; incremental projection implementation Phases 4–6, whole-build integration Phases 8–9 |
 | D095-05 | Silkscreen edits invalidate results bound to changed footprint bytes, final checks, manifest and approval while preserving independent STEP geometry | 103/167; Phases 8–9 negative/reuse tests |
 | D095-06 | Two clean independent STEP exports must be byte-identical in the CAD spike, with deterministic settings and revalidated normalization | Phase 6 gate; whole-build Phase 9 test retained |
-| Metadata remnants | Current product/spec headers consistently identify v0.9.6 and 2026-09-20; earlier review/gate versions remain historical | Header/product description/245/246 |
+| Metadata remnants | Current product/spec headers identify v0.9.7 and 2026-10-05; the archived v0.9.6 header/date and earlier review/gate versions remain historical | Header/product description/245/246 |
 | Count/fault examples | QFN examples distinguish peripheral leads, conductive exposed terminals and groups; blanket fault language excludes allowed symmetry-equivalence positives | 6/21/93.1/241 |
 | Downstream checkpoints | Define supported pin-edit sequencing, complete PDL feature declarations, and required-rule result aggregation | 121.7/126/152; Phases 3/7–8/12 |
+
+## v0.9.7 Phase 13 and plugin/data review resolutions
+
+The full v0.9.6 snapshot is retained in resources/history. D095-01's current
+delivery column above reflects the explicit project-owner sequencing revision;
+the original Phase 8 assignment is preserved there and in the R13-01 finding.
+
+| Finding/gap | Current requirement and owner |
+| --- | --- |
+| R13-01 | REASSIGNED_OPEN to Phase 13.1: versioned closed schemas/types, canonical identities, negative/golden tests, source preservation, affected Phase 8/12 source regressions, isolated PCM contract-payload checks and archived hash closeout; RESOLVED only by 13.1 PASS |
+| Broad Phase 13 bullets | Nine numbered work items and eight ordered milestones with explicit prerequisites, per-milestone checks and final gate |
+| Plugin/configuration gap | Launch-only legacy data distinguished from IPC registration; versioned runtime configuration, packaged metadata, explicit migration and transient session/credential rules in 13.2/174.1.5 |
+| PCM installation correction, 2026-10-05 | PCM ZIP/metadata and IPC registration are separate; verified managed-Python or bundled-executable runtime; real install/preparation/update/uninstall/reinstall in 13.2/13.7/13.8; Phase 14 proves clean/offline production installation |
+| Phase 13 wheel retirement, 2026-10-05 | No PartSmith wheel build/install/test or required wheel receipt in Phase 13; isolated contract payload in 13.1, retire wheel automation and prove PCM resource/runtime parity in 13.2, full source/PCM acceptance in 13.8; historical Phase 0–12 evidence retained |
+| Native/API target gap | Pinned-build capability/units tests; real KiCad 10 PCB Editor IPC; CLI/native-editor schematic evidence and tested target publication mechanism in 13.2/13.7 |
+| Installation data gap | Closed plan/manifest/authorization/check/audit/journal objects, initial-base/null rules, source closure, content identities and acyclic hash order in 174.1.1–174.1.3 |
+| Target/semantic gap | Scoped target/path/nickname safety, complete mapping/comparison allowlist, exact source/STEP preservation, unmanaged/unchanged component handling in 13.3–13.4/174.1.4 |
+| Publication/recovery gap | Separate integration state, authenticated exact authorization, idempotency, lock/base checks, complete-generation switch/journal and fault-tested rollback in 13.5–13.6 |
+| Desktop/acceptance gap | Explicit install controls and versioned saved references without live authority, dirty-project policy, real two-component use/round trips, resource/error coverage and full source/PCM/hash closeout in 13.7–13.8 |
 
 # 247. External Reference Register
 
@@ -7861,6 +9070,16 @@ Documentation entry points checked 2026-09-19:
 | GitHub Models retirement | [Official 2026-07-01 announcement](https://github.blog/changelog/2026-07-01-github-models-is-being-fully-retired-on-july-30-2026/); retirement dated 2026-07-30, checked 2026-09-20; not a supported provider target |
 | IPC-7351 | [Official published contents/reference](https://www.ipc.org/TOC/IPC-7351.pdf); this entry is not a licensed full standard or approval of any derived land pattern |
 | JEDEC | [Official standards organization](https://www.jedec.org/); each PDL entry must supply its exact applicable document/edition or manufacturer-specific evidence |
+
+Additional plugin/IPC entry points checked 2026-10-05:
+
+| Reference | Entry point and limits |
+| --- | --- |
+| KiCad IPC plugin/runtime boundaries | [Official add-on developer guide](https://dev-docs.kicad.org/en/apis-and-binding/ipc-api/for-addon-developers/); distinguishes running-GUI KiCad 10 PCB IPC from later headless/schematic capabilities and describes plugin registration/session variables; installed 10.0.6 capability tests govern acceptance |
+| Official IPC Python bindings | [Version-selectable binding documentation](https://docs.kicad.org/kicad-python/); pin a released binding/dependency set in Phase 13.2 and use matching documentation; latest-development examples are not acceptance evidence |
+| KiCad PCM package format | [Official addon packaging guide](https://dev-docs.kicad.org/en/addons/index.html); package ZIP, archive/repository metadata and layout; validate the schema shipped with the pinned KiCad build |
+| KiCad 10 plugin lifecycle | [Version 10 PCM manual](https://docs.kicad.org/10.0/en/kicad/kicad.html#_installing_packages); local ZIP and repository installation plus managed update/removal |
+| Pinned Python IPC preparation | [KiCad 10.0.6 plugin loader](https://gitlab.com/kicad/code/kicad/-/raw/10.0.6/common/api/api_plugin_manager.cpp) and [registration schema](https://gitlab.com/kicad/code/kicad/-/raw/10.0.6/api/schemas/api.v1.schema.json); requirements.txt preparation uses binary-only installation; min_version is not enforced by the schema's documented behavior |
 
 These entry points establish traceable documentation sources, not final
 package evidence. Every implementation/PDL review records exact edition or
