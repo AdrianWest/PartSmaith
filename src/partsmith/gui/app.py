@@ -209,6 +209,7 @@ class SetupFrame(wx.Frame):
         session=None,
         recover=True,
         inspect_pcb=None,
+        host_alive=None,
     ):
         """@brief Initializes the wx window and its owned controls.
         @param store Secure credential adapter.
@@ -216,6 +217,7 @@ class SetupFrame(wx.Frame):
         @param session Optional isolated working session.
         @param recover Whether to offer the last recovery checkpoint.
         @param inspect_pcb Optional explicit PCB-inspection callback.
+        @param host_alive Optional read-only launching-host lifetime callback.
         @return None.
         @details Binds GUI events without invoking optional PCB inspection.
         """
@@ -242,6 +244,8 @@ class SetupFrame(wx.Frame):
         self.pending_session = None
         self.pending_viewer_camera = None
         self.inspect_pcb = inspect_pcb
+        self.host_alive = host_alive
+        self.host_exited = False
         root = wx.Panel(self)
         outer = wx.BoxSizer(wx.VERTICAL)
         self.banner = Banner(root)
@@ -336,15 +340,9 @@ class SetupFrame(wx.Frame):
         self.status = wx.StaticText(panel, label="Ready")
         controls.Add(self.status, 1, wx.LEFT | wx.ALIGN_CENTER_VERTICAL, 12)
         layout.Add(controls, 0, wx.EXPAND | wx.ALL, 12)
-        self.prototype_button = wx.Button(
-            panel, label="Open 0402 Rendering Prototype (12.1)"
-        )
         self.viewer_button = wx.Button(panel, label="Open 3D Placement Viewer")
         self.viewer_button.Disable()
         layout.Add(self.viewer_button, 0, wx.LEFT | wx.RIGHT | wx.BOTTOM, 12)
-        layout.Add(
-            self.prototype_button, 0, wx.LEFT | wx.RIGHT | wx.BOTTOM, 12
-        )
         from .review_panel import ReviewPanel
 
         self.review = ReviewPanel(panel, self)
@@ -370,7 +368,6 @@ class SetupFrame(wx.Frame):
         self.file_button.Bind(wx.EVT_BUTTON, self.on_file)
         self.start.Bind(wx.EVT_BUTTON, self.on_start)
         self.cancel.Bind(wx.EVT_BUTTON, self.on_cancel)
-        self.prototype_button.Bind(wx.EVT_BUTTON, self.on_prototype)
         self.viewer_button.Bind(wx.EVT_BUTTON, self.on_viewer)
         self.save_button.Bind(wx.EVT_BUTTON, self.on_save_session)
         self.load_button.Bind(wx.EVT_BUTTON, self.on_load_session)
@@ -540,7 +537,7 @@ class SetupFrame(wx.Frame):
         if not self.session.dirty:
             continuation()
             return
-        with wx.MessageDialog(
+        with wx.GenericMessageDialog(
             self,
             "Save changes to the current session?",
             "Unsaved work",
@@ -777,7 +774,7 @@ class SetupFrame(wx.Frame):
         """
         path = self.session.storage / "recovery.partsmith"
         if path.exists():
-            with wx.MessageDialog(
+            with wx.GenericMessageDialog(
                 self,
                 "Recover the last unfinished session?",
                 "Session recovery",
@@ -1076,8 +1073,13 @@ class SetupFrame(wx.Frame):
         """@brief Dispatches processing results and waits for safe teardown.
         @param _event wx event; unused.
         @return None.
-        @details GUI updates stay on the wx thread; cleanup is asynchronous.
+        @details Host exit requests recovery and asynchronous owned cleanup.
         """
+        if self.host_alive is not None and not self.host_exited:
+            if not self.host_alive():
+                self.close_for_host_exit()
+                if not self or self.IsBeingDeleted():
+                    return
         if self.starting:
             return
         for progress in self.actions.drain():
@@ -1154,6 +1156,36 @@ class SetupFrame(wx.Frame):
                     self.Destroy()
             else:
                 self.set_running(False)
+
+    def close_for_host_exit(self):
+        """@brief Closes with the launching editor without an unsaved prompt.
+        @return None.
+        @details Cancels workers, retains recovery and dismisses owned dialogs.
+        """
+        if self.host_exited:
+            return
+        self.host_exited = True
+        self.closing = True
+        self.close_requested = False
+        self.after_save = None
+        self.checkpoint_due = None
+        if self.job.active or self.actions.active:
+            self.on_cancel(None)
+        elif self.session.dirty:
+            self.actions.start(
+                self.session, "checkpoint", lambda session, cancel, emit: None
+            )
+        for window in wx.GetTopLevelWindows():
+            parent = window.GetParent()
+            while parent is not None and parent is not self:
+                parent = parent.GetParent()
+            if (
+                parent is self
+                and isinstance(window, wx.Dialog)
+                and window.IsModal()
+            ):
+                window.EndModal(wx.ID_CANCEL)
+        self.Close()
 
     def on_close(self, event):
         """@brief Cancels owned work before destroying the main window.

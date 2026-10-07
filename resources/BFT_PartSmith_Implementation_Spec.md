@@ -144,6 +144,16 @@ action; **Refresh** performs the component read after exact-instance and
 exact-board verification. Startup never selects or inspects a board, and an
 inspection failure leaves setup available. The frozen 0.1.9 acceptance evidence
 retains its original scope.
+PCM 0.1.11 binds PartSmith to the exact launching KiCad process. Closing editors
+while its project manager remains open permits the existing library publishing
+workflow. Host process exit closes owned windows without a save/discard prompt and
+retains unfinished work through recovery and cooperative worker cleanup.
+The setup window excludes the 0402 rendering prototype launcher; the prototype
+remains available to its development verification harness. The repository's
+`install_partsmith.bat` builds and installs the current verified PCM payload
+with KiCad closed, retaining backups outside plugin discovery and preserving
+other packages and the managed runtime. This prepared-checkout helper does not
+claim Phase 14 clean-machine production installation acceptance.
 Historical v0.9.6 findings remain
 available in the archived specification and review receipts.
 

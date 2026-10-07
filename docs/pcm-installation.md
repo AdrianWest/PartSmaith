@@ -26,7 +26,7 @@ acceptance remains Phase 14.
    pins, schemas and full installed resource inventory again.
 4. With the intended board open, use the **Open PartSmith** IPC toolbar action
    in the PCB Editor. The pinned 10.0.6 **Tools → External Plugins** menu is for
-   legacy ActionPlugins; it does not list IPC actions. Version **0.1.10** opens
+   legacy ActionPlugins; it does not list IPC actions. Version **0.1.11** opens
    the setup window directly, without a board chooser or automatic PCB read.
    To inspect the PCB, press **Inspect PCB...** and deliberately select the
    board already open in the launching editor. PartSmith verifies that instance
@@ -35,6 +35,27 @@ acceptance remains Phase 14.
 
 The startup fix is packaged separately as `dist/partsmith-0.1.10-pcm.zip`.
 The frozen 0.1.9 Phase 13 acceptance archive and evidence retain their scope.
+Version 0.1.11 also closes PartSmith when the launching KiCad process exits,
+retaining unfinished work in recovery without a save/discard prompt. Closing
+editors while the project manager remains open permits library publication.
+The setup window no longer exposes the 0402 rendering prototype button.
+
+## Local repository batch installer
+
+For this prepared development checkout, close KiCad and PartSmith, then
+double-click [`install_partsmith.bat`](../install_partsmith.bat). It uses the
+repository's existing Python 3.12 `.venv`, builds the current PCM ZIP, validates
+its payload and installs it into the configured KiCad 10 third-party directory.
+KiCad's external Python 3.12 must already be configured. Reopen KiCad afterward
+and allow its private plugin runtime preparation to finish.
+
+The installer updates PartSmith's local PCM registration, preserves other
+packages and settings, and retains the previous plugin, icon and registry in
+`PartSmith-install-backups` beside the third-party root. Staging and backups
+stay outside KiCad's recursive plugin discovery. A failed publication restores
+the prior payload. `install_partsmith.bat --no-pause --dry-run` checks the target
+without changing installation files. This repository helper does not replace
+Phase 14 clean-machine or offline installation acceptance.
 
 The final 0.1.9 package uses the project owner's `resources/PartSmith_Logo_64x64.png`
 unchanged for the package manager listing. The PCM ZIP includes it as
@@ -125,7 +146,7 @@ explicit recreation or a complete KiCad restart provides the recovery boundary.
 For offline use,
 the local supply/site policy must also be available to the recreated environment
 before the loader's pip stage. Recreating a cache is not a component-library
-rollback. Never edit PCM's installed-package registry directly.
+rollback. Use PCM or the verified repository installer to update registration.
 
 Safe action diagnostics are in
 `%LOCALAPPDATA%/PartSmith/runtime/last-launch.json`. They contain stable readiness

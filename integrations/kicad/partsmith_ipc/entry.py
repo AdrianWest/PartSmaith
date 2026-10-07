@@ -60,6 +60,7 @@ def main() -> int:
     import wx
 
     from partsmith.gui.app import SetupFrame
+    from partsmith.integration.host import capture_launch_host
     from partsmith.integration.inspection import InspectionController
     from partsmith.integration.inspection_wx import InspectionFrame
     from partsmith.integration.ipc import IpcError, connect_ipc
@@ -67,6 +68,7 @@ def main() -> int:
     app = wx.App(False)
     controller = None
     inspection = None
+    host = None
 
     def save_inspection(snapshot: dict) -> None:
         """@brief Persists bounded safe live inspection outcomes.
@@ -84,6 +86,8 @@ def main() -> int:
         @details Keeps launch secrets in memory; failure leaves setup usable.
         """
         nonlocal controller, inspection
+        if not parent or getattr(parent, "closing", False):
+            return
         if inspection:
             inspection.Raise()
             return
@@ -103,6 +107,8 @@ def main() -> int:
                 if dialog.ShowModal() != wx.ID_OK:
                     return
                 expected_board = dialog.GetPath()
+            if not parent or getattr(parent, "closing", False):
+                return
             session = connect_ipc(endpoint, token, expected_board)
             controller = InspectionController(
                 session, report_callback=save_inspection
@@ -122,6 +128,8 @@ def main() -> int:
             if isinstance(error, IpcError):
                 failure_code = "IPC_" + error.reason.value
             save_inspection({"state": "FAILED", "code": failure_code})
+            if not parent or getattr(parent, "closing", False):
+                return
             wx.MessageBox(
                 "PCB inspection failed: " + failure_code + ".",
                 "PartSmith",
@@ -130,9 +138,24 @@ def main() -> int:
             )
 
     try:
-        frame = SetupFrame(inspect_pcb=inspect_pcb)
+        if endpoint and token:
+            host = capture_launch_host()
+            if host is None or not host.is_alive():
+                if host is not None:
+                    host.close()
+                    host = None
+                report.update(state="CLOSED", code="KICAD_HOST_EXITED")
+                _save_report(report)
+                return 0
+        frame = SetupFrame(
+            inspect_pcb=inspect_pcb,
+            host_alive=host.is_alive if host is not None else None,
+        )
         frame.Show()
         app.MainLoop()
+        if host is not None and not host.is_alive():
+            report.update(state="CLOSED", code="KICAD_HOST_EXITED")
+            _save_report(report)
         return 0
     except Exception:
         report.update(state="FAILED", code="GUI_ACTION_FAILED")
@@ -146,6 +169,8 @@ def main() -> int:
     finally:
         if controller is not None:
             controller.close()
+        if host is not None:
+            host.close()
 
 
 if __name__ == "__main__":

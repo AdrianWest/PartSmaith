@@ -100,6 +100,7 @@ def test_inspection_callback_requires_button_event(app, tmp_path):
         window.Show()
         wx.Yield()
         assert calls == []
+        assert not hasattr(window, "prototype_button")
         button = window.inspect_button
         event = wx.CommandEvent(wx.EVT_BUTTON.typeId, button.GetId())
         button.GetEventHandler().ProcessEvent(event)
@@ -109,6 +110,50 @@ def test_inspection_callback_requires_button_event(app, tmp_path):
         window.session.dirty = False
         window.Close()
         pump(lambda: not window)
+
+
+def test_host_exit_retains_recovery_without_prompt(frame, monkeypatch):
+    """@brief Closes a dirty setup session when its launching host disappears.
+    @param frame Real isolated desktop setup frame.
+    @param monkeypatch Unsaved-transition substitution helper.
+    @return None.
+    @details Recovery retains typed work while automatic close avoids prompts.
+    """
+    storage = frame.session.storage
+    frame.part.SetValue("HOST-EXIT-RECOVERY")
+    frame.on_setup_changed(None)
+
+    def reject_transition(continuation):
+        """@brief Rejects any user-facing save/discard transition on host exit.
+        @param continuation Requested close continuation.
+        @return None.
+        @details A dead host must not leave PartSmith waiting for user input.
+        """
+        pytest.fail("Host shutdown must not invoke unsaved-work prompts")
+
+    monkeypatch.setattr(frame, "transition", reject_transition)
+    frame.host_alive = lambda: False
+    pump(lambda: not frame)
+    recovered = Session.load(storage / "recovery.partsmith", root=storage)
+    assert recovered.state["setup"]["part_number"] == "HOST-EXIT-RECOVERY"
+
+
+def test_host_exit_dismisses_owned_modal_dialog(frame):
+    """@brief Verifies a modal child cannot keep a dead host's plugin open.
+    @param frame Real isolated desktop setup frame.
+    @return None.
+    @details The host timer dismisses the dialog and destroys its parent.
+    """
+    dialog = wx.GenericMessageDialog(
+        frame, "Owned shutdown test", "Owned shutdown test", wx.YES_NO
+    )
+    wx.CallLater(100, setattr, frame, "host_alive", lambda: False)
+    try:
+        assert dialog.ShowModal() == wx.ID_CANCEL
+    finally:
+        if dialog:
+            dialog.Destroy()
+    pump(lambda: not frame)
 
 
 def pump(condition, timeout=5):
@@ -538,11 +583,15 @@ def test_start_requires_part_number_and_valid_source(frame, tmp_path):
     assert "No component was built" in frame.logs.GetValue()
 
 
-def test_window_close_waits_for_worker_cleanup(frame, tmp_path, monkeypatch):
+@pytest.mark.parametrize("host_exit", [False, True])
+def test_window_close_waits_for_worker_cleanup(
+    frame, tmp_path, monkeypatch, host_exit
+):
     """@brief Test window close waits for worker cleanup.
     @param frame Frame input.
     @param tmp_path Tmp path input.
     @param monkeypatch Monkeypatch input.
+    @param host_exit Whether the close originates from loss of the host.
     @return Result of this operation.
     @details Retains the documented processing and redaction contract.
     """
@@ -567,7 +616,10 @@ def test_window_close_waits_for_worker_cleanup(frame, tmp_path, monkeypatch):
     frame.on_start(None)
     assert entered.wait(5)
     monkeypatch.setattr(frame, "transition", lambda callback: callback())
-    frame.Close()
+    if host_exit:
+        frame.host_alive = lambda: False
+    else:
+        frame.Close()
     pump(lambda: not frame)
     assert cleaned.is_set()
 

@@ -115,7 +115,7 @@
     "pdl/release-profiles/mvp-1@1.0.json": "8798d9a552e5dab29f0c5985a4bfbf7b91fb148ac4e90c42f73952dcf8550b0a",
     "pyproject.toml": "69b0086eb05118a4277619b10577a5f1df9b7abb9558877de9ba58cf8de1f271",
     "requirements-ci.txt": "df99cf3dc1ac9c11e29b7303972fb7368517a435df3c9c39e7afdb080ca29ccb",
-    "resources/BFT_PartSmith_Implementation_Spec.md": "916e56ff69f2a0c42e5337d2e7384f96fb8530077f8d1c519ae5c02976363113",
+    "resources/BFT_PartSmith_Implementation_Spec.md": "922a7be968c7ed329fd775ffc63c330924cf75c81b8920a971f05207435dda79",
     "schemas/component-ir-1.0.schema.json": "c58e687cd2e324edcec83eff1e0e7b5dbbb86ad95cecef3315679a28b8c82e6d",
     "schemas/component-ir-1.1.schema.json": "4ed64619ad5d1c50a7c75125835067e8594b8b6a73c197dfe07267588832d438",
     "schemas/component-ir-1.2.schema.json": "b93ba49d787ca5d0d79c1526b18869068e95dea609717e036a8ee48f3ee49570",

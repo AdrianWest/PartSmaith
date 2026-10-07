@@ -1,0 +1,3 @@
+Installed PartSmith 0.1.11
+Backup: C:\Users\User\Documents\KiCad\10.0\PartSmith-install-backups\20261007T172509Z-691ce52017d64d9ba743897b201dda2a
+Open KiCad and wait for its plugin runtime preparation.

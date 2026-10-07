@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="18" time="184.134" timestamp="2026-10-07T13:16:04.791701-04:00" hostname="DESKTOP-CIC0QVQ"><testcase classname="scripts.verify_gui" name="test_inspection_callback_requires_button_event" time="0.543" /><testcase classname="scripts.verify_gui" name="test_host_exit_retains_recovery_without_prompt" time="1.966" /><testcase classname="scripts.verify_gui" name="test_host_exit_dismisses_owned_modal_dialog" time="166.479"><failure message="assert 5104 == 5101&#10; +  where 5104 = &lt;built-in method ShowModal of MessageDialog object at 0x00000150F03491C0&gt;()&#10; +    where &lt;built-in method ShowModal of MessageDialog object at 0x00000150F03491C0&gt; = &lt;wx._core.MessageDialog object at 0x00000150F03491C0&gt;.ShowModal&#10; +  and   5101 = wx.ID_CANCEL">frame = &lt;partsmith.gui.app.SetupFrame object at 0x00000150EDC5BBF0&gt;
+
+    def test_host_exit_dismisses_owned_modal_dialog(frame):
+        """@brief Verifies a modal child cannot keep a dead host's plugin open.
+        @param frame Real isolated desktop setup frame.
+        @return None.
+        @details The host timer dismisses the dialog and destroys its parent.
+        """
+        dialog = wx.MessageDialog(
+            frame, "Owned shutdown test", "Owned shutdown test", wx.YES_NO
+        )
+        wx.CallLater(100, setattr, frame, "host_alive", lambda: False)
+        try:
+&gt;           assert dialog.ShowModal() == wx.ID_CANCEL
+E           assert 5104 == 5101
+E            +  where 5104 = &lt;built-in method ShowModal of MessageDialog object at 0x00000150F03491C0&gt;()
+E            +    where &lt;built-in method ShowModal of MessageDialog object at 0x00000150F03491C0&gt; = &lt;wx._core.MessageDialog object at 0x00000150F03491C0&gt;.ShowModal
+E            +  and   5101 = wx.ID_CANCEL
+
+scripts\verify_gui.py:152: AssertionError</failure></testcase><testcase classname="scripts.verify_gui" name="test_banner_and_layout_from_unrelated_working_directory" time="0.353" /><testcase classname="scripts.verify_gui" name="test_key_dialog_always_blank_and_masked_with_cancel" time="0.418" /><testcase classname="scripts.verify_gui" name="test_key_dialog_ok_persists_and_next_dialog_blank" time="1.588" /><testcase classname="scripts.verify_gui" name="test_key_dialog_blank_or_save_failure_stays_open" time="0.441" /><testcase classname="scripts.verify_gui" name="test_file_selection_and_cancel_preserve_source" time="0.463" /><testcase classname="scripts.verify_gui" name="test_running_controls_live_logs_and_cancel" time="0.543" /><testcase classname="scripts.verify_gui" name="test_provider_disclosure_local_default_and_candidate_retention" time="1.966" /><testcase classname="scripts.verify_gui" name="test_local_job_can_start_without_secure_store" time="0.547" /><testcase classname="scripts.verify_gui" name="test_job_terminal_statuses[success]" time="0.551" /><testcase classname="scripts.verify_gui" name="test_job_terminal_statuses[failed]" time="0.532" /><testcase classname="scripts.verify_gui" name="test_job_terminal_statuses[unavailable]" time="0.564" /><testcase classname="scripts.verify_gui" name="test_start_requires_part_number_and_valid_source" time="2.089" /><testcase classname="scripts.verify_gui" name="test_window_close_waits_for_worker_cleanup[False]" time="0.562" /><testcase classname="scripts.verify_gui" name="test_window_close_waits_for_worker_cleanup[True]" time="4.031" /><testcase classname="scripts.verify_gui" name="test_native_credential_store_persists_across_process_restart" time="0.304" /></testsuite></testsuites>

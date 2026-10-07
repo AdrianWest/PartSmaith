@@ -17,7 +17,7 @@ from jsonschema import Draft7Validator
 from partsmith.integration.policy import ResourcePolicy
 
 IDENTIFIER = "com.boardforgetools.partsmith"
-VERSION = "0.1.10"
+VERSION = "0.1.11"
 INVENTORY = "plugins/inventory.json"
 PCM_ICON = "resources/icon.png"
 PCM_ICON_SHA256 = (

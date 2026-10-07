@@ -232,14 +232,14 @@
     "docs/gates/phase-13-startup-fix-native/inspection-awaits-refresh.png": "7d5e7b8a8bbef735c1162d874aa0b5fe7cbc8ff27df91c4a1d6256558dae3e52",
     "docs/gates/phase-13-startup-fix-native/pcm-installed.png": "025ab7da9c1eb4a187c92a7b9b3ee31053928c0111143d9298c0306884167050",
     "docs/gates/phase-13-startup-fix-source-results.xml": "c06ed1213df4a199d43481fc1b7665bac4c442ea381b2b7115119a6b662f55cf",
-    "docs/pcm-installation.md": "db74c3b77849d282691a75aa99b3aa9179d3b78dffb2bfb73f5e628dcaf424e7",
-    "integrations/kicad/partsmith_ipc/entry.py": "458c6f76a93d8224191a1865b63198a5b64f3c1be08e6c07d15eea79fe03db12",
+    "docs/pcm-installation.md": "a238b161c9ed45c33b362de5d9e4304ff44a72b9c28eb3825810fdd758143a71",
+    "integrations/kicad/partsmith_ipc/entry.py": "c11e084afad2b241cdbe1514d36eb7435f0f860ed397d21d744c13d5aa294bab",
     "pyproject.toml": "69b0086eb05118a4277619b10577a5f1df9b7abb9558877de9ba58cf8de1f271",
-    "resources/BFT_PartSmith_Implementation_Spec.md": "916e56ff69f2a0c42e5337d2e7384f96fb8530077f8d1c519ae5c02976363113",
-    "scripts/verify_gui.py": "c0fad53aa6d8f2fead96d511f79575b6d24fa7335194e2c95e59b9c37d03ab92",
-    "src/partsmith/gui/app.py": "cb6c5d03022a7d41bbb43efe020f14bd7837e0cee56559be04301c74fd17d123",
-    "src/partsmith/pcm/package.py": "b8610d2269e4a280d185c191358fd35253e49992a1e6097fe21dbd2e7be4041d",
-    "tests/test_pcm.py": "70851262388bcec358ab21800154c898adeaa928b0e75300f992065dd503b1be"
+    "resources/BFT_PartSmith_Implementation_Spec.md": "922a7be968c7ed329fd775ffc63c330924cf75c81b8920a971f05207435dda79",
+    "scripts/verify_gui.py": "ad65b4bef1576869a0959d823434e6bef60dd71d054a79841381bc4e9f479931",
+    "src/partsmith/gui/app.py": "186de53d17ec7fcf963da804f89869e6004cf4b3931bf82df1127bc003404090",
+    "src/partsmith/pcm/package.py": "3ba677609a65fd37dfbd73d9a929918c63dd7fa9d0488cf8c428920133394f1c",
+    "tests/test_pcm.py": "811f2dba836d97754e7b230f7fd93862b842024f311fa6a4c82f41163c65c3fc"
   },
   "hash_closeout_verification": {
     "status": "PASS",
@@ -249,5 +249,12 @@
     "command": ".venv/Scripts/python.exe scripts/close_integration_gate.py --phase 13 --reason <startup-fix validation and installation scope>",
     "hash_source": "disk",
     "git_blob_verification": "PASS at 79864aef31ae9d9ede70c1d2fa902a061b066a4b; see docs/gates/phase-13-startup-fix-committed-verification-2026-10-07.json"
+  },
+  "input_revalidation": {
+    "date": "2026-10-07",
+    "reason": "PCM 0.1.11 lifecycle and batch-installer correction",
+    "scope": "Current shared input hashes; original 0.1.10 native evidence and package retain their scope",
+    "historical_manifest": "docs/gates/history/phase-13-startup-fix-2026-10-07-before-lifecycle-fix-9dbdd7de2e57.json",
+    "verification": "docs/gates/phase-13-lifecycle-fix-2026-10-07.json"
   }
 }

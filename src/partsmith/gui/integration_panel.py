@@ -267,7 +267,7 @@ class IntegrationPanel(wx.Panel):
         @return True only for the current deliberate confirmation.
         @details Live process checks independently enforce editor closure.
         """
-        with wx.MessageDialog(
+        with wx.GenericMessageDialog(
             self,
             "Save your schematic and PCB, then close all KiCad editors.\n"
             "Keep PartSmith open. Ensure nobody else is editing this copy.\n"

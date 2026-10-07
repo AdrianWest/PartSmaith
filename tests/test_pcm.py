@@ -411,6 +411,9 @@ def test_archive_preflight_bounds_and_compression(tmp_path, monkeypatch):
     [
         "startup",
         "startup_missing",
+        "host_missing",
+        "host_dead",
+        "host_exit",
         "missing",
         "cancel",
         "connect",
@@ -475,7 +478,7 @@ def test_entry_selection_failure_codes_and_session_cleanup(monkeypatch, case):
         @details Startup must not select, connect, inspect or refresh a board.
         """
         assert calls == ["show"]
-        if case not in {"startup", "startup_missing"}:
+        if case not in {"startup", "startup_missing", "host_exit"}:
             ui["inspect"](ui["frame"])
         if case == "reuse":
             ui["inspect"](ui["frame"])
@@ -564,10 +567,11 @@ def test_entry_selection_failure_codes_and_session_cleanup(monkeypatch, case):
             raise RuntimeError("secret-do-not-record")
         return SimpleNamespace(refresh=refresh, close=session.close)
 
-    def frame(inspect_pcb):
+    def frame(inspect_pcb, host_alive):
         """@brief Supplies a visible frame or unrelated GUI failure.
         @return Frame double exposing Show.
         @param inspect_pcb Deliberate callback registered without invocation.
+        @param host_alive Exact launching-host lifetime callback.
         @details Raw failure messages must not be persisted by the action.
         """
         if case == "gui":
@@ -617,6 +621,20 @@ def test_entry_selection_failure_codes_and_session_cleanup(monkeypatch, case):
     monkeypatch.setitem(
         sys.modules, "partsmith.gui.app", SimpleNamespace(SetupFrame=frame)
     )
+    monkeypatch.setattr(
+        "partsmith.integration.host.capture_launch_host",
+        lambda: (
+            None
+            if case == "host_missing"
+            else SimpleNamespace(
+                is_alive=lambda: (
+                    case != "host_dead"
+                    and (case != "host_exit" or "show" not in calls)
+                ),
+                close=lambda: None,
+            )
+        ),
+    )
     monkeypatch.setitem(
         sys.modules,
         "partsmith.integration.inspection",
@@ -635,6 +653,9 @@ def test_entry_selection_failure_codes_and_session_cleanup(monkeypatch, case):
         1 if case in {"controller", "inspector", "ok", "reuse"} else 0
     )
     assert "private-do-not-record" not in json.dumps(reports)
+    if case in {"host_missing", "host_dead", "host_exit"}:
+        assert calls == (["show"] if case == "host_exit" else [])
+        assert reports[-1] == {"state": "CLOSED", "code": "KICAD_HOST_EXITED"}
     if case in {"startup", "startup_missing"}:
         assert calls == ["show"]
         assert reports[-1] == {"state": "READY", "code": "READY"}
