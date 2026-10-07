@@ -248,6 +248,6 @@
     "refreshed_hashes": 158,
     "command": ".venv/Scripts/python.exe scripts/close_integration_gate.py --phase 13 --reason <startup-fix validation and installation scope>",
     "hash_source": "disk",
-    "git_blob_verification": "Due after current changes are committed"
+    "git_blob_verification": "PASS at 79864aef31ae9d9ede70c1d2fa902a061b066a4b; see docs/gates/phase-13-startup-fix-committed-verification-2026-10-07.json"
   }
 }
