@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="7" skipped="0" tests="93" time="49.563" timestamp="2026-10-07T01:22:15.360470-04:00" hostname="DESKTOP-CIC0QVQ"><testcase classname="tests.test_integration_ipc" name="test_explicit_scope_and_safe_immutable_inspection" time="0.522" /><testcase classname="tests.test_integration_ipc" name="test_detail_fields_fail_closed[library-echo]" time="0.476"><failure message="AttributeError: 'IpcSession' object has no attribute 'closed'. Did you mean: '_closed'?">tmp_path = WindowsPath('C:/Users/User/AppData/Local/Temp/pytest-of-User/pytest-382/test_detail_fields_fail_closed0')
+mode = 'library-echo'
+
+    @pytest.mark.parametrize(
+        "mode",
+        [
+            "library-echo",
+            "pad-echo",
+            "model-echo",
+            "nonfinite",
+            "bool",
+            "limit",
+            "container",
+        ],
+    )
+    def test_detail_fields_fail_closed(tmp_path, mode):
+        """@brief Rejects unsafe nested pad and model fields.
+        @param tmp_path Disposable synthetic selected project.
+        @param mode Invalid nested response scenario.
+        @return None.
+        @details Injected negative evidence cannot replace real native acceptance.
+        """
+        connected = session(tmp_path, "detail-" + mode)
+        with pytest.raises(IpcError) as error:
+            connected.read_board()
+        assert TOKEN not in str(error.value)
+        assert error.value.reason == (
+            IpcFailureReason.RESOURCE_LIMIT
+            if mode == "limit"
+            else IpcFailureReason.UNSAFE_RESPONSE
+        )
+&gt;       assert connected.closed
+               ^^^^^^^^^^^^^^^^
+E       AttributeError: 'IpcSession' object has no attribute 'closed'. Did you mean: '_closed'?
+
+tests\test_integration_ipc.py:255: AttributeError</failure></testcase><testcase classname="tests.test_integration_ipc" name="test_detail_fields_fail_closed[pad-echo]" time="0.489"><failure message="AttributeError: 'IpcSession' object has no attribute 'closed'. Did you mean: '_closed'?">tmp_path = WindowsPath('C:/Users/User/AppData/Local/Temp/pytest-of-User/pytest-382/test_detail_fields_fail_closed1')
+mode = 'pad-echo'
+
+    @pytest.mark.parametrize(
+        "mode",
+        [
+            "library-echo",
+            "pad-echo",
+            "model-echo",
+            "nonfinite",
+            "bool",
+            "limit",
+            "container",
+        ],
+    )
+    def test_detail_fields_fail_closed(tmp_path, mode):
+        """@brief Rejects unsafe nested pad and model fields.
+        @param tmp_path Disposable synthetic selected project.
+        @param mode Invalid nested response scenario.
+        @return None.
+        @details Injected negative evidence cannot replace real native acceptance.
+        """
+        connected = session(tmp_path, "detail-" + mode)
+        with pytest.raises(IpcError) as error:
+            connected.read_board()
+        assert TOKEN not in str(error.value)
+        assert error.value.reason == (
+            IpcFailureReason.RESOURCE_LIMIT
+            if mode == "limit"
+            else IpcFailureReason.UNSAFE_RESPONSE
+        )
+&gt;       assert connected.closed
+               ^^^^^^^^^^^^^^^^
+E       AttributeError: 'IpcSession' object has no attribute 'closed'. Did you mean: '_closed'?
+
+tests\test_integration_ipc.py:255: AttributeError</failure></testcase><testcase classname="tests.test_integration_ipc" name="test_detail_fields_fail_closed[model-echo]" time="0.481"><failure message="AttributeError: 'IpcSession' object has no attribute 'closed'. Did you mean: '_closed'?">tmp_path = WindowsPath('C:/Users/User/AppData/Local/Temp/pytest-of-User/pytest-382/test_detail_fields_fail_closed2')
+mode = 'model-echo'
+
+    @pytest.mark.parametrize(
+        "mode",
+        [
+            "library-echo",
+            "pad-echo",
+            "model-echo",
+            "nonfinite",
+            "bool",
+            "limit",
+            "container",
+        ],
+    )
+    def test_detail_fields_fail_closed(tmp_path, mode):
+        """@brief Rejects unsafe nested pad and model fields.
+        @param tmp_path Disposable synthetic selected project.
+        @param mode Invalid nested response scenario.
+        @return None.
+        @details Injected negative evidence cannot replace real native acceptance.
+        """
+        connected = session(tmp_path, "detail-" + mode)
+        with pytest.raises(IpcError) as error:
+            connected.read_board()
+        assert TOKEN not in str(error.value)
+        assert error.value.reason == (
+            IpcFailureReason.RESOURCE_LIMIT
+            if mode == "limit"
+            else IpcFailureReason.UNSAFE_RESPONSE
+        )
+&gt;       assert connected.closed
+               ^^^^^^^^^^^^^^^^
+E       AttributeError: 'IpcSession' object has no attribute 'closed'. Did you mean: '_closed'?
+
+tests\test_integration_ipc.py:255: AttributeError</failure></testcase><testcase classname="tests.test_integration_ipc" name="test_detail_fields_fail_closed[nonfinite]" time="0.486"><failure message="AttributeError: 'IpcSession' object has no attribute 'closed'. Did you mean: '_closed'?">tmp_path = WindowsPath('C:/Users/User/AppData/Local/Temp/pytest-of-User/pytest-382/test_detail_fields_fail_closed3')
+mode = 'nonfinite'
+
+    @pytest.mark.parametrize(
+        "mode",
+        [
+            "library-echo",
+            "pad-echo",
+            "model-echo",
+            "nonfinite",
+            "bool",
+            "limit",
+            "container",
+        ],
+    )
+    def test_detail_fields_fail_closed(tmp_path, mode):
+        """@brief Rejects unsafe nested pad and model fields.
+        @param tmp_path Disposable synthetic selected project.
+        @param mode Invalid nested response scenario.
+        @return None.
+        @details Injected negative evidence cannot replace real native acceptance.
+        """
+        connected = session(tmp_path, "detail-" + mode)
+        with pytest.raises(IpcError) as error:
+            connected.read_board()
+        assert TOKEN not in str(error.value)
+        assert error.value.reason == (
+            IpcFailureReason.RESOURCE_LIMIT
+            if mode == "limit"
+            else IpcFailureReason.UNSAFE_RESPONSE
+        )
+&gt;       assert connected.closed
+               ^^^^^^^^^^^^^^^^
+E       AttributeError: 'IpcSession' object has no attribute 'closed'. Did you mean: '_closed'?
+
+tests\test_integration_ipc.py:255: AttributeError</failure></testcase><testcase classname="tests.test_integration_ipc" name="test_detail_fields_fail_closed[bool]" time="0.479"><failure message="AttributeError: 'IpcSession' object has no attribute 'closed'. Did you mean: '_closed'?">tmp_path = WindowsPath('C:/Users/User/AppData/Local/Temp/pytest-of-User/pytest-382/test_detail_fields_fail_closed4')
+mode = 'bool'
+
+    @pytest.mark.parametrize(
+        "mode",
+        [
+            "library-echo",
+            "pad-echo",
+            "model-echo",
+            "nonfinite",
+            "bool",
+            "limit",
+            "container",
+        ],
+    )
+    def test_detail_fields_fail_closed(tmp_path, mode):
+        """@brief Rejects unsafe nested pad and model fields.
+        @param tmp_path Disposable synthetic selected project.
+        @param mode Invalid nested response scenario.
+        @return None.
+        @details Injected negative evidence cannot replace real native acceptance.
+        """
+        connected = session(tmp_path, "detail-" + mode)
+        with pytest.raises(IpcError) as error:
+            connected.read_board()
+        assert TOKEN not in str(error.value)
+        assert error.value.reason == (
+            IpcFailureReason.RESOURCE_LIMIT
+            if mode == "limit"
+            else IpcFailureReason.UNSAFE_RESPONSE
+        )
+&gt;       assert connected.closed
+               ^^^^^^^^^^^^^^^^
+E       AttributeError: 'IpcSession' object has no attribute 'closed'. Did you mean: '_closed'?
+
+tests\test_integration_ipc.py:255: AttributeError</failure></testcase><testcase classname="tests.test_integration_ipc" name="test_detail_fields_fail_closed[limit]" time="0.477"><failure message="AttributeError: 'IpcSession' object has no attribute 'closed'. Did you mean: '_closed'?">tmp_path = WindowsPath('C:/Users/User/AppData/Local/Temp/pytest-of-User/pytest-382/test_detail_fields_fail_closed5')
+mode = 'limit'
+
+    @pytest.mark.parametrize(
+        "mode",
+        [
+            "library-echo",
+            "pad-echo",
+            "model-echo",
+            "nonfinite",
+            "bool",
+            "limit",
+            "container",
+        ],
+    )
+    def test_detail_fields_fail_closed(tmp_path, mode):
+        """@brief Rejects unsafe nested pad and model fields.
+        @param tmp_path Disposable synthetic selected project.
+        @param mode Invalid nested response scenario.
+        @return None.
+        @details Injected negative evidence cannot replace real native acceptance.
+        """
+        connected = session(tmp_path, "detail-" + mode)
+        with pytest.raises(IpcError) as error:
+            connected.read_board()
+        assert TOKEN not in str(error.value)
+        assert error.value.reason == (
+            IpcFailureReason.RESOURCE_LIMIT
+            if mode == "limit"
+            else IpcFailureReason.UNSAFE_RESPONSE
+        )
+&gt;       assert connected.closed
+               ^^^^^^^^^^^^^^^^
+E       AttributeError: 'IpcSession' object has no attribute 'closed'. Did you mean: '_closed'?
+
+tests\test_integration_ipc.py:255: AttributeError</failure></testcase><testcase classname="tests.test_integration_ipc" name="test_detail_fields_fail_closed[container]" time="0.483"><failure message="AttributeError: 'IpcSession' object has no attribute 'closed'. Did you mean: '_closed'?">tmp_path = WindowsPath('C:/Users/User/AppData/Local/Temp/pytest-of-User/pytest-382/test_detail_fields_fail_closed6')
+mode = 'container'
+
+    @pytest.mark.parametrize(
+        "mode",
+        [
+            "library-echo",
+            "pad-echo",
+            "model-echo",
+            "nonfinite",
+            "bool",
+            "limit",
+            "container",
+        ],
+    )
+    def test_detail_fields_fail_closed(tmp_path, mode):
+        """@brief Rejects unsafe nested pad and model fields.
+        @param tmp_path Disposable synthetic selected project.
+        @param mode Invalid nested response scenario.
+        @return None.
+        @details Injected negative evidence cannot replace real native acceptance.
+        """
+        connected = session(tmp_path, "detail-" + mode)
+        with pytest.raises(IpcError) as error:
+            connected.read_board()
+        assert TOKEN not in str(error.value)
+        assert error.value.reason == (
+            IpcFailureReason.RESOURCE_LIMIT
+            if mode == "limit"
+            else IpcFailureReason.UNSAFE_RESPONSE
+        )
+&gt;       assert connected.closed
+               ^^^^^^^^^^^^^^^^
+E       AttributeError: 'IpcSession' object has no attribute 'closed'. Did you mean: '_closed'?
+
+tests\test_integration_ipc.py:255: AttributeError</failure></testcase><testcase classname="tests.test_integration_ipc" name="test_declared_model_units_and_immutable_details" time="0.499" /><testcase classname="tests.test_integration_ipc" name="test_discovery_fails_closed[binding-VERSION_MISMATCH]" time="0.246" /><testcase classname="tests.test_integration_ipc" name="test_discovery_fails_closed[api-VERSION_MISMATCH]" time="0.238" /><testcase classname="tests.test_integration_ipc" name="test_discovery_fails_closed[version-VERSION_MISMATCH]" time="0.245" /><testcase classname="tests.test_integration_ipc" name="test_discovery_fails_closed[wrong-WRONG_BOARD]" time="0.243" /><testcase classname="tests.test_integration_ipc" name="test_discovery_fails_closed[duplicate-WRONG_BOARD]" time="0.253" /><testcase classname="tests.test_integration_ipc" name="test_discovery_fails_closed[none-WRONG_BOARD]" time="0.245" /><testcase classname="tests.test_integration_ipc" name="test_discovery_fails_closed[documents-limit-RESOURCE_LIMIT]" time="0.256" /><testcase classname="tests.test_integration_ipc" name="test_discovery_fails_closed[project-secret-UNSAFE_RESPONSE]" time="0.242" /><testcase classname="tests.test_integration_ipc" name="test_discovery_fails_closed[relative-project-INVALID_ARGUMENT]" time="0.239" /><testcase classname="tests.test_integration_ipc" name="test_read_failures_invalidate_without_reconnection[context-CONTEXT_CHANGED]" time="0.478" /><testcase classname="tests.test_integration_ipc" name="test_read_failures_invalidate_without_reconnection[raw-error-DISCONNECTED]" time="0.481" /><testcase classname="tests.test_integration_ipc" name="test_read_failures_invalidate_without_reconnection[token-mismatch-TOKEN_MISMATCH]" time="0.479" /><testcase classname="tests.test_integration_ipc" name="test_read_failures_invalidate_without_reconnection[unavailable-OPERATION_UNAVAILABLE]" time="0.492" /><testcase classname="tests.test_integration_ipc" name="test_read_failures_invalidate_without_reconnection[echo-UNSAFE_RESPONSE]" time="0.486" /><testcase classname="tests.test_integration_ipc" name="test_read_failures_invalidate_without_reconnection[endpoint-echo-UNSAFE_RESPONSE]" time="0.481" /><testcase classname="tests.test_integration_ipc" name="test_read_failures_invalidate_without_reconnection[bad-coordinate-UNSAFE_RESPONSE]" time="0.487" /><testcase classname="tests.test_integration_ipc" name="test_read_failures_invalidate_without_reconnection[items-limit-RESOURCE_LIMIT]" time="0.483" /><testcase classname="tests.test_integration_ipc" name="test_read_failures_invalidate_without_reconnection[duplicate-item-UNSAFE_RESPONSE]" time="0.476" /><testcase classname="tests.test_integration_ipc" name="test_read_failures_invalidate_without_reconnection[oversize-UNSAFE_RESPONSE]" time="0.489" /><testcase classname="tests.test_integration_ipc" name="test_timeout_terminates_owned_worker" time="0.665" /><testcase classname="tests.test_integration_ipc" name="test_provider_output_does_not_escape_worker" time="0.511" /><testcase classname="tests.test_integration_ipc" name="test_missing_or_unsafe_session_arguments[-synthetic-transient-token-never-record]" time="0.001" /><testcase classname="tests.test_integration_ipc" name="test_missing_or_unsafe_session_arguments[ipc://selected-]" time="0.001" /><testcase classname="tests.test_integration_ipc" name="test_missing_or_unsafe_session_arguments[ipc://selected-  ]" time="0.001" /><testcase classname="tests.test_integration_ipc" name="test_missing_or_unsafe_session_arguments[default-synthetic-transient-token-never-record]" time="0.001" /><testcase classname="tests.test_integration_ipc" name="test_missing_or_unsafe_session_arguments[ipc://selected\n-synthetic-transient-token-never-record]" time="0.001" /><testcase classname="tests.test_integration_ipc" name="test_deadline_validation[0]" time="0.001" /><testcase classname="tests.test_integration_ipc" name="test_deadline_validation[-1]" time="0.001" /><testcase classname="tests.test_integration_ipc" name="test_deadline_validation[True]" time="0.001" /><testcase classname="tests.test_integration_ipc" name="test_deadline_validation[nan]" time="0.001" /><testcase classname="tests.test_integration_ipc" name="test_deadline_validation[16]" time="0.001" /><testcase classname="tests.test_integration_ipc" name="test_exact_coordinate_roundtrip[0-0-native0]" time="0.000" /><testcase classname="tests.test_integration_ipc" name="test_exact_coordinate_roundtrip[1-2-native1]" time="0.000" /><testcase classname="tests.test_integration_ipc" name="test_exact_coordinate_roundtrip[-0.000001-0.000001-native2]" time="0.000" /><testcase classname="tests.test_integration_ipc" name="test_exact_coordinate_roundtrip[2147.483647-2147.483648-native3]" time="0.000" /><testcase classname="tests.test_integration_ipc" name="test_coordinate_precision_and_range_fail[0.1]" time="0.000" /><testcase classname="tests.test_integration_ipc" name="test_coordinate_precision_and_range_fail[True]" time="0.000" /><testcase classname="tests.test_integration_ipc" name="test_coordinate_precision_and_range_fail[NaN]" time="0.000" /><testcase classname="tests.test_integration_ipc" name="test_coordinate_precision_and_range_fail[Infinity]" time="0.000" /><testcase classname="tests.test_integration_ipc" name="test_coordinate_precision_and_range_fail[0.0000001]" time="0.000" /><testcase classname="tests.test_integration_ipc" name="test_coordinate_precision_and_range_fail[2147.483648]" time="0.000" /><testcase classname="tests.test_integration_ipc" name="test_native_coordinate_limits[-2147483649]" time="0.000" /><testcase classname="tests.test_integration_ipc" name="test_native_coordinate_limits[2147483648]" time="0.000" /><testcase classname="tests.test_integration_ipc" name="test_native_coordinate_limits[True]" time="0.000" /><testcase classname="tests.test_integration_ipc" name="test_native_coordinate_limits[1.0]" time="0.000" /><testcase classname="tests.test_integration_ipc" name="test_degree_orientation_roundtrip[0]" time="0.000" /><testcase classname="tests.test_integration_ipc" name="test_degree_orientation_roundtrip[90]" time="0.000" /><testcase classname="tests.test_integration_ipc" name="test_degree_orientation_roundtrip[180]" time="0.000" /><testcase classname="tests.test_integration_ipc" name="test_degree_orientation_roundtrip[270]" time="0.000" /><testcase classname="tests.test_integration_ipc" name="test_degree_orientation_roundtrip[-90]" time="0.000" /><testcase classname="tests.test_integration_ipc" name="test_degree_orientation_roundtrip[0.1]" time="0.000" /><testcase classname="tests.test_integration_ipc" name="test_unrepresentable_native_angles_fail" time="0.000" /><testcase classname="tests.test_integration_ipc" name="test_native_status_mapping_excludes_raw_error_text[1-TOKEN_MISMATCH]" time="0.000" /><testcase classname="tests.test_integration_ipc" name="test_native_status_mapping_excludes_raw_error_text[2-TIMEOUT]" time="0.000" /><testcase classname="tests.test_integration_ipc" name="test_native_status_mapping_excludes_raw_error_text[3-OPERATION_UNAVAILABLE]" time="0.000" /><testcase classname="tests.test_integration_ipc" name="test_native_status_mapping_excludes_raw_error_text[4-OPERATION_UNAVAILABLE]" time="0.000" /><testcase classname="tests.test_integration_ipc" name="test_native_status_mapping_excludes_raw_error_text[5-DISCONNECTED]" time="0.000" /><testcase classname="tests.test_integration_workflow" name="test_separate_authority_and_saved_draft_require_new_actions" time="34.339" /><testcase classname="tests.test_integration_workflow" name="test_imported_installation_rows_cannot_load_or_supply_sources" time="0.302" /><testcase classname="tests.test_integration_workflow" name="test_data_only_extension_rejects_live_fields" time="0.122" /><testcase classname="tests.test_ipc_inspection" name="test_construction_and_snapshot_do_not_implicitly_read" time="0.000" /><testcase classname="tests.test_ipc_inspection" name="test_refresh_reads_current_components_and_reports_safe_independent_data" time="0.000" /><testcase classname="tests.test_ipc_inspection" name="test_closed_failure_reasons_clear_rows_and_prevent_reconnect[MISSING_SESSION]" time="0.000" /><testcase classname="tests.test_ipc_inspection" name="test_closed_failure_reasons_clear_rows_and_prevent_reconnect[INVALID_ARGUMENT]" time="0.000" /><testcase classname="tests.test_ipc_inspection" name="test_closed_failure_reasons_clear_rows_and_prevent_reconnect[MISSING_BINDING]" time="0.000" /><testcase classname="tests.test_ipc_inspection" name="test_closed_failure_reasons_clear_rows_and_prevent_reconnect[VERSION_MISMATCH]" time="0.000" /><testcase classname="tests.test_ipc_inspection" name="test_closed_failure_reasons_clear_rows_and_prevent_reconnect[WRONG_BOARD]" time="0.000" /><testcase classname="tests.test_ipc_inspection" name="test_closed_failure_reasons_clear_rows_and_prevent_reconnect[CONTEXT_CHANGED]" time="0.000" /><testcase classname="tests.test_ipc_inspection" name="test_closed_failure_reasons_clear_rows_and_prevent_reconnect[TOKEN_MISMATCH]" time="0.000" /><testcase classname="tests.test_ipc_inspection" name="test_closed_failure_reasons_clear_rows_and_prevent_reconnect[DISCONNECTED]" time="0.000" /><testcase classname="tests.test_ipc_inspection" name="test_closed_failure_reasons_clear_rows_and_prevent_reconnect[TIMEOUT]" time="0.000" /><testcase classname="tests.test_ipc_inspection" name="test_closed_failure_reasons_clear_rows_and_prevent_reconnect[OPERATION_UNAVAILABLE]" time="0.000" /><testcase classname="tests.test_ipc_inspection" name="test_closed_failure_reasons_clear_rows_and_prevent_reconnect[RESOURCE_LIMIT]" time="0.000" /><testcase classname="tests.test_ipc_inspection" name="test_closed_failure_reasons_clear_rows_and_prevent_reconnect[UNSAFE_RESPONSE]" time="0.000" /><testcase classname="tests.test_ipc_inspection" name="test_closed_failure_reasons_clear_rows_and_prevent_reconnect[CLOSED]" time="0.000" /><testcase classname="tests.test_ipc_inspection" name="test_untrusted_failure_text_never_enters_reports_or_representations" time="0.000" /><testcase classname="tests.test_ipc_inspection" name="test_diagnostic_failure_preserves_success_and_connected_session" time="0.000" /><testcase classname="tests.test_ipc_inspection" name="test_close_clears_data_and_is_idempotent" time="0.000" /><testcase classname="tests.test_ipc_inspection" name="test_close_during_pending_read_discards_late_result_and_report" time="0.001" /><testcase classname="tests.test_ipc_inspection" name="test_controller_refuses_serialization_of_live_session" time="0.000" /><testcase classname="tests.test_ipc_inspection" name="test_invalid_callback_fails_without_a_native_read" time="0.000" /><testcase classname="tests.test_ipc_inspection" name="test_inspector_close_closes_session_and_discards_ui_delivery" time="0.039" /><testcase classname="tests.test_ipc_inspection" name="test_parent_destroy_closes_session_without_accessing_deleted_wrappers" time="0.000" /><testcase classname="tests.test_ipc_inspection" name="test_direct_inspector_destroy_ignores_control_descendants" time="0.001" /></testsuite></testsuites>

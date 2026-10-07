@@ -1,0 +1,4 @@
+Synthetic Phase 2 IR test input, not a manufacturer datasheet or approved part.
+Example resistor: two passive terminals numbered 1 and 2, west and east.
+Body length 1.0 mm, width 0.5 mm, height 0.35 mm.
+Nominal body length interval: 0.95 to 1.05 mm.

@@ -1,0 +1,71 @@
+{
+  "status": "PASS",
+  "rounds_requested": 3,
+  "suite": [
+    "tests/test_extraction.py",
+    "tests/test_extraction_isolation.py",
+    "tests/test_ai.py",
+    "tests/test_ai_transport.py",
+    "tests/test_cli.py",
+    "tests/test_gui.py",
+    "tests/test_kicad_runtime.py"
+  ],
+  "attempts": [
+    {
+      "round": 1,
+      "exit_code": 0,
+      "timed_out": false,
+      "complete_junit": true,
+      "artifacts": {
+        "round-1.stdout.txt": "01bd02dff01a95f015110a0029b7f66fcffcae5246e6fad1d9f2e52d348774b6",
+        "round-1.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "round-1.xml": "46fd7c5129abca5583ca5aace54b2c84e3811bdaef52d772246137dde21c0b1f"
+      },
+      "tests": {
+        "tests": 180,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "status": "PASS"
+    },
+    {
+      "round": 2,
+      "exit_code": 0,
+      "timed_out": false,
+      "complete_junit": true,
+      "artifacts": {
+        "round-2.stdout.txt": "1ffbb07495e1470124adcfacd3b70a3b53bc807407149e143fc0d423fd8e83b0",
+        "round-2.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "round-2.xml": "c46b52768d364183789277e6e6f9d0e505890f7ac7fe76d6f881f59bb3d59477"
+      },
+      "tests": {
+        "tests": 180,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "status": "PASS"
+    },
+    {
+      "round": 3,
+      "exit_code": 0,
+      "timed_out": false,
+      "complete_junit": true,
+      "artifacts": {
+        "round-3.stdout.txt": "d73569e7ba895f087cdf871122908dac1f16a019f0e101b03dc943474ae8adbb",
+        "round-3.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "round-3.xml": "9c96dedaf9c785457d417ed394cc4a5fe621f71f1ad204bcd6fa3904d30091a0"
+      },
+      "tests": {
+        "tests": 180,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "status": "PASS"
+    }
+  ],
+  "package_root": "C:\\GIT_HUB\\PartSmaith\\docs\\gates\\phase13.2-packaging-pdf-stability-2026-10-06\\payload\\plugins",
+  "archive_sha256": "966e046d8b3b1a6aafc3f410ee942aaf9ab712b5544358551ad3c1fe131ca1ef"
+}

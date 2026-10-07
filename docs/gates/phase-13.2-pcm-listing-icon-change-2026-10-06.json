@@ -1,0 +1,43 @@
+{
+  "date": "2026-10-06",
+  "scope": "Owner-selected PCM listing logo only; full Phase 13 remains stopped and incomplete.",
+  "status": "SOURCE_AND_PCM_RESOURCES_VERIFIED",
+  "phase13.2_status": "IN_PROGRESS",
+  "installed_ui_acceptance": "NOT_RUN_FOR_0.1.6",
+  "source_image": {
+    "path": "resources/PartSmith_Logo_64x64.png",
+    "sha256": "dc06e6c7275a24553b16667cf2fa7c2afe08efcd8a2cfd8a4e02d97864f1fdae",
+    "byte_length": 7519
+  },
+  "package": {
+    "path": "dist/partsmith-0.1.6-pcm.zip",
+    "sha256": "0fd43032e969b1041cb78e6e1d919310e2d0f9d31f77642f24adc9f48d2c3d2c",
+    "byte_length": 6777652,
+    "version": "0.1.6",
+    "identifier": "com.boardforgetools.partsmith",
+    "inventory_sha256": "07238649be2f8be7aa2be0f4de0d8709318615f2c26b1a463a87b6ca6099ee59",
+    "members": 152,
+    "package_icon": {
+      "path": "resources/icon.png",
+      "sha256": "dc06e6c7275a24553b16667cf2fa7c2afe08efcd8a2cfd8a4e02d97864f1fdae",
+      "size": 7519
+    }
+  },
+  "repository_resources": {
+    "path": "dist/resources.zip",
+    "sha256": "29c259f0111c29cd56e24526f13b17788b2f0b53d6043ace3f093d4413d9136b",
+    "member": "com.boardforgetools.partsmith/icon.png",
+    "byte_parity": true
+  },
+  "tests": {
+    "path": "docs/gates/phase-13.2-pcm-listing-icon-tests-2026-10-06.xml",
+    "passed": 31
+  },
+  "payload_verification": "docs/gates/phase-13.2-pcm-listing-icon-payload-2026-10-06.json",
+  "ruff": "Check and formatting passed for changed Python files.",
+  "preceding_draft_map": "docs/gates/history/phase-13.2-artifacts-before-pcm-listing-icon-2026-10-06.json",
+  "documentation_basis": [
+    "https://dev-docs.kicad.org/en/addons/",
+    "https://gitlab.com/kicad/code/kicad/-/raw/10.0.6/kicad/pcm/pcm.cpp"
+  ]
+}

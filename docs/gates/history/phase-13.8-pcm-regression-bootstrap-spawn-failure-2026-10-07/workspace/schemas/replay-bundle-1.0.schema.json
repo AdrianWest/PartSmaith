@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "PartSmith offline replay bundle 1.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "bundle_id", "availability", "original_run", "expected", "objects"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "bundle_id": {"type": "string", "minLength": 1},
+    "availability": {"const": "OFFLINE_COMPLETE"},
+    "original_run": {"type": "string", "minLength": 1},
+    "expected": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["input_snapshot_hash", "artifact_hashes", "dependency_hashes", "validation_semantics_hash", "engineering_manifest_hash"],
+      "properties": {
+        "input_snapshot_hash": {"$ref": "#/$defs/hash"},
+        "validation_semantics_hash": {"$ref": "#/$defs/hash"},
+        "engineering_manifest_hash": {"$ref": "#/$defs/hash"},
+        "artifact_hashes": {
+          "type": "object", "additionalProperties": false,
+          "required": ["SYMBOL", "FOOTPRINT", "MODEL_3D"],
+          "properties": {
+            "SYMBOL": {"$ref": "#/$defs/hash"},
+            "FOOTPRINT": {"$ref": "#/$defs/hash"},
+            "MODEL_3D": {"$ref": "#/$defs/hash"}
+          }
+        },
+        "dependency_hashes": {
+          "type": "object", "additionalProperties": false,
+          "required": ["symbol", "footprint", "model_3d", "association"],
+          "properties": {
+            "symbol": {"$ref": "#/$defs/hash"},
+            "footprint": {"$ref": "#/$defs/hash"},
+            "model_3d": {"$ref": "#/$defs/hash"},
+            "association": {"$ref": "#/$defs/hash"}
+          }
+        }
+      }
+    },
+    "objects": {
+      "type": "array", "minItems": 1,
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["identity", "kind", "schema_version", "path", "byte_length", "sha256"],
+        "properties": {
+          "identity": {"type": "string", "minLength": 1},
+          "kind": {"enum": ["IR_REVISION", "ACQUISITION_INVENTORY", "SOURCE", "SCHEMA", "RUNTIME", "FROZEN_INPUT", "FINAL_OUTPUT", "AUDIT", "HISTORY_INDEX"]},
+          "schema_version": {"type": "string", "minLength": 1},
+          "path": {"type": "string", "minLength": 1},
+          "byte_length": {"type": "integer", "minimum": 0},
+          "sha256": {"$ref": "#/$defs/hash"}
+        }
+      }
+    }
+  },
+  "$defs": {"hash": {"type": "string", "pattern": "^[0-9a-f]{64}$"}}
+}

@@ -1,0 +1,72 @@
+{
+  "status": "PASS",
+  "rounds_requested": 3,
+  "suite": [
+    "tests/test_extraction.py",
+    "tests/test_extraction_isolation.py",
+    "tests/test_ai.py",
+    "tests/test_ai_transport.py",
+    "tests/test_cli.py",
+    "tests/test_gui.py",
+    "tests/test_kicad_runtime.py",
+    "scripts/verify_gui.py"
+  ],
+  "attempts": [
+    {
+      "round": 1,
+      "exit_code": 0,
+      "timed_out": false,
+      "complete_junit": true,
+      "artifacts": {
+        "round-1.stdout.txt": "8c592ddc70ce26d1fb53466c9d02954287b41be7b700b510fcad81e0fce44f16",
+        "round-1.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "round-1.xml": "68ed84331dd49fde8c76edc5cefec7543aa78b85cdeae666dba6ea30ee78ea69"
+      },
+      "tests": {
+        "tests": 194,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "status": "PASS"
+    },
+    {
+      "round": 2,
+      "exit_code": 0,
+      "timed_out": false,
+      "complete_junit": true,
+      "artifacts": {
+        "round-2.stdout.txt": "797cb4ac0465c07e27f07aada06fa7f717eb5302338719e8bc909268e7c8fe74",
+        "round-2.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "round-2.xml": "7cf04d854eedec77033b65cf8b17c7d151ed924cf00e9294b4446b5457c38683"
+      },
+      "tests": {
+        "tests": 194,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "status": "PASS"
+    },
+    {
+      "round": 3,
+      "exit_code": 0,
+      "timed_out": false,
+      "complete_junit": true,
+      "artifacts": {
+        "round-3.stdout.txt": "5ee2cf205f3fd11b85a6f698ea10d988abd6055efe3a8ed7cb4fbbbdb276df77",
+        "round-3.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "round-3.xml": "37554f65162f4348881451b6b5eb958d024d3c5919a0d6faae12c7b32ba4ef7d"
+      },
+      "tests": {
+        "tests": 194,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "status": "PASS"
+    }
+  ],
+  "package_root": "C:\\GIT_HUB\\PartSmaith\\docs\\gates\\phase-13.8-pdf-stability\\payload\\plugins",
+  "archive_sha256": "a52e0ce3ecbc12aec3a5a79c8c95327529a3b2903c5e6d118596d0e59749fca7"
+}

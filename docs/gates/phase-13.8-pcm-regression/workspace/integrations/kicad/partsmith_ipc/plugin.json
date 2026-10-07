@@ -1,0 +1,18 @@
+{
+  "identifier": "com.boardforgetools.partsmith",
+  "name": "PartSmith",
+  "description": "Deterministic component preparation and inspection",
+  "runtime": {"type": "python", "min_version": "3.12"},
+  "actions": [
+    {
+      "identifier": "open",
+      "name": "Open PartSmith",
+      "description": "Open PartSmith after engineering runtime checks",
+      "show-button": true,
+      "scopes": ["pcb"],
+      "entrypoint": "entry.py",
+      "icons-light": ["icons/PartSmith_Anvil_Icon_24x24.png", "icons/PartSmith_Anvil_Icon_64x64.png"],
+      "icons-dark": ["icons/PartSmith_Anvil_Icon_24x24.png", "icons/PartSmith_Anvil_Icon_64x64.png"]
+    }
+  ]
+}

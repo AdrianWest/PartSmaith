@@ -1,0 +1,67 @@
+{
+  "source": "language-matrix.pdf",
+  "sha256": "723ad9215c9c9894a74d880c9b1631b484ce9b07dd0a638aacacc0b5f99f492a",
+  "kind": "synthetic; no manufacturer approval",
+  "reference_ocr": {
+    "dpi": 300,
+    "page_segmentation": 6
+  },
+  "samples": [
+    {
+      "language": "en",
+      "native_page": 1,
+      "scanned_page": 2,
+      "translation": {
+        "original_text": "Package voltage 5 V\n",
+        "translated_text": "Package voltage 5 V",
+        "source_language": "en",
+        "target_language": "en",
+        "provider": "manual",
+        "model": "not_applicable",
+        "timestamp": "2026-10-04T12:00:00Z"
+      }
+    },
+    {
+      "language": "de",
+      "native_page": 3,
+      "scanned_page": 4,
+      "translation": {
+        "original_text": "Gehäuse Spannung 5 V\n",
+        "translated_text": "Package voltage 5 V",
+        "source_language": "de",
+        "target_language": "en",
+        "provider": "manual",
+        "model": "not_applicable",
+        "timestamp": "2026-10-04T12:00:00Z"
+      }
+    },
+    {
+      "language": "zh-Hans",
+      "native_page": 5,
+      "scanned_page": 6,
+      "translation": {
+        "original_text": "产品规格 额定电压 5 V 电流 20 mA 封装类型\n",
+        "translated_text": "Product specifications: rated voltage 5 V, current 20 mA, package type",
+        "source_language": "zh-Hans",
+        "target_language": "en",
+        "provider": "manual",
+        "model": "not_applicable",
+        "timestamp": "2026-10-04T12:00:00Z"
+      }
+    },
+    {
+      "language": "mul",
+      "native_page": 7,
+      "scanned_page": 8,
+      "translation": {
+        "original_text": "产品规格 额定电压 5 V 电流 20 mA 封装类型\n",
+        "translated_text": "Product specifications: rated voltage 5 V, current 20 mA, package type",
+        "source_language": "zh-Hans",
+        "target_language": "en",
+        "provider": "manual",
+        "model": "not_applicable",
+        "timestamp": "2026-10-04T12:00:00Z"
+      }
+    }
+  ]
+}

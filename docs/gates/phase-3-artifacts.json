@@ -58,12 +58,12 @@
     ".venv/Scripts/python.exe scripts/verify_phase2_manifest.py --manifest docs/gates/phase-3-artifacts.json"
   ],
   "sha256": {
-    ".gitattributes": "44a19d704861ec047282322e3edad133eb0275ed65bf348545836c4d907da315",
-    ".github/workflows/ci.yml": "8ab5a65662be3e3c631ba2171db9230b05a05fc4b387cf31170f7fee75300961",
-    "README.md": "26a1db3c3f21a016e62b1acc796635c3db28b4516669eefa2fe1a8fef3e2db0c",
-    "pyproject.toml": "861a31f7a0cf66015c7635e7aeb97a49f43da0b652485c4f804ca4b4afff7e8e",
+    ".gitattributes": "b345a7db8d695a9da64fa0c9befeb8897345935d2df882c4075fb296b3b61c09",
+    ".github/workflows/ci.yml": "2f676be607172e21533480ed50cbacf9cf3b27bd0e640898326ecc3a4d4ccf25",
+    "README.md": "42499199fc5086bb2e12a7e529fda47d98802eee92cf9b695bc9b4cd578879b8",
+    "pyproject.toml": "0f24341eaa90356f1d88c525dfdff3351282593b56249591901b27b92fd64048",
     "requirements-ci.txt": "df99cf3dc1ac9c11e29b7303972fb7368517a435df3c9c39e7afdb080ca29ccb",
-    "resources/BFT_PartSmith_Implementation_Spec.md": "b61c9845d05888b7c30db7a305b5247119070c564f4091fb17b22cc1470a8076",
+    "resources/BFT_PartSmith_Implementation_Spec.md": "60904059cd35af2679925881644c41b1d4065032628722a226aa0b27abfe9877",
     "schemas/pdl-1.0.schema.json": "beb270c6f7ef0aecd93399cc1bc836b42d42a8a0a14656d7e160efe8144f223a",
     "pdl/entries/synthetic-0402@1.0.json": "199ad7042f45eda4dd0b839f8838a6135c2e0abc2bea0b1011658ab8495a811a",
     "pdl/release-profiles/mvp-1@1.0.json": "8798d9a552e5dab29f0c5985a4bfbf7b91fb148ac4e90c42f73952dcf8550b0a",

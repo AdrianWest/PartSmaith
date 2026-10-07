@@ -1,0 +1,18 @@
+{
+  "status": "PASS",
+  "date": "2026-10-05",
+  "scope": "Local Windows AMD64; exact source/wheel/installed Python bytes",
+  "package_python_files": 101,
+  "wheel": {
+    "path": ".tools/phase12-symbol-viewer/dist/partsmith-0.1.0-py3-none-any.whl",
+    "sha256": "3f5f65f8d90e1a5275ae547cd5e70004fb394140daa8a2a32ea5b7b6acc790c3"
+  },
+  "sdist": {
+    "path": ".tools/phase12-symbol-viewer/dist/partsmith-0.1.0.tar.gz",
+    "sha256": "4ddbf6b55b7d25ff69f9c5845ce8178e01de937f24cc346d49e6c34b1b5c4f31"
+  },
+  "banner3": {
+    "sha256": "080c313c8befd231672174a5ad2473a5ba6ab388ba1c2b977d3fea9377e8a5c8",
+    "source_wheel_sdist_installed": "PASS"
+  }
+}

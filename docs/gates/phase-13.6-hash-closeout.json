@@ -1,0 +1,1418 @@
+{
+  "phase": "13.6",
+  "date": "2026-10-07",
+  "status": "HASH_CLOSEOUT_VERIFIED",
+  "reason": "Validated complete native NTFS publication, actual child process crash recovery, fresh rollback and current managed-reference checks; finalize shared inputs and verify all affected gate hashes",
+  "hash_source": "disk",
+  "scope": "Final inputs; historical acceptance bytes retained",
+  "git_blob_verification": "Due after current inputs are committed",
+  "refreshed_manifests": [
+    {
+      "path": "docs/gates/phase-10-artifacts.json",
+      "historical_path": "docs/gates/history/phase-10-artifacts-before-phase-13.6-2026-10-07.json",
+      "previous_sha256": "3bd602cc56a035f8214bce0f9fcc57fa9e36d5144e8dfba5b913d51983dc859a",
+      "new_sha256": "b3bc58d71179fdb53aa22b0339b1cafd2e368770a015e185082b335cfd5fb1a4"
+    },
+    {
+      "path": "docs/gates/phase-10-parser-fix-2026-10-04.json",
+      "historical_path": "docs/gates/history/phase-10-parser-fix-2026-10-04-before-phase-13.6-2026-10-07.json",
+      "previous_sha256": "4482570f861250a83305d11dd783e105cc3d4b303c4371552b1c85e2ee6f3242",
+      "new_sha256": "dd22ec98bdb9ab9a394a63855c2f0b9aa17b20872dc5512e9eb77321fa70b7b2"
+    },
+    {
+      "path": "docs/gates/phase-8-artifacts.json",
+      "historical_path": "docs/gates/history/phase-8-artifacts-before-phase-13.6-2026-10-07.json",
+      "previous_sha256": "b2a612093fa19466d110b35f2292aaae8b3cda460255897191c361892cc95de8",
+      "new_sha256": "8ec6a06a1a1eaebb53d4bb89d55c8cad9a099da0642c847fe65419611743832d"
+    },
+    {
+      "path": "docs/gates/phase-9-artifacts.json",
+      "historical_path": "docs/gates/history/phase-9-artifacts-before-phase-13.6-2026-10-07.json",
+      "previous_sha256": "a06854b718bf95d52616d81c6950785845c31e395e23cd153e5d78412334f170",
+      "new_sha256": "1d9976d50b4f419a4bb5b646762528f38b490db8ce713fb8ea6c244170824e44"
+    },
+    {
+      "path": "docs/gates/phase-9.5-artifacts.json",
+      "historical_path": "docs/gates/history/phase-9.5-artifacts-before-phase-13.6-2026-10-07.json",
+      "previous_sha256": "a1e9bb22323b193e36d2d5469dc40302a0742e1ef0bd484f97e08a647eca96be",
+      "new_sha256": "b2219ac4d9861f02d71cc5528deadad0229a125848e09ca792961f454582171d"
+    },
+    {
+      "path": "docs/gates/phase-11-artifacts.json",
+      "historical_path": "docs/gates/history/phase-11-artifacts-before-phase-13.6-2026-10-07.json",
+      "previous_sha256": "65d6e0c8d5ba69f9eb7597e9c7f69fd2d1d5101739b681049528ad86bbd3b721",
+      "new_sha256": "09fda4855fd76963706abe8b40c1e825a642c38ebd4d93d7d990fe47ba572bab"
+    },
+    {
+      "path": "docs/gates/phase-11-finding-fixes-2026-10-04.json",
+      "historical_path": "docs/gates/history/phase-11-finding-fixes-2026-10-04-before-phase-13.6-2026-10-07.json",
+      "previous_sha256": "e1a81012702b919f5a165a17b9b85f44696e83840d6f04bb2f1514efd217e4f2",
+      "new_sha256": "2a49236329f1030146c6e234525e09166c05c8f4d149ff859ef92325e692c2eb"
+    },
+    {
+      "path": "docs/gates/phase-12-finding-fixes-2026-10-05.json",
+      "historical_path": "docs/gates/history/phase-12-finding-fixes-2026-10-05-before-phase-13.6-2026-10-07.json",
+      "previous_sha256": "c4591f2a3134f8501f33b0bf8544ce8584ed55e5e508d9571b1fdb96a3489ded",
+      "new_sha256": "378494674d967daffc984a07e6307c6f0e182e9bd54ff8bca108a8cd831e4a21"
+    },
+    {
+      "path": "docs/gates/phase-2-ir-1.1-artifacts.json",
+      "historical_path": "docs/gates/history/phase-2-ir-1.1-artifacts-before-phase-13.6-2026-10-07.json",
+      "previous_sha256": "20c9807e574daa464dcedd87ca631a0d8d74b8158361fdcde5f0ea23b810c63e",
+      "new_sha256": "4bf3e7d3a803b3111316976d64c20527f30665d4909a49922524aa18220e1170"
+    },
+    {
+      "path": "docs/gates/phase-2-ir-1.2-artifacts.json",
+      "historical_path": "docs/gates/history/phase-2-ir-1.2-artifacts-before-phase-13.6-2026-10-07.json",
+      "previous_sha256": "7ce55fed6cc8d604cdb0b41fa1110708eebc084668e764ec41a0b692307051c2",
+      "new_sha256": "bb991128f2aa3aca5521dcc3f330415c95d9b2f98deb9ae774c253e4c150df7a"
+    },
+    {
+      "path": "docs/gates/phase-2-v0.9.6-artifacts.json",
+      "historical_path": "docs/gates/history/phase-2-v0.9.6-artifacts-before-phase-13.6-2026-10-07.json",
+      "previous_sha256": "9abc75d847dc93533473f70a5a3d043fd16f1aee7030416e95db799b0fc3c914",
+      "new_sha256": "179bf693fd3ed7ca011047801044c48d7653cadde82c62843b0570dcf677a286"
+    },
+    {
+      "path": "docs/gates/phase-3-artifacts.json",
+      "historical_path": "docs/gates/history/phase-3-artifacts-before-phase-13.6-2026-10-07.json",
+      "previous_sha256": "318a63ee30293da2e0782dcf8ed03e0e0bcdb1610fdd8126a3148380ce703369",
+      "new_sha256": "7a283ec0451e1e0579afbacf4d794c2858ddaa465bb8737db9b73c6a5d2a6d40"
+    },
+    {
+      "path": "docs/gates/phase-12.1-artifacts.json",
+      "historical_path": "docs/gates/history/phase-12.1-artifacts-before-phase-13.6-2026-10-07.json",
+      "previous_sha256": "a27cdc056361a49376928ccb9af61e96a7362c934561776d0eaed85b0b11a10f",
+      "new_sha256": "dfca464199ffb4fe96d52c32b256d356690ac812bdb5d30088663c10cec6566e"
+    },
+    {
+      "path": "docs/gates/phase-12-readiness-review-2026-10-05.json",
+      "historical_path": "docs/gates/history/phase-12-readiness-review-2026-10-05-before-phase-13.6-2026-10-07.json",
+      "previous_sha256": "3659ddcd93ba2fef5f5d273e6d690666eaa8c099e0a9e74ec900021681a4da41",
+      "new_sha256": "10547818e93e875a3379943dae9bbdd663596aaf4d865fc8514c06a63011561c"
+    },
+    {
+      "path": "docs/gates/phase-13-pcm-only-spec-update-2026-10-05.json",
+      "historical_path": "docs/gates/history/phase-13-pcm-only-spec-update-2026-10-05-before-phase-13.6-2026-10-07.json",
+      "previous_sha256": "6edfe929563dfcf08544a3af38edc4cfe46a03fe4b9d98c36b32f7a16b088cab",
+      "new_sha256": "59bcdaebb215d9c2412a2823ad96b8ed8112081c474f7174ff749c6bf61da44d"
+    },
+    {
+      "path": "docs/gates/phase-13-pcm-spec-update-2026-10-05.json",
+      "historical_path": "docs/gates/history/phase-13-pcm-spec-update-2026-10-05-before-phase-13.6-2026-10-07.json",
+      "previous_sha256": "9ce74c42f7d7b541931a7c100d72b4f1ab15527ba36cf7e8b1821c6fd2b68004",
+      "new_sha256": "88b0c113f197edc498c710f56597364c71fce9c68f9a81c31e8d704dfdafa7ce"
+    },
+    {
+      "path": "docs/gates/phase-13-spec-revision-v0.9.7-2026-10-05.json",
+      "historical_path": "docs/gates/history/phase-13-spec-revision-v0.9.7-2026-10-05-before-phase-13.6-2026-10-07.json",
+      "previous_sha256": "f69327336c75e521100b7d958917c3c545190c5c98be84a954259c198d4bb6aa",
+      "new_sha256": "a566aa6a0a5935ab1b7cc052b4afe9f8e49469107409a622239dc15e98da8662"
+    },
+    {
+      "path": "docs/gates/phase-12-artifacts.json",
+      "historical_path": "docs/gates/history/phase-12-artifacts-before-phase-13.6-2026-10-07.json",
+      "previous_sha256": "d71415c5995710fd3cfc53edaca6ba0ea1a26e5fed2c998f57ebdfdc2c5105a5",
+      "new_sha256": "cead13cd02be765154d9fa6bba1adf01e6109aedebba8e6f621308db44102b38"
+    },
+    {
+      "path": "docs/gates/phase-12-viewer-performance-artifacts.json",
+      "historical_path": "docs/gates/history/phase-12-viewer-performance-artifacts-before-phase-13.6-2026-10-07.json",
+      "previous_sha256": "eccc76ae49c8ec7a5f8b7bec6037a296b70fd7b5be3fc0256551a8c6518e0760",
+      "new_sha256": "4bcc27583f9982f33f0ee1495d6dfdb7d1011d6ba5f55ef6a35edf59d864683b"
+    },
+    {
+      "path": "docs/gates/phase-13.1-artifacts.json",
+      "historical_path": "docs/gates/history/phase-13.1-artifacts-before-phase-13.6-2026-10-07.json",
+      "previous_sha256": "fe9488cbdc5d51f67a4f55c998d1cf1404cc4ce1993e12a062f1d2a75463da27",
+      "new_sha256": "c263f1171781e493a422bbc1a756849414d5e5f7696af6746a2f03f223a65f3a"
+    },
+    {
+      "path": "docs/gates/phase-13.2-artifacts.json",
+      "historical_path": "docs/gates/history/phase-13.2-artifacts-before-phase-13.6-2026-10-07.json",
+      "previous_sha256": "230f49fc10a27b846f6ab3936934b73a0347c615e603aafed90d1653fb8e1df8",
+      "new_sha256": "935f8d0710abaf4c9346fac971a70f04da34db946819fb88bf022d4724dc063f"
+    },
+    {
+      "path": "docs/gates/phase-13.3-artifacts.json",
+      "historical_path": "docs/gates/history/phase-13.3-artifacts-before-phase-13.6-2026-10-07.json",
+      "previous_sha256": "3babbd044e693b65ac5d2d887a65bcdd216f6e26a0775b73a5c0c51a72b0d584",
+      "new_sha256": "4366cdc253dbf8e76e70ee935697dc909a944605481f1222baee2d7c5f9d51ef"
+    },
+    {
+      "path": "docs/gates/phase-13.4-artifacts.json",
+      "historical_path": "docs/gates/history/phase-13.4-artifacts-before-phase-13.6-2026-10-07.json",
+      "previous_sha256": "7f753cd917d10dde6b295adf3c95ed30da90e83bad3b28225cfab1ee9eca792c",
+      "new_sha256": "1ac9f9077c29f8458f272041ca38531428e393c9b45cfaa4048054c9d800ae70"
+    },
+    {
+      "path": "docs/gates/phase-13.5-artifacts.json",
+      "historical_path": "docs/gates/history/phase-13.5-artifacts-before-phase-13.6-2026-10-07.json",
+      "previous_sha256": "2d065cf0c6caa9a06562a8e943c0e70364876d4c2776aed8dba1d3c140843934",
+      "new_sha256": "e23bf15a6d86dbc549e890eedc789cc861a01b09711cbf129bb2bac903ed72b6"
+    }
+  ],
+  "hash_changes": [
+    {
+      "manifest": "docs/gates/phase-10-artifacts.json",
+      "field": "sha256",
+      "path": ".github/workflows/ci.yml",
+      "previous_sha256": "4f9d7cf7d9693830f4b8b65469806575cfd9c7672c969665a4c3cfe140408363",
+      "new_sha256": "1490d28ecb0d46b08234222760a50fae3ccd33c9bf1678324f0b3f0416f44177"
+    },
+    {
+      "manifest": "docs/gates/phase-10-artifacts.json",
+      "field": "sha256",
+      "path": "README.md",
+      "previous_sha256": "1ae1f2ae98947f5293d0d7b12986438c464f5d4e8c49d45401056ea2eecf83af",
+      "new_sha256": "96ffeb15e307b99b07aed499cfd2803aa2bb3beebea9e24177e06a5ed08b09bc"
+    },
+    {
+      "manifest": "docs/gates/phase-10-parser-fix-2026-10-04.json",
+      "field": "source_sha256",
+      "path": ".github/workflows/ci.yml",
+      "previous_sha256": "4f9d7cf7d9693830f4b8b65469806575cfd9c7672c969665a4c3cfe140408363",
+      "new_sha256": "1490d28ecb0d46b08234222760a50fae3ccd33c9bf1678324f0b3f0416f44177"
+    },
+    {
+      "manifest": "docs/gates/phase-10-parser-fix-2026-10-04.json",
+      "field": "source_sha256",
+      "path": ".gitattributes",
+      "previous_sha256": "38af53b52a84855378456f8aec8930fca1c6da6d2ea96771b62b1356c3b0bf59",
+      "new_sha256": "77713bea66c00eaf2cde8a55f7d79847d4a7b1cb78ee0e13dcc2911be11753c3"
+    },
+    {
+      "manifest": "docs/gates/phase-10-parser-fix-2026-10-04.json",
+      "field": "source_sha256",
+      "path": "README.md",
+      "previous_sha256": "1ae1f2ae98947f5293d0d7b12986438c464f5d4e8c49d45401056ea2eecf83af",
+      "new_sha256": "96ffeb15e307b99b07aed499cfd2803aa2bb3beebea9e24177e06a5ed08b09bc"
+    },
+    {
+      "manifest": "docs/gates/phase-8-artifacts.json",
+      "field": "sha256",
+      "path": ".github/workflows/ci.yml",
+      "previous_sha256": "4f9d7cf7d9693830f4b8b65469806575cfd9c7672c969665a4c3cfe140408363",
+      "new_sha256": "1490d28ecb0d46b08234222760a50fae3ccd33c9bf1678324f0b3f0416f44177"
+    },
+    {
+      "manifest": "docs/gates/phase-8-artifacts.json",
+      "field": "sha256",
+      "path": "README.md",
+      "previous_sha256": "1ae1f2ae98947f5293d0d7b12986438c464f5d4e8c49d45401056ea2eecf83af",
+      "new_sha256": "96ffeb15e307b99b07aed499cfd2803aa2bb3beebea9e24177e06a5ed08b09bc"
+    },
+    {
+      "manifest": "docs/gates/phase-8-artifacts.json",
+      "field": "sha256",
+      "path": "resources/BFT_PartSmith_Implementation_Spec.md",
+      "previous_sha256": "8e9eb88fe3d4edf4d604fe5827752b8e7ad0d5227d8321fba70481787ea11b12",
+      "new_sha256": "dc793831f0242960dd11e1974d6838019c2c70d0360f7007549bdbbb1cc91b8c"
+    },
+    {
+      "manifest": "docs/gates/phase-9-artifacts.json",
+      "field": "sha256",
+      "path": ".github/workflows/ci.yml",
+      "previous_sha256": "4f9d7cf7d9693830f4b8b65469806575cfd9c7672c969665a4c3cfe140408363",
+      "new_sha256": "1490d28ecb0d46b08234222760a50fae3ccd33c9bf1678324f0b3f0416f44177"
+    },
+    {
+      "manifest": "docs/gates/phase-9-artifacts.json",
+      "field": "sha256",
+      "path": "README.md",
+      "previous_sha256": "1ae1f2ae98947f5293d0d7b12986438c464f5d4e8c49d45401056ea2eecf83af",
+      "new_sha256": "96ffeb15e307b99b07aed499cfd2803aa2bb3beebea9e24177e06a5ed08b09bc"
+    },
+    {
+      "manifest": "docs/gates/phase-9-artifacts.json",
+      "field": "sha256",
+      "path": "resources/BFT_PartSmith_Implementation_Spec.md",
+      "previous_sha256": "8e9eb88fe3d4edf4d604fe5827752b8e7ad0d5227d8321fba70481787ea11b12",
+      "new_sha256": "dc793831f0242960dd11e1974d6838019c2c70d0360f7007549bdbbb1cc91b8c"
+    },
+    {
+      "manifest": "docs/gates/phase-9.5-artifacts.json",
+      "field": "sha256",
+      "path": "README.md",
+      "previous_sha256": "1ae1f2ae98947f5293d0d7b12986438c464f5d4e8c49d45401056ea2eecf83af",
+      "new_sha256": "96ffeb15e307b99b07aed499cfd2803aa2bb3beebea9e24177e06a5ed08b09bc"
+    },
+    {
+      "manifest": "docs/gates/phase-9.5-artifacts.json",
+      "field": "sha256",
+      "path": "docs/gates/phase-8-artifacts.json",
+      "previous_sha256": "b2a612093fa19466d110b35f2292aaae8b3cda460255897191c361892cc95de8",
+      "new_sha256": "8ec6a06a1a1eaebb53d4bb89d55c8cad9a099da0642c847fe65419611743832d"
+    },
+    {
+      "manifest": "docs/gates/phase-9.5-artifacts.json",
+      "field": "sha256",
+      "path": "docs/gates/phase-9-artifacts.json",
+      "previous_sha256": "a06854b718bf95d52616d81c6950785845c31e395e23cd153e5d78412334f170",
+      "new_sha256": "1d9976d50b4f419a4bb5b646762528f38b490db8ce713fb8ea6c244170824e44"
+    },
+    {
+      "manifest": "docs/gates/phase-9.5-artifacts.json",
+      "field": "sha256",
+      "path": "resources/BFT_PartSmith_Implementation_Spec.md",
+      "previous_sha256": "8e9eb88fe3d4edf4d604fe5827752b8e7ad0d5227d8321fba70481787ea11b12",
+      "new_sha256": "dc793831f0242960dd11e1974d6838019c2c70d0360f7007549bdbbb1cc91b8c"
+    },
+    {
+      "manifest": "docs/gates/phase-11-artifacts.json",
+      "field": "sha256",
+      "path": "docs/gates/phase-10-artifacts.json",
+      "previous_sha256": "3bd602cc56a035f8214bce0f9fcc57fa9e36d5144e8dfba5b913d51983dc859a",
+      "new_sha256": "b3bc58d71179fdb53aa22b0339b1cafd2e368770a015e185082b335cfd5fb1a4"
+    },
+    {
+      "manifest": "docs/gates/phase-11-artifacts.json",
+      "field": "sha256",
+      "path": "docs/gates/phase-8-artifacts.json",
+      "previous_sha256": "b2a612093fa19466d110b35f2292aaae8b3cda460255897191c361892cc95de8",
+      "new_sha256": "8ec6a06a1a1eaebb53d4bb89d55c8cad9a099da0642c847fe65419611743832d"
+    },
+    {
+      "manifest": "docs/gates/phase-11-artifacts.json",
+      "field": "sha256",
+      "path": "docs/gates/phase-9-artifacts.json",
+      "previous_sha256": "a06854b718bf95d52616d81c6950785845c31e395e23cd153e5d78412334f170",
+      "new_sha256": "1d9976d50b4f419a4bb5b646762528f38b490db8ce713fb8ea6c244170824e44"
+    },
+    {
+      "manifest": "docs/gates/phase-11-artifacts.json",
+      "field": "sha256",
+      "path": "docs/gates/phase-9.5-artifacts.json",
+      "previous_sha256": "a1e9bb22323b193e36d2d5469dc40302a0742e1ef0bd484f97e08a647eca96be",
+      "new_sha256": "b2219ac4d9861f02d71cc5528deadad0229a125848e09ca792961f454582171d"
+    },
+    {
+      "manifest": "docs/gates/phase-11-artifacts.json",
+      "field": "sha256",
+      "path": "README.md",
+      "previous_sha256": "1ae1f2ae98947f5293d0d7b12986438c464f5d4e8c49d45401056ea2eecf83af",
+      "new_sha256": "96ffeb15e307b99b07aed499cfd2803aa2bb3beebea9e24177e06a5ed08b09bc"
+    },
+    {
+      "manifest": "docs/gates/phase-11-artifacts.json",
+      "field": "sha256",
+      "path": "resources/BFT_PartSmith_Implementation_Spec.md",
+      "previous_sha256": "8e9eb88fe3d4edf4d604fe5827752b8e7ad0d5227d8321fba70481787ea11b12",
+      "new_sha256": "dc793831f0242960dd11e1974d6838019c2c70d0360f7007549bdbbb1cc91b8c"
+    },
+    {
+      "manifest": "docs/gates/phase-11-finding-fixes-2026-10-04.json",
+      "field": "sha256",
+      "path": "resources/BFT_PartSmith_Implementation_Spec.md",
+      "previous_sha256": "8e9eb88fe3d4edf4d604fe5827752b8e7ad0d5227d8321fba70481787ea11b12",
+      "new_sha256": "dc793831f0242960dd11e1974d6838019c2c70d0360f7007549bdbbb1cc91b8c"
+    },
+    {
+      "manifest": "docs/gates/phase-12-finding-fixes-2026-10-05.json",
+      "field": "sha256",
+      "path": ".gitattributes",
+      "previous_sha256": "38af53b52a84855378456f8aec8930fca1c6da6d2ea96771b62b1356c3b0bf59",
+      "new_sha256": "77713bea66c00eaf2cde8a55f7d79847d4a7b1cb78ee0e13dcc2911be11753c3"
+    },
+    {
+      "manifest": "docs/gates/phase-12-finding-fixes-2026-10-05.json",
+      "field": "sha256",
+      "path": ".github/workflows/ci.yml",
+      "previous_sha256": "4f9d7cf7d9693830f4b8b65469806575cfd9c7672c969665a4c3cfe140408363",
+      "new_sha256": "1490d28ecb0d46b08234222760a50fae3ccd33c9bf1678324f0b3f0416f44177"
+    },
+    {
+      "manifest": "docs/gates/phase-12-finding-fixes-2026-10-05.json",
+      "field": "sha256",
+      "path": "README.md",
+      "previous_sha256": "1ae1f2ae98947f5293d0d7b12986438c464f5d4e8c49d45401056ea2eecf83af",
+      "new_sha256": "96ffeb15e307b99b07aed499cfd2803aa2bb3beebea9e24177e06a5ed08b09bc"
+    },
+    {
+      "manifest": "docs/gates/phase-12-finding-fixes-2026-10-05.json",
+      "field": "sha256",
+      "path": "docs/gates/phase-10-parser-fix-2026-10-04.json",
+      "previous_sha256": "4482570f861250a83305d11dd783e105cc3d4b303c4371552b1c85e2ee6f3242",
+      "new_sha256": "dd22ec98bdb9ab9a394a63855c2f0b9aa17b20872dc5512e9eb77321fa70b7b2"
+    },
+    {
+      "manifest": "docs/gates/phase-12-finding-fixes-2026-10-05.json",
+      "field": "sha256",
+      "path": "resources/BFT_PartSmith_Implementation_Spec.md",
+      "previous_sha256": "8e9eb88fe3d4edf4d604fe5827752b8e7ad0d5227d8321fba70481787ea11b12",
+      "new_sha256": "dc793831f0242960dd11e1974d6838019c2c70d0360f7007549bdbbb1cc91b8c"
+    },
+    {
+      "manifest": "docs/gates/phase-2-ir-1.1-artifacts.json",
+      "field": "sha256",
+      "path": ".github/workflows/ci.yml",
+      "previous_sha256": "4f9d7cf7d9693830f4b8b65469806575cfd9c7672c969665a4c3cfe140408363",
+      "new_sha256": "1490d28ecb0d46b08234222760a50fae3ccd33c9bf1678324f0b3f0416f44177"
+    },
+    {
+      "manifest": "docs/gates/phase-2-ir-1.1-artifacts.json",
+      "field": "sha256",
+      "path": "README.md",
+      "previous_sha256": "1ae1f2ae98947f5293d0d7b12986438c464f5d4e8c49d45401056ea2eecf83af",
+      "new_sha256": "96ffeb15e307b99b07aed499cfd2803aa2bb3beebea9e24177e06a5ed08b09bc"
+    },
+    {
+      "manifest": "docs/gates/phase-2-ir-1.1-artifacts.json",
+      "field": "sha256",
+      "path": "resources/BFT_PartSmith_Implementation_Spec.md",
+      "previous_sha256": "8e9eb88fe3d4edf4d604fe5827752b8e7ad0d5227d8321fba70481787ea11b12",
+      "new_sha256": "dc793831f0242960dd11e1974d6838019c2c70d0360f7007549bdbbb1cc91b8c"
+    },
+    {
+      "manifest": "docs/gates/phase-2-ir-1.2-artifacts.json",
+      "field": "sha256",
+      "path": ".github/workflows/ci.yml",
+      "previous_sha256": "4f9d7cf7d9693830f4b8b65469806575cfd9c7672c969665a4c3cfe140408363",
+      "new_sha256": "1490d28ecb0d46b08234222760a50fae3ccd33c9bf1678324f0b3f0416f44177"
+    },
+    {
+      "manifest": "docs/gates/phase-2-ir-1.2-artifacts.json",
+      "field": "sha256",
+      "path": "README.md",
+      "previous_sha256": "1ae1f2ae98947f5293d0d7b12986438c464f5d4e8c49d45401056ea2eecf83af",
+      "new_sha256": "96ffeb15e307b99b07aed499cfd2803aa2bb3beebea9e24177e06a5ed08b09bc"
+    },
+    {
+      "manifest": "docs/gates/phase-2-ir-1.2-artifacts.json",
+      "field": "sha256",
+      "path": "resources/BFT_PartSmith_Implementation_Spec.md",
+      "previous_sha256": "8e9eb88fe3d4edf4d604fe5827752b8e7ad0d5227d8321fba70481787ea11b12",
+      "new_sha256": "dc793831f0242960dd11e1974d6838019c2c70d0360f7007549bdbbb1cc91b8c"
+    },
+    {
+      "manifest": "docs/gates/phase-2-v0.9.6-artifacts.json",
+      "field": "sha256",
+      "path": ".gitattributes",
+      "previous_sha256": "38af53b52a84855378456f8aec8930fca1c6da6d2ea96771b62b1356c3b0bf59",
+      "new_sha256": "77713bea66c00eaf2cde8a55f7d79847d4a7b1cb78ee0e13dcc2911be11753c3"
+    },
+    {
+      "manifest": "docs/gates/phase-2-v0.9.6-artifacts.json",
+      "field": "sha256",
+      "path": ".github/workflows/ci.yml",
+      "previous_sha256": "4f9d7cf7d9693830f4b8b65469806575cfd9c7672c969665a4c3cfe140408363",
+      "new_sha256": "1490d28ecb0d46b08234222760a50fae3ccd33c9bf1678324f0b3f0416f44177"
+    },
+    {
+      "manifest": "docs/gates/phase-2-v0.9.6-artifacts.json",
+      "field": "sha256",
+      "path": "README.md",
+      "previous_sha256": "1ae1f2ae98947f5293d0d7b12986438c464f5d4e8c49d45401056ea2eecf83af",
+      "new_sha256": "96ffeb15e307b99b07aed499cfd2803aa2bb3beebea9e24177e06a5ed08b09bc"
+    },
+    {
+      "manifest": "docs/gates/phase-2-v0.9.6-artifacts.json",
+      "field": "sha256",
+      "path": "resources/BFT_PartSmith_Implementation_Spec.md",
+      "previous_sha256": "8e9eb88fe3d4edf4d604fe5827752b8e7ad0d5227d8321fba70481787ea11b12",
+      "new_sha256": "dc793831f0242960dd11e1974d6838019c2c70d0360f7007549bdbbb1cc91b8c"
+    },
+    {
+      "manifest": "docs/gates/phase-3-artifacts.json",
+      "field": "sha256",
+      "path": ".gitattributes",
+      "previous_sha256": "38af53b52a84855378456f8aec8930fca1c6da6d2ea96771b62b1356c3b0bf59",
+      "new_sha256": "77713bea66c00eaf2cde8a55f7d79847d4a7b1cb78ee0e13dcc2911be11753c3"
+    },
+    {
+      "manifest": "docs/gates/phase-3-artifacts.json",
+      "field": "sha256",
+      "path": ".github/workflows/ci.yml",
+      "previous_sha256": "4f9d7cf7d9693830f4b8b65469806575cfd9c7672c969665a4c3cfe140408363",
+      "new_sha256": "1490d28ecb0d46b08234222760a50fae3ccd33c9bf1678324f0b3f0416f44177"
+    },
+    {
+      "manifest": "docs/gates/phase-3-artifacts.json",
+      "field": "sha256",
+      "path": "README.md",
+      "previous_sha256": "1ae1f2ae98947f5293d0d7b12986438c464f5d4e8c49d45401056ea2eecf83af",
+      "new_sha256": "96ffeb15e307b99b07aed499cfd2803aa2bb3beebea9e24177e06a5ed08b09bc"
+    },
+    {
+      "manifest": "docs/gates/phase-3-artifacts.json",
+      "field": "sha256",
+      "path": "resources/BFT_PartSmith_Implementation_Spec.md",
+      "previous_sha256": "8e9eb88fe3d4edf4d604fe5827752b8e7ad0d5227d8321fba70481787ea11b12",
+      "new_sha256": "dc793831f0242960dd11e1974d6838019c2c70d0360f7007549bdbbb1cc91b8c"
+    },
+    {
+      "manifest": "docs/gates/phase-12.1-artifacts.json",
+      "field": "sha256",
+      "path": ".gitattributes",
+      "previous_sha256": "38af53b52a84855378456f8aec8930fca1c6da6d2ea96771b62b1356c3b0bf59",
+      "new_sha256": "77713bea66c00eaf2cde8a55f7d79847d4a7b1cb78ee0e13dcc2911be11753c3"
+    },
+    {
+      "manifest": "docs/gates/phase-12.1-artifacts.json",
+      "field": "sha256",
+      "path": ".github/workflows/ci.yml",
+      "previous_sha256": "4f9d7cf7d9693830f4b8b65469806575cfd9c7672c969665a4c3cfe140408363",
+      "new_sha256": "1490d28ecb0d46b08234222760a50fae3ccd33c9bf1678324f0b3f0416f44177"
+    },
+    {
+      "manifest": "docs/gates/phase-12.1-artifacts.json",
+      "field": "sha256",
+      "path": "README.md",
+      "previous_sha256": "1ae1f2ae98947f5293d0d7b12986438c464f5d4e8c49d45401056ea2eecf83af",
+      "new_sha256": "96ffeb15e307b99b07aed499cfd2803aa2bb3beebea9e24177e06a5ed08b09bc"
+    },
+    {
+      "manifest": "docs/gates/phase-12.1-artifacts.json",
+      "field": "sha256",
+      "path": "docs/gates/phase-10-artifacts.json",
+      "previous_sha256": "3bd602cc56a035f8214bce0f9fcc57fa9e36d5144e8dfba5b913d51983dc859a",
+      "new_sha256": "b3bc58d71179fdb53aa22b0339b1cafd2e368770a015e185082b335cfd5fb1a4"
+    },
+    {
+      "manifest": "docs/gates/phase-12.1-artifacts.json",
+      "field": "sha256",
+      "path": "docs/gates/phase-10-parser-fix-2026-10-04.json",
+      "previous_sha256": "4482570f861250a83305d11dd783e105cc3d4b303c4371552b1c85e2ee6f3242",
+      "new_sha256": "dd22ec98bdb9ab9a394a63855c2f0b9aa17b20872dc5512e9eb77321fa70b7b2"
+    },
+    {
+      "manifest": "docs/gates/phase-12.1-artifacts.json",
+      "field": "sha256",
+      "path": "docs/gates/phase-11-artifacts.json",
+      "previous_sha256": "65d6e0c8d5ba69f9eb7597e9c7f69fd2d1d5101739b681049528ad86bbd3b721",
+      "new_sha256": "09fda4855fd76963706abe8b40c1e825a642c38ebd4d93d7d990fe47ba572bab"
+    },
+    {
+      "manifest": "docs/gates/phase-12.1-artifacts.json",
+      "field": "sha256",
+      "path": "docs/gates/phase-11-finding-fixes-2026-10-04.json",
+      "previous_sha256": "e1a81012702b919f5a165a17b9b85f44696e83840d6f04bb2f1514efd217e4f2",
+      "new_sha256": "2a49236329f1030146c6e234525e09166c05c8f4d149ff859ef92325e692c2eb"
+    },
+    {
+      "manifest": "docs/gates/phase-12.1-artifacts.json",
+      "field": "sha256",
+      "path": "docs/gates/phase-2-ir-1.1-artifacts.json",
+      "previous_sha256": "20c9807e574daa464dcedd87ca631a0d8d74b8158361fdcde5f0ea23b810c63e",
+      "new_sha256": "4bf3e7d3a803b3111316976d64c20527f30665d4909a49922524aa18220e1170"
+    },
+    {
+      "manifest": "docs/gates/phase-12.1-artifacts.json",
+      "field": "sha256",
+      "path": "docs/gates/phase-2-ir-1.2-artifacts.json",
+      "previous_sha256": "7ce55fed6cc8d604cdb0b41fa1110708eebc084668e764ec41a0b692307051c2",
+      "new_sha256": "bb991128f2aa3aca5521dcc3f330415c95d9b2f98deb9ae774c253e4c150df7a"
+    },
+    {
+      "manifest": "docs/gates/phase-12.1-artifacts.json",
+      "field": "sha256",
+      "path": "docs/gates/phase-2-v0.9.6-artifacts.json",
+      "previous_sha256": "9abc75d847dc93533473f70a5a3d043fd16f1aee7030416e95db799b0fc3c914",
+      "new_sha256": "179bf693fd3ed7ca011047801044c48d7653cadde82c62843b0570dcf677a286"
+    },
+    {
+      "manifest": "docs/gates/phase-12.1-artifacts.json",
+      "field": "sha256",
+      "path": "docs/gates/phase-3-artifacts.json",
+      "previous_sha256": "318a63ee30293da2e0782dcf8ed03e0e0bcdb1610fdd8126a3148380ce703369",
+      "new_sha256": "7a283ec0451e1e0579afbacf4d794c2858ddaa465bb8737db9b73c6a5d2a6d40"
+    },
+    {
+      "manifest": "docs/gates/phase-12.1-artifacts.json",
+      "field": "sha256",
+      "path": "docs/gates/phase-8-artifacts.json",
+      "previous_sha256": "b2a612093fa19466d110b35f2292aaae8b3cda460255897191c361892cc95de8",
+      "new_sha256": "8ec6a06a1a1eaebb53d4bb89d55c8cad9a099da0642c847fe65419611743832d"
+    },
+    {
+      "manifest": "docs/gates/phase-12.1-artifacts.json",
+      "field": "sha256",
+      "path": "docs/gates/phase-9-artifacts.json",
+      "previous_sha256": "a06854b718bf95d52616d81c6950785845c31e395e23cd153e5d78412334f170",
+      "new_sha256": "1d9976d50b4f419a4bb5b646762528f38b490db8ce713fb8ea6c244170824e44"
+    },
+    {
+      "manifest": "docs/gates/phase-12.1-artifacts.json",
+      "field": "sha256",
+      "path": "docs/gates/phase-9.5-artifacts.json",
+      "previous_sha256": "a1e9bb22323b193e36d2d5469dc40302a0742e1ef0bd484f97e08a647eca96be",
+      "new_sha256": "b2219ac4d9861f02d71cc5528deadad0229a125848e09ca792961f454582171d"
+    },
+    {
+      "manifest": "docs/gates/phase-12.1-artifacts.json",
+      "field": "sha256",
+      "path": "resources/BFT_PartSmith_Implementation_Spec.md",
+      "previous_sha256": "8e9eb88fe3d4edf4d604fe5827752b8e7ad0d5227d8321fba70481787ea11b12",
+      "new_sha256": "dc793831f0242960dd11e1974d6838019c2c70d0360f7007549bdbbb1cc91b8c"
+    },
+    {
+      "manifest": "docs/gates/phase-12-readiness-review-2026-10-05.json",
+      "field": "sha256",
+      "path": ".gitattributes",
+      "previous_sha256": "38af53b52a84855378456f8aec8930fca1c6da6d2ea96771b62b1356c3b0bf59",
+      "new_sha256": "77713bea66c00eaf2cde8a55f7d79847d4a7b1cb78ee0e13dcc2911be11753c3"
+    },
+    {
+      "manifest": "docs/gates/phase-12-readiness-review-2026-10-05.json",
+      "field": "sha256",
+      "path": ".github/workflows/ci.yml",
+      "previous_sha256": "4f9d7cf7d9693830f4b8b65469806575cfd9c7672c969665a4c3cfe140408363",
+      "new_sha256": "1490d28ecb0d46b08234222760a50fae3ccd33c9bf1678324f0b3f0416f44177"
+    },
+    {
+      "manifest": "docs/gates/phase-12-readiness-review-2026-10-05.json",
+      "field": "sha256",
+      "path": "README.md",
+      "previous_sha256": "1ae1f2ae98947f5293d0d7b12986438c464f5d4e8c49d45401056ea2eecf83af",
+      "new_sha256": "96ffeb15e307b99b07aed499cfd2803aa2bb3beebea9e24177e06a5ed08b09bc"
+    },
+    {
+      "manifest": "docs/gates/phase-12-readiness-review-2026-10-05.json",
+      "field": "sha256",
+      "path": "docs/gates/phase-10-artifacts.json",
+      "previous_sha256": "3bd602cc56a035f8214bce0f9fcc57fa9e36d5144e8dfba5b913d51983dc859a",
+      "new_sha256": "b3bc58d71179fdb53aa22b0339b1cafd2e368770a015e185082b335cfd5fb1a4"
+    },
+    {
+      "manifest": "docs/gates/phase-12-readiness-review-2026-10-05.json",
+      "field": "sha256",
+      "path": "docs/gates/phase-10-parser-fix-2026-10-04.json",
+      "previous_sha256": "4482570f861250a83305d11dd783e105cc3d4b303c4371552b1c85e2ee6f3242",
+      "new_sha256": "dd22ec98bdb9ab9a394a63855c2f0b9aa17b20872dc5512e9eb77321fa70b7b2"
+    },
+    {
+      "manifest": "docs/gates/phase-12-readiness-review-2026-10-05.json",
+      "field": "sha256",
+      "path": "docs/gates/phase-11-artifacts.json",
+      "previous_sha256": "65d6e0c8d5ba69f9eb7597e9c7f69fd2d1d5101739b681049528ad86bbd3b721",
+      "new_sha256": "09fda4855fd76963706abe8b40c1e825a642c38ebd4d93d7d990fe47ba572bab"
+    },
+    {
+      "manifest": "docs/gates/phase-12-readiness-review-2026-10-05.json",
+      "field": "sha256",
+      "path": "docs/gates/phase-11-finding-fixes-2026-10-04.json",
+      "previous_sha256": "e1a81012702b919f5a165a17b9b85f44696e83840d6f04bb2f1514efd217e4f2",
+      "new_sha256": "2a49236329f1030146c6e234525e09166c05c8f4d149ff859ef92325e692c2eb"
+    },
+    {
+      "manifest": "docs/gates/phase-12-readiness-review-2026-10-05.json",
+      "field": "sha256",
+      "path": "docs/gates/phase-12.1-artifacts.json",
+      "previous_sha256": "a27cdc056361a49376928ccb9af61e96a7362c934561776d0eaed85b0b11a10f",
+      "new_sha256": "dfca464199ffb4fe96d52c32b256d356690ac812bdb5d30088663c10cec6566e"
+    },
+    {
+      "manifest": "docs/gates/phase-12-readiness-review-2026-10-05.json",
+      "field": "sha256",
+      "path": "docs/gates/phase-2-ir-1.1-artifacts.json",
+      "previous_sha256": "20c9807e574daa464dcedd87ca631a0d8d74b8158361fdcde5f0ea23b810c63e",
+      "new_sha256": "4bf3e7d3a803b3111316976d64c20527f30665d4909a49922524aa18220e1170"
+    },
+    {
+      "manifest": "docs/gates/phase-12-readiness-review-2026-10-05.json",
+      "field": "sha256",
+      "path": "docs/gates/phase-2-ir-1.2-artifacts.json",
+      "previous_sha256": "7ce55fed6cc8d604cdb0b41fa1110708eebc084668e764ec41a0b692307051c2",
+      "new_sha256": "bb991128f2aa3aca5521dcc3f330415c95d9b2f98deb9ae774c253e4c150df7a"
+    },
+    {
+      "manifest": "docs/gates/phase-12-readiness-review-2026-10-05.json",
+      "field": "sha256",
+      "path": "docs/gates/phase-2-v0.9.6-artifacts.json",
+      "previous_sha256": "9abc75d847dc93533473f70a5a3d043fd16f1aee7030416e95db799b0fc3c914",
+      "new_sha256": "179bf693fd3ed7ca011047801044c48d7653cadde82c62843b0570dcf677a286"
+    },
+    {
+      "manifest": "docs/gates/phase-12-readiness-review-2026-10-05.json",
+      "field": "sha256",
+      "path": "docs/gates/phase-3-artifacts.json",
+      "previous_sha256": "318a63ee30293da2e0782dcf8ed03e0e0bcdb1610fdd8126a3148380ce703369",
+      "new_sha256": "7a283ec0451e1e0579afbacf4d794c2858ddaa465bb8737db9b73c6a5d2a6d40"
+    },
+    {
+      "manifest": "docs/gates/phase-12-readiness-review-2026-10-05.json",
+      "field": "sha256",
+      "path": "docs/gates/phase-8-artifacts.json",
+      "previous_sha256": "b2a612093fa19466d110b35f2292aaae8b3cda460255897191c361892cc95de8",
+      "new_sha256": "8ec6a06a1a1eaebb53d4bb89d55c8cad9a099da0642c847fe65419611743832d"
+    },
+    {
+      "manifest": "docs/gates/phase-12-readiness-review-2026-10-05.json",
+      "field": "sha256",
+      "path": "docs/gates/phase-9-artifacts.json",
+      "previous_sha256": "a06854b718bf95d52616d81c6950785845c31e395e23cd153e5d78412334f170",
+      "new_sha256": "1d9976d50b4f419a4bb5b646762528f38b490db8ce713fb8ea6c244170824e44"
+    },
+    {
+      "manifest": "docs/gates/phase-12-readiness-review-2026-10-05.json",
+      "field": "sha256",
+      "path": "docs/gates/phase-9.5-artifacts.json",
+      "previous_sha256": "a1e9bb22323b193e36d2d5469dc40302a0742e1ef0bd484f97e08a647eca96be",
+      "new_sha256": "b2219ac4d9861f02d71cc5528deadad0229a125848e09ca792961f454582171d"
+    },
+    {
+      "manifest": "docs/gates/phase-12-readiness-review-2026-10-05.json",
+      "field": "sha256",
+      "path": "resources/BFT_PartSmith_Implementation_Spec.md",
+      "previous_sha256": "8e9eb88fe3d4edf4d604fe5827752b8e7ad0d5227d8321fba70481787ea11b12",
+      "new_sha256": "dc793831f0242960dd11e1974d6838019c2c70d0360f7007549bdbbb1cc91b8c"
+    },
+    {
+      "manifest": "docs/gates/phase-13-pcm-only-spec-update-2026-10-05.json",
+      "field": "sha256",
+      "path": ".gitattributes",
+      "previous_sha256": "38af53b52a84855378456f8aec8930fca1c6da6d2ea96771b62b1356c3b0bf59",
+      "new_sha256": "77713bea66c00eaf2cde8a55f7d79847d4a7b1cb78ee0e13dcc2911be11753c3"
+    },
+    {
+      "manifest": "docs/gates/phase-13-pcm-only-spec-update-2026-10-05.json",
+      "field": "sha256",
+      "path": ".github/workflows/ci.yml",
+      "previous_sha256": "4f9d7cf7d9693830f4b8b65469806575cfd9c7672c969665a4c3cfe140408363",
+      "new_sha256": "1490d28ecb0d46b08234222760a50fae3ccd33c9bf1678324f0b3f0416f44177"
+    },
+    {
+      "manifest": "docs/gates/phase-13-pcm-only-spec-update-2026-10-05.json",
+      "field": "sha256",
+      "path": "README.md",
+      "previous_sha256": "1ae1f2ae98947f5293d0d7b12986438c464f5d4e8c49d45401056ea2eecf83af",
+      "new_sha256": "96ffeb15e307b99b07aed499cfd2803aa2bb3beebea9e24177e06a5ed08b09bc"
+    },
+    {
+      "manifest": "docs/gates/phase-13-pcm-only-spec-update-2026-10-05.json",
+      "field": "sha256",
+      "path": "resources/BFT_PartSmith_Implementation_Spec.md",
+      "previous_sha256": "8e9eb88fe3d4edf4d604fe5827752b8e7ad0d5227d8321fba70481787ea11b12",
+      "new_sha256": "dc793831f0242960dd11e1974d6838019c2c70d0360f7007549bdbbb1cc91b8c"
+    },
+    {
+      "manifest": "docs/gates/phase-13-pcm-spec-update-2026-10-05.json",
+      "field": "sha256",
+      "path": ".gitattributes",
+      "previous_sha256": "38af53b52a84855378456f8aec8930fca1c6da6d2ea96771b62b1356c3b0bf59",
+      "new_sha256": "77713bea66c00eaf2cde8a55f7d79847d4a7b1cb78ee0e13dcc2911be11753c3"
+    },
+    {
+      "manifest": "docs/gates/phase-13-pcm-spec-update-2026-10-05.json",
+      "field": "sha256",
+      "path": ".github/workflows/ci.yml",
+      "previous_sha256": "4f9d7cf7d9693830f4b8b65469806575cfd9c7672c969665a4c3cfe140408363",
+      "new_sha256": "1490d28ecb0d46b08234222760a50fae3ccd33c9bf1678324f0b3f0416f44177"
+    },
+    {
+      "manifest": "docs/gates/phase-13-pcm-spec-update-2026-10-05.json",
+      "field": "sha256",
+      "path": "README.md",
+      "previous_sha256": "1ae1f2ae98947f5293d0d7b12986438c464f5d4e8c49d45401056ea2eecf83af",
+      "new_sha256": "96ffeb15e307b99b07aed499cfd2803aa2bb3beebea9e24177e06a5ed08b09bc"
+    },
+    {
+      "manifest": "docs/gates/phase-13-pcm-spec-update-2026-10-05.json",
+      "field": "sha256",
+      "path": "resources/BFT_PartSmith_Implementation_Spec.md",
+      "previous_sha256": "8e9eb88fe3d4edf4d604fe5827752b8e7ad0d5227d8321fba70481787ea11b12",
+      "new_sha256": "dc793831f0242960dd11e1974d6838019c2c70d0360f7007549bdbbb1cc91b8c"
+    },
+    {
+      "manifest": "docs/gates/phase-13-spec-revision-v0.9.7-2026-10-05.json",
+      "field": "sha256",
+      "path": ".gitattributes",
+      "previous_sha256": "38af53b52a84855378456f8aec8930fca1c6da6d2ea96771b62b1356c3b0bf59",
+      "new_sha256": "77713bea66c00eaf2cde8a55f7d79847d4a7b1cb78ee0e13dcc2911be11753c3"
+    },
+    {
+      "manifest": "docs/gates/phase-13-spec-revision-v0.9.7-2026-10-05.json",
+      "field": "sha256",
+      "path": ".github/workflows/ci.yml",
+      "previous_sha256": "4f9d7cf7d9693830f4b8b65469806575cfd9c7672c969665a4c3cfe140408363",
+      "new_sha256": "1490d28ecb0d46b08234222760a50fae3ccd33c9bf1678324f0b3f0416f44177"
+    },
+    {
+      "manifest": "docs/gates/phase-13-spec-revision-v0.9.7-2026-10-05.json",
+      "field": "sha256",
+      "path": "README.md",
+      "previous_sha256": "1ae1f2ae98947f5293d0d7b12986438c464f5d4e8c49d45401056ea2eecf83af",
+      "new_sha256": "96ffeb15e307b99b07aed499cfd2803aa2bb3beebea9e24177e06a5ed08b09bc"
+    },
+    {
+      "manifest": "docs/gates/phase-13-spec-revision-v0.9.7-2026-10-05.json",
+      "field": "sha256",
+      "path": "docs/gates/phase-10-parser-fix-2026-10-04.json",
+      "previous_sha256": "4482570f861250a83305d11dd783e105cc3d4b303c4371552b1c85e2ee6f3242",
+      "new_sha256": "dd22ec98bdb9ab9a394a63855c2f0b9aa17b20872dc5512e9eb77321fa70b7b2"
+    },
+    {
+      "manifest": "docs/gates/phase-13-spec-revision-v0.9.7-2026-10-05.json",
+      "field": "sha256",
+      "path": "resources/BFT_PartSmith_Implementation_Spec.md",
+      "previous_sha256": "8e9eb88fe3d4edf4d604fe5827752b8e7ad0d5227d8321fba70481787ea11b12",
+      "new_sha256": "dc793831f0242960dd11e1974d6838019c2c70d0360f7007549bdbbb1cc91b8c"
+    },
+    {
+      "manifest": "docs/gates/phase-12-artifacts.json",
+      "field": "sha256",
+      "path": ".gitattributes",
+      "previous_sha256": "38af53b52a84855378456f8aec8930fca1c6da6d2ea96771b62b1356c3b0bf59",
+      "new_sha256": "77713bea66c00eaf2cde8a55f7d79847d4a7b1cb78ee0e13dcc2911be11753c3"
+    },
+    {
+      "manifest": "docs/gates/phase-12-artifacts.json",
+      "field": "sha256",
+      "path": ".github/workflows/ci.yml",
+      "previous_sha256": "4f9d7cf7d9693830f4b8b65469806575cfd9c7672c969665a4c3cfe140408363",
+      "new_sha256": "1490d28ecb0d46b08234222760a50fae3ccd33c9bf1678324f0b3f0416f44177"
+    },
+    {
+      "manifest": "docs/gates/phase-12-artifacts.json",
+      "field": "sha256",
+      "path": "README.md",
+      "previous_sha256": "1ae1f2ae98947f5293d0d7b12986438c464f5d4e8c49d45401056ea2eecf83af",
+      "new_sha256": "96ffeb15e307b99b07aed499cfd2803aa2bb3beebea9e24177e06a5ed08b09bc"
+    },
+    {
+      "manifest": "docs/gates/phase-12-artifacts.json",
+      "field": "sha256",
+      "path": "docs/gates/phase-10-artifacts.json",
+      "previous_sha256": "3bd602cc56a035f8214bce0f9fcc57fa9e36d5144e8dfba5b913d51983dc859a",
+      "new_sha256": "b3bc58d71179fdb53aa22b0339b1cafd2e368770a015e185082b335cfd5fb1a4"
+    },
+    {
+      "manifest": "docs/gates/phase-12-artifacts.json",
+      "field": "sha256",
+      "path": "docs/gates/phase-10-parser-fix-2026-10-04.json",
+      "previous_sha256": "4482570f861250a83305d11dd783e105cc3d4b303c4371552b1c85e2ee6f3242",
+      "new_sha256": "dd22ec98bdb9ab9a394a63855c2f0b9aa17b20872dc5512e9eb77321fa70b7b2"
+    },
+    {
+      "manifest": "docs/gates/phase-12-artifacts.json",
+      "field": "sha256",
+      "path": "docs/gates/phase-11-artifacts.json",
+      "previous_sha256": "65d6e0c8d5ba69f9eb7597e9c7f69fd2d1d5101739b681049528ad86bbd3b721",
+      "new_sha256": "09fda4855fd76963706abe8b40c1e825a642c38ebd4d93d7d990fe47ba572bab"
+    },
+    {
+      "manifest": "docs/gates/phase-12-artifacts.json",
+      "field": "sha256",
+      "path": "docs/gates/phase-11-finding-fixes-2026-10-04.json",
+      "previous_sha256": "e1a81012702b919f5a165a17b9b85f44696e83840d6f04bb2f1514efd217e4f2",
+      "new_sha256": "2a49236329f1030146c6e234525e09166c05c8f4d149ff859ef92325e692c2eb"
+    },
+    {
+      "manifest": "docs/gates/phase-12-artifacts.json",
+      "field": "sha256",
+      "path": "docs/gates/phase-12.1-artifacts.json",
+      "previous_sha256": "a27cdc056361a49376928ccb9af61e96a7362c934561776d0eaed85b0b11a10f",
+      "new_sha256": "dfca464199ffb4fe96d52c32b256d356690ac812bdb5d30088663c10cec6566e"
+    },
+    {
+      "manifest": "docs/gates/phase-12-artifacts.json",
+      "field": "sha256",
+      "path": "docs/gates/phase-2-ir-1.1-artifacts.json",
+      "previous_sha256": "20c9807e574daa464dcedd87ca631a0d8d74b8158361fdcde5f0ea23b810c63e",
+      "new_sha256": "4bf3e7d3a803b3111316976d64c20527f30665d4909a49922524aa18220e1170"
+    },
+    {
+      "manifest": "docs/gates/phase-12-artifacts.json",
+      "field": "sha256",
+      "path": "docs/gates/phase-2-ir-1.2-artifacts.json",
+      "previous_sha256": "7ce55fed6cc8d604cdb0b41fa1110708eebc084668e764ec41a0b692307051c2",
+      "new_sha256": "bb991128f2aa3aca5521dcc3f330415c95d9b2f98deb9ae774c253e4c150df7a"
+    },
+    {
+      "manifest": "docs/gates/phase-12-artifacts.json",
+      "field": "sha256",
+      "path": "docs/gates/phase-2-v0.9.6-artifacts.json",
+      "previous_sha256": "9abc75d847dc93533473f70a5a3d043fd16f1aee7030416e95db799b0fc3c914",
+      "new_sha256": "179bf693fd3ed7ca011047801044c48d7653cadde82c62843b0570dcf677a286"
+    },
+    {
+      "manifest": "docs/gates/phase-12-artifacts.json",
+      "field": "sha256",
+      "path": "docs/gates/phase-3-artifacts.json",
+      "previous_sha256": "318a63ee30293da2e0782dcf8ed03e0e0bcdb1610fdd8126a3148380ce703369",
+      "new_sha256": "7a283ec0451e1e0579afbacf4d794c2858ddaa465bb8737db9b73c6a5d2a6d40"
+    },
+    {
+      "manifest": "docs/gates/phase-12-artifacts.json",
+      "field": "sha256",
+      "path": "docs/gates/phase-8-artifacts.json",
+      "previous_sha256": "b2a612093fa19466d110b35f2292aaae8b3cda460255897191c361892cc95de8",
+      "new_sha256": "8ec6a06a1a1eaebb53d4bb89d55c8cad9a099da0642c847fe65419611743832d"
+    },
+    {
+      "manifest": "docs/gates/phase-12-artifacts.json",
+      "field": "sha256",
+      "path": "docs/gates/phase-9-artifacts.json",
+      "previous_sha256": "a06854b718bf95d52616d81c6950785845c31e395e23cd153e5d78412334f170",
+      "new_sha256": "1d9976d50b4f419a4bb5b646762528f38b490db8ce713fb8ea6c244170824e44"
+    },
+    {
+      "manifest": "docs/gates/phase-12-artifacts.json",
+      "field": "sha256",
+      "path": "docs/gates/phase-9.5-artifacts.json",
+      "previous_sha256": "a1e9bb22323b193e36d2d5469dc40302a0742e1ef0bd484f97e08a647eca96be",
+      "new_sha256": "b2219ac4d9861f02d71cc5528deadad0229a125848e09ca792961f454582171d"
+    },
+    {
+      "manifest": "docs/gates/phase-12-artifacts.json",
+      "field": "sha256",
+      "path": "resources/BFT_PartSmith_Implementation_Spec.md",
+      "previous_sha256": "8e9eb88fe3d4edf4d604fe5827752b8e7ad0d5227d8321fba70481787ea11b12",
+      "new_sha256": "dc793831f0242960dd11e1974d6838019c2c70d0360f7007549bdbbb1cc91b8c"
+    },
+    {
+      "manifest": "docs/gates/phase-12-artifacts.json",
+      "field": "sha256",
+      "path": "docs/gates/phase-12-readiness-review-2026-10-05.json",
+      "previous_sha256": "3659ddcd93ba2fef5f5d273e6d690666eaa8c099e0a9e74ec900021681a4da41",
+      "new_sha256": "10547818e93e875a3379943dae9bbdd663596aaf4d865fc8514c06a63011561c"
+    },
+    {
+      "manifest": "docs/gates/phase-12-artifacts.json",
+      "field": "sha256",
+      "path": "docs/gates/phase-12-finding-fixes-2026-10-05.json",
+      "previous_sha256": "c4591f2a3134f8501f33b0bf8544ce8584ed55e5e508d9571b1fdb96a3489ded",
+      "new_sha256": "378494674d967daffc984a07e6307c6f0e182e9bd54ff8bca108a8cd831e4a21"
+    },
+    {
+      "manifest": "docs/gates/phase-12-artifacts.json",
+      "field": "sha256",
+      "path": "docs/gates/phase-13-spec-revision-v0.9.7-2026-10-05.json",
+      "previous_sha256": "f69327336c75e521100b7d958917c3c545190c5c98be84a954259c198d4bb6aa",
+      "new_sha256": "a566aa6a0a5935ab1b7cc052b4afe9f8e49469107409a622239dc15e98da8662"
+    },
+    {
+      "manifest": "docs/gates/phase-12-artifacts.json",
+      "field": "sha256",
+      "path": "docs/gates/phase-13-pcm-spec-update-2026-10-05.json",
+      "previous_sha256": "9ce74c42f7d7b541931a7c100d72b4f1ab15527ba36cf7e8b1821c6fd2b68004",
+      "new_sha256": "88b0c113f197edc498c710f56597364c71fce9c68f9a81c31e8d704dfdafa7ce"
+    },
+    {
+      "manifest": "docs/gates/phase-12-artifacts.json",
+      "field": "sha256",
+      "path": "docs/gates/phase-13-pcm-only-spec-update-2026-10-05.json",
+      "previous_sha256": "6edfe929563dfcf08544a3af38edc4cfe46a03fe4b9d98c36b32f7a16b088cab",
+      "new_sha256": "59bcdaebb215d9c2412a2823ad96b8ed8112081c474f7174ff749c6bf61da44d"
+    },
+    {
+      "manifest": "docs/gates/phase-12-viewer-performance-artifacts.json",
+      "field": "sha256",
+      "path": ".gitattributes",
+      "previous_sha256": "38af53b52a84855378456f8aec8930fca1c6da6d2ea96771b62b1356c3b0bf59",
+      "new_sha256": "77713bea66c00eaf2cde8a55f7d79847d4a7b1cb78ee0e13dcc2911be11753c3"
+    },
+    {
+      "manifest": "docs/gates/phase-12-viewer-performance-artifacts.json",
+      "field": "sha256",
+      "path": "docs/gates/phase-10-parser-fix-2026-10-04.json",
+      "previous_sha256": "4482570f861250a83305d11dd783e105cc3d4b303c4371552b1c85e2ee6f3242",
+      "new_sha256": "dd22ec98bdb9ab9a394a63855c2f0b9aa17b20872dc5512e9eb77321fa70b7b2"
+    },
+    {
+      "manifest": "docs/gates/phase-12-viewer-performance-artifacts.json",
+      "field": "sha256",
+      "path": "docs/gates/phase-12-artifacts.json",
+      "previous_sha256": "d71415c5995710fd3cfc53edaca6ba0ea1a26e5fed2c998f57ebdfdc2c5105a5",
+      "new_sha256": "cead13cd02be765154d9fa6bba1adf01e6109aedebba8e6f621308db44102b38"
+    },
+    {
+      "manifest": "docs/gates/phase-12-viewer-performance-artifacts.json",
+      "field": "sha256",
+      "path": "docs/gates/phase-12-finding-fixes-2026-10-05.json",
+      "previous_sha256": "c4591f2a3134f8501f33b0bf8544ce8584ed55e5e508d9571b1fdb96a3489ded",
+      "new_sha256": "378494674d967daffc984a07e6307c6f0e182e9bd54ff8bca108a8cd831e4a21"
+    },
+    {
+      "manifest": "docs/gates/phase-12-viewer-performance-artifacts.json",
+      "field": "sha256",
+      "path": "docs/gates/phase-12-readiness-review-2026-10-05.json",
+      "previous_sha256": "3659ddcd93ba2fef5f5d273e6d690666eaa8c099e0a9e74ec900021681a4da41",
+      "new_sha256": "10547818e93e875a3379943dae9bbdd663596aaf4d865fc8514c06a63011561c"
+    },
+    {
+      "manifest": "docs/gates/phase-12-viewer-performance-artifacts.json",
+      "field": "sha256",
+      "path": "docs/gates/phase-12.1-artifacts.json",
+      "previous_sha256": "a27cdc056361a49376928ccb9af61e96a7362c934561776d0eaed85b0b11a10f",
+      "new_sha256": "dfca464199ffb4fe96d52c32b256d356690ac812bdb5d30088663c10cec6566e"
+    },
+    {
+      "manifest": "docs/gates/phase-12-viewer-performance-artifacts.json",
+      "field": "sha256",
+      "path": "docs/gates/phase-13-pcm-only-spec-update-2026-10-05.json",
+      "previous_sha256": "6edfe929563dfcf08544a3af38edc4cfe46a03fe4b9d98c36b32f7a16b088cab",
+      "new_sha256": "59bcdaebb215d9c2412a2823ad96b8ed8112081c474f7174ff749c6bf61da44d"
+    },
+    {
+      "manifest": "docs/gates/phase-12-viewer-performance-artifacts.json",
+      "field": "sha256",
+      "path": "docs/gates/phase-13-pcm-spec-update-2026-10-05.json",
+      "previous_sha256": "9ce74c42f7d7b541931a7c100d72b4f1ab15527ba36cf7e8b1821c6fd2b68004",
+      "new_sha256": "88b0c113f197edc498c710f56597364c71fce9c68f9a81c31e8d704dfdafa7ce"
+    },
+    {
+      "manifest": "docs/gates/phase-12-viewer-performance-artifacts.json",
+      "field": "sha256",
+      "path": "docs/gates/phase-13-spec-revision-v0.9.7-2026-10-05.json",
+      "previous_sha256": "f69327336c75e521100b7d958917c3c545190c5c98be84a954259c198d4bb6aa",
+      "new_sha256": "a566aa6a0a5935ab1b7cc052b4afe9f8e49469107409a622239dc15e98da8662"
+    },
+    {
+      "manifest": "docs/gates/phase-12-viewer-performance-artifacts.json",
+      "field": "sha256",
+      "path": "docs/gates/phase-2-v0.9.6-artifacts.json",
+      "previous_sha256": "9abc75d847dc93533473f70a5a3d043fd16f1aee7030416e95db799b0fc3c914",
+      "new_sha256": "179bf693fd3ed7ca011047801044c48d7653cadde82c62843b0570dcf677a286"
+    },
+    {
+      "manifest": "docs/gates/phase-12-viewer-performance-artifacts.json",
+      "field": "sha256",
+      "path": "docs/gates/phase-3-artifacts.json",
+      "previous_sha256": "318a63ee30293da2e0782dcf8ed03e0e0bcdb1610fdd8126a3148380ce703369",
+      "new_sha256": "7a283ec0451e1e0579afbacf4d794c2858ddaa465bb8737db9b73c6a5d2a6d40"
+    },
+    {
+      "manifest": "docs/gates/phase-13.1-artifacts.json",
+      "field": "sha256",
+      "path": ".gitattributes",
+      "previous_sha256": "38af53b52a84855378456f8aec8930fca1c6da6d2ea96771b62b1356c3b0bf59",
+      "new_sha256": "77713bea66c00eaf2cde8a55f7d79847d4a7b1cb78ee0e13dcc2911be11753c3"
+    },
+    {
+      "manifest": "docs/gates/phase-13.1-artifacts.json",
+      "field": "sha256",
+      "path": ".github/workflows/ci.yml",
+      "previous_sha256": "4f9d7cf7d9693830f4b8b65469806575cfd9c7672c969665a4c3cfe140408363",
+      "new_sha256": "1490d28ecb0d46b08234222760a50fae3ccd33c9bf1678324f0b3f0416f44177"
+    },
+    {
+      "manifest": "docs/gates/phase-13.1-artifacts.json",
+      "field": "sha256",
+      "path": "README.md",
+      "previous_sha256": "1ae1f2ae98947f5293d0d7b12986438c464f5d4e8c49d45401056ea2eecf83af",
+      "new_sha256": "96ffeb15e307b99b07aed499cfd2803aa2bb3beebea9e24177e06a5ed08b09bc"
+    },
+    {
+      "manifest": "docs/gates/phase-13.1-artifacts.json",
+      "field": "sha256",
+      "path": "docs/gates/phase-12-artifacts.json",
+      "previous_sha256": "d71415c5995710fd3cfc53edaca6ba0ea1a26e5fed2c998f57ebdfdc2c5105a5",
+      "new_sha256": "cead13cd02be765154d9fa6bba1adf01e6109aedebba8e6f621308db44102b38"
+    },
+    {
+      "manifest": "docs/gates/phase-13.1-artifacts.json",
+      "field": "sha256",
+      "path": "resources/BFT_PartSmith_Implementation_Spec.md",
+      "previous_sha256": "8e9eb88fe3d4edf4d604fe5827752b8e7ad0d5227d8321fba70481787ea11b12",
+      "new_sha256": "dc793831f0242960dd11e1974d6838019c2c70d0360f7007549bdbbb1cc91b8c"
+    },
+    {
+      "manifest": "docs/gates/phase-13.2-artifacts.json",
+      "field": "sha256",
+      "path": ".gitattributes",
+      "previous_sha256": "38af53b52a84855378456f8aec8930fca1c6da6d2ea96771b62b1356c3b0bf59",
+      "new_sha256": "77713bea66c00eaf2cde8a55f7d79847d4a7b1cb78ee0e13dcc2911be11753c3"
+    },
+    {
+      "manifest": "docs/gates/phase-13.2-artifacts.json",
+      "field": "sha256",
+      "path": ".github/workflows/ci.yml",
+      "previous_sha256": "4f9d7cf7d9693830f4b8b65469806575cfd9c7672c969665a4c3cfe140408363",
+      "new_sha256": "1490d28ecb0d46b08234222760a50fae3ccd33c9bf1678324f0b3f0416f44177"
+    },
+    {
+      "manifest": "docs/gates/phase-13.2-artifacts.json",
+      "field": "sha256",
+      "path": "README.md",
+      "previous_sha256": "1ae1f2ae98947f5293d0d7b12986438c464f5d4e8c49d45401056ea2eecf83af",
+      "new_sha256": "96ffeb15e307b99b07aed499cfd2803aa2bb3beebea9e24177e06a5ed08b09bc"
+    },
+    {
+      "manifest": "docs/gates/phase-13.2-artifacts.json",
+      "field": "sha256",
+      "path": "docs/gates/phase-12-artifacts.json",
+      "previous_sha256": "d71415c5995710fd3cfc53edaca6ba0ea1a26e5fed2c998f57ebdfdc2c5105a5",
+      "new_sha256": "cead13cd02be765154d9fa6bba1adf01e6109aedebba8e6f621308db44102b38"
+    },
+    {
+      "manifest": "docs/gates/phase-13.2-artifacts.json",
+      "field": "sha256",
+      "path": "resources/BFT_PartSmith_Implementation_Spec.md",
+      "previous_sha256": "8e9eb88fe3d4edf4d604fe5827752b8e7ad0d5227d8321fba70481787ea11b12",
+      "new_sha256": "dc793831f0242960dd11e1974d6838019c2c70d0360f7007549bdbbb1cc91b8c"
+    },
+    {
+      "manifest": "docs/gates/phase-13.2-artifacts.json",
+      "field": "sha256",
+      "path": "scripts/close_integration_gate.py",
+      "previous_sha256": "047b8535914733c67f5b95fbc505833708b6a3f4ecab1b56a9e0c08e51770e98",
+      "new_sha256": "c1807edc6a81c2c23a3f2a948eb8d7c95026796710af7852a44311e133da1c21"
+    },
+    {
+      "manifest": "docs/gates/phase-13.3-artifacts.json",
+      "field": "sha256",
+      "path": ".gitattributes",
+      "previous_sha256": "38af53b52a84855378456f8aec8930fca1c6da6d2ea96771b62b1356c3b0bf59",
+      "new_sha256": "77713bea66c00eaf2cde8a55f7d79847d4a7b1cb78ee0e13dcc2911be11753c3"
+    },
+    {
+      "manifest": "docs/gates/phase-13.3-artifacts.json",
+      "field": "sha256",
+      "path": ".github/workflows/ci.yml",
+      "previous_sha256": "4f9d7cf7d9693830f4b8b65469806575cfd9c7672c969665a4c3cfe140408363",
+      "new_sha256": "1490d28ecb0d46b08234222760a50fae3ccd33c9bf1678324f0b3f0416f44177"
+    },
+    {
+      "manifest": "docs/gates/phase-13.3-artifacts.json",
+      "field": "sha256",
+      "path": "README.md",
+      "previous_sha256": "1ae1f2ae98947f5293d0d7b12986438c464f5d4e8c49d45401056ea2eecf83af",
+      "new_sha256": "96ffeb15e307b99b07aed499cfd2803aa2bb3beebea9e24177e06a5ed08b09bc"
+    },
+    {
+      "manifest": "docs/gates/phase-13.3-artifacts.json",
+      "field": "sha256",
+      "path": "resources/BFT_PartSmith_Implementation_Spec.md",
+      "previous_sha256": "8e9eb88fe3d4edf4d604fe5827752b8e7ad0d5227d8321fba70481787ea11b12",
+      "new_sha256": "dc793831f0242960dd11e1974d6838019c2c70d0360f7007549bdbbb1cc91b8c"
+    },
+    {
+      "manifest": "docs/gates/phase-13.3-artifacts.json",
+      "field": "sha256",
+      "path": "scripts/close_integration_gate.py",
+      "previous_sha256": "047b8535914733c67f5b95fbc505833708b6a3f4ecab1b56a9e0c08e51770e98",
+      "new_sha256": "c1807edc6a81c2c23a3f2a948eb8d7c95026796710af7852a44311e133da1c21"
+    },
+    {
+      "manifest": "docs/gates/phase-13.3-artifacts.json",
+      "field": "sha256",
+      "path": "scripts/record_integration_gate.py",
+      "previous_sha256": "55141f9d3dc7da40678e30221af8cb7816b2b6b487c60118d0c05807b7a04a28",
+      "new_sha256": "84b8119f7accfa142ec32ec2af9a8d140532d747ec92e13c91f24f2210a5e027"
+    },
+    {
+      "manifest": "docs/gates/phase-13.3-artifacts.json",
+      "field": "sha256",
+      "path": "src/partsmith/integration/planner.py",
+      "previous_sha256": "dfb516279b1d9db93d91ba61a55d285bb08e01dd19c59b2e9ff4e7f12533ae05",
+      "new_sha256": "97bdc08a85af0c3083f6fb264ae1b0ccfc25c6a5403c98f5ee5d21790f035991"
+    },
+    {
+      "manifest": "docs/gates/phase-13.4-artifacts.json",
+      "field": "sha256",
+      "path": ".gitattributes",
+      "previous_sha256": "38af53b52a84855378456f8aec8930fca1c6da6d2ea96771b62b1356c3b0bf59",
+      "new_sha256": "77713bea66c00eaf2cde8a55f7d79847d4a7b1cb78ee0e13dcc2911be11753c3"
+    },
+    {
+      "manifest": "docs/gates/phase-13.4-artifacts.json",
+      "field": "sha256",
+      "path": ".github/workflows/ci.yml",
+      "previous_sha256": "4f9d7cf7d9693830f4b8b65469806575cfd9c7672c969665a4c3cfe140408363",
+      "new_sha256": "1490d28ecb0d46b08234222760a50fae3ccd33c9bf1678324f0b3f0416f44177"
+    },
+    {
+      "manifest": "docs/gates/phase-13.4-artifacts.json",
+      "field": "sha256",
+      "path": "README.md",
+      "previous_sha256": "1ae1f2ae98947f5293d0d7b12986438c464f5d4e8c49d45401056ea2eecf83af",
+      "new_sha256": "96ffeb15e307b99b07aed499cfd2803aa2bb3beebea9e24177e06a5ed08b09bc"
+    },
+    {
+      "manifest": "docs/gates/phase-13.4-artifacts.json",
+      "field": "sha256",
+      "path": "resources/BFT_PartSmith_Implementation_Spec.md",
+      "previous_sha256": "8e9eb88fe3d4edf4d604fe5827752b8e7ad0d5227d8321fba70481787ea11b12",
+      "new_sha256": "dc793831f0242960dd11e1974d6838019c2c70d0360f7007549bdbbb1cc91b8c"
+    },
+    {
+      "manifest": "docs/gates/phase-13.4-artifacts.json",
+      "field": "sha256",
+      "path": "scripts/close_integration_gate.py",
+      "previous_sha256": "047b8535914733c67f5b95fbc505833708b6a3f4ecab1b56a9e0c08e51770e98",
+      "new_sha256": "c1807edc6a81c2c23a3f2a948eb8d7c95026796710af7852a44311e133da1c21"
+    },
+    {
+      "manifest": "docs/gates/phase-13.4-artifacts.json",
+      "field": "sha256",
+      "path": "scripts/record_integration_gate.py",
+      "previous_sha256": "55141f9d3dc7da40678e30221af8cb7816b2b6b487c60118d0c05807b7a04a28",
+      "new_sha256": "84b8119f7accfa142ec32ec2af9a8d140532d747ec92e13c91f24f2210a5e027"
+    },
+    {
+      "manifest": "docs/gates/phase-13.4-artifacts.json",
+      "field": "sha256",
+      "path": "src/partsmith/integration/planner.py",
+      "previous_sha256": "dfb516279b1d9db93d91ba61a55d285bb08e01dd19c59b2e9ff4e7f12533ae05",
+      "new_sha256": "97bdc08a85af0c3083f6fb264ae1b0ccfc25c6a5403c98f5ee5d21790f035991"
+    },
+    {
+      "manifest": "docs/gates/phase-13.4-artifacts.json",
+      "field": "sha256",
+      "path": "src/partsmith/integration/staging.py",
+      "previous_sha256": "c2727665e99af08578ca7c1dffaf1eee646cf867efbce06edd9fa65589b2dc9d",
+      "new_sha256": "f863cd8f317f375727c9a3a3fe0dd6b48f5a5add82fc210b50cf883bae5c73a4"
+    },
+    {
+      "manifest": "docs/gates/phase-13.5-artifacts.json",
+      "field": "sha256",
+      "path": ".gitattributes",
+      "previous_sha256": "38af53b52a84855378456f8aec8930fca1c6da6d2ea96771b62b1356c3b0bf59",
+      "new_sha256": "77713bea66c00eaf2cde8a55f7d79847d4a7b1cb78ee0e13dcc2911be11753c3"
+    },
+    {
+      "manifest": "docs/gates/phase-13.5-artifacts.json",
+      "field": "sha256",
+      "path": ".github/workflows/ci.yml",
+      "previous_sha256": "4f9d7cf7d9693830f4b8b65469806575cfd9c7672c969665a4c3cfe140408363",
+      "new_sha256": "1490d28ecb0d46b08234222760a50fae3ccd33c9bf1678324f0b3f0416f44177"
+    },
+    {
+      "manifest": "docs/gates/phase-13.5-artifacts.json",
+      "field": "sha256",
+      "path": "README.md",
+      "previous_sha256": "1ae1f2ae98947f5293d0d7b12986438c464f5d4e8c49d45401056ea2eecf83af",
+      "new_sha256": "96ffeb15e307b99b07aed499cfd2803aa2bb3beebea9e24177e06a5ed08b09bc"
+    },
+    {
+      "manifest": "docs/gates/phase-13.5-artifacts.json",
+      "field": "sha256",
+      "path": "resources/BFT_PartSmith_Implementation_Spec.md",
+      "previous_sha256": "8e9eb88fe3d4edf4d604fe5827752b8e7ad0d5227d8321fba70481787ea11b12",
+      "new_sha256": "dc793831f0242960dd11e1974d6838019c2c70d0360f7007549bdbbb1cc91b8c"
+    },
+    {
+      "manifest": "docs/gates/phase-13.5-artifacts.json",
+      "field": "sha256",
+      "path": "scripts/close_integration_gate.py",
+      "previous_sha256": "047b8535914733c67f5b95fbc505833708b6a3f4ecab1b56a9e0c08e51770e98",
+      "new_sha256": "c1807edc6a81c2c23a3f2a948eb8d7c95026796710af7852a44311e133da1c21"
+    },
+    {
+      "manifest": "docs/gates/phase-13.5-artifacts.json",
+      "field": "sha256",
+      "path": "scripts/record_integration_gate.py",
+      "previous_sha256": "55141f9d3dc7da40678e30221af8cb7816b2b6b487c60118d0c05807b7a04a28",
+      "new_sha256": "84b8119f7accfa142ec32ec2af9a8d140532d747ec92e13c91f24f2210a5e027"
+    },
+    {
+      "manifest": "docs/gates/phase-13.5-artifacts.json",
+      "field": "sha256",
+      "path": "src/partsmith/integration/planner.py",
+      "previous_sha256": "dfb516279b1d9db93d91ba61a55d285bb08e01dd19c59b2e9ff4e7f12533ae05",
+      "new_sha256": "97bdc08a85af0c3083f6fb264ae1b0ccfc25c6a5403c98f5ee5d21790f035991"
+    },
+    {
+      "manifest": "docs/gates/phase-13.5-artifacts.json",
+      "field": "sha256",
+      "path": "src/partsmith/integration/review.py",
+      "previous_sha256": "c8a8bc6446a23e404470e0aa09ccc54ce8d5f0a405affd34e8fc232ef9948d29",
+      "new_sha256": "3ed7479457cadc6408d6f76ecf416a4444c2c9787b80f82a13d5bfa9b87ad95b"
+    },
+    {
+      "manifest": "docs/gates/phase-13.5-artifacts.json",
+      "field": "sha256",
+      "path": "src/partsmith/integration/staging.py",
+      "previous_sha256": "c2727665e99af08578ca7c1dffaf1eee646cf867efbce06edd9fa65589b2dc9d",
+      "new_sha256": "f863cd8f317f375727c9a3a3fe0dd6b48f5a5add82fc210b50cf883bae5c73a4"
+    }
+  ],
+  "verified_active_manifests": [
+    "docs/gates/phase-10-artifacts.json",
+    "docs/gates/phase-10-parser-fix-2026-10-04.json",
+    "docs/gates/phase-6-artifacts.json",
+    "docs/gates/phase-8-artifacts.json",
+    "docs/gates/phase-9-artifacts.json",
+    "docs/gates/phase-7-artifacts.json",
+    "docs/gates/phase-9.5-artifacts.json",
+    "docs/gates/phase-11-artifacts.json",
+    "docs/gates/phase-11-finding-fixes-2026-10-04.json",
+    "docs/gates/phase-12-finding-fixes-2026-10-05.json",
+    "docs/gates/phase-2-ir-1.1-artifacts.json",
+    "docs/gates/phase-2-ir-1.2-artifacts.json",
+    "docs/gates/phase-2-v0.9.6-artifacts.json",
+    "docs/gates/phase-3-artifacts.json",
+    "docs/gates/phase-12.1-artifacts.json",
+    "docs/gates/phase-4-artifacts.json",
+    "docs/gates/phase-12-readiness-review-2026-10-05.json",
+    "docs/gates/phase-13-pcm-only-spec-update-2026-10-05.json",
+    "docs/gates/phase-13-pcm-spec-update-2026-10-05.json",
+    "docs/gates/phase-13-spec-revision-v0.9.7-2026-10-05.json",
+    "docs/gates/phase-12-artifacts.json",
+    "docs/gates/phase-12-viewer-performance-artifacts.json",
+    "docs/gates/phase-13.1-artifacts.json",
+    "docs/gates/phase-13.2-artifacts.json",
+    "docs/gates/phase-13.3-artifacts.json",
+    "docs/gates/phase-13.4-artifacts.json",
+    "docs/gates/phase-13.5-artifacts.json",
+    "docs/gates/phase-13.6-artifacts.json",
+    "docs/gates/phase-2-artifacts.json",
+    "docs/gates/phase-5-artifacts.json"
+  ],
+  "ci_manifests": [
+    "docs/gates/phase-5-artifacts.json",
+    "docs/gates/phase-6-artifacts.json",
+    "docs/gates/phase-8-artifacts.json",
+    "docs/gates/phase-13.1-artifacts.json",
+    "docs/gates/phase-13.2-artifacts.json",
+    "docs/gates/phase-13.3-artifacts.json",
+    "docs/gates/phase-13.4-artifacts.json",
+    "docs/gates/phase-13.5-artifacts.json",
+    "docs/gates/phase-13.6-artifacts.json"
+  ],
+  "verification_commands": [
+    {
+      "command": "C:\\GIT_HUB\\PartSmaith\\.venv\\Scripts\\python.exe scripts/verify_phase2_manifest.py --manifest docs/gates/phase-10-artifacts.json --source disk",
+      "exit_code": 0,
+      "output": "PASS: all recorded repository input hashes match exact file bytes"
+    },
+    {
+      "verification": "Internal exact source_sha256 check",
+      "manifest": "docs/gates/phase-10-parser-fix-2026-10-04.json",
+      "exit_code": 0,
+      "output": "PASS: all current source hashes match"
+    },
+    {
+      "command": "C:\\GIT_HUB\\PartSmaith\\.venv\\Scripts\\python.exe scripts/verify_phase2_manifest.py --manifest docs/gates/phase-6-artifacts.json --source disk",
+      "exit_code": 0,
+      "output": "PASS: all recorded repository input hashes match exact file bytes"
+    },
+    {
+      "command": "C:\\GIT_HUB\\PartSmaith\\.venv\\Scripts\\python.exe scripts/verify_phase2_manifest.py --manifest docs/gates/phase-8-artifacts.json --source disk",
+      "exit_code": 0,
+      "output": "PASS: all recorded repository input hashes match exact file bytes"
+    },
+    {
+      "command": "C:\\GIT_HUB\\PartSmaith\\.venv\\Scripts\\python.exe scripts/verify_phase2_manifest.py --manifest docs/gates/phase-9-artifacts.json --source disk",
+      "exit_code": 0,
+      "output": "PASS: all recorded repository input hashes match exact file bytes"
+    },
+    {
+      "command": "C:\\GIT_HUB\\PartSmaith\\.venv\\Scripts\\python.exe scripts/verify_phase2_manifest.py --manifest docs/gates/phase-7-artifacts.json --source disk",
+      "exit_code": 0,
+      "output": "PASS: all recorded repository input hashes match exact file bytes"
+    },
+    {
+      "command": "C:\\GIT_HUB\\PartSmaith\\.venv\\Scripts\\python.exe scripts/verify_phase2_manifest.py --manifest docs/gates/phase-9.5-artifacts.json --source disk",
+      "exit_code": 0,
+      "output": "PASS: all recorded repository input hashes match exact file bytes"
+    },
+    {
+      "command": "C:\\GIT_HUB\\PartSmaith\\.venv\\Scripts\\python.exe scripts/verify_phase2_manifest.py --manifest docs/gates/phase-11-artifacts.json --source disk",
+      "exit_code": 0,
+      "output": "PASS: all recorded repository input hashes match exact file bytes"
+    },
+    {
+      "command": "C:\\GIT_HUB\\PartSmaith\\.venv\\Scripts\\python.exe scripts/verify_phase2_manifest.py --manifest docs/gates/phase-11-finding-fixes-2026-10-04.json --source disk",
+      "exit_code": 0,
+      "output": "PASS: all recorded repository input hashes match exact file bytes"
+    },
+    {
+      "command": "C:\\GIT_HUB\\PartSmaith\\.venv\\Scripts\\python.exe scripts/verify_phase2_manifest.py --manifest docs/gates/phase-12-finding-fixes-2026-10-05.json --source disk",
+      "exit_code": 0,
+      "output": "PASS: all recorded repository input hashes match exact file bytes"
+    },
+    {
+      "command": "C:\\GIT_HUB\\PartSmaith\\.venv\\Scripts\\python.exe scripts/verify_phase2_manifest.py --manifest docs/gates/phase-2-ir-1.1-artifacts.json --source disk",
+      "exit_code": 0,
+      "output": "PASS: all recorded repository input hashes match exact file bytes"
+    },
+    {
+      "command": "C:\\GIT_HUB\\PartSmaith\\.venv\\Scripts\\python.exe scripts/verify_phase2_manifest.py --manifest docs/gates/phase-2-ir-1.2-artifacts.json --source disk",
+      "exit_code": 0,
+      "output": "PASS: all recorded repository input hashes match exact file bytes"
+    },
+    {
+      "command": "C:\\GIT_HUB\\PartSmaith\\.venv\\Scripts\\python.exe scripts/verify_phase2_manifest.py --manifest docs/gates/phase-2-v0.9.6-artifacts.json --source disk",
+      "exit_code": 0,
+      "output": "PASS: all recorded repository input hashes match exact file bytes"
+    },
+    {
+      "command": "C:\\GIT_HUB\\PartSmaith\\.venv\\Scripts\\python.exe scripts/verify_phase2_manifest.py --manifest docs/gates/phase-3-artifacts.json --source disk",
+      "exit_code": 0,
+      "output": "PASS: all recorded repository input hashes match exact file bytes"
+    },
+    {
+      "command": "C:\\GIT_HUB\\PartSmaith\\.venv\\Scripts\\python.exe scripts/verify_phase2_manifest.py --manifest docs/gates/phase-12.1-artifacts.json --source disk",
+      "exit_code": 0,
+      "output": "PASS: all recorded repository input hashes match exact file bytes"
+    },
+    {
+      "command": "C:\\GIT_HUB\\PartSmaith\\.venv\\Scripts\\python.exe scripts/verify_phase2_manifest.py --manifest docs/gates/phase-4-artifacts.json --source disk",
+      "exit_code": 0,
+      "output": "PASS: all recorded repository input hashes match exact file bytes"
+    },
+    {
+      "command": "C:\\GIT_HUB\\PartSmaith\\.venv\\Scripts\\python.exe scripts/verify_phase2_manifest.py --manifest docs/gates/phase-12-readiness-review-2026-10-05.json --source disk",
+      "exit_code": 0,
+      "output": "PASS: all recorded repository input hashes match exact file bytes"
+    },
+    {
+      "command": "C:\\GIT_HUB\\PartSmaith\\.venv\\Scripts\\python.exe scripts/verify_phase2_manifest.py --manifest docs/gates/phase-13-pcm-only-spec-update-2026-10-05.json --source disk",
+      "exit_code": 0,
+      "output": "PASS: all recorded repository input hashes match exact file bytes"
+    },
+    {
+      "command": "C:\\GIT_HUB\\PartSmaith\\.venv\\Scripts\\python.exe scripts/verify_phase2_manifest.py --manifest docs/gates/phase-13-pcm-spec-update-2026-10-05.json --source disk",
+      "exit_code": 0,
+      "output": "PASS: all recorded repository input hashes match exact file bytes"
+    },
+    {
+      "command": "C:\\GIT_HUB\\PartSmaith\\.venv\\Scripts\\python.exe scripts/verify_phase2_manifest.py --manifest docs/gates/phase-13-spec-revision-v0.9.7-2026-10-05.json --source disk",
+      "exit_code": 0,
+      "output": "PASS: all recorded repository input hashes match exact file bytes"
+    },
+    {
+      "command": "C:\\GIT_HUB\\PartSmaith\\.venv\\Scripts\\python.exe scripts/verify_phase2_manifest.py --manifest docs/gates/phase-12-artifacts.json --source disk",
+      "exit_code": 0,
+      "output": "PASS: all recorded repository input hashes match exact file bytes"
+    },
+    {
+      "command": "C:\\GIT_HUB\\PartSmaith\\.venv\\Scripts\\python.exe scripts/verify_phase2_manifest.py --manifest docs/gates/phase-12-viewer-performance-artifacts.json --source disk",
+      "exit_code": 0,
+      "output": "PASS: all recorded repository input hashes match exact file bytes"
+    },
+    {
+      "command": "C:\\GIT_HUB\\PartSmaith\\.venv\\Scripts\\python.exe scripts/verify_phase2_manifest.py --manifest docs/gates/phase-13.1-artifacts.json --source disk",
+      "exit_code": 0,
+      "output": "PASS: all recorded repository input hashes match exact file bytes"
+    },
+    {
+      "command": "C:\\GIT_HUB\\PartSmaith\\.venv\\Scripts\\python.exe scripts/verify_phase2_manifest.py --manifest docs/gates/phase-13.2-artifacts.json --source disk",
+      "exit_code": 0,
+      "output": "PASS: all recorded repository input hashes match exact file bytes"
+    },
+    {
+      "command": "C:\\GIT_HUB\\PartSmaith\\.venv\\Scripts\\python.exe scripts/verify_phase2_manifest.py --manifest docs/gates/phase-13.3-artifacts.json --source disk",
+      "exit_code": 0,
+      "output": "PASS: all recorded repository input hashes match exact file bytes"
+    },
+    {
+      "command": "C:\\GIT_HUB\\PartSmaith\\.venv\\Scripts\\python.exe scripts/verify_phase2_manifest.py --manifest docs/gates/phase-13.4-artifacts.json --source disk",
+      "exit_code": 0,
+      "output": "PASS: all recorded repository input hashes match exact file bytes"
+    },
+    {
+      "command": "C:\\GIT_HUB\\PartSmaith\\.venv\\Scripts\\python.exe scripts/verify_phase2_manifest.py --manifest docs/gates/phase-13.5-artifacts.json --source disk",
+      "exit_code": 0,
+      "output": "PASS: all recorded repository input hashes match exact file bytes"
+    },
+    {
+      "command": "C:\\GIT_HUB\\PartSmaith\\.venv\\Scripts\\python.exe scripts/verify_phase2_manifest.py --manifest docs/gates/phase-13.6-artifacts.json --source disk",
+      "exit_code": 0,
+      "output": "PASS: all recorded repository input hashes match exact file bytes"
+    },
+    {
+      "command": "C:\\GIT_HUB\\PartSmaith\\.venv\\Scripts\\python.exe scripts/verify_phase2_manifest.py --manifest docs/gates/phase-2-artifacts.json --source disk",
+      "exit_code": 0,
+      "output": "PASS: all recorded repository input hashes match exact file bytes"
+    },
+    {
+      "command": "C:\\GIT_HUB\\PartSmaith\\.venv\\Scripts\\python.exe scripts/verify_phase2_manifest.py --manifest docs/gates/phase-5-artifacts.json --source disk",
+      "exit_code": 0,
+      "output": "PASS: all recorded repository input hashes match exact file bytes"
+    }
+  ],
+  "current_gate_outside_map_identities": "PASS"
+}

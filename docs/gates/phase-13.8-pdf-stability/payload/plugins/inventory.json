@@ -1,0 +1,655 @@
+{
+  "files": {
+    "LICENSE": {
+      "sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+      "size": 35149
+    },
+    "entry.py": {
+      "sha256": "a718ab03512c33b0778fed7f2e6e98f296352a84d024fa0a626f3a9695f43145",
+      "size": 4763
+    },
+    "icons/PartSmith_Anvil_Icon_24x24.png": {
+      "sha256": "d0a479884a128ab7a741a2a388da27358547577ff37489f0cb74e6988980b6d7",
+      "size": 696
+    },
+    "icons/PartSmith_Anvil_Icon_64x64.png": {
+      "sha256": "fdc35a8d3a813a26cec298317d1c7623edd39f93ae1ccca07e995f49fcc601c7",
+      "size": 5120
+    },
+    "partsmith/__init__.py": {
+      "sha256": "b537bd5dcdce0ffaf3da13b8108e9a71f0e9789ed00949c1efa131c1f113f5ad",
+      "size": 441
+    },
+    "partsmith/__main__.py": {
+      "sha256": "369be25b672f3b7d33a8dfff1a3b972ef35bf67fe9ad60a36abf70302f363b7f",
+      "size": 235
+    },
+    "partsmith/ai/__init__.py": {
+      "sha256": "71d67717385e54ba9a6ca3044eaaf66669c1bb70becd92a6b4ff3042d7f79056",
+      "size": 555
+    },
+    "partsmith/ai/adapter-manifest-1.0.json": {
+      "sha256": "ab8569692ff4d5e7177ca8ba1208e9cf57115235678695362d5210c76c92aeb1",
+      "size": 1705
+    },
+    "partsmith/ai/contracts.py": {
+      "sha256": "52c6f8f802b8877bd5420ee89c30e7856fbfc0fed0960da218c7cdcadb1c2ad8",
+      "size": 17614
+    },
+    "partsmith/ai/credentials.py": {
+      "sha256": "ca52837ed4bcc3d6b3fe488e9a5f54b4afdf0f3ed9e284cf41cf8f99729f65f6",
+      "size": 320
+    },
+    "partsmith/ai/errors.py": {
+      "sha256": "15c3d2cd951704656f8986a0b7afb64af8ae0c9c9467aa5c52643f691fde51be",
+      "size": 440
+    },
+    "partsmith/ai/openai.py": {
+      "sha256": "8b15d959e84333bef34d3d2c509c1f082b28f8c4bd89afe360945d4ecc033fc2",
+      "size": 17226
+    },
+    "partsmith/ai/replay.py": {
+      "sha256": "a3947e3479990875648d7e07676e3bb337fe99c49fe3c6af7ecb5ad15d331b86",
+      "size": 1186
+    },
+    "partsmith/ai/workflow.py": {
+      "sha256": "9d93144b3135f23cc9cb84bf81d2264fb8ff612c92f1e7e3b8d7c20dc0342672",
+      "size": 3154
+    },
+    "partsmith/cli.py": {
+      "sha256": "cd83e30092510c26a113719b836b304b7f1178a974484863543885f5fba0f7ee",
+      "size": 11541
+    },
+    "partsmith/extraction/__init__.py": {
+      "sha256": "5b5f90784b414182f3ebb942132dfd13d57fe7b7d95881f8b890f8c16aa0b566",
+      "size": 410
+    },
+    "partsmith/extraction/coordinates.py": {
+      "sha256": "8d3f5ab97da284a0e1f317e422335b2aae1d9bc52ceeac9c8503bf3c19bac884",
+      "size": 3611
+    },
+    "partsmith/extraction/document.py": {
+      "sha256": "da15c6a4e4d46c7b93039375a7e7a80abfde66d16ddc2dc0f3b240a3f4f85a60",
+      "size": 18461
+    },
+    "partsmith/extraction/isolated.py": {
+      "sha256": "401e32d274e1b01904c89d504db67c911c03bc511fe2450e0dba8f7ad8a862f6",
+      "size": 5284
+    },
+    "partsmith/extraction/native_page.py": {
+      "sha256": "68265065abe07914deb0089e09b1045a1c84b6c540813d8e6b72ad1f0b24e682",
+      "size": 6237
+    },
+    "partsmith/extraction/ocr.py": {
+      "sha256": "8c402e7a6fd16fa08716ff722957d56a5e9365eaf4229a5e72b709e577b71408",
+      "size": 3802
+    },
+    "partsmith/extraction/packages.py": {
+      "sha256": "669e25d4354bfce044c07db1f00971f9e125cf72e8b3d31d16128987adbc4fda",
+      "size": 2330
+    },
+    "partsmith/extraction/tables.py": {
+      "sha256": "5be1cfd16e85bf12bf54a6ee06fdb4e93ef0f146a2c7326da9c3e063c94da199",
+      "size": 2297
+    },
+    "partsmith/extraction/translation.py": {
+      "sha256": "6616131015539fb82868f26f9151b2d8d72b0c674a23d3ff5502b217760b3d17",
+      "size": 1366
+    },
+    "partsmith/footprint/__init__.py": {
+      "sha256": "1e875df185d78e80e1dcdbee8fe1d36d7009609857e119b999e45f19b803215b",
+      "size": 861
+    },
+    "partsmith/footprint/model.py": {
+      "sha256": "936436661f10d10002d80fb3857e05269af0e0d965de371d62fbd27ad020470a",
+      "size": 19838
+    },
+    "partsmith/gui/PartSmith-Banner.png": {
+      "sha256": "816ac87337b9981db68b1b4b06d50317c5918bc99a6493895d609bb4b3ad8ff7",
+      "size": 2893356
+    },
+    "partsmith/gui/PartSmith-Banner3.png": {
+      "sha256": "080c313c8befd231672174a5ad2473a5ba6ab388ba1c2b977d3fea9377e8a5c8",
+      "size": 2341981
+    },
+    "partsmith/gui/__init__.py": {
+      "sha256": "30213ef127eaa460428918cdd98ee4080c2af03b2f61a21366676bbf2753a19f",
+      "size": 79
+    },
+    "partsmith/gui/__main__.py": {
+      "sha256": "7899c82dc1e1956eb15b959dce39504048443fc5252db7862ca1a219bdcae6b9",
+      "size": 472
+    },
+    "partsmith/gui/actions.py": {
+      "sha256": "7a345ec786439143d854e22a787e62151494df559ded2621d6b5d20714b9edcc",
+      "size": 7804
+    },
+    "partsmith/gui/app.py": {
+      "sha256": "65de547e344cdb15fdf3c75c6046f9dc3033a08b1de0837b6b5ff9d5c1b2d47e",
+      "size": 46470
+    },
+    "partsmith/gui/artifact_panel.py": {
+      "sha256": "8d86ba267a2e5a6048603f245be47fe415547d64040c1b6ffc2ecf55062083f9",
+      "size": 6251
+    },
+    "partsmith/gui/artifact_scene.py": {
+      "sha256": "f3b9551e6e912623c402c41ae7e2b6bbea489cf2809e7942866425f6ba31867f",
+      "size": 2610
+    },
+    "partsmith/gui/assembly.py": {
+      "sha256": "96121847c9a6957148114ce06ba20b3267278f1e3d4f590677c5223019acaa33",
+      "size": 6769
+    },
+    "partsmith/gui/component_panel.py": {
+      "sha256": "f840e9b1f63c5a920f82539fc0a7be0656dc1f953d6647650f3d7a663ef12582",
+      "size": 10350
+    },
+    "partsmith/gui/credentials.py": {
+      "sha256": "dc3f713beb757579a9f32fbc8d583c1a5ec9f43b39fdf8db380ff4771d76b907",
+      "size": 2044
+    },
+    "partsmith/gui/evidence.py": {
+      "sha256": "b518f86aee3fdd2bb102b2dc259a752a0ce545571801ebc907cb6a6d05886255",
+      "size": 3580
+    },
+    "partsmith/gui/generation.py": {
+      "sha256": "4884135e398765723562b35aca74ab0f63b17a504e3d1c1534c434ee4534e719",
+      "size": 6140
+    },
+    "partsmith/gui/generation_worker.py": {
+      "sha256": "0ee94317b854a540d618fe08a9c15a791b567cf0301c273b192d73e5a7d86784",
+      "size": 5763
+    },
+    "partsmith/gui/identity.py": {
+      "sha256": "70275b6d52e2fd7fec798c5ebd76eac95c991945b3e75f88521599940d689fda",
+      "size": 2709
+    },
+    "partsmith/gui/image_loader.py": {
+      "sha256": "7a9e47e2edcaa629164c14140dfd6c54d14dcfc95ea5da3cbf46a7a3231bb2a3",
+      "size": 3714
+    },
+    "partsmith/gui/inspection.py": {
+      "sha256": "daa542b813d6a001d895ca47955bb31973b9904f3dc3fb63a32c1bbea53e73f0",
+      "size": 6187
+    },
+    "partsmith/gui/install_kicad.py": {
+      "sha256": "24f304a0817a63e5fb6c210c410094fa138d80ff800851892d2f7acc6d784251",
+      "size": 1799
+    },
+    "partsmith/gui/integration_panel.py": {
+      "sha256": "d6ba9d73387504badc6b73311f439d97c0e143b11e6cd033e9dc4ad309193203",
+      "size": 20912
+    },
+    "partsmith/gui/kicad_plugin/__init__.py": {
+      "sha256": "c2d83596eac735dea5999aa66b1fdb111955ece8f981b6cba9b6872967a189e5",
+      "size": 1690
+    },
+    "partsmith/gui/placement.py": {
+      "sha256": "1432c48c3a6877ce269c114edc6837164504f860a3663c5ca0a74ac1c9d7c5d8",
+      "size": 6735
+    },
+    "partsmith/gui/placement_panel.py": {
+      "sha256": "dbc58643243af5906fc08a28890b5727c9caf41dee684b6a1c63c7dd9c8eb228",
+      "size": 8569
+    },
+    "partsmith/gui/placement_viewer.py": {
+      "sha256": "271cdc025bf3fa340ee6df2f0b058211d2c1edb88a2122315b019aec48d77658",
+      "size": 6638
+    },
+    "partsmith/gui/processing.py": {
+      "sha256": "6aa59f4ea5f7bf481f371036204cdba51d06ec63f66dcb2a0491184db40c41cf",
+      "size": 8826
+    },
+    "partsmith/gui/prototype/0402-placement.json": {
+      "sha256": "5fc9d623239488b5580fb539aca3c05c90c705292702dbcdf0683344bff327d1",
+      "size": 316
+    },
+    "partsmith/gui/prototype/0402.kicad_mod": {
+      "sha256": "7d250cb886b21f3b40088cd884e3892bb585185ee05c718160a147b16077da54",
+      "size": 934
+    },
+    "partsmith/gui/prototype/0402.step": {
+      "sha256": "789ee84bd00e5fa7adfec322191eeb678f849c82b990b30a41f1bb51da839c92",
+      "size": 48489
+    },
+    "partsmith/gui/release_panel.py": {
+      "sha256": "d9f8da129915fd5d31cd3ea1f85b110844ba36f0653bf8e2c49b8ea621869553",
+      "size": 6341
+    },
+    "partsmith/gui/release_review.py": {
+      "sha256": "d69e99b213a157c85426c348a91438cc33bfdec7221c298883253ae467afaa0a",
+      "size": 8494
+    },
+    "partsmith/gui/review_panel.py": {
+      "sha256": "114fdadfc8dbbd4937e4e0af995728d287500c62e82e49c4c580e9730f3e760c",
+      "size": 15525
+    },
+    "partsmith/gui/review_service.py": {
+      "sha256": "d8a8c0b0e99b776f657f018fb8598f0d85f95b2946207046d4fe9fdea69fdbd5",
+      "size": 13608
+    },
+    "partsmith/gui/scene.py": {
+      "sha256": "9da02427ff0dc1c9c3ead2abd7e43a4729bc07171511b32bd44812295bf005ec",
+      "size": 10000
+    },
+    "partsmith/gui/scene_controller.py": {
+      "sha256": "cb236307a2f7987752e5001b7d878d468fb909be167f26724942ad9a6d4a668b",
+      "size": 13706
+    },
+    "partsmith/gui/scene_transport.py": {
+      "sha256": "c0cbe3fa6e278a764837da5f72504de1838d732fc77a0cd9a3d55b5c95be8211",
+      "size": 1771
+    },
+    "partsmith/gui/scene_worker.py": {
+      "sha256": "a5c542a151db8e9f2bfb1410cf0bcbdf9b2e5b64ceb8e4a6a2b15002e433d6e8",
+      "size": 16461
+    },
+    "partsmith/gui/session-index-1.0.schema.json": {
+      "sha256": "4d14d872b3c9820067f153ce0d3ddcc797e474f9523c0274fa77d2f3d8da8148",
+      "size": 3360
+    },
+    "partsmith/gui/session.py": {
+      "sha256": "dbb2e372c7c835534bd8ad54d3b3a1d680c7bb9a6bd8b2bca844e7cbf7c390c7",
+      "size": 26731
+    },
+    "partsmith/gui/session_validation.py": {
+      "sha256": "f46510d0b6178cb7ae94f3685b88635f6fe0a977dbd6a062ed6bf3eb0042a879",
+      "size": 6805
+    },
+    "partsmith/gui/symbol_inspection.py": {
+      "sha256": "1d8baf0bb4129f8113951a90f5e8b52b981f71ecd4bc3a790cb51dee7b24ffd6",
+      "size": 8821
+    },
+    "partsmith/gui/symbol_panel.py": {
+      "sha256": "0b1b2eaf62c6b07b752369b8e9cfe8a3ca42c662424d8876c970cf3faab6ed67",
+      "size": 7085
+    },
+    "partsmith/gui/viewer_prototype.py": {
+      "sha256": "44b35c07a48d55535ef3677ec891c16949e94999f4f24c5ba5e2fbf1d32a0528",
+      "size": 12880
+    },
+    "partsmith/integration/__init__.py": {
+      "sha256": "334c4c1d105ea2fbe867d7393d6d18cfc0d686192e12288425c91aa03138e913",
+      "size": 1346
+    },
+    "partsmith/integration/atomic_target.py": {
+      "sha256": "8324a6f93cc5650b8ab84abd31634a3c5e32401f0072c65212ebe38307daecd4",
+      "size": 25017
+    },
+    "partsmith/integration/bindings.py": {
+      "sha256": "250a964e586b65291c602e2c6c1d36facfee287ed1d196e78dc952e44e498553",
+      "size": 11664
+    },
+    "partsmith/integration/contracts.py": {
+      "sha256": "79894255771f22dab367dca653db3283c5d8f0c1b4262f28e653c524986adf92",
+      "size": 17381
+    },
+    "partsmith/integration/errors.py": {
+      "sha256": "541e38bcd5feb5aa0ad5d6d905a7888474ea1f05360ce7f1a2bb8ab20b339de7",
+      "size": 3021
+    },
+    "partsmith/integration/inspection.py": {
+      "sha256": "16df78b45a4f82e3ecafd05bb0fe1c23c075f1294d4604eb5a16d6c3747a8bb8",
+      "size": 8409
+    },
+    "partsmith/integration/inspection_wx.py": {
+      "sha256": "0b17a987c8ce40a5cf987125cd880db773ac07a3103607ad022d8c04402a9f97",
+      "size": 8315
+    },
+    "partsmith/integration/instance_semantics.py": {
+      "sha256": "b0be67bc8becb236bfe4fb7ee98e8d231be960a4760ccdc394e2fdc09b9fd61b",
+      "size": 6264
+    },
+    "partsmith/integration/integration-contracts-1.0.schema.json": {
+      "sha256": "39f09b7f5a3048944c30665da53d770eae6a7e325d2c9869ebc29674cd392cfd",
+      "size": 26601
+    },
+    "partsmith/integration/ipc.py": {
+      "sha256": "1a5026b4c64838e74471e1728cb3e239b7ba964655b6d210ebec24b05a279d40",
+      "size": 35164
+    },
+    "partsmith/integration/native_stage.py": {
+      "sha256": "9f85b62435fa59cd8af1e23e2a8b790d753c18d1f197b108f4ad8f5a152f7437",
+      "size": 7204
+    },
+    "partsmith/integration/planner.py": {
+      "sha256": "7a5828eba1e2ae3cb9cc27aab01eea524e196cf75c41f9a25ae14446464bc595",
+      "size": 21417
+    },
+    "partsmith/integration/policy.py": {
+      "sha256": "024c6d1545608b28f811b8d29c5d8a30ddcc9be4c5be9935ce5e5a278c61bbfd",
+      "size": 2064
+    },
+    "partsmith/integration/publication.py": {
+      "sha256": "2e865abc44ebf2b6855b1cafe1664efcc31015b75f5d44547c4700906c6b96d4",
+      "size": 40764
+    },
+    "partsmith/integration/quiescence.py": {
+      "sha256": "3f2fe6ce29cab965f9361d13c85d81fd5d7e8ebd1378313393b8bc49adc1cbdb",
+      "size": 3712
+    },
+    "partsmith/integration/review.py": {
+      "sha256": "7296205f7f51d496f36a5a131757c4a674005c9b09547db3115280f0520cb2e7",
+      "size": 21699
+    },
+    "partsmith/integration/schema.py": {
+      "sha256": "49fb3fd11d8d6aab4ca602e48f53bf2f387e47bab1d078841507d22d5159e21b",
+      "size": 1893
+    },
+    "partsmith/integration/sexpr.py": {
+      "sha256": "1b4c5b9e1f37a2e20ae050f94c92cda2ec382ccd399a38ee1f5e3d76068e423f",
+      "size": 5135
+    },
+    "partsmith/integration/sources.py": {
+      "sha256": "36dbe7552106a3f0f310fd4b49ba65e66af6ed2bed78ad0b058ad4e1677e4bd0",
+      "size": 10199
+    },
+    "partsmith/integration/staging.py": {
+      "sha256": "c371795e455990f722a8b77e120b2911f2fc518381bd4c7d234ccfde2b121a73",
+      "size": 33074
+    },
+    "partsmith/integration/store.py": {
+      "sha256": "879b528652863638793c90d67ae1fa27f6b2df541d563bb29e0d9f0d549620a5",
+      "size": 14499
+    },
+    "partsmith/integration/target.py": {
+      "sha256": "c295dc4d8cb2b73a07f249555963bddf972dc876fa8cbe00cb80a5999bb50cfd",
+      "size": 20659
+    },
+    "partsmith/integration/units.py": {
+      "sha256": "35efbdfa5d827521abac22a7ddc515227b09e2bcbe5c1853c348c8d99a5a2024",
+      "size": 5698
+    },
+    "partsmith/integration/workflow.py": {
+      "sha256": "3fe63d3426ccbd5afdc3e7def572e26b1c864afadb449182aff417f6d820178c",
+      "size": 13662
+    },
+    "partsmith/ir/__init__.py": {
+      "sha256": "0d32100d0dbac10233fa63c79f669de9ee125b519e8fe6a2b23a849857af3acc",
+      "size": 1386
+    },
+    "partsmith/ir/canonical.py": {
+      "sha256": "aea58db6d42efbae25cb299389a6b9b93e32a4ff167b5b63210d9e40fe8a5ab8",
+      "size": 6126
+    },
+    "partsmith/ir/component-ir-1.0.schema.json": {
+      "sha256": "c58e687cd2e324edcec83eff1e0e7b5dbbb86ad95cecef3315679a28b8c82e6d",
+      "size": 25314
+    },
+    "partsmith/ir/component-ir-1.1.schema.json": {
+      "sha256": "4ed64619ad5d1c50a7c75125835067e8594b8b6a73c197dfe07267588832d438",
+      "size": 34338
+    },
+    "partsmith/ir/component-ir-1.2.schema.json": {
+      "sha256": "b93ba49d787ca5d0d79c1526b18869068e95dea609717e036a8ee48f3ee49570",
+      "size": 60491
+    },
+    "partsmith/ir/contract.py": {
+      "sha256": "8c96dbe350cacc6bcdd75ba42f1a0e99425b907c2e546e5817f2b923da5d4b57",
+      "size": 23292
+    },
+    "partsmith/ir/errors.py": {
+      "sha256": "f04e70a6a2b07dd2e6aa67fa521a3c97afd93454c8fd1e74486f0977ad3a19d8",
+      "size": 2059
+    },
+    "partsmith/ir/history.py": {
+      "sha256": "c5f558db25673eb7ed4b48fa36fd4d08c81013bd39df57e816f0375edc179155",
+      "size": 15598
+    },
+    "partsmith/ir/migration.py": {
+      "sha256": "e3b2efb39eea3d453c452c67fed7fef29a928506e56967cc43fa58542b1a182a",
+      "size": 7540
+    },
+    "partsmith/ir/migration_v12.py": {
+      "sha256": "beb103a12f06641b5e28c05dc4d5b5d68c7aea9aa1d8ea7aea5364cc089504d4",
+      "size": 6205
+    },
+    "partsmith/ir/model.py": {
+      "sha256": "0965a0817072c4902d268ac648a720fda8c8401d82426e9d103798b003c76a11",
+      "size": 15932
+    },
+    "partsmith/ir/projection.py": {
+      "sha256": "b7de58f69e667496564a96ccf3c68c73e28921134f5aebb9dc103c9788730db6",
+      "size": 12553
+    },
+    "partsmith/ir/revised.py": {
+      "sha256": "9c818ab499ce79af1de67bc836419febd04aa327f1a6bc15885d3981e3c7083f",
+      "size": 18025
+    },
+    "partsmith/ir/schema.py": {
+      "sha256": "da891157f0272d956c6d100db0247f3bfb543287c24dcf53d071061529c3dc47",
+      "size": 3802
+    },
+    "partsmith/ir/targets.py": {
+      "sha256": "578e50af5e41d00252a119bc7f5f61a5b07092edc887022c59b9a8627b80fd38",
+      "size": 5587
+    },
+    "partsmith/ir/units.py": {
+      "sha256": "02c1e6a2e5e2c1d9272612eb050c7ca389c8a73911ef548c32d00be3c722ff02",
+      "size": 1300
+    },
+    "partsmith/kicad/__init__.py": {
+      "sha256": "ec0fdcec9b84e97b1cd2a351bec2c5f340d0fc8be82f484fc6564f403f00e688",
+      "size": 476
+    },
+    "partsmith/kicad/runtime.py": {
+      "sha256": "394547da4d5bb2e051d1ce6bf5e23403f725409120e884d9f6dfbb075c3ff238",
+      "size": 10375
+    },
+    "partsmith/pcm/__init__.py": {
+      "sha256": "b2222798890243733da0cd5bc2d568b85d6e7c0a75374fff9b667b37c85f6459",
+      "size": 163
+    },
+    "partsmith/pcm/package.py": {
+      "sha256": "c3151836c51e86510b003f9b30fa8b02bde533b036e009d127493ba9959fef5a",
+      "size": 15996
+    },
+    "partsmith/pcm/runtime.py": {
+      "sha256": "29cc558934af2135034c1c22581a5f54ea9b27afdf2419679a1473f79003da78",
+      "size": 4959
+    },
+    "partsmith/pcm/schemas/api.v1.schema.json": {
+      "sha256": "a51ecc9cc4166fc857a0378b6361909c66a7957451146bd50123d52313fdea96",
+      "size": 4279
+    },
+    "partsmith/pcm/schemas/pcm.v2.schema.json": {
+      "sha256": "74bfb8fca2abdcf619afd152f57bcc768c855541587e21b81e2c6e8fd3b8abb2",
+      "size": 11648
+    },
+    "partsmith/pdl/__init__.py": {
+      "sha256": "61eb83949e378a40175fe787e27e05e76b51cb2a128932b440aa0c303bb59586",
+      "size": 877
+    },
+    "partsmith/pdl/compatibility.py": {
+      "sha256": "eeb2cca00eeb38a1874b8aee1bdac59840623e11bc84731d534a92205f221afe",
+      "size": 2236
+    },
+    "partsmith/pdl/entries/synthetic-0402@1.0.json": {
+      "sha256": "199ad7042f45eda4dd0b839f8838a6135c2e0abc2bea0b1011658ab8495a811a",
+      "size": 5977
+    },
+    "partsmith/pdl/errors.py": {
+      "sha256": "6f8eaa180898d18d7bf1c31d64043c6efcc0547007cf87a6f0e0c1b6aff7059a",
+      "size": 1262
+    },
+    "partsmith/pdl/loader.py": {
+      "sha256": "8ed474e8c0824e1f9f87578c3989f2f08db2ed5611c59fd4a89ed795d294bdc7",
+      "size": 4343
+    },
+    "partsmith/pdl/model.py": {
+      "sha256": "7e0b1862e7cbec0624a8e12b584f08263ab357c1f5d5f10cc0a04d6159546a54",
+      "size": 17014
+    },
+    "partsmith/pdl/pdl-1.0.schema.json": {
+      "sha256": "beb270c6f7ef0aecd93399cc1bc836b42d42a8a0a14656d7e160efe8144f223a",
+      "size": 11970
+    },
+    "partsmith/pdl/profiles.py": {
+      "sha256": "919c4dc661ab4cfcb0e4aea97bffbff2b9e622d32d4100028ad3b27a14078e01",
+      "size": 3166
+    },
+    "partsmith/pdl/release-profiles/mvp-1@1.0.json": {
+      "sha256": "8798d9a552e5dab29f0c5985a4bfbf7b91fb148ac4e90c42f73952dcf8550b0a",
+      "size": 377
+    },
+    "partsmith/pdl/release-profiles/mvp-1@1.1.json": {
+      "sha256": "49067f4f31972e42be52a3217007c661f7cf036ab0f9a28e9140d2b0b68234b6",
+      "size": 613
+    },
+    "partsmith/pdl/schema.py": {
+      "sha256": "45b78150927804a952690a689cac210f946cd2a6ab3f294470a49c8b5a8f2845",
+      "size": 2830
+    },
+    "partsmith/persistence/001_initial.sql": {
+      "sha256": "840216cf721f9b76be6575a4dccc07ff70b3fd32637f4c1f39d33892f5c3eba9",
+      "size": 1032
+    },
+    "partsmith/persistence/002_phase8.sql": {
+      "sha256": "aa2a81d676964a77a89158c8d40c64031c51f31412bd0bd8c3a0bc95acc5b42d",
+      "size": 9126
+    },
+    "partsmith/persistence/003_manifest_rebuilds.sql": {
+      "sha256": "800b114e6cea14278f4a37a091c9fa99f11a1c9ef93ce39484fa02ed83f8ed39",
+      "size": 1409
+    },
+    "partsmith/persistence/004_node_cache.sql": {
+      "sha256": "67b2a1549f1b746eea39df81a764aa5861e988a27549f24081b971390a90fc18",
+      "size": 506
+    },
+    "partsmith/persistence/005_integration.sql": {
+      "sha256": "0c2df55e0d48ac3a8deb18c9ab77b9fb6c334d24b68c856619d0255e4bfb8e39",
+      "size": 4420
+    },
+    "partsmith/persistence/__init__.py": {
+      "sha256": "e88b56d35e918a09b8393050909198ce84bb6284755431180cc35bcdc2272862",
+      "size": 932
+    },
+    "partsmith/persistence/database.py": {
+      "sha256": "61c9f3dfe9ed1042825c4766d6c407f33bbfe957c0b62b30a86d014b16f4c09c",
+      "size": 7696
+    },
+    "partsmith/persistence/immutable.py": {
+      "sha256": "f8e16d74391ba96e99f2cb1a568b2e4a945fd71410b9156268608c1e83389204",
+      "size": 10079
+    },
+    "partsmith/persistence/records.py": {
+      "sha256": "d34b9f6481c436aeb97327738cf568b4b05ae0fef1bf6996e917debe5fa87142",
+      "size": 10407
+    },
+    "partsmith/persistence/release.py": {
+      "sha256": "b0a36d749293012d22662a13e3450e4e59cbd0ee2e94ad282ae9ab7645b0352e",
+      "size": 25377
+    },
+    "partsmith/process.py": {
+      "sha256": "fbded159d2cc37170577eff284a274a1e8a9fe4e636433dcc8da0296c1b4e128",
+      "size": 9749
+    },
+    "partsmith/release/__init__.py": {
+      "sha256": "620fdcc3cdb567fe6228c2780220c8ae57749f890ab068aac75142502d8e3118",
+      "size": 987
+    },
+    "partsmith/release/bundle.py": {
+      "sha256": "f392244d9bbc997ce791b9dbe84bc3dfb60b41e4a36757f54bb3b9f24329394d",
+      "size": 13906
+    },
+    "partsmith/release/contracts.py": {
+      "sha256": "584cb119cc973aae80887804fbadef35c87d8ed3b53e9bec27c8ed59179d9f2b",
+      "size": 13385
+    },
+    "partsmith/release/dependencies.py": {
+      "sha256": "1a03750b8ab600844897141aeeed2c9b5f941cb0c16c092c0d7476496c921434",
+      "size": 2778
+    },
+    "partsmith/release/input_review.py": {
+      "sha256": "1a1c7c334161a3a27000346a5e8a3c2ffc62d597aa90e4dac32a2302969c6eac",
+      "size": 65721
+    },
+    "partsmith/release/phase8-contracts-1.0.schema.json": {
+      "sha256": "7b1e4e0c3dd75d539fadc05f3432088c5051336b3592ed1f67bd1cce2bddf860",
+      "size": 23411
+    },
+    "partsmith/release/pipeline.py": {
+      "sha256": "99afb48f1ac2add114d7399b653d60a51275de7c885dc3d59c23058240baa471",
+      "size": 37105
+    },
+    "partsmith/release/replay-bundle-1.0.schema.json": {
+      "sha256": "87df0b9cbdcb7567cb74235d2fefa83d9a20c8a9e02b0b81b45b9b08e500758b",
+      "size": 2469
+    },
+    "partsmith/release/replay.py": {
+      "sha256": "c75cfb6d10e9b28a62dc8c8854a37e73cc9488f78fe63eb9b14a77a8016a5af5",
+      "size": 22949
+    },
+    "partsmith/release/reproducibility.py": {
+      "sha256": "0824fc2c843c4a11c0d7ed30b1c9fdb8a8d29a0f61c9d9b57c47bf139c530f52",
+      "size": 6500
+    },
+    "partsmith/release/runtime-constraints.txt": {
+      "sha256": "df99cf3dc1ac9c11e29b7303972fb7368517a435df3c9c39e7afdb080ca29ccb",
+      "size": 1139
+    },
+    "partsmith/release/runtime-lock-1.0.json": {
+      "sha256": "a3e60c9207bd6bfa98d0ab5bb941ec8a026d062ad6556a762422bd373362cfec",
+      "size": 99864
+    },
+    "partsmith/release/runtime.py": {
+      "sha256": "27414f9fa7479f3d33703be98bd890fd7b7705a6bccbf0b2a858ab16d4e60893",
+      "size": 3963
+    },
+    "partsmith/release/schema.py": {
+      "sha256": "cb3768f4d904318a0333dc6c9c3e51f28c14d5052cb5fbb1d49cee666ecbf6dd",
+      "size": 2312
+    },
+    "partsmith/release/workflow.py": {
+      "sha256": "d67536daa42c22078a5b72d587c5307d6f8e9ab86e16fbab9d42453041048df8",
+      "size": 10270
+    },
+    "partsmith/schema_support.py": {
+      "sha256": "e2054a13f827018f6c86409685bf2ca28455a7f4bd9a3e4cd83db3f89bea4489",
+      "size": 2184
+    },
+    "partsmith/symbol/__init__.py": {
+      "sha256": "f0205dde5c013c32318edb337e0ac180812fe1f2e780599f610bcb5755d24c46",
+      "size": 736
+    },
+    "partsmith/symbol/model.py": {
+      "sha256": "d6bfc27fcb1cf6c61e926153b4e20eaaca08e0a716433b5b96684d3196da9ac3",
+      "size": 10294
+    },
+    "partsmith/threed/__init__.py": {
+      "sha256": "d043f5f1417b994b9115e40223879400b4df968ac45e9bb82672b18527f1b6a3",
+      "size": 1935
+    },
+    "partsmith/threed/geometry.py": {
+      "sha256": "5b6ac7e49ec70f7dae6fb0da60bfe83157e889d7b89dd3a20b2d9d9b28b1e308",
+      "size": 4082
+    },
+    "partsmith/threed/model.py": {
+      "sha256": "2b5c5df4d345d138cfb725ae666417cc6e04a468c2c0d9badc7995f8e2fab680",
+      "size": 15166
+    },
+    "partsmith/threed/step_backend.py": {
+      "sha256": "77a8fd6663695742b08f5490fa04cfb9d92019dcd7fda2a3a67a4ed5ef658ff5",
+      "size": 9564
+    },
+    "partsmith/threed/transform.py": {
+      "sha256": "50a497769d2284dc55b794f2869f32cd4170adfa951059fc594e9b16c57c5f27",
+      "size": 16404
+    },
+    "partsmith/threed/validation.py": {
+      "sha256": "854fa44cd971da4412068b81af13790e0c2958b2543de1dd17991d3946a04c44",
+      "size": 48055
+    },
+    "plugin.json": {
+      "sha256": "c7ee5031ac1a280c929043b7c860dc38c9ece2228fbfd7e5545d1f88fd697994",
+      "size": 654
+    },
+    "requirements.txt": {
+      "sha256": "6ac9272a3742bdc0b324cbe865f27f9edb03b7ee3a31a460faac036df998d1e9",
+      "size": 1355
+    }
+  },
+  "identifier": "com.boardforgetools.partsmith",
+  "schema_version": "partsmith-pcm-inventory-1.0",
+  "version": "0.1.9"
+}

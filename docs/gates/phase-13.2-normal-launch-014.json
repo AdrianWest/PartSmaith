@@ -1,0 +1,24 @@
+{
+  "date": "2026-10-06",
+  "status": "OBSERVED_NORMAL_LAUNCH_ONLY",
+  "phase13_status": "INCOMPLETE",
+  "package_version": "0.1.4",
+  "archive_sha256": "862cff04151d22c87529f63102fa000f0afc8a8d0b2fff4bb39cd3d2f8aa4cf9",
+  "sequence": [
+    "No PartSmith Setup or PCB inspection window was running.",
+    "Started KiCad project manager and inspected its PCM Installed tab, selecting PartSmith.",
+    "Opened the owned probe project PCB Editor.",
+    "Clicked the installed PS toolbar action in PCB Editor.",
+    "Selected the already open owned board in the action chooser.",
+    "PartSmith Setup and PCB inspection appeared; official live IPC inspection was READY."
+  ],
+  "standalone_partsmith_launch": false,
+  "plugin_started_kicad": false,
+  "caveat": "This confirms the installed 0.1.4 normal launch path. It does not validate later icon package versions or close Phase 13.2.",
+  "artifacts": {
+    "docs/gates/phase-13.2-normal-launch-pcm-014.jpg": "d7db28e27486f7462c7c7b5771102ed06310eb90ec113c221486e58c50b21514",
+    "docs/gates/phase-13.2-normal-launch-before-014.jpg": "e094fc02da3b0aa08a814f2bf10ccc7c3a217ef70a191799dc349ff6d8b0b955",
+    "docs/gates/phase-13.2-normal-launch-reader-014.jpg": "4fbce4b242dc0c9d7404647cb48faa0d2917c60144330c6d998169617992c989",
+    "docs/gates/phase-13.2-normal-launch-ipc-014.json": "2c131838f439fd6ad92dee85543a9e2847987f366ee59974b5efe53add812238"
+  }
+}

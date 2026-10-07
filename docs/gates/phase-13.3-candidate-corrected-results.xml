@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="15" failures="0" skipped="0" tests="31" time="23.007" timestamp="2026-10-06T23:33:47.081912-04:00" hostname="DESKTOP-CIC0QVQ"><testcase classname="tests.test_integration_planner" name="test_first_and_two_source_plans_are_pure" time="6.487"><error message="failed on setup with &quot;partsmith.persistence.immutable.StaleHeadError: Component head changed&quot;">tests\phase13_support.py:107: in approved_sources
+    updated = create_release(
+tests\phase13_support.py:80: in create_release
+    store.compare_and_swap_head(component, revision.revision_id, parent)
+src\partsmith\persistence\immutable.py:259: in compare_and_swap_head
+    raise StaleHeadError("Component head changed")
+E   partsmith.persistence.immutable.StaleHeadError: Component head changed</error></testcase><testcase classname="tests.test_integration_planner" name="test_update_removal_and_exact_noop" time="0.000"><error message="failed on setup with &quot;partsmith.persistence.immutable.StaleHeadError: Component head changed&quot;">tests\phase13_support.py:107: in approved_sources
+    updated = create_release(
+tests\phase13_support.py:80: in create_release
+    store.compare_and_swap_head(component, revision.revision_id, parent)
+src\partsmith\persistence\immutable.py:259: in compare_and_swap_head
+    raise StaleHeadError("Component head changed")
+E   partsmith.persistence.immutable.StaleHeadError: Component head changed</error></testcase><testcase classname="tests.test_integration_planner" name="test_unmanaged_namespace_conflicts[file]" time="0.000"><error message="failed on setup with &quot;partsmith.persistence.immutable.StaleHeadError: Component head changed&quot;">tests\phase13_support.py:107: in approved_sources
+    updated = create_release(
+tests\phase13_support.py:80: in create_release
+    store.compare_and_swap_head(component, revision.revision_id, parent)
+src\partsmith\persistence\immutable.py:259: in compare_and_swap_head
+    raise StaleHeadError("Component head changed")
+E   partsmith.persistence.immutable.StaleHeadError: Component head changed</error></testcase><testcase classname="tests.test_integration_planner" name="test_unmanaged_namespace_conflicts[empty-directory]" time="0.000"><error message="failed on setup with &quot;partsmith.persistence.immutable.StaleHeadError: Component head changed&quot;">tests\phase13_support.py:107: in approved_sources
+    updated = create_release(
+tests\phase13_support.py:80: in create_release
+    store.compare_and_swap_head(component, revision.revision_id, parent)
+src\partsmith\persistence\immutable.py:259: in compare_and_swap_head
+    raise StaleHeadError("Component head changed")
+E   partsmith.persistence.immutable.StaleHeadError: Component head changed</error></testcase><testcase classname="tests.test_integration_planner" name="test_unmanaged_namespace_conflicts[nickname]" time="0.000"><error message="failed on setup with &quot;partsmith.persistence.immutable.StaleHeadError: Component head changed&quot;">tests\phase13_support.py:107: in approved_sources
+    updated = create_release(
+tests\phase13_support.py:80: in create_release
+    store.compare_and_swap_head(component, revision.revision_id, parent)
+src\partsmith\persistence\immutable.py:259: in compare_and_swap_head
+    raise StaleHeadError("Component head changed")
+E   partsmith.persistence.immutable.StaleHeadError: Component head changed</error></testcase><testcase classname="tests.test_integration_planner" name="test_unmanaged_namespace_conflicts[alias]" time="0.000"><error message="failed on setup with &quot;partsmith.persistence.immutable.StaleHeadError: Component head changed&quot;">tests\phase13_support.py:107: in approved_sources
+    updated = create_release(
+tests\phase13_support.py:80: in create_release
+    store.compare_and_swap_head(component, revision.revision_id, parent)
+src\partsmith\persistence\immutable.py:259: in compare_and_swap_head
+    raise StaleHeadError("Component head changed")
+E   partsmith.persistence.immutable.StaleHeadError: Component head changed</error></testcase><testcase classname="tests.test_integration_planner" name="test_stale_whole_project_and_changed_installed_content" time="0.000"><error message="failed on setup with &quot;partsmith.persistence.immutable.StaleHeadError: Component head changed&quot;">tests\phase13_support.py:107: in approved_sources
+    updated = create_release(
+tests\phase13_support.py:80: in create_release
+    store.compare_and_swap_head(component, revision.revision_id, parent)
+src\partsmith\persistence\immutable.py:259: in compare_and_swap_head
+    raise StaleHeadError("Component head changed")
+E   partsmith.persistence.immutable.StaleHeadError: Component head changed</error></testcase><testcase classname="tests.test_integration_planner" name="test_wrong_scope_and_duplicate_source_are_refused" time="0.000"><error message="failed on setup with &quot;partsmith.persistence.immutable.StaleHeadError: Component head changed&quot;">tests\phase13_support.py:107: in approved_sources
+    updated = create_release(
+tests\phase13_support.py:80: in create_release
+    store.compare_and_swap_head(component, revision.revision_id, parent)
+src\partsmith\persistence\immutable.py:259: in compare_and_swap_head
+    raise StaleHeadError("Component head changed")
+E   partsmith.persistence.immutable.StaleHeadError: Component head changed</error></testcase><testcase classname="tests.test_integration_planner" name="test_unsafe_paths_and_nested_reparse_are_refused" time="0.004" /><testcase classname="tests.test_integration_planner" name="test_wrong_registered_root_is_refused" time="0.000"><error message="failed on setup with &quot;partsmith.persistence.immutable.StaleHeadError: Component head changed&quot;">tests\phase13_support.py:107: in approved_sources
+    updated = create_release(
+tests\phase13_support.py:80: in create_release
+    store.compare_and_swap_head(component, revision.revision_id, parent)
+src\partsmith\persistence\immutable.py:259: in compare_and_swap_head
+    raise StaleHeadError("Component head changed")
+E   partsmith.persistence.immutable.StaleHeadError: Component head changed</error></testcase><testcase classname="tests.test_integration_store" name="test_explicit_plan_save_and_reopen" time="6.750"><error message="failed on setup with &quot;partsmith.persistence.immutable.StaleHeadError: Component head changed&quot;">tests\phase13_support.py:107: in approved_sources
+    updated = create_release(
+tests\phase13_support.py:80: in create_release
+    store.compare_and_swap_head(component, revision.revision_id, parent)
+src\partsmith\persistence\immutable.py:259: in compare_and_swap_head
+    raise StaleHeadError("Component head changed")
+E   partsmith.persistence.immutable.StaleHeadError: Component head changed</error></testcase><testcase classname="tests.test_integration_store" name="test_caller_rollback_retains_no_plan_or_event" time="0.000"><error message="failed on setup with &quot;partsmith.persistence.immutable.StaleHeadError: Component head changed&quot;">tests\phase13_support.py:107: in approved_sources
+    updated = create_release(
+tests\phase13_support.py:80: in create_release
+    store.compare_and_swap_head(component, revision.revision_id, parent)
+src\partsmith\persistence\immutable.py:259: in compare_and_swap_head
+    raise StaleHeadError("Component head changed")
+E   partsmith.persistence.immutable.StaleHeadError: Component head changed</error></testcase><testcase classname="tests.test_integration_store" name="test_storage_failure_preserves_outer_work" time="0.000"><error message="failed on setup with &quot;partsmith.persistence.immutable.StaleHeadError: Component head changed&quot;">tests\phase13_support.py:107: in approved_sources
+    updated = create_release(
+tests\phase13_support.py:80: in create_release
+    store.compare_and_swap_head(component, revision.revision_id, parent)
+src\partsmith\persistence\immutable.py:259: in compare_and_swap_head
+    raise StaleHeadError("Component head changed")
+E   partsmith.persistence.immutable.StaleHeadError: Component head changed</error></testcase><testcase classname="tests.test_integration_store" name="test_object_identity_and_append_only_events" time="0.000"><error message="failed on setup with &quot;partsmith.persistence.immutable.StaleHeadError: Component head changed&quot;">tests\phase13_support.py:107: in approved_sources
+    updated = create_release(
+tests\phase13_support.py:80: in create_release
+    store.compare_and_swap_head(component, revision.revision_id, parent)
+src\partsmith\persistence\immutable.py:259: in compare_and_swap_head
+    raise StaleHeadError("Component head changed")
+E   partsmith.persistence.immutable.StaleHeadError: Component head changed</error></testcase><testcase classname="tests.test_integration_store" name="test_oversized_object_is_bounded_before_content_fetch" time="0.000"><error message="failed on setup with &quot;partsmith.persistence.immutable.StaleHeadError: Component head changed&quot;">tests\phase13_support.py:107: in approved_sources
+    updated = create_release(
+tests\phase13_support.py:80: in create_release
+    store.compare_and_swap_head(component, revision.revision_id, parent)
+src\partsmith\persistence\immutable.py:259: in compare_and_swap_head
+    raise StaleHeadError("Component head changed")
+E   partsmith.persistence.immutable.StaleHeadError: Component head changed</error></testcase><testcase classname="tests.test_integration_store" name="test_raw_authorization_import_is_only_data" time="0.000"><error message="failed on setup with &quot;partsmith.persistence.immutable.StaleHeadError: Component head changed&quot;">tests\phase13_support.py:107: in approved_sources
+    updated = create_release(
+tests\phase13_support.py:80: in create_release
+    store.compare_and_swap_head(component, revision.revision_id, parent)
+src\partsmith\persistence\immutable.py:259: in compare_and_swap_head
+    raise StaleHeadError("Component head changed")
+E   partsmith.persistence.immutable.StaleHeadError: Component head changed</error></testcase><testcase classname="tests.test_integration_store" name="test_forward_migration_preserves_real_approved_release" time="7.137" /><testcase classname="tests.test_persistence" name="test_rebuild_migration_preserves_existing_snapshots_and_manifests" time="0.068" /><testcase classname="tests.test_persistence" name="test_shared_persistence_support" time="0.068" /><testcase classname="tests.test_persistence" name="test_phase_one_gate" time="0.047" /><testcase classname="tests.test_persistence" name="test_parent_deletion_is_restricted" time="0.055" /><testcase classname="tests.test_persistence" name="test_queries_are_parameterized_and_scoped" time="0.059" /><testcase classname="tests.test_persistence" name="test_context_rolls_back_and_closes_on_error" time="0.037" /><testcase classname="tests.test_persistence" name="test_success_closes_connection" time="0.029" /><testcase classname="tests.test_persistence" name="test_failed_migration_is_atomic_and_retryable" time="0.032" /><testcase classname="tests.test_persistence" name="test_changed_migration_is_rejected" time="0.034" /><testcase classname="tests.test_persistence" name="test_unknown_migration_is_rejected" time="0.056" /><testcase classname="tests.test_persistence" name="test_migration_does_not_commit_caller_work" time="0.030" /><testcase classname="tests.test_persistence" name="test_migration_requires_foreign_keys" time="0.000" /><testcase classname="tests.test_persistence" name="test_concurrent_initializers_apply_once" time="0.062" /><testcase classname="tests.test_persistence" name="test_required_ids_and_duplicate_ids_are_rejected" time="0.047" /></testsuite></testsuites>

@@ -1,0 +1,9 @@
+{
+  "plan": "5e55cac91c2ebbae08f5b7167b743dfbab0002deeb05939fb1e8f687ce425fb5",
+  "manifest": "ab0b7e85d8830fecf4012984dd2173f6097cf81537bd8b7e7305981f3519d1e0",
+  "pre-validation": "cc4d01806e8791f6c253fc941015bf91bf7093073ea1f69ddc449b8d171bfdbc",
+  "post-validation": "fb0ee2b57dbf7acc540bceb3c73c124655ea40ea68f1137f5e77e450a0c114fa",
+  "authorization": "2e478220e89305182b58bee1fb042a8a9e6b0fe29a247547f7a021365070cf1c",
+  "audit": "bc33abd5dc107641185793e9ac302e27f9681e67dd3d49853fbe923eed30d53f",
+  "journal": "75d745d2ca76a01ff49e5caa9d19dbd2e6e7cd830392a9afa9188e3db11a63ee"
+}

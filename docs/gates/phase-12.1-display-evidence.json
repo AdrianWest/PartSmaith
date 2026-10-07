@@ -1,0 +1,139 @@
+{
+  "package": "C:\\GIT_HUB\\PartSmaith\\.tools\\python\\Lib\\site-packages\\partsmith\\gui\\scene.py",
+  "metadata": {
+    "version": "placement-display-1.0",
+    "units": "mm",
+    "bounds_mm": [
+      [
+        -0.5,
+        -0.25,
+        0.0
+      ],
+      [
+        0.5,
+        0.25,
+        0.35
+      ]
+    ],
+    "solid_bounds_mm": [
+      [
+        [
+          -0.5,
+          -0.25,
+          0.0
+        ],
+        [
+          0.5,
+          0.25,
+          0.35
+        ]
+      ],
+      [
+        [
+          -0.5,
+          -0.25,
+          0.0
+        ],
+        [
+          -0.3,
+          0.25,
+          0.1
+        ]
+      ],
+      [
+        [
+          0.3,
+          -0.25,
+          0.0
+        ],
+        [
+          0.5,
+          0.25,
+          0.1
+        ]
+      ]
+    ],
+    "pads": [
+      {
+        "number": "1",
+        "shape": "roundrect",
+        "centre": [
+          -0.5,
+          0.0
+        ],
+        "size": [
+          0.55,
+          0.6
+        ],
+        "corner_ratio": 0.2
+      },
+      {
+        "number": "2",
+        "shape": "roundrect",
+        "centre": [
+          0.5,
+          0.0
+        ],
+        "size": [
+          0.55,
+          0.6
+        ],
+        "corner_ratio": 0.2
+      }
+    ],
+    "matrix": [
+      [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        1.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        1.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "tolerance_mm": 0.01,
+    "input_sha256": {
+      "step": "789ee84bd00e5fa7adfec322191eeb678f849c82b990b30a41f1bb51da839c92",
+      "footprint": "7d250cb886b21f3b40088cd884e3892bb585185ee05c718160a147b16077da54",
+      "placement": "5fc9d623239488b5580fb539aca3c05c90c705292702dbcdf0683344bff327d1"
+    }
+  },
+  "initial_camera": {
+    "yaw": 35.0,
+    "elevation": 28.0,
+    "zoom": 1.0
+  },
+  "retained_camera": {
+    "yaw": 95.0,
+    "elevation": 28.0,
+    "zoom": 1.4
+  },
+  "heartbeat_callbacks": 88,
+  "max_heartbeat_gap_seconds": 0.0470000000204891,
+  "main_controls_usable": true,
+  "source_bytes_unchanged": true,
+  "native_child_reaped": true,
+  "display_cache_removed": true,
+  "camera_retained": true,
+  "logs": [
+    "12.1 prepare started: synthetic 0402; mm; convention 1.1",
+    "12.1 prepare ready: actual STEP mesh and footprint pads",
+    "12.1 prototype closed: workers and display resources released"
+  ]
+}

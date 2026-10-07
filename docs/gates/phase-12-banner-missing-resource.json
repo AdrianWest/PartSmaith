@@ -1,0 +1,8 @@
+{
+  "status": "PASS",
+  "main_banner_missing_message": true,
+  "setup_and_save_usable": true,
+  "viewer_without_banner_usable": true,
+  "native_cleanup": true,
+  "package": "C:\\GIT_HUB\\PartSmaith\\.tools\\python\\Lib\\site-packages\\partsmith\\gui\\app.py"
+}

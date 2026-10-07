@@ -1,0 +1,24 @@
+{
+  "date": "2026-10-05",
+  "scope": "Local read-only Windows AMD64 observations",
+  "plugin_mode": "Legacy launch-only ActionPlugin",
+  "installed_directory": "C:\\Users\\User\\AppData\\Roaming\\kicad\\10.0\\scripting\\plugins\\partsmith_setup",
+  "installed_plugin_source_parity": "PASS",
+  "installed_plugin_sha256": "c2d83596eac735dea5999aa66b1fdb111955ece8f981b6cba9b6872967a189e5",
+  "launcher_keys": [
+    "python"
+  ],
+  "launcher_schema_version": null,
+  "configured_python": "C:\\GIT_HUB\\PartSmaith\\.venv\\Scripts\\python.exe",
+  "absolute_existing_runtime": true,
+  "launcher_sha256": "be52c6aa4a25ed31373e32dc68f4c28f4f8a50221d19499f31e15786006c9e26",
+  "kicad_cli": "10.0.6",
+  "cli_help": "Usage: kicad-cli [--version] [--help] {fp,jobset,pcb,sch,sym,version}\n\nOptional arguments:\n  -v, --version  prints version information and exits \n  -h, --help     Shows help message and exits \n\nSubcommands:\n  fp            Footprint and Footprint Libraries\n  jobset        Jobset\n  pcb           PCB\n  sch           Schematics\n  sym           Symbol and Symbol Libraries\n  version       Reports the version info in various formats\n",
+  "api_server_offered": false,
+  "installed_kicad_python_versions": [],
+  "ipc_operation_performed": false,
+  "phase8_schema_definitions": 19,
+  "integration_contracts_implemented": false,
+  "source_current_wheel_installed_resource_bytes_unchanged": 121,
+  "live_credentials_captured": false
+}

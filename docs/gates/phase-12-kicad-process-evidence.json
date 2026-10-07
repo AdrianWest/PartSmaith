@@ -1,0 +1,14 @@
+[
+  {
+    "ProcessId": 44620,
+    "ParentProcessId": 25188,
+    "ExecutablePath": "C:\\GIT_HUB\\PartSmaith\\.tools\\python\\python.exe",
+    "CommandLine": "C:\\GIT_HUB\\PartSmaith\\.tools\\python\\python.exe -m partsmith.gui"
+  },
+  {
+    "ProcessId": 26496,
+    "ParentProcessId": 44620,
+    "ExecutablePath": "C:\\WINDOWS\\system32\\conhost.exe",
+    "CommandLine": "\\??\\C:\\WINDOWS\\system32\\conhost.exe 0x4"
+  }
+]

@@ -1,0 +1,71 @@
+{
+  "status": "PASS",
+  "rounds_requested": 3,
+  "suite": [
+    "tests/test_extraction.py",
+    "tests/test_extraction_isolation.py",
+    "tests/test_ai.py",
+    "tests/test_ai_transport.py",
+    "tests/test_cli.py",
+    "tests/test_gui.py",
+    "tests/test_kicad_runtime.py"
+  ],
+  "attempts": [
+    {
+      "round": 1,
+      "exit_code": 0,
+      "timed_out": false,
+      "complete_junit": true,
+      "artifacts": {
+        "round-1.stdout.txt": "fb850c704a4525b185bea7cd385e8ee3eb2c59c3dcc558506b4f88699626f412",
+        "round-1.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "round-1.xml": "5ddee4299d0934d4c4aa995821087295486e1b518bb06fd59f495627e1f7b5ad"
+      },
+      "tests": {
+        "tests": 180,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "status": "PASS"
+    },
+    {
+      "round": 2,
+      "exit_code": 0,
+      "timed_out": false,
+      "complete_junit": true,
+      "artifacts": {
+        "round-2.stdout.txt": "8af1ac424a77aaa8569f8ccd81231df29a52bfb42c352e44a1d1322810570ae3",
+        "round-2.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "round-2.xml": "b7c76dd15db385fb7ac25d4fa2c02aeaba73cac60824744f6a5304750dd84e55"
+      },
+      "tests": {
+        "tests": 180,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "status": "PASS"
+    },
+    {
+      "round": 3,
+      "exit_code": 0,
+      "timed_out": false,
+      "complete_junit": true,
+      "artifacts": {
+        "round-3.stdout.txt": "5cc0222ea7042a7fb83fe7cfcb7d17c586424cb1609c7f81fec01dd588ee0263",
+        "round-3.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "round-3.xml": "b71a56cd1cccb091adc3c600e66f2e7bf8a44410e68fe4d3c3d6ff10a05e9e4a"
+      },
+      "tests": {
+        "tests": 180,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "status": "PASS"
+    }
+  ],
+  "package_root": "C:\\GIT_HUB\\PartSmaith\\.tools\\phase13-live\\pdf-stability-016-revalidation\\payload\\plugins",
+  "archive_sha256": "0fd43032e969b1041cb78e6e1d919310e2d0f9d31f77642f24adc9f48d2c3d2c"
+}

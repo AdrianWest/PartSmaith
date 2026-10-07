@@ -1,0 +1,71 @@
+{
+  "date": "2026-10-06",
+  "status": "PASS_SCOPED_PCM_RUNTIME_IPC_ACCEPTANCE",
+  "target": "Windows AMD64; Python 3.12.10; KiCad 10.0.6",
+  "final_archive": "dist/partsmith-0.1.6-pcm.zip",
+  "real_pcm_operations": [
+    {
+      "scope": "Historical local-file and repository installs",
+      "versions": [
+        "0.1.0",
+        "0.1.3"
+      ],
+      "evidence": "Earlier exact-version PCM records"
+    },
+    {
+      "scope": "Configured repository Pending/Apply updates",
+      "versions": [
+        "0.1.3->0.1.4",
+        "0.1.4->0.1.6"
+      ],
+      "evidence": "phase-13.2-pcm-listing-icon-live-2026-10-06.json"
+    },
+    {
+      "scope": "Active-action removal/reinstall; old IPC invalid",
+      "versions": [
+        "0.1.6"
+      ],
+      "evidence": "phase-13.2-pcm-active-*-016.jpg",
+      "warning": "Active cwd held empty plugin directory; payload and registry removed"
+    },
+    {
+      "scope": "Failed preparation removal/reinstall",
+      "versions": [
+        "0.1.6"
+      ],
+      "evidence": "phase-13.2-pcm-failed-preparation-*-016.jpg",
+      "warning": null
+    }
+  ],
+  "native_preparation": {
+    "failure_trigger": "Registered own action context menu: Recreate Plugin Environment",
+    "failure_supply": "Only local pip 25.0.1 wheel; no index",
+    "failure": "docs/gates/phase-13.2-failed-preparation-readiness-016.json",
+    "watch": "docs/gates/phase-13.2-missing-preparation-watch-016.json",
+    "failed_registration": "Action absent from toolbar/preferences",
+    "retry": "Provision full pinned local supply; restart KiCad manager and PCB Editor; loader prepares dependencies; reopen PCB Editor and deliberately launch action",
+    "retry_runtime": "docs/gates/phase-13.2-retry-preparation-readiness-016.json",
+    "retry_live_read": "docs/gates/phase-13.2-live-ipc-recovered-016.json",
+    "manual_customer_pip": false,
+    "offline_supply_receipt": "docs/gates/phase13.2-packaging-offline-2026-10-06.json",
+    "simulated_cases_scope": "Owned loader helper; native UI separate"
+  },
+  "ipc": {
+    "initial": "docs/gates/phase-13.2-live-ipc-initial-016.json",
+    "refresh": "docs/gates/phase-13.2-live-ipc-refresh-016.json",
+    "disconnect": "docs/gates/phase-13.2-live-ipc-disconnected-016.json",
+    "restart": "docs/gates/phase-13.2-live-ipc-restarted-016.json",
+    "wrong_board": "docs/gates/phase-13.2-live-wrong-board-014.json",
+    "wrong_board_adapter_parity": "0.1.4/0.1.6 bytes identical",
+    "timeout_negative_tests": "tests/test_integration_ipc.py",
+    "launch_endpoint_or_token_persisted": false
+  },
+  "owned_durable_sentinel": {
+    "before_sha256": "44fa14e79b068d98fce90282f721abe447978db6a31d9e8cd6baa3a206885576",
+    "after_active_removal_sha256": "44fa14e79b068d98fce90282f721abe447978db6a31d9e8cd6baa3a206885576",
+    "after_reinstall_and_cache_recreation_sha256": "44fa14e79b068d98fce90282f721abe447978db6a31d9e8cd6baa3a206885576",
+    "private_user_data_inspected": false
+  },
+  "production_publication_claim": false,
+  "full_phase13_status": "PENDING_13.3_TO_13.8"
+}

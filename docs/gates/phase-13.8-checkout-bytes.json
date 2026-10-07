@@ -1,0 +1,14 @@
+{
+  "status": "PASS",
+  "scope": "Read-only clean-filter equivalence for all final active-map inputs and ignore checks for every CI-map input; Git-blob verification remains due after commit",
+  "files": 1944,
+  "ci_input_files": 1550,
+  "normalization_changes": [],
+  "ignored_ci_inputs": [],
+  "historical_excluded_distributions": [
+    ".tools/phase-2-dist/partsmith-0.1.0-py3-none-any.whl",
+    ".tools/phase-2-ir11-dist/partsmith-0.1.0-py3-none-any.whl",
+    ".tools/phase-2-ir12-dist/partsmith-0.1.0-py3-none-any.whl"
+  ],
+  "historical_distribution_scope": "Pre-existing Phase 2 artifacts retained unchanged locally, outside current CI and Phase 13 build/test paths"
+}

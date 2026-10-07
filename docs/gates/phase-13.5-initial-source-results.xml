@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="1" time="27.380" timestamp="2026-10-07T00:04:41.236958-04:00" hostname="DESKTOP-CIC0QVQ"><testcase classname="tests.test_integration_review" name="test_fresh_approval_exact_retry_and_reopen" time="25.509"><failure message="partsmith.integration.errors.IntegrationError: INVALID_CONTRACT: validate">self = &lt;[AttributeError("'IntegrationAuditEnvelope' object has no attribute '_bytes'") raised in repr()] IntegrationAuditEnvelope object at 0x1e317c8dc10&gt;
+data = {'attempt_id': '1cd9a320-e94c-4611-956c-a4e82062ba04', 'authenticated_subject': 'integration-reviewer', 'authentication_mechanism': 'test-live-adapter', 'decision': 'APPROVE', ...}
+
+    def __init__(self, data: dict[str, Any]):
+        """@brief Freezes a validated independent copy of a document.
+        @param data Closed versioned document mapping.
+        @return None.
+        @details Invalid shapes fail before canonicalization; caller mutations
+        and property mutations cannot alter the stored document.
+        """
+        try:
+&gt;           validate_shape(self.kind, data)
+
+src\partsmith\integration\contracts.py:349: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+kind = 'integration_audit_envelope'
+data = {'attempt_id': '1cd9a320-e94c-4611-956c-a4e82062ba04', 'authenticated_subject': 'integration-reviewer', 'authentication_mechanism': 'test-live-adapter', 'decision': 'APPROVE', ...}
+
+    def validate_shape(kind: str, data: object) -&gt; None:
+        """@brief Rejects invalid closed contract shapes.
+        @param kind Integration definition name.
+        @param data Candidate JSON-compatible document.
+        @return None.
+        @details Diagnostics contain paths and constraint names, never values.
+        """
+        errors = sorted(
+            (schema_error_path(e), str(e.validator))
+            for e in validator(kind).iter_errors(data)
+        )
+        if errors:
+&gt;           raise ValueError(f"Invalid {kind}: {errors}")
+E           ValueError: Invalid integration_audit_envelope: [('/timestamp', 'pattern')]
+
+src\partsmith\integration\schema.py:60: ValueError
+
+The above exception was the direct cause of the following exception:
+
+review_fixture = (&lt;sqlite3.Connection object at 0x000001E317F9F5B0&gt;, WindowsPath('C:/Users/User/AppData/Local/Temp/pytest-of-User/pytes...e_mm3': '0.00001'}], 'entries': ['P_92fb898d_fd0f_454b_b0dc_1acfa340ad08', 'P_d82254eb_9a3d_4cee_af09_2e1b6877450d']}))
+tmp_path = WindowsPath('C:/Users/User/AppData/Local/Temp/pytest-of-User/pytest-370/test_fresh_approval_exact_retr0')
+
+    def test_fresh_approval_exact_retry_and_reopen(review_fixture, tmp_path):
+        """@brief Binds a fresh approval to exact content without publication.
+        @param review_fixture Actual checked native generation and saved attempt.
+        @param tmp_path Disposable database path.
+        @return None.
+        @details Retries preserve the exact audit, actor, timestamp and reason.
+        """
+        connection, root, attempt, staged = review_fixture
+        review = IntegrationReview(connection, principal)
+        with pytest.raises(IntegrationError, match="AUTHENTICATION_FAILED"):
+            review.resolve(attempt, staged)
+&gt;       one = review.decide(
+            attempt,
+            staged,
+            "APPROVE",
+            "Review exact packed files",
+            target=TARGET,
+            root=root,
+        )
+
+tests\test_integration_review.py:72: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+src\partsmith\integration\review.py:314: in decide
+    audit = IntegrationAuditEnvelope(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;[AttributeError("'IntegrationAuditEnvelope' object has no attribute '_bytes'") raised in repr()] IntegrationAuditEnvelope object at 0x1e317c8dc10&gt;
+data = {'attempt_id': '1cd9a320-e94c-4611-956c-a4e82062ba04', 'authenticated_subject': 'integration-reviewer', 'authentication_mechanism': 'test-live-adapter', 'decision': 'APPROVE', ...}
+
+    def __init__(self, data: dict[str, Any]):
+        """@brief Freezes a validated independent copy of a document.
+        @param data Closed versioned document mapping.
+        @return None.
+        @details Invalid shapes fail before canonicalization; caller mutations
+        and property mutations cannot alter the stored document.
+        """
+        try:
+            validate_shape(self.kind, data)
+            _semantics(self.kind, data)
+            blob = canonical_json(data)
+            ResourcePolicy().require_sizes([len(blob)])
+            normalized = parse_json(blob)
+            validate_shape(self.kind, normalized)
+            _semantics(self.kind, normalized)
+        except IntegrationError:
+            raise
+        except (ValueError, TypeError, OverflowError) as error:
+&gt;           raise IntegrationError(FailureCode.INVALID_CONTRACT) from error
+E           partsmith.integration.errors.IntegrationError: INVALID_CONTRACT: validate
+
+src\partsmith\integration\contracts.py:359: IntegrationError</failure></testcase></testsuite></testsuites>

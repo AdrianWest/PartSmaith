@@ -1,0 +1,14 @@
+PartSmith synthetic GOLD-0402-001 package definition source.
+This fixture is deterministic test data, not manufacturer evidence and not a
+production package approval.
+
+Package identity: generic chip resistor, 0402 metric body.
+Terminals: two peripheral conductive terminals, numbered 1 west and 2 east.
+Body dimensions (mm): length 1.00 [0.95, 1.05], width 0.50 [0.45, 0.55],
+height 0.35 [0.30, 0.40].
+Terminal dimensions (mm): length 0.20 [0.15, 0.25], width 0.50 [0.45, 0.55],
+height 0.10 [0.08, 0.12].
+Terminal center pitch: 0.80 mm.
+Synthetic land pattern: two round-rectangle pads, each 0.55 x 0.60 mm, centered
+at x=-0.50 mm and x=+0.50 mm respectively, y=0.00 mm.
+Coordinate system: package center, +X right, +Y up, +Z away from PCB.

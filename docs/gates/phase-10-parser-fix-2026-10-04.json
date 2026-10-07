@@ -19,17 +19,17 @@
     "PyMuPDF": "1.28.2"
   },
   "source_sha256": {
-    "pyproject.toml": "861a31f7a0cf66015c7635e7aeb97a49f43da0b652485c4f804ca4b4afff7e8e",
+    "pyproject.toml": "0f24341eaa90356f1d88c525dfdff3351282593b56249591901b27b92fd64048",
     "requirements-extraction.txt": "104015d4659ae8a58dc6787842651f438f32ca2b0fb753fdae92bf89b6d0201d",
     "src/partsmith/extraction/document.py": "da15c6a4e4d46c7b93039375a7e7a80abfde66d16ddc2dc0f3b240a3f4f85a60",
     "src/partsmith/extraction/native_page.py": "68265065abe07914deb0089e09b1045a1c84b6c540813d8e6b72ad1f0b24e682",
     "src/partsmith/extraction/tables.py": "5be1cfd16e85bf12bf54a6ee06fdb4e93ef0f146a2c7326da9c3e063c94da199",
     "tests/test_extraction.py": "339a1dac80aeab59de8c01a8bb5777439a4b66c9ae1ddd0555685448fadaa907",
     "tests/test_extraction_isolation.py": "eeeb609359c2422fa9b55a3932766ef9851f6714521d36cee09f5eac3a6c786c",
-    "scripts/verify_pdf_stability.py": "f6eae7a7e198ec9307e7ffc5555cd4f28824bb75e60f1d058dd3ae09ecd46293",
-    ".github/workflows/ci.yml": "8ab5a65662be3e3c631ba2171db9230b05a05fc4b387cf31170f7fee75300961",
-    ".gitattributes": "44a19d704861ec047282322e3edad133eb0275ed65bf348545836c4d907da315",
-    "README.md": "26a1db3c3f21a016e62b1acc796635c3db28b4516669eefa2fe1a8fef3e2db0c"
+    "scripts/verify_pdf_stability.py": "aeb6583abe2a4046e7ea17b92ff875106ac0ddb8125774b9ddd5ae0322d56572",
+    ".github/workflows/ci.yml": "2f676be607172e21533480ed50cbacf9cf3b27bd0e640898326ecc3a4d4ccf25",
+    ".gitattributes": "b345a7db8d695a9da64fa0c9befeb8897345935d2df882c4075fb296b3b61c09",
+    "README.md": "42499199fc5086bb2e12a7e529fda47d98802eee92cf9b695bc9b4cd578879b8"
   },
   "tests": {
     "source": {
@@ -287,11 +287,11 @@
   "refreshed_manifests": [
     {
       "path": "docs/gates/phase-6-artifacts.json",
-      "sha256": "4dea854cdd76f9b6f6c8d5c94d38be84d741ec98b29e9cbf0e705a6d6dafd55c"
+      "sha256": "f8aa9ae194af0873a85d65a7490dfaf44578dcdd6443c18729842f9519b8a816"
     },
     {
       "path": "docs/gates/phase-8-artifacts.json",
-      "sha256": "6a125442edbdb95bda4d4444432f779498b7a69cfefdbaea096c6d117246a33d"
+      "sha256": "f777da12543e436bafbe171baa2a0b076e36bab43dbf7c67efc5ad671aad9be2"
     }
   ],
   "previous_manifests": [

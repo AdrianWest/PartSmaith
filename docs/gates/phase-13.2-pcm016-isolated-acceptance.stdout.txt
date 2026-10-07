@@ -1,0 +1,99 @@
+........................................................................ [ 34%]
+........................................................................ [ 68%]
+.....................................F......F......................      [100%]
+================================== FAILURES ===================================
+_________________ test_source_resource_parity_and_root_layout _________________
+
+pcm_archive = (WindowsPath('C:/GIT_HUB/PartSmaith/.tools/phase13-discovery/pcm016-acceptance-final/pytest-tmp/pcm0/partsmith.zip'), ... 'install_size': 6754654, 'inventory_sha256': '07238649be2f8be7aa2be0f4de0d8709318615f2c26b1a463a87b6ca6099ee59', ...})
+
+    def test_source_resource_parity_and_root_layout(pcm_archive):
+        """@brief Checks every source/schema/migration/asset/plugin byte.
+        @param pcm_archive Complete archive fixture and receipt.
+        @return None.
+        @details PCM owns its namespace; portable files sit directly under plugins.
+        """
+        path, _ = pcm_archive
+        payload = _payload(path)
+        for name, data in collect_payload(ROOT).items():
+            assert payload[name] == data
+        assert "plugins/plugin.json" in payload
+        assert "plugins/requirements.txt" in payload
+        assert "plugins/entry.py" in payload
+        assert (
+            payload["resources/icon.png"]
+            == (ROOT / "resources/PartSmith_Logo_64x64.png").read_bytes()
+        )
+        with Image.open(io.BytesIO(payload["resources/icon.png"])) as icon:
+            assert icon.format == "PNG" and icon.size == (64, 64)
+        plugin = json.loads(payload["plugins/plugin.json"])
+        for theme in ("icons-light", "icons-dark"):
+            paths = plugin["actions"][0][theme]
+            for size, name in zip((24, 64), paths, strict=True):
+                original = (
+                    ROOT
+                    / "resources"
+                    / (f"PartSmith_Anvil_Icon_{size}x{size}.png")
+                )
+>               assert payload["plugins/" + name] == original.read_bytes()
+                                                     ^^^^^^^^^^^^^^^^^^^^^
+
+..\workspace\tests\test_pcm.py:113: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+C:\Users\User\AppData\Local\Programs\Python\Python312\Lib\pathlib.py:1019: in read_bytes
+    with self.open(mode='rb') as f:
+         ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = WindowsPath('C:/GIT_HUB/PartSmaith/.tools/phase13-discovery/pcm016-acceptance-final/workspace/resources/PartSmith_Anvil_Icon_24x24.png')
+mode = 'rb', buffering = -1, encoding = None, errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: 'C:\\GIT_HUB\\PartSmaith\\.tools\\phase13-discovery\\pcm016-acceptance-final\\workspace\\resources\\PartSmith_Anvil_Icon_24x24.png'
+
+C:\Users\User\AppData\Local\Programs\Python\Python312\Lib\pathlib.py:1013: FileNotFoundError
+____________ test_repository_listing_icon_without_package_download ____________
+
+pcm_archive = (WindowsPath('C:/GIT_HUB/PartSmaith/.tools/phase13-discovery/pcm016-acceptance-final/pytest-tmp/pcm0/partsmith.zip'), ... 'install_size': 6754654, 'inventory_sha256': '07238649be2f8be7aa2be0f4de0d8709318615f2c26b1a463a87b6ca6099ee59', ...})
+
+    def test_repository_listing_icon_without_package_download(pcm_archive):
+        """@brief Verifies the PCM repository supplies the exact listing logo.
+        @param pcm_archive Complete archive fixture and receipt.
+        @return None.
+        @details The separate resources ZIP uses KiCad's package-ID/icon.png path,
+        is hash-bound in repository metadata and repeats deterministically.
+        """
+        spec = importlib.util.spec_from_file_location(
+            "pcm_builder", ROOT / "scripts/build_pcm.py"
+        )
+        builder = importlib.util.module_from_spec(spec)
+>       spec.loader.exec_module(builder)
+
+..\workspace\tests\test_pcm.py:164: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+<frozen importlib._bootstrap_external>:995: in exec_module
+    ???
+<frozen importlib._bootstrap_external>:1132: in get_code
+    ???
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <_frozen_importlib_external.SourceFileLoader object at 0x0000014743297290>
+path = 'C:\\GIT_HUB\\PartSmaith\\.tools\\phase13-discovery\\pcm016-acceptance-final\\workspace\\scripts\\build_pcm.py'
+
+>   ???
+E   FileNotFoundError: [Errno 2] No such file or directory: 'C:\\GIT_HUB\\PartSmaith\\.tools\\phase13-discovery\\pcm016-acceptance-final\\workspace\\scripts\\build_pcm.py'
+
+<frozen importlib._bootstrap_external>:1190: FileNotFoundError
+- generated xml file: C:\GIT_HUB\PartSmaith\docs\gates\phase-13.2-pcm016-isolated-acceptance.xml -
+=========================== short test summary info ===========================
+FAILED ..\workspace\tests\test_pcm.py::test_source_resource_parity_and_root_layout
+FAILED ..\workspace\tests\test_pcm.py::test_repository_listing_icon_without_package_download
+2 failed, 209 passed in 11.94s

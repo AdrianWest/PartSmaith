@@ -1,0 +1,454 @@
+{
+  "specification": "0.9.6",
+  "phase": "9.5",
+  "status": "PASS",
+  "date": "2026-10-04",
+  "scope": "Local Windows AMD64; no remote CI claim",
+  "runtime": {
+    "python": "3.12.10",
+    "wxPython": "4.3.1",
+    "keyring": "25.7.0",
+    "kicad": "10.0.6"
+  },
+  "tests": {
+    "source": {
+      "passed": 490,
+      "seconds": "181.636"
+    },
+    "source_gui": {
+      "passed": 26,
+      "seconds": "1.981"
+    },
+    "installed_wheel_gui": {
+      "passed": 26,
+      "seconds": "1.978"
+    }
+  },
+  "checks": {
+    "lint": "PASS",
+    "format": "PASS",
+    "pip_check": "PASS",
+    "packaged_banner": "PASS",
+    "native_kicad_menu_launch": "PASS",
+    "standalone_script_launch": "PASS",
+    "credential_restart": "PASS",
+    "live_logs": "PASS",
+    "cancellation_and_cleanup": "PASS",
+    "full_part_number_routing": "PASS",
+    "historical_manifest_revalidation": "PASS"
+  },
+  "report": "docs/gates/phase-9.5.md",
+  "wheel": {
+    "path": ".tools/phase95/dist/partsmith-0.1.0-py3-none-any.whl",
+    "sha256": "643fbf40d0a0690709e24d1a50b31a580bc537db546613316195d97a8ed0868f",
+    "availability": "Local generated output"
+  },
+  "prior_manifest_refreshes": {
+    "6": {
+      "pyproject.toml": {
+        "before": "be17362b3813079c06e251c7dba3ca3e594b8c541d7b717ae6e76fa827c3fc8b",
+        "after": "45f87c96c5e61adc2a66d83d5374f4d8e8e48d648c2c59ce13fc071d4559d6a7"
+      },
+      "docs/gates/phase-8.md": {
+        "before": "d1d81ed0ef1cfc335ad6459dc5db78d6097483246a6ca855f95c55160922dcd2",
+        "after": "b93118ffcec24be65d27d8ab9cc170173552919bde1eba1304d6e681591fd0a2"
+      },
+      "docs/gates/phase-8-revalidation.md": {
+        "before": "70267d4ccc58b4b814c664255a57132d2ba57bed4114a9e41a8e5d107e41fe77",
+        "after": "267470ae11db10a34994c0cf775faa90fe6ca63958909112a207f747101cf8fa"
+      }
+    },
+    "7": {
+      "docs/gates/phase-8-revalidation.md": {
+        "before": "70267d4ccc58b4b814c664255a57132d2ba57bed4114a9e41a8e5d107e41fe77",
+        "after": "267470ae11db10a34994c0cf775faa90fe6ca63958909112a207f747101cf8fa"
+      }
+    },
+    "8": {
+      "README.md": {
+        "before": "7e6ee129040aaab3dbd4ef691357d79bcb956e6768b3990f6f0b3a17fdfa9cc0",
+        "after": "7d4e06b8ecc43be7d839e64b82eabb987dd75be2b01c0e1dabf02719eec149c9"
+      },
+      "resources/BFT_PartSmith_Implementation_Spec.md": {
+        "before": "81acdf5f31c0182bdc9d245abbe566319e46c955e358e4c57d3713f6f7485459",
+        "after": "b92bb9f7ff1b6e871f8305244134978c2c36f83dde60d49edd5ac30bac362d4a"
+      },
+      "pyproject.toml": {
+        "before": "be17362b3813079c06e251c7dba3ca3e594b8c541d7b717ae6e76fa827c3fc8b",
+        "after": "45f87c96c5e61adc2a66d83d5374f4d8e8e48d648c2c59ce13fc071d4559d6a7"
+      }
+    },
+    "9": {
+      "README.md": {
+        "before": "7e6ee129040aaab3dbd4ef691357d79bcb956e6768b3990f6f0b3a17fdfa9cc0",
+        "after": "7d4e06b8ecc43be7d839e64b82eabb987dd75be2b01c0e1dabf02719eec149c9"
+      },
+      "pyproject.toml": {
+        "before": "be17362b3813079c06e251c7dba3ca3e594b8c541d7b717ae6e76fa827c3fc8b",
+        "after": "45f87c96c5e61adc2a66d83d5374f4d8e8e48d648c2c59ce13fc071d4559d6a7"
+      },
+      "resources/BFT_PartSmith_Implementation_Spec.md": {
+        "before": "81acdf5f31c0182bdc9d245abbe566319e46c955e358e4c57d3713f6f7485459",
+        "after": "b92bb9f7ff1b6e871f8305244134978c2c36f83dde60d49edd5ac30bac362d4a"
+      }
+    }
+  },
+  "sha256": {
+    "README.md": "96ffeb15e307b99b07aed499cfd2803aa2bb3beebea9e24177e06a5ed08b09bc",
+    "docs/gates/history/phase-6-artifacts-before-phase-9.5-2026-10-04.json": "fb9623680e2578ae7741ea61675832a2ee07fa02a7dc859ceb9b03889af68fac",
+    "docs/gates/history/phase-7-artifacts-before-phase-9.5-2026-10-04.json": "45d2703e920d1181bbc65019b783cfb2bb850d6a7f539e16f9d726d9d00b491a",
+    "docs/gates/history/phase-8-artifacts-before-phase-9.5-2026-10-04.json": "a2da3f70d2e5beb75f125bda60985ef1d86bf6339b85b485785a08d7c7f50287",
+    "docs/gates/history/phase-9-artifacts-before-phase-9.5-2026-10-04.json": "949af03767bb2929d8d372d2613ac619086b6fc37d163d9aa1beafeb0b27611d",
+    "docs/gates/phase-6-artifacts.json": "63d329706b1e8fe60c123812099a973d41430c2b410ba0e301fea9ab51e86436",
+    "docs/gates/phase-7-artifacts.json": "e7596572912fcdee2400f5ca3d23631efcece9eede3000905a2476cacc667665",
+    "docs/gates/phase-8-artifacts.json": "8ec6a06a1a1eaebb53d4bb89d55c8cad9a099da0642c847fe65419611743832d",
+    "docs/gates/phase-9-artifacts.json": "1d9976d50b4f419a4bb5b646762528f38b490db8ce713fb8ea6c244170824e44",
+    "docs/gates/phase-9.5-gui-results.xml": "24ed13923cc0a775fcfc3c4afe9b8a88fc6ed24233c1f0be2ea89d3fe68491c7",
+    "docs/gates/phase-9.5-kicad-launch.png": "b1d1e94e40b2693fa1c6e74fb3d975da793185241f54acaceca0af7255c5178c",
+    "docs/gates/phase-9.5-source-results.xml": "d35c8acd2c9af0137e0e0872b7af96d5b1b95936f2c3213a7778ea31403cc98a",
+    "docs/gates/phase-9.5-standalone-launch.png": "02af67b0979e65dc1fde051e5c4613f315d95b13c3dcef75506e5338220cc211",
+    "docs/gates/phase-9.5-wheel-gui-results.xml": "6a1027a5312ffabdea14b6c1d7e787fded156f19bf719b1b10d0566f7d878daa",
+    "docs/gates/phase-9.5.md": "101d4a886d0fde224f6dc260d2efac4c39e787074b83bf1e875a419584153d93",
+    "integrations/kicad/partsmith_setup/__init__.py": "c2d83596eac735dea5999aa66b1fdb111955ece8f981b6cba9b6872967a189e5",
+    "pyproject.toml": "2ad10bd5c8b395c3e526148c98e452c5ba6408ed99d3a21fa3e177b3755e4642",
+    "requirements-gui-windows.txt": "c2f01ac82069ac46385fbf2ef83f6928048d5e2cbd132fcfed62a24b7b67da52",
+    "resources/BFT_PartSmith_Implementation_Spec.md": "dc793831f0242960dd11e1974d6838019c2c70d0360f7007549bdbbb1cc91b8c",
+    "scripts/install_kicad_gui.py": "0e5683f2f6ad11e2e9f680c87636f1b35e7810a05dff1ded74a27e8b0c62b313",
+    "scripts/partsmith_gui.py": "298ae6123daacdf964747a149a47f7fcc273c3353bf5e9dfdeea2490f1e2ed16",
+    "scripts/verify_gui.py": "4943821173f185801a1c56a6f2b216e61363e3b0c067d209251c010f1888bb7e",
+    "src/partsmith/gui/__init__.py": "30213ef127eaa460428918cdd98ee4080c2af03b2f61a21366676bbf2753a19f",
+    "src/partsmith/gui/__main__.py": "7899c82dc1e1956eb15b959dce39504048443fc5252db7862ca1a219bdcae6b9",
+    "src/partsmith/gui/app.py": "3f166bdb6721a614747b66513c1c792b1ea3b0a72838b010b0bda37ca273b20f",
+    "src/partsmith/gui/credentials.py": "dc3f713beb757579a9f32fbc8d583c1a5ec9f43b39fdf8db380ff4771d76b907",
+    "src/partsmith/gui/install_kicad.py": "24f304a0817a63e5fb6c210c410094fa138d80ff800851892d2f7acc6d784251",
+    "src/partsmith/gui/processing.py": "6aa59f4ea5f7bf481f371036204cdba51d06ec63f66dcb2a0491184db40c41cf",
+    "tests/test_gui.py": "08ae95b1fb8167d228fd0eb5d1dbd64beb00e322d8136c74d5b904e1bb254d64",
+    "resources/PartSmith-Banner.png": "816ac87337b9981db68b1b4b06d50317c5918bc99a6493895d609bb4b3ad8ff7"
+  },
+  "phase_10_revalidation": {
+    "date": "2026-10-04",
+    "report": "docs/gates/phase-10.md",
+    "scope": "Shared CLI/GUI, documentation, CI and PDF packaging changes. Frozen CAD constraints/generators unchanged. Prior wheel and gate identities retain their historical scope.",
+    "source_tests": 570,
+    "installed_wheel_checks": 98,
+    "historical_manifest": "docs/gates/history/phase-9.5-artifacts-before-phase-10-2026-10-04.json",
+    "changed_inputs": {
+      "README.md": {
+        "before": "7d4e06b8ecc43be7d839e64b82eabb987dd75be2b01c0e1dabf02719eec149c9",
+        "after": "c60fc5f3f0fb8603777461f15d558cc2fab7ed5e7d4d9fc1962c11689577fa6b"
+      },
+      "docs/gates/phase-6-artifacts.json": {
+        "before": "ad3ffec35c51d6d36829fdf934a062d99523967a97a1a19c43a5bb363b81d24b",
+        "after": "6dae9ec13715086b3830ab91aff80ebcd2d8796f896c2ee004757e4fe72930bb"
+      },
+      "docs/gates/phase-8-artifacts.json": {
+        "before": "4992478503b79629ce229b6fcb526dbd712b89428ccc1b28e5708ab38e400ae9",
+        "after": "0bcbfc2d4fb7b0510b8d51a3ef802250ae6aa37ed657617e66148f07fe36bf63"
+      },
+      "docs/gates/phase-9-artifacts.json": {
+        "before": "b0f80853b5983c445462509a0de02f246cd8bee35c2bf7edd514db62287dcfd5",
+        "after": "6309dd7be18fa00d9fef073d2f3151fe692ce3830439e277d474e8f25e17cb41"
+      },
+      "pyproject.toml": {
+        "before": "45f87c96c5e61adc2a66d83d5374f4d8e8e48d648c2c59ce13fc071d4559d6a7",
+        "after": "f25fbbffafce750108da08d03fde3dd8abfe9cc1c6b8a72f958b946c80e32349"
+      },
+      "scripts/verify_gui.py": {
+        "before": "0e32c8bd4db1ee7836ff4de8a2fd4d0e7cb6057ae6f8d3177e02a6eec634631c",
+        "after": "59a6c241ec70257e7cef0b9c4e6eb0f618bb9973e804044cbf0cbf2d7d5bdecb"
+      },
+      "src/partsmith/gui/processing.py": {
+        "before": "cc1549b3cadf1a16b4ca9207c4d3e01a84eebed69a964ebd1f69248de6654b30",
+        "after": "15a3b26db828038a5870967bbb7f313618618b60bb89c4a688d5800e501bf63b"
+      },
+      "tests/test_gui.py": {
+        "before": "7121ec195acee6c08f313cfc3c808f4781c734a48896f1cbe349f198c9d67508",
+        "after": "c8b2daff07a82f9b42a8db0e02468630e1b6a4b6bce80eeec69d8da71117dd10"
+      }
+    }
+  },
+  "phase_11_revalidation": {
+    "date": "2026-10-04",
+    "report": "docs/gates/phase-11.md",
+    "scope": "Shared CLI/GUI/documentation only. Historical suites and wheel identities retain their original scope. Full Phase 11 regression evidence covers current files.",
+    "historical_manifest": "docs/gates/history/phase-9.5-artifacts-before-phase-11-2026-10-04.json",
+    "changed_inputs": {
+      "README.md": {
+        "before": "c60fc5f3f0fb8603777461f15d558cc2fab7ed5e7d4d9fc1962c11689577fa6b",
+        "after": "13d83de33be894e7c71e243d3181338b989d62cdb62125f2b775236ea9b50ed8"
+      },
+      "docs/gates/phase-8-artifacts.json": {
+        "before": "0bcbfc2d4fb7b0510b8d51a3ef802250ae6aa37ed657617e66148f07fe36bf63",
+        "after": "b9dbf03e901be594af208c34cba0e3f3358c0dcd42840c321b35c07328c5b163"
+      },
+      "docs/gates/phase-9-artifacts.json": {
+        "before": "6309dd7be18fa00d9fef073d2f3151fe692ce3830439e277d474e8f25e17cb41",
+        "after": "7be29ab4e555cb8aa0e6dfda01e910145cfc164cd747bd3bf3902cca3dd8845d"
+      },
+      "scripts/verify_gui.py": {
+        "before": "59a6c241ec70257e7cef0b9c4e6eb0f618bb9973e804044cbf0cbf2d7d5bdecb",
+        "after": "bf5a549c32cd6c3cfdb651d4d35166d545df23cfeaf91732440b7fe09f161200"
+      },
+      "src/partsmith/gui/app.py": {
+        "before": "fb2c3fe566c7d3c3fcd4ea6e2193a676aa10373c0820531b10d53762b13f9a1c",
+        "after": "d9224413e3ad0c713cdf4efb0476c77f5bc5da7ef4fedb09ac6b11c07313431f"
+      },
+      "src/partsmith/gui/processing.py": {
+        "before": "15a3b26db828038a5870967bbb7f313618618b60bb89c4a688d5800e501bf63b",
+        "after": "0721b9c0b89efd1d9a986a1be195ea1f45fd86aced2ac247e78a31c359967d06"
+      }
+    },
+    "source_checks": 638,
+    "wheel_checks": 108
+  },
+  "phase_12_1_input_refresh": {
+    "date": "2026-10-04",
+    "reason": "Phase 12 startup/prototype and prior committed shared-input changes.",
+    "scope": "Current input-map identities only. Historical status, tests, wheel, canonical and engineering identities retain their original acceptance scope. Separate core/PDF and targeted viewer checks passed; the combined full-source native crash remains unresolved.",
+    "historical_manifest": "docs/gates/history/phase-9.5-artifacts-before-phase-12.1-2026-10-04.json",
+    "report": "docs/gates/phase-12.1.md",
+    "changes": {
+      "sha256/resources/PartSmail-Banner.png": {
+        "before_path": "resources/PartSmail-Banner.png",
+        "after_path": "resources/PartSmith-Banner.png",
+        "before": "816ac87337b9981db68b1b4b06d50317c5918bc99a6493895d609bb4b3ad8ff7",
+        "after": "816ac87337b9981db68b1b4b06d50317c5918bc99a6493895d609bb4b3ad8ff7"
+      },
+      "sha256/README.md": {
+        "before": "13d83de33be894e7c71e243d3181338b989d62cdb62125f2b775236ea9b50ed8",
+        "after": "44384077684e3f7024d832d42f9d6f48bf1be56de0a69a4fcda7772e6b60df62"
+      },
+      "sha256/docs/gates/phase-6-artifacts.json": {
+        "before": "6dae9ec13715086b3830ab91aff80ebcd2d8796f896c2ee004757e4fe72930bb",
+        "after": "d2c2edebec6f551fbca0cfd003e24d274b0c4308747b2383c5507d28743a86eb"
+      },
+      "sha256/docs/gates/phase-8-artifacts.json": {
+        "before": "b9dbf03e901be594af208c34cba0e3f3358c0dcd42840c321b35c07328c5b163",
+        "after": "4106215da902ac6bd91ac119cc79a6780262fd7e67707f13827a0a8d307d623c"
+      },
+      "sha256/docs/gates/phase-9-artifacts.json": {
+        "before": "7be29ab4e555cb8aa0e6dfda01e910145cfc164cd747bd3bf3902cca3dd8845d",
+        "after": "2738eb1e1c3a86c405197acb123d9598886149c70f51f5214eb19801c6f66f6a"
+      },
+      "sha256/pyproject.toml": {
+        "before": "f25fbbffafce750108da08d03fde3dd8abfe9cc1c6b8a72f958b946c80e32349",
+        "after": "3cf64183de05ba5651721a642cba6527389472f58614aa2ad231c447d02c4aeb"
+      },
+      "sha256/resources/BFT_PartSmith_Implementation_Spec.md": {
+        "before": "b92bb9f7ff1b6e871f8305244134978c2c36f83dde60d49edd5ac30bac362d4a",
+        "after": "0ac92a01c268c0a63f9eeaa71fc805aa1f414e92b5fc636cb9e6963aee99d3ee"
+      },
+      "sha256/src/partsmith/gui/app.py": {
+        "before": "d9224413e3ad0c713cdf4efb0476c77f5bc5da7ef4fedb09ac6b11c07313431f",
+        "after": "2f8e47f2e87c60ee7a99954a9ddcadb1411c07a9e324e1b1bc12fa65cee0a252"
+      },
+      "sha256/tests/test_gui.py": {
+        "before": "c8b2daff07a82f9b42a8db0e02468630e1b6a4b6bce80eeec69d8da71117dd10",
+        "after": "08ae95b1fb8167d228fd0eb5d1dbd64beb00e322d8136c74d5b904e1bb254d64"
+      },
+      "sha256/resources/PartSmith-Banner.png": {
+        "before": null,
+        "after": "816ac87337b9981db68b1b4b06d50317c5918bc99a6493895d609bb4b3ad8ff7"
+      }
+    }
+  },
+  "phase_12_input_refresh": {
+    "date": "2026-10-05",
+    "reason": "Full Phase 12 implementation, validation and shared-input closeout.",
+    "scope": "Current input-map identities revalidated by the final source/wheel suites. Historical status, test results, generated wheel and golden artifact identities retain their original acceptance scope. The Phase 12.1 failed combined run remains historical failure evidence.",
+    "historical_manifest": "docs/gates/history/phase-9.5-artifacts-before-phase-12-2026-10-05.json",
+    "report": "docs/gates/phase-12.md",
+    "changes": {
+      "sha256/README.md": {
+        "before": "44384077684e3f7024d832d42f9d6f48bf1be56de0a69a4fcda7772e6b60df62",
+        "after": "8548f42c1a521004eb63e4ce14774df2b86dd69ec7d14969e5c0bc6230bb60cf"
+      },
+      "sha256/docs/gates/phase-6-artifacts.json": {
+        "before": "d2c2edebec6f551fbca0cfd003e24d274b0c4308747b2383c5507d28743a86eb",
+        "after": "b37d13075a9fede9df45b5d967850c76c4c1f3510e64b55308d1639c24f1a892"
+      },
+      "sha256/docs/gates/phase-8-artifacts.json": {
+        "before": "4106215da902ac6bd91ac119cc79a6780262fd7e67707f13827a0a8d307d623c",
+        "after": "8997cd45da121d827aed1b854383548220c07626d2b0cd02f46cd3d32aaa1030"
+      },
+      "sha256/docs/gates/phase-9-artifacts.json": {
+        "before": "2738eb1e1c3a86c405197acb123d9598886149c70f51f5214eb19801c6f66f6a",
+        "after": "7584f73e4936b3f632bcbe67c828f9cd41d46e0320c6bb2516be08899e7504f3"
+      },
+      "sha256/pyproject.toml": {
+        "before": "3cf64183de05ba5651721a642cba6527389472f58614aa2ad231c447d02c4aeb",
+        "after": "861a31f7a0cf66015c7635e7aeb97a49f43da0b652485c4f804ca4b4afff7e8e"
+      },
+      "sha256/scripts/verify_gui.py": {
+        "before": "bf5a549c32cd6c3cfdb651d4d35166d545df23cfeaf91732440b7fe09f161200",
+        "after": "7e83a42f4d982538dc0804f2afa980e19c230e9ed6bb4d2bd8a032767679fd13"
+      },
+      "sha256/src/partsmith/gui/app.py": {
+        "before": "2f8e47f2e87c60ee7a99954a9ddcadb1411c07a9e324e1b1bc12fa65cee0a252",
+        "after": "3fa8a8817d715431225f02b91b431ba1d1e4618f3be670e825395b6d76518718"
+      },
+      "sha256/src/partsmith/gui/processing.py": {
+        "before": "0721b9c0b89efd1d9a986a1be195ea1f45fd86aced2ac247e78a31c359967d06",
+        "after": "6aa59f4ea5f7bf481f371036204cdba51d06ec63f66dcb2a0491184db40c41cf"
+      }
+    }
+  },
+  "banner_layout_input_refresh": {
+    "date": "2026-10-05",
+    "report": "docs/gates/phase-12-banner-update.md",
+    "historical_manifest": "docs/gates/history/phase-9.5-artifacts-before-banner-update-2026-10-05.json",
+    "reason": "User-requested Banner3 on the Phase 9.5 main GUI; no Phase 12 viewer banner; updated specification and layout checks.",
+    "scope": "Final input-map bytes revalidated by scoped GUI checks. Original full-gate tests, distributions and other historical evidence retain their acceptance scope.",
+    "changes": {
+      "sha256/README.md": {
+        "before": "8548f42c1a521004eb63e4ce14774df2b86dd69ec7d14969e5c0bc6230bb60cf",
+        "after": "a982261618eb203fc10a0c09125072b90b8e1af3cbdb3240de2f632cf3ef7d9b"
+      },
+      "sha256/docs/gates/phase-8-artifacts.json": {
+        "before": "8997cd45da121d827aed1b854383548220c07626d2b0cd02f46cd3d32aaa1030",
+        "after": "b2f9ff6d99151b099c6abb1aed54a7f35b5522e39f5ff91683501fc2af5c71d3"
+      },
+      "sha256/docs/gates/phase-9-artifacts.json": {
+        "before": "7584f73e4936b3f632bcbe67c828f9cd41d46e0320c6bb2516be08899e7504f3",
+        "after": "a5d43e4fa2d1453896872fa21b6053e38bbc0e454ec32fec7e26ff0b94b880bc"
+      },
+      "sha256/resources/BFT_PartSmith_Implementation_Spec.md": {
+        "before": "0ac92a01c268c0a63f9eeaa71fc805aa1f414e92b5fc636cb9e6963aee99d3ee",
+        "after": "a01675ca05871643edc9bec81d67505ac7b69d786c8e1332994b5a052fb272b1"
+      },
+      "sha256/scripts/verify_gui.py": {
+        "before": "7e83a42f4d982538dc0804f2afa980e19c230e9ed6bb4d2bd8a032767679fd13",
+        "after": "4943821173f185801a1c56a6f2b216e61363e3b0c067d209251c010f1888bb7e"
+      },
+      "sha256/src/partsmith/gui/app.py": {
+        "before": "3fa8a8817d715431225f02b91b431ba1d1e4618f3be670e825395b6d76518718",
+        "after": "347b3dbb4e5f379674b6ac0310b07369a13619c57499a8882977c8fd43cd1c8b"
+      }
+    }
+  },
+  "symbol_viewer_input_refresh": {
+    "date": "2026-10-05",
+    "reason": "Separate-viewer symbol inspection, explicit full-part review contract and current Banner3 parity validation.",
+    "scope": "Refresh affected active input maps and their dependencies from finalized disk bytes. Historical tests, wheels, golden artifacts and prior before/after records retain their original acceptance scope.",
+    "historical_manifest": "docs/gates/history/phase-9.5-artifacts-before-symbol-viewer-2026-10-05.json",
+    "report": "docs/gates/phase-12-symbol-viewer.md",
+    "changes": {
+      "README.md": {
+        "before": "a982261618eb203fc10a0c09125072b90b8e1af3cbdb3240de2f632cf3ef7d9b",
+        "after": "e7c675924a63b20c240acb2c0434588615a175ea24bc4be904c85bfd069af530"
+      },
+      "docs/gates/phase-8-artifacts.json": {
+        "before": "b2f9ff6d99151b099c6abb1aed54a7f35b5522e39f5ff91683501fc2af5c71d3",
+        "after": "e9ece3e9aba595cbd0ad7f26c4cdb7ab257a987f2c33b7b4b18cb49c57163183"
+      },
+      "docs/gates/phase-9-artifacts.json": {
+        "before": "a5d43e4fa2d1453896872fa21b6053e38bbc0e454ec32fec7e26ff0b94b880bc",
+        "after": "b030f9ba97d0797e22430eefea9bd9822647d41a20f24561c51136a58d4dade8"
+      },
+      "resources/BFT_PartSmith_Implementation_Spec.md": {
+        "before": "a01675ca05871643edc9bec81d67505ac7b69d786c8e1332994b5a052fb272b1",
+        "after": "e0dd473ca1b6219c8c0fe51ef7ab4a7ba98094a79eca2d8cf59501444636681c"
+      }
+    }
+  },
+  "phase_12_finding_fixes_input_refresh": {
+    "date": "2026-10-05",
+    "report": "docs/gates/phase-12-finding-fixes-2026-10-05.md",
+    "reason": "Resolve bound-part identity and post-commit recovery outcomes",
+    "scope": "Current validated input bytes and manifest dependencies; historical tests/wheels retain original acceptance scope",
+    "historical_manifest": "docs/gates/history/phase-9.5-artifacts-before-phase-12-finding-fixes-2026-10-05.json",
+    "changes": {
+      "README.md": {
+        "before": "e7c675924a63b20c240acb2c0434588615a175ea24bc4be904c85bfd069af530",
+        "after": "b23c4234a222e3c3dd6c138d1b9fe5043fbdca1e5b847be5a8991c44c8b32c5d"
+      },
+      "docs/gates/phase-8-artifacts.json": {
+        "before": "e9ece3e9aba595cbd0ad7f26c4cdb7ab257a987f2c33b7b4b18cb49c57163183",
+        "after": "67fb145375f6a0c8c5839f40ce49c111a6c1ec34f3f4e1977d863278fbab5ca8"
+      },
+      "docs/gates/phase-9-artifacts.json": {
+        "before": "b030f9ba97d0797e22430eefea9bd9822647d41a20f24561c51136a58d4dade8",
+        "after": "7a6bfcbb9a6954a48997d326e9d312ad2533cdadbf8223553272b04eddc5dff7"
+      },
+      "src/partsmith/gui/app.py": {
+        "before": "347b3dbb4e5f379674b6ac0310b07369a13619c57499a8882977c8fd43cd1c8b",
+        "after": "3f166bdb6721a614747b66513c1c792b1ea3b0a72838b010b0bda37ca273b20f"
+      }
+    }
+  },
+  "spec_v097_input_refresh": {
+    "date": "2026-10-05",
+    "report": "docs/spec-phase-13-review-v0.9.7.md",
+    "reason": "Explicit Phase 13 contract reassignment and plugin/data/spec gap review",
+    "scope": "Current documentation/specification and manifest dependencies only; unchanged runtime and historical tests/binaries retain acceptance scope",
+    "historical_manifest": "docs/gates/history/phase-9.5-artifacts-before-spec-v0.9.7-2026-10-05.json",
+    "changes": {
+      "README.md": {
+        "before": "b23c4234a222e3c3dd6c138d1b9fe5043fbdca1e5b847be5a8991c44c8b32c5d",
+        "after": "5debdba8af19a25f05e639cc650361c6ebad2b93133c4772b438e5b9af0f10b2"
+      },
+      "docs/gates/phase-8-artifacts.json": {
+        "before": "67fb145375f6a0c8c5839f40ce49c111a6c1ec34f3f4e1977d863278fbab5ca8",
+        "after": "89474241bf56d64ecb1858e8e22d0abe161227a46af25c59d8a0fc309051b113"
+      },
+      "docs/gates/phase-9-artifacts.json": {
+        "before": "7a6bfcbb9a6954a48997d326e9d312ad2533cdadbf8223553272b04eddc5dff7",
+        "after": "0c8bf9cbcaf3f84d1888ad01d48524ddcbe692adcade2f0a366e3724e23bbbfb"
+      },
+      "resources/BFT_PartSmith_Implementation_Spec.md": {
+        "before": "e0dd473ca1b6219c8c0fe51ef7ab4a7ba98094a79eca2d8cf59501444636681c",
+        "after": "80cbf284de63d6a8ba934510418ac99522585c7985fac2a71c3cbe4c104b92b8"
+      }
+    }
+  },
+  "pcm_spec_input_refresh": {
+    "date": "2026-10-05",
+    "reason": "Explicit PCM ZIP/runtime/lifecycle correction to Phase 13",
+    "scope": "Current documentation and dependent maps; historical tests/binaries unchanged",
+    "report": "docs/spec-phase-13-pcm-installation-update-2026-10-05.md",
+    "historical_manifest": "docs/gates/history/phase-9.5-artifacts-before-pcm-spec-update-2026-10-05.json",
+    "changes": {
+      "README.md": {
+        "before": "5debdba8af19a25f05e639cc650361c6ebad2b93133c4772b438e5b9af0f10b2",
+        "after": "171de95f57362a8bc1f63ed7786bb421c5f88d1af19e89b47304528404dd6f5c"
+      },
+      "docs/gates/phase-8-artifacts.json": {
+        "before": "89474241bf56d64ecb1858e8e22d0abe161227a46af25c59d8a0fc309051b113",
+        "after": "7225859aa924ac1074e88c48f4d7209ba4bf6f266b3022eeb29fa80fd8a7f512"
+      },
+      "docs/gates/phase-9-artifacts.json": {
+        "before": "0c8bf9cbcaf3f84d1888ad01d48524ddcbe692adcade2f0a366e3724e23bbbfb",
+        "after": "ba81c05d02a6365dc5bd12b7c8622bb59271b29f0e24f64e9ea506a1b03e20fb"
+      },
+      "resources/BFT_PartSmith_Implementation_Spec.md": {
+        "before": "80cbf284de63d6a8ba934510418ac99522585c7985fac2a71c3cbe4c104b92b8",
+        "after": "a9f7626d41177002e3746a130bc8a7ed41612b67d37f8942778e93ec31945f26"
+      }
+    }
+  },
+  "pcm_only_input_refresh": {
+    "date": "2026-10-05",
+    "reason": "Explicit PCM-only build/test correction to Phase 13",
+    "scope": "Current documentation and dependent maps; historical tests/binaries unchanged",
+    "report": "docs/spec-phase-13-pcm-only-update-2026-10-05.md",
+    "historical_manifest": "docs/gates/history/phase-9.5-artifacts-before-pcm-only-spec-update-2026-10-05.json",
+    "changes": {
+      "README.md": {
+        "before": "171de95f57362a8bc1f63ed7786bb421c5f88d1af19e89b47304528404dd6f5c",
+        "after": "26a1db3c3f21a016e62b1acc796635c3db28b4516669eefa2fe1a8fef3e2db0c"
+      },
+      "docs/gates/phase-8-artifacts.json": {
+        "before": "7225859aa924ac1074e88c48f4d7209ba4bf6f266b3022eeb29fa80fd8a7f512",
+        "after": "039dcc55ecb456a9cfaf638fbc7221435ceedb8cebaea6733a23249619afb4d0"
+      },
+      "docs/gates/phase-9-artifacts.json": {
+        "before": "ba81c05d02a6365dc5bd12b7c8622bb59271b29f0e24f64e9ea506a1b03e20fb",
+        "after": "b3be858c4fbc669050f1a953a1e148dd578975dc74055a3fcf415f9ff8f9142b"
+      },
+      "resources/BFT_PartSmith_Implementation_Spec.md": {
+        "before": "a9f7626d41177002e3746a130bc8a7ed41612b67d37f8942778e93ec31945f26",
+        "after": "b61c9845d05888b7c30db7a305b5247119070c564f4091fb17b22cc1470a8076"
+      }
+    }
+  }
+}

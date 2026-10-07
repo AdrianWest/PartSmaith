@@ -1,0 +1,32 @@
+{
+  "evidence_version": "phase13.2-native-toolbar-source-1.0",
+  "date": "2026-10-06",
+  "status": "READ_ONLY_OFFICIAL_SOURCE_DISCOVERY",
+  "milestone_pass_claim": false,
+  "live_ipc_acceptance_claim": false,
+  "native_version": "10.0.6",
+  "official_source": {
+    "url": "https://gitlab.com/kicad/code/kicad/-/raw/10.0.6/common/eda_draw_frame.cpp",
+    "path": ".tools/phase13-discovery/kicad-10.0.6-eda_draw_frame.cpp",
+    "sha256": "619d60d66ceca1fbbc4c1785b7704c603582466138b8e0888b7c7ee814c1d5b2",
+    "size": 47420,
+    "function": "EDA_DRAW_FRAME::AddApiPluginTools",
+    "lines": [1430, 1451]
+  },
+  "findings": {
+    "actions_filtered_by": ["native ready set", "frame scope", "configured visibility"],
+    "label": "empty",
+    "icon_selection": "valid dark icon in dark mode, otherwise light icon",
+    "missing_icon_fallback": false,
+    "missing_icon_prevents_binding": false,
+    "implication": "An otherwise ready action may create a blank clickable toolbar button",
+    "required_package_change": "Provide a visible packaged action icon"
+  },
+  "root_reported_observation": {
+    "independently_witnessed_by_this_agent": false,
+    "package_version": "0.1.3",
+    "result": "Clicking the blank action slot launched the managed Python 3.12 board chooser",
+    "acceptance_evidence_owner": "root"
+  },
+  "mutations": ["new documentation", "new public source evidence download"]
+}

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="1" time="20.142" timestamp="2026-10-06T23:49:30.175539-04:00" hostname="DESKTOP-CIC0QVQ"><testcase classname="tests.test_integration_staging" name="test_two_native_stages_are_identical" time="18.287"><failure message="partsmith.integration.errors.IntegrationError: NATIVE_CHECK_FAILED: validate">approved_database = (&lt;sqlite3.Connection object at 0x000002314CB0FE20&gt;, ('96580569-27a4-4513-92fe-32f89f68f1c5', 'db4d19ee-e05f-4fbd-bea3-c0546c259da7', 'c29d1596-fc4c-430a-8f88-ae6c70baf846'))
+tmp_path = WindowsPath('C:/Users/User/AppData/Local/Temp/pytest-of-User/pytest-365/test_two_native_stages_are_ide0')
+
+    def test_two_native_stages_are_identical(approved_database, tmp_path):
+        """@brief Verifies native packing and deterministic check identities.
+        @param approved_database Complete approved source packages.
+        @param tmp_path Isolated target and owned staging parent.
+        @return None.
+        @details Unrelated table/project bytes and SQLite remain unchanged.
+        """
+        connection, builds = approved_database
+        root = tmp_path / "project"
+        root.mkdir()
+        (root / "sym-lib-table").write_bytes(
+            b'(sym_lib_table (version 7) (lib (name "User") (type "KiCad") '
+            b'(uri "${KIPRJMOD}/user.kicad_sym") (descr "User property")))'
+        )
+        (root / "user.kicad_pro").write_bytes(b"{}")
+        result = Planner(connection).plan(root, TARGET, builds[:2])
+        before = database_identity(connection), read_project(root)
+&gt;       one = Stager(connection).stage(result, tmp_path)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\test_integration_staging.py:42: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+src\partsmith\integration\staging.py:508: in stage
+    receipt = native_check(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+root = WindowsPath('C:/Users/User/AppData/Local/Temp/pytest-of-User/pytest-365/test_two_native_stages_are_ide0/stage-vnu40i9j')
+names = ('P_8372cab8_ad72_43ae_8401_888e0c6806d3', 'P_b8d113ca_c981_4a11_a47b_5d56356ad3f6')
+version = '10.0.6'
+
+    def native_check(root: Path, names: tuple[str, ...], version: str) -&gt; dict:
+        """@brief Parses every packed symbol and footprint with pinned KiCad.
+        @param root Complete isolated project generation.
+        @param names Exact expected entry names.
+        @param version Frozen required native runtime version.
+        @return Separate operational CLI receipt without deterministic authority.
+        @details Round-trip and render outputs never replace engineering bytes.
+        Process time, logs and descendants are bounded by resource policy 1.0.
+        """
+        runtime = discover_kicad(version)
+        receipts = []
+        if not names:
+            return {"version": runtime.version, "operations": [], "entries": []}
+        with TemporaryDirectory(prefix="partsmith-integration-native-") as temp:
+            output = Path(temp)
+            commands = [
+                (
+                    "sym",
+                    "upgrade",
+                    "--force",
+                    str(root / "BFT_Symbols.kicad_sym"),
+                    "--output",
+                    str(output / "symbols"),
+                ),
+                (
+                    "sym",
+                    "export",
+                    "svg",
+                    str(root / "BFT_Symbols.kicad_sym"),
+                    "--output",
+                    str(output / "symbol-svg"),
+                    "--black-and-white",
+                ),
+                (
+                    "fp",
+                    "upgrade",
+                    "--force",
+                    str(root / "BFT_Footprints.pretty"),
+                    "--output",
+                    str(output / "footprints.pretty"),
+                ),
+                (
+                    "fp",
+                    "export",
+                    "svg",
+                    str(root / "BFT_Footprints.pretty"),
+                    "--output",
+                    str(output / "footprint-svg"),
+                    "--black-and-white",
+                ),
+            ]
+            for arguments in commands:
+                process = run_process(
+                    [str(runtime.executable), *arguments],
+                    log=quiet_log,
+                    cwd=root,
+                    timeout=ResourcePolicy().native_timeout_seconds,
+                    output_budget=ResourcePolicy().log_bytes,
+                )
+                if process.returncode:
+                    raise IntegrationError(FailureCode.NATIVE_CHECK_FAILED)
+                receipts.append(
+                    {
+                        "operation": "-".join(arguments[:2]),
+                        "exit_code": 0,
+                        "stdout_sha256": sha256(
+                            process.stdout.encode()
+                        ).hexdigest(),
+                        "stderr_sha256": sha256(
+                            process.stderr.encode()
+                        ).hexdigest(),
+                    }
+                )
+            for directory in ("symbol-svg", "footprint-svg"):
+                rendered = {
+                    path.stem for path in (output / directory).rglob("*.svg")
+                }
+                if rendered != set(names):
+&gt;                   raise IntegrationError(FailureCode.NATIVE_CHECK_FAILED)
+E                   partsmith.integration.errors.IntegrationError: NATIVE_CHECK_FAILED: validate
+
+src\partsmith\integration\staging.py:367: IntegrationError</failure></testcase></testsuite></testsuites>

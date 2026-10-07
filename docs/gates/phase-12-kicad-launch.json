@@ -1,0 +1,26 @@
+{
+  "status": "PASS",
+  "host": "Actual KiCad 10.0.6 PCB Editor",
+  "launch_action": "Tools > External Plugins > PartSmith Setup",
+  "external_process": 44620,
+  "kicad_parent_process": 25188,
+  "runtime": "C:\\GIT_HUB\\PartSmaith\\.tools\\python\\python.exe",
+  "command": [
+    "python.exe",
+    "-m",
+    "partsmith.gui"
+  ],
+  "scope": "Unmodified installed-wheel runtime launched by the actual registered action plugin; manually loaded explicit generated offline fixture and viewed actual retained STEP/footprint",
+  "viewer_banner3": "PASS",
+  "actual_model_dimensions_mm": [
+    1,
+    0.5,
+    0.35
+  ],
+  "release_approved": false,
+  "native_children_reaped": true,
+  "saved_before_close": true,
+  "original_launcher_configuration_restored": true,
+  "screenshot": "docs/gates/phase-12-display/phase-12-kicad-launch-viewer.png",
+  "process_evidence": "docs/gates/phase-12-kicad-process-evidence.json"
+}

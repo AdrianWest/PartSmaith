@@ -54,7 +54,7 @@ PartSmith treats source evidence, structured Component IR, and package
 definitions as the engineering inputs. Generated artifacts never become the
 source of truth for another generator. This separation makes discrepancies
 visible instead of silently correcting one artifact to match another.
-Project installation will assemble approved components into a separately
+Project installation assembles approved components into a separately
 validated library, with explicit integration authorization for the installed
 files. The approved source bundles retain their original bytes and hashes.
 
@@ -103,8 +103,8 @@ Archives restore unfinished work into fresh operational sessions, including
 source assets, immutable history, proposals, artifacts, camera and draft state.
 Loading never runs a provider, generation or an approval automatically.
 
-Launch `.tools/python/python.exe -m partsmith.gui` or the installed
-`partsmith-gui` entry. The 12.1 synthetic rendering experiment remains available
+From the contributor environment, launch `python -m partsmith.gui` using the
+declared source path. The 12.1 synthetic rendering experiment remains available
 as a separate diagnostic control. See the [Phase 12 gate](docs/gates/phase-12.md)
 and [12.1 rendering decision](docs/gates/phase-12.1.md). Desktop acceptance is
 scoped to Windows AMD64; other desktop platforms and remote CI are not claimed.
@@ -130,8 +130,9 @@ and history-complete revision/inventory import and export. Revision bundles
 remain `RETRIEVAL_REQUIRED`. Phase 9 adds separate verified `OFFLINE_COMPLETE`
 replay bundles, network-disabled multi-revision rebuild tests, clean-build hash
 comparisons, and selective reuse with scoped invalidation. The Phase 9 gate
-passes locally on Windows AMD64; shared-library installation remains Phase 13
-work. See the [Phase 9 gate report](docs/gates/phase-9.md) and
+passes locally on Windows AMD64; shared-library installation is implemented
+under the [Phase 13 gate](docs/gates/phase-13.md). See the
+[Phase 9 gate report](docs/gates/phase-9.md) and
 [Phase 8 revalidation](docs/gates/phase-8-revalidation.md).
 
 Phase 13 now has eight ordered milestones, beginning with the installation
@@ -139,16 +140,41 @@ contracts, fixtures, source regressions and isolated PCM contract-payload checks
 needed to close **R13-01**.
 The project-owner specification revision assigns those contracts to Phase 13.1;
 later planning, installation and publication work requires that checkpoint's
-PASS. The contracts and installer remain pending implementation. See the
+PASS. The [13.1 contracts checkpoint](docs/gates/phase-13.1.md) now implements
+those contracts and closes R13-01 after source, isolated offline PCM payload and
+hash checks. The complete [Phase 13 integration gate](docs/gates/phase-13.md)
+now passes on the declared Windows AMD64/KiCad 10.0.6 target. See the
 [plugin/data review and revised plan](docs/spec-phase-13-review-v0.9.7.md).
 
 The [2026-10-05 PCM correction](docs/spec-phase-13-pcm-installation-update-2026-10-05.md)
 requires a KiCad Plugin and Content Manager ZIP and real install, preparation,
 launch, update, uninstall and reinstall checks in Phase 13. The subsequent
 [PCM-only validation update](docs/spec-phase-13-pcm-only-update-2026-10-05.md)
-removes PartSmith wheel builds/tests from that phase and assigns retirement of
-wheel automation to 13.2, with source/PCM resource coverage. Customers install
-through PCM. Production
+removes PartSmith wheel builds/tests from that phase. Phase 13.2 now implements
+a deterministic PCM ZIP, pinned managed Python runtime diagnostics, exact
+schema/resource checks and a read-only IPC inspector; active wheel automation
+has been replaced by source/PCM checks. The
+[13.2 checkpoint](docs/gates/phase-13.2.md) records actual PCM lifecycle,
+offline preparation/recovery, live PCB inspection and local NTFS publication
+feasibility acceptance with affected-manifest hash closeout.
+The [13.3 checkpoint](docs/gates/phase-13.3.md) adds pure approved-source
+planning, bounded project inventory and immutable integration persistence.
+The [13.4 checkpoint](docs/gates/phase-13.4.md) packs deterministic libraries
+with exact engineering comparisons and real native SVG/STEP validation.
+The [13.5 checkpoint](docs/gates/phase-13.5.md) provides fresh authenticated
+installation decisions bound to exact content, with durable retry/cancellation
+handling. The [13.6 checkpoint](docs/gates/phase-13.6.md) adds complete owned
+NTFS project publication, real process-crash recovery and freshly authorized
+rollback that preserves current user files. The
+[13.7 checkpoint](docs/gates/phase-13.7.md) adds deliberate project controls,
+safe saved references and actual two-component native/IPC round trips with
+the PCM-installed 0.1.9 runtime. The [13.8 closeout](docs/gates/phase-13.8.md)
+records 1,104 source checks, 14 source desktop checks, 1,118 isolated PCM checks,
+98 offline contract checks and three 194-check PDF/native/desktop rounds, all
+passing without skips, alongside supervised PCM/native/IPC evidence and final
+affected-manifest hash verification.
+Customers install through PCM; see [PCM installation](docs/pcm-installation.md).
+Production
 clean-machine/offline packaging remains Phase 14 work.
 
 AI-assisted document interpretation is intentionally later in the plan. The
@@ -166,22 +192,23 @@ mapping or a blocked unrecognized/ambiguous mapping. The optional OpenAI
 checkbox adds unreviewed Phase 11 interpretation candidates. Phase 12 human
 review/application remains required before a component can be built.
 
-With the existing Python 3.12 environment, install the optional Windows runtime:
+For development in an existing Python 3.12 environment, install the pinned
+Windows runtime and load the declared source tree:
 
 ```powershell
-.\.venv\Scripts\python.exe -m pip install -r requirements-gui-windows.txt
-.\.venv\Scripts\python.exe -m pip install -e ".[gui]" --no-deps
-.\.venv\Scripts\python.exe scripts\partsmith_gui.py
+.\.venv\Scripts\python.exe -m pip install --only-binary :all: -r requirements-pcm.txt
+$env:PYTHONPATH = (Resolve-Path .\src).Path
+.\.venv\Scripts\python.exe -m partsmith.gui
 ```
 
-After installation, `python -m partsmith.gui` or `partsmith-gui` also launches
-the window. All launch paths resolve the packaged banner independently of the
+`python -m partsmith.gui` launches from the contributor environment. The PCM
+action loads its installed package directly. These paths resolve the banner independently of the
 working directory. Keys are saved in the operating system's secure credential
 store (Windows Credential Manager on the verified Windows runtime). The key
 dialog always opens blank, masks new input, saves on **OK**, and preserves the
 existing key on **Cancel**. Saved keys are never displayed or written to logs.
 
-For KiCad 10.0.6 on Windows, install the launch-only action plugin:
+For historical development of the launch-only entry, use:
 
 ```powershell
 .\.venv\Scripts\python.exe -m partsmith.gui.install_kicad --plugin-dir "$env:APPDATA\kicad\10.0\scripting\plugins"
@@ -193,12 +220,14 @@ plugin directory reported by the PCB Editor's Action Plugins preferences.
 The entry starts PartSmith's Python 3.12 environment as a separate process;
 it imports no PartSmith CAD dependencies into KiCad's embedded Python.
 Reinstall the entry if the PartSmith environment moves. The installed
-`launcher.json` contains only the interpreter path. The installer also works
-from a wheel using `partsmith-kicad-setup --plugin-dir <directory>`.
+`launcher.json` contains only the interpreter path. This manual-copy entry is a
+legacy development path; the customer IPC plugin uses PCM and separate
+version-matched `plugin.json` registration.
 
 The launch entry follows KiCad's
 [documented action-plugin interface](https://dev-docs.kicad.org/en/apis-and-binding/pcbnew/index.html);
-broader IPC integration remains Phase 13. This desktop runtime is verified on
+the expanded integration gate is recorded in [Phase 13](docs/gates/phase-13.md).
+This desktop runtime is verified on
 Windows AMD64; Linux/macOS GUI installation and native keyring availability
 have not been verified. For desktop integration checks, run
 `python -m pytest scripts/verify_gui.py -v`; the ordinary test suite also checks
@@ -214,7 +243,8 @@ development environment and install the pinned project tools:
 py -3.12 -m venv .venv
 .\.venv\Scripts\Activate.ps1
 python -m pip install --requirement requirements-ci.txt
-python -m pip install -e . --no-deps
+python -m pip install --requirement requirements-extraction.txt
+$env:PYTHONPATH = (Resolve-Path .\src).Path
 .\scripts\setup_kicad.ps1
 ```
 
@@ -230,14 +260,22 @@ the pinned KiCad CLI version/hash, and the verified CadQuery/OCP/OCCT tuple.
 The packaged runtime lock contains Windows/Linux CAD wheel hashes and file
 identities; release generation rejects mismatched installed runtime bytes.
 
+For the Windows PCM runtime and desktop checks, also install the pinned
+third-party closure with `python -m pip install --only-binary :all:
+--requirement requirements-pcm.txt`. This is contributor setup; customers use
+KiCad's managed preparation and do not run pip or install a PartSmith package.
+
 Run the local quality checks before contributing:
 
 ```powershell
 python -m pytest
 python -m ruff check .
 python -m ruff format --check .
-partsmith version
-partsmith doctor --json
+python -m partsmith version
+python -m partsmith doctor --json
+python scripts/build_pcm.py --output dist/partsmith-pcm.zip
+python scripts/verify_pcm.py dist/partsmith-pcm.zip --evidence pcm-payload-results.json
+python scripts/verify_pdf_stability.py --archive dist/partsmith-pcm.zip --rounds 3 --output pdf-stability-results
 ```
 
 Enable the repository's pre-push gate once per clone:
@@ -259,8 +297,9 @@ The hook is local to clones that enable it; CI still verifies the recorded
 phase manifests and native KiCad compatibility on both operating systems. A
 failed gate requires investigation, not bypassing the check.
 
-`partsmith doctor` verifies the Phase 0 runtime foundation: supported Python,
-installed package version, and command-line availability.
+`python -m partsmith doctor` verifies the Phase 0 runtime foundation: supported
+Python, package version and command-line availability. The PCM action adds
+strict installed resource, dependency, CAD and exact IPC session checks.
 
 ## Persistence (Phase 1)
 
@@ -284,7 +323,7 @@ Repository methods never commit independently. Missing ID queries return `None`;
 invalid references raise `sqlite3.IntegrityError`. Parent deletion is restricted.
 Build state is stored as supplied; later phases implement validation and approval.
 
-Migration SQL lives in `migrations/001_initial.sql` and is included in wheels.
+Migration SQL lives in `migrations/001_initial.sql` and the PCM payload.
 Applied migrations are checksum-verified and must never be edited. Future schema
 changes require new migrations. Every domain record has UTC creation/update
 timestamps; Phase 1 exposes creation and queries, not editing workflows.
@@ -451,8 +490,8 @@ extraction explicitly.
 See [Phase 10 parser correction and revalidation](docs/gates/phase-10-parser-fix-2026-10-04.md)
 and [the original Phase 10 evidence](docs/gates/phase-10.md). Run
 `python -m pytest tests/test_extraction.py` for the corpus and targeted fixtures.
-After building and installing the wheel, run
-`python scripts/verify_pdf_stability.py --rounds 3 --output pdf-stability-results`.
+After building the PCM ZIP, run
+`python scripts/verify_pdf_stability.py --archive dist/partsmith-pcm.zip --rounds 3 --output pdf-stability-results`.
 Add `--desktop` to include native wx and credential checks in a Windows desktop
 session with the GUI dependencies installed. Each round retains its JUnit
 report and raw output; a failure stops the gate without retrying. Use a fresh

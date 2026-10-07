@@ -1,0 +1,27 @@
+Captured from the Phase 12.1 combined source regression tool output.
+Date: 2026-10-04; Windows AMD64; Python 3.12.10.
+Reported command exit status: 1; no completed JUnit report was published.
+The failure occurred before the new viewer tests executed. No successful
+subsequent run replaces this failed combined-run evidence.
+
+Command:
+.tools/python/python.exe -c "import sys; sys.path[:0]=['src','.']; import pytest; raise SystemExit(pytest.main(['tests','scripts/verify_gui.py','scripts/verify_viewer_prototype.py','scripts/verify_phase11_review.py','-q','--junitxml=docs/gates/phase-12.1-source-results.xml']))"
+
+Windows fatal exception: access violation
+
+Current thread 0x00002d90 (most recent call first):
+  File "C:\GIT_HUB\PartSmaith\.tools\python\Lib\site-packages\pypdf\generic\_base.py", line 571 in write_to_stream
+  File "C:\GIT_HUB\PartSmaith\.tools\python\Lib\site-packages\pypdf\generic\_data_structures.py", line 230 in write_to_stream
+  File "C:\GIT_HUB\PartSmaith\.tools\python\Lib\site-packages\pypdf\generic\_data_structures.py", line 510 in write_to_stream
+  File "C:\GIT_HUB\PartSmaith\.tools\python\Lib\site-packages\pypdf\_writer.py", line 1593 in _write_pdf_structure
+  File "C:\GIT_HUB\PartSmaith\.tools\python\Lib\site-packages\pypdf\_writer.py", line 1448 in write_stream
+  File "C:\GIT_HUB\PartSmaith\.tools\python\Lib\site-packages\pypdf\_writer.py", line 1477 in write
+  File "C:\GIT_HUB\PartSmaith\src\partsmith\extraction\native_page.py", line 59 in read_page
+  File "C:\GIT_HUB\PartSmaith\src\partsmith\extraction\document.py", line 347 in extract_document
+  File "C:\GIT_HUB\PartSmaith\tests\test_extraction.py", line 90 in test_supplied_corpus_ingestion_and_selected_pages
+  File "C:\GIT_HUB\PartSmaith\.tools\python\Lib\site-packages\_pytest\python.py", line 157 in pytest_pyfunc_call
+  File "C:\GIT_HUB\PartSmaith\.tools\python\Lib\site-packages\pluggy\_callers.py", line 121 in _multicall
+  File "C:\GIT_HUB\PartSmaith\.tools\python\Lib\site-packages\pluggy\_manager.py", line 120 in _hookexec
+  File "C:\GIT_HUB\PartSmaith\.tools\python\Lib\site-packages\pluggy\_hooks.py", line 512 in __call__
+  File "C:\GIT_HUB\PartSmaith\.tools\python\Lib\site-packages\_pytest\python.py", line 1671 in runtest
+  File "C:\GIT_HUB\PartSmaith\.tools\python\Lib\site-packages\_pytest\runner.py", line 178 in pytest_runtest_call

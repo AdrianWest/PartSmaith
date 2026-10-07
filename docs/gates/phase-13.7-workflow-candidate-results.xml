@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="14" time="36.016" timestamp="2026-10-07T01:09:17.241066-04:00" hostname="DESKTOP-CIC0QVQ"><testcase classname="tests.test_integration_workflow" name="test_separate_authority_and_saved_draft_require_new_actions" time="31.184" /><testcase classname="tests.test_integration_workflow" name="test_imported_installation_rows_cannot_load_or_supply_sources" time="0.294" /><testcase classname="tests.test_integration_workflow" name="test_data_only_extension_rejects_live_fields" time="0.191"><failure message="Failed: DID NOT RAISE &lt;class 'ValueError'&gt;">component_session = (&lt;partsmith.gui.session.Session object at 0x00000286108CC950&gt;, ('b262b25d-7b3b-41e8-95f5-39330a2f8f95', '39270e89-87ca-4561-886a-0533e3826d2d', 'c8a1cf3e-64e8-46bb-8e6c-a720170209be'))
+tmp_path = WindowsPath('C:/Users/User/AppData/Local/Temp/pytest-of-User/pytest-379/test_data_only_extension_rejec0')
+
+    def test_data_only_extension_rejects_live_fields(component_session, tmp_path):
+        """@brief Rejects principals, confirmation and unknown extension versions.
+        @param component_session Real source session.
+        @param tmp_path Owned archive destination.
+        @return None.
+        @details The closed saved extension contains references only.
+        """
+        session, _ = component_session
+        for field, value in (
+            ("confirmed", True),
+            ("principal", "saved actor"),
+            ("schema_version", "unknown"),
+        ):
+            extension = {
+                "schema_version": "partsmith-session-integration-1.0",
+                "project_id": "data-only",
+                "drafts": [],
+            }
+            extension[field] = value
+            session.update(integration=extension)
+&gt;           with pytest.raises(ValueError):
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^
+E           Failed: DID NOT RAISE &lt;class 'ValueError'&gt;
+
+tests\test_integration_workflow.py:161: Failed</failure></testcase><testcase classname="tests.test_desktop_session" name="test_local_extraction_survives_source_loss_and_repeated_load" time="0.386" /><testcase classname="tests.test_desktop_session" name="test_snapshot_never_follows_changed_original_path" time="0.182" /><testcase classname="tests.test_desktop_session" name="test_bad_archive_is_staged_without_modifying_current_session[object]" time="0.267" /><testcase classname="tests.test_desktop_session" name="test_bad_archive_is_staged_without_modifying_current_session[version]" time="0.265" /><testcase classname="tests.test_desktop_session" name="test_bad_archive_is_staged_without_modifying_current_session[reference]" time="0.286" /><testcase classname="tests.test_desktop_session" name="test_bad_archive_is_staged_without_modifying_current_session[database]" time="0.264" /><testcase classname="tests.test_desktop_session" name="test_bad_archive_is_staged_without_modifying_current_session[extra]" time="0.260" /><testcase classname="tests.test_desktop_session" name="test_atomic_save_failure_retains_last_good_checkpoint" time="0.232" /><testcase classname="tests.test_desktop_session" name="test_credentials_excluded_from_settings_logs_and_archive" time="0.106" /><testcase classname="tests.test_desktop_session" name="test_background_serialization_and_committed_outcome" time="0.123" /><testcase classname="tests.test_desktop_session" name="test_checkpoint_only_failure_preserves_engineering_status" time="0.111" /></testsuite></testsuites>

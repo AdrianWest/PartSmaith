@@ -1,0 +1,32 @@
+{
+  "status": "PASS",
+  "installed_package": "C:\\GIT_HUB\\PartSmaith\\.tools\\python\\Lib\\site-packages\\partsmith",
+  "checked_source_files": 102,
+  "exact_source_wheel_installed_parity": true,
+  "exact_banner3_wheel_sdist_installed_parity": true,
+  "versions": {
+    "wxPython": "4.3.1",
+    "Pillow": "12.3.0",
+    "numpy": "2.5.3",
+    "keyring": "25.7.0",
+    "cadquery": "2.8.0",
+    "pypdfium2": "5.14.0",
+    "pdfplumber": "0.11.10",
+    "pdfminer.six": "20260107"
+  },
+  "wheel": {
+    "path": ".tools/phase12-full/dist/partsmith-0.1.0-py3-none-any.whl",
+    "sha256": "f54f37a53c121aab29cee2ae2cb45c3e1a38523ce0fae735eac281f4032545db"
+  },
+  "sdist": {
+    "path": ".tools/phase12-full/dist/partsmith-0.1.0.tar.gz",
+    "sha256": "6be14d93ea4e6f0c5c92c8c26c13b855cbe602efe589301304c6176f960f23fb",
+    "gate_receipts": "Repository evidence excluded to avoid circular distribution hashes."
+  },
+  "launch_fixture": {
+    "path": ".tools/phase12-full/launch-fixture.partsmith",
+    "sha256": "0bd68eccd54a60ed74f568e0c656d295e112b2f2909eb18a56f96e1be4fb70b4",
+    "release_approved": false,
+    "source": "Explicit offline 0402 test inputs, reviewed via service before actual generation"
+  }
+}

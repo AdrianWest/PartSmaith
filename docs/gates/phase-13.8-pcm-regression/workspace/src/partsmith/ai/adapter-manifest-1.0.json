@@ -1,0 +1,30 @@
+{
+  "schema_version": "ai-adapter-manifest-1.0",
+  "provider": "OpenAI",
+  "adapter_version": "1.1",
+  "api_version": "responses-v1",
+  "model": "gpt-4.1-mini-2025-04-14",
+  "endpoint": "https://api.openai.com/v1/responses",
+  "result_schema": "ai-result-1.0",
+  "prompt_version": "partsmith-ai-1.1",
+  "authentication": "Bearer API key from native OS credential store or OPENAI_API_KEY; BFT_TOKEN only in opt-in development tests",
+  "capabilities": {
+    "input": "Selected Evidence text/OCR and original-page provenance; no PDF, image, filesystem or network tools",
+    "output": "Unreviewed package, translation, explanation and trusted-registry IR value candidates",
+    "tasks": ["extract_pin_table", "interpret_pin_description", "identify_package", "interpret_package_drawing", "locate_land_pattern", "identify_symbol", "classify_conflict", "translate_technical_text", "explain_ambiguity"],
+    "limitations": "Drawing and land-pattern tasks interpret supplied text/OCR only; no image-only interpretation. Confidence does not prove correctness. Human review and deterministic validation remain mandatory."
+  },
+  "data_handling": {
+    "store": false,
+    "ocr": "local",
+    "provider_terms": "OpenAI account retention/abuse monitoring terms apply; store=false does not guarantee zero retention",
+    "billing": "User pays OpenAI directly",
+    "local_mode": "No outbound request; AI interpretation unavailable"
+  },
+  "official_references_checked": "2026-10-04",
+  "official_references": [
+    "https://developers.openai.com/api/docs/guides/structured-outputs",
+    "https://developers.openai.com/api/docs/models/gpt-4.1-mini",
+    "https://developers.openai.com/api/docs/guides/your-data"
+  ]
+}

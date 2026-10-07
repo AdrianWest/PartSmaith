@@ -1,0 +1,1192 @@
+"""@package tests.test_phase8_input_review
+@brief Tests immutable Phase 8 evidence and inventory input review.
+@details Covers review before artifacts, stale heads, authentication,
+immutable proposals, rejection, and atomic rollback.
+"""
+
+import copy
+import json
+from hashlib import sha256
+from pathlib import Path
+
+import pytest
+
+from partsmith.ir import (
+    ComponentIR,
+    RequirementsContext,
+    canonical_json,
+    validate_ir,
+)
+from partsmith.persistence import (
+    ImmutableStore,
+    Repository,
+    StaleHeadError,
+    database,
+)
+from partsmith.release import AuthenticatedPrincipal
+from partsmith.release.input_review import (
+    NO_HEAD_HASH,
+    ConflictResolutionProposalRequest,
+    EvidenceExclusionProposalRequest,
+    InputApprovalRequest,
+    InputRejectionRequest,
+    InputReviewProposal,
+    InputReviewService,
+    OverrideProposalRequest,
+    PinReorderProposalRequest,
+)
+
+ROOT = Path(__file__).resolve().parents[1]
+IR_PATH = ROOT / "fixtures" / "ir" / "v1.2" / "valid" / "0402.json"
+WIDTH = "/package/mechanical/body_width"
+
+
+def _inventory(data: dict) -> dict:
+    """@brief Builds the complete acquisition inventory for a revision.
+    @param data Component IR mapping.
+    @return Matching source hashes and evidence identities.
+    @details Ordering follows the retained revision arrays.
+    """
+    return {
+        "source_hashes": [
+            document["sha256"] for document in data["source"]["documents"]
+        ],
+        "evidence_ids": [record["id"] for record in data["evidence"]],
+    }
+
+
+def _root_revision(component_id: str) -> dict:
+    """@brief Loads an unreviewed root revision for one component.
+    @param component_id Persisted component identity.
+    @return Detached valid IR 1.2 root mapping.
+    @details Existing synthetic approval metadata is removed for service tests.
+    """
+    data = json.loads(IR_PATH.read_text(encoding="utf-8"))
+    data["identity"]["component_id"] = component_id
+    data["revision"]["evidence_review"] = None
+    return data
+
+
+def _candidate(base: dict, revision_id: str = "candidate-1") -> dict:
+    """@brief Creates an evidence-review-only child revision.
+    @param base Exact base revision.
+    @param revision_id New candidate revision identity.
+    @return Detached unreviewed child mapping.
+    @details Engineering content and decision history remain unchanged.
+    """
+    data = copy.deepcopy(base)
+    data["revision"]["id"] = revision_id
+    data["revision"]["parent_id"] = base["revision"]["id"]
+    data["revision"]["description"] = "Pending evidence review"
+    data["revision"]["evidence_review"] = None
+    return data
+
+
+def _proposal_fixture(connection):
+    """@brief Persists one root, inventory, candidate, and proposal.
+    @param connection Active migrated SQLite connection.
+    @return Component, proposal request, and persisted proposal result.
+    @details No build or generated artifact is created by this fixture.
+    """
+    component = Repository(connection).create_component(
+        "Synthetic", "0402", "0402"
+    )
+    store = ImmutableStore(connection)
+    root = _root_revision(component.id)
+    inventory = _inventory(root)
+    inventory_hash = store.put_inventory(inventory)
+    stored_root = store.put_revision(
+        root,
+        inventory_sha256=inventory_hash,
+        reviewed=False,
+    )
+    candidate = _candidate(root)
+    candidate_hash = ComponentIR(candidate).sha256
+    request = InputReviewProposal(
+        component_id=component.id,
+        base_revision_id=stored_root.revision_id,
+        base_revision_hash=stored_root.canonical_sha256,
+        expected_head_hash=NO_HEAD_HASH,
+        candidate_revision_id=candidate["revision"]["id"],
+        candidate_revision_hash=candidate_hash,
+        inventory_sha256=inventory_hash,
+        reason="Review retained source and evidence inventory",
+    )
+    result = InputReviewService(connection).propose(request, candidate)
+    return component, request, result
+
+
+def _approval_request(component, request, result) -> InputApprovalRequest:
+    """@brief Builds an exact approval request for one proposal.
+    @param component Persisted component record.
+    @param request Original proposal request.
+    @param result Persisted proposal result.
+    @return Closed exact-hash input approval request.
+    @details Reviewer identity is later checked against authentication.
+    """
+    return InputApprovalRequest(
+        proposal_id=result.proposal_id,
+        proposal_hash=result.proposal_hash,
+        component_id=component.id,
+        candidate_revision_id=result.candidate_revision_id,
+        candidate_revision_hash=result.candidate_revision_hash,
+        expected_head_hash=request.expected_head_hash,
+        inventory_sha256=request.inventory_sha256,
+        reviewer="reviewer-1",
+        reason="Evidence inventory is complete and correct",
+    )
+
+
+def _reviewed_head_fixture(connection):
+    """@brief Persists one reviewed current IR head for override tests.
+    @param connection Active migrated SQLite connection.
+    @return Component, reviewed revision, inventory hash, and review service.
+    @details The retained synthetic review and inventory are exact and valid.
+    """
+    component = Repository(connection).create_component(
+        "Synthetic", "0402", "0402"
+    )
+    data = json.loads(IR_PATH.read_text(encoding="utf-8"))
+    data["identity"]["component_id"] = component.id
+    store = ImmutableStore(connection)
+    inventory_hash = store.put_inventory(_inventory(data))
+    assert (
+        data["revision"]["evidence_review"]["inventory_sha256"]
+        == inventory_hash
+    )
+    stored = store.put_revision(
+        data,
+        inventory_sha256=inventory_hash,
+        reviewed=True,
+    )
+    store.compare_and_swap_head(component.id, stored.revision_id, None)
+    return component, stored, inventory_hash, InputReviewService(connection)
+
+
+def _conflicted_head_fixture(connection):
+    """@brief Persists one reviewed head with an unresolved width candidate.
+    @param connection Active migrated SQLite connection.
+    @return Component, reviewed revision, inventory hash, and review service.
+    @details The conflict is retained as independently assigned evidence.
+    """
+    component = Repository(connection).create_component(
+        "Synthetic", "0402", "0402"
+    )
+    data = json.loads(IR_PATH.read_text(encoding="utf-8"))
+    data["identity"]["component_id"] = component.id
+    conflicting = copy.deepcopy(data["evidence"][0])
+    conflicting["id"] = "E-CONFLICT"
+    conflicting["candidate_targets"] = [WIDTH]
+    conflicting["interpretation"]["status"] = "CONFLICTING"
+    data["evidence"].append(conflicting)
+    inventory = _inventory(data)
+    inventory_hash = sha256(canonical_json(inventory)).hexdigest()
+    data["revision"]["evidence_review"].update(
+        inventory_sha256=inventory_hash,
+        reviewed_evidence_ids=inventory["evidence_ids"],
+    )
+    store = ImmutableStore(connection)
+    assert store.put_inventory(inventory) == inventory_hash
+    stored = store.put_revision(
+        data,
+        inventory_sha256=inventory_hash,
+        reviewed=True,
+    )
+    store.compare_and_swap_head(component.id, stored.revision_id, None)
+    return component, stored, inventory_hash, InputReviewService(connection)
+
+
+def _unassigned_evidence_head_fixture(connection):
+    """@brief Persists a reviewed head with unassigned and replacement
+    evidence.
+    @param connection Active migrated SQLite connection.
+    @return Component, reviewed revision, inventory hash, and review service.
+    @details Both evidence identities remain in the complete acquisition
+    inventory.
+    """
+    component = Repository(connection).create_component(
+        "Synthetic", "0402", "0402"
+    )
+    data = json.loads(IR_PATH.read_text(encoding="utf-8"))
+    data["identity"]["component_id"] = component.id
+    raw = copy.deepcopy(data["evidence"][0])
+    raw.update(id="E-RAW", candidate_targets=[])
+    replacement = copy.deepcopy(raw)
+    replacement.update(id="E-REPLACEMENT", candidate_targets=[WIDTH])
+    data["evidence"].extend([raw, replacement])
+    inventory = _inventory(data)
+    inventory_hash = sha256(canonical_json(inventory)).hexdigest()
+    data["revision"]["evidence_review"].update(
+        inventory_sha256=inventory_hash,
+        reviewed_evidence_ids=inventory["evidence_ids"],
+    )
+    store = ImmutableStore(connection)
+    assert store.put_inventory(inventory) == inventory_hash
+    stored = store.put_revision(
+        data,
+        inventory_sha256=inventory_hash,
+        reviewed=True,
+    )
+    store.compare_and_swap_head(component.id, stored.revision_id, None)
+    return component, stored, inventory_hash, InputReviewService(connection)
+
+
+def _override_approval_request(
+    component,
+    base_hash: str,
+    inventory_hash: str,
+    result,
+) -> InputApprovalRequest:
+    """@brief Builds an approval request for one override proposal.
+    @param component Persisted component record.
+    @param base_hash Expected current reviewed head hash.
+    @param inventory_hash Retained acquisition inventory digest.
+    @param result Persisted override proposal result.
+    @return Closed exact-hash approval request.
+    @details The request cannot alter captured override content.
+    """
+    return InputApprovalRequest(
+        proposal_id=result.proposal_id,
+        proposal_hash=result.proposal_hash,
+        component_id=component.id,
+        candidate_revision_id=result.candidate_revision_id,
+        candidate_revision_hash=result.candidate_revision_hash,
+        expected_head_hash=base_hash,
+        inventory_sha256=inventory_hash,
+        reviewer="reviewer-1",
+        reason="Approve typed engineering override",
+    )
+
+
+def test_input_review_approves_before_any_artifact_exists(tmp_path):
+    """@brief Verifies input approval is independent of generated artifacts.
+    @param tmp_path Pytest temporary directory.
+    @return None.
+    @details Approval creates a reviewed child, event, and current head only.
+    """
+    with database(tmp_path / "db") as connection:
+        component, proposal, result = _proposal_fixture(connection)
+        revision = InputReviewService(connection).approve_inputs(
+            _approval_request(component, proposal, result),
+            AuthenticatedPrincipal("reviewer-1", "local-test"),
+        )
+        head = connection.execute(
+            "SELECT * FROM component_heads WHERE component_id = ?",
+            (component.id,),
+        ).fetchone()
+        assert head["revision_id"] == revision.revision_id
+        assert head["revision_hash"] == revision.revision_hash
+        approved = ImmutableStore(connection).get_revision(
+            revision.revision_id
+        )
+        review = approved["revision"]["evidence_review"]
+        assert review["approval_state"] == "APPROVED"
+        assert review["reviewer"] == "reviewer-1"
+        assert approved["revision"]["parent_id"] == (
+            result.candidate_revision_id
+        )
+        assert (
+            connection.execute("SELECT COUNT(*) FROM builds").fetchone()[0]
+            == 0
+        )
+        assert (
+            connection.execute("SELECT COUNT(*) FROM artifacts").fetchone()[0]
+            == 0
+        )
+        assert (
+            connection.execute(
+                "SELECT status FROM review_proposals WHERE id = ?",
+                (result.proposal_id,),
+            ).fetchone()[0]
+            == "PENDING"
+        )
+
+
+def test_stale_head_rejects_approval_without_partial_records(tmp_path):
+    """@brief Verifies concurrent head advancement requires rereview.
+    @param tmp_path Pytest temporary directory.
+    @return None.
+    @details No approval event or reviewed proposal child survives failure.
+    """
+    with database(tmp_path / "db") as connection:
+        component, proposal, result = _proposal_fixture(connection)
+        store = ImmutableStore(connection)
+        candidate = store.get_revision(result.candidate_revision_id)
+        inventory = store.get_inventory(proposal.inventory_sha256)
+        competing = copy.deepcopy(candidate)
+        competing["revision"]["id"] = "competing-reviewed"
+        competing["revision"]["parent_id"] = result.candidate_revision_id
+        competing["revision"]["evidence_review"] = {
+            "inventory_sha256": proposal.inventory_sha256,
+            "reviewed_evidence_ids": inventory["evidence_ids"],
+            "reviewer": "reviewer-2",
+            "timestamp": "2026-10-02T20:00:00Z",
+            "approval_state": "APPROVED",
+        }
+        stored = store.put_revision(
+            competing,
+            inventory_sha256=proposal.inventory_sha256,
+            reviewed=True,
+        )
+        store.compare_and_swap_head(component.id, stored.revision_id, None)
+        before_count = connection.execute(
+            "SELECT COUNT(*) FROM ir_revisions"
+        ).fetchone()[0]
+        with pytest.raises(StaleHeadError):
+            InputReviewService(connection).approve_inputs(
+                _approval_request(component, proposal, result),
+                AuthenticatedPrincipal("reviewer-1", "local-test"),
+            )
+        assert (
+            connection.execute("SELECT COUNT(*) FROM ir_revisions").fetchone()[
+                0
+            ]
+            == before_count
+        )
+        assert (
+            connection.execute(
+                "SELECT COUNT(*) FROM review_events"
+            ).fetchone()[0]
+            == 0
+        )
+
+
+def test_rejection_retains_immutable_pending_proposal(tmp_path):
+    """@brief Verifies rejection appends an event without editing proposal.
+    @param tmp_path Pytest temporary directory.
+    @return None.
+    @details A decided proposal cannot receive a second decision.
+    """
+    with database(tmp_path / "db") as connection:
+        component, proposal, result = _proposal_fixture(connection)
+        row = connection.execute(
+            "SELECT canonical_bytes FROM review_proposals WHERE id = ?",
+            (result.proposal_id,),
+        ).fetchone()
+        original = bytes(row["canonical_bytes"])
+        request = InputRejectionRequest(
+            proposal_id=result.proposal_id,
+            proposal_hash=result.proposal_hash,
+            component_id=component.id,
+            candidate_revision_id=result.candidate_revision_id,
+            candidate_revision_hash=result.candidate_revision_hash,
+            expected_head_hash=proposal.expected_head_hash,
+            reviewer="reviewer-1",
+            reason="Evidence needs reacquisition",
+        )
+        rejected = InputReviewService(connection).reject_inputs(
+            request,
+            AuthenticatedPrincipal("reviewer-1", "local-test"),
+        )
+        assert rejected.decision == "REJECT"
+        persisted = connection.execute(
+            "SELECT status, canonical_bytes FROM review_proposals "
+            "WHERE id = ?",
+            (result.proposal_id,),
+        ).fetchone()
+        assert persisted["status"] == "PENDING"
+        assert bytes(persisted["canonical_bytes"]) == original
+        assert (
+            connection.execute(
+                "SELECT COUNT(*) FROM component_heads"
+            ).fetchone()[0]
+            == 0
+        )
+        with pytest.raises(ValueError, match="already has a decision"):
+            InputReviewService(connection).reject_inputs(
+                request,
+                AuthenticatedPrincipal("reviewer-1", "local-test"),
+            )
+
+
+def test_engineering_change_is_not_an_evidence_review_action(tmp_path):
+    """@brief Verifies evidence review cannot smuggle engineering edits.
+    @param tmp_path Pytest temporary directory.
+    @return None.
+    @details Invalid proposal writes roll back candidate and proposal records.
+    """
+    with database(tmp_path / "db") as connection:
+        component = Repository(connection).create_component("X", "Y", "Z")
+        store = ImmutableStore(connection)
+        root = _root_revision(component.id)
+        inventory_hash = store.put_inventory(_inventory(root))
+        stored_root = store.put_revision(
+            root,
+            inventory_sha256=inventory_hash,
+            reviewed=False,
+        )
+        candidate = _candidate(root)
+        candidate["electrical"]["resistance"]["value"] = 22000
+        candidate_hash = ComponentIR(candidate).sha256
+        request = InputReviewProposal(
+            component_id=component.id,
+            base_revision_id=stored_root.revision_id,
+            base_revision_hash=stored_root.canonical_sha256,
+            expected_head_hash=NO_HEAD_HASH,
+            candidate_revision_id=candidate["revision"]["id"],
+            candidate_revision_hash=candidate_hash,
+            inventory_sha256=inventory_hash,
+            reason="Attempt engineering edit",
+        )
+        with pytest.raises(ValueError, match="engineering content"):
+            InputReviewService(connection).propose(request, candidate)
+        assert (
+            connection.execute(
+                "SELECT COUNT(*) FROM review_proposals"
+            ).fetchone()[0]
+            == 0
+        )
+        assert (
+            connection.execute("SELECT COUNT(*) FROM ir_revisions").fetchone()[
+                0
+            ]
+            == 1
+        )
+
+
+def test_authentication_and_proposal_hash_fail_atomically(tmp_path):
+    """@brief Verifies identity and exact proposal hashes are mandatory.
+    @param tmp_path Pytest temporary directory.
+    @return None.
+    @details Failed attempts leave the proposal undecided and head absent.
+    """
+    with database(tmp_path / "db") as connection:
+        component, proposal, result = _proposal_fixture(connection)
+        request = _approval_request(component, proposal, result)
+        service = InputReviewService(connection)
+        with pytest.raises(PermissionError):
+            service.approve_inputs(
+                request,
+                AuthenticatedPrincipal("another-reviewer", "local-test"),
+            )
+        stale = InputApprovalRequest(
+            **(request.to_dict() | {"proposal_hash": "f" * 64})
+        )
+        with pytest.raises(ValueError, match="proposal hash"):
+            service.approve_inputs(
+                stale,
+                AuthenticatedPrincipal("reviewer-1", "local-test"),
+            )
+        assert (
+            connection.execute(
+                "SELECT COUNT(*) FROM review_events"
+            ).fetchone()[0]
+            == 0
+        )
+        assert (
+            connection.execute(
+                "SELECT COUNT(*) FROM component_heads"
+            ).fetchone()[0]
+            == 0
+        )
+
+
+def test_proposal_hash_binds_generated_identity(tmp_path):
+    """@brief Verifies proposal identity participates in immutable bytes.
+    @param tmp_path Pytest temporary directory.
+    @return None.
+    @details Persisted canonical bytes hash to the returned proposal digest.
+    """
+    with database(tmp_path / "db") as connection:
+        _, _, result = _proposal_fixture(connection)
+        row = connection.execute(
+            "SELECT canonical_sha256, canonical_bytes "
+            "FROM review_proposals WHERE id = ?",
+            (result.proposal_id,),
+        ).fetchone()
+        assert sha256(bytes(row["canonical_bytes"])).hexdigest() == (
+            result.proposal_hash
+        )
+        assert row["canonical_sha256"] == result.proposal_hash
+        data = json.loads(bytes(row["canonical_bytes"]))
+        assert data["proposal_id"] == result.proposal_id
+        assert canonical_json(data) == bytes(row["canonical_bytes"])
+
+
+def test_typed_override_captures_previous_value_and_retains_pending(tmp_path):
+    """@brief Verifies typed scalar override proposal and approval behavior.
+    @param tmp_path Pytest temporary directory.
+    @return None.
+    @details The target changes only in the reviewed child, while the pending
+    decision remains immutable history.
+    """
+    with database(tmp_path / "db") as connection:
+        component, base, inventory_hash, service = _reviewed_head_fixture(
+            connection
+        )
+        result = service.propose_override(
+            OverrideProposalRequest(
+                component_id=component.id,
+                base_revision_id=base.revision_id,
+                base_revision_hash=base.canonical_sha256,
+                expected_head_hash=base.canonical_sha256,
+                path="/pins/0/electrical_type",
+                new_value="input",
+                evidence_reference="E-001",
+                reason="Reviewed pin electrical behavior",
+            ),
+            AuthenticatedPrincipal("proposer-1", "local-test"),
+        )
+        store = ImmutableStore(connection)
+        candidate = store.get_revision(result.candidate_revision_id)
+        assert candidate["pins"][0]["electrical_type"] == "passive"
+        pending = candidate["overrides"][-1]
+        assert pending["approval_state"] == "PENDING"
+        assert pending["previous_value"] == "passive"
+        assert pending["new_value"] == "input"
+        assert pending["value_type"] == "STRING"
+        assert candidate["revision"]["active_override_ids"] == []
+
+        approved = service.approve_inputs(
+            _override_approval_request(
+                component,
+                base.canonical_sha256,
+                inventory_hash,
+                result,
+            ),
+            AuthenticatedPrincipal("reviewer-1", "local-test"),
+        )
+        data = store.get_revision(approved.revision_id)
+        assert data["pins"][0]["electrical_type"] == "input"
+        assert data["overrides"][-2] == pending
+        decision = data["overrides"][-1]
+        assert decision["id"] != pending["id"]
+        assert decision["approval_state"] == "APPROVED"
+        assert decision["user"] == "reviewer-1"
+        assert data["revision"]["active_override_ids"] == [decision["id"]]
+
+
+def test_quantity_override_gets_server_owned_self_binding(tmp_path):
+    """@brief Verifies record overrides receive trusted approval bindings.
+    @param tmp_path Pytest temporary directory.
+    @return None.
+    @details Callers do not supply decision IDs or USER_OVERRIDE metadata.
+    """
+    with database(tmp_path / "db") as connection:
+        component, base, inventory_hash, service = _reviewed_head_fixture(
+            connection
+        )
+        current = ImmutableStore(connection).get_revision(base.revision_id)
+        value = copy.deepcopy(current["package"]["mechanical"]["body_width"])
+        value["source_value"] = 550
+        value.pop("normalized_value")
+        value.pop("normalized_unit")
+        result = service.propose_override(
+            OverrideProposalRequest(
+                component_id=component.id,
+                base_revision_id=base.revision_id,
+                base_revision_hash=base.canonical_sha256,
+                expected_head_hash=base.canonical_sha256,
+                path="/package/mechanical/body_width",
+                new_value=value,
+                evidence_reference="E-001",
+                reason="Reviewed corrected package width",
+            ),
+            AuthenticatedPrincipal("proposer-1", "local-test"),
+        )
+        approved = service.approve_inputs(
+            _override_approval_request(
+                component,
+                base.canonical_sha256,
+                inventory_hash,
+                result,
+            ),
+            AuthenticatedPrincipal("reviewer-1", "local-test"),
+        )
+        data = ImmutableStore(connection).get_revision(approved.revision_id)
+        target = data["package"]["mechanical"]["body_width"]
+        decision = data["overrides"][-1]
+        assert target["source_value"] == 550
+        assert target["status"] == "USER_OVERRIDE"
+        assert target["override_id"] == decision["id"]
+        assert decision["new_value"] == target
+
+
+def test_replacing_override_preserves_history_and_supersedes_active(tmp_path):
+    """@brief Verifies an approved override can be explicitly replaced.
+    @param tmp_path Pytest temporary directory.
+    @return None.
+    @details Earlier pending and approved records remain byte-for-byte present.
+    """
+    with database(tmp_path / "db") as connection:
+        component, base, inventory_hash, service = _reviewed_head_fixture(
+            connection
+        )
+        first_proposal = service.propose_override(
+            OverrideProposalRequest(
+                component_id=component.id,
+                base_revision_id=base.revision_id,
+                base_revision_hash=base.canonical_sha256,
+                expected_head_hash=base.canonical_sha256,
+                path="/pins/0/electrical_type",
+                new_value="input",
+                evidence_reference="E-001",
+                reason="First reviewed pin override",
+            ),
+            AuthenticatedPrincipal("proposer-1", "local-test"),
+        )
+        first = service.approve_inputs(
+            _override_approval_request(
+                component,
+                base.canonical_sha256,
+                inventory_hash,
+                first_proposal,
+            ),
+            AuthenticatedPrincipal("reviewer-1", "local-test"),
+        )
+        store = ImmutableStore(connection)
+        first_data = store.get_revision(first.revision_id)
+        first_active = first_data["revision"]["active_override_ids"][0]
+        retained = copy.deepcopy(first_data["overrides"])
+
+        second_proposal = service.propose_override(
+            OverrideProposalRequest(
+                component_id=component.id,
+                base_revision_id=first.revision_id,
+                base_revision_hash=first.revision_hash,
+                expected_head_hash=first.revision_hash,
+                path="/pins/0/electrical_type",
+                new_value="output",
+                evidence_reference="E-001",
+                reason="Replace reviewed pin override",
+            ),
+            AuthenticatedPrincipal("proposer-2", "local-test"),
+        )
+        second = service.approve_inputs(
+            _override_approval_request(
+                component,
+                first.revision_hash,
+                inventory_hash,
+                second_proposal,
+            ),
+            AuthenticatedPrincipal("reviewer-1", "local-test"),
+        )
+        data = store.get_revision(second.revision_id)
+        assert data["overrides"][: len(retained)] == retained
+        assert data["pins"][0]["electrical_type"] == "output"
+        new_active = data["revision"]["active_override_ids"][0]
+        assert new_active != first_active
+        approved_record = next(
+            record
+            for record in data["overrides"]
+            if record["id"] == new_active
+        )
+        assert approved_record["supersedes_override_id"] == first_active
+
+
+@pytest.mark.parametrize(
+    "path",
+    ["/revision/description", "/footprint/land_pattern_source"],
+)
+def test_override_rejects_paths_outside_trusted_registry(tmp_path, path):
+    """@brief Verifies metadata and land-source edits are not overrides.
+    @param tmp_path Pytest temporary directory.
+    @param path Disallowed proposed target path.
+    @return None.
+    @details Invalid requests leave no candidate or proposal records.
+    """
+    with database(tmp_path / "db") as connection:
+        component, base, _, service = _reviewed_head_fixture(connection)
+        before = connection.execute(
+            "SELECT COUNT(*) FROM ir_revisions"
+        ).fetchone()[0]
+        with pytest.raises(ValueError, match="editable registry"):
+            service.propose_override(
+                OverrideProposalRequest(
+                    component_id=component.id,
+                    base_revision_id=base.revision_id,
+                    base_revision_hash=base.canonical_sha256,
+                    expected_head_hash=base.canonical_sha256,
+                    path=path,
+                    new_value="changed",
+                    evidence_reference="E-001",
+                    reason="Attempt disallowed edit",
+                ),
+                AuthenticatedPrincipal("proposer-1", "local-test"),
+            )
+        assert (
+            connection.execute("SELECT COUNT(*) FROM ir_revisions").fetchone()[
+                0
+            ]
+            == before
+        )
+        assert (
+            connection.execute(
+                "SELECT COUNT(*) FROM review_proposals"
+            ).fetchone()[0]
+            == 0
+        )
+
+
+def test_conflict_resolution_retains_pending_and_activates_approval(tmp_path):
+    """@brief Verifies a complete conflict disposition becomes active.
+    @param tmp_path Pytest temporary directory.
+    @return None.
+    @details Pending and approved records remain separate immutable decisions.
+    """
+    with database(tmp_path / "db") as connection:
+        component, base, inventory_hash, service = _conflicted_head_fixture(
+            connection
+        )
+        result = service.propose_resolution(
+            ConflictResolutionProposalRequest(
+                component_id=component.id,
+                base_revision_id=base.revision_id,
+                base_revision_hash=base.canonical_sha256,
+                expected_head_hash=base.canonical_sha256,
+                target_path=WIDTH,
+                selected_evidence_ids=("E-001",),
+                superseded_evidence_ids=("E-CONFLICT",),
+                override_id=None,
+                decision="select",
+                reason="Manufacturer value is authoritative",
+            ),
+            AuthenticatedPrincipal("proposer-1", "local-test"),
+        )
+        store = ImmutableStore(connection)
+        candidate = store.get_revision(result.candidate_revision_id)
+        pending = candidate["resolutions"][-1]
+        assert pending["approval_state"] == "PENDING"
+        assert pending["selected_evidence_ids"] == ["E-001"]
+        assert pending["superseded_evidence_ids"] == ["E-CONFLICT"]
+        assert candidate["revision"]["active_resolution_ids"] == []
+
+        approved = service.approve_inputs(
+            _override_approval_request(
+                component,
+                base.canonical_sha256,
+                inventory_hash,
+                result,
+            ),
+            AuthenticatedPrincipal("reviewer-1", "local-test"),
+        )
+        data = store.get_revision(approved.revision_id)
+        assert data["resolutions"][-2] == pending
+        decision = data["resolutions"][-1]
+        assert decision["id"] != pending["id"]
+        assert decision["approval_state"] == "APPROVED"
+        assert data["revision"]["active_resolution_ids"] == [decision["id"]]
+        context = RequirementsContext(
+            "synthetic",
+            "test-1",
+            "test-1",
+            "test-1",
+            (WIDTH,),
+            (WIDTH,),
+        )
+        assert (
+            validate_ir(
+                data,
+                for_generation=True,
+                requirements=context,
+                revisions=store,
+            )
+            == ()
+        )
+
+
+def test_successive_resolution_preserves_prior_conflict_disposition(tmp_path):
+    """@brief Verifies replacement resolutions preserve prior dispositions.
+    @param tmp_path Pytest temporary directory.
+    @return None.
+    @details The previous approved decision remains retained but inactive.
+    """
+    with database(tmp_path / "db") as connection:
+        component, base, inventory_hash, service = _conflicted_head_fixture(
+            connection
+        )
+        first_proposal = service.propose_resolution(
+            ConflictResolutionProposalRequest(
+                component_id=component.id,
+                base_revision_id=base.revision_id,
+                base_revision_hash=base.canonical_sha256,
+                expected_head_hash=base.canonical_sha256,
+                target_path=WIDTH,
+                selected_evidence_ids=("E-001",),
+                superseded_evidence_ids=("E-CONFLICT",),
+                override_id=None,
+                decision="select",
+                reason="Initial conflict resolution",
+            ),
+            AuthenticatedPrincipal("proposer-1", "local-test"),
+        )
+        first = service.approve_inputs(
+            _override_approval_request(
+                component,
+                base.canonical_sha256,
+                inventory_hash,
+                first_proposal,
+            ),
+            AuthenticatedPrincipal("reviewer-1", "local-test"),
+        )
+        store = ImmutableStore(connection)
+        first_data = store.get_revision(first.revision_id)
+        first_active = first_data["revision"]["active_resolution_ids"][0]
+        retained = copy.deepcopy(first_data["resolutions"])
+
+        second_proposal = service.propose_resolution(
+            ConflictResolutionProposalRequest(
+                component_id=component.id,
+                base_revision_id=first.revision_id,
+                base_revision_hash=first.revision_hash,
+                expected_head_hash=first.revision_hash,
+                target_path=WIDTH,
+                selected_evidence_ids=("E-001",),
+                superseded_evidence_ids=("E-CONFLICT",),
+                override_id=None,
+                decision="retain",
+                reason="Reconfirm conflict disposition",
+            ),
+            AuthenticatedPrincipal("proposer-2", "local-test"),
+        )
+        second = service.approve_inputs(
+            _override_approval_request(
+                component,
+                first.revision_hash,
+                inventory_hash,
+                second_proposal,
+            ),
+            AuthenticatedPrincipal("reviewer-1", "local-test"),
+        )
+        data = store.get_revision(second.revision_id)
+        assert data["resolutions"][: len(retained)] == retained
+        active_id = data["revision"]["active_resolution_ids"][0]
+        assert active_id != first_active
+        active = next(
+            record
+            for record in data["resolutions"]
+            if record["id"] == active_id
+        )
+        assert active["supersedes_resolution_id"] == first_active
+        assert data["resolutions"][-2]["approval_state"] == "PENDING"
+
+
+@pytest.mark.parametrize(
+    ("selected", "superseded", "message"),
+    [
+        (("E-CONFLICT",), ("E-001",), "Selected evidence"),
+        (("E-001",), ("E-001",), "disjoint"),
+        (("E-001",), ("missing",), "does not resolve"),
+        (("E-001",), (), "Invalid conflict_resolution"),
+    ],
+)
+def test_conflict_resolution_rejects_invalid_evidence_dispositions(
+    tmp_path, selected, superseded, message
+):
+    """@brief Verifies conflict proposals require exact evidence disposition.
+    @param tmp_path Pytest temporary directory.
+    @param selected Proposed selected evidence identities.
+    @param superseded Proposed superseded evidence identities.
+    @param message Expected failure text.
+    @return None.
+    @details Invalid requests leave no candidate or proposal records.
+    """
+    with database(tmp_path / "db") as connection:
+        component, base, _, service = _conflicted_head_fixture(connection)
+        before = connection.execute(
+            "SELECT COUNT(*) FROM ir_revisions"
+        ).fetchone()[0]
+        with pytest.raises(ValueError, match=message):
+            request = ConflictResolutionProposalRequest(
+                component_id=component.id,
+                base_revision_id=base.revision_id,
+                base_revision_hash=base.canonical_sha256,
+                expected_head_hash=base.canonical_sha256,
+                target_path=WIDTH,
+                selected_evidence_ids=selected,
+                superseded_evidence_ids=superseded,
+                override_id=None,
+                decision="select",
+                reason="Invalid disposition",
+            )
+            service.propose_resolution(
+                request,
+                AuthenticatedPrincipal("proposer-1", "local-test"),
+            )
+        assert (
+            connection.execute("SELECT COUNT(*) FROM ir_revisions").fetchone()[
+                0
+            ]
+            == before
+        )
+        assert (
+            connection.execute(
+                "SELECT COUNT(*) FROM review_proposals"
+            ).fetchone()[0]
+            == 0
+        )
+
+
+def test_evidence_exclusion_retains_pending_and_approved_records(tmp_path):
+    """@brief Verifies reviewed disposition of unassigned evidence.
+    @param tmp_path Pytest temporary directory.
+    @return None.
+    @details A compatible assigned replacement remains explicitly linked.
+    """
+    with database(tmp_path / "db") as connection:
+        component, base, inventory_hash, service = (
+            _unassigned_evidence_head_fixture(connection)
+        )
+        result = service.propose_evidence_exclusion(
+            EvidenceExclusionProposalRequest(
+                component_id=component.id,
+                base_revision_id=base.revision_id,
+                base_revision_hash=base.canonical_sha256,
+                expected_head_hash=base.canonical_sha256,
+                evidence_id="E-RAW",
+                replacement_evidence_ids=("E-REPLACEMENT",),
+                reason="Assigned interpretation retained separately",
+            ),
+            AuthenticatedPrincipal("proposer-1", "local-test"),
+        )
+        store = ImmutableStore(connection)
+        candidate = store.get_revision(result.candidate_revision_id)
+        pending = candidate["revision"]["evidence_exclusions"][-1]
+        assert pending["approval_state"] == "PENDING"
+        assert pending["replacement_evidence_ids"] == ["E-REPLACEMENT"]
+
+        approved = service.approve_inputs(
+            _override_approval_request(
+                component,
+                base.canonical_sha256,
+                inventory_hash,
+                result,
+            ),
+            AuthenticatedPrincipal("reviewer-1", "local-test"),
+        )
+        data = store.get_revision(approved.revision_id)
+        exclusions = data["revision"]["evidence_exclusions"]
+        assert exclusions[-2] == pending
+        assert exclusions[-1]["approval_state"] == "APPROVED"
+        assert exclusions[-1]["reviewer"] == "reviewer-1"
+        assert exclusions[-1]["evidence_id"] == "E-RAW"
+        context = RequirementsContext(
+            "synthetic",
+            "test-1",
+            "test-1",
+            "test-1",
+            (WIDTH,),
+            (WIDTH,),
+        )
+        assert (
+            validate_ir(
+                data,
+                for_generation=True,
+                requirements=context,
+                revisions=store,
+            )
+            == ()
+        )
+
+
+def test_evidence_exclusion_allows_no_replacement(tmp_path):
+    """@brief Verifies irrelevant unassigned evidence may be excluded directly.
+    @param tmp_path Pytest temporary directory.
+    @return None.
+    @details The empty replacement list remains explicit in reviewed history.
+    """
+    with database(tmp_path / "db") as connection:
+        component, base, inventory_hash, service = (
+            _unassigned_evidence_head_fixture(connection)
+        )
+        result = service.propose_evidence_exclusion(
+            EvidenceExclusionProposalRequest(
+                component_id=component.id,
+                base_revision_id=base.revision_id,
+                base_revision_hash=base.canonical_sha256,
+                expected_head_hash=base.canonical_sha256,
+                evidence_id="E-RAW",
+                replacement_evidence_ids=(),
+                reason="Raw duplicate has no engineering assignment",
+            ),
+            AuthenticatedPrincipal("proposer-1", "local-test"),
+        )
+        approved = service.approve_inputs(
+            _override_approval_request(
+                component,
+                base.canonical_sha256,
+                inventory_hash,
+                result,
+            ),
+            AuthenticatedPrincipal("reviewer-1", "local-test"),
+        )
+        data = ImmutableStore(connection).get_revision(approved.revision_id)
+        assert (
+            data["revision"]["evidence_exclusions"][-1][
+                "replacement_evidence_ids"
+            ]
+            == []
+        )
+
+
+@pytest.mark.parametrize(
+    ("evidence_id", "replacement_ids", "message"),
+    [
+        ("E-001", (), "Assigned evidence"),
+        ("missing", (), "does not resolve"),
+        ("E-RAW", ("missing",), "not compatible"),
+        ("E-RAW", ("E-RAW",), "not compatible"),
+    ],
+)
+def test_evidence_exclusion_rejects_invalid_dispositions(
+    tmp_path, evidence_id, replacement_ids, message
+):
+    """@brief Verifies exclusions cannot hide assigned or invalid evidence.
+    @param tmp_path Pytest temporary directory.
+    @param evidence_id Proposed excluded evidence identity.
+    @param replacement_ids Proposed replacement evidence identities.
+    @param message Expected failure text.
+    @return None.
+    @details Invalid proposals leave no candidate or proposal records.
+    """
+    with database(tmp_path / "db") as connection:
+        component, base, _, service = _unassigned_evidence_head_fixture(
+            connection
+        )
+        before = connection.execute(
+            "SELECT COUNT(*) FROM ir_revisions"
+        ).fetchone()[0]
+        with pytest.raises(ValueError, match=message):
+            service.propose_evidence_exclusion(
+                EvidenceExclusionProposalRequest(
+                    component_id=component.id,
+                    base_revision_id=base.revision_id,
+                    base_revision_hash=base.canonical_sha256,
+                    expected_head_hash=base.canonical_sha256,
+                    evidence_id=evidence_id,
+                    replacement_evidence_ids=replacement_ids,
+                    reason="Invalid evidence disposition",
+                ),
+                AuthenticatedPrincipal("proposer-1", "local-test"),
+            )
+        assert (
+            connection.execute("SELECT COUNT(*) FROM ir_revisions").fetchone()[
+                0
+            ]
+            == before
+        )
+        assert (
+            connection.execute(
+                "SELECT COUNT(*) FROM review_proposals"
+            ).fetchone()[0]
+            == 0
+        )
+
+
+def test_pin_reorder_creates_reviewed_target_rebindings(tmp_path):
+    """@brief Verifies pin order changes preserve terminal identities.
+    @param tmp_path Pytest temporary directory.
+    @return None.
+    @details Pending rebindings remain immutable and approved mappings move
+    every affected historical pin path.
+    """
+    with database(tmp_path / "db") as connection:
+        component, base, inventory_hash, service = _reviewed_head_fixture(
+            connection
+        )
+        result = service.propose_pin_reorder(
+            PinReorderProposalRequest(
+                component_id=component.id,
+                base_revision_id=base.revision_id,
+                base_revision_hash=base.canonical_sha256,
+                expected_head_hash=base.canonical_sha256,
+                terminal_order=("2", "1"),
+                reason="Match reviewed physical terminal ordering",
+            ),
+            AuthenticatedPrincipal("proposer-1", "local-test"),
+        )
+        store = ImmutableStore(connection)
+        candidate = store.get_revision(result.candidate_revision_id)
+        assert [pin["number"] for pin in candidate["pins"]] == ["1", "2"]
+        pending = candidate["revision"]["target_rebindings"][-2:]
+        assert {binding["approval_state"] for binding in pending} == {
+            "PENDING"
+        }
+        assert {
+            (binding["old_path"], binding["new_path"]) for binding in pending
+        } == {("/pins/0", "/pins/1"), ("/pins/1", "/pins/0")}
+
+        reviewed = service.approve_inputs(
+            _override_approval_request(
+                component,
+                base.canonical_sha256,
+                inventory_hash,
+                result,
+            ),
+            AuthenticatedPrincipal("reviewer-1", "local-test"),
+        )
+        data = store.get_revision(reviewed.revision_id)
+        assert [pin["number"] for pin in data["pins"]] == ["2", "1"]
+        assert data["revision"]["target_rebindings"][-4:-2] == pending
+        approved = data["revision"]["target_rebindings"][-2:]
+        assert {binding["approval_state"] for binding in approved} == {
+            "APPROVED"
+        }
+        context = RequirementsContext(
+            "synthetic",
+            "test-1",
+            "test-1",
+            "test-1",
+            ("/pins",),
+            ("/pins",),
+        )
+        assert (
+            validate_ir(
+                data,
+                for_generation=True,
+                requirements=context,
+                revisions=store,
+            )
+            == ()
+        )
+
+
+@pytest.mark.parametrize(
+    ("order", "message"),
+    [
+        (("1",), "exact terminal identities"),
+        (("1", "3"), "exact terminal identities"),
+        (("1", "2"), "must change persisted order"),
+        (("1", "1"), "Invalid pin_reorder"),
+    ],
+)
+def test_pin_reorder_rejects_invalid_or_ambiguous_orders(
+    tmp_path, order, message
+):
+    """@brief Verifies reorder cannot add, remove, duplicate, or no-op pins.
+    @param tmp_path Pytest temporary directory.
+    @param order Proposed terminal-number order.
+    @param message Expected failure text.
+    @return None.
+    @details Invalid requests leave no candidate or proposal records.
+    """
+    with database(tmp_path / "db") as connection:
+        component, base, _, service = _reviewed_head_fixture(connection)
+        before = connection.execute(
+            "SELECT COUNT(*) FROM ir_revisions"
+        ).fetchone()[0]
+        with pytest.raises(ValueError, match=message):
+            request = PinReorderProposalRequest(
+                component_id=component.id,
+                base_revision_id=base.revision_id,
+                base_revision_hash=base.canonical_sha256,
+                expected_head_hash=base.canonical_sha256,
+                terminal_order=order,
+                reason="Invalid pin reorder",
+            )
+            service.propose_pin_reorder(
+                request,
+                AuthenticatedPrincipal("proposer-1", "local-test"),
+            )
+        assert (
+            connection.execute("SELECT COUNT(*) FROM ir_revisions").fetchone()[
+                0
+            ]
+            == before
+        )
+        assert (
+            connection.execute(
+                "SELECT COUNT(*) FROM review_proposals"
+            ).fetchone()[0]
+            == 0
+        )

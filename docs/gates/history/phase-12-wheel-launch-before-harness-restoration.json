@@ -1,0 +1,12 @@
+{
+  "stage": 0,
+  "status": "FAIL",
+  "error": "Traceback (most recent call last):\n  File \"C:\\GIT_HUB\\PartSmaith\\scripts\\verify_phase12_launch.py\", line 68, in drive\n    assert frame.viewer_button.IsEnabled()\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n",
+  "package": "C:\\GIT_HUB\\PartSmaith\\.tools\\python\\Lib\\site-packages\\partsmith\\gui\\app.py",
+  "scope": "Actual standalone entry/main loop; explicit offline fixture",
+  "source": false,
+  "exit_code": 0,
+  "seconds": 0.75,
+  "transport_sha256": "0bd68eccd54a60ed74f568e0c656d295e112b2f2909eb18a56f96e1be4fb70b4",
+  "native_children_reaped": false
+}

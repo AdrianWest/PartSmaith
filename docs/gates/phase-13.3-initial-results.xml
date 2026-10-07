@@ -1,0 +1,1126 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="9" failures="0" skipped="0" tests="24" time="4.435" timestamp="2026-10-06T23:30:00.646741-04:00" hostname="DESKTOP-CIC0QVQ"><testcase classname="tests.test_integration_planner" name="test_first_and_two_source_plans_are_pure" time="1.529"><error message="failed on setup with &quot;partsmith.ir.errors.IRValidationError: IR_RELEVANCE at /electrical/resistance: Selected evidence lacks a compatible target; IR_HISTORY at /evidence/0/acquisition_revision_id: Acquisition snapshot must retain the exact evidence; IR_RELEVANCE at /evidence/0/candidate_targets: Candidate target must resolve in its revision; IR_RELEVANCE at /identity: Selected evidence lacks a compatible target; IR_RELEVANCE at /pins/0: Selected evidence lacks a compatible target; IR_RELEVANCE at /pins/1: Selected evidence lacks a compatible target&quot;">tmp_path_factory = TempPathFactory(_given_basetemp=None, _trace=&lt;pluggy._tracing.TagTracerSub object at 0x0000028905E5F350&gt;, _basetemp=WindowsPath('C:/Users/User/AppData/Local/Temp/pytest-of-User/pytest-358'), _retention_count=3, _retention_policy='all')
+
+    @pytest.fixture(scope="session")
+    def approved_sources(tmp_path_factory):
+        """@brief Builds two actual approved releases and one approved update.
+        @param tmp_path_factory Session-owned fixture directory factory.
+        @return Source database path and exact three release build IDs.
+        @details Native CLI and locked CAD generation run once per test session.
+        """
+        path = tmp_path_factory.mktemp("integration-approved") / "sources.db"
+        with closing(connect(path)) as connection:
+            migrate(connection)
+&gt;           first = create_release(connection)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\phase13_support.py:90: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+tests\phase13_support.py:67: in create_release
+    release = KnownGoodReleasePipeline(connection).run(
+src\partsmith\release\pipeline.py:413: in run
+    kind: node_dependency(
+src\partsmith\release\dependencies.py:13: in node_dependency
+    projection = release_projection(
+src\partsmith\ir\projection.py:53: in release_projection
+    return _dependency_projection(
+src\partsmith\ir\projection.py:65: in _dependency_projection
+    data = normalize_ir(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+data = {'build': {'ai_model': None, 'ai_provider': None, 'bft_version': '0.1.0', 'kicad_target': '10.x', ...}, 'electrical': ...vidence_ids': ['E-001'], 'land_pattern_source': 'MANUFACTURER_RECOMMENDED', 'properties': {}, 'status': 'DIRECT'}, ...}
+
+    def normalize_ir(
+        data: dict,
+        *,
+        for_generation: bool = False,
+        requirements=None,
+        revisions=None,
+    ) -&gt; dict:
+        """
+    
+        @brief Return a validated copy. Candidate statuses remain explicit.
+        for_generation blocks unresolved provenance, but does not certify
+        PDL, geometry, KiCad compatibility, or grant IR_VALIDATED/APPROVED
+        state.
+        @param data The data argument.
+        @param for_generation The for_generation argument.
+        @param requirements The requirements argument.
+        @param revisions The revisions argument.
+        @return The dict result.
+        @details Implements the documented behavior without changing the
+        public contract.
+    
+        """
+        result = normalize_json(data)
+        issues = schema_issues(result)
+        if issues:
+            raise IRValidationError(issues)
+        revised = result["schema_version"] in {"1.1", "1.2"}
+        for index, document in enumerate(result["source"]["documents"]):
+            document["path"] = _portable_path(
+                document["path"], f"/source/documents/{index}/path"
+            )
+        for path, item in _walk(result):
+            if "source_unit" not in item:
+                continue
+            if revised and (
+                item["source_value"] is None or item["source_unit"] is None
+            ):
+                item["normalized_value"] = None
+                item["normalized_unit"] = None
+                continue
+            for source, target in (
+                ("source_value", "normalized_value"),
+                ("source_min", "normalized_min"),
+                ("source_max", "normalized_max"),
+            ):
+                if source not in item:
+                    if target in item:
+                        fail(
+                            path,
+                            "IR_DIMENSION",
+                            "Normalized bound has no source bound",
+                        )
+                    continue
+                value, unit = normalize_quantity(item[source], item["source_unit"])
+                if target in item and item[target] != value:
+                    fail(
+                        pointer(path, target),
+                        "IR_UNIT",
+                        "Normalized value contradicts source",
+                    )
+                if "normalized_unit" in item and item["normalized_unit"] != unit:
+                    fail(
+                        pointer(path, "normalized_unit"),
+                        "IR_UNIT",
+                        "Normalized unit contradicts source",
+                    )
+                item[target] = value
+                item["normalized_unit"] = unit
+            if (
+                "source_min" in item
+                and not item["source_min"]
+                &lt;= item["source_value"]
+                &lt;= item["source_max"]
+            ):
+                fail(
+                    path, "IR_DIMENSION", "Expected minimum &lt;= nominal &lt;= maximum"
+                )
+        issues = schema_issues(result) + _semantic_issues(
+            result, for_generation and not revised
+        )
+        if result["schema_version"] == "1.2":
+            from partsmith.ir.contract import contract_issues
+    
+            issues += contract_issues(
+                result, for_generation, requirements, revisions
+            )
+        elif revised:
+            from partsmith.ir.revised import revised_issues
+    
+            issues += revised_issues(result, for_generation, requirements)
+        if issues:
+&gt;           raise IRValidationError(issues)
+E           partsmith.ir.errors.IRValidationError: IR_RELEVANCE at /electrical/resistance: Selected evidence lacks a compatible target; IR_HISTORY at /evidence/0/acquisition_revision_id: Acquisition snapshot must retain the exact evidence; IR_RELEVANCE at /evidence/0/candidate_targets: Candidate target must resolve in its revision; IR_RELEVANCE at /identity: Selected evidence lacks a compatible target; IR_RELEVANCE at /pins/0: Selected evidence lacks a compatible target; IR_RELEVANCE at /pins/1: Selected evidence lacks a compatible target
+
+src\partsmith\ir\model.py:163: IRValidationError</error></testcase><testcase classname="tests.test_integration_planner" name="test_update_removal_and_exact_noop" time="0.000"><error message="failed on setup with &quot;partsmith.ir.errors.IRValidationError: IR_RELEVANCE at /electrical/resistance: Selected evidence lacks a compatible target; IR_HISTORY at /evidence/0/acquisition_revision_id: Acquisition snapshot must retain the exact evidence; IR_RELEVANCE at /evidence/0/candidate_targets: Candidate target must resolve in its revision; IR_RELEVANCE at /identity: Selected evidence lacks a compatible target; IR_RELEVANCE at /pins/0: Selected evidence lacks a compatible target; IR_RELEVANCE at /pins/1: Selected evidence lacks a compatible target&quot;">tmp_path_factory = TempPathFactory(_given_basetemp=None, _trace=&lt;pluggy._tracing.TagTracerSub object at 0x0000028905E5F350&gt;, _basetemp=WindowsPath('C:/Users/User/AppData/Local/Temp/pytest-of-User/pytest-358'), _retention_count=3, _retention_policy='all')
+
+    @pytest.fixture(scope="session")
+    def approved_sources(tmp_path_factory):
+        """@brief Builds two actual approved releases and one approved update.
+        @param tmp_path_factory Session-owned fixture directory factory.
+        @return Source database path and exact three release build IDs.
+        @details Native CLI and locked CAD generation run once per test session.
+        """
+        path = tmp_path_factory.mktemp("integration-approved") / "sources.db"
+        with closing(connect(path)) as connection:
+            migrate(connection)
+&gt;           first = create_release(connection)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\phase13_support.py:90: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+tests\phase13_support.py:67: in create_release
+    release = KnownGoodReleasePipeline(connection).run(
+src\partsmith\release\pipeline.py:413: in run
+    kind: node_dependency(
+src\partsmith\release\dependencies.py:13: in node_dependency
+    projection = release_projection(
+src\partsmith\ir\projection.py:53: in release_projection
+    return _dependency_projection(
+src\partsmith\ir\projection.py:65: in _dependency_projection
+    data = normalize_ir(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+data = {'build': {'ai_model': None, 'ai_provider': None, 'bft_version': '0.1.0', 'kicad_target': '10.x', ...}, 'electrical': ...vidence_ids': ['E-001'], 'land_pattern_source': 'MANUFACTURER_RECOMMENDED', 'properties': {}, 'status': 'DIRECT'}, ...}
+
+    def normalize_ir(
+        data: dict,
+        *,
+        for_generation: bool = False,
+        requirements=None,
+        revisions=None,
+    ) -&gt; dict:
+        """
+    
+        @brief Return a validated copy. Candidate statuses remain explicit.
+        for_generation blocks unresolved provenance, but does not certify
+        PDL, geometry, KiCad compatibility, or grant IR_VALIDATED/APPROVED
+        state.
+        @param data The data argument.
+        @param for_generation The for_generation argument.
+        @param requirements The requirements argument.
+        @param revisions The revisions argument.
+        @return The dict result.
+        @details Implements the documented behavior without changing the
+        public contract.
+    
+        """
+        result = normalize_json(data)
+        issues = schema_issues(result)
+        if issues:
+            raise IRValidationError(issues)
+        revised = result["schema_version"] in {"1.1", "1.2"}
+        for index, document in enumerate(result["source"]["documents"]):
+            document["path"] = _portable_path(
+                document["path"], f"/source/documents/{index}/path"
+            )
+        for path, item in _walk(result):
+            if "source_unit" not in item:
+                continue
+            if revised and (
+                item["source_value"] is None or item["source_unit"] is None
+            ):
+                item["normalized_value"] = None
+                item["normalized_unit"] = None
+                continue
+            for source, target in (
+                ("source_value", "normalized_value"),
+                ("source_min", "normalized_min"),
+                ("source_max", "normalized_max"),
+            ):
+                if source not in item:
+                    if target in item:
+                        fail(
+                            path,
+                            "IR_DIMENSION",
+                            "Normalized bound has no source bound",
+                        )
+                    continue
+                value, unit = normalize_quantity(item[source], item["source_unit"])
+                if target in item and item[target] != value:
+                    fail(
+                        pointer(path, target),
+                        "IR_UNIT",
+                        "Normalized value contradicts source",
+                    )
+                if "normalized_unit" in item and item["normalized_unit"] != unit:
+                    fail(
+                        pointer(path, "normalized_unit"),
+                        "IR_UNIT",
+                        "Normalized unit contradicts source",
+                    )
+                item[target] = value
+                item["normalized_unit"] = unit
+            if (
+                "source_min" in item
+                and not item["source_min"]
+                &lt;= item["source_value"]
+                &lt;= item["source_max"]
+            ):
+                fail(
+                    path, "IR_DIMENSION", "Expected minimum &lt;= nominal &lt;= maximum"
+                )
+        issues = schema_issues(result) + _semantic_issues(
+            result, for_generation and not revised
+        )
+        if result["schema_version"] == "1.2":
+            from partsmith.ir.contract import contract_issues
+    
+            issues += contract_issues(
+                result, for_generation, requirements, revisions
+            )
+        elif revised:
+            from partsmith.ir.revised import revised_issues
+    
+            issues += revised_issues(result, for_generation, requirements)
+        if issues:
+&gt;           raise IRValidationError(issues)
+E           partsmith.ir.errors.IRValidationError: IR_RELEVANCE at /electrical/resistance: Selected evidence lacks a compatible target; IR_HISTORY at /evidence/0/acquisition_revision_id: Acquisition snapshot must retain the exact evidence; IR_RELEVANCE at /evidence/0/candidate_targets: Candidate target must resolve in its revision; IR_RELEVANCE at /identity: Selected evidence lacks a compatible target; IR_RELEVANCE at /pins/0: Selected evidence lacks a compatible target; IR_RELEVANCE at /pins/1: Selected evidence lacks a compatible target
+
+src\partsmith\ir\model.py:163: IRValidationError</error></testcase><testcase classname="tests.test_integration_planner" name="test_unmanaged_namespace_conflicts[file]" time="0.000"><error message="failed on setup with &quot;partsmith.ir.errors.IRValidationError: IR_RELEVANCE at /electrical/resistance: Selected evidence lacks a compatible target; IR_HISTORY at /evidence/0/acquisition_revision_id: Acquisition snapshot must retain the exact evidence; IR_RELEVANCE at /evidence/0/candidate_targets: Candidate target must resolve in its revision; IR_RELEVANCE at /identity: Selected evidence lacks a compatible target; IR_RELEVANCE at /pins/0: Selected evidence lacks a compatible target; IR_RELEVANCE at /pins/1: Selected evidence lacks a compatible target&quot;">tmp_path_factory = TempPathFactory(_given_basetemp=None, _trace=&lt;pluggy._tracing.TagTracerSub object at 0x0000028905E5F350&gt;, _basetemp=WindowsPath('C:/Users/User/AppData/Local/Temp/pytest-of-User/pytest-358'), _retention_count=3, _retention_policy='all')
+
+    @pytest.fixture(scope="session")
+    def approved_sources(tmp_path_factory):
+        """@brief Builds two actual approved releases and one approved update.
+        @param tmp_path_factory Session-owned fixture directory factory.
+        @return Source database path and exact three release build IDs.
+        @details Native CLI and locked CAD generation run once per test session.
+        """
+        path = tmp_path_factory.mktemp("integration-approved") / "sources.db"
+        with closing(connect(path)) as connection:
+            migrate(connection)
+&gt;           first = create_release(connection)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\phase13_support.py:90: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+tests\phase13_support.py:67: in create_release
+    release = KnownGoodReleasePipeline(connection).run(
+src\partsmith\release\pipeline.py:413: in run
+    kind: node_dependency(
+src\partsmith\release\dependencies.py:13: in node_dependency
+    projection = release_projection(
+src\partsmith\ir\projection.py:53: in release_projection
+    return _dependency_projection(
+src\partsmith\ir\projection.py:65: in _dependency_projection
+    data = normalize_ir(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+data = {'build': {'ai_model': None, 'ai_provider': None, 'bft_version': '0.1.0', 'kicad_target': '10.x', ...}, 'electrical': ...vidence_ids': ['E-001'], 'land_pattern_source': 'MANUFACTURER_RECOMMENDED', 'properties': {}, 'status': 'DIRECT'}, ...}
+
+    def normalize_ir(
+        data: dict,
+        *,
+        for_generation: bool = False,
+        requirements=None,
+        revisions=None,
+    ) -&gt; dict:
+        """
+    
+        @brief Return a validated copy. Candidate statuses remain explicit.
+        for_generation blocks unresolved provenance, but does not certify
+        PDL, geometry, KiCad compatibility, or grant IR_VALIDATED/APPROVED
+        state.
+        @param data The data argument.
+        @param for_generation The for_generation argument.
+        @param requirements The requirements argument.
+        @param revisions The revisions argument.
+        @return The dict result.
+        @details Implements the documented behavior without changing the
+        public contract.
+    
+        """
+        result = normalize_json(data)
+        issues = schema_issues(result)
+        if issues:
+            raise IRValidationError(issues)
+        revised = result["schema_version"] in {"1.1", "1.2"}
+        for index, document in enumerate(result["source"]["documents"]):
+            document["path"] = _portable_path(
+                document["path"], f"/source/documents/{index}/path"
+            )
+        for path, item in _walk(result):
+            if "source_unit" not in item:
+                continue
+            if revised and (
+                item["source_value"] is None or item["source_unit"] is None
+            ):
+                item["normalized_value"] = None
+                item["normalized_unit"] = None
+                continue
+            for source, target in (
+                ("source_value", "normalized_value"),
+                ("source_min", "normalized_min"),
+                ("source_max", "normalized_max"),
+            ):
+                if source not in item:
+                    if target in item:
+                        fail(
+                            path,
+                            "IR_DIMENSION",
+                            "Normalized bound has no source bound",
+                        )
+                    continue
+                value, unit = normalize_quantity(item[source], item["source_unit"])
+                if target in item and item[target] != value:
+                    fail(
+                        pointer(path, target),
+                        "IR_UNIT",
+                        "Normalized value contradicts source",
+                    )
+                if "normalized_unit" in item and item["normalized_unit"] != unit:
+                    fail(
+                        pointer(path, "normalized_unit"),
+                        "IR_UNIT",
+                        "Normalized unit contradicts source",
+                    )
+                item[target] = value
+                item["normalized_unit"] = unit
+            if (
+                "source_min" in item
+                and not item["source_min"]
+                &lt;= item["source_value"]
+                &lt;= item["source_max"]
+            ):
+                fail(
+                    path, "IR_DIMENSION", "Expected minimum &lt;= nominal &lt;= maximum"
+                )
+        issues = schema_issues(result) + _semantic_issues(
+            result, for_generation and not revised
+        )
+        if result["schema_version"] == "1.2":
+            from partsmith.ir.contract import contract_issues
+    
+            issues += contract_issues(
+                result, for_generation, requirements, revisions
+            )
+        elif revised:
+            from partsmith.ir.revised import revised_issues
+    
+            issues += revised_issues(result, for_generation, requirements)
+        if issues:
+&gt;           raise IRValidationError(issues)
+E           partsmith.ir.errors.IRValidationError: IR_RELEVANCE at /electrical/resistance: Selected evidence lacks a compatible target; IR_HISTORY at /evidence/0/acquisition_revision_id: Acquisition snapshot must retain the exact evidence; IR_RELEVANCE at /evidence/0/candidate_targets: Candidate target must resolve in its revision; IR_RELEVANCE at /identity: Selected evidence lacks a compatible target; IR_RELEVANCE at /pins/0: Selected evidence lacks a compatible target; IR_RELEVANCE at /pins/1: Selected evidence lacks a compatible target
+
+src\partsmith\ir\model.py:163: IRValidationError</error></testcase><testcase classname="tests.test_integration_planner" name="test_unmanaged_namespace_conflicts[empty-directory]" time="0.000"><error message="failed on setup with &quot;partsmith.ir.errors.IRValidationError: IR_RELEVANCE at /electrical/resistance: Selected evidence lacks a compatible target; IR_HISTORY at /evidence/0/acquisition_revision_id: Acquisition snapshot must retain the exact evidence; IR_RELEVANCE at /evidence/0/candidate_targets: Candidate target must resolve in its revision; IR_RELEVANCE at /identity: Selected evidence lacks a compatible target; IR_RELEVANCE at /pins/0: Selected evidence lacks a compatible target; IR_RELEVANCE at /pins/1: Selected evidence lacks a compatible target&quot;">tmp_path_factory = TempPathFactory(_given_basetemp=None, _trace=&lt;pluggy._tracing.TagTracerSub object at 0x0000028905E5F350&gt;, _basetemp=WindowsPath('C:/Users/User/AppData/Local/Temp/pytest-of-User/pytest-358'), _retention_count=3, _retention_policy='all')
+
+    @pytest.fixture(scope="session")
+    def approved_sources(tmp_path_factory):
+        """@brief Builds two actual approved releases and one approved update.
+        @param tmp_path_factory Session-owned fixture directory factory.
+        @return Source database path and exact three release build IDs.
+        @details Native CLI and locked CAD generation run once per test session.
+        """
+        path = tmp_path_factory.mktemp("integration-approved") / "sources.db"
+        with closing(connect(path)) as connection:
+            migrate(connection)
+&gt;           first = create_release(connection)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\phase13_support.py:90: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+tests\phase13_support.py:67: in create_release
+    release = KnownGoodReleasePipeline(connection).run(
+src\partsmith\release\pipeline.py:413: in run
+    kind: node_dependency(
+src\partsmith\release\dependencies.py:13: in node_dependency
+    projection = release_projection(
+src\partsmith\ir\projection.py:53: in release_projection
+    return _dependency_projection(
+src\partsmith\ir\projection.py:65: in _dependency_projection
+    data = normalize_ir(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+data = {'build': {'ai_model': None, 'ai_provider': None, 'bft_version': '0.1.0', 'kicad_target': '10.x', ...}, 'electrical': ...vidence_ids': ['E-001'], 'land_pattern_source': 'MANUFACTURER_RECOMMENDED', 'properties': {}, 'status': 'DIRECT'}, ...}
+
+    def normalize_ir(
+        data: dict,
+        *,
+        for_generation: bool = False,
+        requirements=None,
+        revisions=None,
+    ) -&gt; dict:
+        """
+    
+        @brief Return a validated copy. Candidate statuses remain explicit.
+        for_generation blocks unresolved provenance, but does not certify
+        PDL, geometry, KiCad compatibility, or grant IR_VALIDATED/APPROVED
+        state.
+        @param data The data argument.
+        @param for_generation The for_generation argument.
+        @param requirements The requirements argument.
+        @param revisions The revisions argument.
+        @return The dict result.
+        @details Implements the documented behavior without changing the
+        public contract.
+    
+        """
+        result = normalize_json(data)
+        issues = schema_issues(result)
+        if issues:
+            raise IRValidationError(issues)
+        revised = result["schema_version"] in {"1.1", "1.2"}
+        for index, document in enumerate(result["source"]["documents"]):
+            document["path"] = _portable_path(
+                document["path"], f"/source/documents/{index}/path"
+            )
+        for path, item in _walk(result):
+            if "source_unit" not in item:
+                continue
+            if revised and (
+                item["source_value"] is None or item["source_unit"] is None
+            ):
+                item["normalized_value"] = None
+                item["normalized_unit"] = None
+                continue
+            for source, target in (
+                ("source_value", "normalized_value"),
+                ("source_min", "normalized_min"),
+                ("source_max", "normalized_max"),
+            ):
+                if source not in item:
+                    if target in item:
+                        fail(
+                            path,
+                            "IR_DIMENSION",
+                            "Normalized bound has no source bound",
+                        )
+                    continue
+                value, unit = normalize_quantity(item[source], item["source_unit"])
+                if target in item and item[target] != value:
+                    fail(
+                        pointer(path, target),
+                        "IR_UNIT",
+                        "Normalized value contradicts source",
+                    )
+                if "normalized_unit" in item and item["normalized_unit"] != unit:
+                    fail(
+                        pointer(path, "normalized_unit"),
+                        "IR_UNIT",
+                        "Normalized unit contradicts source",
+                    )
+                item[target] = value
+                item["normalized_unit"] = unit
+            if (
+                "source_min" in item
+                and not item["source_min"]
+                &lt;= item["source_value"]
+                &lt;= item["source_max"]
+            ):
+                fail(
+                    path, "IR_DIMENSION", "Expected minimum &lt;= nominal &lt;= maximum"
+                )
+        issues = schema_issues(result) + _semantic_issues(
+            result, for_generation and not revised
+        )
+        if result["schema_version"] == "1.2":
+            from partsmith.ir.contract import contract_issues
+    
+            issues += contract_issues(
+                result, for_generation, requirements, revisions
+            )
+        elif revised:
+            from partsmith.ir.revised import revised_issues
+    
+            issues += revised_issues(result, for_generation, requirements)
+        if issues:
+&gt;           raise IRValidationError(issues)
+E           partsmith.ir.errors.IRValidationError: IR_RELEVANCE at /electrical/resistance: Selected evidence lacks a compatible target; IR_HISTORY at /evidence/0/acquisition_revision_id: Acquisition snapshot must retain the exact evidence; IR_RELEVANCE at /evidence/0/candidate_targets: Candidate target must resolve in its revision; IR_RELEVANCE at /identity: Selected evidence lacks a compatible target; IR_RELEVANCE at /pins/0: Selected evidence lacks a compatible target; IR_RELEVANCE at /pins/1: Selected evidence lacks a compatible target
+
+src\partsmith\ir\model.py:163: IRValidationError</error></testcase><testcase classname="tests.test_integration_planner" name="test_unmanaged_namespace_conflicts[nickname]" time="0.000"><error message="failed on setup with &quot;partsmith.ir.errors.IRValidationError: IR_RELEVANCE at /electrical/resistance: Selected evidence lacks a compatible target; IR_HISTORY at /evidence/0/acquisition_revision_id: Acquisition snapshot must retain the exact evidence; IR_RELEVANCE at /evidence/0/candidate_targets: Candidate target must resolve in its revision; IR_RELEVANCE at /identity: Selected evidence lacks a compatible target; IR_RELEVANCE at /pins/0: Selected evidence lacks a compatible target; IR_RELEVANCE at /pins/1: Selected evidence lacks a compatible target&quot;">tmp_path_factory = TempPathFactory(_given_basetemp=None, _trace=&lt;pluggy._tracing.TagTracerSub object at 0x0000028905E5F350&gt;, _basetemp=WindowsPath('C:/Users/User/AppData/Local/Temp/pytest-of-User/pytest-358'), _retention_count=3, _retention_policy='all')
+
+    @pytest.fixture(scope="session")
+    def approved_sources(tmp_path_factory):
+        """@brief Builds two actual approved releases and one approved update.
+        @param tmp_path_factory Session-owned fixture directory factory.
+        @return Source database path and exact three release build IDs.
+        @details Native CLI and locked CAD generation run once per test session.
+        """
+        path = tmp_path_factory.mktemp("integration-approved") / "sources.db"
+        with closing(connect(path)) as connection:
+            migrate(connection)
+&gt;           first = create_release(connection)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\phase13_support.py:90: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+tests\phase13_support.py:67: in create_release
+    release = KnownGoodReleasePipeline(connection).run(
+src\partsmith\release\pipeline.py:413: in run
+    kind: node_dependency(
+src\partsmith\release\dependencies.py:13: in node_dependency
+    projection = release_projection(
+src\partsmith\ir\projection.py:53: in release_projection
+    return _dependency_projection(
+src\partsmith\ir\projection.py:65: in _dependency_projection
+    data = normalize_ir(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+data = {'build': {'ai_model': None, 'ai_provider': None, 'bft_version': '0.1.0', 'kicad_target': '10.x', ...}, 'electrical': ...vidence_ids': ['E-001'], 'land_pattern_source': 'MANUFACTURER_RECOMMENDED', 'properties': {}, 'status': 'DIRECT'}, ...}
+
+    def normalize_ir(
+        data: dict,
+        *,
+        for_generation: bool = False,
+        requirements=None,
+        revisions=None,
+    ) -&gt; dict:
+        """
+    
+        @brief Return a validated copy. Candidate statuses remain explicit.
+        for_generation blocks unresolved provenance, but does not certify
+        PDL, geometry, KiCad compatibility, or grant IR_VALIDATED/APPROVED
+        state.
+        @param data The data argument.
+        @param for_generation The for_generation argument.
+        @param requirements The requirements argument.
+        @param revisions The revisions argument.
+        @return The dict result.
+        @details Implements the documented behavior without changing the
+        public contract.
+    
+        """
+        result = normalize_json(data)
+        issues = schema_issues(result)
+        if issues:
+            raise IRValidationError(issues)
+        revised = result["schema_version"] in {"1.1", "1.2"}
+        for index, document in enumerate(result["source"]["documents"]):
+            document["path"] = _portable_path(
+                document["path"], f"/source/documents/{index}/path"
+            )
+        for path, item in _walk(result):
+            if "source_unit" not in item:
+                continue
+            if revised and (
+                item["source_value"] is None or item["source_unit"] is None
+            ):
+                item["normalized_value"] = None
+                item["normalized_unit"] = None
+                continue
+            for source, target in (
+                ("source_value", "normalized_value"),
+                ("source_min", "normalized_min"),
+                ("source_max", "normalized_max"),
+            ):
+                if source not in item:
+                    if target in item:
+                        fail(
+                            path,
+                            "IR_DIMENSION",
+                            "Normalized bound has no source bound",
+                        )
+                    continue
+                value, unit = normalize_quantity(item[source], item["source_unit"])
+                if target in item and item[target] != value:
+                    fail(
+                        pointer(path, target),
+                        "IR_UNIT",
+                        "Normalized value contradicts source",
+                    )
+                if "normalized_unit" in item and item["normalized_unit"] != unit:
+                    fail(
+                        pointer(path, "normalized_unit"),
+                        "IR_UNIT",
+                        "Normalized unit contradicts source",
+                    )
+                item[target] = value
+                item["normalized_unit"] = unit
+            if (
+                "source_min" in item
+                and not item["source_min"]
+                &lt;= item["source_value"]
+                &lt;= item["source_max"]
+            ):
+                fail(
+                    path, "IR_DIMENSION", "Expected minimum &lt;= nominal &lt;= maximum"
+                )
+        issues = schema_issues(result) + _semantic_issues(
+            result, for_generation and not revised
+        )
+        if result["schema_version"] == "1.2":
+            from partsmith.ir.contract import contract_issues
+    
+            issues += contract_issues(
+                result, for_generation, requirements, revisions
+            )
+        elif revised:
+            from partsmith.ir.revised import revised_issues
+    
+            issues += revised_issues(result, for_generation, requirements)
+        if issues:
+&gt;           raise IRValidationError(issues)
+E           partsmith.ir.errors.IRValidationError: IR_RELEVANCE at /electrical/resistance: Selected evidence lacks a compatible target; IR_HISTORY at /evidence/0/acquisition_revision_id: Acquisition snapshot must retain the exact evidence; IR_RELEVANCE at /evidence/0/candidate_targets: Candidate target must resolve in its revision; IR_RELEVANCE at /identity: Selected evidence lacks a compatible target; IR_RELEVANCE at /pins/0: Selected evidence lacks a compatible target; IR_RELEVANCE at /pins/1: Selected evidence lacks a compatible target
+
+src\partsmith\ir\model.py:163: IRValidationError</error></testcase><testcase classname="tests.test_integration_planner" name="test_unmanaged_namespace_conflicts[alias]" time="0.000"><error message="failed on setup with &quot;partsmith.ir.errors.IRValidationError: IR_RELEVANCE at /electrical/resistance: Selected evidence lacks a compatible target; IR_HISTORY at /evidence/0/acquisition_revision_id: Acquisition snapshot must retain the exact evidence; IR_RELEVANCE at /evidence/0/candidate_targets: Candidate target must resolve in its revision; IR_RELEVANCE at /identity: Selected evidence lacks a compatible target; IR_RELEVANCE at /pins/0: Selected evidence lacks a compatible target; IR_RELEVANCE at /pins/1: Selected evidence lacks a compatible target&quot;">tmp_path_factory = TempPathFactory(_given_basetemp=None, _trace=&lt;pluggy._tracing.TagTracerSub object at 0x0000028905E5F350&gt;, _basetemp=WindowsPath('C:/Users/User/AppData/Local/Temp/pytest-of-User/pytest-358'), _retention_count=3, _retention_policy='all')
+
+    @pytest.fixture(scope="session")
+    def approved_sources(tmp_path_factory):
+        """@brief Builds two actual approved releases and one approved update.
+        @param tmp_path_factory Session-owned fixture directory factory.
+        @return Source database path and exact three release build IDs.
+        @details Native CLI and locked CAD generation run once per test session.
+        """
+        path = tmp_path_factory.mktemp("integration-approved") / "sources.db"
+        with closing(connect(path)) as connection:
+            migrate(connection)
+&gt;           first = create_release(connection)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\phase13_support.py:90: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+tests\phase13_support.py:67: in create_release
+    release = KnownGoodReleasePipeline(connection).run(
+src\partsmith\release\pipeline.py:413: in run
+    kind: node_dependency(
+src\partsmith\release\dependencies.py:13: in node_dependency
+    projection = release_projection(
+src\partsmith\ir\projection.py:53: in release_projection
+    return _dependency_projection(
+src\partsmith\ir\projection.py:65: in _dependency_projection
+    data = normalize_ir(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+data = {'build': {'ai_model': None, 'ai_provider': None, 'bft_version': '0.1.0', 'kicad_target': '10.x', ...}, 'electrical': ...vidence_ids': ['E-001'], 'land_pattern_source': 'MANUFACTURER_RECOMMENDED', 'properties': {}, 'status': 'DIRECT'}, ...}
+
+    def normalize_ir(
+        data: dict,
+        *,
+        for_generation: bool = False,
+        requirements=None,
+        revisions=None,
+    ) -&gt; dict:
+        """
+    
+        @brief Return a validated copy. Candidate statuses remain explicit.
+        for_generation blocks unresolved provenance, but does not certify
+        PDL, geometry, KiCad compatibility, or grant IR_VALIDATED/APPROVED
+        state.
+        @param data The data argument.
+        @param for_generation The for_generation argument.
+        @param requirements The requirements argument.
+        @param revisions The revisions argument.
+        @return The dict result.
+        @details Implements the documented behavior without changing the
+        public contract.
+    
+        """
+        result = normalize_json(data)
+        issues = schema_issues(result)
+        if issues:
+            raise IRValidationError(issues)
+        revised = result["schema_version"] in {"1.1", "1.2"}
+        for index, document in enumerate(result["source"]["documents"]):
+            document["path"] = _portable_path(
+                document["path"], f"/source/documents/{index}/path"
+            )
+        for path, item in _walk(result):
+            if "source_unit" not in item:
+                continue
+            if revised and (
+                item["source_value"] is None or item["source_unit"] is None
+            ):
+                item["normalized_value"] = None
+                item["normalized_unit"] = None
+                continue
+            for source, target in (
+                ("source_value", "normalized_value"),
+                ("source_min", "normalized_min"),
+                ("source_max", "normalized_max"),
+            ):
+                if source not in item:
+                    if target in item:
+                        fail(
+                            path,
+                            "IR_DIMENSION",
+                            "Normalized bound has no source bound",
+                        )
+                    continue
+                value, unit = normalize_quantity(item[source], item["source_unit"])
+                if target in item and item[target] != value:
+                    fail(
+                        pointer(path, target),
+                        "IR_UNIT",
+                        "Normalized value contradicts source",
+                    )
+                if "normalized_unit" in item and item["normalized_unit"] != unit:
+                    fail(
+                        pointer(path, "normalized_unit"),
+                        "IR_UNIT",
+                        "Normalized unit contradicts source",
+                    )
+                item[target] = value
+                item["normalized_unit"] = unit
+            if (
+                "source_min" in item
+                and not item["source_min"]
+                &lt;= item["source_value"]
+                &lt;= item["source_max"]
+            ):
+                fail(
+                    path, "IR_DIMENSION", "Expected minimum &lt;= nominal &lt;= maximum"
+                )
+        issues = schema_issues(result) + _semantic_issues(
+            result, for_generation and not revised
+        )
+        if result["schema_version"] == "1.2":
+            from partsmith.ir.contract import contract_issues
+    
+            issues += contract_issues(
+                result, for_generation, requirements, revisions
+            )
+        elif revised:
+            from partsmith.ir.revised import revised_issues
+    
+            issues += revised_issues(result, for_generation, requirements)
+        if issues:
+&gt;           raise IRValidationError(issues)
+E           partsmith.ir.errors.IRValidationError: IR_RELEVANCE at /electrical/resistance: Selected evidence lacks a compatible target; IR_HISTORY at /evidence/0/acquisition_revision_id: Acquisition snapshot must retain the exact evidence; IR_RELEVANCE at /evidence/0/candidate_targets: Candidate target must resolve in its revision; IR_RELEVANCE at /identity: Selected evidence lacks a compatible target; IR_RELEVANCE at /pins/0: Selected evidence lacks a compatible target; IR_RELEVANCE at /pins/1: Selected evidence lacks a compatible target
+
+src\partsmith\ir\model.py:163: IRValidationError</error></testcase><testcase classname="tests.test_integration_planner" name="test_stale_whole_project_and_changed_installed_content" time="0.000"><error message="failed on setup with &quot;partsmith.ir.errors.IRValidationError: IR_RELEVANCE at /electrical/resistance: Selected evidence lacks a compatible target; IR_HISTORY at /evidence/0/acquisition_revision_id: Acquisition snapshot must retain the exact evidence; IR_RELEVANCE at /evidence/0/candidate_targets: Candidate target must resolve in its revision; IR_RELEVANCE at /identity: Selected evidence lacks a compatible target; IR_RELEVANCE at /pins/0: Selected evidence lacks a compatible target; IR_RELEVANCE at /pins/1: Selected evidence lacks a compatible target&quot;">tmp_path_factory = TempPathFactory(_given_basetemp=None, _trace=&lt;pluggy._tracing.TagTracerSub object at 0x0000028905E5F350&gt;, _basetemp=WindowsPath('C:/Users/User/AppData/Local/Temp/pytest-of-User/pytest-358'), _retention_count=3, _retention_policy='all')
+
+    @pytest.fixture(scope="session")
+    def approved_sources(tmp_path_factory):
+        """@brief Builds two actual approved releases and one approved update.
+        @param tmp_path_factory Session-owned fixture directory factory.
+        @return Source database path and exact three release build IDs.
+        @details Native CLI and locked CAD generation run once per test session.
+        """
+        path = tmp_path_factory.mktemp("integration-approved") / "sources.db"
+        with closing(connect(path)) as connection:
+            migrate(connection)
+&gt;           first = create_release(connection)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\phase13_support.py:90: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+tests\phase13_support.py:67: in create_release
+    release = KnownGoodReleasePipeline(connection).run(
+src\partsmith\release\pipeline.py:413: in run
+    kind: node_dependency(
+src\partsmith\release\dependencies.py:13: in node_dependency
+    projection = release_projection(
+src\partsmith\ir\projection.py:53: in release_projection
+    return _dependency_projection(
+src\partsmith\ir\projection.py:65: in _dependency_projection
+    data = normalize_ir(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+data = {'build': {'ai_model': None, 'ai_provider': None, 'bft_version': '0.1.0', 'kicad_target': '10.x', ...}, 'electrical': ...vidence_ids': ['E-001'], 'land_pattern_source': 'MANUFACTURER_RECOMMENDED', 'properties': {}, 'status': 'DIRECT'}, ...}
+
+    def normalize_ir(
+        data: dict,
+        *,
+        for_generation: bool = False,
+        requirements=None,
+        revisions=None,
+    ) -&gt; dict:
+        """
+    
+        @brief Return a validated copy. Candidate statuses remain explicit.
+        for_generation blocks unresolved provenance, but does not certify
+        PDL, geometry, KiCad compatibility, or grant IR_VALIDATED/APPROVED
+        state.
+        @param data The data argument.
+        @param for_generation The for_generation argument.
+        @param requirements The requirements argument.
+        @param revisions The revisions argument.
+        @return The dict result.
+        @details Implements the documented behavior without changing the
+        public contract.
+    
+        """
+        result = normalize_json(data)
+        issues = schema_issues(result)
+        if issues:
+            raise IRValidationError(issues)
+        revised = result["schema_version"] in {"1.1", "1.2"}
+        for index, document in enumerate(result["source"]["documents"]):
+            document["path"] = _portable_path(
+                document["path"], f"/source/documents/{index}/path"
+            )
+        for path, item in _walk(result):
+            if "source_unit" not in item:
+                continue
+            if revised and (
+                item["source_value"] is None or item["source_unit"] is None
+            ):
+                item["normalized_value"] = None
+                item["normalized_unit"] = None
+                continue
+            for source, target in (
+                ("source_value", "normalized_value"),
+                ("source_min", "normalized_min"),
+                ("source_max", "normalized_max"),
+            ):
+                if source not in item:
+                    if target in item:
+                        fail(
+                            path,
+                            "IR_DIMENSION",
+                            "Normalized bound has no source bound",
+                        )
+                    continue
+                value, unit = normalize_quantity(item[source], item["source_unit"])
+                if target in item and item[target] != value:
+                    fail(
+                        pointer(path, target),
+                        "IR_UNIT",
+                        "Normalized value contradicts source",
+                    )
+                if "normalized_unit" in item and item["normalized_unit"] != unit:
+                    fail(
+                        pointer(path, "normalized_unit"),
+                        "IR_UNIT",
+                        "Normalized unit contradicts source",
+                    )
+                item[target] = value
+                item["normalized_unit"] = unit
+            if (
+                "source_min" in item
+                and not item["source_min"]
+                &lt;= item["source_value"]
+                &lt;= item["source_max"]
+            ):
+                fail(
+                    path, "IR_DIMENSION", "Expected minimum &lt;= nominal &lt;= maximum"
+                )
+        issues = schema_issues(result) + _semantic_issues(
+            result, for_generation and not revised
+        )
+        if result["schema_version"] == "1.2":
+            from partsmith.ir.contract import contract_issues
+    
+            issues += contract_issues(
+                result, for_generation, requirements, revisions
+            )
+        elif revised:
+            from partsmith.ir.revised import revised_issues
+    
+            issues += revised_issues(result, for_generation, requirements)
+        if issues:
+&gt;           raise IRValidationError(issues)
+E           partsmith.ir.errors.IRValidationError: IR_RELEVANCE at /electrical/resistance: Selected evidence lacks a compatible target; IR_HISTORY at /evidence/0/acquisition_revision_id: Acquisition snapshot must retain the exact evidence; IR_RELEVANCE at /evidence/0/candidate_targets: Candidate target must resolve in its revision; IR_RELEVANCE at /identity: Selected evidence lacks a compatible target; IR_RELEVANCE at /pins/0: Selected evidence lacks a compatible target; IR_RELEVANCE at /pins/1: Selected evidence lacks a compatible target
+
+src\partsmith\ir\model.py:163: IRValidationError</error></testcase><testcase classname="tests.test_integration_planner" name="test_wrong_scope_and_duplicate_source_are_refused" time="0.000"><error message="failed on setup with &quot;partsmith.ir.errors.IRValidationError: IR_RELEVANCE at /electrical/resistance: Selected evidence lacks a compatible target; IR_HISTORY at /evidence/0/acquisition_revision_id: Acquisition snapshot must retain the exact evidence; IR_RELEVANCE at /evidence/0/candidate_targets: Candidate target must resolve in its revision; IR_RELEVANCE at /identity: Selected evidence lacks a compatible target; IR_RELEVANCE at /pins/0: Selected evidence lacks a compatible target; IR_RELEVANCE at /pins/1: Selected evidence lacks a compatible target&quot;">tmp_path_factory = TempPathFactory(_given_basetemp=None, _trace=&lt;pluggy._tracing.TagTracerSub object at 0x0000028905E5F350&gt;, _basetemp=WindowsPath('C:/Users/User/AppData/Local/Temp/pytest-of-User/pytest-358'), _retention_count=3, _retention_policy='all')
+
+    @pytest.fixture(scope="session")
+    def approved_sources(tmp_path_factory):
+        """@brief Builds two actual approved releases and one approved update.
+        @param tmp_path_factory Session-owned fixture directory factory.
+        @return Source database path and exact three release build IDs.
+        @details Native CLI and locked CAD generation run once per test session.
+        """
+        path = tmp_path_factory.mktemp("integration-approved") / "sources.db"
+        with closing(connect(path)) as connection:
+            migrate(connection)
+&gt;           first = create_release(connection)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\phase13_support.py:90: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+tests\phase13_support.py:67: in create_release
+    release = KnownGoodReleasePipeline(connection).run(
+src\partsmith\release\pipeline.py:413: in run
+    kind: node_dependency(
+src\partsmith\release\dependencies.py:13: in node_dependency
+    projection = release_projection(
+src\partsmith\ir\projection.py:53: in release_projection
+    return _dependency_projection(
+src\partsmith\ir\projection.py:65: in _dependency_projection
+    data = normalize_ir(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+data = {'build': {'ai_model': None, 'ai_provider': None, 'bft_version': '0.1.0', 'kicad_target': '10.x', ...}, 'electrical': ...vidence_ids': ['E-001'], 'land_pattern_source': 'MANUFACTURER_RECOMMENDED', 'properties': {}, 'status': 'DIRECT'}, ...}
+
+    def normalize_ir(
+        data: dict,
+        *,
+        for_generation: bool = False,
+        requirements=None,
+        revisions=None,
+    ) -&gt; dict:
+        """
+    
+        @brief Return a validated copy. Candidate statuses remain explicit.
+        for_generation blocks unresolved provenance, but does not certify
+        PDL, geometry, KiCad compatibility, or grant IR_VALIDATED/APPROVED
+        state.
+        @param data The data argument.
+        @param for_generation The for_generation argument.
+        @param requirements The requirements argument.
+        @param revisions The revisions argument.
+        @return The dict result.
+        @details Implements the documented behavior without changing the
+        public contract.
+    
+        """
+        result = normalize_json(data)
+        issues = schema_issues(result)
+        if issues:
+            raise IRValidationError(issues)
+        revised = result["schema_version"] in {"1.1", "1.2"}
+        for index, document in enumerate(result["source"]["documents"]):
+            document["path"] = _portable_path(
+                document["path"], f"/source/documents/{index}/path"
+            )
+        for path, item in _walk(result):
+            if "source_unit" not in item:
+                continue
+            if revised and (
+                item["source_value"] is None or item["source_unit"] is None
+            ):
+                item["normalized_value"] = None
+                item["normalized_unit"] = None
+                continue
+            for source, target in (
+                ("source_value", "normalized_value"),
+                ("source_min", "normalized_min"),
+                ("source_max", "normalized_max"),
+            ):
+                if source not in item:
+                    if target in item:
+                        fail(
+                            path,
+                            "IR_DIMENSION",
+                            "Normalized bound has no source bound",
+                        )
+                    continue
+                value, unit = normalize_quantity(item[source], item["source_unit"])
+                if target in item and item[target] != value:
+                    fail(
+                        pointer(path, target),
+                        "IR_UNIT",
+                        "Normalized value contradicts source",
+                    )
+                if "normalized_unit" in item and item["normalized_unit"] != unit:
+                    fail(
+                        pointer(path, "normalized_unit"),
+                        "IR_UNIT",
+                        "Normalized unit contradicts source",
+                    )
+                item[target] = value
+                item["normalized_unit"] = unit
+            if (
+                "source_min" in item
+                and not item["source_min"]
+                &lt;= item["source_value"]
+                &lt;= item["source_max"]
+            ):
+                fail(
+                    path, "IR_DIMENSION", "Expected minimum &lt;= nominal &lt;= maximum"
+                )
+        issues = schema_issues(result) + _semantic_issues(
+            result, for_generation and not revised
+        )
+        if result["schema_version"] == "1.2":
+            from partsmith.ir.contract import contract_issues
+    
+            issues += contract_issues(
+                result, for_generation, requirements, revisions
+            )
+        elif revised:
+            from partsmith.ir.revised import revised_issues
+    
+            issues += revised_issues(result, for_generation, requirements)
+        if issues:
+&gt;           raise IRValidationError(issues)
+E           partsmith.ir.errors.IRValidationError: IR_RELEVANCE at /electrical/resistance: Selected evidence lacks a compatible target; IR_HISTORY at /evidence/0/acquisition_revision_id: Acquisition snapshot must retain the exact evidence; IR_RELEVANCE at /evidence/0/candidate_targets: Candidate target must resolve in its revision; IR_RELEVANCE at /identity: Selected evidence lacks a compatible target; IR_RELEVANCE at /pins/0: Selected evidence lacks a compatible target; IR_RELEVANCE at /pins/1: Selected evidence lacks a compatible target
+
+src\partsmith\ir\model.py:163: IRValidationError</error></testcase><testcase classname="tests.test_integration_planner" name="test_unsafe_paths_and_nested_reparse_are_refused" time="0.004" /><testcase classname="tests.test_integration_planner" name="test_wrong_registered_root_is_refused" time="0.000"><error message="failed on setup with &quot;partsmith.ir.errors.IRValidationError: IR_RELEVANCE at /electrical/resistance: Selected evidence lacks a compatible target; IR_HISTORY at /evidence/0/acquisition_revision_id: Acquisition snapshot must retain the exact evidence; IR_RELEVANCE at /evidence/0/candidate_targets: Candidate target must resolve in its revision; IR_RELEVANCE at /identity: Selected evidence lacks a compatible target; IR_RELEVANCE at /pins/0: Selected evidence lacks a compatible target; IR_RELEVANCE at /pins/1: Selected evidence lacks a compatible target&quot;">tmp_path_factory = TempPathFactory(_given_basetemp=None, _trace=&lt;pluggy._tracing.TagTracerSub object at 0x0000028905E5F350&gt;, _basetemp=WindowsPath('C:/Users/User/AppData/Local/Temp/pytest-of-User/pytest-358'), _retention_count=3, _retention_policy='all')
+
+    @pytest.fixture(scope="session")
+    def approved_sources(tmp_path_factory):
+        """@brief Builds two actual approved releases and one approved update.
+        @param tmp_path_factory Session-owned fixture directory factory.
+        @return Source database path and exact three release build IDs.
+        @details Native CLI and locked CAD generation run once per test session.
+        """
+        path = tmp_path_factory.mktemp("integration-approved") / "sources.db"
+        with closing(connect(path)) as connection:
+            migrate(connection)
+&gt;           first = create_release(connection)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\phase13_support.py:90: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+tests\phase13_support.py:67: in create_release
+    release = KnownGoodReleasePipeline(connection).run(
+src\partsmith\release\pipeline.py:413: in run
+    kind: node_dependency(
+src\partsmith\release\dependencies.py:13: in node_dependency
+    projection = release_projection(
+src\partsmith\ir\projection.py:53: in release_projection
+    return _dependency_projection(
+src\partsmith\ir\projection.py:65: in _dependency_projection
+    data = normalize_ir(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+data = {'build': {'ai_model': None, 'ai_provider': None, 'bft_version': '0.1.0', 'kicad_target': '10.x', ...}, 'electrical': ...vidence_ids': ['E-001'], 'land_pattern_source': 'MANUFACTURER_RECOMMENDED', 'properties': {}, 'status': 'DIRECT'}, ...}
+
+    def normalize_ir(
+        data: dict,
+        *,
+        for_generation: bool = False,
+        requirements=None,
+        revisions=None,
+    ) -&gt; dict:
+        """
+    
+        @brief Return a validated copy. Candidate statuses remain explicit.
+        for_generation blocks unresolved provenance, but does not certify
+        PDL, geometry, KiCad compatibility, or grant IR_VALIDATED/APPROVED
+        state.
+        @param data The data argument.
+        @param for_generation The for_generation argument.
+        @param requirements The requirements argument.
+        @param revisions The revisions argument.
+        @return The dict result.
+        @details Implements the documented behavior without changing the
+        public contract.
+    
+        """
+        result = normalize_json(data)
+        issues = schema_issues(result)
+        if issues:
+            raise IRValidationError(issues)
+        revised = result["schema_version"] in {"1.1", "1.2"}
+        for index, document in enumerate(result["source"]["documents"]):
+            document["path"] = _portable_path(
+                document["path"], f"/source/documents/{index}/path"
+            )
+        for path, item in _walk(result):
+            if "source_unit" not in item:
+                continue
+            if revised and (
+                item["source_value"] is None or item["source_unit"] is None
+            ):
+                item["normalized_value"] = None
+                item["normalized_unit"] = None
+                continue
+            for source, target in (
+                ("source_value", "normalized_value"),
+                ("source_min", "normalized_min"),
+                ("source_max", "normalized_max"),
+            ):
+                if source not in item:
+                    if target in item:
+                        fail(
+                            path,
+                            "IR_DIMENSION",
+                            "Normalized bound has no source bound",
+                        )
+                    continue
+                value, unit = normalize_quantity(item[source], item["source_unit"])
+                if target in item and item[target] != value:
+                    fail(
+                        pointer(path, target),
+                        "IR_UNIT",
+                        "Normalized value contradicts source",
+                    )
+                if "normalized_unit" in item and item["normalized_unit"] != unit:
+                    fail(
+                        pointer(path, "normalized_unit"),
+                        "IR_UNIT",
+                        "Normalized unit contradicts source",
+                    )
+                item[target] = value
+                item["normalized_unit"] = unit
+            if (
+                "source_min" in item
+                and not item["source_min"]
+                &lt;= item["source_value"]
+                &lt;= item["source_max"]
+            ):
+                fail(
+                    path, "IR_DIMENSION", "Expected minimum &lt;= nominal &lt;= maximum"
+                )
+        issues = schema_issues(result) + _semantic_issues(
+            result, for_generation and not revised
+        )
+        if result["schema_version"] == "1.2":
+            from partsmith.ir.contract import contract_issues
+    
+            issues += contract_issues(
+                result, for_generation, requirements, revisions
+            )
+        elif revised:
+            from partsmith.ir.revised import revised_issues
+    
+            issues += revised_issues(result, for_generation, requirements)
+        if issues:
+&gt;           raise IRValidationError(issues)
+E           partsmith.ir.errors.IRValidationError: IR_RELEVANCE at /electrical/resistance: Selected evidence lacks a compatible target; IR_HISTORY at /evidence/0/acquisition_revision_id: Acquisition snapshot must retain the exact evidence; IR_RELEVANCE at /evidence/0/candidate_targets: Candidate target must resolve in its revision; IR_RELEVANCE at /identity: Selected evidence lacks a compatible target; IR_RELEVANCE at /pins/0: Selected evidence lacks a compatible target; IR_RELEVANCE at /pins/1: Selected evidence lacks a compatible target
+
+src\partsmith\ir\model.py:163: IRValidationError</error></testcase><testcase classname="tests.test_persistence" name="test_rebuild_migration_preserves_existing_snapshots_and_manifests" time="0.081" /><testcase classname="tests.test_persistence" name="test_shared_persistence_support" time="0.065" /><testcase classname="tests.test_persistence" name="test_phase_one_gate" time="0.058" /><testcase classname="tests.test_persistence" name="test_parent_deletion_is_restricted" time="0.050" /><testcase classname="tests.test_persistence" name="test_queries_are_parameterized_and_scoped" time="0.048" /><testcase classname="tests.test_persistence" name="test_context_rolls_back_and_closes_on_error" time="0.030" /><testcase classname="tests.test_persistence" name="test_success_closes_connection" time="0.027" /><testcase classname="tests.test_persistence" name="test_failed_migration_is_atomic_and_retryable" time="0.026" /><testcase classname="tests.test_persistence" name="test_changed_migration_is_rejected" time="0.026" /><testcase classname="tests.test_persistence" name="test_unknown_migration_is_rejected" time="0.048" /><testcase classname="tests.test_persistence" name="test_migration_does_not_commit_caller_work" time="0.029" /><testcase classname="tests.test_persistence" name="test_migration_requires_foreign_keys" time="0.000" /><testcase classname="tests.test_persistence" name="test_concurrent_initializers_apply_once" time="0.068" /><testcase classname="tests.test_persistence" name="test_required_ids_and_duplicate_ids_are_rejected" time="0.050" /></testsuite></testsuites>

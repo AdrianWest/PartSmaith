@@ -1,0 +1,278 @@
+{
+  "identities": {
+    "outside_map": [
+      {
+        "location": "/tests/source",
+        "path": "docs/gates/phase-12-source-final-results.xml",
+        "match": true
+      },
+      {
+        "location": "/tests/installed_wheel",
+        "path": "docs/gates/phase-12-wheel-final-results.xml",
+        "match": true
+      },
+      {
+        "location": "/tests/symbol_revalidation",
+        "path": "docs/gates/phase-12-symbol-revalidation-results.xml",
+        "match": true
+      },
+      {
+        "location": "/tests/visual_capture",
+        "path": "docs/gates/phase-12-display-results.xml",
+        "match": true
+      },
+      {
+        "location": "/launches/source",
+        "path": "docs/gates/phase-12-symbol-viewer-source-launch.json",
+        "match": true
+      },
+      {
+        "location": "/launches/wheel",
+        "path": "docs/gates/phase-12-symbol-viewer-wheel-launch.json",
+        "match": true
+      },
+      {
+        "location": "/launches/kicad",
+        "path": "docs/gates/phase-12-kicad-launch.json",
+        "match": true
+      },
+      {
+        "location": "/pdf_stability",
+        "path": "docs/gates/phase-12-pdf-stability/manifest.json",
+        "match": true
+      },
+      {
+        "location": "/wheel",
+        "path": ".tools/phase12-symbol-viewer/dist/partsmith-0.1.0-py3-none-any.whl",
+        "match": true
+      },
+      {
+        "location": "/sdist",
+        "path": ".tools/phase12-symbol-viewer/dist/partsmith-0.1.0.tar.gz",
+        "match": true
+      },
+      {
+        "location": "/historical_full_gate_acceptance/tests/source",
+        "path": "docs/gates/phase-12-source-final-results.xml",
+        "match": true
+      },
+      {
+        "location": "/historical_full_gate_acceptance/tests/installed_wheel",
+        "path": "docs/gates/phase-12-wheel-final-results.xml",
+        "match": true
+      },
+      {
+        "location": "/historical_full_gate_acceptance/tests/symbol_revalidation",
+        "path": "docs/gates/phase-12-symbol-revalidation-results.xml",
+        "match": true
+      },
+      {
+        "location": "/historical_full_gate_acceptance/tests/visual_capture",
+        "path": "docs/gates/phase-12-display-results.xml",
+        "match": true
+      },
+      {
+        "location": "/historical_full_gate_acceptance/launches/source",
+        "path": "docs/gates/phase-12-source-launch.json",
+        "match": true
+      },
+      {
+        "location": "/historical_full_gate_acceptance/launches/wheel",
+        "path": "docs/gates/phase-12-wheel-launch.json",
+        "match": true
+      },
+      {
+        "location": "/historical_full_gate_acceptance/launches/kicad",
+        "path": "docs/gates/phase-12-kicad-launch.json",
+        "match": true
+      },
+      {
+        "location": "/historical_full_gate_acceptance/wheel",
+        "path": ".tools/phase12-full/dist/partsmith-0.1.0-py3-none-any.whl",
+        "match": true
+      },
+      {
+        "location": "/historical_full_gate_acceptance/sdist",
+        "path": ".tools/phase12-full/dist/partsmith-0.1.0.tar.gz",
+        "match": true
+      },
+      {
+        "location": "/historical_full_gate_acceptance/pdf_stability",
+        "path": "docs/gates/phase-12-pdf-stability/manifest.json",
+        "match": true
+      },
+      {
+        "location": "/banner_layout_revalidation/tests_and_evidence/source",
+        "path": "docs/gates/phase-12-banner-source-results.xml",
+        "match": true
+      },
+      {
+        "location": "/banner_layout_revalidation/tests_and_evidence/installed_wheel",
+        "path": "docs/gates/phase-12-banner-wheel-results.xml",
+        "match": true
+      },
+      {
+        "location": "/banner_layout_revalidation/tests_and_evidence/source_launch",
+        "path": "docs/gates/phase-12-banner-source-launch.json",
+        "match": true
+      },
+      {
+        "location": "/banner_layout_revalidation/tests_and_evidence/wheel_launch",
+        "path": "docs/gates/phase-12-banner-wheel-launch.json",
+        "match": true
+      },
+      {
+        "location": "/banner_layout_revalidation/tests_and_evidence/missing_resource",
+        "path": "docs/gates/phase-12-banner-missing-resource.json",
+        "match": true
+      },
+      {
+        "location": "/banner_layout_revalidation/tests_and_evidence/package",
+        "path": "docs/gates/phase-12-banner-package-evidence.json",
+        "match": true
+      },
+      {
+        "location": "/banner_layout_revalidation/historical_native_kicad_acceptance",
+        "path": "docs/gates/phase-12-kicad-launch.json",
+        "match": true
+      },
+      {
+        "location": "/symbol_viewer_revalidation/tests/source_regression",
+        "path": "docs/gates/phase-12-symbol-viewer-source-results.xml",
+        "match": true
+      },
+      {
+        "location": "/symbol_viewer_revalidation/tests/wheel_regression",
+        "path": "docs/gates/phase-12-symbol-viewer-wheel-results.xml",
+        "match": true
+      },
+      {
+        "location": "/symbol_viewer_revalidation/tests/final_source",
+        "path": "docs/gates/phase-12-symbol-viewer-final-source-results.xml",
+        "match": true
+      },
+      {
+        "location": "/symbol_viewer_revalidation/tests/final_installed_wheel",
+        "path": "docs/gates/phase-12-symbol-viewer-final-wheel-results.xml",
+        "match": true
+      },
+      {
+        "location": "/symbol_viewer_revalidation/source_launch",
+        "path": "docs/gates/phase-12-symbol-viewer-source-launch.json",
+        "match": true
+      },
+      {
+        "location": "/symbol_viewer_revalidation/wheel_launch",
+        "path": "docs/gates/phase-12-symbol-viewer-wheel-launch.json",
+        "match": true
+      },
+      {
+        "location": "/symbol_viewer_revalidation/package",
+        "path": "docs/gates/phase-12-symbol-viewer-package-evidence.json",
+        "match": true
+      },
+      {
+        "location": "/symbol_viewer_revalidation/wheel",
+        "path": ".tools/phase12-symbol-viewer/dist/partsmith-0.1.0-py3-none-any.whl",
+        "match": true
+      },
+      {
+        "location": "/symbol_viewer_revalidation/sdist",
+        "path": ".tools/phase12-symbol-viewer/dist/partsmith-0.1.0.tar.gz",
+        "match": true
+      },
+      {
+        "location": "/symbol_viewer_revalidation/visual_evidence/0",
+        "path": "docs/gates/phase-12-symbol-viewer-display/phase-12-symbol-inspection-accepted.png",
+        "match": true
+      },
+      {
+        "location": "/symbol_viewer_revalidation/visual_evidence/1",
+        "path": "docs/gates/phase-12-symbol-viewer-display/phase-12-symbol-inspection-minimum.png",
+        "match": true
+      },
+      {
+        "location": "/symbol_viewer_revalidation/visual_evidence/2",
+        "path": "docs/gates/phase-12-symbol-viewer-display/phase-12-symbol-inspection-scrolled.png",
+        "match": true
+      }
+    ],
+    "python_files": 101,
+    "source_wheel_mismatches": [],
+    "source_installed_mismatches": [],
+    "installed_root": "C:\\GIT_HUB\\PartSmaith\\.tools\\python\\Lib\\site-packages\\partsmith",
+    "plugin_source_wheel_match": true
+  },
+  "checkpoint_after_commit": {
+    "history": [
+      {
+        "actor": "S-1-5-21-2185327442-4085330683-1461296888-1000",
+        "kind": "INPUT_APPROVE",
+        "mechanism": "windows-process-token-sid",
+        "reason": "Explicit real input approval before checkpoint failure",
+        "result": {
+          "review_event_id": "dc4a4dd0-9a20-4a71-b825-01120a3e6899",
+          "revision_hash": "6c3132c53411e518eb4f15f9866652a55997ee4cac9f420a73bc626b79f58a73",
+          "revision_id": "e1f1083e-7f03-4f6b-ba6b-24b89826085a"
+        }
+      }
+    ],
+    "reviewed_revision_changed": true,
+    "persisted_status": "cancelled",
+    "events": [
+      {
+        "outcome": "progress",
+        "code": null,
+        "detail": "Started",
+        "payload": null
+      },
+      {
+        "outcome": "cancelled",
+        "code": "OSError",
+        "detail": "Injected checkpoint storage failure after commit",
+        "payload": null
+      },
+      {
+        "outcome": "progress",
+        "code": "CHECKPOINT_ERROR",
+        "detail": "Last good checkpoint retained",
+        "payload": null
+      }
+    ]
+  },
+  "changed_part_number": {
+    "worker_requests": [
+      "DIFFERENT-ORDERING-NUMBER"
+    ],
+    "unsaved_policy_calls": [],
+    "setup_part": "DIFFERENT-ORDERING-NUMBER",
+    "reviewed_part": "FULL-SUFFIX-R",
+    "original_part": "FULL-SUFFIX-R",
+    "same_component": true,
+    "same_reviewed_revision": true,
+    "session_dirty": true,
+    "generation_enabled": true
+  },
+  "package": "C:\\GIT_HUB\\PartSmaith\\.tools\\python\\Lib\\site-packages\\partsmith\\__init__.py",
+  "phase8_schema_definitions": [
+    "sha256",
+    "nonempty_string",
+    "not_generatable",
+    "warning_policy",
+    "validation_result",
+    "engineering_manifest",
+    "three_artifact_map",
+    "audit_envelope",
+    "release_report",
+    "post_manifest_report",
+    "input_review_proposal",
+    "input_approval_request",
+    "input_rejection_request",
+    "override_proposal_request",
+    "conflict_resolution_proposal_request",
+    "evidence_exclusion_proposal_request",
+    "pin_reorder_proposal_request",
+    "bundle_index",
+    "pin_removal_proposal_request"
+  ]
+}

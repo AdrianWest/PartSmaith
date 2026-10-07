@@ -1,0 +1,117 @@
+{
+  "actual_live_operations_independently_witnessed": false,
+  "archive_members": 152,
+  "date": "2026-10-06",
+  "embedded311": "PYTHON_312_REQUIRED",
+  "engineering_resources_match_exact_zip_and_source": true,
+  "evidence_identities": {
+    ".tools/phase13-discovery/build_pcm014_coverage.py": {
+      "path": ".tools/phase13-discovery/build_pcm014_coverage.py",
+      "sha256": "120bb8b665d0f7ce7166874a2dcbfe231ef7ae549852fe894425c1b336cd190c",
+      "size": 8151
+    },
+    ".tools/phase13-live/pdf-stability-014/manifest.json": {
+      "path": ".tools/phase13-live/pdf-stability-014/manifest.json",
+      "sha256": "9badab6d66db388c5337843c41934023c32cbe624cf0466d8c834a8e145d4e9c",
+      "size": 2177
+    },
+    "dist/partsmith-0.1.4-pcm.receipt.json": {
+      "path": "dist/partsmith-0.1.4-pcm.receipt.json",
+      "sha256": "16c4cae35c0ef936c2e74beb985c6f045de86f398461f1c9ef34fb5d2e5a8c1d",
+      "size": 317
+    },
+    "dist/partsmith-0.1.4-pcm.zip": {
+      "path": "dist/partsmith-0.1.4-pcm.zip",
+      "sha256": "862cff04151d22c87529f63102fa000f0afc8a8d0b2fff4bb39cd3d2f8aa4cf9",
+      "size": 6767558
+    },
+    "docs/gates/phase-13.2-final-combined-source-results.xml": {
+      "path": "docs/gates/phase-13.2-final-combined-source-results.xml",
+      "sha256": "0ad46325dbe419d14c7156e7a0b1c95d884097f349e126367febfd1b7bbf1236",
+      "size": 29153
+    },
+    "docs/gates/phase-13.2-live-ipc-refresh-014.json": {
+      "path": "docs/gates/phase-13.2-live-ipc-refresh-014.json",
+      "sha256": "0851ad81a1a872cc8a56a3a38a0560176ccceea06c42fd94f4ce9f358305f8cf",
+      "size": 7586
+    },
+    "docs/gates/phase-13.2-live-wrong-board-014.json": {
+      "path": "docs/gates/phase-13.2-live-wrong-board-014.json",
+      "sha256": "541b679cc280733f9e19f7ba29627e19e99f3608faa3a216be214d615389bc1c",
+      "size": 5907
+    },
+    "docs/gates/phase-13.2-managed-ready-014.json": {
+      "path": "docs/gates/phase-13.2-managed-ready-014.json",
+      "sha256": "b3a4b56559dbbe94bb34643fc91a1b4816cee390052b2dd07f259a6b0effe890",
+      "size": 4771
+    },
+    "docs/gates/phase-13.2-pcm014-isolated-acceptance.json": {
+      "path": "docs/gates/phase-13.2-pcm014-isolated-acceptance.json",
+      "sha256": "63b8cada3c88678d770d637c8cff8dda0f9c752e885e0af989863248d23e99ef",
+      "size": 23744
+    },
+    "docs/gates/phase13.2-packaging-014-runtime-2026-10-06.json": {
+      "path": "docs/gates/phase13.2-packaging-014-runtime-2026-10-06.json",
+      "sha256": "fd76e78ca45974b9cd572e46ae009580e17e6f55fdd05d62d08c66db5c52d26e",
+      "size": 14203
+    },
+    "requirements-ci.txt": {
+      "path": "requirements-ci.txt",
+      "sha256": "df99cf3dc1ac9c11e29b7303972fb7368517a435df3c9c39e7afdb080ca29ccb",
+      "size": 1139
+    },
+    "requirements-pcm.txt": {
+      "path": "requirements-pcm.txt",
+      "sha256": "6ac9272a3742bdc0b324cbe865f27f9edb03b7ee3a31a460faac036df998d1e9",
+      "size": 1355
+    },
+    "src/partsmith/release/runtime-lock-1.0.json": {
+      "path": "src/partsmith/release/runtime-lock-1.0.json",
+      "sha256": "a3e60c9207bd6bfa98d0ab5bb941ec8a026d062ad6556a762422bd373362cfec",
+      "size": 99864
+    }
+  },
+  "evidence_version": "phase13.2-pcm014-readiness-coverage-1.0",
+  "final_pdf_stability": {
+    "passed_per_round": 180,
+    "rounds": 3
+  },
+  "inventory_sha256": "bd5c2663f7e141d20c3ba556541e5823be3578bf8a1b0d22164363f685a4d70e",
+  "isolated_acceptance": {
+    "errors": 0,
+    "failures": 0,
+    "groups": {
+      "workspace.tests.test_integration_contracts": 98,
+      "workspace.tests.test_integration_ipc": 58,
+      "workspace.tests.test_ipc_inspection": 24,
+      "workspace.tests.test_pcm": 28
+    },
+    "passed": 208,
+    "skipped": 0
+  },
+  "locked_dependency_count": 67,
+  "milestone_pass_claim": false,
+  "owned_inventory_files": 150,
+  "package": {
+    "path": "dist/partsmith-0.1.4-pcm.zip",
+    "sha256": "862cff04151d22c87529f63102fa000f0afc8a8d0b2fff4bb39cd3d2f8aa4cf9",
+    "size": 6767558,
+    "version": "0.1.4"
+  },
+  "readiness_cases": {
+    "isolated_external312": "READY",
+    "isolated_recreated312": "READY",
+    "root_actual_managed": "READY"
+  },
+  "remaining_root_closeout": [
+    "Document exact PCM lifecycle and durable-data ownership results",
+    "Record live session loss/restart/context rejection",
+    "Bind tested complete-generation native feasibility boundaries",
+    "Refresh and verify every affected active/CI manifest"
+  ],
+  "root_recorded_live_operations": {
+    "deliberate_refresh": "READY sequence 2",
+    "wrong_selected_board": "IPC_WRONG_BOARD"
+  },
+  "status": "PACKAGING_SCOPE_VERIFIED_ROOT_CLOSEOUT_PENDING"
+}

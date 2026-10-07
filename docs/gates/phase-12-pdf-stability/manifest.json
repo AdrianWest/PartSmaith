@@ -1,0 +1,70 @@
+{
+  "status": "PASS",
+  "rounds_requested": 3,
+  "suite": [
+    "tests/test_extraction.py",
+    "tests/test_extraction_isolation.py",
+    "tests/test_ai.py",
+    "tests/test_ai_transport.py",
+    "tests/test_cli.py",
+    "tests/test_gui.py",
+    "tests/test_kicad_runtime.py",
+    "scripts/verify_gui.py"
+  ],
+  "attempts": [
+    {
+      "round": 1,
+      "exit_code": 0,
+      "timed_out": false,
+      "complete_junit": true,
+      "artifacts": {
+        "round-1.stdout.txt": "925bdc5527f212902253a98b655586ffb14e6eeb5e3ac544239ec2e081c736a5",
+        "round-1.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "round-1.xml": "6ba5c7ea6db318e47d85eecaffa24c3673388b45cdf0c0f27b6f019d9e582423"
+      },
+      "tests": {
+        "tests": 194,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "status": "PASS"
+    },
+    {
+      "round": 2,
+      "exit_code": 0,
+      "timed_out": false,
+      "complete_junit": true,
+      "artifacts": {
+        "round-2.stdout.txt": "b0a1237ba086d5c5d15e5617e4c7ddba5a8993ec6bbd502fed22798839a3c67a",
+        "round-2.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "round-2.xml": "e92eb6ac87ed0f5f92d251d1b1fe65e3fd947c961d7f3a67f9b3ece4c94eabcd"
+      },
+      "tests": {
+        "tests": 194,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "status": "PASS"
+    },
+    {
+      "round": 3,
+      "exit_code": 0,
+      "timed_out": false,
+      "complete_junit": true,
+      "artifacts": {
+        "round-3.stdout.txt": "1c62deac777e0737011494e6a6edbaa30084760e4bb9e407bacfb192db594697",
+        "round-3.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "round-3.xml": "32e768ef035567252c6af7c2c3549fd4d5ea423a98109cbcd50c561e8fa9d015"
+      },
+      "tests": {
+        "tests": 194,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "status": "PASS"
+    }
+  ]
+}

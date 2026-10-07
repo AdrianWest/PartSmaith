@@ -1,0 +1,36 @@
+{
+  "status": "PASS",
+  "scope": "Local 0402 CPU-renderer/controller measurements; no GPU.",
+  "measurements": [
+    {
+      "size": [
+        400,
+        300
+      ],
+      "fresh_process_median_ms": 194.34,
+      "persistent_request_to_frame_median_ms": 32.96,
+      "continuous_motion_frames": 60,
+      "continuous_motion_seconds": 2.0,
+      "continuous_motion_frame_events_per_second": 30.0,
+      "same_renderer_process": true,
+      "final_camera_rendered": true,
+      "source_bytes_unchanged": true,
+      "child_reaped_and_cache_removed": true
+    },
+    {
+      "size": [
+        880,
+        480
+      ],
+      "fresh_process_median_ms": 201.67,
+      "persistent_request_to_frame_median_ms": 33.82,
+      "continuous_motion_frames": 53,
+      "continuous_motion_seconds": 2.0,
+      "continuous_motion_frame_events_per_second": 26.5,
+      "same_renderer_process": true,
+      "final_camera_rendered": true,
+      "source_bytes_unchanged": true,
+      "child_reaped_and_cache_removed": true
+    }
+  ]
+}

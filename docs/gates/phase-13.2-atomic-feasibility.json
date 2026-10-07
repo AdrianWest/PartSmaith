@@ -1,0 +1,272 @@
+{
+  "status": "PASS_FEASIBILITY_ONLY",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "python": "3.12.10",
+  "elevated": false,
+  "kicad_version": "10.0.6",
+  "cli_sha256": "393525236969434e24bc710334efe244fb285ef6596a1aea8e74353ef4db5477",
+  "native_default_local_settings_sha256": "dae33d92d9bf03efbe9908fd60caa5432a854a20227d04a594b5dc4b1469c733",
+  "workspace": "C:\\Users\\User\\AppData\\Local\\Temp\\partsmith-atomic-native-v5fl97o4\\owned",
+  "active_project": "C:\\Users\\User\\AppData\\Local\\Temp\\partsmith-atomic-native-v5fl97o4\\owned\\active\\probe.kicad_pcb",
+  "volume": {
+    "filesystem": "NTFS",
+    "serial": 710730757,
+    "drive_type": 3
+  },
+  "junction_file_id": [
+    710730757,
+    131072,
+    1763252
+  ],
+  "boundary": "One FSCTL_SET_REPARSE_POINT on the owned junction",
+  "reader_boundary": "One opened root plus NtCreateFile RootDirectory",
+  "before_and_after_switch_anchored_hashes_equal": true,
+  "complete_generation_inventories": {
+    "old": {
+      "Footprints.pretty/ProbeOld.kicad_mod": "0fea30dee807363ed9f1ff3aeb801336b04c3867b20a34f0c86c1c8d837efabd",
+      "Models/0402.step": "789ee84bd00e5fa7adfec322191eeb678f849c82b990b30a41f1bb51da839c92",
+      "Symbols.kicad_sym": "c9c3ad36b2bab0217ac3476c950b25754e2c63c6ba4d3c51c073db61db1ef5e2",
+      "fp-lib-table": "ea4d581699d75577a791c8081671818bbf588e5eeeb54315d413a1817ce137dd",
+      "probe.kicad_pcb": "015828855acb789d9eb1acf86603b0e07879ca0a5b9913d9ee0d1faf83e8950b",
+      "probe.kicad_prl": "dae33d92d9bf03efbe9908fd60caa5432a854a20227d04a594b5dc4b1469c733",
+      "probe.kicad_pro": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+      "sym-lib-table": "ecd6f3c7246f650cabda7d32412e29c02c792ea6eadd41fc026f4fd57b8aa8ed"
+    },
+    "new": {
+      "Footprints.pretty/ProbeNew.kicad_mod": "76c0b1e29c4751454f3d3cc267e38588d326007d7d037528bbb1db6568b90c7f",
+      "Models/0402.step": "789ee84bd00e5fa7adfec322191eeb678f849c82b990b30a41f1bb51da839c92",
+      "Symbols.kicad_sym": "00a44460ef4ba50cd1b439be14ae8aeedbff8d31dd235716a64c3be1e3c47a11",
+      "fp-lib-table": "73983878f26f400bf4a206dddea7068adcfa7da19c1167e2886d757d617f1fd8",
+      "probe.kicad_pcb": "174b5c3b4bf93d11b85303a5507681a725f111c40f485913853e70c616cea4c1",
+      "probe.kicad_prl": "dae33d92d9bf03efbe9908fd60caa5432a854a20227d04a594b5dc4b1469c733",
+      "probe.kicad_pro": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+      "sym-lib-table": "096de12733ac2fc85d07705dbaec9a777a5b923db2f97a1ab891615159011edf"
+    }
+  },
+  "both_library_table_bytes_changed": true,
+  "native": {
+    "old": {
+      "commands": [
+        {
+          "arguments": [
+            "sym",
+            "export",
+            "svg",
+            "--output",
+            "C:\\Users\\User\\AppData\\Local\\Temp\\partsmith-atomic-native-v5fl97o4\\owned\\native-output\\old\\symbol",
+            "C:\\Users\\User\\AppData\\Local\\Temp\\partsmith-atomic-native-v5fl97o4\\owned\\active\\Symbols.kicad_sym"
+          ],
+          "returncode": 0,
+          "stdout": "Plotting symbol 'ProbeOld' unit 1 to 'C:\\Users\\User\\AppData\\Local\\Temp\\partsmith-atomic-native-v5fl97o4\\owned\\native-output\\old\\symbol\\ProbeOld_unit1.svg'\n",
+          "stderr": ""
+        },
+        {
+          "arguments": [
+            "fp",
+            "export",
+            "svg",
+            "--output",
+            "C:\\Users\\User\\AppData\\Local\\Temp\\partsmith-atomic-native-v5fl97o4\\owned\\native-output\\old\\footprint",
+            "C:\\Users\\User\\AppData\\Local\\Temp\\partsmith-atomic-native-v5fl97o4\\owned\\active\\Footprints.pretty"
+          ],
+          "returncode": 0,
+          "stdout": "Plotting footprint 'ProbeOld' to 'C:\\Users\\User\\AppData\\Local\\Temp\\partsmith-atomic-native-v5fl97o4\\owned\\native-output\\old\\footprint\\ProbeOld.svg'\nPlotted to 'C:\\Users\\User\\AppData\\Local\\Temp\\partsmith-atomic-native-v5fl97o4\\owned\\native-output\\old\\footprint\\ProbeOld.svg'.\nDone.\n",
+          "stderr": ""
+        },
+        {
+          "arguments": [
+            "pcb",
+            "drc",
+            "--format",
+            "json",
+            "--output",
+            "C:\\Users\\User\\AppData\\Local\\Temp\\partsmith-atomic-native-v5fl97o4\\owned\\native-output\\old\\drc.json",
+            "C:\\Users\\User\\AppData\\Local\\Temp\\partsmith-atomic-native-v5fl97o4\\owned\\active\\probe.kicad_pcb"
+          ],
+          "returncode": 0,
+          "stdout": "Found 0 violations\nFound 0 unconnected items\nSaved DRC Report to C:/Users/User/AppData/Local/Temp/partsmith-atomic-native-v5fl97o4/owned/native-output/old/drc.json\n",
+          "stderr": ""
+        },
+        {
+          "arguments": [
+            "pcb",
+            "export",
+            "step",
+            "--force",
+            "--output",
+            "C:\\Users\\User\\AppData\\Local\\Temp\\partsmith-atomic-native-v5fl97o4\\owned\\native-output\\old\\board.step",
+            "C:\\Users\\User\\AppData\\Local\\Temp\\partsmith-atomic-native-v5fl97o4\\owned\\active\\probe.kicad_pcb"
+          ],
+          "returncode": 0,
+          "stdout": "STEP file 'C:/Users/User/AppData/Local/Temp/partsmith-atomic-native-v5fl97o4/owned/native-output/old/board.step' created.\n\nExport time 0.015 s\n",
+          "stderr": ""
+        }
+      ],
+      "library_table_violations": [],
+      "source_model_solids": 3,
+      "exported_board_and_model_solids": 4,
+      "artifacts": {
+        "board.step": "e3f168ff1be8e975f94db2f41425821f93f8e3d6bbf5594a3df2b658df3e14a5",
+        "drc.json": "90b17f3f7a164a12eaa1251728796efc9e6bbccc645b40ca7f990ba801044de6",
+        "footprint/ProbeOld.svg": "3c94e88608c7db301ae7a6428090ec449c8a3e15bc40e3bc7deb4d563e625a4a",
+        "symbol/ProbeOld_unit1.svg": "6c57de29331166c700c94f995c826ce6766d863cfa8012645f26ec3bae884b81"
+      }
+    },
+    "new": {
+      "commands": [
+        {
+          "arguments": [
+            "sym",
+            "export",
+            "svg",
+            "--output",
+            "C:\\Users\\User\\AppData\\Local\\Temp\\partsmith-atomic-native-v5fl97o4\\owned\\native-output\\new\\symbol",
+            "C:\\Users\\User\\AppData\\Local\\Temp\\partsmith-atomic-native-v5fl97o4\\owned\\active\\Symbols.kicad_sym"
+          ],
+          "returncode": 0,
+          "stdout": "Plotting symbol 'ProbeNew' unit 1 to 'C:\\Users\\User\\AppData\\Local\\Temp\\partsmith-atomic-native-v5fl97o4\\owned\\native-output\\new\\symbol\\ProbeNew_unit1.svg'\n",
+          "stderr": ""
+        },
+        {
+          "arguments": [
+            "fp",
+            "export",
+            "svg",
+            "--output",
+            "C:\\Users\\User\\AppData\\Local\\Temp\\partsmith-atomic-native-v5fl97o4\\owned\\native-output\\new\\footprint",
+            "C:\\Users\\User\\AppData\\Local\\Temp\\partsmith-atomic-native-v5fl97o4\\owned\\active\\Footprints.pretty"
+          ],
+          "returncode": 0,
+          "stdout": "Plotting footprint 'ProbeNew' to 'C:\\Users\\User\\AppData\\Local\\Temp\\partsmith-atomic-native-v5fl97o4\\owned\\native-output\\new\\footprint\\ProbeNew.svg'\nPlotted to 'C:\\Users\\User\\AppData\\Local\\Temp\\partsmith-atomic-native-v5fl97o4\\owned\\native-output\\new\\footprint\\ProbeNew.svg'.\nDone.\n",
+          "stderr": ""
+        },
+        {
+          "arguments": [
+            "pcb",
+            "drc",
+            "--format",
+            "json",
+            "--output",
+            "C:\\Users\\User\\AppData\\Local\\Temp\\partsmith-atomic-native-v5fl97o4\\owned\\native-output\\new\\drc.json",
+            "C:\\Users\\User\\AppData\\Local\\Temp\\partsmith-atomic-native-v5fl97o4\\owned\\active\\probe.kicad_pcb"
+          ],
+          "returncode": 0,
+          "stdout": "Found 0 violations\nFound 0 unconnected items\nSaved DRC Report to C:/Users/User/AppData/Local/Temp/partsmith-atomic-native-v5fl97o4/owned/native-output/new/drc.json\n",
+          "stderr": ""
+        },
+        {
+          "arguments": [
+            "pcb",
+            "export",
+            "step",
+            "--force",
+            "--output",
+            "C:\\Users\\User\\AppData\\Local\\Temp\\partsmith-atomic-native-v5fl97o4\\owned\\native-output\\new\\board.step",
+            "C:\\Users\\User\\AppData\\Local\\Temp\\partsmith-atomic-native-v5fl97o4\\owned\\active\\probe.kicad_pcb"
+          ],
+          "returncode": 0,
+          "stdout": "STEP file 'C:/Users/User/AppData/Local/Temp/partsmith-atomic-native-v5fl97o4/owned/native-output/new/board.step' created.\n\nExport time 0.015 s\n",
+          "stderr": ""
+        }
+      ],
+      "library_table_violations": [],
+      "source_model_solids": 3,
+      "exported_board_and_model_solids": 4,
+      "artifacts": {
+        "board.step": "04337c8973842f6773de205c8af24aa93bb5ae206e45e6ac7ddf4b35b95d8ed9",
+        "drc.json": "be166d925628ee8164f51e26e9c087c2914bd4f1249cb5bd4028d7f3bd8ae007",
+        "footprint/ProbeNew.svg": "dec1896e46097a525a9544fb383bccbdcd7723136ff587e6e9a19f0f2845e25c",
+        "symbol/ProbeNew_unit1.svg": "3f1c13343d0df1cbe8dc33a4da3ec3b99e2ad16ed623dd741f11dea6ce8c2781"
+      }
+    },
+    "rollback": {
+      "commands": [
+        {
+          "arguments": [
+            "sym",
+            "export",
+            "svg",
+            "--output",
+            "C:\\Users\\User\\AppData\\Local\\Temp\\partsmith-atomic-native-v5fl97o4\\owned\\native-output\\rollback\\symbol",
+            "C:\\Users\\User\\AppData\\Local\\Temp\\partsmith-atomic-native-v5fl97o4\\owned\\active\\Symbols.kicad_sym"
+          ],
+          "returncode": 0,
+          "stdout": "Plotting symbol 'ProbeOld' unit 1 to 'C:\\Users\\User\\AppData\\Local\\Temp\\partsmith-atomic-native-v5fl97o4\\owned\\native-output\\rollback\\symbol\\ProbeOld_unit1.svg'\n",
+          "stderr": ""
+        },
+        {
+          "arguments": [
+            "fp",
+            "export",
+            "svg",
+            "--output",
+            "C:\\Users\\User\\AppData\\Local\\Temp\\partsmith-atomic-native-v5fl97o4\\owned\\native-output\\rollback\\footprint",
+            "C:\\Users\\User\\AppData\\Local\\Temp\\partsmith-atomic-native-v5fl97o4\\owned\\active\\Footprints.pretty"
+          ],
+          "returncode": 0,
+          "stdout": "Plotting footprint 'ProbeOld' to 'C:\\Users\\User\\AppData\\Local\\Temp\\partsmith-atomic-native-v5fl97o4\\owned\\native-output\\rollback\\footprint\\ProbeOld.svg'\nPlotted to 'C:\\Users\\User\\AppData\\Local\\Temp\\partsmith-atomic-native-v5fl97o4\\owned\\native-output\\rollback\\footprint\\ProbeOld.svg'.\nDone.\n",
+          "stderr": ""
+        },
+        {
+          "arguments": [
+            "pcb",
+            "drc",
+            "--format",
+            "json",
+            "--output",
+            "C:\\Users\\User\\AppData\\Local\\Temp\\partsmith-atomic-native-v5fl97o4\\owned\\native-output\\rollback\\drc.json",
+            "C:\\Users\\User\\AppData\\Local\\Temp\\partsmith-atomic-native-v5fl97o4\\owned\\active\\probe.kicad_pcb"
+          ],
+          "returncode": 0,
+          "stdout": "Found 0 violations\nFound 0 unconnected items\nSaved DRC Report to C:/Users/User/AppData/Local/Temp/partsmith-atomic-native-v5fl97o4/owned/native-output/rollback/drc.json\n",
+          "stderr": ""
+        },
+        {
+          "arguments": [
+            "pcb",
+            "export",
+            "step",
+            "--force",
+            "--output",
+            "C:\\Users\\User\\AppData\\Local\\Temp\\partsmith-atomic-native-v5fl97o4\\owned\\native-output\\rollback\\board.step",
+            "C:\\Users\\User\\AppData\\Local\\Temp\\partsmith-atomic-native-v5fl97o4\\owned\\active\\probe.kicad_pcb"
+          ],
+          "returncode": 0,
+          "stdout": "STEP file 'C:/Users/User/AppData/Local/Temp/partsmith-atomic-native-v5fl97o4/owned/native-output/rollback/board.step' created.\n\nExport time 0.015 s\n",
+          "stderr": ""
+        }
+      ],
+      "library_table_violations": [],
+      "source_model_solids": 3,
+      "exported_board_and_model_solids": 4,
+      "artifacts": {
+        "board.step": "28f855e63575227747069b8accfa8986062bf499674608fc2386ca26cb3be5a7",
+        "drc.json": "2750252feaad634c267171568fd7df0f95244cd47c79cee817041c6e09ff7d3a",
+        "footprint/ProbeOld.svg": "fed83baa213aecd5e6d373f54aabc115f4ea559160b03bcd0ec7038e6188d7b8",
+        "symbol/ProbeOld_unit1.svg": "661f6a685bb4a031d7710fe505e328e5f2ef13ac478bd21adac2292907d6d596"
+      }
+    }
+  },
+  "cancelled_before_switch": true,
+  "sharing_failure_winerror": 32,
+  "concurrent_readers": {
+    "readers": 4,
+    "snapshots": 160,
+    "switches": 80,
+    "observed": {
+      "new": 78,
+      "old": 82
+    },
+    "elapsed_seconds": 0.641
+  },
+  "restrictions": [
+    "New owned project root on the same fixed NTFS volume",
+    "Existing directories and foreign reparses are not adopted",
+    "Libraries, tables and references stay inside the generation",
+    "Generation files stay immutable and contain no reparses",
+    "Editors must quiesce and explicitly refresh libraries",
+    "External writers and remote/removable volumes unsupported",
+    "No production authorization, journal or power-loss proof"
+  ],
+  "workspace_retained": false
+}

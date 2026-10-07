@@ -1,0 +1,11 @@
+{
+  "archive_sha256": "a52e0ce3ecbc12aec3a5a79c8c95327529a3b2903c5e6d118596d0e59749fca7",
+  "engineering_readiness_claim": false,
+  "isolated": {
+    "members": 162,
+    "state": "OFFLINE_PAYLOAD_VERIFIED"
+  },
+  "source_resource_parity": true,
+  "state": "OFFLINE_PAYLOAD_VERIFIED",
+  "version": "0.1.9"
+}

@@ -1,0 +1,6 @@
+{
+  "code": "PINNED_DEPENDENCY_MISSING_OR_CHANGED",
+  "python": "3.12.10",
+  "schema_version": "partsmith-pcm-readiness-1.0",
+  "state": "FAILED"
+}

@@ -1,0 +1,347 @@
+"""
+
+@package src.partsmith.symbol.model
+@brief Deterministic KiCad symbol generation and symbol dependency
+projections.
+@details Provides the module implementation and public interfaces.
+"""
+
+from dataclasses import dataclass
+from hashlib import sha256
+from typing import Protocol
+
+from partsmith.ir.canonical import canonical_json
+from partsmith.ir.errors import Issue
+from partsmith.ir.model import ComponentIR, normalize_ir
+from partsmith.pdl import PDL, ir_pdl_issues
+
+
+@dataclass(frozen=True)
+class SymbolContext:
+    """Trusted, symbol-only generator configuration."""
+
+    generator_version: str = "1.0"
+    serializer_version: str = "1.0"
+    target_format: str = "kicad_sym"
+    conventions_version: str = "1.0"
+    naming_version: str = "1.0"
+    assignment_version: str = "1.0"
+    python_version: str = "3.12"
+    configuration_schema_version: str = "1.0"
+    required_ir_paths: tuple[str, ...] = (
+        "/identity",
+        "/electrical",
+        "/pins",
+        "/symbol",
+    )
+    required_configuration_paths: tuple[str, ...] = (
+        "/generator_version",
+        "/serializer_version",
+        "/target_format",
+        "/conventions_version",
+        "/naming_version",
+        "/assignment_version",
+    )
+
+
+GeneratorContext = SymbolContext
+
+
+@dataclass(frozen=True)
+class GeneratedArtifact:
+    """Deterministic generated artifact with exact byte identity."""
+
+    artifact_type: str
+    filename: str
+    content: bytes
+    source_hash: str
+    dependency_hash: str
+    generator_version: str
+
+    @property
+    def sha256(self) -> str:
+        """
+
+        @brief Implements the sha256 operation.
+        @return The str result.
+        @details Implements the documented behavior without changing the
+        public contract.
+
+        """
+        return sha256(self.content).hexdigest()
+
+
+class SymbolGenerator(Protocol):
+    """@brief Defines the symbol-generation interface.
+    @details Implementations produce deterministic symbol artifacts from IR.
+    """
+
+    def generate(
+        self, ir: ComponentIR, context: SymbolContext
+    ) -> GeneratedArtifact:
+        """
+        @brief Generates a deterministic symbol artifact.
+        @param ir Component IR used for symbol generation.
+        @param context Trusted symbol generator configuration.
+        @return The generated symbol artifact.
+        @details Implementations must preserve deterministic byte identity.
+
+        """
+        ...
+
+
+class DeterministicSymbolGenerator:
+    """Concrete deterministic symbol generator implementation."""
+
+    def generate(
+        self, ir: ComponentIR, context: SymbolContext
+    ) -> GeneratedArtifact:
+        """
+        @brief Generates a deterministic symbol artifact.
+        @param ir Component IR used for symbol generation.
+        @param context Trusted symbol generator configuration.
+        @return The generated symbol artifact.
+        @details Implementations must preserve deterministic byte identity.
+
+        """
+        return serialize_symbol(ir, context)
+
+
+def _ir_data(ir: ComponentIR | dict) -> dict:
+    """
+
+    @brief Implements the _ir_data operation.
+    @param ir The ir argument.
+    @return The dict result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
+    return ir.data if isinstance(ir, ComponentIR) else ir
+
+
+def validate_symbol_inputs(
+    ir: ComponentIR | dict, pdl: PDL
+) -> tuple[Issue, ...]:
+    """
+
+    @brief Validate IR and its package compatibility before symbol
+    generation.
+    @param ir The ir argument.
+    @param pdl The pdl argument.
+    @return The tuple[Issue, ...] result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
+    try:
+        data = normalize_ir(_ir_data(ir))
+    except ValueError as error:
+        return tuple(
+            sorted(
+                set(
+                    getattr(
+                        error,
+                        "issues",
+                        (Issue("", "IR_INPUT", str(error)),),
+                    )
+                )
+            )
+        )
+    issues = list(ir_pdl_issues(data, pdl.data))
+    return tuple(sorted(set(issues)))
+
+
+def symbol_projection(ir: ComponentIR | dict, context: SymbolContext) -> dict:
+    """
+
+    @brief Project only IR and trusted symbol configuration.
+    @param ir The ir argument.
+    @param context The context argument.
+    @return The dict result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
+    data = normalize_ir(_ir_data(ir))
+    identity = {
+        key: value
+        for key, value in data["identity"].items()
+        if key != "component_id"
+    }
+    return {
+        "snapshot_profile": "1.2",
+        "node_kind": "SYMBOL",
+        "declaration": {
+            "id": "partsmith.symbol",
+            "version": context.generator_version,
+            "configuration_schema_version": (
+                context.configuration_schema_version
+            ),
+            "required_ir_paths": list(context.required_ir_paths),
+            "required_configuration_paths": list(
+                context.required_configuration_paths
+            ),
+        },
+        "configuration": {
+            "python_version": context.python_version,
+            "generator_version": context.generator_version,
+            "serializer_version": context.serializer_version,
+            "target_format": context.target_format,
+            "conventions_version": context.conventions_version,
+            "naming_version": context.naming_version,
+            "assignment_version": context.assignment_version,
+        },
+        "inputs": {
+            "identity": identity,
+            "electrical": data["electrical"],
+            "pins": data["pins"],
+            "symbol": data["symbol"],
+        },
+    }
+
+
+def symbol_dependency_hash(
+    ir: ComponentIR | dict, context: SymbolContext
+) -> str:
+    """
+
+    @brief Hash the canonical symbol-only profile-1.2 projection.
+    @param ir The ir argument.
+    @param context The context argument.
+    @return The str result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
+    return sha256(canonical_json(symbol_projection(ir, context))).hexdigest()
+
+
+def _quote(value: str) -> str:
+    """
+
+    @brief Implements the _quote operation.
+    @param value The value argument.
+    @return The str result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
+    return '"' + value.replace("\\", "\\\\").replace('"', '\\"') + '"'
+
+
+def _pin(number: str, name: str, electrical_type: str, x: int) -> str:
+    """
+
+    @brief Implements the _pin operation.
+    @param number The number argument.
+    @param name The name argument.
+    @param electrical_type The electrical_type argument.
+    @param x The x argument.
+    @return The str result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
+    return "\n".join(
+        (
+            f"      (pin {electrical_type} line (at {x} 0 0) (length 2.54)",
+            f"        (name {_quote(name)} (effects (font (size 1.27 1.27))))",
+            f"        (number {_quote(number)} (effects "
+            f"(font (size 1.27 1.27))))",
+            "      )",
+        )
+    )
+
+
+def serialize_symbol(
+    ir: ComponentIR | dict, context: SymbolContext
+) -> GeneratedArtifact:
+    """
+
+    @brief Serialize a deterministic single-unit resistor-style KiCad
+    symbol.
+    @param ir The ir argument.
+    @param context The context argument.
+    @return The GeneratedArtifact result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
+    data = normalize_ir(_ir_data(ir))
+    pins = data["pins"]
+    reference = data["symbol"]["reference_prefix"]
+    value = data["identity"]["mpn"]
+    symbol_name = data["identity"]["normalized_mpn"]
+    pin_blocks = []
+    for index, pin in enumerate(pins):
+        x = -2.54 if index % 2 == 0 else 2.54
+        pin_blocks.append(
+            _pin(pin["number"], pin["name"], pin["electrical_type"], x)
+        )
+    content = "\n".join(
+        (
+            "(kicad_symbol_lib",
+            "  (version 20231120)",
+            "  (generator partsmith)",
+            f"  (symbol {_quote(symbol_name)}",
+            f'    (property "Reference" {_quote(reference)})',
+            f'    (property "Value" {_quote(value)})',
+            "    (symbol " + _quote(symbol_name + "_1_1"),
+            "      (rectangle (start -1.27 1.27) (end 1.27 -1.27)",
+            "        (stroke (width 0) (type default))",
+            "        (fill (type none))",
+            "      )",
+            *pin_blocks,
+            "    )",
+            "  )",
+            ")",
+            "",
+        )
+    ).encode("utf-8")
+    return GeneratedArtifact(
+        artifact_type="SYMBOL",
+        filename=f"{symbol_name}.kicad_sym",
+        content=content,
+        source_hash=sha256(canonical_json(data)).hexdigest(),
+        dependency_hash=symbol_dependency_hash(data, context),
+        generator_version=context.generator_version,
+    )
+
+
+def validate_symbol_artifact(
+    artifact: GeneratedArtifact, ir: ComponentIR | dict
+) -> tuple[Issue, ...]:
+    """
+
+    @brief Check deterministic symbol syntax and exact physical pin
+    numbering.
+    @param artifact The artifact argument.
+    @param ir The ir argument.
+    @return The tuple[Issue, ...] result.
+    @details Implements the documented behavior without changing the
+    public contract.
+
+    """
+    issues = []
+    text = artifact.content.decode("utf-8")
+    if text.count("(") != text.count(")"):
+        issues.append(
+            Issue(
+                "/artifact", "SYMBOL_SYNTAX", "Unbalanced KiCad symbol syntax"
+            )
+        )
+    expected = {pin["number"] for pin in normalize_ir(_ir_data(ir))["pins"]}
+    actual = set()
+    for line in text.splitlines():
+        if line.strip().startswith("(number "):
+            actual.add(line.strip().split('"')[1])
+    if actual != expected:
+        issues.append(
+            Issue(
+                "/artifact",
+                "SYMBOL_PINS",
+                "Symbol pin numbers do not match IR",
+            )
+        )
+    return tuple(sorted(set(issues)))

@@ -1,0 +1,129 @@
+{
+  "phase": "13.1",
+  "date": "2026-10-06",
+  "status": "PASS",
+  "specification": "v0.9.7",
+  "finding": {
+    "R13-01": "RESOLVED"
+  },
+  "scope": "Local Windows AMD64, Python3.12.10, KiCad10.0.6. Source and isolated offline contract-only PCM-layout fixture; no customer plugin or complete Phase13 PASS.",
+  "next_milestone": "13.2",
+  "full_phase13_status": "PENDING",
+  "resource_policy": "1.0",
+  "canonical_profile": "1.0",
+  "entry": {
+    "phase12_status": "PASS",
+    "corrections": [
+      "R12-01",
+      "R12-02"
+    ],
+    "legacy_plugin": "launch-only; unchanged",
+    "desktop_session": "partsmith-session-1.0; unchanged",
+    "historical_evidence": "Previous Phase0\u201312 tests/distributions retain original identities/scope."
+  },
+  "tests": {
+    "source": {
+      "path": "docs/gates/phase-13.1-final-source-results.xml",
+      "sha256": "c79ee166ac8dd68be3c174e96e4d49921cbefb30785e5c71111d805375e3fbd1",
+      "byte_length": 25908,
+      "tests": 194,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "status": "PASS"
+    },
+    "isolated_pcm_payload": {
+      "path": "docs/gates/phase-13.1-pcm-results.xml",
+      "sha256": "d84fbdf134894a1d60e54e195243aeabfef1fc7702f07687796317f7d164d6b1",
+      "byte_length": 12784,
+      "tests": 98,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "status": "PASS"
+    }
+  },
+  "pcm_contract_fixture": {
+    "path": "dist/phase13-contract-payload.zip",
+    "sha256": "2a5aee4117e26947aad41819916545a7f53b97abcfdf4ab5d6a20086fd766a94",
+    "byte_length": 6661100
+  },
+  "payload_evidence": {
+    "path": "docs/gates/phase-13.1-pcm-payload.json",
+    "sha256": "4dead1cb8dee3dac366b29ab5573f785028ae3bf374c98c717079943497ec782",
+    "byte_length": 26827
+  },
+  "quality": {
+    "ruff_check": "PASS",
+    "ruff_format_check": "PASS",
+    "historical_archive_policy": "Excluded from formatter to preserve exact historical bytes."
+  },
+  "wheel_build_install_or_test": false,
+  "hash_source": "disk",
+  "hash_closeout": "docs/gates/phase-13.1-hash-closeout-2026-10-06.json",
+  "git_blob_verification": "Due after changes are committed; HEAD cannot represent these uncommitted inputs.",
+  "commands": [
+    "Set PYTHONPATH to repository src; use project Python3.12",
+    "python -m pytest tests/test_integration_contracts.py tests/test_integration_sources.py tests/test_phase8_bundle.py tests/test_phase8_release_workflow.py tests/test_phase8_input_review.py tests/test_phase8_persistence.py tests/test_release_contracts.py tests/test_desktop_session.py tests/test_desktop_review.py tests/test_desktop_release.py tests/test_desktop_generation.py -q --junitxml=docs/gates/phase-13.1-final-source-results.xml",
+    "python scripts/verify_phase13_contracts.py --archive dist/phase13-contract-payload.zip --evidence docs/gates/phase-13.1-pcm-payload.json --junit docs/gates/phase-13.1-pcm-results.xml",
+    "python -m ruff check .",
+    "python -m ruff format --check ."
+  ],
+  "sha256": {
+    ".gitattributes": "77713bea66c00eaf2cde8a55f7d79847d4a7b1cb78ee0e13dcc2911be11753c3",
+    ".github/instructions/gate-closeout.instructions.md": "379f662435f4478397d7167531ffa719e29d828eb55a518aa0b108a07eccffbc",
+    ".github/instructions/python-docstrings.instructions.md": "894da275afecd25301ba82e36a159da73c99320bcbd06041035852b1875aa5ae",
+    ".github/workflows/ci.yml": "1490d28ecb0d46b08234222760a50fae3ccd33c9bf1678324f0b3f0416f44177",
+    "AGENTS.md": "08ba9c88839cc00c7ad9626e1b6a281c5085d670debede9c20b13c3221df7a8a",
+    "README.md": "96ffeb15e307b99b07aed499cfd2803aa2bb3beebea9e24177e06a5ed08b09bc",
+    "docs/gates/phase-12-artifacts.json": "cead13cd02be765154d9fa6bba1adf01e6109aedebba8e6f621308db44102b38",
+    "docs/gates/phase-12.md": "f36eb76cf3cbbb0ca25349c16bc73cbbd5657ab4ee238521957b902c8ba32785",
+    "docs/gates/phase-13-discovery-2026-10-06.json": "26a7a555bbc628f81199608585be3bf4bb3de71cae98bd59df7710cc94f11395",
+    "docs/gates/phase-13-discovery-2026-10-06.md": "f8ce298a0cc42cfbf7b8b95f144fdbeccbe392604fc6298ba914cb32bc4cc3ab",
+    "docs/gates/phase-13.1-final-source-results.xml": "c79ee166ac8dd68be3c174e96e4d49921cbefb30785e5c71111d805375e3fbd1",
+    "docs/gates/phase-13.1-pcm-payload.json": "4dead1cb8dee3dac366b29ab5573f785028ae3bf374c98c717079943497ec782",
+    "docs/gates/phase-13.1-pcm-payload.stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/gates/phase-13.1-pcm-payload.stdout.txt": "defb3608a766d1ca38020f6e230aa9258f7b045d380a85485fddaf8fa853dd62",
+    "docs/gates/phase-13.1-pcm-results.xml": "d84fbdf134894a1d60e54e195243aeabfef1fc7702f07687796317f7d164d6b1",
+    "docs/gates/phase-13.1.md": "1240640374bd5eb050640995b3e34df5ddbcd2cfaf812ee30d4e3ceea576cb66",
+    "docs/integration-contracts.md": "69a593e4b574e3f3326659592f189efeaa8242b59b55477506937d10a92bc943",
+    "fixtures/integration/files.json": "5c1dfc9a5fd9da213086d9034c9a6ff3086d3ea13f76c2f07c5429fa98462723",
+    "fixtures/integration/golden.json": "4e5b281d5198d382b8a5331353cc5528dc35a42bf4e2067eaf3bd19324bbdf21",
+    "fixtures/integration/invalid/bad-digest.json": "bc8ad0c5c8056a8b641ac72f11d9f4d419b01c5e5b57cf102368cba7464a5ed5",
+    "fixtures/integration/invalid/case-alias.json": "10947eca41e8797d93120821d666eda75ac5080b2f0feec82c3910b9f3892558",
+    "fixtures/integration/invalid/duplicate-path.json": "5b8b7dc41cc4bb549ec9ff20a32cbc4d9b45fe5c00dfd1ce5deea88ad62980c5",
+    "fixtures/integration/invalid/hash-cycle.json": "9347ee400700a6e6d8c51fb9b554ff7344a701a2378513c5df95a201a4cb2760",
+    "fixtures/integration/invalid/missing-field.json": "047dfd8d886d6958e1e60abe568e54bc25ced0ad6ca8dcf78b9cb273b9242b6f",
+    "fixtures/integration/invalid/missing-rule.json": "94a4fd2db89156259943e6f8d1267733dc65f1c0e1a7cd4ad6e2b9ef6f0d5f5a",
+    "fixtures/integration/invalid/mixed-base.json": "2583c8fe8c646f102f00f2d7bd92bdd342425e74bc040a6210d8392063d7a996",
+    "fixtures/integration/invalid/parent-path.json": "1a541d3cffa12e460db9e0d7690d2af2eae4a6d61788a344606450a5f3a4c860",
+    "fixtures/integration/invalid/self-hash.json": "37b47b5acf5b4ad2fdac5576132dc6cc451a4fecfe13e522f8220514e79d9a00",
+    "fixtures/integration/invalid/unknown-field.json": "658d2eebe14b6540327249e26b313ca9a71543305589d82dc9f0e7a377e5a1b7",
+    "fixtures/integration/invalid/unsorted-source.json": "864fbe5963a4fa05879e3cb103e61136c2fc336ab2fc87787fa8f1088cbe21f0",
+    "fixtures/integration/invalid/unsupported-version.json": "8f8610bf1645cc94744b684958aab98d7d92e42b8319304da770b8a2da3fb85b",
+    "fixtures/integration/valid/audit.json": "3e42c0214a38d0470aeaedfcbde6b81f58d28b81f6d404d6b54cd52be21a4830",
+    "fixtures/integration/valid/authorization.json": "8a2bc7420694d9ca1f5f51bc0e9075c726f783cc46367883da3450ab3169009e",
+    "fixtures/integration/valid/journal.json": "59a20807e974e073b4d322e54a8f32b8dd961e585cb48cad403e16a651d70fad",
+    "fixtures/integration/valid/manifest.json": "61f2ea2115f232ccd7b12c3b496983d87c65d9d3873b6210755b9342d461486a",
+    "fixtures/integration/valid/plan.json": "e50a441f3fd71ce2ddbbffc9d6b506453ae80a41638739983d47369ad2bb5ac1",
+    "fixtures/integration/valid/post-validation.json": "40a83858cfec672b2ea5fcaa15cbc3af8033cfb05a5e9725238bcb991e1e9dfc",
+    "fixtures/integration/valid/pre-validation.json": "6f6629155a7b66fb97262bbaa6175f49684911f0d5066b63955eb1300f0bd4ae",
+    "pyproject.toml": "2ad10bd5c8b395c3e526148c98e452c5ba6408ed99d3a21fa3e177b3755e4642",
+    "resources/BFT_PartSmith_Implementation_Spec.md": "dc793831f0242960dd11e1974d6838019c2c70d0360f7007549bdbbb1cc91b8c",
+    "schemas/integration-contracts-1.0.schema.json": "39f09b7f5a3048944c30665da53d770eae6a7e325d2c9869ebc29674cd392cfd",
+    "scripts/verify_phase13_contracts.py": "d9e240832e9d41785b0225ab72e13e35d344889b092a92fe2da1fbba5bd87324",
+    "src/partsmith/integration/__init__.py": "334c4c1d105ea2fbe867d7393d6d18cfc0d686192e12288425c91aa03138e913",
+    "src/partsmith/integration/bindings.py": "250a964e586b65291c602e2c6c1d36facfee287ed1d196e78dc952e44e498553",
+    "src/partsmith/integration/contracts.py": "79894255771f22dab367dca653db3283c5d8f0c1b4262f28e653c524986adf92",
+    "src/partsmith/integration/errors.py": "541e38bcd5feb5aa0ad5d6d905a7888474ea1f05360ce7f1a2bb8ab20b339de7",
+    "src/partsmith/integration/policy.py": "024c6d1545608b28f811b8d29c5d8a30ddcc9be4c5be9935ce5e5a278c61bbfd",
+    "src/partsmith/integration/schema.py": "49fb3fd11d8d6aab4ca602e48f53bf2f387e47bab1d078841507d22d5159e21b",
+    "src/partsmith/integration/sources.py": "55bc7aeda0936c42ece62c58b1b84a2ff0b11d9eaf73dbc45d632c5ddc81e105",
+    "src/partsmith/persistence/release.py": "b0a36d749293012d22662a13e3450e4e59cbd0ee2e94ad282ae9ab7645b0352e",
+    "src/partsmith/release/bundle.py": "f392244d9bbc997ce791b9dbe84bc3dfb60b41e4a36757f54bb3b9f24329394d",
+    "src/partsmith/release/replay.py": "c75cfb6d10e9b28a62dc8c8854a37e73cc9488f78fe63eb9b14a77a8016a5af5",
+    "src/partsmith/release/runtime-lock-1.0.json": "a3e60c9207bd6bfa98d0ab5bb941ec8a026d062ad6556a762422bd373362cfec",
+    "tests/test_integration_contracts.py": "2650ecf32a87c7e2089eb8da8291bc342df5cab6998717782be4b99ed29a13be",
+    "tests/test_integration_sources.py": "af8b461498c302a29c1efa5447e4a99103bf34ba2142649c681c096e9b5545ae"
+  }
+}

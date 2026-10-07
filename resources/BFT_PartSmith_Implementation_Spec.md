@@ -1,7 +1,7 @@
 # PartSmith Implementation Specification
 
 **Specification version:** v0.9.7
-**Status:** Implementation baseline — Phase 13 contracts and integration pending
+**Status:** Implementation baseline — Phase 13 PASS on the declared Windows target
 **Document date:** 2026-10-05
 
 **Revision purpose:** Incorporate the project owner's requested R13-01 work
@@ -23,7 +23,8 @@ defines package/runtime preparation and the PCM lifecycle; 13.7/13.8 require
 real installed-package acceptance. The subsequent project-owner correction
 removes PartSmith wheel builds/tests from Phase 13; source, PCM payload and
 installed PCM runtime checks are its validation paths. This is an addendum to
-v0.9.7; no runtime implementation or Phase 13 PASS is asserted. See the
+v0.9.7; that requirements revision did not itself assert runtime implementation
+or Phase 13 PASS. Current implementation receipts are listed below. See the
 [installation correction](../docs/spec-phase-13-pcm-installation-update-2026-10-05.md)
 and [pre-correction snapshot](history/BFT_PartSmith_Implementation_Spec_v0.9.7_before_PCM_2026-10-05.md).
 The [PCM-only validation update](../docs/spec-phase-13-pcm-only-update-2026-10-05.md)
@@ -39,12 +40,22 @@ alternative schemas. Historical material is preserved unchanged in the
 Version labels inside that archive describe its original context only.
 
 **Implementation status:** Repository receipts cover the implemented Phases
-0–12 within their stated platforms and test scopes. Phase 12's R12-01/R12-02
+0–13 within their stated platforms and test scopes. Phase 12's R12-01/R12-02
 corrections have source and installed-wheel regression evidence. The existing
-KiCad entry is a launch-only action plugin; native CLI validation, immutable
+legacy KiCad entry is a launch-only action plugin; native CLI validation, immutable
 release/revision bundles and desktop session transport are implemented.
-Installation-plan/manifest/authorization contracts, a PCM package, an IPC client,
-an aggregate publisher and rollback are pending Phase 13 work. See the
+Phase 13.1 installation contracts, golden/negative fixtures, trusted source
+resolution and isolated offline PCM-layout checks are implemented. The
+[13.1 receipt](../docs/gates/phase-13.1-artifacts.json) records their scoped PASS.
+A customer PCM package, pinned managed runtime and official PCB IPC client are
+implemented in 13.2. Planning, exact native staging and fresh installation
+authorization are implemented in 13.3–13.5; complete owned NTFS publication,
+reconciliation and rollback in 13.6; deliberate desktop controls and actual
+native/IPC round trips in 13.7. Final source/PCM/desktop/offline acceptance,
+three PDF stability rounds, exact final PCM lifecycle and affected-hash closeout
+are recorded in [13.8](../docs/gates/phase-13.8.md) and the
+[full Phase 13 gate](../docs/gates/phase-13.md), 2026-10-07.
+See the
 [current plugin/data review](../docs/spec-phase-13-review-v0.9.7.md) and
 [Phase 12 handoff](../docs/gates/phase-12.md).
 
@@ -100,11 +111,34 @@ a waiver is not a PASS.
 The v0.9.7 sequencing decision moves section 174.1's installation-contract
 delivery from Phase 8 to Phase 13.1, at the project/specification owner's
 request on 2026-10-05. Phase 8 retains immutable release and bundle verification;
-Phase 12 retains its full desktop gate. R13-01 is **REASSIGNED_OPEN** to 13.1,
-not an implemented contract or a passed Phase 13 gate. The bounded sequencing
-risk is entering Phase 13 without those schemas; no installation-dependent
-milestone may start until 13.1 completes validation and hash closeout. This
-dependency ends only when 13.1 records PASS. Historical v0.9.6 findings remain
+Phase 12 retains its full desktop gate. R13-01 was reassigned to 13.1 and is
+**RESOLVED** by the [13.1 contract checkpoint](../docs/gates/phase-13.1.md),
+2026-10-06, after source/isolated-PCM validation and affected-hash closeout.
+The [13.2 adapter/PCM checkpoint](../docs/gates/phase-13.2.md) records real
+PCM lifecycle, prepared-runtime recovery, live PCB reads and complete-project
+NTFS feasibility with final affected-hash closeout. The
+[13.3 planning/store checkpoint](../docs/gates/phase-13.3.md) records pure
+planning, safe target inventory and forward-migration preservation, with 188
+passing checks and affected-hash closeout. The
+[13.4 semantic staging checkpoint](../docs/gates/phase-13.4.md) adds
+deterministic packed libraries and actual native SVG/STEP validation with
+exact engineering preservation. The
+[13.5 review checkpoint](../docs/gates/phase-13.5.md) adds exact fresh
+authenticated installation decisions, durable cancellation/retry semantics and
+native fixture evidence with affected-hash closeout. The
+[13.6 publication checkpoint](../docs/gates/phase-13.6.md) implements complete
+owned NTFS publication, real process-crash reconciliation and fresh rollback
+with current mutable-file preservation. Its source/native evidence and affected
+hash closeout permit 13.7. The
+[13.7 workflow checkpoint](../docs/gates/phase-13.7.md) adds deliberate desktop
+controls, authority-free saved references and actual two-component native/IPC
+round trips through PCM-installed 0.1.9. The
+[13.8 acceptance checkpoint](../docs/gates/phase-13.8.md) and
+[full Phase 13 receipt](../docs/gates/phase-13-artifacts.json) record all final
+source/PCM/desktop/offline/PDF checks and affected active/CI hash verification.
+The complete gate permits Phase 14; production clean/offline installation
+remains that separate phase's responsibility.
+Historical v0.9.6 findings remain
 available in the archived specification and review receipts.
 
 ## Phase 0 — Repository and build foundation
@@ -7483,6 +7517,12 @@ Each final reference resolves within the declared complete generation/root scope
 Recheck concurrent changes and editor dirty state before publication.
 
 Version the semantic comparator and its closed relocation-field allowlist.
+Implemented comparator 1.0 permits outer symbol/footprint entry names, derived
+symbol-unit name prefixes, the symbol `Footprint` mapping property and the model
+URI. A missing `Footprint` property may be inserted using the frozen plan's
+declared library/entry identity. Existing nonmapping properties and all geometry,
+electrical, layer and model-placement tokens remain exact. These mechanical
+changes do not alter or replace the approved source artifacts.
 Cover every retained symbol/footprint entry, pin number/type and mapping,
 engineering property/graphic, pad shape/location/layer, model association and
 placement. Define measured decimal/tolerance rules from the pinned source/PDL
@@ -9047,7 +9087,7 @@ the original Phase 8 assignment is preserved there and in the R13-01 finding.
 
 | Finding/gap | Current requirement and owner |
 | --- | --- |
-| R13-01 | REASSIGNED_OPEN to Phase 13.1: versioned closed schemas/types, canonical identities, negative/golden tests, source preservation, affected Phase 8/12 source regressions, isolated PCM contract-payload checks and archived hash closeout; RESOLVED only by 13.1 PASS |
+| R13-01 | RESOLVED by Phase 13.1 PASS, 2026-10-06: closed schemas/frozen types, canonical/golden/negative checks, exact source preservation, affected Phase 8/12 source regressions, isolated offline PCM contract payload and final archived hash closeout; see `docs/gates/phase-13.1-artifacts.json`. Complete Phase 13 PASS is separately recorded in `docs/gates/phase-13-artifacts.json`, 2026-10-07. |
 | Broad Phase 13 bullets | Nine numbered work items and eight ordered milestones with explicit prerequisites, per-milestone checks and final gate |
 | Plugin/configuration gap | Launch-only legacy data distinguished from IPC registration; versioned runtime configuration, packaged metadata, explicit migration and transient session/credential rules in 13.2/174.1.5 |
 | PCM installation correction, 2026-10-05 | PCM ZIP/metadata and IPC registration are separate; verified managed-Python or bundled-executable runtime; real install/preparation/update/uninstall/reinstall in 13.2/13.7/13.8; Phase 14 proves clean/offline production installation |

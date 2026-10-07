@@ -1,0 +1,133 @@
+{
+  "specification": "0.9.6",
+  "phase": "11",
+  "date": "2026-10-04",
+  "status": "FINDINGS_1_2_RESOLVED",
+  "scope": "Targeted local Windows source/native, installed-wheel and live OpenAI checks for review findings 1 and 2. Not a full phase-gate acceptance.",
+  "phase_10_finding": "Deferred by user; no extraction/parser implementation or dependency changes; no waiver or PASS claimed.",
+  "report": "docs/gates/phase-11-finding-fixes-2026-10-04.md",
+  "review": "docs/gates/phase-10-11-review-2026-10-04.md",
+  "engineering_inputs": {
+    "provider": "OpenAI",
+    "model": "gpt-4.1-mini-2025-04-14",
+    "api_version": "responses-v1",
+    "adapter_version": "1.1",
+    "schema_version": "ai-result-1.0",
+    "prompt_version": "partsmith-ai-1.1",
+    "instructions_hash": "4a7df0bf87cd061f601f2a31b9e7b07d1d93663f5356854509442241370b5d45",
+    "output_schema_hash": "f3fefd23e6b4449d78d09da302e69f9b6010801c53600358ebb33f3025223dc0",
+    "temperature": 0,
+    "max_output_tokens": 4096
+  },
+  "tests": {
+    "source": {
+      "passed": 121,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "result": "docs/gates/phase-11-finding-fixes-2026-10-04-source-results.xml"
+    },
+    "wheel": {
+      "passed": 121,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "result": "docs/gates/phase-11-finding-fixes-2026-10-04-wheel-results.xml"
+    },
+    "live": {
+      "passed": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "result": "docs/gates/phase-11-finding-fixes-2026-10-04-live-results.xml"
+    }
+  },
+  "checks": {
+    "full_order_number_source_anchor": "PASS",
+    "missing_package_ambiguity": "PASS",
+    "exact_decimal_request_and_result": "PASS",
+    "transport_and_evidence_binding": "PASS",
+    "canonical_cli_serialization": "PASS",
+    "offline_replay": "PASS",
+    "original_review_probes": "PASS",
+    "lint": "PASS",
+    "format": "PASS",
+    "pip_check": "PASS",
+    "git_diff_check": "PASS",
+    "credential_export_scan": "PASS"
+  },
+  "package_contents": {
+    "status": "PASS",
+    "files_checked": 75
+  },
+  "wheel": {
+    "path": ".tools/phase11-fixes/dist/partsmith-0.1.0-py3-none-any.whl",
+    "sha256": "6aac5e6abbf1a4e221750f05bdb771cf404735feacbb012d399282732c97b1f3"
+  },
+  "live_outputs": {
+    ".tools/phase11-fixes/live/missing-order.json": "63e98e0ee0193558ca616bacab4a3e94ae726c4696ccfb26c0000d945312b275",
+    ".tools/phase11-fixes/live/real-ordering.json": "80b11954cb727e54b77848b58126ab10abf2acb5960b9936038c6a2ed7a38654",
+    ".tools/phase11-fixes/live/synthetic-injection.json": "e4db5833196b8fc1ca84be365005f7b486f612c639c6e21ecd8445b06482cf2a"
+  },
+  "sha256": {
+    "docs/gates/phase-11-finding-fixes-2026-10-04-live-results.xml": "b9da99df9d57d5e9aed17d6e6758772f08bd14a29a6e71be1e67e117bec40704",
+    "docs/gates/phase-11-finding-fixes-2026-10-04-security-scan.json": "7978cb75f95f79480b7f13f2bc41a4627c4eaad04498ec66fe6cbd6d88402374",
+    "docs/gates/phase-11-finding-fixes-2026-10-04-source-results.xml": "4b12354b4282c7a0b68202110497993aadc198bb037f2947a5f4e2e325e27cad",
+    "docs/gates/phase-11-finding-fixes-2026-10-04-wheel-results.xml": "55c2cd67c32c41a41aed20e719ffe4f618fcfcfeeda4ee64e7afb58288581491",
+    "docs/gates/phase-11-finding-fixes-2026-10-04.md": "c0bf6499b607f7020fab15de16caeebc67875e94ddf8c4be341c76771a1dab7e",
+    "fixtures/ir/v1.2/valid/0402.json": "ff8f8697ef789b694123385a73777787ec16b1b8ebb8d9c9fd590cc4078a1063",
+    "pyproject.toml": "3cf64183de05ba5651721a642cba6527389472f58614aa2ad231c447d02c4aeb",
+    "resources/BFT_PartSmith_Implementation_Spec.md": "0ac92a01c268c0a63f9eeaa71fc805aa1f414e92b5fc636cb9e6963aee99d3ee",
+    "scripts/verify_ai_live.py": "83f9dc0d4cb12f838ba506c5c928132d63c607c47102cad772a9f1fbd7ea6bd9",
+    "scripts/verify_gui.py": "bf5a549c32cd6c3cfdb651d4d35166d545df23cfeaf91732440b7fe09f161200",
+    "scripts/verify_phase11_review.py": "9d0b0055896af3facdd444a09a2157d559dc33f4d68358205f8d3857db64f2f6",
+    "src/partsmith/ai/__init__.py": "71d67717385e54ba9a6ca3044eaaf66669c1bb70becd92a6b4ff3042d7f79056",
+    "src/partsmith/ai/adapter-manifest-1.0.json": "ab8569692ff4d5e7177ca8ba1208e9cf57115235678695362d5210c76c92aeb1",
+    "src/partsmith/ai/contracts.py": "52c6f8f802b8877bd5420ee89c30e7856fbfc0fed0960da218c7cdcadb1c2ad8",
+    "src/partsmith/ai/credentials.py": "ca52837ed4bcc3d6b3fe488e9a5f54b4afdf0f3ed9e284cf41cf8f99729f65f6",
+    "src/partsmith/ai/errors.py": "15c3d2cd951704656f8986a0b7afb64af8ae0c9c9467aa5c52643f691fde51be",
+    "src/partsmith/ai/openai.py": "8b15d959e84333bef34d3d2c509c1f082b28f8c4bd89afe360945d4ecc033fc2",
+    "src/partsmith/ai/replay.py": "a3947e3479990875648d7e07676e3bb337fe99c49fe3c6af7ecb5ad15d331b86",
+    "src/partsmith/ai/workflow.py": "9d93144b3135f23cc9cb84bf81d2264fb8ff612c92f1e7e3b8d7c20dc0342672",
+    "src/partsmith/cli.py": "cd83e30092510c26a113719b836b304b7f1178a974484863543885f5fba0f7ee",
+    "src/partsmith/gui/app.py": "2f8e47f2e87c60ee7a99954a9ddcadb1411c07a9e324e1b1bc12fa65cee0a252",
+    "src/partsmith/gui/credentials.py": "dc3f713beb757579a9f32fbc8d583c1a5ec9f43b39fdf8db380ff4771d76b907",
+    "src/partsmith/gui/processing.py": "0721b9c0b89efd1d9a986a1be195ea1f45fd86aced2ac247e78a31c359967d06",
+    "test_data_sheets/LM2575-D.PDF": "55f4ada7c4f8037a3ba64acb5fd3cdd3b382af05358eb8bbd73854ec9acf73af",
+    "tests/test_ai.py": "40ccc9325923a4ea0ab930cfd40197c122ece2984d483a12aece154393eb153e",
+    "tests/test_ai_transport.py": "43ce58821419dcf762af2a71f90fce5b9fc20f558d3ee16b51b9623155e54b0e",
+    "tests/test_cli.py": "23ae12da06601f203818dcfd53b6604efb23d60837aa9103abf7ad9863a394d4",
+    "tests/test_extraction_isolation.py": "eeeb609359c2422fa9b55a3932766ef9851f6714521d36cee09f5eac3a6c786c",
+    "tests/test_gui.py": "08ae95b1fb8167d228fd0eb5d1dbd64beb00e322d8136c74d5b904e1bb254d64",
+    "tests/test_kicad_runtime.py": "1d3517cc6b012e9cdb3e09fefa11b2bc6ddb84283e26c9408d4d73482deb42ca"
+  },
+  "phase_12_1_input_refresh": {
+    "date": "2026-10-04",
+    "reason": "Phase 12 startup/prototype and prior committed shared-input changes.",
+    "scope": "Current input-map identities only. Historical status, tests, wheel, canonical and engineering identities retain their original acceptance scope. Separate core/PDF and targeted viewer checks passed; the combined full-source native crash remains unresolved.",
+    "historical_manifest": "docs/gates/history/phase-11-finding-fixes-2026-10-04-before-phase-12.1-2026-10-04.json",
+    "report": "docs/gates/phase-12.1.md",
+    "changes": {
+      "sha256/pyproject.toml": {
+        "before": "f25fbbffafce750108da08d03fde3dd8abfe9cc1c6b8a72f958b946c80e32349",
+        "after": "3cf64183de05ba5651721a642cba6527389472f58614aa2ad231c447d02c4aeb"
+      },
+      "sha256/resources/BFT_PartSmith_Implementation_Spec.md": {
+        "before": "b92bb9f7ff1b6e871f8305244134978c2c36f83dde60d49edd5ac30bac362d4a",
+        "after": "0ac92a01c268c0a63f9eeaa71fc805aa1f414e92b5fc636cb9e6963aee99d3ee"
+      },
+      "sha256/src/partsmith/gui/app.py": {
+        "before": "d9224413e3ad0c713cdf4efb0476c77f5bc5da7ef4fedb09ac6b11c07313431f",
+        "after": "2f8e47f2e87c60ee7a99954a9ddcadb1411c07a9e324e1b1bc12fa65cee0a252"
+      },
+      "sha256/tests/test_extraction_isolation.py": {
+        "before": "549fc8056d9e0a41c29703e2bc12178f80cf55c76d01174237f6e4af802a1d15",
+        "after": "eeeb609359c2422fa9b55a3932766ef9851f6714521d36cee09f5eac3a6c786c"
+      },
+      "sha256/tests/test_gui.py": {
+        "before": "c8b2daff07a82f9b42a8db0e02468630e1b6a4b6bce80eeec69d8da71117dd10",
+        "after": "08ae95b1fb8167d228fd0eb5d1dbd64beb00e322d8136c74d5b904e1bb254d64"
+      }
+    }
+  }
+}

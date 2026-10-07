@@ -1,0 +1,19 @@
+{
+  "status": "PASS",
+  "scope": "Local Python 3.12 source/wheel/installed package parity.",
+  "checked_source_files": 105,
+  "versions": {
+    "wxPython": "4.3.1",
+    "Pillow": "12.3.0",
+    "numpy": "2.5.3",
+    "cadquery": "2.8.0"
+  },
+  "wheel": {
+    "path": ".tools/phase12-viewer-performance/dist/partsmith-0.1.0-py3-none-any.whl",
+    "sha256": "2ca127d5dbdbec4c15c6a12e70dd0de01c7fe46ab2e348a25567d23c983c4317"
+  },
+  "sdist": {
+    "path": ".tools/phase12-viewer-performance/dist/partsmith-0.1.0.tar.gz",
+    "sha256": "4a775151d9397230628354c1c86aeb179cfccea1107883b758e77751b22d389d"
+  }
+}

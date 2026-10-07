@@ -1,0 +1,14 @@
+{"package": "C:\\GIT_HUB\\PartSmaith\\.tools\\phase13-live\\pdf-stability-016\\payload\\plugins\\partsmith", "pdfium": "156.0.8076.0", "pdfplumber": "0.11.10", "pdfminer": "20260107"}
+============================= test session starts =============================
+platform win32 -- Python 3.12.10, pytest-8.4.2, pluggy-1.6.0 -- C:\GIT_HUB\PartSmaith\.venv\Scripts\python.exe
+cachedir: .tools\phase13-live\pdf-stability-016\cache
+rootdir: C:\GIT_HUB\PartSmaith
+configfile: pyproject.toml
+collecting ... collected 180 items
+
+tests/test_extraction.py::test_supplied_corpus_ingestion_and_selected_pages[150crz.pdf] PASSED [  0%]
+tests/test_extraction.py::test_supplied_corpus_ingestion_and_selected_pages[190rtl.pdf] PASSED [  1%]
+tests/test_extraction.py::test_supplied_corpus_ingestion_and_selected_pages[APA102-2020_SMD_LED.pdf] PASSED [  1%]
+tests/test_extraction.py::test_supplied_corpus_ingestion_and_selected_pages[AVR32LA14-20-28-32-DataSheet-DS40002684.pdf] PASSED [  2%]
+tests/test_extraction.py::test_supplied_corpus_ingestion_and_selected_pages[Bourns_07-15-2026_SRP2510PA.pdf] PASSED [  2%]
+tests/test_extraction.py::test_supplied_corpus_ingestion_and_selected_pages[ds180_7Series_Overview.pdf] 

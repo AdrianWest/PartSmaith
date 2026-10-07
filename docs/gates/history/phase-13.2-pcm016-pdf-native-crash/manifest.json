@@ -1,0 +1,28 @@
+{
+  "status": "FAIL",
+  "rounds_requested": 3,
+  "suite": [
+    "tests/test_extraction.py",
+    "tests/test_extraction_isolation.py",
+    "tests/test_ai.py",
+    "tests/test_ai_transport.py",
+    "tests/test_cli.py",
+    "tests/test_gui.py",
+    "tests/test_kicad_runtime.py"
+  ],
+  "attempts": [
+    {
+      "round": 1,
+      "exit_code": 3221225477,
+      "timed_out": false,
+      "complete_junit": false,
+      "artifacts": {
+        "round-1.stdout.txt": "9f24d925256574b75c7b8da04621cdec9cc6292bb5b47a2fdf63110227be94e7",
+        "round-1.stderr.txt": "4b5222cc4cb54ab53b1db0d0c637e7790829e2fd81c32ce1d1383342ae19677a"
+      },
+      "status": "FAIL"
+    }
+  ],
+  "package_root": "C:\\GIT_HUB\\PartSmaith\\.tools\\phase13-live\\pdf-stability-016\\payload\\plugins",
+  "archive_sha256": "0fd43032e969b1041cb78e6e1d919310e2d0f9d31f77642f24adc9f48d2c3d2c"
+}

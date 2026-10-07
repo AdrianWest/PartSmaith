@@ -1,0 +1,27 @@
+{
+  "$schema": "https://go.kicad.org/pcm/schemas/v2",
+  "author": {
+    "contact": {},
+    "name": "Board Forge Tools"
+  },
+  "description": "Deterministic component preparation and inspection",
+  "description_full": "PartSmith IPC action for Windows AMD64, KiCad 10.0.6 and verified external Python 3.12. KiCad prepares pinned binary dependencies in the background; first preparation requires network or an explicitly provisioned offline binary supply. Engineering readiness is checked again by the action.",
+  "identifier": "com.boardforgetools.partsmith",
+  "license": "GPL-3.0-only",
+  "name": "PartSmith",
+  "resources": {},
+  "type": "plugin",
+  "versions": [
+    {
+      "install_size": 6981275,
+      "kicad_version": "10.0.6",
+      "kicad_version_max": "10.0.6",
+      "platforms": [
+        "windows"
+      ],
+      "runtime": "ipc",
+      "status": "development",
+      "version": "0.1.9"
+    }
+  ]
+}

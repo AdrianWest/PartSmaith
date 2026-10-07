@@ -1,0 +1,112 @@
+{
+  "canonical_profile": "1.0",
+  "expected_base": {
+    "files": [
+      {
+        "byte_length": null,
+        "path": "BFT_3D/item.step",
+        "sha256": null
+      },
+      {
+        "byte_length": null,
+        "path": "BFT_Footprints.pretty/item.kicad_mod",
+        "sha256": null
+      },
+      {
+        "byte_length": null,
+        "path": "BFT_Symbols.kicad_sym",
+        "sha256": null
+      }
+    ],
+    "generation_hash": null,
+    "manifest_hash": null
+  },
+  "mappings": [
+    {
+      "component_id": "component-1",
+      "footprint_name": "item",
+      "footprint_nickname": "BFT_Footprints",
+      "footprint_path": "BFT_Footprints.pretty/item.kicad_mod",
+      "model_path": "BFT_3D/item.step",
+      "symbol_name": "item",
+      "symbol_nickname": "BFT_Symbols",
+      "symbol_path": "BFT_Symbols.kicad_sym"
+    }
+  ],
+  "operations": [
+    {
+      "action": "CREATE",
+      "basis": [
+        "component-1"
+      ],
+      "kind": "MODEL_3D",
+      "path": "BFT_3D/item.step"
+    },
+    {
+      "action": "CREATE",
+      "basis": [
+        "component-1"
+      ],
+      "kind": "FOOTPRINT",
+      "path": "BFT_Footprints.pretty/item.kicad_mod"
+    },
+    {
+      "action": "CREATE",
+      "basis": [
+        "component-1"
+      ],
+      "kind": "SYMBOL_LIBRARY",
+      "path": "BFT_Symbols.kicad_sym"
+    }
+  ],
+  "removals": [],
+  "required_rules": [
+    "MAPPING",
+    "NATIVE_PARSE",
+    "PATH_RESOLUTION",
+    "SEMANTIC_PRESERVATION"
+  ],
+  "resource_policy": "1.0",
+  "schema_version": "1.0",
+  "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "sources": [
+    {
+      "artifacts": [
+        {
+          "byte_length": 18,
+          "path": "BFT_Footprints.pretty/item.kicad_mod",
+          "role": "footprint",
+          "sha256": "3612435bdbc96ef0aa86f6a748315950abb4530290ca55a4cbc8b0c0e366e442"
+        },
+        {
+          "byte_length": 23,
+          "path": "BFT_3D/item.step",
+          "role": "model_3d",
+          "sha256": "9e2c8a237a6451f04033782b35ba7d8a847f3e6bf22783b606aca640b9159af4"
+        },
+        {
+          "byte_length": 22,
+          "path": "BFT_Symbols.kicad_sym",
+          "role": "symbol",
+          "sha256": "418cc41d91cbdc2f3be7eea67304e12c9a5928fa4806e750dd2a2acbb4ca87a2"
+        }
+      ],
+      "component_id": "component-1",
+      "release_approval_hash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "release_manifest_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "revision_id": "revision-1"
+    }
+  ],
+  "target": {
+    "library_id": "bft-library",
+    "project_id": "project-1",
+    "scope": "project-local"
+  },
+  "versions": {
+    "adapter": "1.0",
+    "comparator": "1.0",
+    "kicad": "10.0.6",
+    "runtime_lock_hash": "a3e60c9207bd6bfa98d0ab5bb941ec8a026d062ad6556a762422bd373362cfec",
+    "serializer": "1.0"
+  }
+}

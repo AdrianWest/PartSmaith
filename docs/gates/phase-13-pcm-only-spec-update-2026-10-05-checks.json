@@ -1,0 +1,63 @@
+{
+  "status": "PASS",
+  "scope": "Documentation correction only",
+  "local_links_checked": 89,
+  "milestones": [
+    "13.1",
+    "13.2",
+    "13.3",
+    "13.4",
+    "13.5",
+    "13.6",
+    "13.7",
+    "13.8"
+  ],
+  "required_pcm_contract_terms": [
+    "PCM package and runtime installation contract",
+    "metadata.json",
+    "plugins/plugin.json",
+    "plugins/requirements.txt",
+    "binary-only",
+    "Install from File",
+    "Pending/Apply",
+    "update, uninstall and reinstall",
+    "Customers do not install a PartSmith wheel",
+    "download_*",
+    "outside disposable package/environment paths",
+    "offline production path",
+    "Phase 13 build/test scope \u2014 PCM only",
+    "isolated PCM payload fixture",
+    "Retire the active `Verify installed wheel and packaged resources`",
+    "dist/*.whl",
+    "avoid creating an editable/release PartSmith wheel",
+    "no new PartSmith wheel build/test dependency"
+  ],
+  "historical_specification": {
+    "path": "resources/history/BFT_PartSmith_Implementation_Spec_v0.9.7_before_PCM_only_2026-10-05.md",
+    "sha256": "a9f7626d41177002e3746a130bc8a7ed41612b67d37f8942778e93ec31945f26"
+  },
+  "unchanged_runtime_resource_files": 121,
+  "installed_kicad_10_0_6_schema_observations": {
+    "api.v1.schema.json": {
+      "installed_path": "C:\\Program Files\\KiCad\\10.0\\share\\kicad\\schemas\\api.v1.schema.json",
+      "sha256": "a51ecc9cc4166fc857a0378b6361909c66a7957451146bd50123d52313fdea96"
+    },
+    "pcm.v2.schema.json": {
+      "installed_path": "C:\\Program Files\\KiCad\\10.0\\share\\kicad\\schemas\\pcm.v2.schema.json",
+      "sha256": "74bfb8fca2abdcf619afd152f57bcc768c855541587e21b81e2c6e8fd3b8abb2"
+    }
+  },
+  "phase13_implementation": "NOT_STARTED",
+  "r13_01": "REASSIGNED_OPEN",
+  "pcm_package_built_or_installed": false,
+  "partsmith_wheel_built_or_tested": false,
+  "removed_phase13_wheel_requirement_phrases": [
+    "against source and installed wheel",
+    "Internal wheel/resource checks remain required",
+    "Retain internal wheel tests",
+    "source/wheel closeout",
+    "source/wheel/hash checks",
+    "offline contract/native-CLI source/wheel"
+  ],
+  "automation_retirement_owner": "13.2; not implemented"
+}

@@ -1,0 +1,22 @@
+{
+  "stage": 4,
+  "status": "PASS",
+  "dpi": [
+    96,
+    96
+  ],
+  "content_scale_factor": 1.0,
+  "display_size": [
+    3440,
+    1440
+  ],
+  "symbol_sha256": "e6156e1cbb871e8e486a2adf432a75e28961606db000cae79e7cf5030ab11d56",
+  "package": "C:\\GIT_HUB\\PartSmaith\\src\\partsmith\\gui\\app.py",
+  "working_directory": "C:\\Users\\User\\AppData\\Local\\Temp",
+  "scope": "Actual standalone entry/main loop; explicit offline fixture",
+  "source": true,
+  "exit_code": 0,
+  "seconds": 5.985,
+  "transport_sha256": "0bd68eccd54a60ed74f568e0c656d295e112b2f2909eb18a56f96e1be4fb70b4",
+  "native_children_reaped": true
+}

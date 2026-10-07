@@ -1,0 +1,84 @@
+{
+  "status": "PASS",
+  "date": "2026-10-05",
+  "checks": [
+    {
+      "command": [
+        "C:\\GIT_HUB\\PartSmaith\\.tools\\python\\python.exe",
+        "-X",
+        "utf8",
+        "C:\\GIT_HUB\\PartSmaith\\.tools\\phase13-spec-v097-20261005\\check_spec.py"
+      ],
+      "exit_code": 0,
+      "stdout": "{\"date\": \"2026-10-05\", \"status\": \"PASS\", \"specification\": \"v0.9.7\", \"phase13_milestones\": [\"13.1\", \"13.2\", \"13.3\", \"13.4\", \"13.5\", \"13.6\", \"13.7\", \"13.8\"], \"required_contract_objects\": [\"IntegrationPlan\", \"InstallationManifest\", \"IntegrationAuthorizationBinding\", \"IntegrationValidationReport\", \"IntegrationAuditEnvelope\", \"IntegrationJournal\"], \"phase8_ownership_consistency\": \"PASS\", \"historical_specification_byte_preservation\": \"PASS\", \"revised_markdown_files\": 6, \"local_links_checked\": 138, \"unchanged_runtime_resource_files\": 121, \"implementation_status\": \"Phase 13 NOT_STARTED; R13-01 REASSIGNED_OPEN\"}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "C:\\GIT_HUB\\PartSmaith\\.tools\\python\\python.exe",
+        "-m",
+        "ruff",
+        "check",
+        "."
+      ],
+      "exit_code": 0,
+      "stdout": "All checks passed!\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "C:\\GIT_HUB\\PartSmaith\\.tools\\python\\python.exe",
+        "-m",
+        "ruff",
+        "format",
+        "--check",
+        "."
+      ],
+      "exit_code": 0,
+      "stdout": "208 files already formatted\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "C:\\GIT_HUB\\PartSmaith\\.tools\\python\\python.exe",
+        ".tools/check_phase12_docs.py"
+      ],
+      "exit_code": 0,
+      "stdout": "Tagged documentation PASS: 50 Python files\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "C:\\GIT_HUB\\PartSmaith\\.tools\\python\\python.exe",
+        "-m",
+        "pip",
+        "check"
+      ],
+      "exit_code": 0,
+      "stdout": "No broken requirements found.\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "C:\\GIT_HUB\\PartSmaith\\.tools\\python\\python.exe",
+        "-m",
+        "partsmith",
+        "doctor",
+        "--json"
+      ],
+      "exit_code": 0,
+      "stdout": "[{\"detail\":\"3.12.10\",\"name\":\"python\",\"status\":\"PASS\"},{\"detail\":\"partsmith 0.1.0\",\"name\":\"package\",\"status\":\"PASS\"},{\"detail\":\"command interface available\",\"name\":\"cli\",\"status\":\"PASS\"},{\"detail\":\"10.0.6 at C:\\\\Program Files\\\\KiCad\\\\10.0\\\\bin\\\\kicad-cli.exe\",\"name\":\"kicad\",\"status\":\"PASS\"}]\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ]
+}

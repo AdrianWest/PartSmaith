@@ -1,0 +1,469 @@
+{
+  "schema_version": "1.0",
+  "id": "synthetic-0402-phase7",
+  "revision": "1.0",
+  "effective_date": "2026-09-26",
+  "validation_status": "APPROVED",
+  "content_sha256": "cb315d3349c75c2060bedb37c358fdb3cc82f0efd4e8d17492b3a15b1faaadf2",
+  "release_profile": {
+    "id": "mvp-1",
+    "version": "1.0",
+    "sha256": "6f6f53a32a731a03d4c396f7235c199887232e24a95728dd9d78db1c179edfd8"
+  },
+  "identity": {
+    "family": "chip_resistor",
+    "variant": "0402",
+    "scope": "GENERIC",
+    "manufacturer": null,
+    "manufacturer_package_code": null,
+    "peripheral_lead_count": 2.0,
+    "exposed_terminal_count": 0.0,
+    "pin_count": 2.0
+  },
+  "mechanical": {
+    "body": {
+      "length": {
+        "nominal_mm": 1.0,
+        "minimum_mm": 0.95,
+        "maximum_mm": 1.05,
+        "source_ids": [
+          "SRC-SYNTH-0402"
+        ]
+      },
+      "width": {
+        "nominal_mm": 0.5,
+        "minimum_mm": 0.45,
+        "maximum_mm": 0.55,
+        "source_ids": [
+          "SRC-SYNTH-0402"
+        ]
+      },
+      "height": {
+        "nominal_mm": 0.35,
+        "minimum_mm": 0.3,
+        "maximum_mm": 0.4,
+        "source_ids": [
+          "SRC-SYNTH-0402"
+        ]
+      }
+    },
+    "terminal": {
+      "length": {
+        "nominal_mm": 0.2,
+        "minimum_mm": 0.15,
+        "maximum_mm": 0.25,
+        "source_ids": [
+          "SRC-SYNTH-0402"
+        ]
+      },
+      "width": {
+        "nominal_mm": 0.5,
+        "minimum_mm": 0.45,
+        "maximum_mm": 0.55,
+        "source_ids": [
+          "SRC-SYNTH-0402"
+        ]
+      },
+      "height": {
+        "nominal_mm": 0.1,
+        "minimum_mm": 0.08,
+        "maximum_mm": 0.12,
+        "source_ids": [
+          "SRC-SYNTH-0402"
+        ]
+      }
+    }
+  },
+  "topology": {
+    "pitch_mm": 0.8,
+    "numbering": "LINEAR",
+    "pin1_location": "WEST",
+    "stagger": false,
+    "sides": {
+      "north": 0.0,
+      "east": 1.0,
+      "south": 0.0,
+      "west": 1.0,
+      "center": 0.0
+    },
+    "terminals": [
+      {
+        "id": "T-1",
+        "number": "1",
+        "kind": "PERIPHERAL",
+        "side": "west",
+        "topology_index": 0.0,
+        "group_id": "G-1"
+      },
+      {
+        "id": "T-2",
+        "number": "2",
+        "kind": "PERIPHERAL",
+        "side": "east",
+        "topology_index": 0.0,
+        "group_id": "G-2"
+      }
+    ]
+  },
+  "land_pattern": {
+    "source": "PDL_DERIVED",
+    "groups": [
+      {
+        "id": "G-1",
+        "terminal_number": "1",
+        "shapes": [
+          {
+            "id": "PAD-1",
+            "shape": "ROUNDRECT",
+            "center_mm": [
+              -0.5,
+              0.0
+            ],
+            "size_mm": [
+              0.55,
+              0.6
+            ]
+          }
+        ]
+      },
+      {
+        "id": "G-2",
+        "terminal_number": "2",
+        "shapes": [
+          {
+            "id": "PAD-2",
+            "shape": "ROUNDRECT",
+            "center_mm": [
+              0.5,
+              0.0
+            ],
+            "size_mm": [
+              0.55,
+              0.6
+            ]
+          }
+        ]
+      }
+    ],
+    "non_electrical_features": []
+  },
+  "model_3d": {
+    "body_strategy": "CHIP_BODY",
+    "lead_strategy": "END_TERMINATIONS",
+    "marker_strategy": "NONE"
+  },
+  "coordinate_system": {
+    "origin": "PACKAGE_REFERENCE_CENTER",
+    "x_positive": "RIGHT",
+    "y_positive": "UP",
+    "z_positive": "AWAY_FROM_PCB",
+    "units": "mm",
+    "convention_version": "1.1"
+  },
+  "reference_features": [
+    {
+      "id": "BODY-CENTER",
+      "kind": "BODY_CENTER",
+      "terminal_id": null,
+      "anchor_mm": [
+        0.0,
+        0.0,
+        0.175
+      ],
+      "representation": "MEASURED",
+      "applicability": "REQUIRED"
+    },
+    {
+      "id": "BODY-EXTENT",
+      "kind": "BODY_EXTENT",
+      "terminal_id": null,
+      "anchor_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "representation": "MEASURED",
+      "applicability": "REQUIRED"
+    },
+    {
+      "id": "LAND-EXTENT",
+      "kind": "LAND_PATTERN_EXTENT",
+      "terminal_id": null,
+      "anchor_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "representation": "MEASURED",
+      "applicability": "REQUIRED"
+    },
+    {
+      "id": "TERMINAL-1",
+      "kind": "TERMINAL_ANCHOR",
+      "terminal_id": "T-1",
+      "anchor_mm": [
+        -0.4,
+        0.0,
+        0.05
+      ],
+      "representation": "MEASURED",
+      "applicability": "REQUIRED"
+    },
+    {
+      "id": "TERMINAL-2",
+      "kind": "TERMINAL_ANCHOR",
+      "terminal_id": "T-2",
+      "anchor_mm": [
+        0.4,
+        0.0,
+        0.05
+      ],
+      "representation": "MEASURED",
+      "applicability": "REQUIRED"
+    },
+    {
+      "id": "PIN1",
+      "kind": "PIN1_ANCHOR",
+      "terminal_id": "T-1",
+      "anchor_mm": [
+        -0.4,
+        0.0,
+        0.05
+      ],
+      "representation": "DECLARED_ONLY",
+      "applicability": "REQUIRED"
+    },
+    {
+      "id": "MOUNTING-PLANE",
+      "kind": "MOUNTING_PLANE",
+      "terminal_id": null,
+      "anchor_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "representation": "MEASURED",
+      "applicability": "REQUIRED"
+    },
+    {
+      "id": "EXPOSED-PAD-ABSENT",
+      "kind": "TERMINAL_ANCHOR",
+      "terminal_id": null,
+      "anchor_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "representation": "DECLARED_ONLY",
+      "applicability": "ABSENT"
+    }
+  ],
+  "allowed_symmetries": [
+    {
+      "id": "IDENTITY",
+      "matrix": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "terminal_mapping": {
+        "T-1": "T-1",
+        "T-2": "T-2"
+      }
+    },
+    {
+      "id": "ROTATE-Z-180",
+      "matrix": [
+        [
+          -1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          -1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "terminal_mapping": {
+        "T-1": "T-2",
+        "T-2": "T-1"
+      }
+    }
+  ],
+  "required_observables": [
+    {
+      "id": "OBS-BODY-LENGTH",
+      "kind": "LENGTH",
+      "feature_id": "BODY-EXTENT",
+      "measurement_mode": "MEASURED",
+      "tolerance_id": "BODY"
+    },
+    {
+      "id": "OBS-BODY-WIDTH",
+      "kind": "WIDTH",
+      "feature_id": "BODY-EXTENT",
+      "measurement_mode": "MEASURED",
+      "tolerance_id": "BODY"
+    },
+    {
+      "id": "OBS-BODY-HEIGHT",
+      "kind": "HEIGHT",
+      "feature_id": "BODY-EXTENT",
+      "measurement_mode": "MEASURED",
+      "tolerance_id": "HEIGHT"
+    },
+    {
+      "id": "OBS-TERMINAL-1",
+      "kind": "POSITION",
+      "feature_id": "TERMINAL-1",
+      "measurement_mode": "MEASURED",
+      "tolerance_id": "POSITION"
+    },
+    {
+      "id": "OBS-TERMINAL-2",
+      "kind": "POSITION",
+      "feature_id": "TERMINAL-2",
+      "measurement_mode": "MEASURED",
+      "tolerance_id": "POSITION"
+    },
+    {
+      "id": "OBS-PIN1",
+      "kind": "ORIENTATION",
+      "feature_id": "PIN1",
+      "measurement_mode": "DECLARED_ONLY",
+      "tolerance_id": "ORIENTATION"
+    },
+    {
+      "id": "OBS-CLEARANCE",
+      "kind": "CLEARANCE",
+      "feature_id": "LAND-EXTENT",
+      "measurement_mode": "MEASURED",
+      "tolerance_id": "CLEARANCE"
+    },
+    {
+      "id": "OBS-T-1-LENGTH",
+      "kind": "LENGTH",
+      "feature_id": "TERMINAL-1",
+      "measurement_mode": "MEASURED",
+      "tolerance_id": "BODY"
+    },
+    {
+      "id": "OBS-T-1-WIDTH",
+      "kind": "WIDTH",
+      "feature_id": "TERMINAL-1",
+      "measurement_mode": "MEASURED",
+      "tolerance_id": "BODY"
+    },
+    {
+      "id": "OBS-T-1-HEIGHT",
+      "kind": "HEIGHT",
+      "feature_id": "TERMINAL-1",
+      "measurement_mode": "MEASURED",
+      "tolerance_id": "HEIGHT"
+    },
+    {
+      "id": "OBS-T-2-LENGTH",
+      "kind": "LENGTH",
+      "feature_id": "TERMINAL-2",
+      "measurement_mode": "MEASURED",
+      "tolerance_id": "BODY"
+    },
+    {
+      "id": "OBS-T-2-WIDTH",
+      "kind": "WIDTH",
+      "feature_id": "TERMINAL-2",
+      "measurement_mode": "MEASURED",
+      "tolerance_id": "BODY"
+    },
+    {
+      "id": "OBS-T-2-HEIGHT",
+      "kind": "HEIGHT",
+      "feature_id": "TERMINAL-2",
+      "measurement_mode": "MEASURED",
+      "tolerance_id": "HEIGHT"
+    }
+  ],
+  "validation": {
+    "tolerances": {
+      "BODY": {
+        "value": 0.05,
+        "unit": "mm"
+      },
+      "HEIGHT": {
+        "value": 0.05,
+        "unit": "mm"
+      },
+      "POSITION": {
+        "value": 0.05,
+        "unit": "mm"
+      },
+      "ORIENTATION": {
+        "value": 0.1,
+        "unit": "deg"
+      },
+      "CLEARANCE": {
+        "value": 0.05,
+        "unit": "mm"
+      }
+    }
+  },
+  "sources": [
+    {
+      "id": "SRC-SYNTH-0402",
+      "organization": "Board Forge Tools",
+      "document": "Synthetic GOLD-0402-001 package definition source",
+      "revision": "1.0",
+      "reference": "fixtures/pdl/source/synthetic-gold-0402.txt",
+      "access_date": "2026-09-26",
+      "section": null,
+      "table_or_figure": null,
+      "content_sha256": "dd912c336c41538c8dcc95fd642542f3b6480ae632adc4cd649a6a6b54bf84df"
+    }
+  ],
+  "change_history": [
+    {
+      "revision": "1.0",
+      "date": "2026-09-26",
+      "description": "Phase 7 symmetry and applicability fixture",
+      "source_ids": [
+        "SRC-SYNTH-0402"
+      ]
+    }
+  ]
+}

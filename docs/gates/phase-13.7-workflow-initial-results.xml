@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="2" skipped="0" tests="3" time="21.729" timestamp="2026-10-07T01:07:39.264652-04:00" hostname="DESKTOP-CIC0QVQ"><testcase classname="tests.test_integration_workflow" name="test_separate_authority_and_saved_draft_require_new_actions" time="19.401"><failure message="ValueError: Unknown desktop session field">component_session = (&lt;partsmith.gui.session.Session object at 0x000001B247EDCE30&gt;, ('76c22fb7-9d76-4cef-abc5-5189ca70924f', '7eab4aa5-6a68-48eb-bb38-4ef4864d86de', '738e1b59-29c1-4b8c-8f19-ac62c6de2c93'))
+tmp_path = WindowsPath('C:/Users/User/AppData/Local/Temp/pytest-of-User/pytest-378/test_separate_authority_and_sa0')
+
+    def test_separate_authority_and_saved_draft_require_new_actions(
+        component_session, tmp_path
+    ):
+        """@brief Exercises shared native workflow and safe archive round trips.
+        @param component_session Actual approved sources in a real working session.
+        @param tmp_path Owned original, workspace, authority and archive paths.
+        @return None.
+        @details A loaded archive retains references without rows or permission.
+        Fresh explicit publish with current authentication still uses central data.
+        """
+        session, builds = component_session
+        original = tmp_path / "original"
+        original.mkdir()
+        (original / "design.kicad_pro").write_bytes(b"{}")
+        workflow = IntegrationWorkflow(
+            [session],
+            directory=tmp_path / "authority",
+            principal_provider=principal,
+        )
+        target, link = workflow.register(
+            original, tmp_path / "managed", confirmed=True
+        )
+        from partsmith.integration.target import OwnedTarget
+    
+        try:
+            draft = workflow.plan(target, builds[:2])
+            assert draft.attempt_id is None
+            stage = workflow.stage(draft)
+            view = workflow.inspect(stage)
+            assert view["blocking_codes"] == []
+&gt;           session.update(integration=stage.references())
+
+tests\test_integration_workflow.py:73: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;partsmith.gui.session.Session object at 0x000001B247EDCE30&gt;
+_connection = None
+changes = {'integration': {'drafts': [{'attempt_id': 'ac613924-7e29-4afc-920d-83200a918d1f', 'manifest_hash': '803625bb53bb50d85...274c4'}], 'project_id': 'b4680254-db9d-402b-83c7-c1d498d01128', 'schema_version': 'partsmith-session-integration-1.0'}}
+
+    def update(self, *, _connection=None, **changes):
+        """@brief Commits one detached desktop state boundary.
+        @param changes Whitelisted session fields to replace.
+        @param _connection Optional transaction already owned by this worker.
+        @return None.
+        @details Redacts metadata before storing it in the working database.
+        """
+        if set(changes) - STATE_FIELDS:
+&gt;           raise ValueError("Unknown desktop session field")
+E           ValueError: Unknown desktop session field
+
+src\partsmith\gui\session.py:256: ValueError</failure></testcase><testcase classname="tests.test_integration_workflow" name="test_imported_installation_rows_cannot_load_or_supply_sources" time="0.316" /><testcase classname="tests.test_integration_workflow" name="test_data_only_extension_rejects_live_fields" time="0.128"><failure message="ValueError: Unknown desktop session field">component_session = (&lt;partsmith.gui.session.Session object at 0x000001B27AC96690&gt;, ('76c22fb7-9d76-4cef-abc5-5189ca70924f', '7eab4aa5-6a68-48eb-bb38-4ef4864d86de', '738e1b59-29c1-4b8c-8f19-ac62c6de2c93'))
+tmp_path = WindowsPath('C:/Users/User/AppData/Local/Temp/pytest-of-User/pytest-378/test_data_only_extension_rejec0')
+
+    def test_data_only_extension_rejects_live_fields(component_session, tmp_path):
+        """@brief Rejects principals, confirmation and unknown extension versions.
+        @param component_session Real source session.
+        @param tmp_path Owned archive destination.
+        @return None.
+        @details The closed saved extension contains references only.
+        """
+        session, _ = component_session
+        for field, value in (
+            ("confirmed", True),
+            ("principal", "saved actor"),
+            ("schema_version", "unknown"),
+        ):
+            extension = {
+                "schema_version": "partsmith-session-integration-1.0",
+                "project_id": "data-only",
+                "drafts": [],
+            }
+            extension[field] = value
+&gt;           session.update(integration=extension)
+
+tests\test_integration_workflow.py:160: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;partsmith.gui.session.Session object at 0x000001B27AC96690&gt;
+_connection = None
+changes = {'integration': {'confirmed': True, 'drafts': [], 'project_id': 'data-only', 'schema_version': 'partsmith-session-integration-1.0'}}
+
+    def update(self, *, _connection=None, **changes):
+        """@brief Commits one detached desktop state boundary.
+        @param changes Whitelisted session fields to replace.
+        @param _connection Optional transaction already owned by this worker.
+        @return None.
+        @details Redacts metadata before storing it in the working database.
+        """
+        if set(changes) - STATE_FIELDS:
+&gt;           raise ValueError("Unknown desktop session field")
+E           ValueError: Unknown desktop session field
+
+src\partsmith\gui\session.py:256: ValueError</failure></testcase></testsuite></testsuites>

@@ -1,0 +1,61 @@
+{
+  "date": "2026-10-06",
+  "scope": "Owner-requested anvil icon correction only.",
+  "icon_change_status": "SOURCE_AND_PCM_PAYLOAD_VERIFIED",
+  "phase13_status": "STOPPED_INCOMPLETE",
+  "phase13.2_status": "IN_PROGRESS",
+  "installed_runtime_acceptance": "NOT_RUN_FOR_0.1.5",
+  "package": {
+    "path": "dist/partsmith-0.1.5-pcm.zip",
+    "sha256": "2585a1b19d3776ebe1df6ed4259352af4de3b535e16c0821a60292b20116b5ef",
+    "byte_length": 6769149,
+    "version": "0.1.5",
+    "inventory_sha256": "b39477a918a6694ad6f7278990ab5cb490a3d658fbf254349903c858a59278d2",
+    "members": 151
+  },
+  "icons": [
+    {
+      "path": "resources/PartSmith_Anvil_Icon_24x24.png",
+      "sha256": "d0a479884a128ab7a741a2a388da27358547577ff37489f0cb74e6988980b6d7",
+      "byte_length": 696,
+      "member": "plugins/icons/PartSmith_Anvil_Icon_24x24.png"
+    },
+    {
+      "path": "resources/PartSmith_Anvil_Icon_64x64.png",
+      "sha256": "fdc35a8d3a813a26cec298317d1c7623edd39f93ae1ccca07e995f49fcc601c7",
+      "byte_length": 5120,
+      "member": "plugins/icons/PartSmith_Anvil_Icon_64x64.png"
+    }
+  ],
+  "source_tests": {
+    "path": "docs/gates/phase-13.2-anvil-icon-tests-2026-10-06.xml",
+    "sha256": "f7ba42f6bf054a0d29b2220f86170d5e9ce96869138bdb280cadaf8d470b3b66",
+    "byte_length": 3500,
+    "passed": 28
+  },
+  "offline_payload": {
+    "path": "docs/gates/phase-13.2-anvil-icon-payload-2026-10-06.json",
+    "sha256": "1082ef886bdb919debaf2d269fe5178fea96b50e0331cdef93bbe778d51d7d20",
+    "byte_length": 307
+  },
+  "checks": [
+    "Ruff check and formatting passed for changed Python files.",
+    "Both supplied PNGs preserved byte-for-byte in the PCM ZIP.",
+    "Source/resource parity and isolated payload verification passed.",
+    "PCM metadata matches the pinned KiCad schemas."
+  ],
+  "preceding_draft_map": {
+    "path": "docs/gates/history/phase-13.2-artifacts-before-anvil-icon-2026-10-06.json",
+    "sha256": "86110bd2ce36894209f81bf6a1d4fe06d5044dbc0b02fc011c84e6a0e924228e",
+    "byte_length": 35512
+  },
+  "previous_package_preserved": {
+    "path": "dist/partsmith-0.1.4-pcm.zip",
+    "sha256": "862cff04151d22c87529f63102fa000f0afc8a8d0b2fff4bb39cd3d2f8aa4cf9",
+    "byte_length": 6767558,
+    "version": "0.1.4",
+    "identifier": "com.boardforgetools.partsmith",
+    "inventory_sha256": "bd5c2663f7e141d20c3ba556541e5823be3578bf8a1b0d22164363f685a4d70e",
+    "members": 152
+  }
+}

@@ -1,0 +1,956 @@
+{
+  "date": "2026-10-06",
+  "status": "HASH_REFRESH_VERIFIED",
+  "reason": "Repository-owner requested a gate hash refresh after the Git tracking audit.",
+  "scope": "Exact current uncommitted checkout bytes; refresh live Phase 12 manifest references and every affected active hash map.",
+  "hash_source": "disk",
+  "implementation_gate_revalidated": false,
+  "validation_scope": "Repository hash integrity only. Existing implementation test verdicts retain their original scope; no source, fixture, test result, wheel, or sdist bytes changed.",
+  "git_blob_verification": "Due after implementation inputs are committed; HEAD cannot represent the current uncommitted files.",
+  "refreshed_manifests": [
+    {
+      "path": "docs/gates/phase-12-artifacts.json",
+      "historical_path": "docs/gates/history/phase-12-artifacts-before-gate-hash-refresh-2026-10-06.json",
+      "previous_sha256": "39198f49783e63007cf65203ec53601948895e3eb1083925112066706e2ec4af",
+      "new_sha256": "1cd8c4b8cfde8991def305901afd3cc721db2484152c6e8d0019d9861fc92709"
+    },
+    {
+      "path": "docs/gates/phase-12-viewer-performance-artifacts.json",
+      "historical_path": "docs/gates/history/phase-12-viewer-performance-artifacts-before-gate-hash-refresh-2026-10-06.json",
+      "previous_sha256": "bad226046ef14a8f93c8a1ed196b22f01c3d13e205909bad12ace4c4cbb712d0",
+      "new_sha256": "436f1842b29b10a070f32cd74b68dc9b8ee206924debb7a7fc37104a07582155"
+    }
+  ],
+  "hash_changes": [
+    {
+      "manifest": "docs/gates/phase-12-artifacts.json",
+      "field": "/readiness_review/sha256",
+      "file": "docs/gates/phase-12-readiness-review-2026-10-05.json",
+      "previous_sha256": "e7565bcb6dd3dfa3f5b9b686e321c4be0455571e0b0349a2b3c8b68cbab57361",
+      "new_sha256": "26f011d8723c521b25f656d29103ca4b9ac5a3b1b8a64ed0e9c32908e1638509"
+    },
+    {
+      "manifest": "docs/gates/phase-12-artifacts.json",
+      "field": "/phase_12_finding_fixes/sha256",
+      "file": "docs/gates/phase-12-finding-fixes-2026-10-05.json",
+      "previous_sha256": "3036e0869041a606315cc638d3101aed9180c4f86fd745d695c9364cf97de5b7",
+      "new_sha256": "2fab9b4e57f8e69bf48e3033cc9c4eaf54e059ab85e0f2494a218b1ce9cc81c5"
+    },
+    {
+      "manifest": "docs/gates/phase-12-artifacts.json",
+      "field": "/spec_v097_revision/sha256",
+      "file": "docs/gates/phase-13-spec-revision-v0.9.7-2026-10-05.json",
+      "previous_sha256": "6f6775e99957aa89711865cf37c54cadf24ca6fde1ba25afecc03b8d55c4ada6",
+      "new_sha256": "6be5f5f9e628d093729d20f73521af96b697572601955160ff2387d69af7583b"
+    },
+    {
+      "manifest": "docs/gates/phase-12-artifacts.json",
+      "field": "/pcm_spec_update/sha256",
+      "file": "docs/gates/phase-13-pcm-spec-update-2026-10-05.json",
+      "previous_sha256": "fcb48a704001135ace306a66b612ecb15a9d199adfb0294d8a196cdf244a555c",
+      "new_sha256": "9d742c5846066d6f6ad74bea94c7e1dfbf2081b8f3f74c0c30420bd1bd9aef02"
+    },
+    {
+      "manifest": "docs/gates/phase-12-artifacts.json",
+      "field": "/pcm_only_spec_update/sha256",
+      "file": "docs/gates/phase-13-pcm-only-spec-update-2026-10-05.json",
+      "previous_sha256": "65b89fe8aef94f64157e8de7e58a599d8de438a3d3580b4cd1096c5a11096474",
+      "new_sha256": "e82e90d3d908a21e2fd5a428ea2eaba4559ea49b5ddaa905a9c1b037ab0b875f"
+    },
+    {
+      "manifest": "docs/gates/phase-12-viewer-performance-artifacts.json",
+      "field": "/sha256/docs/gates/phase-12-artifacts.json",
+      "file": "docs/gates/phase-12-artifacts.json",
+      "previous_sha256": "39198f49783e63007cf65203ec53601948895e3eb1083925112066706e2ec4af",
+      "new_sha256": "1cd8c4b8cfde8991def305901afd3cc721db2484152c6e8d0019d9861fc92709"
+    }
+  ],
+  "verified_active_manifests": [
+    "docs/gates/phase-10-artifacts.json",
+    "docs/gates/phase-11-artifacts.json",
+    "docs/gates/phase-11-finding-fixes-2026-10-04.json",
+    "docs/gates/phase-12-artifacts.json",
+    "docs/gates/phase-12-finding-fixes-2026-10-05.json",
+    "docs/gates/phase-12-readiness-review-2026-10-05.json",
+    "docs/gates/phase-12-viewer-performance-artifacts.json",
+    "docs/gates/phase-12.1-artifacts.json",
+    "docs/gates/phase-13-pcm-only-spec-update-2026-10-05.json",
+    "docs/gates/phase-13-pcm-spec-update-2026-10-05.json",
+    "docs/gates/phase-13-spec-revision-v0.9.7-2026-10-05.json",
+    "docs/gates/phase-2-artifacts.json",
+    "docs/gates/phase-2-ir-1.1-artifacts.json",
+    "docs/gates/phase-2-ir-1.2-artifacts.json",
+    "docs/gates/phase-2-v0.9.6-artifacts.json",
+    "docs/gates/phase-3-artifacts.json",
+    "docs/gates/phase-4-artifacts.json",
+    "docs/gates/phase-5-artifacts.json",
+    "docs/gates/phase-6-artifacts.json",
+    "docs/gates/phase-7-artifacts.json",
+    "docs/gates/phase-8-artifacts.json",
+    "docs/gates/phase-9-artifacts.json",
+    "docs/gates/phase-9.5-artifacts.json"
+  ],
+  "verified_primary_hash_count": 2902,
+  "ci_required_manifests": [
+    "docs/gates/phase-5-artifacts.json",
+    "docs/gates/phase-6-artifacts.json",
+    "docs/gates/phase-8-artifacts.json"
+  ],
+  "custom_source_map": {
+    "manifest": "docs/gates/phase-10-parser-fix-2026-10-04.json",
+    "field": "source_sha256",
+    "verified_hash_count": 11
+  },
+  "verified_outside_map_identities": [
+    {
+      "manifest": "docs/gates/phase-12-artifacts.json",
+      "field": "/tests/source",
+      "file": "docs/gates/phase-12-finding-fixes-2026-10-05-source-results.xml",
+      "sha256": "4ae2387eb4702211339a3e5afa047c3641ba2981038f9206e96818bbbbbb9a99"
+    },
+    {
+      "manifest": "docs/gates/phase-12-artifacts.json",
+      "field": "/tests/installed_wheel",
+      "file": "docs/gates/phase-12-finding-fixes-2026-10-05-wheel-results.xml",
+      "sha256": "ea06598dd24b81d2463f198f72f3c1b7fdafeff8f5082440f60c95a6feeca2ef"
+    },
+    {
+      "manifest": "docs/gates/phase-12-artifacts.json",
+      "field": "/launches/source",
+      "file": "docs/gates/phase-12-finding-fixes-2026-10-05-source-launch.json",
+      "sha256": "850dd4c14f1e53aaa4fae7f9b33edf85ab7cae39e4f55c29c3eecd651ff38091"
+    },
+    {
+      "manifest": "docs/gates/phase-12-artifacts.json",
+      "field": "/launches/wheel",
+      "file": "docs/gates/phase-12-finding-fixes-2026-10-05-wheel-launch.json",
+      "sha256": "64cf4de233887b3b843bf354ac9b179a8fae5a618a1da20d81ebb2ecbb60bf3f"
+    },
+    {
+      "manifest": "docs/gates/phase-12-artifacts.json",
+      "field": "/launches/kicad",
+      "file": "docs/gates/phase-12-kicad-launch.json",
+      "sha256": "4afda475c476f30f80489e402113dd655344deb9871e916319a619b0dc86e92a"
+    },
+    {
+      "manifest": "docs/gates/phase-12-artifacts.json",
+      "field": "/pdf_stability",
+      "file": "docs/gates/phase-12-pdf-stability/manifest.json",
+      "sha256": "efe22bebb8a04d2dfb99064f75a719979696c9109ae617fc8576da5be08c0eac"
+    },
+    {
+      "manifest": "docs/gates/phase-12-artifacts.json",
+      "field": "/wheel",
+      "file": ".tools/phase12-finding-fixes-20261005/dist/partsmith-0.1.0-py3-none-any.whl",
+      "sha256": "be2e0d79df17c404be5c6f7528e7673f69fa24bd13af43978864d79638e99e89"
+    },
+    {
+      "manifest": "docs/gates/phase-12-artifacts.json",
+      "field": "/sdist",
+      "file": ".tools/phase12-finding-fixes-20261005/dist/partsmith-0.1.0.tar.gz",
+      "sha256": "1a9bc1d386267772cc5198dacd5e3de9a4369df8fce57ad19ba3bac24d8dc580"
+    },
+    {
+      "manifest": "docs/gates/phase-12-artifacts.json",
+      "field": "/historical_full_gate_acceptance/tests/source",
+      "file": "docs/gates/phase-12-source-final-results.xml",
+      "sha256": "5c4163b902d16e4aba2b8c5a4bd72e79e95ea464960957f0dac9ee888699a974"
+    },
+    {
+      "manifest": "docs/gates/phase-12-artifacts.json",
+      "field": "/historical_full_gate_acceptance/tests/installed_wheel",
+      "file": "docs/gates/phase-12-wheel-final-results.xml",
+      "sha256": "2fe39eb18ae1a7c371b5032f5fc730472ec0dfd9a8a442e9f2a6dba3692b7cfe"
+    },
+    {
+      "manifest": "docs/gates/phase-12-artifacts.json",
+      "field": "/historical_full_gate_acceptance/tests/symbol_revalidation",
+      "file": "docs/gates/phase-12-symbol-revalidation-results.xml",
+      "sha256": "58d21d760e3d0e6e2ab017d0abe55bc59859e3ea8099e596b5aca5c1ad5736bb"
+    },
+    {
+      "manifest": "docs/gates/phase-12-artifacts.json",
+      "field": "/historical_full_gate_acceptance/tests/visual_capture",
+      "file": "docs/gates/phase-12-display-results.xml",
+      "sha256": "1db3dd05ca7d59a12b1acbb9e160a1a3ac79f2933818b0e98012ef68389747ab"
+    },
+    {
+      "manifest": "docs/gates/phase-12-artifacts.json",
+      "field": "/historical_full_gate_acceptance/launches/source",
+      "file": "docs/gates/phase-12-source-launch.json",
+      "sha256": "c37a1324e1e5c38981c613eb29e56f2a286932d1da7ac56b350af731393aea28"
+    },
+    {
+      "manifest": "docs/gates/phase-12-artifacts.json",
+      "field": "/historical_full_gate_acceptance/launches/wheel",
+      "file": "docs/gates/phase-12-wheel-launch.json",
+      "sha256": "8398ef9760d30babb61a48ad4cfc126552ecc124d537488f5f5017bc9ecae2c3"
+    },
+    {
+      "manifest": "docs/gates/phase-12-artifacts.json",
+      "field": "/historical_full_gate_acceptance/launches/kicad",
+      "file": "docs/gates/phase-12-kicad-launch.json",
+      "sha256": "4afda475c476f30f80489e402113dd655344deb9871e916319a619b0dc86e92a"
+    },
+    {
+      "manifest": "docs/gates/phase-12-artifacts.json",
+      "field": "/historical_full_gate_acceptance/wheel",
+      "file": ".tools/phase12-full/dist/partsmith-0.1.0-py3-none-any.whl",
+      "sha256": "f54f37a53c121aab29cee2ae2cb45c3e1a38523ce0fae735eac281f4032545db"
+    },
+    {
+      "manifest": "docs/gates/phase-12-artifacts.json",
+      "field": "/historical_full_gate_acceptance/sdist",
+      "file": ".tools/phase12-full/dist/partsmith-0.1.0.tar.gz",
+      "sha256": "6be14d93ea4e6f0c5c92c8c26c13b855cbe602efe589301304c6176f960f23fb"
+    },
+    {
+      "manifest": "docs/gates/phase-12-artifacts.json",
+      "field": "/historical_full_gate_acceptance/pdf_stability",
+      "file": "docs/gates/phase-12-pdf-stability/manifest.json",
+      "sha256": "efe22bebb8a04d2dfb99064f75a719979696c9109ae617fc8576da5be08c0eac"
+    },
+    {
+      "manifest": "docs/gates/phase-12-artifacts.json",
+      "field": "/banner_layout_revalidation/tests_and_evidence/source",
+      "file": "docs/gates/phase-12-banner-source-results.xml",
+      "sha256": "5bf45a2d73554d03486571f9f411f49114779cfe31926a20f7e655ddb4265f41"
+    },
+    {
+      "manifest": "docs/gates/phase-12-artifacts.json",
+      "field": "/banner_layout_revalidation/tests_and_evidence/installed_wheel",
+      "file": "docs/gates/phase-12-banner-wheel-results.xml",
+      "sha256": "30c67918bb28d8760420bc86179d8f3d29c4da5f923c9c3c2772905fc2808118"
+    },
+    {
+      "manifest": "docs/gates/phase-12-artifacts.json",
+      "field": "/banner_layout_revalidation/tests_and_evidence/source_launch",
+      "file": "docs/gates/phase-12-banner-source-launch.json",
+      "sha256": "0efef61ce18d7a286df6c4180babcfd7c7ecfd983a7f0697385061f98641b8a0"
+    },
+    {
+      "manifest": "docs/gates/phase-12-artifacts.json",
+      "field": "/banner_layout_revalidation/tests_and_evidence/wheel_launch",
+      "file": "docs/gates/phase-12-banner-wheel-launch.json",
+      "sha256": "e5fd5b96a808bcb242846bf50b278fd2d6cc5282e619e358aa4425cbd2194ff0"
+    },
+    {
+      "manifest": "docs/gates/phase-12-artifacts.json",
+      "field": "/banner_layout_revalidation/tests_and_evidence/missing_resource",
+      "file": "docs/gates/phase-12-banner-missing-resource.json",
+      "sha256": "04e0859114773ca2a700c4dc53c408d11590c8ecf368a356d9367001c21d9c27"
+    },
+    {
+      "manifest": "docs/gates/phase-12-artifacts.json",
+      "field": "/banner_layout_revalidation/tests_and_evidence/package",
+      "file": "docs/gates/phase-12-banner-package-evidence.json",
+      "sha256": "50b4c1a1822141f589ef7203b83b0a2a9743187007f85ef5ee9b5b0120bc4a11"
+    },
+    {
+      "manifest": "docs/gates/phase-12-artifacts.json",
+      "field": "/banner_layout_revalidation/historical_native_kicad_acceptance",
+      "file": "docs/gates/phase-12-kicad-launch.json",
+      "sha256": "4afda475c476f30f80489e402113dd655344deb9871e916319a619b0dc86e92a"
+    },
+    {
+      "manifest": "docs/gates/phase-12-artifacts.json",
+      "field": "/symbol_viewer_revalidation/tests/source_regression",
+      "file": "docs/gates/phase-12-symbol-viewer-source-results.xml",
+      "sha256": "219153969b5cd6e3fbe4c2c7d8c742766cb4ca91d26bc3b11861c6c091e1ecd1"
+    },
+    {
+      "manifest": "docs/gates/phase-12-artifacts.json",
+      "field": "/symbol_viewer_revalidation/tests/wheel_regression",
+      "file": "docs/gates/phase-12-symbol-viewer-wheel-results.xml",
+      "sha256": "477467be66b96d9e2c909fee478b65717d51a4bc25b36261517419e039cd0b39"
+    },
+    {
+      "manifest": "docs/gates/phase-12-artifacts.json",
+      "field": "/symbol_viewer_revalidation/tests/final_source",
+      "file": "docs/gates/phase-12-symbol-viewer-final-source-results.xml",
+      "sha256": "9b75a7a7d31d478d635ddbc2bd783c9753029292470f681a24c495696503c38d"
+    },
+    {
+      "manifest": "docs/gates/phase-12-artifacts.json",
+      "field": "/symbol_viewer_revalidation/tests/final_installed_wheel",
+      "file": "docs/gates/phase-12-symbol-viewer-final-wheel-results.xml",
+      "sha256": "588151f524c453ed2435379e23e96d2b9d8c069d946c82d126c772db613550d1"
+    },
+    {
+      "manifest": "docs/gates/phase-12-artifacts.json",
+      "field": "/symbol_viewer_revalidation/source_launch",
+      "file": "docs/gates/phase-12-symbol-viewer-source-launch.json",
+      "sha256": "fb2c6b66dad0238e85d899d11ce8b5da9ea22ee3fe570fc386aed6e6fb0fcb7e"
+    },
+    {
+      "manifest": "docs/gates/phase-12-artifacts.json",
+      "field": "/symbol_viewer_revalidation/wheel_launch",
+      "file": "docs/gates/phase-12-symbol-viewer-wheel-launch.json",
+      "sha256": "9632d8797e6891ceda931ebc83c6cdbed59346db62588a3f896508bc3c2eeb78"
+    },
+    {
+      "manifest": "docs/gates/phase-12-artifacts.json",
+      "field": "/symbol_viewer_revalidation/package",
+      "file": "docs/gates/phase-12-symbol-viewer-package-evidence.json",
+      "sha256": "833029febeb6e4aa82ca042ccdfa1147897755be1217611342bd5a612bfaa0e0"
+    },
+    {
+      "manifest": "docs/gates/phase-12-artifacts.json",
+      "field": "/symbol_viewer_revalidation/wheel",
+      "file": ".tools/phase12-symbol-viewer/dist/partsmith-0.1.0-py3-none-any.whl",
+      "sha256": "3f5f65f8d90e1a5275ae547cd5e70004fb394140daa8a2a32ea5b7b6acc790c3"
+    },
+    {
+      "manifest": "docs/gates/phase-12-artifacts.json",
+      "field": "/symbol_viewer_revalidation/sdist",
+      "file": ".tools/phase12-symbol-viewer/dist/partsmith-0.1.0.tar.gz",
+      "sha256": "4ddbf6b55b7d25ff69f9c5845ce8178e01de937f24cc346d49e6c34b1b5c4f31"
+    },
+    {
+      "manifest": "docs/gates/phase-12-artifacts.json",
+      "field": "/symbol_viewer_revalidation/visual_evidence/0",
+      "file": "docs/gates/phase-12-symbol-viewer-display/phase-12-symbol-inspection-accepted.png",
+      "sha256": "80f27d3a2532114ef0725ad2875344e6e1caff2712a343aecbd3f7b89cbfd7f3"
+    },
+    {
+      "manifest": "docs/gates/phase-12-artifacts.json",
+      "field": "/symbol_viewer_revalidation/visual_evidence/1",
+      "file": "docs/gates/phase-12-symbol-viewer-display/phase-12-symbol-inspection-minimum.png",
+      "sha256": "e5b18081754c973e54efc63c81fa697a318b9c7734852feb9068c699ebd644bf"
+    },
+    {
+      "manifest": "docs/gates/phase-12-artifacts.json",
+      "field": "/symbol_viewer_revalidation/visual_evidence/2",
+      "file": "docs/gates/phase-12-symbol-viewer-display/phase-12-symbol-inspection-scrolled.png",
+      "sha256": "b84647c959a0a3705463f53694d58b9001cbfc30ce6b5da2cd5c6e3b35a61057"
+    },
+    {
+      "manifest": "docs/gates/phase-12-artifacts.json",
+      "field": "/readiness_review",
+      "file": "docs/gates/phase-12-readiness-review-2026-10-05.json",
+      "sha256": "26f011d8723c521b25f656d29103ca4b9ac5a3b1b8a64ed0e9c32908e1638509"
+    },
+    {
+      "manifest": "docs/gates/phase-12-artifacts.json",
+      "field": "/readiness_review/tests/source",
+      "file": "docs/gates/phase-12-readiness-review-2026-10-05-source-results.xml",
+      "sha256": "5178047cf97cd32c39d295f872005664ef9dfaa098a3c1e2ec958e502baaee55"
+    },
+    {
+      "manifest": "docs/gates/phase-12-artifacts.json",
+      "field": "/readiness_review/tests/installed_wheel",
+      "file": "docs/gates/phase-12-readiness-review-2026-10-05-wheel-results.xml",
+      "sha256": "a45c7ea1f8ed4fa7ffc3d549bbd0d4c07954bf1cfe6ca913f77b77d5839a4e8e"
+    },
+    {
+      "manifest": "docs/gates/phase-12-artifacts.json",
+      "field": "/readiness_review/historical_manifest",
+      "file": "docs/gates/history/phase-12-artifacts-before-readiness-review-2026-10-05.json",
+      "sha256": "ce1210f4b00f52dd8722d2e257e538591e94f8a67c07e022c6f981344af16b4b"
+    },
+    {
+      "manifest": "docs/gates/phase-12-artifacts.json",
+      "field": "/readiness_review/historical_report",
+      "file": "docs/gates/history/phase-12-before-readiness-review-2026-10-05.md",
+      "sha256": "53d1d9a0e90bdc70eb0411776db3f6ef12148a1ee2ff95783d44a25efc18fbe1"
+    },
+    {
+      "manifest": "docs/gates/phase-12-artifacts.json",
+      "field": "/historical_tests_before_finding_fixes/source",
+      "file": "docs/gates/phase-12-source-final-results.xml",
+      "sha256": "5c4163b902d16e4aba2b8c5a4bd72e79e95ea464960957f0dac9ee888699a974"
+    },
+    {
+      "manifest": "docs/gates/phase-12-artifacts.json",
+      "field": "/historical_tests_before_finding_fixes/installed_wheel",
+      "file": "docs/gates/phase-12-wheel-final-results.xml",
+      "sha256": "2fe39eb18ae1a7c371b5032f5fc730472ec0dfd9a8a442e9f2a6dba3692b7cfe"
+    },
+    {
+      "manifest": "docs/gates/phase-12-artifacts.json",
+      "field": "/historical_tests_before_finding_fixes/symbol_revalidation",
+      "file": "docs/gates/phase-12-symbol-revalidation-results.xml",
+      "sha256": "58d21d760e3d0e6e2ab017d0abe55bc59859e3ea8099e596b5aca5c1ad5736bb"
+    },
+    {
+      "manifest": "docs/gates/phase-12-artifacts.json",
+      "field": "/historical_tests_before_finding_fixes/visual_capture",
+      "file": "docs/gates/phase-12-display-results.xml",
+      "sha256": "1db3dd05ca7d59a12b1acbb9e160a1a3ac79f2933818b0e98012ef68389747ab"
+    },
+    {
+      "manifest": "docs/gates/phase-12-artifacts.json",
+      "field": "/historical_launches_before_finding_fixes/source",
+      "file": "docs/gates/phase-12-symbol-viewer-source-launch.json",
+      "sha256": "fb2c6b66dad0238e85d899d11ce8b5da9ea22ee3fe570fc386aed6e6fb0fcb7e"
+    },
+    {
+      "manifest": "docs/gates/phase-12-artifacts.json",
+      "field": "/historical_launches_before_finding_fixes/wheel",
+      "file": "docs/gates/phase-12-symbol-viewer-wheel-launch.json",
+      "sha256": "9632d8797e6891ceda931ebc83c6cdbed59346db62588a3f896508bc3c2eeb78"
+    },
+    {
+      "manifest": "docs/gates/phase-12-artifacts.json",
+      "field": "/historical_launches_before_finding_fixes/kicad",
+      "file": "docs/gates/phase-12-kicad-launch.json",
+      "sha256": "4afda475c476f30f80489e402113dd655344deb9871e916319a619b0dc86e92a"
+    },
+    {
+      "manifest": "docs/gates/phase-12-artifacts.json",
+      "field": "/phase_12_finding_fixes",
+      "file": "docs/gates/phase-12-finding-fixes-2026-10-05.json",
+      "sha256": "2fab9b4e57f8e69bf48e3033cc9c4eaf54e059ab85e0f2494a218b1ce9cc81c5"
+    },
+    {
+      "manifest": "docs/gates/phase-12-artifacts.json",
+      "field": "/phase_12_finding_fixes/checks/source_regression",
+      "file": "docs/gates/phase-12-finding-fixes-2026-10-05-source-results.xml",
+      "sha256": "4ae2387eb4702211339a3e5afa047c3641ba2981038f9206e96818bbbbbb9a99"
+    },
+    {
+      "manifest": "docs/gates/phase-12-artifacts.json",
+      "field": "/phase_12_finding_fixes/checks/installed_wheel_regression",
+      "file": "docs/gates/phase-12-finding-fixes-2026-10-05-wheel-results.xml",
+      "sha256": "ea06598dd24b81d2463f198f72f3c1b7fdafeff8f5082440f60c95a6feeca2ef"
+    },
+    {
+      "manifest": "docs/gates/phase-12-artifacts.json",
+      "field": "/phase_12_finding_fixes/checks/package_parity",
+      "file": "docs/gates/phase-12-finding-fixes-2026-10-05-package-evidence.json",
+      "sha256": "3c148e3b24c8a907045ee16d25689eb289344d2eec261f6c47d7f0a03f6192ef"
+    },
+    {
+      "manifest": "docs/gates/phase-12-artifacts.json",
+      "field": "/phase_12_finding_fixes/checks/quality",
+      "file": "docs/gates/phase-12-finding-fixes-2026-10-05-quality-checks.json",
+      "sha256": "ca69167f25757402d6c7612bbd057b041ac9fad2739e3d69a59045efd467ef7e"
+    },
+    {
+      "manifest": "docs/gates/phase-12-artifacts.json",
+      "field": "/phase_12_finding_fixes/checks/source_launch",
+      "file": "docs/gates/phase-12-finding-fixes-2026-10-05-source-launch.json",
+      "sha256": "850dd4c14f1e53aaa4fae7f9b33edf85ab7cae39e4f55c29c3eecd651ff38091"
+    },
+    {
+      "manifest": "docs/gates/phase-12-artifacts.json",
+      "field": "/phase_12_finding_fixes/checks/installed_launch",
+      "file": "docs/gates/phase-12-finding-fixes-2026-10-05-wheel-launch.json",
+      "sha256": "64cf4de233887b3b843bf354ac9b179a8fae5a618a1da20d81ebb2ecbb60bf3f"
+    },
+    {
+      "manifest": "docs/gates/phase-12-artifacts.json",
+      "field": "/spec_v097_revision",
+      "file": "docs/gates/phase-13-spec-revision-v0.9.7-2026-10-05.json",
+      "sha256": "6be5f5f9e628d093729d20f73521af96b697572601955160ff2387d69af7583b"
+    },
+    {
+      "manifest": "docs/gates/phase-12-artifacts.json",
+      "field": "/spec_v097_revision/checks/source_focused_review",
+      "file": "docs/gates/phase-13-spec-revision-v0.9.7-2026-10-05-source-results.xml",
+      "sha256": "90234b9d0c88c09cedd90d286b75518cdf2fe9f1f5d3ad787902d93693a459fb"
+    },
+    {
+      "manifest": "docs/gates/phase-12-artifacts.json",
+      "field": "/spec_v097_revision/checks/installed_focused_review",
+      "file": "docs/gates/phase-13-spec-revision-v0.9.7-2026-10-05-wheel-results.xml",
+      "sha256": "ce42932dde405297186ad8573ffca6f5820ba7bba9a4ab8ba637df58fbdbd8e4"
+    },
+    {
+      "manifest": "docs/gates/phase-12-artifacts.json",
+      "field": "/spec_v097_revision/checks/specification_structure",
+      "file": "docs/gates/phase-13-spec-revision-v0.9.7-2026-10-05-structure-checks.json",
+      "sha256": "46bd89999354cc76abe6773282d8701cfd4ff247cf20b76950de152411d5e18e"
+    },
+    {
+      "manifest": "docs/gates/phase-12-artifacts.json",
+      "field": "/spec_v097_revision/checks/quality",
+      "file": "docs/gates/phase-13-spec-revision-v0.9.7-2026-10-05-quality-checks.json",
+      "sha256": "ce7cf83d41052105991ae975167a0b47bab1e11c09f62a537239d6f5950491cf"
+    },
+    {
+      "manifest": "docs/gates/phase-12-artifacts.json",
+      "field": "/spec_v097_revision/checks/plugin_data",
+      "file": "docs/gates/phase-13-spec-revision-v0.9.7-2026-10-05-plugin-data-review.json",
+      "sha256": "f14c80f046bc170efcd24a6f018045869381fd50e87fa532042411e0eb8b070d"
+    },
+    {
+      "manifest": "docs/gates/phase-12-artifacts.json",
+      "field": "/spec_v097_revision/checks/prior_full_regressions/source",
+      "file": "docs/gates/phase-12-finding-fixes-2026-10-05-source-results.xml",
+      "sha256": "4ae2387eb4702211339a3e5afa047c3641ba2981038f9206e96818bbbbbb9a99"
+    },
+    {
+      "manifest": "docs/gates/phase-12-artifacts.json",
+      "field": "/spec_v097_revision/checks/prior_full_regressions/installed_wheel",
+      "file": "docs/gates/phase-12-finding-fixes-2026-10-05-wheel-results.xml",
+      "sha256": "ea06598dd24b81d2463f198f72f3c1b7fdafeff8f5082440f60c95a6feeca2ef"
+    },
+    {
+      "manifest": "docs/gates/phase-12-artifacts.json",
+      "field": "/pcm_spec_update",
+      "file": "docs/gates/phase-13-pcm-spec-update-2026-10-05.json",
+      "sha256": "9d742c5846066d6f6ad74bea94c7e1dfbf2081b8f3f74c0c30420bd1bd9aef02"
+    },
+    {
+      "manifest": "docs/gates/phase-12-artifacts.json",
+      "field": "/pcm_only_spec_update",
+      "file": "docs/gates/phase-13-pcm-only-spec-update-2026-10-05.json",
+      "sha256": "e82e90d3d908a21e2fd5a428ea2eaba4559ea49b5ddaa905a9c1b037ab0b875f"
+    },
+    {
+      "manifest": "docs/gates/phase-12-artifacts.json",
+      "field": "/viewer_performance_amendment/tests/source",
+      "file": "docs/gates/phase-12-viewer-performance-source-results.xml",
+      "sha256": "9812c3f547a48f574e5e36e7297a58d05f87c622599184e597224fb55266c3da"
+    },
+    {
+      "manifest": "docs/gates/phase-12-artifacts.json",
+      "field": "/viewer_performance_amendment/tests/wheel",
+      "file": "docs/gates/phase-12-viewer-performance-wheel-results.xml",
+      "sha256": "1cfe4cebea85fa9cd139021d7613ba7c3b2e31bb4b8456c88c7e67f0b698f376"
+    },
+    {
+      "manifest": "docs/gates/phase-12-artifacts.json",
+      "field": "/viewer_performance_amendment/package_evidence",
+      "file": "docs/gates/phase-12-viewer-performance-package-evidence.json",
+      "sha256": "002a1cc748469c0f202fb01f0201bdee1674afccff3bf30a01d97ba75508d6de"
+    },
+    {
+      "manifest": "docs/gates/phase-12-artifacts.json",
+      "field": "/viewer_performance_amendment/measurements",
+      "file": "docs/gates/phase-12-viewer-performance-measurements.json",
+      "sha256": "15bf69d4b76b0dc8bf193bc9500b7250f4306e211845c966c95ef6e30cf1aa92"
+    },
+    {
+      "manifest": "docs/gates/phase-12-artifacts.json",
+      "field": "/viewer_performance_amendment/wheel",
+      "file": ".tools/phase12-viewer-performance/dist/partsmith-0.1.0-py3-none-any.whl",
+      "sha256": "2ca127d5dbdbec4c15c6a12e70dd0de01c7fe46ab2e348a25567d23c983c4317"
+    },
+    {
+      "manifest": "docs/gates/phase-12-artifacts.json",
+      "field": "/viewer_performance_amendment/sdist",
+      "file": ".tools/phase12-viewer-performance/dist/partsmith-0.1.0.tar.gz",
+      "sha256": "4a775151d9397230628354c1c86aeb179cfccea1107883b758e77751b22d389d"
+    },
+    {
+      "manifest": "docs/gates/phase-12-viewer-performance-artifacts.json",
+      "field": "/tests/source",
+      "file": "docs/gates/phase-12-viewer-performance-source-results.xml",
+      "sha256": "9812c3f547a48f574e5e36e7297a58d05f87c622599184e597224fb55266c3da"
+    },
+    {
+      "manifest": "docs/gates/phase-12-viewer-performance-artifacts.json",
+      "field": "/tests/wheel",
+      "file": "docs/gates/phase-12-viewer-performance-wheel-results.xml",
+      "sha256": "1cfe4cebea85fa9cd139021d7613ba7c3b2e31bb4b8456c88c7e67f0b698f376"
+    },
+    {
+      "manifest": "docs/gates/phase-12-viewer-performance-artifacts.json",
+      "field": "/wheel",
+      "file": ".tools/phase12-viewer-performance/dist/partsmith-0.1.0-py3-none-any.whl",
+      "sha256": "2ca127d5dbdbec4c15c6a12e70dd0de01c7fe46ab2e348a25567d23c983c4317"
+    },
+    {
+      "manifest": "docs/gates/phase-12-viewer-performance-artifacts.json",
+      "field": "/sdist",
+      "file": ".tools/phase12-viewer-performance/dist/partsmith-0.1.0.tar.gz",
+      "sha256": "4a775151d9397230628354c1c86aeb179cfccea1107883b758e77751b22d389d"
+    },
+    {
+      "manifest": "docs/gates/phase-12-viewer-performance-package-evidence.json",
+      "field": "/wheel",
+      "file": ".tools/phase12-viewer-performance/dist/partsmith-0.1.0-py3-none-any.whl",
+      "sha256": "2ca127d5dbdbec4c15c6a12e70dd0de01c7fe46ab2e348a25567d23c983c4317"
+    },
+    {
+      "manifest": "docs/gates/phase-12-viewer-performance-package-evidence.json",
+      "field": "/sdist",
+      "file": ".tools/phase12-viewer-performance/dist/partsmith-0.1.0.tar.gz",
+      "sha256": "4a775151d9397230628354c1c86aeb179cfccea1107883b758e77751b22d389d"
+    }
+  ],
+  "historical_scope_preserved": [
+    {
+      "manifest": "docs/gates/phase-10-parser-fix-2026-10-04.json",
+      "field": "refreshed_manifests",
+      "reason": "The Phase 10 closeout records then-current Phase 6/8 manifest identities. Later input refreshes do not rewrite that historical event."
+    },
+    {
+      "manifest": "docs/gates/phase-12-finding-fixes-2026-10-05-package-evidence.json",
+      "field": "source_sha256",
+      "reason": "Exact source identities of the earlier validated wheel/sdist are historical. Five files were subsequently changed by the separately recorded viewer-performance amendment."
+    }
+  ],
+  "verification_commands": [
+    {
+      "command": ".venv/Scripts/python.exe scripts/verify_phase2_manifest.py --manifest docs/gates/phase-10-artifacts.json --source disk",
+      "exit_code": 0,
+      "output": "PASS: all recorded repository input hashes match exact file bytes"
+    },
+    {
+      "command": ".venv/Scripts/python.exe scripts/verify_phase2_manifest.py --manifest docs/gates/phase-11-artifacts.json --source disk",
+      "exit_code": 0,
+      "output": "PASS: all recorded repository input hashes match exact file bytes"
+    },
+    {
+      "command": ".venv/Scripts/python.exe scripts/verify_phase2_manifest.py --manifest docs/gates/phase-11-finding-fixes-2026-10-04.json --source disk",
+      "exit_code": 0,
+      "output": "PASS: all recorded repository input hashes match exact file bytes"
+    },
+    {
+      "command": ".venv/Scripts/python.exe scripts/verify_phase2_manifest.py --manifest docs/gates/phase-12-artifacts.json --source disk",
+      "exit_code": 0,
+      "output": "PASS: all recorded repository input hashes match exact file bytes"
+    },
+    {
+      "command": ".venv/Scripts/python.exe scripts/verify_phase2_manifest.py --manifest docs/gates/phase-12-finding-fixes-2026-10-05.json --source disk",
+      "exit_code": 0,
+      "output": "PASS: all recorded repository input hashes match exact file bytes"
+    },
+    {
+      "command": ".venv/Scripts/python.exe scripts/verify_phase2_manifest.py --manifest docs/gates/phase-12-readiness-review-2026-10-05.json --source disk",
+      "exit_code": 0,
+      "output": "PASS: all recorded repository input hashes match exact file bytes"
+    },
+    {
+      "command": ".venv/Scripts/python.exe scripts/verify_phase2_manifest.py --manifest docs/gates/phase-12-viewer-performance-artifacts.json --source disk",
+      "exit_code": 0,
+      "output": "PASS: all recorded repository input hashes match exact file bytes"
+    },
+    {
+      "command": ".venv/Scripts/python.exe scripts/verify_phase2_manifest.py --manifest docs/gates/phase-12.1-artifacts.json --source disk",
+      "exit_code": 0,
+      "output": "PASS: all recorded repository input hashes match exact file bytes"
+    },
+    {
+      "command": ".venv/Scripts/python.exe scripts/verify_phase2_manifest.py --manifest docs/gates/phase-13-pcm-only-spec-update-2026-10-05.json --source disk",
+      "exit_code": 0,
+      "output": "PASS: all recorded repository input hashes match exact file bytes"
+    },
+    {
+      "command": ".venv/Scripts/python.exe scripts/verify_phase2_manifest.py --manifest docs/gates/phase-13-pcm-spec-update-2026-10-05.json --source disk",
+      "exit_code": 0,
+      "output": "PASS: all recorded repository input hashes match exact file bytes"
+    },
+    {
+      "command": ".venv/Scripts/python.exe scripts/verify_phase2_manifest.py --manifest docs/gates/phase-13-spec-revision-v0.9.7-2026-10-05.json --source disk",
+      "exit_code": 0,
+      "output": "PASS: all recorded repository input hashes match exact file bytes"
+    },
+    {
+      "command": ".venv/Scripts/python.exe scripts/verify_phase2_manifest.py --manifest docs/gates/phase-2-artifacts.json --source disk",
+      "exit_code": 0,
+      "output": "PASS: all recorded repository input hashes match exact file bytes"
+    },
+    {
+      "command": ".venv/Scripts/python.exe scripts/verify_phase2_manifest.py --manifest docs/gates/phase-2-ir-1.1-artifacts.json --source disk",
+      "exit_code": 0,
+      "output": "PASS: all recorded repository input hashes match exact file bytes"
+    },
+    {
+      "command": ".venv/Scripts/python.exe scripts/verify_phase2_manifest.py --manifest docs/gates/phase-2-ir-1.2-artifacts.json --source disk",
+      "exit_code": 0,
+      "output": "PASS: all recorded repository input hashes match exact file bytes"
+    },
+    {
+      "command": ".venv/Scripts/python.exe scripts/verify_phase2_manifest.py --manifest docs/gates/phase-2-v0.9.6-artifacts.json --source disk",
+      "exit_code": 0,
+      "output": "PASS: all recorded repository input hashes match exact file bytes"
+    },
+    {
+      "command": ".venv/Scripts/python.exe scripts/verify_phase2_manifest.py --manifest docs/gates/phase-3-artifacts.json --source disk",
+      "exit_code": 0,
+      "output": "PASS: all recorded repository input hashes match exact file bytes"
+    },
+    {
+      "command": ".venv/Scripts/python.exe scripts/verify_phase2_manifest.py --manifest docs/gates/phase-4-artifacts.json --source disk",
+      "exit_code": 0,
+      "output": "PASS: all recorded repository input hashes match exact file bytes"
+    },
+    {
+      "command": ".venv/Scripts/python.exe scripts/verify_phase2_manifest.py --manifest docs/gates/phase-5-artifacts.json --source disk",
+      "exit_code": 0,
+      "output": "PASS: all recorded repository input hashes match exact file bytes"
+    },
+    {
+      "command": ".venv/Scripts/python.exe scripts/verify_phase2_manifest.py --manifest docs/gates/phase-6-artifacts.json --source disk",
+      "exit_code": 0,
+      "output": "PASS: all recorded repository input hashes match exact file bytes"
+    },
+    {
+      "command": ".venv/Scripts/python.exe scripts/verify_phase2_manifest.py --manifest docs/gates/phase-7-artifacts.json --source disk",
+      "exit_code": 0,
+      "output": "PASS: all recorded repository input hashes match exact file bytes"
+    },
+    {
+      "command": ".venv/Scripts/python.exe scripts/verify_phase2_manifest.py --manifest docs/gates/phase-8-artifacts.json --source disk",
+      "exit_code": 0,
+      "output": "PASS: all recorded repository input hashes match exact file bytes"
+    },
+    {
+      "command": ".venv/Scripts/python.exe scripts/verify_phase2_manifest.py --manifest docs/gates/phase-9-artifacts.json --source disk",
+      "exit_code": 0,
+      "output": "PASS: all recorded repository input hashes match exact file bytes"
+    },
+    {
+      "command": ".venv/Scripts/python.exe scripts/verify_phase2_manifest.py --manifest docs/gates/phase-9.5-artifacts.json --source disk",
+      "exit_code": 0,
+      "output": "PASS: all recorded repository input hashes match exact file bytes"
+    },
+    {
+      "command": ".venv/Scripts/python.exe scripts/verify_phase2_manifest.py --manifest docs/gates/phase-12-artifacts.json --source disk --update",
+      "exit_code": 0,
+      "output": "Updated docs\\gates\\phase-12-artifacts.json from source=disk"
+    },
+    {
+      "command": ".venv/Scripts/python.exe scripts/verify_phase2_manifest.py --manifest docs/gates/phase-12-viewer-performance-artifacts.json --source disk --update",
+      "exit_code": 0,
+      "output": "Updated docs\\gates\\phase-12-viewer-performance-artifacts.json from source=disk"
+    },
+    {
+      "command": ".venv/Scripts/python.exe scripts/verify_phase2_manifest.py --manifest docs/gates/phase-10-artifacts.json --source disk",
+      "exit_code": 0,
+      "output": "PASS: all recorded repository input hashes match exact file bytes"
+    },
+    {
+      "command": ".venv/Scripts/python.exe scripts/verify_phase2_manifest.py --manifest docs/gates/phase-11-artifacts.json --source disk",
+      "exit_code": 0,
+      "output": "PASS: all recorded repository input hashes match exact file bytes"
+    },
+    {
+      "command": ".venv/Scripts/python.exe scripts/verify_phase2_manifest.py --manifest docs/gates/phase-11-finding-fixes-2026-10-04.json --source disk",
+      "exit_code": 0,
+      "output": "PASS: all recorded repository input hashes match exact file bytes"
+    },
+    {
+      "command": ".venv/Scripts/python.exe scripts/verify_phase2_manifest.py --manifest docs/gates/phase-12-artifacts.json --source disk",
+      "exit_code": 0,
+      "output": "PASS: all recorded repository input hashes match exact file bytes"
+    },
+    {
+      "command": ".venv/Scripts/python.exe scripts/verify_phase2_manifest.py --manifest docs/gates/phase-12-finding-fixes-2026-10-05.json --source disk",
+      "exit_code": 0,
+      "output": "PASS: all recorded repository input hashes match exact file bytes"
+    },
+    {
+      "command": ".venv/Scripts/python.exe scripts/verify_phase2_manifest.py --manifest docs/gates/phase-12-readiness-review-2026-10-05.json --source disk",
+      "exit_code": 0,
+      "output": "PASS: all recorded repository input hashes match exact file bytes"
+    },
+    {
+      "command": ".venv/Scripts/python.exe scripts/verify_phase2_manifest.py --manifest docs/gates/phase-12-viewer-performance-artifacts.json --source disk",
+      "exit_code": 0,
+      "output": "PASS: all recorded repository input hashes match exact file bytes"
+    },
+    {
+      "command": ".venv/Scripts/python.exe scripts/verify_phase2_manifest.py --manifest docs/gates/phase-12.1-artifacts.json --source disk",
+      "exit_code": 0,
+      "output": "PASS: all recorded repository input hashes match exact file bytes"
+    },
+    {
+      "command": ".venv/Scripts/python.exe scripts/verify_phase2_manifest.py --manifest docs/gates/phase-13-pcm-only-spec-update-2026-10-05.json --source disk",
+      "exit_code": 0,
+      "output": "PASS: all recorded repository input hashes match exact file bytes"
+    },
+    {
+      "command": ".venv/Scripts/python.exe scripts/verify_phase2_manifest.py --manifest docs/gates/phase-13-pcm-spec-update-2026-10-05.json --source disk",
+      "exit_code": 0,
+      "output": "PASS: all recorded repository input hashes match exact file bytes"
+    },
+    {
+      "command": ".venv/Scripts/python.exe scripts/verify_phase2_manifest.py --manifest docs/gates/phase-13-spec-revision-v0.9.7-2026-10-05.json --source disk",
+      "exit_code": 0,
+      "output": "PASS: all recorded repository input hashes match exact file bytes"
+    },
+    {
+      "command": ".venv/Scripts/python.exe scripts/verify_phase2_manifest.py --manifest docs/gates/phase-2-artifacts.json --source disk",
+      "exit_code": 0,
+      "output": "PASS: all recorded repository input hashes match exact file bytes"
+    },
+    {
+      "command": ".venv/Scripts/python.exe scripts/verify_phase2_manifest.py --manifest docs/gates/phase-2-ir-1.1-artifacts.json --source disk",
+      "exit_code": 0,
+      "output": "PASS: all recorded repository input hashes match exact file bytes"
+    },
+    {
+      "command": ".venv/Scripts/python.exe scripts/verify_phase2_manifest.py --manifest docs/gates/phase-2-ir-1.2-artifacts.json --source disk",
+      "exit_code": 0,
+      "output": "PASS: all recorded repository input hashes match exact file bytes"
+    },
+    {
+      "command": ".venv/Scripts/python.exe scripts/verify_phase2_manifest.py --manifest docs/gates/phase-2-v0.9.6-artifacts.json --source disk",
+      "exit_code": 0,
+      "output": "PASS: all recorded repository input hashes match exact file bytes"
+    },
+    {
+      "command": ".venv/Scripts/python.exe scripts/verify_phase2_manifest.py --manifest docs/gates/phase-3-artifacts.json --source disk",
+      "exit_code": 0,
+      "output": "PASS: all recorded repository input hashes match exact file bytes"
+    },
+    {
+      "command": ".venv/Scripts/python.exe scripts/verify_phase2_manifest.py --manifest docs/gates/phase-4-artifacts.json --source disk",
+      "exit_code": 0,
+      "output": "PASS: all recorded repository input hashes match exact file bytes"
+    },
+    {
+      "command": ".venv/Scripts/python.exe scripts/verify_phase2_manifest.py --manifest docs/gates/phase-5-artifacts.json --source disk",
+      "exit_code": 0,
+      "output": "PASS: all recorded repository input hashes match exact file bytes"
+    },
+    {
+      "command": ".venv/Scripts/python.exe scripts/verify_phase2_manifest.py --manifest docs/gates/phase-6-artifacts.json --source disk",
+      "exit_code": 0,
+      "output": "PASS: all recorded repository input hashes match exact file bytes"
+    },
+    {
+      "command": ".venv/Scripts/python.exe scripts/verify_phase2_manifest.py --manifest docs/gates/phase-7-artifacts.json --source disk",
+      "exit_code": 0,
+      "output": "PASS: all recorded repository input hashes match exact file bytes"
+    },
+    {
+      "command": ".venv/Scripts/python.exe scripts/verify_phase2_manifest.py --manifest docs/gates/phase-8-artifacts.json --source disk",
+      "exit_code": 0,
+      "output": "PASS: all recorded repository input hashes match exact file bytes"
+    },
+    {
+      "command": ".venv/Scripts/python.exe scripts/verify_phase2_manifest.py --manifest docs/gates/phase-9-artifacts.json --source disk",
+      "exit_code": 0,
+      "output": "PASS: all recorded repository input hashes match exact file bytes"
+    },
+    {
+      "command": ".venv/Scripts/python.exe scripts/verify_phase2_manifest.py --manifest docs/gates/phase-9.5-artifacts.json --source disk",
+      "exit_code": 0,
+      "output": "PASS: all recorded repository input hashes match exact file bytes"
+    }
+  ],
+  "receipt_verification_command": ".venv/Scripts/python.exe scripts/verify_phase2_manifest.py --manifest docs/gates/gate-hash-refresh-2026-10-06.json --source disk",
+  "sha256": {
+    "docs/gates/phase-12-artifacts.json": "60dabb07f776cf064ab1c1fa7a645a3a4f8b5e11563625faeb4800b12ab059a8",
+    "docs/gates/phase-12-viewer-performance-artifacts.json": "436f1842b29b10a070f32cd74b68dc9b8ee206924debb7a7fc37104a07582155",
+    "docs/gates/history/phase-12-artifacts-before-gate-hash-refresh-2026-10-06.json": "39198f49783e63007cf65203ec53601948895e3eb1083925112066706e2ec4af",
+    "docs/gates/history/phase-12-viewer-performance-artifacts-before-gate-hash-refresh-2026-10-06.json": "bad226046ef14a8f93c8a1ed196b22f01c3d13e205909bad12ace4c4cbb712d0",
+    "scripts/verify_phase2_manifest.py": "28b8e28c51c74a71ca20d7c570f402eef1e12468abaf1b0e77e5161abf72a1fc",
+    ".github/instructions/gate-closeout.instructions.md": "379f662435f4478397d7167531ffa719e29d828eb55a518aa0b108a07eccffbc",
+    ".github/workflows/ci.yml": "7c5f06058eb242ec9020fdd41f7fb55e7e35cf6ed8d04833743df77cea6ed0bd"
+  },
+  "line_endings": "Edited manifests, archives and this receipt retain exact UTF-8/LF bytes as required by .gitattributes. The Windows verifier output was normalized before final verification.",
+  "final_verification_commands": [
+    {
+      "command": ".venv/Scripts/python.exe scripts/verify_phase2_manifest.py --manifest docs/gates/phase-10-artifacts.json --source disk",
+      "exit_code": 0,
+      "output": "PASS: all recorded repository input hashes match exact file bytes"
+    },
+    {
+      "command": ".venv/Scripts/python.exe scripts/verify_phase2_manifest.py --manifest docs/gates/phase-11-artifacts.json --source disk",
+      "exit_code": 0,
+      "output": "PASS: all recorded repository input hashes match exact file bytes"
+    },
+    {
+      "command": ".venv/Scripts/python.exe scripts/verify_phase2_manifest.py --manifest docs/gates/phase-11-finding-fixes-2026-10-04.json --source disk",
+      "exit_code": 0,
+      "output": "PASS: all recorded repository input hashes match exact file bytes"
+    },
+    {
+      "command": ".venv/Scripts/python.exe scripts/verify_phase2_manifest.py --manifest docs/gates/phase-12-artifacts.json --source disk",
+      "exit_code": 0,
+      "output": "PASS: all recorded repository input hashes match exact file bytes"
+    },
+    {
+      "command": ".venv/Scripts/python.exe scripts/verify_phase2_manifest.py --manifest docs/gates/phase-12-finding-fixes-2026-10-05.json --source disk",
+      "exit_code": 0,
+      "output": "PASS: all recorded repository input hashes match exact file bytes"
+    },
+    {
+      "command": ".venv/Scripts/python.exe scripts/verify_phase2_manifest.py --manifest docs/gates/phase-12-readiness-review-2026-10-05.json --source disk",
+      "exit_code": 0,
+      "output": "PASS: all recorded repository input hashes match exact file bytes"
+    },
+    {
+      "command": ".venv/Scripts/python.exe scripts/verify_phase2_manifest.py --manifest docs/gates/phase-12-viewer-performance-artifacts.json --source disk",
+      "exit_code": 0,
+      "output": "PASS: all recorded repository input hashes match exact file bytes"
+    },
+    {
+      "command": ".venv/Scripts/python.exe scripts/verify_phase2_manifest.py --manifest docs/gates/phase-12.1-artifacts.json --source disk",
+      "exit_code": 0,
+      "output": "PASS: all recorded repository input hashes match exact file bytes"
+    },
+    {
+      "command": ".venv/Scripts/python.exe scripts/verify_phase2_manifest.py --manifest docs/gates/phase-13-pcm-only-spec-update-2026-10-05.json --source disk",
+      "exit_code": 0,
+      "output": "PASS: all recorded repository input hashes match exact file bytes"
+    },
+    {
+      "command": ".venv/Scripts/python.exe scripts/verify_phase2_manifest.py --manifest docs/gates/phase-13-pcm-spec-update-2026-10-05.json --source disk",
+      "exit_code": 0,
+      "output": "PASS: all recorded repository input hashes match exact file bytes"
+    },
+    {
+      "command": ".venv/Scripts/python.exe scripts/verify_phase2_manifest.py --manifest docs/gates/phase-13-spec-revision-v0.9.7-2026-10-05.json --source disk",
+      "exit_code": 0,
+      "output": "PASS: all recorded repository input hashes match exact file bytes"
+    },
+    {
+      "command": ".venv/Scripts/python.exe scripts/verify_phase2_manifest.py --manifest docs/gates/phase-2-artifacts.json --source disk",
+      "exit_code": 0,
+      "output": "PASS: all recorded repository input hashes match exact file bytes"
+    },
+    {
+      "command": ".venv/Scripts/python.exe scripts/verify_phase2_manifest.py --manifest docs/gates/phase-2-ir-1.1-artifacts.json --source disk",
+      "exit_code": 0,
+      "output": "PASS: all recorded repository input hashes match exact file bytes"
+    },
+    {
+      "command": ".venv/Scripts/python.exe scripts/verify_phase2_manifest.py --manifest docs/gates/phase-2-ir-1.2-artifacts.json --source disk",
+      "exit_code": 0,
+      "output": "PASS: all recorded repository input hashes match exact file bytes"
+    },
+    {
+      "command": ".venv/Scripts/python.exe scripts/verify_phase2_manifest.py --manifest docs/gates/phase-2-v0.9.6-artifacts.json --source disk",
+      "exit_code": 0,
+      "output": "PASS: all recorded repository input hashes match exact file bytes"
+    },
+    {
+      "command": ".venv/Scripts/python.exe scripts/verify_phase2_manifest.py --manifest docs/gates/phase-3-artifacts.json --source disk",
+      "exit_code": 0,
+      "output": "PASS: all recorded repository input hashes match exact file bytes"
+    },
+    {
+      "command": ".venv/Scripts/python.exe scripts/verify_phase2_manifest.py --manifest docs/gates/phase-4-artifacts.json --source disk",
+      "exit_code": 0,
+      "output": "PASS: all recorded repository input hashes match exact file bytes"
+    },
+    {
+      "command": ".venv/Scripts/python.exe scripts/verify_phase2_manifest.py --manifest docs/gates/phase-5-artifacts.json --source disk",
+      "exit_code": 0,
+      "output": "PASS: all recorded repository input hashes match exact file bytes"
+    },
+    {
+      "command": ".venv/Scripts/python.exe scripts/verify_phase2_manifest.py --manifest docs/gates/phase-6-artifacts.json --source disk",
+      "exit_code": 0,
+      "output": "PASS: all recorded repository input hashes match exact file bytes"
+    },
+    {
+      "command": ".venv/Scripts/python.exe scripts/verify_phase2_manifest.py --manifest docs/gates/phase-7-artifacts.json --source disk",
+      "exit_code": 0,
+      "output": "PASS: all recorded repository input hashes match exact file bytes"
+    },
+    {
+      "command": ".venv/Scripts/python.exe scripts/verify_phase2_manifest.py --manifest docs/gates/phase-8-artifacts.json --source disk",
+      "exit_code": 0,
+      "output": "PASS: all recorded repository input hashes match exact file bytes"
+    },
+    {
+      "command": ".venv/Scripts/python.exe scripts/verify_phase2_manifest.py --manifest docs/gates/phase-9-artifacts.json --source disk",
+      "exit_code": 0,
+      "output": "PASS: all recorded repository input hashes match exact file bytes"
+    },
+    {
+      "command": ".venv/Scripts/python.exe scripts/verify_phase2_manifest.py --manifest docs/gates/phase-9.5-artifacts.json --source disk",
+      "exit_code": 0,
+      "output": "PASS: all recorded repository input hashes match exact file bytes"
+    }
+  ]
+}

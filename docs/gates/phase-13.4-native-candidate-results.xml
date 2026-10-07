@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="1" time="20.191" timestamp="2026-10-06T23:50:36.454027-04:00" hostname="DESKTOP-CIC0QVQ"><testcase classname="tests.test_integration_staging" name="test_two_native_stages_are_identical" time="18.342"><failure message="partsmith.integration.errors.IntegrationError: NATIVE_CHECK_FAILED: validate">approved_database = (&lt;sqlite3.Connection object at 0x0000024D794FFE20&gt;, ('272d0b50-d329-4643-b13b-af6ba9605cff', 'f0f53607-03e9-44ba-a47e-66b68bf79df2', '8cd245da-45dd-4ff2-904a-94c0b0704abd'))
+tmp_path = WindowsPath('C:/Users/User/AppData/Local/Temp/pytest-of-User/pytest-366/test_two_native_stages_are_ide0')
+
+    def test_two_native_stages_are_identical(approved_database, tmp_path):
+        """@brief Verifies native packing and deterministic check identities.
+        @param approved_database Complete approved source packages.
+        @param tmp_path Isolated target and owned staging parent.
+        @return None.
+        @details Unrelated table/project bytes and SQLite remain unchanged.
+        """
+        connection, builds = approved_database
+        root = tmp_path / "project"
+        root.mkdir()
+        (root / "sym-lib-table").write_bytes(
+            b'(sym_lib_table (version 7) (lib (name "User") (type "KiCad") '
+            b'(uri "${KIPRJMOD}/user.kicad_sym") (descr "User property")))'
+        )
+        (root / "user.kicad_pro").write_bytes(b"{}")
+        result = Planner(connection).plan(root, TARGET, builds[:2])
+        before = database_identity(connection), read_project(root)
+&gt;       one = Stager(connection).stage(result, tmp_path)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\test_integration_staging.py:42: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+src\partsmith\integration\staging.py:533: in stage
+    receipt = native_check(
+src\partsmith\integration\staging.py:392: in native_check
+    receipts.append(native_model_check(root, output, runtime.executable))
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+root = WindowsPath('C:/Users/User/AppData/Local/Temp/pytest-of-User/pytest-366/test_two_native_stages_are_ide0/stage-dsj8790v')
+output = WindowsPath('C:/Users/User/AppData/Local/Temp/partsmith-integration-native-0xc_w9xj')
+executable = WindowsPath('C:/Program Files/KiCad/10.0/bin/kicad-cli.exe')
+
+    def native_model_check(root: Path, output: Path, executable: Path) -&gt; dict:
+        """@brief Exports a disposable board and verifies every unchanged STEP.
+        @param root Exact complete staged generation.
+        @param output Owned diagnostic output directory outside the stage.
+        @param executable Pinned verified KiCad CLI executable.
+        @return Operational receipt with native CAD solid and volume readback.
+        @details KIPRJMOD resolves from the copied diagnostic project. Missing
+        models cannot pass through a CLI warning: solids/volume must match sources.
+        """
+        import cadquery
+    
+        diagnostic = output / "project"
+        diagnostic.mkdir()
+        footprints = []
+        expected_solids, expected_volume = 1, Decimal("160")
+        for path in sorted((root / "BFT_Footprints.pretty").glob("*.kicad_mod")):
+            tree = parse(path.read_bytes())
+            model = children(tree, "model")[0]
+            relative = model[1].removeprefix("${KIPRJMOD}/")
+            if relative == model[1]:
+                raise IntegrationError(FailureCode.PATH_CONFLICT)
+            source = root / relative
+            blob = source.read_bytes()
+            destination = diagnostic / relative
+            destination.parent.mkdir(parents=True, exist_ok=True)
+            destination.write_bytes(blob)
+            shape = cadquery.importers.importStep(str(source)).val()
+            expected_solids += len(shape.Solids())
+            scale = children(children(model, "scale")[0], "xyz")[0][1:]
+            factor = abs(Decimal(scale[0]) * Decimal(scale[1]) * Decimal(scale[2]))
+            expected_volume += Decimal(str(shape.Volume())) * factor
+            footprints.append(tree)
+        board = diagnostic / "native-models.kicad_pcb"
+        board.write_bytes(serialize(board_tree(footprints)))
+        board.with_suffix(".kicad_pro").write_bytes(b"{}")
+        exported = output / "native-board.step"
+        result = run_process(
+            [
+                str(executable),
+                "pcb",
+                "export",
+                "step",
+                "--force",
+                "--output",
+                str(exported),
+                str(board),
+            ],
+            log=quiet,
+            cwd=diagnostic,
+            timeout=ResourcePolicy().native_timeout_seconds,
+            output_budget=ResourcePolicy().log_bytes,
+        )
+        if result.returncode or not exported.is_file():
+            raise IntegrationError(FailureCode.NATIVE_CHECK_FAILED)
+        shape = cadquery.importers.importStep(str(exported)).val()
+        observed_solids = len(shape.Solids())
+        observed_volume = Decimal(str(shape.Volume()))
+        if observed_solids != expected_solids or abs(
+            observed_volume - expected_volume
+        ) &gt; Decimal("0.00001"):
+&gt;           raise IntegrationError(FailureCode.NATIVE_CHECK_FAILED)
+E           partsmith.integration.errors.IntegrationError: NATIVE_CHECK_FAILED: validate
+
+src\partsmith\integration\native_stage.py:125: IntegrationError</failure></testcase></testsuite></testsuites>

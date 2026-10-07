@@ -1,0 +1,309 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "bft://schemas/pdl/1.0",
+  "title": "PartSmith Package Definition Library 1.0",
+  "type": "object",
+  "properties": {
+    "schema_version": { "const": "1.0" },
+    "id": { "$ref": "#/$defs/id" },
+    "revision": { "$ref": "#/$defs/id" },
+    "effective_date": { "type": "string", "format": "date" },
+    "validation_status": { "enum": ["DRAFT", "VALIDATED", "APPROVED", "RETIRED"] },
+    "content_sha256": { "$ref": "#/$defs/sha256" },
+    "release_profile": {
+      "type": "object",
+      "properties": {
+        "id": { "const": "mvp-1" },
+        "version": { "$ref": "#/$defs/id" },
+        "sha256": { "$ref": "#/$defs/sha256" }
+      },
+      "required": ["id", "version", "sha256"],
+      "additionalProperties": false
+    },
+    "identity": {
+      "type": "object",
+      "properties": {
+        "family": { "$ref": "#/$defs/id" },
+        "variant": { "$ref": "#/$defs/id" },
+        "scope": { "enum": ["GENERIC", "MANUFACTURER_SPECIFIC"] },
+        "manufacturer": { "type": ["string", "null"] },
+        "manufacturer_package_code": { "type": ["string", "null"] },
+        "peripheral_lead_count": { "$ref": "#/$defs/nonnegativeInteger" },
+        "exposed_terminal_count": { "$ref": "#/$defs/nonnegativeInteger" },
+        "pin_count": { "type": "integer", "minimum": 1 }
+      },
+      "required": [
+        "family", "variant", "scope", "manufacturer",
+        "manufacturer_package_code", "peripheral_lead_count",
+        "exposed_terminal_count", "pin_count"
+      ],
+      "additionalProperties": false
+    },
+    "mechanical": {
+      "type": "object",
+      "properties": {
+        "body": {
+          "type": "object",
+          "properties": {
+            "length": { "$ref": "#/$defs/dimension" },
+            "width": { "$ref": "#/$defs/dimension" },
+            "height": { "$ref": "#/$defs/dimension" }
+          },
+          "required": ["length", "width", "height"],
+          "additionalProperties": false
+        },
+        "terminal": {
+          "type": "object",
+          "properties": {
+            "length": { "$ref": "#/$defs/dimension" },
+            "width": { "$ref": "#/$defs/dimension" },
+            "height": { "$ref": "#/$defs/dimension" }
+          },
+          "required": ["length", "width", "height"],
+          "additionalProperties": false
+        }
+      },
+      "required": ["body", "terminal"],
+      "additionalProperties": false
+    },
+    "topology": {
+      "type": "object",
+      "properties": {
+        "pitch_mm": { "type": ["number", "null"], "exclusiveMinimum": 0 },
+        "numbering": { "enum": ["CLOCKWISE", "COUNTER_CLOCKWISE", "LINEAR", "NONE"] },
+        "pin1_location": { "type": ["string", "null"] },
+        "stagger": { "type": "boolean" },
+        "sides": {
+          "type": "object",
+          "properties": {
+            "north": { "$ref": "#/$defs/nonnegativeInteger" },
+            "east": { "$ref": "#/$defs/nonnegativeInteger" },
+            "south": { "$ref": "#/$defs/nonnegativeInteger" },
+            "west": { "$ref": "#/$defs/nonnegativeInteger" },
+            "center": { "$ref": "#/$defs/nonnegativeInteger" }
+          },
+          "required": ["north", "east", "south", "west", "center"],
+          "additionalProperties": false
+        },
+        "terminals": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": { "$ref": "#/$defs/id" },
+              "number": { "$ref": "#/$defs/id" },
+              "kind": { "enum": ["PERIPHERAL", "EXPOSED"] },
+              "side": { "enum": ["north", "east", "south", "west", "center"] },
+              "topology_index": { "$ref": "#/$defs/nonnegativeInteger" },
+              "group_id": { "$ref": "#/$defs/id" }
+            },
+            "required": ["id", "number", "kind", "side", "topology_index", "group_id"],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": ["pitch_mm", "numbering", "pin1_location", "stagger", "sides", "terminals"],
+      "additionalProperties": false
+    },
+    "land_pattern": {
+      "type": "object",
+      "properties": {
+        "source": { "enum": ["MANUFACTURER_RECOMMENDED", "IPC_DERIVED", "PDL_DERIVED"] },
+        "groups": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": { "$ref": "#/$defs/id" },
+              "terminal_number": { "$ref": "#/$defs/id" },
+              "shapes": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": { "$ref": "#/$defs/id" },
+                    "shape": { "enum": ["RECT", "ROUNDRECT", "CIRCLE", "OVAL", "CUSTOM"] },
+                    "center_mm": { "$ref": "#/$defs/vec2" },
+                    "size_mm": { "$ref": "#/$defs/positiveVec2" }
+                  },
+                  "required": ["id", "shape", "center_mm", "size_mm"],
+                  "additionalProperties": false
+                }
+              }
+            },
+            "required": ["id", "terminal_number", "shapes"],
+            "additionalProperties": false
+          }
+        },
+        "non_electrical_features": { "type": "array", "items": { "$ref": "#/$defs/id" }, "uniqueItems": true }
+      },
+      "required": ["source", "groups", "non_electrical_features"],
+      "additionalProperties": false
+    },
+    "model_3d": {
+      "type": "object",
+      "properties": {
+        "body_strategy": { "$ref": "#/$defs/id" },
+        "lead_strategy": { "$ref": "#/$defs/id" },
+        "marker_strategy": { "$ref": "#/$defs/id" }
+      },
+      "required": ["body_strategy", "lead_strategy", "marker_strategy"],
+      "additionalProperties": false
+    },
+    "coordinate_system": {
+      "type": "object",
+      "properties": {
+        "origin": { "const": "PACKAGE_REFERENCE_CENTER" },
+        "x_positive": { "const": "RIGHT" },
+        "y_positive": { "const": "UP" },
+        "z_positive": { "const": "AWAY_FROM_PCB" },
+        "units": { "const": "mm" },
+        "convention_version": { "const": "1.1" }
+      },
+      "required": ["origin", "x_positive", "y_positive", "z_positive", "units", "convention_version"],
+      "additionalProperties": false
+    },
+    "reference_features": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": { "$ref": "#/$defs/id" },
+          "kind": { "enum": ["BODY_CENTER", "BODY_EXTENT", "LAND_PATTERN_EXTENT", "TERMINAL_ANCHOR", "PIN1_ANCHOR", "MOUNTING_PLANE"] },
+          "terminal_id": { "type": ["string", "null"] },
+          "anchor_mm": { "$ref": "#/$defs/vec3" },
+          "representation": { "enum": ["MEASURED", "DECLARED_ONLY"] },
+          "applicability": { "enum": ["REQUIRED", "ABSENT"] }
+        },
+        "required": ["id", "kind", "terminal_id", "anchor_mm", "representation", "applicability"],
+        "additionalProperties": false
+      }
+    },
+    "allowed_symmetries": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": { "$ref": "#/$defs/id" },
+          "matrix": { "$ref": "#/$defs/matrix4" },
+          "terminal_mapping": {
+            "type": "object",
+            "additionalProperties": { "$ref": "#/$defs/id" }
+          }
+        },
+        "required": ["id", "matrix", "terminal_mapping"],
+        "additionalProperties": false
+      }
+    },
+    "required_observables": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": { "$ref": "#/$defs/id" },
+          "kind": { "enum": ["LENGTH", "WIDTH", "HEIGHT", "POSITION", "ORIENTATION", "COUNT", "CLEARANCE"] },
+          "feature_id": { "$ref": "#/$defs/id" },
+          "measurement_mode": { "enum": ["MEASURED", "DECLARED_ONLY"] },
+          "tolerance_id": { "$ref": "#/$defs/id" }
+        },
+        "required": ["id", "kind", "feature_id", "measurement_mode", "tolerance_id"],
+        "additionalProperties": false
+      }
+    },
+    "validation": {
+      "type": "object",
+      "properties": {
+        "tolerances": {
+          "type": "object",
+          "minProperties": 1,
+          "additionalProperties": { "$ref": "#/$defs/tolerance" }
+        }
+      },
+      "required": ["tolerances"],
+      "additionalProperties": false
+    },
+    "sources": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": { "$ref": "#/$defs/id" },
+          "organization": { "type": "string", "minLength": 1 },
+          "document": { "type": "string", "minLength": 1 },
+          "revision": { "type": "string", "minLength": 1 },
+          "reference": { "type": "string", "minLength": 1 },
+          "access_date": { "type": "string", "format": "date" },
+          "section": { "type": ["string", "null"] },
+          "table_or_figure": { "type": ["string", "null"] },
+          "content_sha256": { "type": ["string", "null"], "pattern": "^[0-9a-f]{64}$" }
+        },
+        "required": ["id", "organization", "document", "revision", "reference", "access_date", "section", "table_or_figure", "content_sha256"],
+        "additionalProperties": false
+      }
+    },
+    "change_history": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "properties": {
+          "revision": { "$ref": "#/$defs/id" },
+          "date": { "type": "string", "format": "date" },
+          "description": { "type": "string", "minLength": 1 },
+          "source_ids": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "$ref": "#/$defs/id" } }
+        },
+        "required": ["revision", "date", "description", "source_ids"],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "schema_version", "id", "revision", "effective_date",
+    "validation_status", "content_sha256", "release_profile", "identity",
+    "mechanical", "topology", "land_pattern", "model_3d",
+    "coordinate_system", "reference_features", "allowed_symmetries",
+    "required_observables", "validation", "sources", "change_history"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "id": { "type": "string", "minLength": 1, "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$" },
+    "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "nonnegativeInteger": { "type": "integer", "minimum": 0 },
+    "dimension": {
+      "type": "object",
+      "properties": {
+        "nominal_mm": { "type": "number", "exclusiveMinimum": 0 },
+        "minimum_mm": { "type": "number", "exclusiveMinimum": 0 },
+        "maximum_mm": { "type": "number", "exclusiveMinimum": 0 },
+        "source_ids": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "$ref": "#/$defs/id" } }
+      },
+      "required": ["nominal_mm", "minimum_mm", "maximum_mm", "source_ids"],
+      "additionalProperties": false
+    },
+    "tolerance": {
+      "type": "object",
+      "properties": {
+        "value": { "type": "number", "minimum": 0 },
+        "unit": { "enum": ["mm", "deg", "count"] }
+      },
+      "required": ["value", "unit"],
+      "additionalProperties": false
+    },
+    "vec2": { "type": "array", "prefixItems": [{ "type": "number" }, { "type": "number" }], "items": false },
+    "positiveVec2": { "type": "array", "prefixItems": [{ "type": "number", "exclusiveMinimum": 0 }, { "type": "number", "exclusiveMinimum": 0 }], "items": false },
+    "vec3": { "type": "array", "prefixItems": [{ "type": "number" }, { "type": "number" }, { "type": "number" }], "items": false },
+    "matrix4": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "items": { "type": "array", "minItems": 4, "maxItems": 4, "items": { "type": "number" } }
+    }
+  }
+}

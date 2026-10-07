@@ -1,0 +1,110 @@
+[
+  {
+    "file": "unknown-field.json",
+    "issues": [
+      {
+        "code": "IR_SCHEMA",
+        "path": "/revision"
+      }
+    ]
+  },
+  {
+    "file": "unknown-version.json",
+    "issues": [
+      {
+        "code": "IR_VERSION",
+        "path": "/schema_version"
+      }
+    ]
+  },
+  {
+    "file": "missing-accuracy.json",
+    "issues": [
+      {
+        "code": "IR_SCHEMA",
+        "path": "/model_3d"
+      }
+    ]
+  },
+  {
+    "file": "missing-relevance.json",
+    "issues": [
+      {
+        "code": "IR_SCHEMA",
+        "path": "/evidence/0"
+      }
+    ]
+  },
+  {
+    "file": "metadata-target.json",
+    "issues": [
+      {
+        "code": "IR_RELEVANCE",
+        "path": "/evidence/0/candidate_targets"
+      }
+    ]
+  },
+  {
+    "file": "dangling-active-override.json",
+    "issues": [
+      {
+        "code": "IR_SELECTION",
+        "path": "/revision/active_override_ids"
+      }
+    ]
+  },
+  {
+    "file": "dangling-active-resolution.json",
+    "issues": [
+      {
+        "code": "IR_SELECTION",
+        "path": "/revision/active_resolution_ids"
+      }
+    ]
+  },
+  {
+    "file": "duplicate-selector.json",
+    "issues": [
+      {
+        "code": "IR_SCHEMA",
+        "path": "/revision/active_override_ids"
+      }
+    ]
+  },
+  {
+    "file": "null-region-frame.json",
+    "issues": [
+      {
+        "code": "IR_SCHEMA",
+        "path": "/evidence/0/source/coordinate_convention"
+      }
+    ]
+  },
+  {
+    "file": "negative-scale.json",
+    "issues": [
+      {
+        "code": "IR_TRANSFORM",
+        "path": "/model_3d/placement/scale"
+      }
+    ]
+  },
+  {
+    "file": "legacy-pin-type.json",
+    "issues": [
+      {
+        "code": "IR_SCHEMA",
+        "path": "/pins/0/electrical_type"
+      }
+    ]
+  },
+  {
+    "file": "missing-review-field.json",
+    "issues": [
+      {
+        "code": "IR_SCHEMA",
+        "path": "/revision/evidence_review"
+      }
+    ]
+  }
+]

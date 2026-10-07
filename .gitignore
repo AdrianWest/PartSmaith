@@ -18,6 +18,10 @@ build/
 # Local application state
 *.sqlite3
 *.db
+# Explicit synthetic gate databases are portable acceptance evidence.
+!docs/gates/phase-13.4-native-staging/sources.db
+!docs/gates/phase-13.5-native-review/application.db
+!docs/gates/phase-13.6-native-publication/application.db
 
 # Local environment variables
 .env

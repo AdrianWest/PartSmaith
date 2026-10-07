@@ -1,0 +1,18 @@
+{
+  "date": "2026-10-06",
+  "status": "PCM_UPDATE_AND_VISIBLE_LISTING_ICON_VERIFIED",
+  "scope": "Owner-requested package manager logo update only.",
+  "installation_method": "Configured repository: Update, Pending(1), Apply Pending Changes, completed successfully, Pending(0).",
+  "installed_version": "0.1.6",
+  "package": "dist/partsmith-0.1.6-pcm.zip",
+  "source_icon": "resources/PartSmith_Logo_64x64.png",
+  "installed_icon_sha256": "dc06e6c7275a24553b16667cf2fa7c2afe08efcd8a2cfd8a4e02d97864f1fdae",
+  "byte_parity": true,
+  "ui_verification": "Correct logo visible in both Repository and Installed PCM listings.",
+  "screenshot": {
+    "path": "docs/gates/phase-13.2-pcm-listing-icon-installed-2026-10-06.jpg",
+    "sha256": "f40a44506314dbb4374c44e7dc289831c025376e3ac3ae3794c1e5882471a4a5"
+  },
+  "phase13_status": "STOPPED_INCOMPLETE",
+  "engineering_runtime_acceptance": "NOT_RUN_IN_THIS_ICON_TASK"
+}

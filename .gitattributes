@@ -16,3 +16,41 @@ docs/gates/history/phase-8-artifacts-before-parser-fix-2026-10-04.json -text
 docs/gates/phase-12-pdf-stability/* -text
 docs/gates/history/phase-12-viewer-performance*.xml -text
 docs/gates/history/*-before-viewer-performance-2026-10-05.json -text
+docs/gates/history/*-before-phase-13.1-2026-10-06.* -text
+# Keep the exact schemas shipped with the pinned Windows KiCad build.
+src/partsmith/pcm/schemas/*.json -text
+docs/gates/phase13.2-packaging-pdf-stability-2026-10-06/*.txt -text
+docs/gates/phase-13.2-pcm*-pdf-stability/*.txt -text
+docs/gates/history/phase-13.2-pcm016-pdf-native-crash/* -text
+docs/gates/phase-13.2-pcm016-isolated-*.txt -text
+docs/gates/history/*-before-phase-13.2-2026-10-06.* -text
+# Integration source acceptance XML records exact execution bytes.
+docs/gates/phase-13.3-*.xml -text
+docs/gates/phase-13.4-*.xml -text
+docs/gates/phase-13.4-native-staging/** -text
+docs/gates/history/phase-13.4-native-staging*/** -text
+docs/gates/phase-13.5-*.xml -text
+docs/gates/phase-13.5-native-review/** -text
+docs/gates/phase-13.6-*.xml -text
+docs/gates/phase-13.6-native-publication/** -text
+docs/gates/history/*-before-phase-13.*-2026-10-07*.json -text
+docs/gates/history/*-before-revalidation-2026-10-07*.json -text
+docs/gates/phase-13.7-*.xml -text
+docs/gates/phase-13.7-*.txt -text
+docs/gates/phase-13.7-*.json -text
+docs/gates/phase-13.7-native-workflow/** -text
+docs/gates/phase-13.7-native-roundtrip/** -text
+docs/gates/phase-13.7-native-final/** -text
+docs/gates/phase-13.7-native-roundtrip-final/** -text
+docs/gates/phase-13.8-*.xml -text
+docs/gates/phase-13.8-*.txt -text
+docs/gates/phase-13.8-*.json -text
+docs/gates/phase-13.8-pcm-regression/** -text
+docs/gates/phase-13.8-pdf-stability/** -text
+docs/gates/history/phase-13.8-pcm-regression-*/** -text
+
+# All execution captures and archived evidence bind their original bytes.
+docs/gates/**/*.json -text
+docs/gates/**/*.xml -text
+docs/gates/**/*.txt -text
+docs/gates/history/** -text

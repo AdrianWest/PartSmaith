@@ -1,0 +1,14 @@
+{
+  "status": "PASS",
+  "package_byte_parity_files": 102,
+  "exact_banner3_bytes": "PASS",
+  "scope": "Current main Banner3 and viewer without banner; Windows AMD64",
+  "wheel": {
+    "path": ".tools/phase12-banner/dist/partsmith-0.1.0-py3-none-any.whl",
+    "sha256": "0ed73b36b217b474b7ad1c0c4d31dce37e712a610f298bed23a611eab6a327a1"
+  },
+  "sdist": {
+    "path": ".tools/phase12-banner/dist/partsmith-0.1.0.tar.gz",
+    "sha256": "01d5d58109a1c02c67f85cda24ba749922c666b98b780ab12dda7704c87eba60"
+  }
+}

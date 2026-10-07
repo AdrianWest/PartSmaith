@@ -1,0 +1,1194 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "bft://schemas/component-ir/1",
+  "title": "PartSmith Component IR 1.0",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "identity": {
+      "$ref": "#/$defs/identity"
+    },
+    "source": {
+      "type": "object",
+      "properties": {
+        "documents": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/document"
+          },
+          "minItems": 1
+        }
+      },
+      "required": [
+        "documents"
+      ],
+      "additionalProperties": false
+    },
+    "electrical": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/$defs/value"
+      }
+    },
+    "pins": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/pin"
+      },
+      "minItems": 1
+    },
+    "package": {
+      "type": "object",
+      "properties": {
+        "family": {
+          "type": "string",
+          "minLength": 1
+        },
+        "variant": {
+          "type": "string",
+          "minLength": 1
+        },
+        "pdl_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "pdl_revision": {
+          "type": "string",
+          "minLength": 1
+        },
+        "pin_count": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "mechanical": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/quantity"
+          },
+          "minProperties": 1
+        },
+        "status": {
+          "enum": [
+            "DIRECT",
+            "DERIVED",
+            "STANDARD",
+            "UNKNOWN",
+            "INFERRED",
+            "AMBIGUOUS",
+            "CONFLICTING",
+            "MISSING",
+            "USER_OVERRIDE"
+          ]
+        },
+        "evidence_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 0,
+          "uniqueItems": true
+        },
+        "derivation": {
+          "type": "string",
+          "minLength": 1
+        },
+        "standard_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "override_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "family",
+        "variant",
+        "pin_count",
+        "mechanical",
+        "status",
+        "evidence_ids"
+      ],
+      "additionalProperties": false
+    },
+    "symbol": {
+      "type": "object",
+      "properties": {
+        "reference_prefix": {
+          "type": "string",
+          "minLength": 1
+        },
+        "properties": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/value"
+          }
+        }
+      },
+      "required": [
+        "reference_prefix",
+        "properties"
+      ],
+      "additionalProperties": false
+    },
+    "footprint": {
+      "type": "object",
+      "properties": {
+        "land_pattern_source": {
+          "enum": [
+            "MANUFACTURER",
+            "STANDARD",
+            "USER_OVERRIDE"
+          ]
+        },
+        "properties": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/quantity"
+          }
+        },
+        "status": {
+          "enum": [
+            "DIRECT",
+            "DERIVED",
+            "STANDARD",
+            "UNKNOWN",
+            "INFERRED",
+            "AMBIGUOUS",
+            "CONFLICTING",
+            "MISSING",
+            "USER_OVERRIDE"
+          ]
+        },
+        "evidence_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 0,
+          "uniqueItems": true
+        },
+        "derivation": {
+          "type": "string",
+          "minLength": 1
+        },
+        "standard_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "override_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "land_pattern_source",
+        "properties",
+        "status",
+        "evidence_ids"
+      ],
+      "additionalProperties": false
+    },
+    "model_3d": {
+      "type": "object",
+      "properties": {
+        "required": {
+          "type": "boolean"
+        },
+        "placement": {
+          "$ref": "#/$defs/transform"
+        }
+      },
+      "required": [
+        "required",
+        "placement"
+      ],
+      "additionalProperties": false
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/evidence"
+      },
+      "minItems": 1
+    },
+    "standards": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/standard"
+      },
+      "minItems": 0
+    },
+    "overrides": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/override"
+      },
+      "minItems": 0
+    },
+    "validation": {
+      "type": "object",
+      "properties": {
+        "results": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/result"
+          },
+          "minItems": 0
+        },
+        "tolerances": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/quantity"
+          }
+        }
+      },
+      "required": [
+        "results",
+        "tolerances"
+      ],
+      "additionalProperties": false
+    },
+    "build": {
+      "type": "object",
+      "properties": {
+        "bft_version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kicad_target": {
+          "type": "string",
+          "minLength": 1
+        },
+        "pdl_revision": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "ai_provider": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "ai_model": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "bft_version",
+        "kicad_target",
+        "pdl_revision",
+        "ai_provider",
+        "ai_model"
+      ],
+      "additionalProperties": false
+    },
+    "revision": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "parent_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "description": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "parent_id",
+        "description"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "schema_version",
+    "identity",
+    "source",
+    "electrical",
+    "pins",
+    "package",
+    "symbol",
+    "footprint",
+    "model_3d",
+    "evidence",
+    "standards",
+    "overrides",
+    "validation",
+    "build",
+    "revision"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "identity": {
+      "type": "object",
+      "properties": {
+        "component_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "manufacturer": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "minLength": 1
+            },
+            "normalized_name": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "name",
+            "normalized_name"
+          ],
+          "additionalProperties": false
+        },
+        "mpn": {
+          "type": "string",
+          "minLength": 1
+        },
+        "normalized_mpn": {
+          "type": "string",
+          "minLength": 1
+        },
+        "ordering_suffix": {
+          "type": "string"
+        },
+        "package_variant": {
+          "type": "string",
+          "minLength": 1
+        },
+        "temperature_grade": {
+          "type": "string"
+        },
+        "qualification": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 0
+        },
+        "source_revision": {
+          "type": "string",
+          "minLength": 1
+        },
+        "evidence_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 0,
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "component_id",
+        "manufacturer",
+        "mpn",
+        "normalized_mpn",
+        "package_variant",
+        "evidence_ids"
+      ],
+      "additionalProperties": false
+    },
+    "document": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "revision": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "id",
+        "path",
+        "sha256"
+      ],
+      "additionalProperties": false
+    },
+    "value": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": [
+            "string",
+            "number",
+            "boolean",
+            "null"
+          ]
+        },
+        "status": {
+          "enum": [
+            "DIRECT",
+            "DERIVED",
+            "STANDARD",
+            "UNKNOWN",
+            "INFERRED",
+            "AMBIGUOUS",
+            "CONFLICTING",
+            "MISSING",
+            "USER_OVERRIDE"
+          ]
+        },
+        "evidence_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 0,
+          "uniqueItems": true
+        },
+        "unit": {
+          "type": "string",
+          "minLength": 1
+        },
+        "derivation": {
+          "type": "string",
+          "minLength": 1
+        },
+        "standard_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "override_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "value",
+        "status",
+        "evidence_ids"
+      ],
+      "additionalProperties": false
+    },
+    "quantity": {
+      "type": "object",
+      "properties": {
+        "source_value": {
+          "type": "number"
+        },
+        "source_unit": {
+          "enum": [
+            "mm",
+            "mil",
+            "inch",
+            "um",
+            "\u00b5m",
+            "\u03bcm",
+            "deg",
+            "degree",
+            "degrees"
+          ]
+        },
+        "normalized_value": {
+          "type": "number"
+        },
+        "normalized_unit": {
+          "enum": [
+            "mm",
+            "deg"
+          ]
+        },
+        "source_min": {
+          "type": "number"
+        },
+        "source_max": {
+          "type": "number"
+        },
+        "normalized_min": {
+          "type": "number"
+        },
+        "normalized_max": {
+          "type": "number"
+        },
+        "status": {
+          "enum": [
+            "DIRECT",
+            "DERIVED",
+            "STANDARD",
+            "UNKNOWN",
+            "INFERRED",
+            "AMBIGUOUS",
+            "CONFLICTING",
+            "MISSING",
+            "USER_OVERRIDE"
+          ]
+        },
+        "evidence_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 0,
+          "uniqueItems": true
+        },
+        "derivation": {
+          "type": "string",
+          "minLength": 1
+        },
+        "standard_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "override_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "source_value",
+        "source_unit",
+        "status",
+        "evidence_ids"
+      ],
+      "additionalProperties": false,
+      "dependentRequired": {
+        "normalized_value": [
+          "normalized_unit"
+        ],
+        "normalized_unit": [
+          "normalized_value"
+        ],
+        "source_min": [
+          "source_max"
+        ],
+        "source_max": [
+          "source_min"
+        ],
+        "normalized_min": [
+          "normalized_max"
+        ],
+        "normalized_max": [
+          "normalized_min"
+        ]
+      }
+    },
+    "pin": {
+      "type": "object",
+      "properties": {
+        "number": {
+          "type": "string",
+          "minLength": 1
+        },
+        "name": {
+          "type": "string"
+        },
+        "electrical_type": {
+          "enum": [
+            "input",
+            "output",
+            "bidirectional",
+            "tri_state",
+            "passive",
+            "free",
+            "unspecified",
+            "power_in",
+            "power_out",
+            "open_collector",
+            "open_emitter",
+            "no_connect"
+          ]
+        },
+        "function": {
+          "type": "string"
+        },
+        "active_low": {
+          "type": "boolean"
+        },
+        "alternate_functions": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 0
+        },
+        "physical": {
+          "type": "object",
+          "properties": {
+            "topology_side": {
+              "enum": [
+                "north",
+                "south",
+                "east",
+                "west",
+                "center"
+              ]
+            },
+            "topology_index": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          "required": [
+            "topology_side",
+            "topology_index"
+          ],
+          "additionalProperties": false
+        },
+        "flags": {
+          "type": "object",
+          "properties": {
+            "exposed_pad": {
+              "type": "boolean"
+            },
+            "no_connect": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "exposed_pad",
+            "no_connect"
+          ],
+          "additionalProperties": false
+        },
+        "status": {
+          "enum": [
+            "DIRECT",
+            "DERIVED",
+            "STANDARD",
+            "UNKNOWN",
+            "INFERRED",
+            "AMBIGUOUS",
+            "CONFLICTING",
+            "MISSING",
+            "USER_OVERRIDE"
+          ]
+        },
+        "evidence_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 0,
+          "uniqueItems": true
+        },
+        "derivation": {
+          "type": "string",
+          "minLength": 1
+        },
+        "standard_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "override_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "number",
+        "name",
+        "electrical_type",
+        "function",
+        "active_low",
+        "alternate_functions",
+        "physical",
+        "flags",
+        "status",
+        "evidence_ids"
+      ],
+      "additionalProperties": false
+    },
+    "region": {
+      "type": "object",
+      "properties": {
+        "x": {
+          "type": "number"
+        },
+        "y": {
+          "type": "number"
+        },
+        "width": {
+          "type": "number",
+          "minimum": 0
+        },
+        "height": {
+          "type": "number",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "x",
+        "y",
+        "width",
+        "height"
+      ],
+      "additionalProperties": false
+    },
+    "evidence": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "type": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source": {
+          "type": "object",
+          "properties": {
+            "document_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "document_hash": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "page": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "region": {
+              "$ref": "#/$defs/region"
+            }
+          },
+          "required": [
+            "document_id",
+            "document_hash",
+            "page"
+          ],
+          "additionalProperties": false
+        },
+        "extracted": {
+          "type": "object",
+          "properties": {
+            "text": {
+              "type": "string"
+            },
+            "value": {
+              "type": [
+                "number",
+                "string",
+                "boolean",
+                "null"
+              ]
+            },
+            "unit": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "text",
+            "value",
+            "unit"
+          ],
+          "additionalProperties": false
+        },
+        "interpretation": {
+          "type": "object",
+          "properties": {
+            "normalized_value": {
+              "type": [
+                "number",
+                "string",
+                "boolean",
+                "null"
+              ]
+            },
+            "status": {
+              "enum": [
+                "DIRECT",
+                "DERIVED",
+                "STANDARD",
+                "UNKNOWN",
+                "INFERRED",
+                "AMBIGUOUS",
+                "CONFLICTING",
+                "MISSING",
+                "USER_OVERRIDE"
+              ]
+            }
+          },
+          "required": [
+            "normalized_value",
+            "status"
+          ],
+          "additionalProperties": false
+        },
+        "extractor": {
+          "type": "object",
+          "properties": {
+            "method": {
+              "type": "string",
+              "minLength": 1
+            },
+            "version": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "method",
+            "version"
+          ],
+          "additionalProperties": false
+        },
+        "confidence": {
+          "type": "object",
+          "properties": {
+            "score": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "basis": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "score",
+            "basis"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "id",
+        "type",
+        "source",
+        "extracted",
+        "interpretation",
+        "extractor",
+        "confidence"
+      ],
+      "additionalProperties": false
+    },
+    "standard": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "revision": {
+          "type": "string",
+          "minLength": 1
+        },
+        "reference": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "revision",
+        "reference"
+      ],
+      "additionalProperties": false
+    },
+    "override": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "previous_value": {
+          "$ref": "#/$defs/value"
+        },
+        "new_value": {
+          "$ref": "#/$defs/value"
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        },
+        "user": {
+          "type": "string",
+          "minLength": 1
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "evidence_reference": {
+          "type": "string",
+          "minLength": 1
+        },
+        "approval_state": {
+          "enum": [
+            "PENDING",
+            "APPROVED",
+            "REJECTED"
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "path",
+        "previous_value",
+        "new_value",
+        "reason",
+        "user",
+        "timestamp",
+        "evidence_reference",
+        "approval_state"
+      ],
+      "additionalProperties": false
+    },
+    "vector": {
+      "type": "array",
+      "items": {
+        "type": "number"
+      },
+      "minItems": 3,
+      "maxItems": 3
+    },
+    "transform": {
+      "type": "object",
+      "properties": {
+        "source_coordinate_system": {
+          "type": "string",
+          "minLength": 1
+        },
+        "destination_coordinate_system": {
+          "type": "string",
+          "minLength": 1
+        },
+        "translation_mm": {
+          "$ref": "#/$defs/vector"
+        },
+        "rotation_deg": {
+          "$ref": "#/$defs/vector"
+        },
+        "scale": {
+          "$ref": "#/$defs/vector"
+        },
+        "mirror": {
+          "type": "object",
+          "properties": {
+            "x": {
+              "type": "boolean"
+            },
+            "y": {
+              "type": "boolean"
+            },
+            "z": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "x",
+            "y",
+            "z"
+          ],
+          "additionalProperties": false
+        },
+        "units": {
+          "type": "object",
+          "properties": {
+            "length": {
+              "const": "mm"
+            },
+            "angle": {
+              "const": "deg"
+            }
+          },
+          "required": [
+            "length",
+            "angle"
+          ],
+          "additionalProperties": false
+        },
+        "convention_version": {
+          "const": "1.0"
+        },
+        "order": {
+          "const": "T*R*S*M"
+        },
+        "status": {
+          "enum": [
+            "DIRECT",
+            "DERIVED",
+            "STANDARD",
+            "UNKNOWN",
+            "INFERRED",
+            "AMBIGUOUS",
+            "CONFLICTING",
+            "MISSING",
+            "USER_OVERRIDE"
+          ]
+        },
+        "evidence_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 0,
+          "uniqueItems": true
+        },
+        "derivation": {
+          "type": "string",
+          "minLength": 1
+        },
+        "standard_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "override_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "source_coordinate_system",
+        "destination_coordinate_system",
+        "translation_mm",
+        "rotation_deg",
+        "scale",
+        "mirror",
+        "units",
+        "convention_version",
+        "order",
+        "status",
+        "evidence_ids"
+      ],
+      "additionalProperties": false
+    },
+    "result": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "category": {
+          "type": "string",
+          "minLength": 1
+        },
+        "rule_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "status": {
+          "enum": [
+            "PASS",
+            "FAIL",
+            "WARN",
+            "HUMAN_REVIEW",
+            "NOT_GENERATABLE"
+          ]
+        },
+        "severity": {
+          "enum": [
+            "INFO",
+            "WARNING",
+            "ERROR"
+          ]
+        },
+        "message": {
+          "type": "string"
+        },
+        "evidence_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 0,
+          "uniqueItems": true
+        },
+        "artifact_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 0,
+          "uniqueItems": true
+        },
+        "measured": {
+          "type": [
+            "number",
+            "string",
+            "boolean",
+            "null"
+          ]
+        },
+        "expected": {
+          "type": [
+            "number",
+            "string",
+            "boolean",
+            "null"
+          ]
+        },
+        "tolerance": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0
+        }
+      },
+      "required": [
+        "id",
+        "category",
+        "rule_id",
+        "status",
+        "severity",
+        "message",
+        "evidence_ids",
+        "artifact_ids",
+        "measured",
+        "expected",
+        "tolerance"
+      ],
+      "additionalProperties": false
+    }
+  }
+}
