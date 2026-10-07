@@ -1,0 +1,492 @@
+{
+  "status": "PASS",
+  "validated_commit": "f424e28d794a414368e11530caf876064f94b2d1",
+  "active_gate_manifests": 35,
+  "ci_gate_manifests": 12,
+  "verification": "Committed Git blobs and finalized checkout bytes",
+  "checks": [
+    {
+      "manifest": "docs/gates/phase-10-artifacts.json",
+      "command": [
+        "C:\\GIT_HUB\\PartSmaith\\.venv\\Scripts\\python.exe",
+        "scripts/verify_phase2_manifest.py",
+        "--manifest",
+        "docs/gates/phase-10-artifacts.json",
+        "--source",
+        "git"
+      ],
+      "exit_code": 0,
+      "stdout": "PASS: all recorded repository input hashes match exact file bytes",
+      "inputs": 58
+    },
+    {
+      "manifest": "docs/gates/phase-10-parser-fix-2026-10-04.json",
+      "exit_code": 0,
+      "inputs": 11,
+      "verification": "Exact source_sha256 committed-blob and disk check"
+    },
+    {
+      "manifest": "docs/gates/phase-6-artifacts.json",
+      "command": [
+        "C:\\GIT_HUB\\PartSmaith\\.venv\\Scripts\\python.exe",
+        "scripts/verify_phase2_manifest.py",
+        "--manifest",
+        "docs/gates/phase-6-artifacts.json",
+        "--source",
+        "git"
+      ],
+      "exit_code": 0,
+      "stdout": "PASS: all recorded repository input hashes match exact file bytes",
+      "inputs": 29
+    },
+    {
+      "manifest": "docs/gates/phase-8-artifacts.json",
+      "command": [
+        "C:\\GIT_HUB\\PartSmaith\\.venv\\Scripts\\python.exe",
+        "scripts/verify_phase2_manifest.py",
+        "--manifest",
+        "docs/gates/phase-8-artifacts.json",
+        "--source",
+        "git"
+      ],
+      "exit_code": 0,
+      "stdout": "PASS: all recorded repository input hashes match exact file bytes",
+      "inputs": 50
+    },
+    {
+      "manifest": "docs/gates/phase-9-artifacts.json",
+      "command": [
+        "C:\\GIT_HUB\\PartSmaith\\.venv\\Scripts\\python.exe",
+        "scripts/verify_phase2_manifest.py",
+        "--manifest",
+        "docs/gates/phase-9-artifacts.json",
+        "--source",
+        "git"
+      ],
+      "exit_code": 0,
+      "stdout": "PASS: all recorded repository input hashes match exact file bytes",
+      "inputs": 174
+    },
+    {
+      "manifest": "docs/gates/phase-7-artifacts.json",
+      "command": [
+        "C:\\GIT_HUB\\PartSmaith\\.venv\\Scripts\\python.exe",
+        "scripts/verify_phase2_manifest.py",
+        "--manifest",
+        "docs/gates/phase-7-artifacts.json",
+        "--source",
+        "git"
+      ],
+      "exit_code": 0,
+      "stdout": "PASS: all recorded repository input hashes match exact file bytes",
+      "inputs": 35
+    },
+    {
+      "manifest": "docs/gates/phase-9.5-artifacts.json",
+      "command": [
+        "C:\\GIT_HUB\\PartSmaith\\.venv\\Scripts\\python.exe",
+        "scripts/verify_phase2_manifest.py",
+        "--manifest",
+        "docs/gates/phase-9.5-artifacts.json",
+        "--source",
+        "git"
+      ],
+      "exit_code": 0,
+      "stdout": "PASS: all recorded repository input hashes match exact file bytes",
+      "inputs": 30
+    },
+    {
+      "manifest": "docs/gates/phase-11-artifacts.json",
+      "command": [
+        "C:\\GIT_HUB\\PartSmaith\\.venv\\Scripts\\python.exe",
+        "scripts/verify_phase2_manifest.py",
+        "--manifest",
+        "docs/gates/phase-11-artifacts.json",
+        "--source",
+        "git"
+      ],
+      "exit_code": 0,
+      "stdout": "PASS: all recorded repository input hashes match exact file bytes",
+      "inputs": 36
+    },
+    {
+      "manifest": "docs/gates/phase-11-finding-fixes-2026-10-04.json",
+      "command": [
+        "C:\\GIT_HUB\\PartSmaith\\.venv\\Scripts\\python.exe",
+        "scripts/verify_phase2_manifest.py",
+        "--manifest",
+        "docs/gates/phase-11-finding-fixes-2026-10-04.json",
+        "--source",
+        "git"
+      ],
+      "exit_code": 0,
+      "stdout": "PASS: all recorded repository input hashes match exact file bytes",
+      "inputs": 30
+    },
+    {
+      "manifest": "docs/gates/phase-12-finding-fixes-2026-10-05.json",
+      "command": [
+        "C:\\GIT_HUB\\PartSmaith\\.venv\\Scripts\\python.exe",
+        "scripts/verify_phase2_manifest.py",
+        "--manifest",
+        "docs/gates/phase-12-finding-fixes-2026-10-05.json",
+        "--source",
+        "git"
+      ],
+      "exit_code": 0,
+      "stdout": "PASS: all recorded repository input hashes match exact file bytes",
+      "inputs": 317
+    },
+    {
+      "manifest": "docs/gates/phase-2-ir-1.1-artifacts.json",
+      "command": [
+        "C:\\GIT_HUB\\PartSmaith\\.venv\\Scripts\\python.exe",
+        "scripts/verify_phase2_manifest.py",
+        "--manifest",
+        "docs/gates/phase-2-ir-1.1-artifacts.json",
+        "--source",
+        "git"
+      ],
+      "exit_code": 0,
+      "stdout": "PASS: all recorded repository input hashes match exact file bytes",
+      "inputs": 36
+    },
+    {
+      "manifest": "docs/gates/phase-2-ir-1.2-artifacts.json",
+      "command": [
+        "C:\\GIT_HUB\\PartSmaith\\.venv\\Scripts\\python.exe",
+        "scripts/verify_phase2_manifest.py",
+        "--manifest",
+        "docs/gates/phase-2-ir-1.2-artifacts.json",
+        "--source",
+        "git"
+      ],
+      "exit_code": 0,
+      "stdout": "PASS: all recorded repository input hashes match exact file bytes",
+      "inputs": 50
+    },
+    {
+      "manifest": "docs/gates/phase-2-v0.9.6-artifacts.json",
+      "command": [
+        "C:\\GIT_HUB\\PartSmaith\\.venv\\Scripts\\python.exe",
+        "scripts/verify_phase2_manifest.py",
+        "--manifest",
+        "docs/gates/phase-2-v0.9.6-artifacts.json",
+        "--source",
+        "git"
+      ],
+      "exit_code": 0,
+      "stdout": "PASS: all recorded repository input hashes match exact file bytes",
+      "inputs": 108
+    },
+    {
+      "manifest": "docs/gates/phase-3-artifacts.json",
+      "command": [
+        "C:\\GIT_HUB\\PartSmaith\\.venv\\Scripts\\python.exe",
+        "scripts/verify_phase2_manifest.py",
+        "--manifest",
+        "docs/gates/phase-3-artifacts.json",
+        "--source",
+        "git"
+      ],
+      "exit_code": 0,
+      "stdout": "PASS: all recorded repository input hashes match exact file bytes",
+      "inputs": 27
+    },
+    {
+      "manifest": "docs/gates/phase-12.1-artifacts.json",
+      "command": [
+        "C:\\GIT_HUB\\PartSmaith\\.venv\\Scripts\\python.exe",
+        "scripts/verify_phase2_manifest.py",
+        "--manifest",
+        "docs/gates/phase-12.1-artifacts.json",
+        "--source",
+        "git"
+      ],
+      "exit_code": 0,
+      "stdout": "PASS: all recorded repository input hashes match exact file bytes",
+      "inputs": 60
+    },
+    {
+      "manifest": "docs/gates/phase-4-artifacts.json",
+      "command": [
+        "C:\\GIT_HUB\\PartSmaith\\.venv\\Scripts\\python.exe",
+        "scripts/verify_phase2_manifest.py",
+        "--manifest",
+        "docs/gates/phase-4-artifacts.json",
+        "--source",
+        "git"
+      ],
+      "exit_code": 0,
+      "stdout": "PASS: all recorded repository input hashes match exact file bytes",
+      "inputs": 6
+    },
+    {
+      "manifest": "docs/gates/phase-12-readiness-review-2026-10-05.json",
+      "command": [
+        "C:\\GIT_HUB\\PartSmaith\\.venv\\Scripts\\python.exe",
+        "scripts/verify_phase2_manifest.py",
+        "--manifest",
+        "docs/gates/phase-12-readiness-review-2026-10-05.json",
+        "--source",
+        "git"
+      ],
+      "exit_code": 0,
+      "stdout": "PASS: all recorded repository input hashes match exact file bytes",
+      "inputs": 296
+    },
+    {
+      "manifest": "docs/gates/phase-13-pcm-only-spec-update-2026-10-05.json",
+      "command": [
+        "C:\\GIT_HUB\\PartSmaith\\.venv\\Scripts\\python.exe",
+        "scripts/verify_phase2_manifest.py",
+        "--manifest",
+        "docs/gates/phase-13-pcm-only-spec-update-2026-10-05.json",
+        "--source",
+        "git"
+      ],
+      "exit_code": 0,
+      "stdout": "PASS: all recorded repository input hashes match exact file bytes",
+      "inputs": 386
+    },
+    {
+      "manifest": "docs/gates/phase-13-pcm-spec-update-2026-10-05.json",
+      "command": [
+        "C:\\GIT_HUB\\PartSmaith\\.venv\\Scripts\\python.exe",
+        "scripts/verify_phase2_manifest.py",
+        "--manifest",
+        "docs/gates/phase-13-pcm-spec-update-2026-10-05.json",
+        "--source",
+        "git"
+      ],
+      "exit_code": 0,
+      "stdout": "PASS: all recorded repository input hashes match exact file bytes",
+      "inputs": 363
+    },
+    {
+      "manifest": "docs/gates/phase-13-spec-revision-v0.9.7-2026-10-05.json",
+      "command": [
+        "C:\\GIT_HUB\\PartSmaith\\.venv\\Scripts\\python.exe",
+        "scripts/verify_phase2_manifest.py",
+        "--manifest",
+        "docs/gates/phase-13-spec-revision-v0.9.7-2026-10-05.json",
+        "--source",
+        "git"
+      ],
+      "exit_code": 0,
+      "stdout": "PASS: all recorded repository input hashes match exact file bytes",
+      "inputs": 344
+    },
+    {
+      "manifest": "docs/gates/phase-12-artifacts.json",
+      "command": [
+        "C:\\GIT_HUB\\PartSmaith\\.venv\\Scripts\\python.exe",
+        "scripts/verify_phase2_manifest.py",
+        "--manifest",
+        "docs/gates/phase-12-artifacts.json",
+        "--source",
+        "git"
+      ],
+      "exit_code": 0,
+      "stdout": "PASS: all recorded repository input hashes match exact file bytes",
+      "inputs": 413
+    },
+    {
+      "manifest": "docs/gates/phase-12-viewer-performance-artifacts.json",
+      "command": [
+        "C:\\GIT_HUB\\PartSmaith\\.venv\\Scripts\\python.exe",
+        "scripts/verify_phase2_manifest.py",
+        "--manifest",
+        "docs/gates/phase-12-viewer-performance-artifacts.json",
+        "--source",
+        "git"
+      ],
+      "exit_code": 0,
+      "stdout": "PASS: all recorded repository input hashes match exact file bytes",
+      "inputs": 40
+    },
+    {
+      "manifest": "docs/gates/phase-13.1-artifacts.json",
+      "command": [
+        "C:\\GIT_HUB\\PartSmaith\\.venv\\Scripts\\python.exe",
+        "scripts/verify_phase2_manifest.py",
+        "--manifest",
+        "docs/gates/phase-13.1-artifacts.json",
+        "--source",
+        "git"
+      ],
+      "exit_code": 0,
+      "stdout": "PASS: all recorded repository input hashes match exact file bytes",
+      "inputs": 55
+    },
+    {
+      "manifest": "docs/gates/phase-13.2-artifacts.json",
+      "command": [
+        "C:\\GIT_HUB\\PartSmaith\\.venv\\Scripts\\python.exe",
+        "scripts/verify_phase2_manifest.py",
+        "--manifest",
+        "docs/gates/phase-13.2-artifacts.json",
+        "--source",
+        "git"
+      ],
+      "exit_code": 0,
+      "stdout": "PASS: all recorded repository input hashes match exact file bytes",
+      "inputs": 368
+    },
+    {
+      "manifest": "docs/gates/phase-13.3-artifacts.json",
+      "command": [
+        "C:\\GIT_HUB\\PartSmaith\\.venv\\Scripts\\python.exe",
+        "scripts/verify_phase2_manifest.py",
+        "--manifest",
+        "docs/gates/phase-13.3-artifacts.json",
+        "--source",
+        "git"
+      ],
+      "exit_code": 0,
+      "stdout": "PASS: all recorded repository input hashes match exact file bytes",
+      "inputs": 40
+    },
+    {
+      "manifest": "docs/gates/phase-13.4-artifacts.json",
+      "command": [
+        "C:\\GIT_HUB\\PartSmaith\\.venv\\Scripts\\python.exe",
+        "scripts/verify_phase2_manifest.py",
+        "--manifest",
+        "docs/gates/phase-13.4-artifacts.json",
+        "--source",
+        "git"
+      ],
+      "exit_code": 0,
+      "stdout": "PASS: all recorded repository input hashes match exact file bytes",
+      "inputs": 65
+    },
+    {
+      "manifest": "docs/gates/phase-13.5-artifacts.json",
+      "command": [
+        "C:\\GIT_HUB\\PartSmaith\\.venv\\Scripts\\python.exe",
+        "scripts/verify_phase2_manifest.py",
+        "--manifest",
+        "docs/gates/phase-13.5-artifacts.json",
+        "--source",
+        "git"
+      ],
+      "exit_code": 0,
+      "stdout": "PASS: all recorded repository input hashes match exact file bytes",
+      "inputs": 62
+    },
+    {
+      "manifest": "docs/gates/phase-13.6-artifacts.json",
+      "command": [
+        "C:\\GIT_HUB\\PartSmaith\\.venv\\Scripts\\python.exe",
+        "scripts/verify_phase2_manifest.py",
+        "--manifest",
+        "docs/gates/phase-13.6-artifacts.json",
+        "--source",
+        "git"
+      ],
+      "exit_code": 0,
+      "stdout": "PASS: all recorded repository input hashes match exact file bytes",
+      "inputs": 142
+    },
+    {
+      "manifest": "docs/gates/phase-13.7-artifacts.json",
+      "command": [
+        "C:\\GIT_HUB\\PartSmaith\\.venv\\Scripts\\python.exe",
+        "scripts/verify_phase2_manifest.py",
+        "--manifest",
+        "docs/gates/phase-13.7-artifacts.json",
+        "--source",
+        "git"
+      ],
+      "exit_code": 0,
+      "stdout": "PASS: all recorded repository input hashes match exact file bytes",
+      "inputs": 180
+    },
+    {
+      "manifest": "docs/gates/phase-13.8-artifacts.json",
+      "command": [
+        "C:\\GIT_HUB\\PartSmaith\\.venv\\Scripts\\python.exe",
+        "scripts/verify_phase2_manifest.py",
+        "--manifest",
+        "docs/gates/phase-13.8-artifacts.json",
+        "--source",
+        "git"
+      ],
+      "exit_code": 0,
+      "stdout": "PASS: all recorded repository input hashes match exact file bytes",
+      "inputs": 1249
+    },
+    {
+      "manifest": "docs/gates/phase-13-artifacts.json",
+      "command": [
+        "C:\\GIT_HUB\\PartSmaith\\.venv\\Scripts\\python.exe",
+        "scripts/verify_phase2_manifest.py",
+        "--manifest",
+        "docs/gates/phase-13-artifacts.json",
+        "--source",
+        "git"
+      ],
+      "exit_code": 0,
+      "stdout": "PASS: all recorded repository input hashes match exact file bytes",
+      "inputs": 8
+    },
+    {
+      "manifest": "docs/gates/phase-2-artifacts.json",
+      "command": [
+        "C:\\GIT_HUB\\PartSmaith\\.venv\\Scripts\\python.exe",
+        "scripts/verify_phase2_manifest.py",
+        "--manifest",
+        "docs/gates/phase-2-artifacts.json",
+        "--source",
+        "git"
+      ],
+      "exit_code": 0,
+      "stdout": "PASS: all recorded repository input hashes match exact file bytes",
+      "inputs": 5
+    },
+    {
+      "manifest": "docs/gates/phase-5-artifacts.json",
+      "command": [
+        "C:\\GIT_HUB\\PartSmaith\\.venv\\Scripts\\python.exe",
+        "scripts/verify_phase2_manifest.py",
+        "--manifest",
+        "docs/gates/phase-5-artifacts.json",
+        "--source",
+        "git"
+      ],
+      "exit_code": 0,
+      "stdout": "PASS: all recorded repository input hashes match exact file bytes",
+      "inputs": 9
+    },
+    {
+      "manifest": "docs/gates/phase-13-startup-fix-2026-10-07.json",
+      "command": [
+        "C:\\GIT_HUB\\PartSmaith\\.venv\\Scripts\\python.exe",
+        "scripts/verify_phase2_manifest.py",
+        "--manifest",
+        "docs/gates/phase-13-startup-fix-2026-10-07.json",
+        "--source",
+        "git"
+      ],
+      "exit_code": 0,
+      "stdout": "PASS: all recorded repository input hashes match exact file bytes",
+      "inputs": 18
+    },
+    {
+      "manifest": "docs/gates/phase-13-lifecycle-fix-2026-10-07.json",
+      "command": [
+        "C:\\GIT_HUB\\PartSmaith\\.venv\\Scripts\\python.exe",
+        "scripts/verify_phase2_manifest.py",
+        "--manifest",
+        "docs/gates/phase-13-lifecycle-fix-2026-10-07.json",
+        "--source",
+        "git"
+      ],
+      "exit_code": 0,
+      "stdout": "PASS: all recorded repository input hashes match exact file bytes",
+      "inputs": 26
+    }
+  ],
+  "outside_map_identities": "0.1.9 and 0.1.10 frozen acceptance identities and 0.1.11 deterministic installed package verified separately"
+}
