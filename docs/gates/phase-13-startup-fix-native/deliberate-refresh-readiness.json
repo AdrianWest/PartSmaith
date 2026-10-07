@@ -1,0 +1,1599 @@
+{
+  "code": "READY",
+  "dependencies": {
+    "Pillow": "12.3.0",
+    "PyYAML": "6.0.3",
+    "aiohappyeyeballs": "2.7.1",
+    "aiohttp": "3.14.3",
+    "aiosignal": "1.4.0",
+    "attrs": "26.1.0",
+    "cadquery": "2.8.0",
+    "cadquery-ocp": "7.9.3.1.1",
+    "cadquery-ocp-proxy": "7.9.3.1.1",
+    "casadi": "3.8.1",
+    "cffi": "2.0.0",
+    "charset-normalizer": "3.5.2",
+    "colorama": "0.4.6",
+    "contourpy": "1.4.0",
+    "cryptography": "46.0.3",
+    "cycler": "0.12.1",
+    "ezdxf": "1.4.4",
+    "fonttools": "4.66.0",
+    "frozenlist": "1.8.0",
+    "idna": "3.20",
+    "jaraco.classes": "3.4.0",
+    "jaraco.context": "6.1.2",
+    "jaraco.functools": "4.6.0",
+    "jsonschema": "4.26.0",
+    "jsonschema-specifications": "2025.9.1",
+    "keyring": "25.7.0",
+    "kicad-python": "0.8.0",
+    "kiwisolver": "1.5.1",
+    "llvmlite": "0.49.0",
+    "matplotlib": "3.11.2",
+    "more-itertools": "11.1.0",
+    "msgpack": "1.2.2",
+    "multidict": "6.9.1",
+    "multimethod": "1.12",
+    "nlopt": "2.11.0",
+    "numba": "0.67.0",
+    "numpy": "2.5.3",
+    "packaging": "26.3",
+    "pdfminer.six": "20260107",
+    "pdfplumber": "0.11.10",
+    "propcache": "0.5.4",
+    "protobuf": "5.29.6",
+    "pycparser": "2.23",
+    "pynng": "0.9.0",
+    "pyparsing": "3.3.3",
+    "pypdf": "6.1.3",
+    "pypdfium2": "5.14.0",
+    "python-dateutil": "2.9.0.post0",
+    "pywin32-ctypes": "0.2.3",
+    "referencing": "0.37.0",
+    "rpds-py": "2026.6.3",
+    "runtype": "0.5.3",
+    "scipy": "1.18.1",
+    "six": "1.17.0",
+    "sniffio": "1.3.1",
+    "trame": "4.0.0",
+    "trame-client": "4.1.2",
+    "trame-common": "1.2.7",
+    "trame-components": "2.5.0",
+    "trame-server": "4.0.0",
+    "trame-vtk": "2.11.17",
+    "trame-vuetify": "3.2.6",
+    "typing-extensions": "4.16.0",
+    "vtk": "9.6.2",
+    "wslink": "2.5.7",
+    "wxPython": "4.3.1",
+    "yarl": "1.25.1"
+  },
+  "engineering": {
+    "archives": [
+      {
+        "distribution": "cadquery",
+        "filename": "cadquery-2.8.0-py3-none-any.whl",
+        "installed_content_sha256": "20b5e1445bc1eedaca4a81e89e98140227898df65ce7aea7077e4df6282e643c",
+        "licenses": {
+          "cadquery-2.8.0.dist-info/licenses/LICENSE": "7f598e7f729c8fde66f0e0a660e53d784d04cfd028d3a74478c0d58730da0fbe"
+        },
+        "sha256": "0acaddf36415551c26c3f8237907980ba86c277e211c32398121c839f719c81f",
+        "source": "PyPI",
+        "version": "2.8.0"
+      },
+      {
+        "distribution": "cadquery-ocp",
+        "filename": "cadquery_ocp-7.9.3.1.1-cp312-cp312-win_amd64.whl",
+        "installed_content_sha256": "751a5ec73ccd4c94a3377314b69dd15258f99528719e3333dc3ebcc7a6841d7a",
+        "licenses": {
+          "cadquery_ocp/LICENSE": "a13caea71627202ad33cc4cafafdd18e667e16716488f8d9c568127121fb89fd"
+        },
+        "sha256": "47cead7f3a7c18bcdd14659c3303e02b6f4537930bc2ff9a8946d1b1400787fe",
+        "source": "PyPI",
+        "version": "7.9.3.1.1"
+      },
+      {
+        "distribution": "cadquery-ocp-proxy",
+        "filename": "cadquery_ocp_proxy-7.9.3.1.1-py3-none-any.whl",
+        "installed_content_sha256": "44b4217dc71dbec4d905ffd727d42e93cb75bfd086bb5e0f0209144c0f52cd09",
+        "licenses": {},
+        "sha256": "ca4164ec4b54956d9fc3e68c67d555b5486cb963c2f71e18df005ba16b921c91",
+        "source": "PyPI",
+        "version": "7.9.3.1.1"
+      }
+    ],
+    "cadquery": "2.8.0",
+    "constraints_sha256": "df99cf3dc1ac9c11e29b7303972fb7368517a435df3c9c39e7afdb080ca29ccb",
+    "dependencies": {
+      "PyYAML": "6.0.3",
+      "aiohappyeyeballs": "2.7.1",
+      "aiohttp": "3.14.3",
+      "aiosignal": "1.4.0",
+      "attrs": "26.1.0",
+      "cadquery": "2.8.0",
+      "cadquery-ocp": "7.9.3.1.1",
+      "cadquery-ocp-proxy": "7.9.3.1.1",
+      "casadi": "3.8.1",
+      "colorama": "0.4.6",
+      "contourpy": "1.4.0",
+      "cycler": "0.12.1",
+      "ezdxf": "1.4.4",
+      "fonttools": "4.66.0",
+      "frozenlist": "1.8.0",
+      "idna": "3.20",
+      "jsonschema": "4.26.0",
+      "jsonschema-specifications": "2025.9.1",
+      "kiwisolver": "1.5.1",
+      "llvmlite": "0.49.0",
+      "matplotlib": "3.11.2",
+      "more-itertools": "11.1.0",
+      "msgpack": "1.2.2",
+      "multidict": "6.9.1",
+      "multimethod": "1.12",
+      "nlopt": "2.11.0",
+      "numba": "0.67.0",
+      "numpy": "2.5.3",
+      "packaging": "26.3",
+      "pillow": "12.3.0",
+      "pyparsing": "3.3.3",
+      "python-dateutil": "2.9.0.post0",
+      "referencing": "0.37.0",
+      "rpds-py": "2026.6.3",
+      "runtype": "0.5.3",
+      "scipy": "1.18.1",
+      "six": "1.17.0",
+      "trame": "4.0.0",
+      "trame-client": "4.1.2",
+      "trame-common": "1.2.7",
+      "trame-components": "2.5.0",
+      "trame-server": "4.0.0",
+      "trame-vtk": "2.11.17",
+      "trame-vuetify": "3.2.6",
+      "typing-extensions": "4.16.0",
+      "vtk": "9.6.2",
+      "wslink": "2.5.7",
+      "yarl": "1.25.1"
+    },
+    "generator": "1.1",
+    "kicad": {
+      "executable_sha256": "393525236969434e24bc710334efe244fb285ef6596a1aea8e74353ef4db5477",
+      "version": "10.0.6"
+    },
+    "lock_sha256": "a3e60c9207bd6bfa98d0ab5bb941ec8a026d062ad6556a762422bd373362cfec",
+    "occt": "7.9.3.1",
+    "ocp": "7.9.3.1.1",
+    "platform": "Windows-AMD64",
+    "python": "3.12.10",
+    "python_baseline": "3.12",
+    "python_build": [
+      "tags/v3.12.10:0cc8128",
+      "Apr  8 2025 12:21:36"
+    ],
+    "python_executable_sha256": "d72294fb338bc2fc8896d25a7395a4db466425427e1559e77185d5135a830681",
+    "python_implementation": "CPython",
+    "validator": "1.0"
+  },
+  "inventory_sha256": "955d1953c30efef7942e894308c3c5bcf8196508be9afe533a26dec2a91c344d",
+  "ipc_inspection": {
+    "code": "READY",
+    "inspection": {
+      "capabilities": {
+        "adapter_version": "1.1",
+        "angle_unit": "degree",
+        "binding_api_build": "10.0.6-0-gcaf7377e9c",
+        "binding_api_version": "10.0.6",
+        "binding_version": "0.8.0",
+        "board_path": "c:\\git_hub\\testing\\ki-test 01-10\\ki-test.kicad_pcb",
+        "coordinate_adapter": "kicad-pcb-units-1.0",
+        "engineering_convention_version": "1.1",
+        "engineering_distance_unit": "mm",
+        "engineering_frame": "native-board-origin-x-right-y-up",
+        "evidence_origin": "official-live-binding",
+        "kicad_version": "10.0.6",
+        "native_distance_unit": "nm",
+        "native_frame": "native-board-origin-x-right-y-down",
+        "operations": [
+          "get_version",
+          "get_api_version",
+          "get_open_documents",
+          "get_footprints"
+        ],
+        "project_name": "Ki-Test",
+        "project_path": "c:\\git_hub\\testing\\ki-test 01-10",
+        "schema_version": "partsmith-ipc-capabilities-1.0",
+        "serializer_version": "1.0"
+      },
+      "footprints": [
+        {
+          "item_id": "06988455-52c3-4ad9-83c8-4c901b8561a2",
+          "library_id": "MyLib:Capacitor_SMD__CP_Elec_18x17.5_f8d541ca68",
+          "models": [
+            {
+              "filename": "${KIPRJMOD}/3D Models/CP_Elec_18x17.5_185bf26715.step",
+              "offset_mm": [
+                "0.0",
+                "0.0",
+                "0.0"
+              ],
+              "rotation_degrees": [
+                "0.0",
+                "0.0",
+                "0.0"
+              ],
+              "scale": [
+                "1.0",
+                "1.0",
+                "1.0"
+              ],
+              "visible": true
+            }
+          ],
+          "orientation_degrees": "0.0",
+          "pads": [
+            {
+              "number": "1",
+              "x_mm": "117.945",
+              "y_mm": "-50.55"
+            },
+            {
+              "number": "2",
+              "x_mm": "131.445",
+              "y_mm": "-50.55"
+            }
+          ],
+          "reference": "C1",
+          "side": "top",
+          "x_mm": "124.695",
+          "y_mm": "-50.55"
+        },
+        {
+          "item_id": "1b5aec95-5fe5-4029-8fca-f31c3b833a59",
+          "library_id": "MyLib:Diode_THT__D_DO-41_SOD81_P10.16mm_Horizontal_8c01c841ae",
+          "models": [
+            {
+              "filename": "${KIPRJMOD}/3D Models/D_DO-41_SOD81_P10.16mm_Horizontal_2530e1281a.step",
+              "offset_mm": [
+                "0.0",
+                "0.0",
+                "0.0"
+              ],
+              "rotation_degrees": [
+                "0.0",
+                "0.0",
+                "0.0"
+              ],
+              "scale": [
+                "1.0",
+                "1.0",
+                "1.0"
+              ],
+              "visible": true
+            }
+          ],
+          "orientation_degrees": "0.0",
+          "pads": [
+            {
+              "number": "1",
+              "x_mm": "152.69",
+              "y_mm": "-118.65"
+            },
+            {
+              "number": "2",
+              "x_mm": "162.85",
+              "y_mm": "-118.65"
+            }
+          ],
+          "reference": "D18",
+          "side": "top",
+          "x_mm": "152.69",
+          "y_mm": "-118.65"
+        },
+        {
+          "item_id": "218ab233-aaa5-4435-a650-1cdee92ddb90",
+          "library_id": "MyLib:Resistor_SMD__R_4020_10251Metric_Pad1.65x5.30mm_HandSolder_f491507cba",
+          "models": [
+            {
+              "filename": "${KIPRJMOD}/3D Models/R_4020_10251Metric_1a1cba01c9.step",
+              "offset_mm": [
+                "0.0",
+                "0.0",
+                "0.0"
+              ],
+              "rotation_degrees": [
+                "0.0",
+                "0.0",
+                "0.0"
+              ],
+              "scale": [
+                "1.0",
+                "1.0",
+                "1.0"
+              ],
+              "visible": true
+            }
+          ],
+          "orientation_degrees": "0.0",
+          "pads": [
+            {
+              "number": "1",
+              "x_mm": "100.63",
+              "y_mm": "-64.25"
+            },
+            {
+              "number": "2",
+              "x_mm": "110.43",
+              "y_mm": "-64.25"
+            }
+          ],
+          "reference": "R4",
+          "side": "top",
+          "x_mm": "105.53",
+          "y_mm": "-64.25"
+        },
+        {
+          "item_id": "2a2099e9-f55a-40d0-91dc-7efeefbf4631",
+          "library_id": "MyLib:Diode_THT__D_DO-41_SOD81_P10.16mm_Horizontal_8c01c841ae",
+          "models": [
+            {
+              "filename": "${KIPRJMOD}/3D Models/D_DO-41_SOD81_P10.16mm_Horizontal_2530e1281a.step",
+              "offset_mm": [
+                "0.0",
+                "0.0",
+                "0.0"
+              ],
+              "rotation_degrees": [
+                "0.0",
+                "0.0",
+                "0.0"
+              ],
+              "scale": [
+                "1.0",
+                "1.0",
+                "1.0"
+              ],
+              "visible": true
+            }
+          ],
+          "orientation_degrees": "0.0",
+          "pads": [
+            {
+              "number": "1",
+              "x_mm": "152.69",
+              "y_mm": "-74.15"
+            },
+            {
+              "number": "2",
+              "x_mm": "162.85",
+              "y_mm": "-74.15"
+            }
+          ],
+          "reference": "D2",
+          "side": "top",
+          "x_mm": "152.69",
+          "y_mm": "-74.15"
+        },
+        {
+          "item_id": "2dc1e9a6-fd45-4bcf-bfd2-f94326a2f55d",
+          "library_id": "MyLib:Resistor_SMD__R_4020_10251Metric_Pad1.65x5.30mm_HandSolder_f491507cba",
+          "models": [
+            {
+              "filename": "${KIPRJMOD}/3D Models/R_4020_10251Metric_1a1cba01c9.step",
+              "offset_mm": [
+                "0.0",
+                "0.0",
+                "0.0"
+              ],
+              "rotation_degrees": [
+                "0.0",
+                "0.0",
+                "0.0"
+              ],
+              "scale": [
+                "1.0",
+                "1.0",
+                "1.0"
+              ],
+              "visible": true
+            }
+          ],
+          "orientation_degrees": "0.0",
+          "pads": [
+            {
+              "number": "1",
+              "x_mm": "100.63",
+              "y_mm": "-98.5"
+            },
+            {
+              "number": "2",
+              "x_mm": "110.43",
+              "y_mm": "-98.5"
+            }
+          ],
+          "reference": "R9",
+          "side": "top",
+          "x_mm": "105.53",
+          "y_mm": "-98.5"
+        },
+        {
+          "item_id": "4609267f-5b1e-4651-9e5b-a37f539f22e9",
+          "library_id": "MyLib:Capacitor_SMD__CP_Elec_18x17.5_f8d541ca68",
+          "models": [
+            {
+              "filename": "${KIPRJMOD}/3D Models/CP_Elec_18x17.5_185bf26715.step",
+              "offset_mm": [
+                "0.0",
+                "0.0",
+                "0.0"
+              ],
+              "rotation_degrees": [
+                "0.0",
+                "0.0",
+                "0.0"
+              ],
+              "scale": [
+                "1.0",
+                "1.0",
+                "1.0"
+              ],
+              "visible": true
+            }
+          ],
+          "orientation_degrees": "0.0",
+          "pads": [
+            {
+              "number": "1",
+              "x_mm": "117.945",
+              "y_mm": "-91.65"
+            },
+            {
+              "number": "2",
+              "x_mm": "131.445",
+              "y_mm": "-91.65"
+            }
+          ],
+          "reference": "C3",
+          "side": "top",
+          "x_mm": "124.695",
+          "y_mm": "-91.65"
+        },
+        {
+          "item_id": "4b49ef8f-70d0-476a-85f9-945170e22855",
+          "library_id": "MyLib:Diode_THT__D_DO-41_SOD81_P10.16mm_Horizontal_8c01c841ae",
+          "models": [
+            {
+              "filename": "${KIPRJMOD}/3D Models/D_DO-41_SOD81_P10.16mm_Horizontal_2530e1281a.step",
+              "offset_mm": [
+                "0.0",
+                "0.0",
+                "0.0"
+              ],
+              "rotation_degrees": [
+                "0.0",
+                "0.0",
+                "0.0"
+              ],
+              "scale": [
+                "1.0",
+                "1.0",
+                "1.0"
+              ],
+              "visible": true
+            }
+          ],
+          "orientation_degrees": "0.0",
+          "pads": [
+            {
+              "number": "1",
+              "x_mm": "152.69",
+              "y_mm": "-82.65"
+            },
+            {
+              "number": "2",
+              "x_mm": "162.85",
+              "y_mm": "-82.65"
+            }
+          ],
+          "reference": "D4",
+          "side": "top",
+          "x_mm": "152.69",
+          "y_mm": "-82.65"
+        },
+        {
+          "item_id": "6031734e-2577-4f79-a473-998e11968aee",
+          "library_id": "MyLib:Diode_THT__D_DO-41_SOD81_P10.16mm_Horizontal_8c01c841ae",
+          "models": [
+            {
+              "filename": "${KIPRJMOD}/3D Models/D_DO-41_SOD81_P10.16mm_Horizontal_2530e1281a.step",
+              "offset_mm": [
+                "0.0",
+                "0.0",
+                "0.0"
+              ],
+              "rotation_degrees": [
+                "0.0",
+                "0.0",
+                "0.0"
+              ],
+              "scale": [
+                "1.0",
+                "1.0",
+                "1.0"
+              ],
+              "visible": true
+            }
+          ],
+          "orientation_degrees": "0.0",
+          "pads": [
+            {
+              "number": "1",
+              "x_mm": "152.69",
+              "y_mm": "-46.65"
+            },
+            {
+              "number": "2",
+              "x_mm": "162.85",
+              "y_mm": "-46.65"
+            }
+          ],
+          "reference": "D8",
+          "side": "top",
+          "x_mm": "152.69",
+          "y_mm": "-46.65"
+        },
+        {
+          "item_id": "6bffacf4-67fe-4071-90d7-d0c52a359a2d",
+          "library_id": "MyLib:Resistor_SMD__R_4020_10251Metric_Pad1.65x5.30mm_HandSolder_f491507cba",
+          "models": [
+            {
+              "filename": "${KIPRJMOD}/3D Models/R_4020_10251Metric_1a1cba01c9.step",
+              "offset_mm": [
+                "0.0",
+                "0.0",
+                "0.0"
+              ],
+              "rotation_degrees": [
+                "0.0",
+                "0.0",
+                "0.0"
+              ],
+              "scale": [
+                "1.0",
+                "1.0",
+                "1.0"
+              ],
+              "visible": true
+            }
+          ],
+          "orientation_degrees": "0.0",
+          "pads": [
+            {
+              "number": "1",
+              "x_mm": "100.63",
+              "y_mm": "-57.4"
+            },
+            {
+              "number": "2",
+              "x_mm": "110.43",
+              "y_mm": "-57.4"
+            }
+          ],
+          "reference": "R3",
+          "side": "top",
+          "x_mm": "105.53",
+          "y_mm": "-57.4"
+        },
+        {
+          "item_id": "7086fa46-1821-48b8-b5bf-313dd58530e9",
+          "library_id": "MyLib:Diode_THT__D_DO-41_SOD81_P10.16mm_Horizontal_8c01c841ae",
+          "models": [
+            {
+              "filename": "${KIPRJMOD}/3D Models/D_DO-41_SOD81_P10.16mm_Horizontal_2530e1281a.step",
+              "offset_mm": [
+                "0.0",
+                "0.0",
+                "0.0"
+              ],
+              "rotation_degrees": [
+                "0.0",
+                "0.0",
+                "0.0"
+              ],
+              "scale": [
+                "1.0",
+                "1.0",
+                "1.0"
+              ],
+              "visible": true
+            }
+          ],
+          "orientation_degrees": "0.0",
+          "pads": [
+            {
+              "number": "1",
+              "x_mm": "152.69",
+              "y_mm": "-110.15"
+            },
+            {
+              "number": "2",
+              "x_mm": "162.85",
+              "y_mm": "-110.15"
+            }
+          ],
+          "reference": "D16",
+          "side": "top",
+          "x_mm": "152.69",
+          "y_mm": "-110.15"
+        },
+        {
+          "item_id": "7d37c201-9868-4a2b-a602-0329e456190f",
+          "library_id": "MyLib:Diode_THT__D_DO-41_SOD81_P10.16mm_Horizontal_8c01c841ae",
+          "models": [
+            {
+              "filename": "${KIPRJMOD}/3D Models/D_DO-41_SOD81_P10.16mm_Horizontal_2530e1281a.step",
+              "offset_mm": [
+                "0.0",
+                "0.0",
+                "0.0"
+              ],
+              "rotation_degrees": [
+                "0.0",
+                "0.0",
+                "0.0"
+              ],
+              "scale": [
+                "1.0",
+                "1.0",
+                "1.0"
+              ],
+              "visible": true
+            }
+          ],
+          "orientation_degrees": "0.0",
+          "pads": [
+            {
+              "number": "1",
+              "x_mm": "152.69",
+              "y_mm": "-50.9"
+            },
+            {
+              "number": "2",
+              "x_mm": "162.85",
+              "y_mm": "-50.9"
+            }
+          ],
+          "reference": "D9",
+          "side": "top",
+          "x_mm": "152.69",
+          "y_mm": "-50.9"
+        },
+        {
+          "item_id": "8384de95-c5a0-49a2-89e0-df1970b87a05",
+          "library_id": "MyLib:Connector_Phoenix_MC__PhoenixContact_MCV_1,5_4-GF-3.81_1x04_P3.81mm_Vertical_ThreadedFlange_MountHole_6440600b02",
+          "models": [
+            {
+              "filename": "${KIPRJMOD}/3D Models/PhoenixContact_MCV_1,5_4-GF-3.81_1x04_P3.81mm_Vertical_ThreadedFlange_MountHole_71f47cd7fb.step",
+              "offset_mm": [
+                "0.0",
+                "0.0",
+                "0.0"
+              ],
+              "rotation_degrees": [
+                "0.0",
+                "0.0",
+                "0.0"
+              ],
+              "scale": [
+                "1.0",
+                "1.0",
+                "1.0"
+              ],
+              "visible": true
+            }
+          ],
+          "orientation_degrees": "90.0",
+          "pads": [
+            {
+              "number": "",
+              "x_mm": "143.3",
+              "y_mm": "-59.02"
+            },
+            {
+              "number": "",
+              "x_mm": "143.3",
+              "y_mm": "-79.45"
+            },
+            {
+              "number": "1",
+              "x_mm": "143.3",
+              "y_mm": "-74.95"
+            },
+            {
+              "number": "2",
+              "x_mm": "143.3",
+              "y_mm": "-71.14"
+            },
+            {
+              "number": "3",
+              "x_mm": "143.3",
+              "y_mm": "-67.33"
+            },
+            {
+              "number": "4",
+              "x_mm": "143.3",
+              "y_mm": "-63.52"
+            }
+          ],
+          "reference": "J1",
+          "side": "top",
+          "x_mm": "143.3",
+          "y_mm": "-74.95"
+        },
+        {
+          "item_id": "84f0c8cf-f49b-4e48-8f2d-42b94ddd27a3",
+          "library_id": "MyLib:Resistor_SMD__R_4020_10251Metric_Pad1.65x5.30mm_HandSolder_f491507cba",
+          "models": [
+            {
+              "filename": "${KIPRJMOD}/3D Models/R_4020_10251Metric_1a1cba01c9.step",
+              "offset_mm": [
+                "0.0",
+                "0.0",
+                "0.0"
+              ],
+              "rotation_degrees": [
+                "0.0",
+                "0.0",
+                "0.0"
+              ],
+              "scale": [
+                "1.0",
+                "1.0",
+                "1.0"
+              ],
+              "visible": true
+            }
+          ],
+          "orientation_degrees": "0.0",
+          "pads": [
+            {
+              "number": "1",
+              "x_mm": "100.63",
+              "y_mm": "-77.95"
+            },
+            {
+              "number": "2",
+              "x_mm": "110.43",
+              "y_mm": "-77.95"
+            }
+          ],
+          "reference": "R6",
+          "side": "top",
+          "x_mm": "105.53",
+          "y_mm": "-77.95"
+        },
+        {
+          "item_id": "879b15cb-cee0-4d24-a389-aefd8c093b21",
+          "library_id": "MyLib:Diode_THT__D_DO-41_SOD81_P10.16mm_Horizontal_8c01c841ae",
+          "models": [
+            {
+              "filename": "${KIPRJMOD}/3D Models/D_DO-41_SOD81_P10.16mm_Horizontal_2530e1281a.step",
+              "offset_mm": [
+                "0.0",
+                "0.0",
+                "0.0"
+              ],
+              "rotation_degrees": [
+                "0.0",
+                "0.0",
+                "0.0"
+              ],
+              "scale": [
+                "1.0",
+                "1.0",
+                "1.0"
+              ],
+              "visible": true
+            }
+          ],
+          "orientation_degrees": "0.0",
+          "pads": [
+            {
+              "number": "1",
+              "x_mm": "152.69",
+              "y_mm": "-63.65"
+            },
+            {
+              "number": "2",
+              "x_mm": "162.85",
+              "y_mm": "-63.65"
+            }
+          ],
+          "reference": "D12",
+          "side": "top",
+          "x_mm": "152.69",
+          "y_mm": "-63.65"
+        },
+        {
+          "item_id": "8a6ca1c5-b900-4e57-8304-d873e363b886",
+          "library_id": "MyLib:Diode_THT__D_DO-41_SOD81_P10.16mm_Horizontal_8c01c841ae",
+          "models": [
+            {
+              "filename": "${KIPRJMOD}/3D Models/D_DO-41_SOD81_P10.16mm_Horizontal_2530e1281a.step",
+              "offset_mm": [
+                "0.0",
+                "0.0",
+                "0.0"
+              ],
+              "rotation_degrees": [
+                "0.0",
+                "0.0",
+                "0.0"
+              ],
+              "scale": [
+                "1.0",
+                "1.0",
+                "1.0"
+              ],
+              "visible": true
+            }
+          ],
+          "orientation_degrees": "0.0",
+          "pads": [
+            {
+              "number": "1",
+              "x_mm": "152.69",
+              "y_mm": "-105.9"
+            },
+            {
+              "number": "2",
+              "x_mm": "162.85",
+              "y_mm": "-105.9"
+            }
+          ],
+          "reference": "D15",
+          "side": "top",
+          "x_mm": "152.69",
+          "y_mm": "-105.9"
+        },
+        {
+          "item_id": "8b37fe3b-cd85-4aa1-8127-4a679dd61ec7",
+          "library_id": "MyLib:Diode_THT__D_DO-41_SOD81_P10.16mm_Horizontal_8c01c841ae",
+          "models": [
+            {
+              "filename": "${KIPRJMOD}/3D Models/D_DO-41_SOD81_P10.16mm_Horizontal_2530e1281a.step",
+              "offset_mm": [
+                "0.0",
+                "0.0",
+                "0.0"
+              ],
+              "rotation_degrees": [
+                "0.0",
+                "0.0",
+                "0.0"
+              ],
+              "scale": [
+                "1.0",
+                "1.0",
+                "1.0"
+              ],
+              "visible": true
+            }
+          ],
+          "orientation_degrees": "0.0",
+          "pads": [
+            {
+              "number": "1",
+              "x_mm": "152.69",
+              "y_mm": "-101.65"
+            },
+            {
+              "number": "2",
+              "x_mm": "162.85",
+              "y_mm": "-101.65"
+            }
+          ],
+          "reference": "D14",
+          "side": "top",
+          "x_mm": "152.69",
+          "y_mm": "-101.65"
+        },
+        {
+          "item_id": "90df3664-6ff5-4477-b2d1-4d61917b7bd1",
+          "library_id": "MyLib:Diode_THT__D_DO-41_SOD81_P10.16mm_Horizontal_8c01c841ae",
+          "models": [
+            {
+              "filename": "${KIPRJMOD}/3D Models/D_DO-41_SOD81_P10.16mm_Horizontal_2530e1281a.step",
+              "offset_mm": [
+                "0.0",
+                "0.0",
+                "0.0"
+              ],
+              "rotation_degrees": [
+                "0.0",
+                "0.0",
+                "0.0"
+              ],
+              "scale": [
+                "1.0",
+                "1.0",
+                "1.0"
+              ],
+              "visible": true
+            }
+          ],
+          "orientation_degrees": "0.0",
+          "pads": [
+            {
+              "number": "1",
+              "x_mm": "152.69",
+              "y_mm": "-86.9"
+            },
+            {
+              "number": "2",
+              "x_mm": "162.85",
+              "y_mm": "-86.9"
+            }
+          ],
+          "reference": "D5",
+          "side": "top",
+          "x_mm": "152.69",
+          "y_mm": "-86.9"
+        },
+        {
+          "item_id": "9aba9dc3-1502-4646-9802-7bb788a2afc1",
+          "library_id": "MyLib:Button_Switch_THT__KSA_Tactile_SPST_bc7e61b051",
+          "models": [
+            {
+              "filename": "${KICAD9_3DMODEL_DIR}/Button_Switch_THT.3dshapes/KSA_Tactile_SPST.step",
+              "offset_mm": [
+                "0.0",
+                "0.0",
+                "0.0"
+              ],
+              "rotation_degrees": [
+                "0.0",
+                "0.0",
+                "0.0"
+              ],
+              "scale": [
+                "1.0",
+                "1.0",
+                "1.0"
+              ],
+              "visible": true
+            }
+          ],
+          "orientation_degrees": "0.0",
+          "pads": [
+            {
+              "number": "1",
+              "x_mm": "62.9",
+              "y_mm": "-70.925"
+            },
+            {
+              "number": "2",
+              "x_mm": "67.98",
+              "y_mm": "-70.925"
+            },
+            {
+              "number": "3",
+              "x_mm": "67.98",
+              "y_mm": "-78.545"
+            },
+            {
+              "number": "4",
+              "x_mm": "65.44",
+              "y_mm": "-78.545"
+            },
+            {
+              "number": "5",
+              "x_mm": "62.9",
+              "y_mm": "-78.545"
+            }
+          ],
+          "reference": "REF**",
+          "side": "top",
+          "x_mm": "62.9",
+          "y_mm": "-70.925"
+        },
+        {
+          "item_id": "a2f93e96-9e36-4b09-b458-e459c2648779",
+          "library_id": "MyLib:Diode_THT__D_DO-41_SOD81_P10.16mm_Horizontal_8c01c841ae",
+          "models": [
+            {
+              "filename": "${KIPRJMOD}/3D Models/D_DO-41_SOD81_P10.16mm_Horizontal_2530e1281a.step",
+              "offset_mm": [
+                "0.0",
+                "0.0",
+                "0.0"
+              ],
+              "rotation_degrees": [
+                "0.0",
+                "0.0",
+                "0.0"
+              ],
+              "scale": [
+                "1.0",
+                "1.0",
+                "1.0"
+              ],
+              "visible": true
+            }
+          ],
+          "orientation_degrees": "0.0",
+          "pads": [
+            {
+              "number": "1",
+              "x_mm": "152.69",
+              "y_mm": "-91.15"
+            },
+            {
+              "number": "2",
+              "x_mm": "162.85",
+              "y_mm": "-91.15"
+            }
+          ],
+          "reference": "D6",
+          "side": "top",
+          "x_mm": "152.69",
+          "y_mm": "-91.15"
+        },
+        {
+          "item_id": "a5ab78fa-96c6-4357-9cf3-78eac6f9641e",
+          "library_id": "MyLib:Resistor_SMD__R_4020_10251Metric_Pad1.65x5.30mm_HandSolder_f491507cba",
+          "models": [
+            {
+              "filename": "${KIPRJMOD}/3D Models/R_4020_10251Metric_1a1cba01c9.step",
+              "offset_mm": [
+                "0.0",
+                "0.0",
+                "0.0"
+              ],
+              "rotation_degrees": [
+                "0.0",
+                "0.0",
+                "0.0"
+              ],
+              "scale": [
+                "1.0",
+                "1.0",
+                "1.0"
+              ],
+              "visible": true
+            }
+          ],
+          "orientation_degrees": "0.0",
+          "pads": [
+            {
+              "number": "1",
+              "x_mm": "100.63",
+              "y_mm": "-84.8"
+            },
+            {
+              "number": "2",
+              "x_mm": "110.43",
+              "y_mm": "-84.8"
+            }
+          ],
+          "reference": "R7",
+          "side": "top",
+          "x_mm": "105.53",
+          "y_mm": "-84.8"
+        },
+        {
+          "item_id": "aa0f94e6-e274-4c64-9cec-08424e4b3b83",
+          "library_id": "MyLib:Diode_THT__D_DO-41_SOD81_P10.16mm_Horizontal_8c01c841ae",
+          "models": [
+            {
+              "filename": "${KIPRJMOD}/3D Models/D_DO-41_SOD81_P10.16mm_Horizontal_2530e1281a.step",
+              "offset_mm": [
+                "0.0",
+                "0.0",
+                "0.0"
+              ],
+              "rotation_degrees": [
+                "0.0",
+                "0.0",
+                "0.0"
+              ],
+              "scale": [
+                "1.0",
+                "1.0",
+                "1.0"
+              ],
+              "visible": true
+            }
+          ],
+          "orientation_degrees": "0.0",
+          "pads": [
+            {
+              "number": "1",
+              "x_mm": "152.69",
+              "y_mm": "-59.4"
+            },
+            {
+              "number": "2",
+              "x_mm": "162.85",
+              "y_mm": "-59.4"
+            }
+          ],
+          "reference": "D11",
+          "side": "top",
+          "x_mm": "152.69",
+          "y_mm": "-59.4"
+        },
+        {
+          "item_id": "abe8fe18-1441-4c5b-b628-f4f6bb343dff",
+          "library_id": "MyLib:Capacitor_SMD__CP_Elec_18x17.5_f8d541ca68",
+          "models": [
+            {
+              "filename": "${KIPRJMOD}/3D Models/CP_Elec_18x17.5_185bf26715.step",
+              "offset_mm": [
+                "0.0",
+                "0.0",
+                "0.0"
+              ],
+              "rotation_degrees": [
+                "0.0",
+                "0.0",
+                "0.0"
+              ],
+              "scale": [
+                "1.0",
+                "1.0",
+                "1.0"
+              ],
+              "visible": true
+            }
+          ],
+          "orientation_degrees": "0.0",
+          "pads": [
+            {
+              "number": "1",
+              "x_mm": "117.945",
+              "y_mm": "-71.1"
+            },
+            {
+              "number": "2",
+              "x_mm": "131.445",
+              "y_mm": "-71.1"
+            }
+          ],
+          "reference": "C2",
+          "side": "top",
+          "x_mm": "124.695",
+          "y_mm": "-71.1"
+        },
+        {
+          "item_id": "ac4fff50-c6f4-46f2-a13f-b1c9dff741a9",
+          "library_id": "MyLib:Resistor_SMD__R_4020_10251Metric_Pad1.65x5.30mm_HandSolder_f491507cba",
+          "models": [
+            {
+              "filename": "${KIPRJMOD}/3D Models/R_4020_10251Metric_1a1cba01c9.step",
+              "offset_mm": [
+                "0.0",
+                "0.0",
+                "0.0"
+              ],
+              "rotation_degrees": [
+                "0.0",
+                "0.0",
+                "0.0"
+              ],
+              "scale": [
+                "1.0",
+                "1.0",
+                "1.0"
+              ],
+              "visible": true
+            }
+          ],
+          "orientation_degrees": "0.0",
+          "pads": [
+            {
+              "number": "1",
+              "x_mm": "100.63",
+              "y_mm": "-71.1"
+            },
+            {
+              "number": "2",
+              "x_mm": "110.43",
+              "y_mm": "-71.1"
+            }
+          ],
+          "reference": "R5",
+          "side": "top",
+          "x_mm": "105.53",
+          "y_mm": "-71.1"
+        },
+        {
+          "item_id": "b1886e5e-308e-42f2-9ec9-31f0b12d92d8",
+          "library_id": "MyLib:Resistor_SMD__R_4020_10251Metric_Pad1.65x5.30mm_HandSolder_f491507cba",
+          "models": [
+            {
+              "filename": "${KIPRJMOD}/3D Models/R_4020_10251Metric_1a1cba01c9.step",
+              "offset_mm": [
+                "0.0",
+                "0.0",
+                "0.0"
+              ],
+              "rotation_degrees": [
+                "0.0",
+                "0.0",
+                "0.0"
+              ],
+              "scale": [
+                "1.0",
+                "1.0",
+                "1.0"
+              ],
+              "visible": true
+            }
+          ],
+          "orientation_degrees": "0.0",
+          "pads": [
+            {
+              "number": "1",
+              "x_mm": "100.63",
+              "y_mm": "-91.65"
+            },
+            {
+              "number": "2",
+              "x_mm": "110.43",
+              "y_mm": "-91.65"
+            }
+          ],
+          "reference": "R8",
+          "side": "top",
+          "x_mm": "105.53",
+          "y_mm": "-91.65"
+        },
+        {
+          "item_id": "b39db537-8f02-46b3-a1da-669acf5648f7",
+          "library_id": "MyLib:Diode_THT__D_DO-41_SOD81_P10.16mm_Horizontal_8c01c841ae",
+          "models": [
+            {
+              "filename": "${KIPRJMOD}/3D Models/D_DO-41_SOD81_P10.16mm_Horizontal_2530e1281a.step",
+              "offset_mm": [
+                "0.0",
+                "0.0",
+                "0.0"
+              ],
+              "rotation_degrees": [
+                "0.0",
+                "0.0",
+                "0.0"
+              ],
+              "scale": [
+                "1.0",
+                "1.0",
+                "1.0"
+              ],
+              "visible": true
+            }
+          ],
+          "orientation_degrees": "0.0",
+          "pads": [
+            {
+              "number": "1",
+              "x_mm": "152.69",
+              "y_mm": "-42.4"
+            },
+            {
+              "number": "2",
+              "x_mm": "162.85",
+              "y_mm": "-42.4"
+            }
+          ],
+          "reference": "D7",
+          "side": "top",
+          "x_mm": "152.69",
+          "y_mm": "-42.4"
+        },
+        {
+          "item_id": "b52ce6e8-44af-4cee-9c1d-ad5cae2a6d9b",
+          "library_id": "MyLib:Resistor_SMD__R_4020_10251Metric_Pad1.65x5.30mm_HandSolder_f491507cba",
+          "models": [
+            {
+              "filename": "${KIPRJMOD}/3D Models/R_4020_10251Metric_1a1cba01c9.step",
+              "offset_mm": [
+                "0.0",
+                "0.0",
+                "0.0"
+              ],
+              "rotation_degrees": [
+                "0.0",
+                "0.0",
+                "0.0"
+              ],
+              "scale": [
+                "1.0",
+                "1.0",
+                "1.0"
+              ],
+              "visible": true
+            }
+          ],
+          "orientation_degrees": "0.0",
+          "pads": [
+            {
+              "number": "1",
+              "x_mm": "100.63",
+              "y_mm": "-43.7"
+            },
+            {
+              "number": "2",
+              "x_mm": "110.43",
+              "y_mm": "-43.7"
+            }
+          ],
+          "reference": "R1",
+          "side": "top",
+          "x_mm": "105.53",
+          "y_mm": "-43.7"
+        },
+        {
+          "item_id": "c4c8a9ef-db9d-41af-80de-39cfe3f6ff09",
+          "library_id": "MyLib:Diode_THT__D_DO-41_SOD81_P10.16mm_Horizontal_8c01c841ae",
+          "models": [
+            {
+              "filename": "${KIPRJMOD}/3D Models/D_DO-41_SOD81_P10.16mm_Horizontal_2530e1281a.step",
+              "offset_mm": [
+                "0.0",
+                "0.0",
+                "0.0"
+              ],
+              "rotation_degrees": [
+                "0.0",
+                "0.0",
+                "0.0"
+              ],
+              "scale": [
+                "1.0",
+                "1.0",
+                "1.0"
+              ],
+              "visible": true
+            }
+          ],
+          "orientation_degrees": "0.0",
+          "pads": [
+            {
+              "number": "1",
+              "x_mm": "152.69",
+              "y_mm": "-69.9"
+            },
+            {
+              "number": "2",
+              "x_mm": "162.85",
+              "y_mm": "-69.9"
+            }
+          ],
+          "reference": "D1",
+          "side": "top",
+          "x_mm": "152.69",
+          "y_mm": "-69.9"
+        },
+        {
+          "item_id": "c885e55f-cbc2-4b51-b972-386a61fdaab9",
+          "library_id": "MyLib:Diode_THT__D_DO-41_SOD81_P10.16mm_Horizontal_8c01c841ae",
+          "models": [
+            {
+              "filename": "${KIPRJMOD}/3D Models/D_DO-41_SOD81_P10.16mm_Horizontal_2530e1281a.step",
+              "offset_mm": [
+                "0.0",
+                "0.0",
+                "0.0"
+              ],
+              "rotation_degrees": [
+                "0.0",
+                "0.0",
+                "0.0"
+              ],
+              "scale": [
+                "1.0",
+                "1.0",
+                "1.0"
+              ],
+              "visible": true
+            }
+          ],
+          "orientation_degrees": "0.0",
+          "pads": [
+            {
+              "number": "1",
+              "x_mm": "152.69",
+              "y_mm": "-114.4"
+            },
+            {
+              "number": "2",
+              "x_mm": "162.85",
+              "y_mm": "-114.4"
+            }
+          ],
+          "reference": "D17",
+          "side": "top",
+          "x_mm": "152.69",
+          "y_mm": "-114.4"
+        },
+        {
+          "item_id": "caf85877-2481-4882-a14b-806d408e9dc8",
+          "library_id": "MyLib:Diode_THT__D_DO-41_SOD81_P10.16mm_Horizontal_8c01c841ae",
+          "models": [
+            {
+              "filename": "${KIPRJMOD}/3D Models/D_DO-41_SOD81_P10.16mm_Horizontal_2530e1281a.step",
+              "offset_mm": [
+                "0.0",
+                "0.0",
+                "0.0"
+              ],
+              "rotation_degrees": [
+                "0.0",
+                "0.0",
+                "0.0"
+              ],
+              "scale": [
+                "1.0",
+                "1.0",
+                "1.0"
+              ],
+              "visible": true
+            }
+          ],
+          "orientation_degrees": "0.0",
+          "pads": [
+            {
+              "number": "1",
+              "x_mm": "152.69",
+              "y_mm": "-55.15"
+            },
+            {
+              "number": "2",
+              "x_mm": "162.85",
+              "y_mm": "-55.15"
+            }
+          ],
+          "reference": "D10",
+          "side": "top",
+          "x_mm": "152.69",
+          "y_mm": "-55.15"
+        },
+        {
+          "item_id": "e2dd7993-9585-481a-a86b-a4984a0cf642",
+          "library_id": "MyLib:Diode_THT__D_DO-41_SOD81_P10.16mm_Horizontal_8c01c841ae",
+          "models": [
+            {
+              "filename": "${KIPRJMOD}/3D Models/D_DO-41_SOD81_P10.16mm_Horizontal_2530e1281a.step",
+              "offset_mm": [
+                "0.0",
+                "0.0",
+                "0.0"
+              ],
+              "rotation_degrees": [
+                "0.0",
+                "0.0",
+                "0.0"
+              ],
+              "scale": [
+                "1.0",
+                "1.0",
+                "1.0"
+              ],
+              "visible": true
+            }
+          ],
+          "orientation_degrees": "0.0",
+          "pads": [
+            {
+              "number": "1",
+              "x_mm": "152.69",
+              "y_mm": "-97.4"
+            },
+            {
+              "number": "2",
+              "x_mm": "162.85",
+              "y_mm": "-97.4"
+            }
+          ],
+          "reference": "D13",
+          "side": "top",
+          "x_mm": "152.69",
+          "y_mm": "-97.4"
+        },
+        {
+          "item_id": "efe59ffd-d92e-45d0-8f93-be49fba785d0",
+          "library_id": "MyLib:Resistor_SMD__R_4020_10251Metric_Pad1.65x5.30mm_HandSolder_f491507cba",
+          "models": [
+            {
+              "filename": "${KIPRJMOD}/3D Models/R_4020_10251Metric_1a1cba01c9.step",
+              "offset_mm": [
+                "0.0",
+                "0.0",
+                "0.0"
+              ],
+              "rotation_degrees": [
+                "0.0",
+                "0.0",
+                "0.0"
+              ],
+              "scale": [
+                "1.0",
+                "1.0",
+                "1.0"
+              ],
+              "visible": true
+            }
+          ],
+          "orientation_degrees": "0.0",
+          "pads": [
+            {
+              "number": "1",
+              "x_mm": "100.63",
+              "y_mm": "-50.55"
+            },
+            {
+              "number": "2",
+              "x_mm": "110.43",
+              "y_mm": "-50.55"
+            }
+          ],
+          "reference": "R2",
+          "side": "top",
+          "x_mm": "105.53",
+          "y_mm": "-50.55"
+        },
+        {
+          "item_id": "f512b01a-b025-40f7-8ac6-ba7e4187c25b",
+          "library_id": "MyLib:Diode_THT__D_DO-41_SOD81_P10.16mm_Horizontal_8c01c841ae",
+          "models": [
+            {
+              "filename": "${KIPRJMOD}/3D Models/D_DO-41_SOD81_P10.16mm_Horizontal_2530e1281a.step",
+              "offset_mm": [
+                "0.0",
+                "0.0",
+                "0.0"
+              ],
+              "rotation_degrees": [
+                "0.0",
+                "0.0",
+                "0.0"
+              ],
+              "scale": [
+                "1.0",
+                "1.0",
+                "1.0"
+              ],
+              "visible": true
+            }
+          ],
+          "orientation_degrees": "0.0",
+          "pads": [
+            {
+              "number": "1",
+              "x_mm": "152.69",
+              "y_mm": "-78.4"
+            },
+            {
+              "number": "2",
+              "x_mm": "162.85",
+              "y_mm": "-78.4"
+            }
+          ],
+          "reference": "D3",
+          "side": "top",
+          "x_mm": "152.69",
+          "y_mm": "-78.4"
+        }
+      ]
+    },
+    "reason": null,
+    "schema_version": "partsmith-ipc-inspection-1.0",
+    "sequence": 1,
+    "session_id": "06fc291d-7dcb-4a37-906c-022b7714fd23",
+    "state": "READY"
+  },
+  "package_version": "0.1.10",
+  "python": "3.12.10",
+  "schema_version": "partsmith-pcm-readiness-1.0",
+  "state": "READY"
+}

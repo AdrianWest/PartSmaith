@@ -1,6 +1,6 @@
 """@file test_pcm.py
 @brief Checks deterministic PCM archives, resource ownership and runtime gates.
-@details Source imports require no PartSmith wheel or package installation.
+@details Checks installed launch isolation and deliberate optional PCB access.
 """
 
 import importlib.util
@@ -407,12 +407,24 @@ def test_archive_preflight_bounds_and_compression(tmp_path, monkeypatch):
 
 
 @pytest.mark.parametrize(
-    "case", ["missing", "cancel", "connect", "read", "gui", "ok"]
+    "case",
+    [
+        "startup",
+        "startup_missing",
+        "missing",
+        "cancel",
+        "connect",
+        "controller",
+        "inspector",
+        "gui",
+        "ok",
+        "reuse",
+    ],
 )
 def test_entry_selection_failure_codes_and_session_cleanup(monkeypatch, case):
-    """@brief Checks deliberate board selection and every action cleanup path.
+    """@brief Checks direct startup and deliberate optional inspection cleanup.
     @param monkeypatch Module and launch-environment substitution helper.
-    @param case Missing context, cancellation, IPC error, GUI error or success.
+    @param case Startup, optional inspection, cancellation or failure scenario.
     @return None.
     @details GUI doubles test orchestration; desktop proof is separate.
     """
@@ -430,6 +442,7 @@ def test_entry_selection_failure_codes_and_session_cleanup(monkeypatch, case):
     )
     reports = []
     calls = []
+    ui = {}
 
     def ready(root):
         """@brief Supplies safe readiness while checking early env removal.
@@ -452,14 +465,20 @@ def test_entry_selection_failure_codes_and_session_cleanup(monkeypatch, case):
     def show():
         """@brief Supplies a no-op visible-window boundary.
         @return None.
-        @details Native UI acceptance remains owned by the desktop gate.
+        @details Records main-frame visibility before any board access.
         """
+        calls.append("show")
 
     def loop():
         """@brief Finishes the fake desktop action event loop.
         @return None.
-        @details Represents deliberate action close for cleanup verification.
+        @details Startup must not select, connect, inspect or refresh a board.
         """
+        assert calls == ["show"]
+        if case not in {"startup", "startup_missing"}:
+            ui["inspect"](ui["frame"])
+        if case == "reuse":
+            ui["inspect"](ui["frame"])
 
     def app(redirect):
         """@brief Supplies a bounded application double.
@@ -535,25 +554,34 @@ def test_entry_selection_failure_codes_and_session_cleanup(monkeypatch, case):
         """
 
         def refresh():
-            """@brief Produces a bounded safe inspection or closed IPC failure.
-            @return READY outcome after invoking the safe report callback.
-            @details Timeout simulation never includes provider error text.
+            """@brief Rejects any automatic component inspection.
+            @return None.
+            @details Only the inspector's deliberate Refresh button may read.
             """
-            if case == "read":
-                raise IpcError(IpcFailureReason.TIMEOUT)
-            report_callback({"state": "READY", "code": "READY"})
-            return SimpleNamespace(state="READY")
+            pytest.fail("Entry must not refresh the board automatically")
 
+        if case == "controller":
+            raise RuntimeError("secret-do-not-record")
         return SimpleNamespace(refresh=refresh, close=session.close)
 
-    def frame():
+    def frame(inspect_pcb):
         """@brief Supplies a visible frame or unrelated GUI failure.
         @return Frame double exposing Show.
+        @param inspect_pcb Deliberate callback registered without invocation.
         @details Raw failure messages must not be persisted by the action.
         """
         if case == "gui":
             raise RuntimeError("secret-do-not-record")
-        return SimpleNamespace(Show=show)
+        ui["inspect"] = inspect_pcb
+        ui["frame"] = SimpleNamespace(Show=show)
+        return ui["frame"]
+
+    def raise_inspector():
+        """@brief Records reuse of the existing optional inspector.
+        @return None.
+        @details A second button click must not reconnect or select a board.
+        """
+        calls.append("raised")
 
     def inspector(parent, inspection_controller):
         """@brief Supplies the read-only inspector display boundary.
@@ -562,13 +590,15 @@ def test_entry_selection_failure_codes_and_session_cleanup(monkeypatch, case):
         @return Inspector window double exposing Show.
         @details Does not create or reconnect an IPC session.
         """
-        return SimpleNamespace(Show=show)
+        if case == "inspector":
+            raise RuntimeError("secret-do-not-record")
+        return SimpleNamespace(Show=show, Raise=raise_inspector)
 
     monkeypatch.setattr(runtime, "readiness", ready)
     monkeypatch.setattr(entry, "_save_report", save)
     monkeypatch.setenv("KICAD_API_SOCKET", "private-do-not-record")
     monkeypatch.setenv("KICAD_API_TOKEN", "secret-do-not-record")
-    if case == "missing":
+    if case in {"missing", "startup_missing"}:
         monkeypatch.delenv("KICAD_API_TOKEN")
     monkeypatch.setitem(
         sys.modules,
@@ -599,17 +629,34 @@ def test_entry_selection_failure_codes_and_session_cleanup(monkeypatch, case):
     )
     monkeypatch.setattr("partsmith.integration.ipc.connect_ipc", connect)
     result = entry.main()
-    assert result == (0 if case in {"cancel", "ok"} else 2)
+    assert result == (2 if case == "gui" else 0)
     assert "secret-do-not-record" not in json.dumps(reports)
-    assert calls.count("closed") == (1 if case in {"read", "gui", "ok"} else 0)
+    assert calls.count("closed") == (
+        1 if case in {"controller", "inspector", "ok", "reuse"} else 0
+    )
+    assert "private-do-not-record" not in json.dumps(reports)
+    if case in {"startup", "startup_missing"}:
+        assert calls == ["show"]
+        assert reports[-1] == {"state": "READY", "code": "READY"}
     if case == "missing":
         assert "picker" not in calls
-        assert reports[-1]["code"] == "IPC_LAUNCH_CONTEXT_REQUIRED"
+        assert reports[-1]["state"] == "READY"
+        assert reports[-1]["ipc_inspection"]["code"] == (
+            "IPC_LAUNCH_CONTEXT_REQUIRED"
+        )
     elif case == "cancel":
         assert "connect" not in calls
     elif case == "connect":
-        assert reports[-1]["code"] == "IPC_WRONG_BOARD"
-    elif case == "read":
-        assert reports[-1]["code"] == "IPC_TIMEOUT"
+        assert reports[-1]["ipc_inspection"]["code"] == "IPC_WRONG_BOARD"
+    elif case == "controller":
+        assert reports[-1]["ipc_inspection"]["code"] == (
+            "IPC_CONNECTION_OR_BOARD_CHECK_FAILED"
+        )
+    elif case == "inspector":
+        assert reports[-1]["ipc_inspection"]["code"] == "GUI_ACTION_FAILED"
     elif case == "gui":
         assert reports[-1]["code"] == "GUI_ACTION_FAILED"
+    elif case == "reuse":
+        assert calls.count("picker") == 1
+        assert calls.count("connect") == 1
+        assert calls.count("raised") == 1

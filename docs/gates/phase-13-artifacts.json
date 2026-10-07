@@ -910,13 +910,13 @@
   },
   "hash_closeout": "docs/gates/phase-13-hash-closeout.json",
   "sha256": {
-    "docs/gates/phase-13.1-artifacts.json": "350ebc047119b96e1400580d7e70fa0c1a022e9859c599ddba7771fb1ab38819",
-    "docs/gates/phase-13.2-artifacts.json": "b3f1507554f2a41af3bfeb0ad1151258b03646f64b8e4e3cee3a41963626bb36",
-    "docs/gates/phase-13.3-artifacts.json": "068f6a697ea952d25e99240124b13fccd827524e7edf27b36572d85a837640df",
-    "docs/gates/phase-13.4-artifacts.json": "f6ea41bb20371e1b963ad2842ba940fc2d347c29c37e45b6621ec5ee3a1c8515",
-    "docs/gates/phase-13.5-artifacts.json": "e22e99bf65d2655b66dbf1d15a76083c52baca5ac4b1eae1fc4688903e4fa631",
-    "docs/gates/phase-13.6-artifacts.json": "b0387d8e1d98137de43ddbd2ea93f8d263858d2d3a808a08d253e32221742081",
-    "docs/gates/phase-13.7-artifacts.json": "4bafc1f0cd09a2e3c0b4b98b82c0a510024b5cfb4f6fbd833b77bafd82c51217",
-    "docs/gates/phase-13.8-artifacts.json": "4c2dd2dce06f9cf0f9e1e3eebe15e3931d8597221abe330219072cefd31f0087"
+    "docs/gates/phase-13.1-artifacts.json": "445263eb20b05484bb4e417f7431e2d5007a5cfbabf097d974a5ca032a5d44f6",
+    "docs/gates/phase-13.2-artifacts.json": "5b2b6c72912ee6116f34b784b74da3c7c1d8aadd46442cbd04fc999c143b4f54",
+    "docs/gates/phase-13.3-artifacts.json": "39da88a9caff6b4f1c4da4d6e23fdd1a2c3b7a92c394f7eba11e98b1825a573d",
+    "docs/gates/phase-13.4-artifacts.json": "2a69de3b7ee834949c0120516b527512df550c110bd73a97fa51f0730e6912c0",
+    "docs/gates/phase-13.5-artifacts.json": "9786ab02a33413765d12f083266282c54c63223fec3b26bffc4554b63f7d1ec4",
+    "docs/gates/phase-13.6-artifacts.json": "4b9e4767b47353054e15edb669b920d382084bc4b2b00186aace2cfc78750d1d",
+    "docs/gates/phase-13.7-artifacts.json": "33eb7cfb1511967fe3ff3b1688425824a0438ed722ca8f20e19c99a73e6cc0f5",
+    "docs/gates/phase-13.8-artifacts.json": "73bb4dc466213e98d7e7a5791f56fb5269cb5bba7884c0fa1dbdf66e74f8721f"
   }
 }

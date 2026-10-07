@@ -19,7 +19,7 @@
     "PyMuPDF": "1.28.2"
   },
   "source_sha256": {
-    "pyproject.toml": "0f24341eaa90356f1d88c525dfdff3351282593b56249591901b27b92fd64048",
+    "pyproject.toml": "69b0086eb05118a4277619b10577a5f1df9b7abb9558877de9ba58cf8de1f271",
     "requirements-extraction.txt": "104015d4659ae8a58dc6787842651f438f32ca2b0fb753fdae92bf89b6d0201d",
     "src/partsmith/extraction/document.py": "da15c6a4e4d46c7b93039375a7e7a80abfde66d16ddc2dc0f3b240a3f4f85a60",
     "src/partsmith/extraction/native_page.py": "68265065abe07914deb0089e09b1045a1c84b6c540813d8e6b72ad1f0b24e682",

@@ -26,11 +26,15 @@ acceptance remains Phase 14.
    pins, schemas and full installed resource inventory again.
 4. With the intended board open, use the **Open PartSmith** IPC toolbar action
    in the PCB Editor. The pinned 10.0.6 **Tools → External Plugins** menu is for
-   legacy ActionPlugins; it does not list IPC actions. Deliberately select the
-   intended board in the chooser.
-   PartSmith verifies the launching instance and exact board before opening its
-   setup window and read-only PCB inspector. **Refresh** reads the current board;
+   legacy ActionPlugins; it does not list IPC actions. Version **0.1.10** opens
+   the setup window directly, without a board chooser or automatic PCB read.
+   To inspect the PCB, press **Inspect PCB...** and deliberately select the
+   board already open in the launching editor. PartSmith verifies that instance
+   and exact board before opening the read-only inspector. **Refresh** reads it;
    session loss or changed context disables further inspection until a new launch.
+
+The startup fix is packaged separately as `dist/partsmith-0.1.10-pcm.zip`.
+The frozen 0.1.9 Phase 13 acceptance archive and evidence retain their scope.
 
 The final 0.1.9 package uses the project owner's `resources/PartSmith_Logo_64x64.png`
 unchanged for the package manager listing. The PCM ZIP includes it as

@@ -138,6 +138,12 @@ round trips through PCM-installed 0.1.9. The
 source/PCM/desktop/offline/PDF checks and affected active/CI hash verification.
 The complete gate permits Phase 14; production clean/offline installation
 remains that separate phase's responsibility.
+The subsequent PCM 0.1.10 startup correction opens setup directly. Board
+selection and read-only PCB inspection require the deliberate **Inspect PCB...**
+action; **Refresh** performs the component read after exact-instance and
+exact-board verification. Startup never selects or inspects a board, and an
+inspection failure leaves setup available. The frozen 0.1.9 acceptance evidence
+retains its original scope.
 Historical v0.9.6 findings remain
 available in the archived specification and review receipts.
 

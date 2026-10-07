@@ -1,6 +1,6 @@
 """@file verify_gui.py
 @brief Verifies setup controls, credential storage and desktop launch behavior.
-@details Uses isolated working sessions and explicit scripted test teardown.
+@details Uses isolated sessions and checks deliberate optional PCB inspection.
 """
 
 import subprocess
@@ -80,6 +80,35 @@ def frame(app, tmp_path):
         result.session.dirty = False
         result.Close()
         pump(lambda: not result)
+
+
+def test_inspection_callback_requires_button_event(app, tmp_path):
+    """@brief Checks real setup controls defer inspection until a button event.
+    @param app Isolated wx application owned by the desktop harness.
+    @param tmp_path Temporary working-session root.
+    @return None.
+    @details Constructor and visibility must not invoke the launch callback.
+    """
+    calls = []
+    window = SetupFrame(
+        store=CredentialStore(backend=Backend()),
+        session=Session(tmp_path / "inspect-sessions"),
+        recover=False,
+        inspect_pcb=calls.append,
+    )
+    try:
+        window.Show()
+        wx.Yield()
+        assert calls == []
+        button = window.inspect_button
+        event = wx.CommandEvent(wx.EVT_BUTTON.typeId, button.GetId())
+        button.GetEventHandler().ProcessEvent(event)
+        assert calls == [window]
+    finally:
+        window.closing = True
+        window.session.dirty = False
+        window.Close()
+        pump(lambda: not window)
 
 
 def pump(condition, timeout=5):

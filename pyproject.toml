@@ -88,11 +88,6 @@ extend-exclude = [
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B"]
 
-[tool.ruff.lint.per-file-ignores]
-# Keep the native-accepted frozen IPC entry byte-identical to PCM 0.1.9.
-# Its delayed imports retain their original grouping; all other checks apply.
-"integrations/kicad/partsmith_ipc/entry.py" = ["I001"]
-
 [tool.ruff.format]
 quote-style = "double"
 indent-style = "space"

@@ -65,7 +65,7 @@
     "pdl/release-profiles/mvp-1@1.0.json": "8798d9a552e5dab29f0c5985a4bfbf7b91fb148ac4e90c42f73952dcf8550b0a",
     "docs/gates/phase-6-tests.xml": "cbfe37406118a48e74947feb58ec5d0dc39ce9fac03135a7cc19b6d124a58dca",
     "docs/gates/phase-6-wheel-tests.xml": "cc671eee02c2be57b89b5fff555781030f153a9af474039883fbfb9b1f35b8b9",
-    "pyproject.toml": "0f24341eaa90356f1d88c525dfdff3351282593b56249591901b27b92fd64048",
+    "pyproject.toml": "69b0086eb05118a4277619b10577a5f1df9b7abb9558877de9ba58cf8de1f271",
     "requirements-ci.txt": "df99cf3dc1ac9c11e29b7303972fb7368517a435df3c9c39e7afdb080ca29ccb",
     "src/partsmith/ir/projection.py": "b7de58f69e667496564a96ccf3c68c73e28921134f5aebb9dc103c9788730db6",
     "src/partsmith/release/runtime.py": "27414f9fa7479f3d33703be98bd890fd7b7705a6bccbf0b2a858ab16d4e60893",

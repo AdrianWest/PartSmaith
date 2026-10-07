@@ -202,14 +202,22 @@ class Banner(wx.Panel):
 
 
 class SetupFrame(wx.Frame):
-    def __init__(self, store=None, worker=None, session=None, recover=True):
+    def __init__(
+        self,
+        store=None,
+        worker=None,
+        session=None,
+        recover=True,
+        inspect_pcb=None,
+    ):
         """@brief Initializes the wx window and its owned controls.
         @param store Secure credential adapter.
         @param worker Optional cancellable processing worker.
         @param session Optional isolated working session.
         @param recover Whether to offer the last recovery checkpoint.
+        @param inspect_pcb Optional explicit PCB-inspection callback.
         @return None.
-        @details Binds GUI events and retains the owning application state.
+        @details Binds GUI events without invoking optional PCB inspection.
         """
         super().__init__(None, title="PartSmith Setup", size=(840, 860))
         self.SetMinSize((620, 740))
@@ -233,6 +241,7 @@ class SetupFrame(wx.Frame):
         self.viewer = None
         self.pending_session = None
         self.pending_viewer_camera = None
+        self.inspect_pcb = inspect_pcb
         root = wx.Panel(self)
         outer = wx.BoxSizer(wx.VERTICAL)
         self.banner = Banner(root)
@@ -263,6 +272,12 @@ class SetupFrame(wx.Frame):
         ):
             session_controls.Add(button, 0, wx.RIGHT, 8)
         layout.Add(session_controls, 0, wx.EXPAND | wx.ALL, 12)
+        if inspect_pcb is not None:
+            self.inspect_button = wx.Button(panel, label="Inspect PCB...")
+            self.inspect_button.Bind(wx.EVT_BUTTON, self.on_inspect_pcb)
+            layout.Add(
+                self.inspect_button, 0, wx.LEFT | wx.RIGHT | wx.BOTTOM, 12
+            )
         self.file_button = wx.Button(panel, label="Select Datasheet")
         layout.Add(self.file_button, 0, wx.LEFT | wx.RIGHT, 12)
         self.source = wx.TextCtrl(panel, style=wx.TE_READONLY)
@@ -374,6 +389,15 @@ class SetupFrame(wx.Frame):
         self.Centre()
         if recover:
             wx.CallAfter(self.offer_recovery)
+
+    def on_inspect_pcb(self, event):
+        """@brief Runs PCB inspection only after the user presses its button.
+        @param event Deliberate inspection-button event.
+        @return None.
+        @details The launcher owns board selection and transient IPC lifetime.
+        """
+        if self.inspect_pcb is not None:
+            self.inspect_pcb(self)
 
     def process_session(self, request, log, cancel):
         """@brief Processes an immutable source and retains all local results.
