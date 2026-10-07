@@ -6,18 +6,19 @@ handoff. The fresh source/desktop checks, exact package/evidence verification
 and repository-required final hash closeout pass. No outstanding Phase 13
 implementation blocker was found.
 
-The review covers the current working tree, including uncommitted Phase 13
-source and evidence. HEAD is `6a90e6b` (`Phase 12 is done`). The current gate
-records disk hashes; Git-blob verification remains due after committing those
-inputs. Commit the Phase 13 baseline and verify its committed inputs before
-adding Phase 14 implementation changes.
+The review originally covered uncommitted Phase 13 source and evidence over
+HEAD `6a90e6b` (`Phase 12 is done`). The reviewed baseline is now committed as
+`742387b22b27c14b5cd24a12fe08df01468fc90d`. All 33 active input maps, including
+all 12 CI maps, match both that commit's exact Git blobs and the checkout bytes.
+The [committed-input verification receipt](gates/phase-13-committed-input-verification-2026-10-07.json)
+records fulfillment of the prior closeout's deferred Git verification.
 
 | Readiness evidence | Review result |
 | --- | --- |
 | Ordered 13.1–13.8 receipts | All eight record PASS and have retained closeouts |
 | Full Phase 13 gate | Recorded PASS for the declared target |
-| Active input maps | All 33 match current disk bytes |
-| CI input maps | All 12 are included and match current disk bytes |
+| Active input maps | All 33 match exact committed Git blobs and checkout bytes |
+| CI input maps | All 12 are included and match exact committed Git blobs and checkout bytes |
 | Final PCM package | Inventory, metadata, SHA-256 and source/resource parity verified |
 | Fresh deterministic PCM builds | Two builds match frozen 0.1.9 archive bytes exactly |
 | Native publication, relocation and isolated PCM receipts | Retained identities and referenced artifacts verified |
@@ -87,6 +88,7 @@ Review commands include:
 .venv/Scripts/python.exe -m ruff format --check .
 .venv/Scripts/python.exe -m partsmith doctor --json
 .venv/Scripts/python.exe scripts/verify_phase2_manifest.py --manifest <active-manifest> --source disk
+.venv/Scripts/python.exe scripts/verify_phase2_manifest.py --manifest <active-manifest> --source git
 .venv/Scripts/python.exe scripts/close_integration_gate.py --phase 13 --reason "Phase 14 readiness review: fresh source and desktop checks; retained exact PCM, native and offline evidence verified"
 ```
 
@@ -98,7 +100,11 @@ the declared `src` import path. Post-test inspection found no unexpected input
 changes. The final closeout verified all 33 active maps and outside-map identities,
 recorded zero hash changes and preserved its previous receipt under
 `docs/gates/history/`. Original test, package and native acceptance artifacts
-retain their exact original bytes and scope.
+retain their exact original bytes and scope. Committed verification additionally
+tracks the three historical wheel inputs previously hidden by `.tools/` and
+preserves the recorded bytes of three historical XML captures in Git. Gate
+execution records retain their original disk-validation scope; the separate
+committed-input receipt records the subsequent Git verification.
 
 References: [phase policy and Phase 14 requirements](../resources/BFT_PartSmith_Implementation_Spec.md),
 [full Phase 13 gate](gates/phase-13.md),
