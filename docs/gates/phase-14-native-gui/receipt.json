@@ -1,0 +1,28 @@
+{
+  "archive_sha256": "b3ba5dd4b2f3d38e59a3d833805c83ecad9043b2c9eea0b43ed06bc325eed70d",
+  "board_after_sha256": "9181b6a70a205652ff169443915c04de125bf3adb21f9a6ae3078ec87c855335",
+  "board_before_sha256": "9181b6a70a205652ff169443915c04de125bf3adb21f9a6ae3078ec87c855335",
+  "closed_readiness": "docs/gates/phase-14-native-gui/host-closed-readiness.json",
+  "editor_closed_manager_alive": "PLUGIN_REMAINS_OPEN",
+  "files": {
+    "editor-closed-manager-open.json": "e4bb0d930d8c223e926480fd90e60a57815333f48c4e4e071abb605b92968391",
+    "host-closed-readiness.json": "1a571612685df4caaa4de30ea11883ef4e8e1ef1b16252567d0d46c6b53cbe8f",
+    "host-closed-windows.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+    "setup-tree.txt": "f7bc4626f656043195dc890ed86b6a1001de69028479df04ba741085ca083fae",
+    "setup.png": "1a23f3a2dd7363d4a481d6f55d9bc808c0ffa1947ebaef3487a97dc5517756ec",
+    "startup-ready.json": "1df9e99a15ab97094ddddddba16c357368f565c562b765251b9bbd5e24f965cf"
+  },
+  "host_closed": "PLUGIN_AND_OWNED_INTERPRETER_EXITED",
+  "inventory_sha256": "ad2e6c728662129b447ce926842714f6b5354770f20a2d26c4bc6edc6d288e11",
+  "launch": "KiCad 10.0.6 PCB Editor toolbar executable action",
+  "owned_gui_processes_after_host_exit": 0,
+  "package_version": "0.2.0",
+  "pcb_inspection": "DELIBERATE_BUTTON_ONLY",
+  "prototype_rendering_button": "ABSENT",
+  "schema_version": "partsmith-phase14-native-gui-1.0",
+  "scope": "Current Windows development profile; clean-host provenance is separate",
+  "session_recovery": "DECLINED_WITH_NO",
+  "state": "PASS",
+  "verified_owned_files": 10858,
+  "visible_setup": "PASS"
+}

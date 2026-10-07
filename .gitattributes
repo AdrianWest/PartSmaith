@@ -54,3 +54,6 @@ docs/gates/**/*.json -text
 docs/gates/**/*.xml -text
 docs/gates/**/*.txt -text
 docs/gates/history/** -text
+
+# Production native references retain exact exported artifact bytes.
+fixtures/production/golden/** -text

@@ -1,0 +1,48 @@
+{
+  "changed_python_inputs_since_full_run": [
+    "tests/test_pcm.py"
+  ],
+  "complete_changed_module_rerun": {
+    "errors": 0,
+    "failures": 0,
+    "path": "docs/gates/phase-14-runtime/pcm-results.xml",
+    "skipped": 0,
+    "tests": 38
+  },
+  "final_unique_case_coverage": {
+    "errors": 0,
+    "failures": 0,
+    "skipped": 0,
+    "tests": 1154
+  },
+  "native_windows_visibility_proof": "docs/gates/phase-14-native-gui/receipt.json",
+  "no_original_failure_discarded": true,
+  "original_full_run": {
+    "errors": 0,
+    "failed": 10,
+    "passed": 1144,
+    "path": "docs/gates/history/phase-14-stale-wx-double/source-results.xml",
+    "sha256": "f2ab92a7481876ef1deb163972d99a55322597fa56e26d8c8e70d66ad6eb3816",
+    "skipped": 0,
+    "tests": 1154
+  },
+  "original_test_fixture": {
+    "path": "docs/gates/history/phase-14-stale-wx-double/test_pcm.py",
+    "sha256": "811f2dba836d97754e7b230f7fd93862b842024f311fa6a4c82f41163c65c3fc"
+  },
+  "reason": "Orchestration GUI double did not accept recovery argument or expose the Windows visibility boundary; application code is unchanged",
+  "schema_version": "partsmith-phase14-source-revalidation-1.0",
+  "scope": "All 1154 source cases covered by full run plus complete changed-module revalidation; not a claim of one all-pass full run",
+  "state": "PASS",
+  "unchanged_passing_cases": {
+    "errors": 0,
+    "failures": 0,
+    "path": "docs/gates/phase-14-runtime/source-unchanged-results.xml",
+    "skipped": 0,
+    "tests": 1116
+  },
+  "updated_test_fixture": {
+    "path": "tests/test_pcm.py",
+    "sha256": "fa1a433c79fadde17f07627680b0ef287e45c1d36d2a14dfafaab756c0e8e2f6"
+  }
+}

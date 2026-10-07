@@ -1,0 +1,11 @@
+{
+  "dependency_manifest_sha256": "7770a2f33baa5e185b629821b530f2fd3f3cf2cc29d403aaff1cd8d1ce06b248",
+  "identifier": "com.boardforgetools.partsmith",
+  "install_size": 1333738779,
+  "inventory_sha256": "f65550f180a5141ab108b23f26207ecb9fa4c22974fe9d0d59f703e0a5e55ffc",
+  "members": 10861,
+  "runtime_lock_sha256": "405843a2bd6490c087c79ebb5ecf1c2c30fff08df334d70c9847049853b16728",
+  "sha256": "44be190b2e9644679fafde03a1156ee8581e9da49bfc687bbc26b3b06eb2b532",
+  "size": 1336054043,
+  "version": "0.2.1"
+}

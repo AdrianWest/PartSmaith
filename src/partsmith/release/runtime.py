@@ -1,4 +1,7 @@
-"""Verified runtime identities for complete Phase 8 input snapshots."""
+"""@package partsmith.release.runtime
+@brief Records verified runtime identities for frozen release snapshots.
+@details Includes the complete production bundle identity when installed.
+"""
 
 import platform
 import sys
@@ -14,10 +17,11 @@ from partsmith.kicad import KiCadRuntime
 
 
 def runtime_configuration(kicad: KiCadRuntime) -> dict:
-    """Verify the installed CAD tuple against reviewed wheel identities.
-
-    Paths belong to audit metadata. Actual Python patch/build, OS, machine,
-    archive hashes, installed content, and native KiCad bytes affect replay.
+    """@brief Verifies the installed CAD tuple and production runtime.
+    @param kicad Verified native KiCad executable and version.
+    @return Runtime identities consumed by the frozen release snapshot.
+    @details Paths belong to audit metadata. Python build, native content,
+    dependency archive hashes and bundled notices affect reproducibility.
     """
     if sys.version_info[:2] != (3, 12):
         raise RuntimeError("PartSmith requires Python 3.12.x")
@@ -71,7 +75,7 @@ def runtime_configuration(kicad: KiCadRuntime) -> dict:
         if actual != expected:
             raise RuntimeError(f"Pinned dependency version mismatch: {name}")
         dependencies[name] = actual
-    return {
+    result = {
         "python": platform.python_version(),
         "python_baseline": lock["python_baseline"],
         "python_implementation": platform.python_implementation(),
@@ -96,3 +100,9 @@ def runtime_configuration(kicad: KiCadRuntime) -> dict:
         "dependencies": dependencies,
         "archives": identities,
     }
+    root = Path(__file__).resolve().parents[2]
+    if (root / "bundle.json").is_file():
+        from partsmith.pcm.bundle import verify_bundle
+
+        result["production_bundle"] = verify_bundle(root)
+    return result

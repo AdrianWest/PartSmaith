@@ -326,7 +326,11 @@ class KnownGoodReleasePipeline:
         self._notify("IR_VALIDATED", build.id)
         settings = configuration or BuildConfiguration()
         runtime = runtime_configuration(self.kicad_runtime)
-        symbol_context = SymbolContext(python_version=runtime["python"])
+        production = pdl.data["schema_version"] == "1.1"
+        symbol_context = SymbolContext(
+            python_version=runtime["python"],
+            serializer_version="2.0" if production else "1.0",
+        )
         footprint_context = FootprintContext(python_version=runtime["python"])
         threed_context = ThreeDContext(
             python_version=runtime["python"],

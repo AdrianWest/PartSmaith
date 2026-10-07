@@ -1,0 +1,22 @@
+(kicad_symbol_lib
+  (version 20231120)
+  (generator partsmith)
+  (symbol "CRCW040210K0FKEA"
+    (property "Reference" "R" (at 0 3.81 0) (effects (font (size 1.27 1.27))))
+    (property "Value" "CRCW040210K0FKEA" (at 0 -3.81 0) (effects (font (size 1.27 1.27))))
+    (symbol "CRCW040210K0FKEA_1_1"
+      (rectangle (start -1.27 1.27) (end 1.27 -1.27)
+        (stroke (width 0) (type default))
+        (fill (type none))
+      )
+      (pin passive line (at -3.81 0.0 0) (length 2.54)
+        (name "1" (effects (font (size 1.27 1.27))))
+        (number "1" (effects (font (size 1.27 1.27))))
+      )
+      (pin passive line (at 3.81 0.0 180) (length 2.54)
+        (name "2" (effects (font (size 1.27 1.27))))
+        (number "2" (effects (font (size 1.27 1.27))))
+      )
+    )
+  )
+)

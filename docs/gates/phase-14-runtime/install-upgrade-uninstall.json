@@ -1,0 +1,27 @@
+{
+    "schema_version":  "partsmith-install-acceptance-1.0",
+    "corpus":  "PASS",
+    "corrupted_notice":  "REJECTED",
+    "engines":  "PASS",
+    "missing_model":  "REJECTED",
+    "state":  "PASS",
+    "scope":  "isolated-profile runtime acceptance; clean-host provenance is separate",
+    "uninstall":  "PASS",
+    "unrelated_package":  "UNCHANGED",
+    "python_environment":  "BLOCKED",
+    "runs":  [
+                 {
+                     "diagnostics":  "READY",
+                     "gui_smoke":  false,
+                     "install":  "PASS",
+                     "version":  "0.2.0"
+                 },
+                 {
+                     "diagnostics":  "READY",
+                     "gui_smoke":  false,
+                     "install":  "PASS",
+                     "version":  "0.2.1"
+                 }
+             ],
+    "untracked_bytecode":  "REJECTED"
+}

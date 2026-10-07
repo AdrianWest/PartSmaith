@@ -18,7 +18,7 @@ from partsmith.schema_support import (
     schema_error_path,
 )
 
-SUPPORTED_VERSIONS = ("1.0",)
+SUPPORTED_VERSIONS = ("1.0", "1.1")
 
 
 def load_schema(version: str = "1.0") -> dict:

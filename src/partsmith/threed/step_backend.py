@@ -118,6 +118,7 @@ def _export_raw_step(solids: list, *, precision_mode: int = 0) -> bytes:
 
     @brief Export a list of solids as one compound STEP file.
     @param solids The solids argument.
+    @param precision_mode OCCT precision mode: -1, 0 or 1.
     @return The bytes result.
     @details Implements the documented behavior without changing the
     public contract.
@@ -155,6 +156,7 @@ def generate_step_bytes(pdl_data: dict, *, precision_mode: int = 0) -> bytes:
 
     @brief Deterministically generate a normalized STEP artifact.
     @param pdl_data The pdl_data argument.
+    @param precision_mode OCCT precision mode passed to the raw exporter.
     @return The bytes result.
     @details Builds the section 145 solids, exports STEP, normalizes
     away nondeterministic OCCT metadata, then reparses and remeasures
@@ -206,6 +208,7 @@ class SolidMeasurement:
     size_mm: Vec3
     minimum_mm: Vec3 | None = None
     maximum_mm: Vec3 | None = None
+    cylindrical_faces: tuple[tuple[Vec3, float], ...] = ()
 
     def __post_init__(self) -> None:
         """@brief Fill bounds omitted by Phase 6-compatible callers.
@@ -259,11 +262,12 @@ class StepMeasurement:
 def measure_step(step_bytes: bytes) -> StepMeasurement:
     """
 
-    @brief Parse STEP bytes and measure each solid's bounding box.
+    @brief Parses STEP and measures bounding boxes and cylindrical features.
     @param step_bytes The step_bytes argument.
     @return The StepMeasurement result.
     @details Raises ValueError when the STEP artifact parses to zero
-    solids.
+    solids. Cylindrical faces bind physically present index recesses to
+    production orientation validation independently of generator metadata.
 
     """
     unit_matches = set(_LENGTH_UNIT_PATTERN.findall(step_bytes))
@@ -295,5 +299,15 @@ def measure_step(step_bytes: bytes) -> StepMeasurement:
         size = (box.xlen, box.ylen, box.zlen)
         minimum = (box.xmin, box.ymin, box.zmin)
         maximum = (box.xmax, box.ymax, box.zmax)
-        measurements.append(SolidMeasurement(center, size, minimum, maximum))
+        cylinders = []
+        for face in solid.Faces():
+            if face.geomType() == "CYLINDER":
+                from OCP.BRepAdaptor import BRepAdaptor_Surface
+
+                surface = BRepAdaptor_Surface(face.wrapped)
+                cylinder = surface.Cylinder()
+                cylinders.append((face.Center().toTuple(), cylinder.Radius()))
+        measurements.append(
+            SolidMeasurement(center, size, minimum, maximum, tuple(cylinders))
+        )
     return StepMeasurement(tuple(measurements), length_unit_mm)

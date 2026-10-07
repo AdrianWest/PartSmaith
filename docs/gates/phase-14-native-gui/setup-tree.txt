@@ -1,0 +1,81 @@
+Window: "PartSmith Setup", App: pythonw.exe.
+	0 window PartSmith Setup Secondary Actions: Raise
+		8 pane panel ID: -31993
+			9 pane panel ID: -31992
+			10 pane scrolledpanel ID: -31991
+				11 button Set AI API Key ID: -31990
+				12 text OpenAI: configured ID: -31989
+				13 button Save Session ID: -31988
+				14 button Load Session ID: -31987
+				15 button New / Clear Component ID: -31986
+				16 button Resource Limits ID: -31985
+				17 button Inspect PCB... ID: -31984
+				18 button Select Datasheet ID: -31983
+				19 edit Description: Select a local PDF datasheet ID: -31982
+				20 text Required Part Number ID: -31981
+				21 edit (settable, string) Required Part Number Description: Full manufacturer part number, including suffixes ID: -31980
+				22 check box Send selected Evidence to OpenAI for interpretation ID: -31979
+				23 text OpenAI / gpt-4.1-mini-2025-04-14: selected extracted text and provenance; local OCR. store=false; provider retention follows account terms. API charges paid to OpenAI. Candidates require human review. ID: -31978
+				24 edit (settable, string) OpenAI / gpt-4.1-mini-2025-04-14: selected extracted text and provenance; local OCR. store=false; provider retention follows account terms. API charges paid to OpenAI. Candidates require human review. Value: All Pages ID: -31977
+				25 edit (settable, string) Value: 200
+				26 spinner ID: -31976
+					27 button More ID: MoreButton
+					28 button Less ID: LessButton
+				29 check box Force OCR ID: -31975
+				30 edit (settable, string) Value: eng,deu,chi_sim ID: -31974
+				31 text Pages ID: -31973
+				32 text DPI ID: -31972
+				33 text OCR languages ID: -31971
+				34 button Start ID: -31970
+				35 button (disabled) Cancel ID: -31969
+				36 text Ready ID: -31968
+				37 button (disabled) Open 3D Placement Viewer ID: -31967
+				38 tab ID: -31966
+					39 pane panel ID: -31965
+						40 text No retained extraction ID: -31964
+						41 list No retained extraction ID: -31963
+							42 header Header Control ID: Header
+								43 header item Page ID: HeaderItem 0
+								44 header item Type ID: HeaderItem 1
+								45 header item Status ID: HeaderItem 2
+								46 header item Original text ID: HeaderItem 3
+						47 edit ID: -31962
+							48 scroll bar (disabled, settable, float) Vertical Value: 0 ID: NonClientVerticalScrollBar
+								49 button (disabled) Line up ID: UpButton
+								50 button (disabled) Line down ID: DownButton
+						51 pane panel ID: -31961
+						52 combo box (settable, string) Value: identify_package ID: -31960
+							53 text (settable, string) Value: identify_package
+							54 button Open ID: DropDown
+						55 edit (settable, string) Description: Trusted target paths, comma separated ID: -31959
+						56 button Preview AI Request ID: -31958
+						57 button Send Selected Evidence ID: -31957
+						58 text No AI request selected ID: -31956
+					59 tab item (selectable) Evidence
+					60 tab item (selectable) Conflicts
+					61 tab item (selectable) Component Data
+					62 tab item (selectable) Symbol / Footprint
+					63 tab item (selectable) Validation / Release
+					64 tab item (selectable) Project Libraries
+				65 text Processing Log ID: -31910
+				66 edit Processing Log ID: -31909
+					67 scroll bar (disabled, settable, float) Vertical Value: 0 ID: NonClientVerticalScrollBar
+						68 button (disabled) Line up ID: UpButton
+						69 button (disabled) Line down ID: DownButton
+					70 scroll bar (disabled, settable, float) Horizontal Value: 0 ID: NonClientHorizontalScrollBar
+						71 button (disabled) Column left ID: UpButton
+						72 button (disabled) Column right ID: DownButton
+					73 thumb (disabled)
+				74 scroll bar (settable, float) Vertical Value: 0 ID: NonClientVerticalScrollBar
+					75 button Line up ID: UpButton
+					76 thumb Position ID: ScrollbarThumb
+					77 button Page down ID: DownPageButton
+					78 button Line down ID: DownButton
+		79 title bar (settable, string) Value: PartSmith Setup
+			80 menu bar System ID: MenuBar
+				81 menu item System
+			82 button Minimize
+			83 button Maximize
+			84 button Close
+
+The focused UI element is 9 pane panel ID: -31992.

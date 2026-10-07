@@ -7,6 +7,7 @@ from __future__ import annotations
 
 import json
 import platform
+import subprocess
 import sys
 from hashlib import sha256
 from importlib.metadata import version
@@ -20,6 +21,11 @@ def verify_inventory(root: Path) -> dict:
     @details Ignores bytecode and rejects symlinks and escaping paths.
     """
     inventory = json.loads((root / "inventory.json").read_bytes())
+    if (root / "bundle.json").is_file():
+        from .bundle import verify_bundle
+
+        verify_bundle(root, interpreter=False)
+        return inventory
     from partsmith.integration.policy import ResourcePolicy
 
     from .package import IDENTIFIER, _unique_names
@@ -76,7 +82,44 @@ def readiness(root: Path) -> dict:
         return result
     try:
         result["code"] = "PCM_RESOURCE_CHECK_FAILED"
-        inventory = verify_inventory(root)
+        if (root / "bundle.json").is_file():
+            result["code"] = "BUNDLED_RUNTIME_CHECK_FAILED"
+            from .bundle import verify_bundle
+
+            result["bundle"] = verify_bundle(root)
+            result["code"] = "BUNDLED_OCR_CHECK_FAILED"
+            engine = root / "ocr/bin/tesseract.exe"
+            flags = subprocess.CREATE_NO_WINDOW
+            engine_version = subprocess.check_output(
+                [str(engine), "--version"],
+                text=True,
+                timeout=30,
+                creationflags=flags,
+            ).splitlines()[0]
+            languages = subprocess.check_output(
+                [
+                    str(engine),
+                    "--tessdata-dir",
+                    str(root / "ocr/tessdata"),
+                    "--list-langs",
+                ],
+                text=True,
+                timeout=30,
+                creationflags=flags,
+            ).splitlines()[1:]
+            if engine_version != "tesseract 5.5.1" or set(languages) != {
+                "eng",
+                "deu",
+                "chi_sim",
+            }:
+                return result
+            result["ocr"] = {
+                "version": "5.5.1",
+                "languages": sorted(languages),
+            }
+            inventory = json.loads((root / "inventory.json").read_bytes())
+        else:
+            inventory = verify_inventory(root)
         result["code"] = "PINNED_DEPENDENCY_MISSING_OR_CHANGED"
         pins = {}
         for line in (
@@ -112,6 +155,17 @@ def readiness(root: Path) -> dict:
         from partsmith.release.runtime import runtime_configuration
 
         engineering = runtime_configuration(discover_kicad())
+        if (root / "bundle.json").is_file():
+            import pypdfium2
+            import wx
+
+            from .native import verify_native_origins
+
+            # Force the GUI/PDF native engines into the same closure check.
+            if not wx.VERSION or not pypdfium2.PYPDFIUM_INFO.version:
+                return result
+            result["code"] = "BUNDLED_NATIVE_LIBRARY_CHECK_FAILED"
+            result["native_libraries"] = verify_native_origins(root)
         result.update(
             state="READY",
             code="READY",

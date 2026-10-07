@@ -1,0 +1,26 @@
+{
+  "baseline_commit": "93b3f7a6ef4587c009546a107c07c9d5df7dee22",
+  "checkout_bytes": {
+    "staged_file_byte_mismatches": 0,
+    "state": "PASS"
+  },
+  "new_modified_python_docstrings": {
+    "missing_tag_or_parameter_count": 0,
+    "python_files": 38,
+    "scope": "New/modified implementation and test Python files; archived evidence excluded",
+    "state": "PASS"
+  },
+  "python": "3.12.10",
+  "ruff_check": {
+    "command": ".venv/Scripts/python.exe -m ruff check .",
+    "state": "PASS"
+  },
+  "ruff_format": {
+    "command": ".venv/Scripts/python.exe -m ruff format --check .",
+    "formatted_files": 304,
+    "state": "PASS"
+  },
+  "schema_version": "partsmith-phase14-static-checks-1.0",
+  "scope": "Final implementation code; evidence documents and hash maps finalized separately",
+  "state": "PASS"
+}

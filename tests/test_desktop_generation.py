@@ -15,7 +15,7 @@ from partsmith.gui import generation as generation_module
 from partsmith.gui.generation import generate_session
 from partsmith.gui.processing import Redactor
 from partsmith.gui.session import Session
-from partsmith.pdl import resolve_pdl
+from partsmith.pdl import load_pdl
 from partsmith.process import run_process
 
 
@@ -26,7 +26,7 @@ def ready_session(tmp_path):
     @details No release decision has been made.
     """
     session, review = fielded_session(tmp_path)
-    pdl = resolve_pdl("chip_resistor", "0402", {"1", "2"})
+    pdl = load_pdl("synthetic-0402", "1.0")
     review.bind_pdl(
         pdl.data["id"], pdl.data["revision"], pdl.data["content_sha256"]
     )

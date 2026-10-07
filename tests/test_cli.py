@@ -86,7 +86,10 @@ def test_pdl_inspection_commands(capsys):
 
     """
     assert main(["pdl", "list"]) == 0
-    assert capsys.readouterr().out == "synthetic-0402@1.0\n"
+    catalog = capsys.readouterr().out.splitlines()
+    assert catalog == sorted(catalog)
+    assert "synthetic-0402@1.0" in catalog
+    assert len(catalog) == 9
 
     assert main(["pdl", "inspect", "synthetic-0402"]) == 0
     inspected = json.loads(capsys.readouterr().out)

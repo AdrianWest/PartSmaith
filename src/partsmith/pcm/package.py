@@ -8,7 +8,7 @@ from __future__ import annotations
 import json
 import stat
 import tomllib
-from hashlib import sha256
+from hashlib import file_digest, sha256
 from pathlib import Path, PurePosixPath
 from zipfile import ZIP_STORED, ZipFile, ZipInfo
 
@@ -17,7 +17,7 @@ from jsonschema import Draft7Validator
 from partsmith.integration.policy import ResourcePolicy
 
 IDENTIFIER = "com.boardforgetools.partsmith"
-VERSION = "0.1.11"
+VERSION = "0.1.12"
 INVENTORY = "plugins/inventory.json"
 PCM_ICON = "resources/icon.png"
 PCM_ICON_SHA256 = (
@@ -364,6 +364,18 @@ def verify_pcm(path: Path) -> dict:
     @details Duplicate, encrypted and nonregular members fail closed.
     """
     with ZipFile(path) as archive:
+        try:
+            registration = archive.getinfo("plugins/plugin.json")
+        except KeyError:
+            registration = None
+        if registration is not None:
+            if registration.file_size > 4096:
+                raise ValueError("PCM registration is oversized")
+            plugin = json.loads(archive.read(registration))
+            if plugin.get("runtime") == {"type": "exec"}:
+                from .production import verify_production_pcm
+
+                return verify_production_pcm(path)
         names = archive.namelist()
         _unique_names(names)
         ResourcePolicy().require_sizes(
@@ -390,11 +402,12 @@ def repository_package(archive: Path, url: str) -> dict:
     @details Does not modify the archive or claim a hosted release exists.
     """
     metadata = verify_pcm(archive)
-    blob = archive.read_bytes()
+    with archive.open("rb") as stream:
+        digest = file_digest(stream, "sha256").hexdigest()
     metadata["versions"][0].update(
         download_url=url,
-        download_size=len(blob),
-        download_sha256=sha256(blob).hexdigest(),
+        download_size=archive.stat().st_size,
+        download_sha256=digest,
     )
     with ZipFile(archive) as source:
         schema = json.loads(

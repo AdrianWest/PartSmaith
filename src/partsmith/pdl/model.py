@@ -44,6 +44,9 @@ def _semantic_issues(data: dict) -> list[Issue]:
 
     """
     issues = []
+    from partsmith.pdl.production_rules import production_issues
+
+    issues.extend(production_issues(data))
 
     def add(path: str, code: str, message: str) -> None:
         """

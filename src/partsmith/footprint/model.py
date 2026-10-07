@@ -401,6 +401,38 @@ def _fp_rect(
     )
 
 
+def _courtyard(pdl_data: dict) -> tuple:
+    """@brief Computes the versioned engineering courtyard bounds.
+    @param pdl_data Validated PDL document.
+    @return Minimum X/Y followed by maximum X/Y in native KiCad coordinates.
+    @details PDL 1.1 encloses body and copper with a 0.25 mm fixture margin;
+    historical PDL 1.0 retains its frozen body-only 0.05 mm convention.
+    """
+    body = pdl_data["mechanical"]["body"]
+    x = body["length"]["nominal_mm"] / 2
+    y = body["width"]["nominal_mm"] / 2
+    bounds = [-x, -y, x, y]
+    margin = Decimal("0.05")
+    if pdl_data["schema_version"] == "1.1":
+        margin = Decimal("0.25")
+        for group in pdl_data["land_pattern"]["groups"]:
+            for shape in group["shapes"]:
+                px, py = shape["center_mm"]
+                w, h = shape["size_mm"]
+                bounds = [
+                    min(bounds[0], px - w / 2),
+                    min(bounds[1], -py - h / 2),
+                    max(bounds[2], px + w / 2),
+                    max(bounds[3], -py + h / 2),
+                ]
+    return (
+        bounds[0] - margin,
+        bounds[1] - margin,
+        bounds[2] + margin,
+        bounds[3] + margin,
+    )
+
+
 def serialize_footprint(
     ir: ComponentIR | dict, pdl: PDL, context: FootprintContext
 ) -> GeneratedArtifact:
@@ -412,8 +444,9 @@ def serialize_footprint(
     @param pdl The pdl argument.
     @param context The context argument.
     @return The GeneratedArtifact result.
-    @details Implements the documented behavior without changing the public
-    contract.
+    @details PDL 1.1 explicitly converts engineering upward Y to native KiCad
+    downward Y and encloses the complete body and land pattern in a courtyard.
+    PDL 1.0 bytes preserve their historical serializer convention.
 
     """
 
@@ -439,11 +472,16 @@ def serialize_footprint(
         f"references: {references}; page(s): {pages}"
     )
     tags = f"{data['package']['family']} {data['package']['variant']}"
-    courtyard_margin = Decimal("0.05")
+    courtyard = _courtyard(pdl_data)
+    label_top, label_bottom = Decimal("-1.2"), Decimal("1.2")
+    if pdl_data["schema_version"] == "1.1":
+        label_top, label_bottom = courtyard[1] - 1, courtyard[3] + 1
     pads = []
     for group in land_pattern["groups"]:
         for shape in group["shapes"]:
             x, y = shape["center_mm"]
+            if pdl_data["schema_version"] == "1.1":
+                y = -y
             width, height = shape["size_mm"]
             pad_shape = _pad_shape(shape["shape"])
             pad = [
@@ -473,22 +511,17 @@ def serialize_footprint(
             ],
             f"  (fp_text reference "
             f"{_quote(data['symbol']['reference_prefix'] + '?')} "
-            '(at 0 -1.2) (layer "F.SilkS")',
+            f'(at 0 {_fmt(label_top)}) (layer "F.SilkS")',
             "    (effects (font (size 1 1) (thickness 0.15)))",
             "  )",
-            f'  (fp_text value {_quote(name)} (at 0 1.2) (layer "F.Fab")',
+            f"  (fp_text value {_quote(name)} "
+            f'(at 0 {_fmt(label_bottom)}) (layer "F.Fab")',
             "    (effects (font (size 1 1) (thickness 0.15)))",
             "  )",
             _fp_rect(
                 "F.CrtYd",
-                (
-                    -half_length - courtyard_margin,
-                    -half_width - courtyard_margin,
-                ),
-                (
-                    half_length + courtyard_margin,
-                    half_width + courtyard_margin,
-                ),
+                courtyard[:2],
+                courtyard[2:],
             ),
             _fp_rect(
                 "F.Fab", (-half_length, -half_width), (half_length, half_width)
@@ -562,7 +595,12 @@ def validate_footprint_artifact(
                 (
                     group["terminal_number"],
                     shape_name,
-                    *(str(value) for value in shape["center_mm"]),
+                    str(shape["center_mm"][0]),
+                    str(
+                        -shape["center_mm"][1]
+                        if pdl_data["schema_version"] == "1.1"
+                        else shape["center_mm"][1]
+                    ),
                     *(str(value) for value in shape["size_mm"]),
                     "F.Cu",
                     "F.Paste",
@@ -593,14 +631,7 @@ def validate_footprint_artifact(
             )
         )
 
-    body = pdl_data["mechanical"]["body"]
-    margin = Decimal("0.05")
-    expected_courtyard = (
-        -body["length"]["nominal_mm"] / 2 - margin,
-        -body["width"]["nominal_mm"] / 2 - margin,
-        body["length"]["nominal_mm"] / 2 + margin,
-        body["width"]["nominal_mm"] / 2 + margin,
-    )
+    expected_courtyard = _courtyard(pdl_data)
     courtyard_pattern = re.compile(
         r"\(fp_rect \(start ([-\d.]+) ([-\d.]+)\) "
         r"\(end ([-\d.]+) ([-\d.]+)\).*?"

@@ -1,0 +1,76 @@
+{
+  "inventory_sha256": "f65550f180a5141ab108b23f26207ecb9fa4c22974fe9d0d59f703e0a5e55ffc",
+  "languages": {
+    "chi_sim": {
+      "recognized_words": 319,
+      "result_sha256": "8e89609223242a25bee274767d87b88c36f1c0dbeb0c0d3e895aa7875fea8f11",
+      "state": "PASS"
+    },
+    "deu": {
+      "recognized_words": 369,
+      "result_sha256": "c93d33a5ec9f20db88b641119474bde2d69898e21bca7f366e2b1ee8fb42ac75",
+      "state": "PASS"
+    },
+    "eng": {
+      "recognized_words": 335,
+      "result_sha256": "6392c7288b7719a6e0251cd7bd05e02993b329a9686a709d341472f0041986ac",
+      "state": "PASS"
+    }
+  },
+  "native_libraries": {
+    "owned_modules": [
+      "runtime/_bz2.pyd",
+      "runtime/_ctypes.pyd",
+      "runtime/_decimal.pyd",
+      "runtime/_hashlib.pyd",
+      "runtime/_lzma.pyd",
+      "runtime/_socket.pyd",
+      "runtime/_uuid.pyd",
+      "runtime/_wmi.pyd",
+      "runtime/Lib/site-packages/_cffi_backend.cp312-win_amd64.pyd",
+      "runtime/Lib/site-packages/charset_normalizer/cd.cp312-win_amd64.pyd",
+      "runtime/Lib/site-packages/charset_normalizer/md.cp312-win_amd64.pyd",
+      "runtime/Lib/site-packages/cryptography/hazmat/bindings/_rust.pyd",
+      "runtime/Lib/site-packages/numpy/_core/_multiarray_umath.cp312-win_amd64.pyd",
+      "runtime/Lib/site-packages/numpy/linalg/_umath_linalg.cp312-win_amd64.pyd",
+      "runtime/Lib/site-packages/numpy.libs/libscipy_openblas64_-ed4f167a5330424524f45258e7ca2c8d.dll",
+      "runtime/Lib/site-packages/numpy.libs/msvcp140-a4c2229bdc2a2a630acdc095b4d86008.dll",
+      "runtime/Lib/site-packages/PIL/_imaging.cp312-win_amd64.pyd",
+      "runtime/Lib/site-packages/PIL/_imagingmath.cp312-win_amd64.pyd",
+      "runtime/Lib/site-packages/pypdfium2_raw/pdfium.dll",
+      "runtime/Lib/site-packages/rpds/rpds.cp312-win_amd64.pyd",
+      "runtime/libcrypto-3.dll",
+      "runtime/libffi-8.dll",
+      "runtime/pyexpat.pyd",
+      "runtime/python.exe",
+      "runtime/python3.dll",
+      "runtime/python312.dll",
+      "runtime/select.pyd",
+      "runtime/unicodedata.pyd",
+      "runtime/vcruntime140.dll",
+      "runtime/vcruntime140_1.dll"
+    ],
+    "registered_system_extensions": [
+      {
+        "classification": "REGISTERED_SIGNED_AMSI_PROVIDER",
+        "filename": "mbamsi64.dll",
+        "sha256": "4074719d567557afd6ae87582cdf1c86d79a973945cc0480b0b4d77bf1fed1c6",
+        "size": 4722968
+      },
+      {
+        "classification": "SIGNED_AMSI_REGISTRY_HELPER",
+        "filename": "offreg.dll",
+        "sha256": "8e6c155a97666c8e6a3f9ea95bfc6f6e4f87beac53dd72164aba3ef33ff88db1",
+        "size": 143536
+      }
+    ],
+    "windows_modules": 51
+  },
+  "ocr_version": "tesseract 5.5.1",
+  "raster_sha256": "2d09dd413761c067ccea4b377b526b44ffb75650df3fb6ea9b286b1299254a07",
+  "schema_version": "partsmith-engine-acceptance-1.0",
+  "scope": "Isolated engine execution; host provenance is separate",
+  "source_page": 11,
+  "source_sha256": "ca58e35d83dd8da96ae8d4ac84c163e2f2f8d4e1366370f7abd737ec00531135",
+  "state": "PASS"
+}

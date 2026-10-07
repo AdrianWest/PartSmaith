@@ -872,8 +872,9 @@ class IpcSession:
                         process.join(0.2)
                     if process.is_alive():
                         process.kill()
-                        process.join(0.2)
-                    process.close()
+                        process.join(5)
+                    if not process.is_alive():
+                        process.close()
 
     def read_board(self) -> BoardInspection:
         """@brief Reads actual footprints from the bound expected board.

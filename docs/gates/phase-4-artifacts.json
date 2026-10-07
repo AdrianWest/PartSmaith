@@ -32,7 +32,7 @@
   "packaged_symbol_import_verified": true,
   "sha256": {
     "src/partsmith/symbol/__init__.py": "f0205dde5c013c32318edb337e0ac180812fe1f2e780599f610bcb5755d24c46",
-    "src/partsmith/symbol/model.py": "d6bfc27fcb1cf6c61e926153b4e20eaaca08e0a716433b5b96684d3196da9ac3",
+    "src/partsmith/symbol/model.py": "903a6d0671648c67f7c54db410a9c2035df2bb719aa4a1265a0e7e6ecb702275",
     "tests/test_symbol.py": "2abd72dbc9e27620af53773376bb31375bc67e4d512c6bb1c89d84f0ca7abd85",
     "fixtures/symbol/expected/0402.kicad_sym": "1e68b04c019d5ad5cd20eb03c3ac4d66b9594e1eb6278c80122c4b60670a2b6e",
     "docs/gates/phase-4-tests.xml": "5c8f60f60d14972a7280e16bc8a9bc4fe567569ada59b24faeabe59474fec4b2",

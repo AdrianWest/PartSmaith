@@ -3,6 +3,7 @@
 @details Checks installed launch isolation and deliberate optional PCB access.
 """
 
+import ctypes
 import importlib.util
 import io
 import json
@@ -472,6 +473,34 @@ def test_entry_selection_failure_codes_and_session_cleanup(monkeypatch, case):
         """
         calls.append("show")
 
+    def window_handle():
+        """@brief Supplies the visible-frame native-handle boundary.
+        @return One as an inert handle fixture.
+        @details Does not create or access any native desktop window.
+        """
+        return 1
+
+    def visible(handle):
+        """@brief Models an already-visible setup frame.
+        @param handle Exact inert main-frame handle.
+        @return True for this orchestration-only GUI fixture.
+        @details Real Windows visibility has separate installed GUI evidence.
+        """
+        assert handle == 1
+        return True
+
+    def native_library(name):
+        """@brief Supplies only the expected visibility API boundary.
+        @param name Windows library requested by the entry point.
+        @return Object exposing the inert visibility callback.
+        @details Rejects any unrelated native API access in this unit test.
+        """
+        assert name == "user32"
+        return SimpleNamespace(IsWindowVisible=visible)
+
+    if entry.os.name == "nt":
+        monkeypatch.setattr(ctypes, "WinDLL", native_library)
+
     def loop():
         """@brief Finishes the fake desktop action event loop.
         @return None.
@@ -567,17 +596,19 @@ def test_entry_selection_failure_codes_and_session_cleanup(monkeypatch, case):
             raise RuntimeError("secret-do-not-record")
         return SimpleNamespace(refresh=refresh, close=session.close)
 
-    def frame(inspect_pcb, host_alive):
+    def frame(inspect_pcb, host_alive, recover):
         """@brief Supplies a visible frame or unrelated GUI failure.
         @return Frame double exposing Show.
         @param inspect_pcb Deliberate callback registered without invocation.
         @param host_alive Exact launching-host lifetime callback.
+        @param recover Normal startup's deliberate session-recovery behavior.
         @details Raw failure messages must not be persisted by the action.
         """
         if case == "gui":
             raise RuntimeError("secret-do-not-record")
+        assert recover is True
         ui["inspect"] = inspect_pcb
-        ui["frame"] = SimpleNamespace(Show=show)
+        ui["frame"] = SimpleNamespace(Show=show, GetHandle=window_handle)
         return ui["frame"]
 
     def raise_inspector():

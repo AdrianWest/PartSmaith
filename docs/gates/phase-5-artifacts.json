@@ -34,7 +34,7 @@
   "packaged_footprint_import_verified": true,
   "sha256": {
     "src/partsmith/footprint/__init__.py": "1e875df185d78e80e1dcdbee8fe1d36d7009609857e119b999e45f19b803215b",
-    "src/partsmith/footprint/model.py": "936436661f10d10002d80fb3857e05269af0e0d965de371d62fbd27ad020470a",
+    "src/partsmith/footprint/model.py": "d35e31afcab8481d285d81333fb41b764d7fbd874c978c1e366b2efad183767b",
     "tests/test_footprint.py": "4ad1691b23ac97fbe481f8aa0a80e96e73fcb776382835ab2d3a0ab4ff2ea987",
     "fixtures/footprint/expected/0402.kicad_mod": "7d250cb886b21f3b40088cd884e3892bb585185ee05c718160a147b16077da54",
     "fixtures/ir/v1.2/valid/0402.json": "ff8f8697ef789b694123385a73777787ec16b1b8ebb8d9c9fd590cc4078a1063",

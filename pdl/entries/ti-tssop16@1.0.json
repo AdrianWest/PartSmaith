@@ -1,0 +1,2444 @@
+{
+  "schema_version": "1.1",
+  "id": "ti-tssop16",
+  "revision": "1.0",
+  "effective_date": "2026-10-07",
+  "validation_status": "APPROVED",
+  "content_sha256": "9c15d01c881a6b780c2203baa827bf1fe018c3cd396fae2258e5ec68576dec18",
+  "release_profile": {
+    "id": "mvp-1",
+    "version": "1.1",
+    "sha256": "4fd985b0dda18fdc2bdb0bcd7f64bb36492fa3b19b2a0de29c181d2508b8764f"
+  },
+  "identity": {
+    "family": "small_outline_ic",
+    "variant": "TSSOP-16",
+    "scope": "MANUFACTURER_SPECIFIC",
+    "manufacturer": "Texas Instruments",
+    "manufacturer_package_code": "PW0016A",
+    "peripheral_lead_count": 16,
+    "exposed_terminal_count": 0,
+    "pin_count": 16
+  },
+  "mechanical": {
+    "body": {
+      "length": {
+        "nominal_mm": 4.4,
+        "minimum_mm": 4.3,
+        "maximum_mm": 4.5,
+        "source_ids": [
+          "SRC-MANUFACTURER"
+        ]
+      },
+      "width": {
+        "nominal_mm": 5,
+        "minimum_mm": 4.9,
+        "maximum_mm": 5.1,
+        "source_ids": [
+          "SRC-MANUFACTURER"
+        ]
+      },
+      "height": {
+        "nominal_mm": 1.1,
+        "minimum_mm": 1.1,
+        "maximum_mm": 1.1,
+        "source_ids": [
+          "SRC-MODEL-POLICY"
+        ]
+      }
+    },
+    "terminal": {
+      "length": {
+        "nominal_mm": 1,
+        "minimum_mm": 1,
+        "maximum_mm": 1,
+        "source_ids": [
+          "SRC-MODEL-POLICY"
+        ]
+      },
+      "width": {
+        "nominal_mm": 0.235,
+        "minimum_mm": 0.235,
+        "maximum_mm": 0.235,
+        "source_ids": [
+          "SRC-MODEL-POLICY"
+        ]
+      },
+      "height": {
+        "nominal_mm": 0.5,
+        "minimum_mm": 0.5,
+        "maximum_mm": 0.5,
+        "source_ids": [
+          "SRC-MODEL-POLICY"
+        ]
+      }
+    },
+    "terminals": [
+      {
+        "terminal_id": "T-1",
+        "length": {
+          "nominal_mm": 1,
+          "minimum_mm": 1,
+          "maximum_mm": 1,
+          "source_ids": [
+            "SRC-MODEL-POLICY"
+          ]
+        },
+        "width": {
+          "nominal_mm": 0.235,
+          "minimum_mm": 0.235,
+          "maximum_mm": 0.235,
+          "source_ids": [
+            "SRC-MODEL-POLICY"
+          ]
+        },
+        "height": {
+          "nominal_mm": 0.5,
+          "minimum_mm": 0.5,
+          "maximum_mm": 0.5,
+          "source_ids": [
+            "SRC-MODEL-POLICY"
+          ]
+        }
+      },
+      {
+        "terminal_id": "T-2",
+        "length": {
+          "nominal_mm": 1,
+          "minimum_mm": 1,
+          "maximum_mm": 1,
+          "source_ids": [
+            "SRC-MODEL-POLICY"
+          ]
+        },
+        "width": {
+          "nominal_mm": 0.235,
+          "minimum_mm": 0.235,
+          "maximum_mm": 0.235,
+          "source_ids": [
+            "SRC-MODEL-POLICY"
+          ]
+        },
+        "height": {
+          "nominal_mm": 0.5,
+          "minimum_mm": 0.5,
+          "maximum_mm": 0.5,
+          "source_ids": [
+            "SRC-MODEL-POLICY"
+          ]
+        }
+      },
+      {
+        "terminal_id": "T-3",
+        "length": {
+          "nominal_mm": 1,
+          "minimum_mm": 1,
+          "maximum_mm": 1,
+          "source_ids": [
+            "SRC-MODEL-POLICY"
+          ]
+        },
+        "width": {
+          "nominal_mm": 0.235,
+          "minimum_mm": 0.235,
+          "maximum_mm": 0.235,
+          "source_ids": [
+            "SRC-MODEL-POLICY"
+          ]
+        },
+        "height": {
+          "nominal_mm": 0.5,
+          "minimum_mm": 0.5,
+          "maximum_mm": 0.5,
+          "source_ids": [
+            "SRC-MODEL-POLICY"
+          ]
+        }
+      },
+      {
+        "terminal_id": "T-4",
+        "length": {
+          "nominal_mm": 1,
+          "minimum_mm": 1,
+          "maximum_mm": 1,
+          "source_ids": [
+            "SRC-MODEL-POLICY"
+          ]
+        },
+        "width": {
+          "nominal_mm": 0.235,
+          "minimum_mm": 0.235,
+          "maximum_mm": 0.235,
+          "source_ids": [
+            "SRC-MODEL-POLICY"
+          ]
+        },
+        "height": {
+          "nominal_mm": 0.5,
+          "minimum_mm": 0.5,
+          "maximum_mm": 0.5,
+          "source_ids": [
+            "SRC-MODEL-POLICY"
+          ]
+        }
+      },
+      {
+        "terminal_id": "T-5",
+        "length": {
+          "nominal_mm": 1,
+          "minimum_mm": 1,
+          "maximum_mm": 1,
+          "source_ids": [
+            "SRC-MODEL-POLICY"
+          ]
+        },
+        "width": {
+          "nominal_mm": 0.235,
+          "minimum_mm": 0.235,
+          "maximum_mm": 0.235,
+          "source_ids": [
+            "SRC-MODEL-POLICY"
+          ]
+        },
+        "height": {
+          "nominal_mm": 0.5,
+          "minimum_mm": 0.5,
+          "maximum_mm": 0.5,
+          "source_ids": [
+            "SRC-MODEL-POLICY"
+          ]
+        }
+      },
+      {
+        "terminal_id": "T-6",
+        "length": {
+          "nominal_mm": 1,
+          "minimum_mm": 1,
+          "maximum_mm": 1,
+          "source_ids": [
+            "SRC-MODEL-POLICY"
+          ]
+        },
+        "width": {
+          "nominal_mm": 0.235,
+          "minimum_mm": 0.235,
+          "maximum_mm": 0.235,
+          "source_ids": [
+            "SRC-MODEL-POLICY"
+          ]
+        },
+        "height": {
+          "nominal_mm": 0.5,
+          "minimum_mm": 0.5,
+          "maximum_mm": 0.5,
+          "source_ids": [
+            "SRC-MODEL-POLICY"
+          ]
+        }
+      },
+      {
+        "terminal_id": "T-7",
+        "length": {
+          "nominal_mm": 1,
+          "minimum_mm": 1,
+          "maximum_mm": 1,
+          "source_ids": [
+            "SRC-MODEL-POLICY"
+          ]
+        },
+        "width": {
+          "nominal_mm": 0.235,
+          "minimum_mm": 0.235,
+          "maximum_mm": 0.235,
+          "source_ids": [
+            "SRC-MODEL-POLICY"
+          ]
+        },
+        "height": {
+          "nominal_mm": 0.5,
+          "minimum_mm": 0.5,
+          "maximum_mm": 0.5,
+          "source_ids": [
+            "SRC-MODEL-POLICY"
+          ]
+        }
+      },
+      {
+        "terminal_id": "T-8",
+        "length": {
+          "nominal_mm": 1,
+          "minimum_mm": 1,
+          "maximum_mm": 1,
+          "source_ids": [
+            "SRC-MODEL-POLICY"
+          ]
+        },
+        "width": {
+          "nominal_mm": 0.235,
+          "minimum_mm": 0.235,
+          "maximum_mm": 0.235,
+          "source_ids": [
+            "SRC-MODEL-POLICY"
+          ]
+        },
+        "height": {
+          "nominal_mm": 0.5,
+          "minimum_mm": 0.5,
+          "maximum_mm": 0.5,
+          "source_ids": [
+            "SRC-MODEL-POLICY"
+          ]
+        }
+      },
+      {
+        "terminal_id": "T-9",
+        "length": {
+          "nominal_mm": 1,
+          "minimum_mm": 1,
+          "maximum_mm": 1,
+          "source_ids": [
+            "SRC-MODEL-POLICY"
+          ]
+        },
+        "width": {
+          "nominal_mm": 0.235,
+          "minimum_mm": 0.235,
+          "maximum_mm": 0.235,
+          "source_ids": [
+            "SRC-MODEL-POLICY"
+          ]
+        },
+        "height": {
+          "nominal_mm": 0.5,
+          "minimum_mm": 0.5,
+          "maximum_mm": 0.5,
+          "source_ids": [
+            "SRC-MODEL-POLICY"
+          ]
+        }
+      },
+      {
+        "terminal_id": "T-10",
+        "length": {
+          "nominal_mm": 1,
+          "minimum_mm": 1,
+          "maximum_mm": 1,
+          "source_ids": [
+            "SRC-MODEL-POLICY"
+          ]
+        },
+        "width": {
+          "nominal_mm": 0.235,
+          "minimum_mm": 0.235,
+          "maximum_mm": 0.235,
+          "source_ids": [
+            "SRC-MODEL-POLICY"
+          ]
+        },
+        "height": {
+          "nominal_mm": 0.5,
+          "minimum_mm": 0.5,
+          "maximum_mm": 0.5,
+          "source_ids": [
+            "SRC-MODEL-POLICY"
+          ]
+        }
+      },
+      {
+        "terminal_id": "T-11",
+        "length": {
+          "nominal_mm": 1,
+          "minimum_mm": 1,
+          "maximum_mm": 1,
+          "source_ids": [
+            "SRC-MODEL-POLICY"
+          ]
+        },
+        "width": {
+          "nominal_mm": 0.235,
+          "minimum_mm": 0.235,
+          "maximum_mm": 0.235,
+          "source_ids": [
+            "SRC-MODEL-POLICY"
+          ]
+        },
+        "height": {
+          "nominal_mm": 0.5,
+          "minimum_mm": 0.5,
+          "maximum_mm": 0.5,
+          "source_ids": [
+            "SRC-MODEL-POLICY"
+          ]
+        }
+      },
+      {
+        "terminal_id": "T-12",
+        "length": {
+          "nominal_mm": 1,
+          "minimum_mm": 1,
+          "maximum_mm": 1,
+          "source_ids": [
+            "SRC-MODEL-POLICY"
+          ]
+        },
+        "width": {
+          "nominal_mm": 0.235,
+          "minimum_mm": 0.235,
+          "maximum_mm": 0.235,
+          "source_ids": [
+            "SRC-MODEL-POLICY"
+          ]
+        },
+        "height": {
+          "nominal_mm": 0.5,
+          "minimum_mm": 0.5,
+          "maximum_mm": 0.5,
+          "source_ids": [
+            "SRC-MODEL-POLICY"
+          ]
+        }
+      },
+      {
+        "terminal_id": "T-13",
+        "length": {
+          "nominal_mm": 1,
+          "minimum_mm": 1,
+          "maximum_mm": 1,
+          "source_ids": [
+            "SRC-MODEL-POLICY"
+          ]
+        },
+        "width": {
+          "nominal_mm": 0.235,
+          "minimum_mm": 0.235,
+          "maximum_mm": 0.235,
+          "source_ids": [
+            "SRC-MODEL-POLICY"
+          ]
+        },
+        "height": {
+          "nominal_mm": 0.5,
+          "minimum_mm": 0.5,
+          "maximum_mm": 0.5,
+          "source_ids": [
+            "SRC-MODEL-POLICY"
+          ]
+        }
+      },
+      {
+        "terminal_id": "T-14",
+        "length": {
+          "nominal_mm": 1,
+          "minimum_mm": 1,
+          "maximum_mm": 1,
+          "source_ids": [
+            "SRC-MODEL-POLICY"
+          ]
+        },
+        "width": {
+          "nominal_mm": 0.235,
+          "minimum_mm": 0.235,
+          "maximum_mm": 0.235,
+          "source_ids": [
+            "SRC-MODEL-POLICY"
+          ]
+        },
+        "height": {
+          "nominal_mm": 0.5,
+          "minimum_mm": 0.5,
+          "maximum_mm": 0.5,
+          "source_ids": [
+            "SRC-MODEL-POLICY"
+          ]
+        }
+      },
+      {
+        "terminal_id": "T-15",
+        "length": {
+          "nominal_mm": 1,
+          "minimum_mm": 1,
+          "maximum_mm": 1,
+          "source_ids": [
+            "SRC-MODEL-POLICY"
+          ]
+        },
+        "width": {
+          "nominal_mm": 0.235,
+          "minimum_mm": 0.235,
+          "maximum_mm": 0.235,
+          "source_ids": [
+            "SRC-MODEL-POLICY"
+          ]
+        },
+        "height": {
+          "nominal_mm": 0.5,
+          "minimum_mm": 0.5,
+          "maximum_mm": 0.5,
+          "source_ids": [
+            "SRC-MODEL-POLICY"
+          ]
+        }
+      },
+      {
+        "terminal_id": "T-16",
+        "length": {
+          "nominal_mm": 1,
+          "minimum_mm": 1,
+          "maximum_mm": 1,
+          "source_ids": [
+            "SRC-MODEL-POLICY"
+          ]
+        },
+        "width": {
+          "nominal_mm": 0.235,
+          "minimum_mm": 0.235,
+          "maximum_mm": 0.235,
+          "source_ids": [
+            "SRC-MODEL-POLICY"
+          ]
+        },
+        "height": {
+          "nominal_mm": 0.5,
+          "minimum_mm": 0.5,
+          "maximum_mm": 0.5,
+          "source_ids": [
+            "SRC-MODEL-POLICY"
+          ]
+        }
+      }
+    ]
+  },
+  "topology": {
+    "pitch_mm": 0.65,
+    "numbering": "COUNTER_CLOCKWISE",
+    "pin1_location": "WEST",
+    "stagger": false,
+    "sides": {
+      "north": 0,
+      "east": 8,
+      "south": 0,
+      "west": 8,
+      "center": 0
+    },
+    "terminals": [
+      {
+        "id": "T-1",
+        "number": "1",
+        "kind": "PERIPHERAL",
+        "side": "west",
+        "topology_index": 0,
+        "group_id": "G-1"
+      },
+      {
+        "id": "T-2",
+        "number": "2",
+        "kind": "PERIPHERAL",
+        "side": "west",
+        "topology_index": 1,
+        "group_id": "G-2"
+      },
+      {
+        "id": "T-3",
+        "number": "3",
+        "kind": "PERIPHERAL",
+        "side": "west",
+        "topology_index": 2,
+        "group_id": "G-3"
+      },
+      {
+        "id": "T-4",
+        "number": "4",
+        "kind": "PERIPHERAL",
+        "side": "west",
+        "topology_index": 3,
+        "group_id": "G-4"
+      },
+      {
+        "id": "T-5",
+        "number": "5",
+        "kind": "PERIPHERAL",
+        "side": "west",
+        "topology_index": 4,
+        "group_id": "G-5"
+      },
+      {
+        "id": "T-6",
+        "number": "6",
+        "kind": "PERIPHERAL",
+        "side": "west",
+        "topology_index": 5,
+        "group_id": "G-6"
+      },
+      {
+        "id": "T-7",
+        "number": "7",
+        "kind": "PERIPHERAL",
+        "side": "west",
+        "topology_index": 6,
+        "group_id": "G-7"
+      },
+      {
+        "id": "T-8",
+        "number": "8",
+        "kind": "PERIPHERAL",
+        "side": "west",
+        "topology_index": 7,
+        "group_id": "G-8"
+      },
+      {
+        "id": "T-9",
+        "number": "9",
+        "kind": "PERIPHERAL",
+        "side": "east",
+        "topology_index": 0,
+        "group_id": "G-9"
+      },
+      {
+        "id": "T-10",
+        "number": "10",
+        "kind": "PERIPHERAL",
+        "side": "east",
+        "topology_index": 1,
+        "group_id": "G-10"
+      },
+      {
+        "id": "T-11",
+        "number": "11",
+        "kind": "PERIPHERAL",
+        "side": "east",
+        "topology_index": 2,
+        "group_id": "G-11"
+      },
+      {
+        "id": "T-12",
+        "number": "12",
+        "kind": "PERIPHERAL",
+        "side": "east",
+        "topology_index": 3,
+        "group_id": "G-12"
+      },
+      {
+        "id": "T-13",
+        "number": "13",
+        "kind": "PERIPHERAL",
+        "side": "east",
+        "topology_index": 4,
+        "group_id": "G-13"
+      },
+      {
+        "id": "T-14",
+        "number": "14",
+        "kind": "PERIPHERAL",
+        "side": "east",
+        "topology_index": 5,
+        "group_id": "G-14"
+      },
+      {
+        "id": "T-15",
+        "number": "15",
+        "kind": "PERIPHERAL",
+        "side": "east",
+        "topology_index": 6,
+        "group_id": "G-15"
+      },
+      {
+        "id": "T-16",
+        "number": "16",
+        "kind": "PERIPHERAL",
+        "side": "east",
+        "topology_index": 7,
+        "group_id": "G-16"
+      }
+    ]
+  },
+  "land_pattern": {
+    "source": "MANUFACTURER_RECOMMENDED",
+    "groups": [
+      {
+        "id": "G-1",
+        "terminal_number": "1",
+        "shapes": [
+          {
+            "id": "PAD-1",
+            "shape": "RECT",
+            "center_mm": [
+              -2.9,
+              2.275
+            ],
+            "size_mm": [
+              1.5,
+              0.45
+            ]
+          }
+        ]
+      },
+      {
+        "id": "G-2",
+        "terminal_number": "2",
+        "shapes": [
+          {
+            "id": "PAD-2",
+            "shape": "RECT",
+            "center_mm": [
+              -2.9,
+              1.625
+            ],
+            "size_mm": [
+              1.5,
+              0.45
+            ]
+          }
+        ]
+      },
+      {
+        "id": "G-3",
+        "terminal_number": "3",
+        "shapes": [
+          {
+            "id": "PAD-3",
+            "shape": "RECT",
+            "center_mm": [
+              -2.9,
+              0.9749999999999999
+            ],
+            "size_mm": [
+              1.5,
+              0.45
+            ]
+          }
+        ]
+      },
+      {
+        "id": "G-4",
+        "terminal_number": "4",
+        "shapes": [
+          {
+            "id": "PAD-4",
+            "shape": "RECT",
+            "center_mm": [
+              -2.9,
+              0.32499999999999973
+            ],
+            "size_mm": [
+              1.5,
+              0.45
+            ]
+          }
+        ]
+      },
+      {
+        "id": "G-5",
+        "terminal_number": "5",
+        "shapes": [
+          {
+            "id": "PAD-5",
+            "shape": "RECT",
+            "center_mm": [
+              -2.9,
+              -0.3250000000000002
+            ],
+            "size_mm": [
+              1.5,
+              0.45
+            ]
+          }
+        ]
+      },
+      {
+        "id": "G-6",
+        "terminal_number": "6",
+        "shapes": [
+          {
+            "id": "PAD-6",
+            "shape": "RECT",
+            "center_mm": [
+              -2.9,
+              -0.9750000000000001
+            ],
+            "size_mm": [
+              1.5,
+              0.45
+            ]
+          }
+        ]
+      },
+      {
+        "id": "G-7",
+        "terminal_number": "7",
+        "shapes": [
+          {
+            "id": "PAD-7",
+            "shape": "RECT",
+            "center_mm": [
+              -2.9,
+              -1.6250000000000004
+            ],
+            "size_mm": [
+              1.5,
+              0.45
+            ]
+          }
+        ]
+      },
+      {
+        "id": "G-8",
+        "terminal_number": "8",
+        "shapes": [
+          {
+            "id": "PAD-8",
+            "shape": "RECT",
+            "center_mm": [
+              -2.9,
+              -2.275
+            ],
+            "size_mm": [
+              1.5,
+              0.45
+            ]
+          }
+        ]
+      },
+      {
+        "id": "G-9",
+        "terminal_number": "9",
+        "shapes": [
+          {
+            "id": "PAD-9",
+            "shape": "RECT",
+            "center_mm": [
+              2.9,
+              -2.275
+            ],
+            "size_mm": [
+              1.5,
+              0.45
+            ]
+          }
+        ]
+      },
+      {
+        "id": "G-10",
+        "terminal_number": "10",
+        "shapes": [
+          {
+            "id": "PAD-10",
+            "shape": "RECT",
+            "center_mm": [
+              2.9,
+              -1.625
+            ],
+            "size_mm": [
+              1.5,
+              0.45
+            ]
+          }
+        ]
+      },
+      {
+        "id": "G-11",
+        "terminal_number": "11",
+        "shapes": [
+          {
+            "id": "PAD-11",
+            "shape": "RECT",
+            "center_mm": [
+              2.9,
+              -0.9749999999999999
+            ],
+            "size_mm": [
+              1.5,
+              0.45
+            ]
+          }
+        ]
+      },
+      {
+        "id": "G-12",
+        "terminal_number": "12",
+        "shapes": [
+          {
+            "id": "PAD-12",
+            "shape": "RECT",
+            "center_mm": [
+              2.9,
+              -0.32499999999999973
+            ],
+            "size_mm": [
+              1.5,
+              0.45
+            ]
+          }
+        ]
+      },
+      {
+        "id": "G-13",
+        "terminal_number": "13",
+        "shapes": [
+          {
+            "id": "PAD-13",
+            "shape": "RECT",
+            "center_mm": [
+              2.9,
+              0.3250000000000002
+            ],
+            "size_mm": [
+              1.5,
+              0.45
+            ]
+          }
+        ]
+      },
+      {
+        "id": "G-14",
+        "terminal_number": "14",
+        "shapes": [
+          {
+            "id": "PAD-14",
+            "shape": "RECT",
+            "center_mm": [
+              2.9,
+              0.9750000000000001
+            ],
+            "size_mm": [
+              1.5,
+              0.45
+            ]
+          }
+        ]
+      },
+      {
+        "id": "G-15",
+        "terminal_number": "15",
+        "shapes": [
+          {
+            "id": "PAD-15",
+            "shape": "RECT",
+            "center_mm": [
+              2.9,
+              1.6250000000000004
+            ],
+            "size_mm": [
+              1.5,
+              0.45
+            ]
+          }
+        ]
+      },
+      {
+        "id": "G-16",
+        "terminal_number": "16",
+        "shapes": [
+          {
+            "id": "PAD-16",
+            "shape": "RECT",
+            "center_mm": [
+              2.9,
+              2.275
+            ],
+            "size_mm": [
+              1.5,
+              0.45
+            ]
+          }
+        ]
+      }
+    ],
+    "non_electrical_features": []
+  },
+  "model_3d": {
+    "body_strategy": "MOLDED_BODY",
+    "lead_strategy": "GULL_WING",
+    "marker_strategy": "PIN1_RECESS",
+    "lead_profiles": [
+      {
+        "terminal_id": "T-1",
+        "points_mm": [
+          [
+            -0.5,
+            0.25
+          ],
+          [
+            -0.3,
+            0.25
+          ],
+          [
+            0.15000000000000002,
+            -0.1
+          ],
+          [
+            0.5,
+            -0.1
+          ],
+          [
+            0.5,
+            -0.25
+          ],
+          [
+            0.0,
+            -0.25
+          ],
+          [
+            -0.42,
+            0.1
+          ],
+          [
+            -0.5,
+            0.1
+          ]
+        ],
+        "width_mm": 0.235,
+        "rotation_deg": 180
+      },
+      {
+        "terminal_id": "T-2",
+        "points_mm": [
+          [
+            -0.5,
+            0.25
+          ],
+          [
+            -0.3,
+            0.25
+          ],
+          [
+            0.15000000000000002,
+            -0.1
+          ],
+          [
+            0.5,
+            -0.1
+          ],
+          [
+            0.5,
+            -0.25
+          ],
+          [
+            0.0,
+            -0.25
+          ],
+          [
+            -0.42,
+            0.1
+          ],
+          [
+            -0.5,
+            0.1
+          ]
+        ],
+        "width_mm": 0.235,
+        "rotation_deg": 180
+      },
+      {
+        "terminal_id": "T-3",
+        "points_mm": [
+          [
+            -0.5,
+            0.25
+          ],
+          [
+            -0.3,
+            0.25
+          ],
+          [
+            0.15000000000000002,
+            -0.1
+          ],
+          [
+            0.5,
+            -0.1
+          ],
+          [
+            0.5,
+            -0.25
+          ],
+          [
+            0.0,
+            -0.25
+          ],
+          [
+            -0.42,
+            0.1
+          ],
+          [
+            -0.5,
+            0.1
+          ]
+        ],
+        "width_mm": 0.235,
+        "rotation_deg": 180
+      },
+      {
+        "terminal_id": "T-4",
+        "points_mm": [
+          [
+            -0.5,
+            0.25
+          ],
+          [
+            -0.3,
+            0.25
+          ],
+          [
+            0.15000000000000002,
+            -0.1
+          ],
+          [
+            0.5,
+            -0.1
+          ],
+          [
+            0.5,
+            -0.25
+          ],
+          [
+            0.0,
+            -0.25
+          ],
+          [
+            -0.42,
+            0.1
+          ],
+          [
+            -0.5,
+            0.1
+          ]
+        ],
+        "width_mm": 0.235,
+        "rotation_deg": 180
+      },
+      {
+        "terminal_id": "T-5",
+        "points_mm": [
+          [
+            -0.5,
+            0.25
+          ],
+          [
+            -0.3,
+            0.25
+          ],
+          [
+            0.15000000000000002,
+            -0.1
+          ],
+          [
+            0.5,
+            -0.1
+          ],
+          [
+            0.5,
+            -0.25
+          ],
+          [
+            0.0,
+            -0.25
+          ],
+          [
+            -0.42,
+            0.1
+          ],
+          [
+            -0.5,
+            0.1
+          ]
+        ],
+        "width_mm": 0.235,
+        "rotation_deg": 180
+      },
+      {
+        "terminal_id": "T-6",
+        "points_mm": [
+          [
+            -0.5,
+            0.25
+          ],
+          [
+            -0.3,
+            0.25
+          ],
+          [
+            0.15000000000000002,
+            -0.1
+          ],
+          [
+            0.5,
+            -0.1
+          ],
+          [
+            0.5,
+            -0.25
+          ],
+          [
+            0.0,
+            -0.25
+          ],
+          [
+            -0.42,
+            0.1
+          ],
+          [
+            -0.5,
+            0.1
+          ]
+        ],
+        "width_mm": 0.235,
+        "rotation_deg": 180
+      },
+      {
+        "terminal_id": "T-7",
+        "points_mm": [
+          [
+            -0.5,
+            0.25
+          ],
+          [
+            -0.3,
+            0.25
+          ],
+          [
+            0.15000000000000002,
+            -0.1
+          ],
+          [
+            0.5,
+            -0.1
+          ],
+          [
+            0.5,
+            -0.25
+          ],
+          [
+            0.0,
+            -0.25
+          ],
+          [
+            -0.42,
+            0.1
+          ],
+          [
+            -0.5,
+            0.1
+          ]
+        ],
+        "width_mm": 0.235,
+        "rotation_deg": 180
+      },
+      {
+        "terminal_id": "T-8",
+        "points_mm": [
+          [
+            -0.5,
+            0.25
+          ],
+          [
+            -0.3,
+            0.25
+          ],
+          [
+            0.15000000000000002,
+            -0.1
+          ],
+          [
+            0.5,
+            -0.1
+          ],
+          [
+            0.5,
+            -0.25
+          ],
+          [
+            0.0,
+            -0.25
+          ],
+          [
+            -0.42,
+            0.1
+          ],
+          [
+            -0.5,
+            0.1
+          ]
+        ],
+        "width_mm": 0.235,
+        "rotation_deg": 180
+      },
+      {
+        "terminal_id": "T-9",
+        "points_mm": [
+          [
+            -0.5,
+            0.25
+          ],
+          [
+            -0.3,
+            0.25
+          ],
+          [
+            0.15000000000000002,
+            -0.1
+          ],
+          [
+            0.5,
+            -0.1
+          ],
+          [
+            0.5,
+            -0.25
+          ],
+          [
+            0.0,
+            -0.25
+          ],
+          [
+            -0.42,
+            0.1
+          ],
+          [
+            -0.5,
+            0.1
+          ]
+        ],
+        "width_mm": 0.235,
+        "rotation_deg": 0
+      },
+      {
+        "terminal_id": "T-10",
+        "points_mm": [
+          [
+            -0.5,
+            0.25
+          ],
+          [
+            -0.3,
+            0.25
+          ],
+          [
+            0.15000000000000002,
+            -0.1
+          ],
+          [
+            0.5,
+            -0.1
+          ],
+          [
+            0.5,
+            -0.25
+          ],
+          [
+            0.0,
+            -0.25
+          ],
+          [
+            -0.42,
+            0.1
+          ],
+          [
+            -0.5,
+            0.1
+          ]
+        ],
+        "width_mm": 0.235,
+        "rotation_deg": 0
+      },
+      {
+        "terminal_id": "T-11",
+        "points_mm": [
+          [
+            -0.5,
+            0.25
+          ],
+          [
+            -0.3,
+            0.25
+          ],
+          [
+            0.15000000000000002,
+            -0.1
+          ],
+          [
+            0.5,
+            -0.1
+          ],
+          [
+            0.5,
+            -0.25
+          ],
+          [
+            0.0,
+            -0.25
+          ],
+          [
+            -0.42,
+            0.1
+          ],
+          [
+            -0.5,
+            0.1
+          ]
+        ],
+        "width_mm": 0.235,
+        "rotation_deg": 0
+      },
+      {
+        "terminal_id": "T-12",
+        "points_mm": [
+          [
+            -0.5,
+            0.25
+          ],
+          [
+            -0.3,
+            0.25
+          ],
+          [
+            0.15000000000000002,
+            -0.1
+          ],
+          [
+            0.5,
+            -0.1
+          ],
+          [
+            0.5,
+            -0.25
+          ],
+          [
+            0.0,
+            -0.25
+          ],
+          [
+            -0.42,
+            0.1
+          ],
+          [
+            -0.5,
+            0.1
+          ]
+        ],
+        "width_mm": 0.235,
+        "rotation_deg": 0
+      },
+      {
+        "terminal_id": "T-13",
+        "points_mm": [
+          [
+            -0.5,
+            0.25
+          ],
+          [
+            -0.3,
+            0.25
+          ],
+          [
+            0.15000000000000002,
+            -0.1
+          ],
+          [
+            0.5,
+            -0.1
+          ],
+          [
+            0.5,
+            -0.25
+          ],
+          [
+            0.0,
+            -0.25
+          ],
+          [
+            -0.42,
+            0.1
+          ],
+          [
+            -0.5,
+            0.1
+          ]
+        ],
+        "width_mm": 0.235,
+        "rotation_deg": 0
+      },
+      {
+        "terminal_id": "T-14",
+        "points_mm": [
+          [
+            -0.5,
+            0.25
+          ],
+          [
+            -0.3,
+            0.25
+          ],
+          [
+            0.15000000000000002,
+            -0.1
+          ],
+          [
+            0.5,
+            -0.1
+          ],
+          [
+            0.5,
+            -0.25
+          ],
+          [
+            0.0,
+            -0.25
+          ],
+          [
+            -0.42,
+            0.1
+          ],
+          [
+            -0.5,
+            0.1
+          ]
+        ],
+        "width_mm": 0.235,
+        "rotation_deg": 0
+      },
+      {
+        "terminal_id": "T-15",
+        "points_mm": [
+          [
+            -0.5,
+            0.25
+          ],
+          [
+            -0.3,
+            0.25
+          ],
+          [
+            0.15000000000000002,
+            -0.1
+          ],
+          [
+            0.5,
+            -0.1
+          ],
+          [
+            0.5,
+            -0.25
+          ],
+          [
+            0.0,
+            -0.25
+          ],
+          [
+            -0.42,
+            0.1
+          ],
+          [
+            -0.5,
+            0.1
+          ]
+        ],
+        "width_mm": 0.235,
+        "rotation_deg": 0
+      },
+      {
+        "terminal_id": "T-16",
+        "points_mm": [
+          [
+            -0.5,
+            0.25
+          ],
+          [
+            -0.3,
+            0.25
+          ],
+          [
+            0.15000000000000002,
+            -0.1
+          ],
+          [
+            0.5,
+            -0.1
+          ],
+          [
+            0.5,
+            -0.25
+          ],
+          [
+            0.0,
+            -0.25
+          ],
+          [
+            -0.42,
+            0.1
+          ],
+          [
+            -0.5,
+            0.1
+          ]
+        ],
+        "width_mm": 0.235,
+        "rotation_deg": 0
+      }
+    ],
+    "geometry_basis": "Top-view numbering and recommended land pattern come from the cited pages. Unspecified nominal body height is a fixed representative envelope below the maximum seated height, subtracting selected standoff. Gull-wing bend elevation, index recess radius/depth and flat body styling are explicit rendering choices, not manufacturer tolerances. Index recess indicates the documented pin-one area. No JEDEC variation or electrical behavior beyond the pin table is inferred.",
+    "pin1_marker": {
+      "center_mm": [
+        -1.54,
+        1.75,
+        1.1400000000000001
+      ],
+      "radius_mm": 0.15,
+      "depth_mm": 0.06
+    }
+  },
+  "coordinate_system": {
+    "origin": "PACKAGE_REFERENCE_CENTER",
+    "x_positive": "RIGHT",
+    "y_positive": "UP",
+    "z_positive": "AWAY_FROM_PCB",
+    "units": "mm",
+    "convention_version": "1.1"
+  },
+  "reference_features": [
+    {
+      "id": "BODY-CENTER",
+      "kind": "BODY_CENTER",
+      "terminal_id": null,
+      "anchor_mm": [
+        0,
+        0,
+        0.65
+      ],
+      "representation": "MEASURED",
+      "applicability": "REQUIRED"
+    },
+    {
+      "id": "BODY-EXTENT",
+      "kind": "BODY_EXTENT",
+      "terminal_id": null,
+      "anchor_mm": [
+        0,
+        0,
+        0
+      ],
+      "representation": "MEASURED",
+      "applicability": "REQUIRED"
+    },
+    {
+      "id": "LAND-EXTENT",
+      "kind": "LAND_PATTERN_EXTENT",
+      "terminal_id": null,
+      "anchor_mm": [
+        0,
+        0,
+        0
+      ],
+      "representation": "MEASURED",
+      "applicability": "REQUIRED"
+    },
+    {
+      "id": "MOUNTING-PLANE",
+      "kind": "MOUNTING_PLANE",
+      "terminal_id": null,
+      "anchor_mm": [
+        0,
+        0,
+        0
+      ],
+      "representation": "MEASURED",
+      "applicability": "REQUIRED"
+    },
+    {
+      "id": "TERMINAL-1",
+      "kind": "TERMINAL_ANCHOR",
+      "terminal_id": "T-1",
+      "anchor_mm": [
+        -2.7,
+        2.275,
+        0.25
+      ],
+      "representation": "MEASURED",
+      "applicability": "REQUIRED"
+    },
+    {
+      "id": "TERMINAL-2",
+      "kind": "TERMINAL_ANCHOR",
+      "terminal_id": "T-2",
+      "anchor_mm": [
+        -2.7,
+        1.625,
+        0.25
+      ],
+      "representation": "MEASURED",
+      "applicability": "REQUIRED"
+    },
+    {
+      "id": "TERMINAL-3",
+      "kind": "TERMINAL_ANCHOR",
+      "terminal_id": "T-3",
+      "anchor_mm": [
+        -2.7,
+        0.9749999999999999,
+        0.25
+      ],
+      "representation": "MEASURED",
+      "applicability": "REQUIRED"
+    },
+    {
+      "id": "TERMINAL-4",
+      "kind": "TERMINAL_ANCHOR",
+      "terminal_id": "T-4",
+      "anchor_mm": [
+        -2.7,
+        0.32499999999999973,
+        0.25
+      ],
+      "representation": "MEASURED",
+      "applicability": "REQUIRED"
+    },
+    {
+      "id": "TERMINAL-5",
+      "kind": "TERMINAL_ANCHOR",
+      "terminal_id": "T-5",
+      "anchor_mm": [
+        -2.7,
+        -0.3250000000000002,
+        0.25
+      ],
+      "representation": "MEASURED",
+      "applicability": "REQUIRED"
+    },
+    {
+      "id": "TERMINAL-6",
+      "kind": "TERMINAL_ANCHOR",
+      "terminal_id": "T-6",
+      "anchor_mm": [
+        -2.7,
+        -0.9750000000000001,
+        0.25
+      ],
+      "representation": "MEASURED",
+      "applicability": "REQUIRED"
+    },
+    {
+      "id": "TERMINAL-7",
+      "kind": "TERMINAL_ANCHOR",
+      "terminal_id": "T-7",
+      "anchor_mm": [
+        -2.7,
+        -1.6250000000000004,
+        0.25
+      ],
+      "representation": "MEASURED",
+      "applicability": "REQUIRED"
+    },
+    {
+      "id": "TERMINAL-8",
+      "kind": "TERMINAL_ANCHOR",
+      "terminal_id": "T-8",
+      "anchor_mm": [
+        -2.7,
+        -2.275,
+        0.25
+      ],
+      "representation": "MEASURED",
+      "applicability": "REQUIRED"
+    },
+    {
+      "id": "TERMINAL-9",
+      "kind": "TERMINAL_ANCHOR",
+      "terminal_id": "T-9",
+      "anchor_mm": [
+        2.7,
+        -2.275,
+        0.25
+      ],
+      "representation": "MEASURED",
+      "applicability": "REQUIRED"
+    },
+    {
+      "id": "TERMINAL-10",
+      "kind": "TERMINAL_ANCHOR",
+      "terminal_id": "T-10",
+      "anchor_mm": [
+        2.7,
+        -1.625,
+        0.25
+      ],
+      "representation": "MEASURED",
+      "applicability": "REQUIRED"
+    },
+    {
+      "id": "TERMINAL-11",
+      "kind": "TERMINAL_ANCHOR",
+      "terminal_id": "T-11",
+      "anchor_mm": [
+        2.7,
+        -0.9749999999999999,
+        0.25
+      ],
+      "representation": "MEASURED",
+      "applicability": "REQUIRED"
+    },
+    {
+      "id": "TERMINAL-12",
+      "kind": "TERMINAL_ANCHOR",
+      "terminal_id": "T-12",
+      "anchor_mm": [
+        2.7,
+        -0.32499999999999973,
+        0.25
+      ],
+      "representation": "MEASURED",
+      "applicability": "REQUIRED"
+    },
+    {
+      "id": "TERMINAL-13",
+      "kind": "TERMINAL_ANCHOR",
+      "terminal_id": "T-13",
+      "anchor_mm": [
+        2.7,
+        0.3250000000000002,
+        0.25
+      ],
+      "representation": "MEASURED",
+      "applicability": "REQUIRED"
+    },
+    {
+      "id": "TERMINAL-14",
+      "kind": "TERMINAL_ANCHOR",
+      "terminal_id": "T-14",
+      "anchor_mm": [
+        2.7,
+        0.9750000000000001,
+        0.25
+      ],
+      "representation": "MEASURED",
+      "applicability": "REQUIRED"
+    },
+    {
+      "id": "TERMINAL-15",
+      "kind": "TERMINAL_ANCHOR",
+      "terminal_id": "T-15",
+      "anchor_mm": [
+        2.7,
+        1.6250000000000004,
+        0.25
+      ],
+      "representation": "MEASURED",
+      "applicability": "REQUIRED"
+    },
+    {
+      "id": "TERMINAL-16",
+      "kind": "TERMINAL_ANCHOR",
+      "terminal_id": "T-16",
+      "anchor_mm": [
+        2.7,
+        2.275,
+        0.25
+      ],
+      "representation": "MEASURED",
+      "applicability": "REQUIRED"
+    },
+    {
+      "id": "PIN1",
+      "kind": "PIN1_ANCHOR",
+      "terminal_id": "T-1",
+      "anchor_mm": [
+        -2.7,
+        2.275,
+        0.25
+      ],
+      "representation": "DECLARED_ONLY",
+      "applicability": "REQUIRED"
+    }
+  ],
+  "allowed_symmetries": [
+    {
+      "id": "IDENTITY",
+      "matrix": [
+        [
+          1,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          1
+        ]
+      ],
+      "terminal_mapping": {
+        "T-1": "T-1",
+        "T-2": "T-2",
+        "T-3": "T-3",
+        "T-4": "T-4",
+        "T-5": "T-5",
+        "T-6": "T-6",
+        "T-7": "T-7",
+        "T-8": "T-8",
+        "T-9": "T-9",
+        "T-10": "T-10",
+        "T-11": "T-11",
+        "T-12": "T-12",
+        "T-13": "T-13",
+        "T-14": "T-14",
+        "T-15": "T-15",
+        "T-16": "T-16"
+      }
+    }
+  ],
+  "required_observables": [
+    {
+      "id": "OBS-BODY-LENGTH",
+      "kind": "LENGTH",
+      "feature_id": "BODY-EXTENT",
+      "measurement_mode": "MEASURED",
+      "tolerance_id": "BODY"
+    },
+    {
+      "id": "OBS-BODY-WIDTH",
+      "kind": "WIDTH",
+      "feature_id": "BODY-EXTENT",
+      "measurement_mode": "MEASURED",
+      "tolerance_id": "BODY"
+    },
+    {
+      "id": "OBS-BODY-HEIGHT",
+      "kind": "HEIGHT",
+      "feature_id": "BODY-EXTENT",
+      "measurement_mode": "MEASURED",
+      "tolerance_id": "HEIGHT"
+    },
+    {
+      "id": "OBS-PIN1",
+      "kind": "ORIENTATION",
+      "feature_id": "PIN1",
+      "measurement_mode": "DECLARED_ONLY",
+      "tolerance_id": "ORIENTATION"
+    },
+    {
+      "id": "OBS-CLEARANCE",
+      "kind": "CLEARANCE",
+      "feature_id": "LAND-EXTENT",
+      "measurement_mode": "MEASURED",
+      "tolerance_id": "CLEARANCE"
+    },
+    {
+      "id": "OBS-1-POSITION",
+      "kind": "POSITION",
+      "feature_id": "TERMINAL-1",
+      "measurement_mode": "MEASURED",
+      "tolerance_id": "POSITION"
+    },
+    {
+      "id": "OBS-1-LENGTH",
+      "kind": "LENGTH",
+      "feature_id": "TERMINAL-1",
+      "measurement_mode": "MEASURED",
+      "tolerance_id": "BODY"
+    },
+    {
+      "id": "OBS-1-WIDTH",
+      "kind": "WIDTH",
+      "feature_id": "TERMINAL-1",
+      "measurement_mode": "MEASURED",
+      "tolerance_id": "BODY"
+    },
+    {
+      "id": "OBS-1-HEIGHT",
+      "kind": "HEIGHT",
+      "feature_id": "TERMINAL-1",
+      "measurement_mode": "MEASURED",
+      "tolerance_id": "BODY"
+    },
+    {
+      "id": "OBS-2-POSITION",
+      "kind": "POSITION",
+      "feature_id": "TERMINAL-2",
+      "measurement_mode": "MEASURED",
+      "tolerance_id": "POSITION"
+    },
+    {
+      "id": "OBS-2-LENGTH",
+      "kind": "LENGTH",
+      "feature_id": "TERMINAL-2",
+      "measurement_mode": "MEASURED",
+      "tolerance_id": "BODY"
+    },
+    {
+      "id": "OBS-2-WIDTH",
+      "kind": "WIDTH",
+      "feature_id": "TERMINAL-2",
+      "measurement_mode": "MEASURED",
+      "tolerance_id": "BODY"
+    },
+    {
+      "id": "OBS-2-HEIGHT",
+      "kind": "HEIGHT",
+      "feature_id": "TERMINAL-2",
+      "measurement_mode": "MEASURED",
+      "tolerance_id": "BODY"
+    },
+    {
+      "id": "OBS-3-POSITION",
+      "kind": "POSITION",
+      "feature_id": "TERMINAL-3",
+      "measurement_mode": "MEASURED",
+      "tolerance_id": "POSITION"
+    },
+    {
+      "id": "OBS-3-LENGTH",
+      "kind": "LENGTH",
+      "feature_id": "TERMINAL-3",
+      "measurement_mode": "MEASURED",
+      "tolerance_id": "BODY"
+    },
+    {
+      "id": "OBS-3-WIDTH",
+      "kind": "WIDTH",
+      "feature_id": "TERMINAL-3",
+      "measurement_mode": "MEASURED",
+      "tolerance_id": "BODY"
+    },
+    {
+      "id": "OBS-3-HEIGHT",
+      "kind": "HEIGHT",
+      "feature_id": "TERMINAL-3",
+      "measurement_mode": "MEASURED",
+      "tolerance_id": "BODY"
+    },
+    {
+      "id": "OBS-4-POSITION",
+      "kind": "POSITION",
+      "feature_id": "TERMINAL-4",
+      "measurement_mode": "MEASURED",
+      "tolerance_id": "POSITION"
+    },
+    {
+      "id": "OBS-4-LENGTH",
+      "kind": "LENGTH",
+      "feature_id": "TERMINAL-4",
+      "measurement_mode": "MEASURED",
+      "tolerance_id": "BODY"
+    },
+    {
+      "id": "OBS-4-WIDTH",
+      "kind": "WIDTH",
+      "feature_id": "TERMINAL-4",
+      "measurement_mode": "MEASURED",
+      "tolerance_id": "BODY"
+    },
+    {
+      "id": "OBS-4-HEIGHT",
+      "kind": "HEIGHT",
+      "feature_id": "TERMINAL-4",
+      "measurement_mode": "MEASURED",
+      "tolerance_id": "BODY"
+    },
+    {
+      "id": "OBS-5-POSITION",
+      "kind": "POSITION",
+      "feature_id": "TERMINAL-5",
+      "measurement_mode": "MEASURED",
+      "tolerance_id": "POSITION"
+    },
+    {
+      "id": "OBS-5-LENGTH",
+      "kind": "LENGTH",
+      "feature_id": "TERMINAL-5",
+      "measurement_mode": "MEASURED",
+      "tolerance_id": "BODY"
+    },
+    {
+      "id": "OBS-5-WIDTH",
+      "kind": "WIDTH",
+      "feature_id": "TERMINAL-5",
+      "measurement_mode": "MEASURED",
+      "tolerance_id": "BODY"
+    },
+    {
+      "id": "OBS-5-HEIGHT",
+      "kind": "HEIGHT",
+      "feature_id": "TERMINAL-5",
+      "measurement_mode": "MEASURED",
+      "tolerance_id": "BODY"
+    },
+    {
+      "id": "OBS-6-POSITION",
+      "kind": "POSITION",
+      "feature_id": "TERMINAL-6",
+      "measurement_mode": "MEASURED",
+      "tolerance_id": "POSITION"
+    },
+    {
+      "id": "OBS-6-LENGTH",
+      "kind": "LENGTH",
+      "feature_id": "TERMINAL-6",
+      "measurement_mode": "MEASURED",
+      "tolerance_id": "BODY"
+    },
+    {
+      "id": "OBS-6-WIDTH",
+      "kind": "WIDTH",
+      "feature_id": "TERMINAL-6",
+      "measurement_mode": "MEASURED",
+      "tolerance_id": "BODY"
+    },
+    {
+      "id": "OBS-6-HEIGHT",
+      "kind": "HEIGHT",
+      "feature_id": "TERMINAL-6",
+      "measurement_mode": "MEASURED",
+      "tolerance_id": "BODY"
+    },
+    {
+      "id": "OBS-7-POSITION",
+      "kind": "POSITION",
+      "feature_id": "TERMINAL-7",
+      "measurement_mode": "MEASURED",
+      "tolerance_id": "POSITION"
+    },
+    {
+      "id": "OBS-7-LENGTH",
+      "kind": "LENGTH",
+      "feature_id": "TERMINAL-7",
+      "measurement_mode": "MEASURED",
+      "tolerance_id": "BODY"
+    },
+    {
+      "id": "OBS-7-WIDTH",
+      "kind": "WIDTH",
+      "feature_id": "TERMINAL-7",
+      "measurement_mode": "MEASURED",
+      "tolerance_id": "BODY"
+    },
+    {
+      "id": "OBS-7-HEIGHT",
+      "kind": "HEIGHT",
+      "feature_id": "TERMINAL-7",
+      "measurement_mode": "MEASURED",
+      "tolerance_id": "BODY"
+    },
+    {
+      "id": "OBS-8-POSITION",
+      "kind": "POSITION",
+      "feature_id": "TERMINAL-8",
+      "measurement_mode": "MEASURED",
+      "tolerance_id": "POSITION"
+    },
+    {
+      "id": "OBS-8-LENGTH",
+      "kind": "LENGTH",
+      "feature_id": "TERMINAL-8",
+      "measurement_mode": "MEASURED",
+      "tolerance_id": "BODY"
+    },
+    {
+      "id": "OBS-8-WIDTH",
+      "kind": "WIDTH",
+      "feature_id": "TERMINAL-8",
+      "measurement_mode": "MEASURED",
+      "tolerance_id": "BODY"
+    },
+    {
+      "id": "OBS-8-HEIGHT",
+      "kind": "HEIGHT",
+      "feature_id": "TERMINAL-8",
+      "measurement_mode": "MEASURED",
+      "tolerance_id": "BODY"
+    },
+    {
+      "id": "OBS-9-POSITION",
+      "kind": "POSITION",
+      "feature_id": "TERMINAL-9",
+      "measurement_mode": "MEASURED",
+      "tolerance_id": "POSITION"
+    },
+    {
+      "id": "OBS-9-LENGTH",
+      "kind": "LENGTH",
+      "feature_id": "TERMINAL-9",
+      "measurement_mode": "MEASURED",
+      "tolerance_id": "BODY"
+    },
+    {
+      "id": "OBS-9-WIDTH",
+      "kind": "WIDTH",
+      "feature_id": "TERMINAL-9",
+      "measurement_mode": "MEASURED",
+      "tolerance_id": "BODY"
+    },
+    {
+      "id": "OBS-9-HEIGHT",
+      "kind": "HEIGHT",
+      "feature_id": "TERMINAL-9",
+      "measurement_mode": "MEASURED",
+      "tolerance_id": "BODY"
+    },
+    {
+      "id": "OBS-10-POSITION",
+      "kind": "POSITION",
+      "feature_id": "TERMINAL-10",
+      "measurement_mode": "MEASURED",
+      "tolerance_id": "POSITION"
+    },
+    {
+      "id": "OBS-10-LENGTH",
+      "kind": "LENGTH",
+      "feature_id": "TERMINAL-10",
+      "measurement_mode": "MEASURED",
+      "tolerance_id": "BODY"
+    },
+    {
+      "id": "OBS-10-WIDTH",
+      "kind": "WIDTH",
+      "feature_id": "TERMINAL-10",
+      "measurement_mode": "MEASURED",
+      "tolerance_id": "BODY"
+    },
+    {
+      "id": "OBS-10-HEIGHT",
+      "kind": "HEIGHT",
+      "feature_id": "TERMINAL-10",
+      "measurement_mode": "MEASURED",
+      "tolerance_id": "BODY"
+    },
+    {
+      "id": "OBS-11-POSITION",
+      "kind": "POSITION",
+      "feature_id": "TERMINAL-11",
+      "measurement_mode": "MEASURED",
+      "tolerance_id": "POSITION"
+    },
+    {
+      "id": "OBS-11-LENGTH",
+      "kind": "LENGTH",
+      "feature_id": "TERMINAL-11",
+      "measurement_mode": "MEASURED",
+      "tolerance_id": "BODY"
+    },
+    {
+      "id": "OBS-11-WIDTH",
+      "kind": "WIDTH",
+      "feature_id": "TERMINAL-11",
+      "measurement_mode": "MEASURED",
+      "tolerance_id": "BODY"
+    },
+    {
+      "id": "OBS-11-HEIGHT",
+      "kind": "HEIGHT",
+      "feature_id": "TERMINAL-11",
+      "measurement_mode": "MEASURED",
+      "tolerance_id": "BODY"
+    },
+    {
+      "id": "OBS-12-POSITION",
+      "kind": "POSITION",
+      "feature_id": "TERMINAL-12",
+      "measurement_mode": "MEASURED",
+      "tolerance_id": "POSITION"
+    },
+    {
+      "id": "OBS-12-LENGTH",
+      "kind": "LENGTH",
+      "feature_id": "TERMINAL-12",
+      "measurement_mode": "MEASURED",
+      "tolerance_id": "BODY"
+    },
+    {
+      "id": "OBS-12-WIDTH",
+      "kind": "WIDTH",
+      "feature_id": "TERMINAL-12",
+      "measurement_mode": "MEASURED",
+      "tolerance_id": "BODY"
+    },
+    {
+      "id": "OBS-12-HEIGHT",
+      "kind": "HEIGHT",
+      "feature_id": "TERMINAL-12",
+      "measurement_mode": "MEASURED",
+      "tolerance_id": "BODY"
+    },
+    {
+      "id": "OBS-13-POSITION",
+      "kind": "POSITION",
+      "feature_id": "TERMINAL-13",
+      "measurement_mode": "MEASURED",
+      "tolerance_id": "POSITION"
+    },
+    {
+      "id": "OBS-13-LENGTH",
+      "kind": "LENGTH",
+      "feature_id": "TERMINAL-13",
+      "measurement_mode": "MEASURED",
+      "tolerance_id": "BODY"
+    },
+    {
+      "id": "OBS-13-WIDTH",
+      "kind": "WIDTH",
+      "feature_id": "TERMINAL-13",
+      "measurement_mode": "MEASURED",
+      "tolerance_id": "BODY"
+    },
+    {
+      "id": "OBS-13-HEIGHT",
+      "kind": "HEIGHT",
+      "feature_id": "TERMINAL-13",
+      "measurement_mode": "MEASURED",
+      "tolerance_id": "BODY"
+    },
+    {
+      "id": "OBS-14-POSITION",
+      "kind": "POSITION",
+      "feature_id": "TERMINAL-14",
+      "measurement_mode": "MEASURED",
+      "tolerance_id": "POSITION"
+    },
+    {
+      "id": "OBS-14-LENGTH",
+      "kind": "LENGTH",
+      "feature_id": "TERMINAL-14",
+      "measurement_mode": "MEASURED",
+      "tolerance_id": "BODY"
+    },
+    {
+      "id": "OBS-14-WIDTH",
+      "kind": "WIDTH",
+      "feature_id": "TERMINAL-14",
+      "measurement_mode": "MEASURED",
+      "tolerance_id": "BODY"
+    },
+    {
+      "id": "OBS-14-HEIGHT",
+      "kind": "HEIGHT",
+      "feature_id": "TERMINAL-14",
+      "measurement_mode": "MEASURED",
+      "tolerance_id": "BODY"
+    },
+    {
+      "id": "OBS-15-POSITION",
+      "kind": "POSITION",
+      "feature_id": "TERMINAL-15",
+      "measurement_mode": "MEASURED",
+      "tolerance_id": "POSITION"
+    },
+    {
+      "id": "OBS-15-LENGTH",
+      "kind": "LENGTH",
+      "feature_id": "TERMINAL-15",
+      "measurement_mode": "MEASURED",
+      "tolerance_id": "BODY"
+    },
+    {
+      "id": "OBS-15-WIDTH",
+      "kind": "WIDTH",
+      "feature_id": "TERMINAL-15",
+      "measurement_mode": "MEASURED",
+      "tolerance_id": "BODY"
+    },
+    {
+      "id": "OBS-15-HEIGHT",
+      "kind": "HEIGHT",
+      "feature_id": "TERMINAL-15",
+      "measurement_mode": "MEASURED",
+      "tolerance_id": "BODY"
+    },
+    {
+      "id": "OBS-16-POSITION",
+      "kind": "POSITION",
+      "feature_id": "TERMINAL-16",
+      "measurement_mode": "MEASURED",
+      "tolerance_id": "POSITION"
+    },
+    {
+      "id": "OBS-16-LENGTH",
+      "kind": "LENGTH",
+      "feature_id": "TERMINAL-16",
+      "measurement_mode": "MEASURED",
+      "tolerance_id": "BODY"
+    },
+    {
+      "id": "OBS-16-WIDTH",
+      "kind": "WIDTH",
+      "feature_id": "TERMINAL-16",
+      "measurement_mode": "MEASURED",
+      "tolerance_id": "BODY"
+    },
+    {
+      "id": "OBS-16-HEIGHT",
+      "kind": "HEIGHT",
+      "feature_id": "TERMINAL-16",
+      "measurement_mode": "MEASURED",
+      "tolerance_id": "BODY"
+    }
+  ],
+  "validation": {
+    "tolerances": {
+      "BODY": {
+        "value": 0.05,
+        "unit": "mm"
+      },
+      "HEIGHT": {
+        "value": 0.05,
+        "unit": "mm"
+      },
+      "POSITION": {
+        "value": 0.05,
+        "unit": "mm"
+      },
+      "ORIENTATION": {
+        "value": 0.1,
+        "unit": "deg"
+      },
+      "CLEARANCE": {
+        "value": 0.05,
+        "unit": "mm"
+      }
+    }
+  },
+  "sources": [
+    {
+      "id": "SRC-MANUFACTURER",
+      "organization": "Texas Instruments",
+      "document": "ti-sn74hc595.pdf",
+      "revision": "SCLS041J October 2021; PW0016A 4220204/B 12/2023",
+      "reference": "https://www.ti.com/lit/ds/symlink/sn74hc595.pdf",
+      "access_date": "2026-10-07",
+      "section": "PDF page 34",
+      "table_or_figure": "PW0016A package outline and page 35 board layout; page 3 pin functions",
+      "content_sha256": "5a6a5aeecc79a2d4bf4e15aae681e0f99cb13b54d6524be253a6844c898eeb0d"
+    },
+    {
+      "id": "SRC-MODEL-POLICY",
+      "organization": "Board Forge Tools",
+      "document": "Representative model choices and source facts",
+      "revision": "1.0",
+      "reference": "fixtures/production/packages.json",
+      "access_date": "2026-10-07",
+      "section": "TSSOP-16",
+      "table_or_figure": "model_choices and geometry values",
+      "content_sha256": "d82b232350b095b43bcc7c31a15170a7a1740df3733e1b7eb99fa956d6625fb5"
+    }
+  ],
+  "change_history": [
+    {
+      "revision": "1.0",
+      "date": "2026-10-07",
+      "description": "Manufacturer-backed Phase 14 package corpus",
+      "source_ids": [
+        "SRC-MANUFACTURER",
+        "SRC-MODEL-POLICY"
+      ]
+    }
+  ]
+}

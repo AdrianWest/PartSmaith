@@ -8,9 +8,14 @@ data and reference features.
 
 import cadquery as cq
 
-_SUPPORTED_BODY_STRATEGY = "CHIP_BODY"
-_SUPPORTED_LEAD_STRATEGY = "END_TERMINATIONS"
-_SUPPORTED_MARKER_STRATEGY = "NONE"
+from partsmith.threed.package_geometry import (
+    apply_index_marker,
+    build_terminal,
+)
+
+_SUPPORTED_BODY_STRATEGIES = {"CHIP_BODY", "MOLDED_BODY"}
+_SUPPORTED_LEAD_STRATEGIES = {"END_TERMINATIONS", "GULL_WING", "NO_LEAD"}
+_SUPPORTED_MARKER_STRATEGIES = {"NONE", "PIN1_RECESS"}
 
 
 def _reference_feature(pdl_data: dict, kind: str) -> dict:
@@ -81,25 +86,23 @@ def _box_at(
 def build_solids(pdl_data: dict) -> list:
     """
 
-    @brief Build the CHIP_BODY/END_TERMINATIONS solids for a PDL
-    entry.
+    @brief Builds body and independently identified terminal solids.
     @param pdl_data The pdl_data argument.
     @return The list result.
     @details Returns `[body_solid, *terminal_solids]` in terminal-ID
-    order; raises ValueError for any model_3d strategy this Phase 6
-    bootstrap does not implement.
+    order; validates supported chip, molded, gull-wing and no-lead strategies.
 
     """
     model_3d = pdl_data["model_3d"]
-    if model_3d["body_strategy"] != _SUPPORTED_BODY_STRATEGY:
+    if model_3d["body_strategy"] not in _SUPPORTED_BODY_STRATEGIES:
         raise ValueError(
             f"Unsupported body_strategy: {model_3d['body_strategy']}"
         )
-    if model_3d["lead_strategy"] != _SUPPORTED_LEAD_STRATEGY:
+    if model_3d["lead_strategy"] not in _SUPPORTED_LEAD_STRATEGIES:
         raise ValueError(
             f"Unsupported lead_strategy: {model_3d['lead_strategy']}"
         )
-    if model_3d["marker_strategy"] != _SUPPORTED_MARKER_STRATEGY:
+    if model_3d["marker_strategy"] not in _SUPPORTED_MARKER_STRATEGIES:
         raise ValueError(
             f"Unsupported marker_strategy: {model_3d['marker_strategy']}"
         )
@@ -119,16 +122,9 @@ def build_solids(pdl_data: dict) -> list:
         body_center,
     )
 
-    terminal = mechanical["terminal"]
+    body_solid = apply_index_marker(body_solid, pdl_data)
     terminal_solids = [
-        _box_at(
-            (
-                float(terminal["length"]["nominal_mm"]),
-                float(terminal["width"]["nominal_mm"]),
-                float(terminal["height"]["nominal_mm"]),
-            ),
-            tuple(float(value) for value in feature["anchor_mm"]),
-        )
+        build_terminal(pdl_data, feature)
         for feature in _terminal_features(pdl_data)
     ]
     return [body_solid, *terminal_solids]

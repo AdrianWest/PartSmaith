@@ -230,7 +230,15 @@ def _quote(value: str) -> str:
     return '"' + value.replace("\\", "\\\\").replace('"', '\\"') + '"'
 
 
-def _pin(number: str, name: str, electrical_type: str, x: int) -> str:
+def _pin(
+    number: str,
+    name: str,
+    electrical_type: str,
+    x: float,
+    y: float = 0,
+    angle: int = 0,
+    length: float = 2.54,
+) -> str:
     """
 
     @brief Implements the _pin operation.
@@ -238,6 +246,9 @@ def _pin(number: str, name: str, electrical_type: str, x: int) -> str:
     @param name The name argument.
     @param electrical_type The electrical_type argument.
     @param x The x argument.
+    @param y Vertical symbol position.
+    @param angle Direction towards the symbol body in degrees.
+    @param length Declared pin length in millimeters.
     @return The str result.
     @details Implements the documented behavior without changing the
     public contract.
@@ -245,7 +256,8 @@ def _pin(number: str, name: str, electrical_type: str, x: int) -> str:
     """
     return "\n".join(
         (
-            f"      (pin {electrical_type} line (at {x} 0 0) (length 2.54)",
+            f"      (pin {electrical_type} line (at {x} {y} {angle}) "
+            f"(length {length})",
             f"        (name {_quote(name)} (effects (font (size 1.27 1.27))))",
             f"        (number {_quote(number)} (effects "
             f"(font (size 1.27 1.27))))",
@@ -259,13 +271,13 @@ def serialize_symbol(
 ) -> GeneratedArtifact:
     """
 
-    @brief Serialize a deterministic single-unit resistor-style KiCad
-    symbol.
+    @brief Serializes a deterministic single-unit KiCad symbol.
     @param ir The ir argument.
     @param context The context argument.
     @return The GeneratedArtifact result.
-    @details Implements the documented behavior without changing the
-    public contract.
+    @details Serializer 2.0 spaces terminal rows and connects each pin to the
+    body boundary without inferring electrical functionality. Serializer 1.0
+    retains historical bytes for frozen gates and release replays.
 
     """
     data = normalize_ir(_ir_data(ir))
@@ -274,10 +286,34 @@ def serialize_symbol(
     value = data["identity"]["mpn"]
     symbol_name = data["identity"]["normalized_mpn"]
     pin_blocks = []
+    production = context.serializer_version == "2.0"
+    rows = (len(pins) + 1) // 2
+    half_x = 5.08 if production and len(pins) > 2 else 1.27
+    half_y = (rows + 1) * 1.27 if production and len(pins) > 2 else 1.27
+    properties = (
+        f'    (property "Reference" {_quote(reference)})',
+        f'    (property "Value" {_quote(value)})',
+    )
+    if production:
+        properties = (
+            f'    (property "Reference" {_quote(reference)} '
+            f"(at 0 {half_y + 2.54} 0) "
+            "(effects (font (size 1.27 1.27))))",
+            f'    (property "Value" {_quote(value)} '
+            f"(at 0 {-half_y - 2.54} 0) "
+            "(effects (font (size 1.27 1.27))))",
+        )
     for index, pin in enumerate(pins):
-        x = -2.54 if index % 2 == 0 else 2.54
+        x = (-1 if index % 2 == 0 else 1) * (half_x + 2.54)
+        if not production:
+            x = -2.54 if index % 2 == 0 else 2.54
+        y = (rows - 1) * 1.27 - (index // 2) * 2.54 if production else 0
+        angle = 180 if production and index % 2 else 0
+        name = pin["name"]
+        if production and pin["active_low"]:
+            name = "~{" + name + "}"
         pin_blocks.append(
-            _pin(pin["number"], pin["name"], pin["electrical_type"], x)
+            _pin(pin["number"], name, pin["electrical_type"], x, y, angle)
         )
     content = "\n".join(
         (
@@ -285,10 +321,10 @@ def serialize_symbol(
             "  (version 20231120)",
             "  (generator partsmith)",
             f"  (symbol {_quote(symbol_name)}",
-            f'    (property "Reference" {_quote(reference)})',
-            f'    (property "Value" {_quote(value)})',
+            *properties,
             "    (symbol " + _quote(symbol_name + "_1_1"),
-            "      (rectangle (start -1.27 1.27) (end 1.27 -1.27)",
+            f"      (rectangle (start {-half_x} {half_y}) "
+            f"(end {half_x} {-half_y})",
             "        (stroke (width 0) (type default))",
             "        (fill (type none))",
             "      )",

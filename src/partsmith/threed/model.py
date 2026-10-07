@@ -21,9 +21,9 @@ from partsmith.threed.step_backend import (
     measure_step,
 )
 
-_SUPPORTED_BODY_STRATEGY = "CHIP_BODY"
-_SUPPORTED_LEAD_STRATEGY = "END_TERMINATIONS"
-_SUPPORTED_MARKER_STRATEGY = "NONE"
+_SUPPORTED_BODY_STRATEGIES = {"CHIP_BODY", "MOLDED_BODY"}
+_SUPPORTED_LEAD_STRATEGIES = {"END_TERMINATIONS", "GULL_WING", "NO_LEAD"}
+_SUPPORTED_MARKER_STRATEGIES = {"NONE", "PIN1_RECESS"}
 
 
 @dataclass(frozen=True)
@@ -153,7 +153,7 @@ def validate_threed_inputs(
         )
     issues = list(ir_pdl_issues(data, pdl.data))
     model_3d = pdl.data["model_3d"]
-    if model_3d["body_strategy"] != _SUPPORTED_BODY_STRATEGY:
+    if model_3d["body_strategy"] not in _SUPPORTED_BODY_STRATEGIES:
         issues.append(
             Issue(
                 "/model_3d/body_strategy",
@@ -161,7 +161,7 @@ def validate_threed_inputs(
                 f"Unsupported body_strategy: {model_3d['body_strategy']}",
             )
         )
-    if model_3d["lead_strategy"] != _SUPPORTED_LEAD_STRATEGY:
+    if model_3d["lead_strategy"] not in _SUPPORTED_LEAD_STRATEGIES:
         issues.append(
             Issue(
                 "/model_3d/lead_strategy",
@@ -169,7 +169,7 @@ def validate_threed_inputs(
                 f"Unsupported lead_strategy: {model_3d['lead_strategy']}",
             )
         )
-    if model_3d["marker_strategy"] != _SUPPORTED_MARKER_STRATEGY:
+    if model_3d["marker_strategy"] not in _SUPPORTED_MARKER_STRATEGIES:
         issues.append(
             Issue(
                 "/model_3d/marker_strategy",
@@ -442,6 +442,7 @@ def validate_step_artifact(step_bytes: bytes, pdl: PDL) -> tuple[Issue, ...]:
                 for axis in range(3)
             ),
         )
+        remaining_solids.remove(nearest)
         for axis, label in enumerate(("x", "y", "z")):
             delta = abs(nearest.center_mm[axis] - expected_center[axis])
             if delta > position_tolerance:

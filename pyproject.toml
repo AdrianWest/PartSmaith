@@ -63,12 +63,14 @@ exclude = ["docs/gates"]
 "schemas/component-ir-1.1.schema.json" = "partsmith/ir/component-ir-1.1.schema.json"
 "schemas/component-ir-1.2.schema.json" = "partsmith/ir/component-ir-1.2.schema.json"
 "schemas/pdl-1.0.schema.json" = "partsmith/pdl/pdl-1.0.schema.json"
+"schemas/pdl-1.1.schema.json" = "partsmith/pdl/pdl-1.1.schema.json"
 "schemas/phase8-contracts-1.0.schema.json" = "partsmith/release/phase8-contracts-1.0.schema.json"
 "schemas/integration-contracts-1.0.schema.json" = "partsmith/integration/integration-contracts-1.0.schema.json"
 "schemas/replay-bundle-1.0.schema.json" = "partsmith/release/replay-bundle-1.0.schema.json"
 "pdl/entries" = "partsmith/pdl/entries"
 "pdl/release-profiles" = "partsmith/pdl/release-profiles"
 "requirements-ci.txt" = "partsmith/release/runtime-constraints.txt"
+"fixtures/production" = "partsmith/pcm/corpus"
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

@@ -1,0 +1,117 @@
+{
+  "schema_version": "partsmith-golden-corpus-1.0",
+  "variants": {
+    "0402": {
+      "FOOTPRINT": {
+        "filename": "CRCW040210K0FKEA.kicad_mod",
+        "sha256": "2457857ef307bb2de497058ba62966e83f90b3543c11c9693446d0ccaf153cda"
+      },
+      "MODEL_3D": {
+        "filename": "CRCW040210K0FKEA.step",
+        "sha256": "b485c3c34df80a6403679d73b4bbe7360abc9472f3c644cb6f528116c05ff4c6"
+      },
+      "SYMBOL": {
+        "filename": "CRCW040210K0FKEA.kicad_sym",
+        "sha256": "bccb55b09206b7e1872be465644166b759e6a8be209a0c0e6d7dfb937c656f22"
+      }
+    },
+    "0603": {
+      "FOOTPRINT": {
+        "filename": "CRCW060310K0FKEA.kicad_mod",
+        "sha256": "ecf0210c9a18d31f10dad43962ec7500265e3dec79b296ae3dfe10cca3578b2a"
+      },
+      "MODEL_3D": {
+        "filename": "CRCW060310K0FKEA.step",
+        "sha256": "17c23e71aa53951400b9de6c64ef3b30ee33c4c85d76de1d3ee5ba27521cbf4f"
+      },
+      "SYMBOL": {
+        "filename": "CRCW060310K0FKEA.kicad_sym",
+        "sha256": "960f5490076bb9fe57d2d1752ab7efc5e9e5642136c0716e882fcaa65f074fcb"
+      }
+    },
+    "0805": {
+      "FOOTPRINT": {
+        "filename": "CRCW080510K0FKEA.kicad_mod",
+        "sha256": "b3b8527b7851b92a16d5cb86cef8f620151404c643940af1459eaf89903a09ed"
+      },
+      "MODEL_3D": {
+        "filename": "CRCW080510K0FKEA.step",
+        "sha256": "6703df02275b1a40f34eb27b3cdf85e8b46dc8c762e31a38fa5fda731239aba3"
+      },
+      "SYMBOL": {
+        "filename": "CRCW080510K0FKEA.kicad_sym",
+        "sha256": "ff7241c4353fd9f1cabaa8d0e22a5f674b1439ede60a5821eb13819e86760853"
+      }
+    },
+    "QFN-16-3x3-0.5P": {
+      "FOOTPRINT": {
+        "filename": "TPS62140RGTR.kicad_mod",
+        "sha256": "3243f08e0ae7c18d457781e1b6b407ee26e2b16ba5efcac28f0d386fba526131"
+      },
+      "MODEL_3D": {
+        "filename": "TPS62140RGTR.step",
+        "sha256": "4f680eb6bfdbd1b6eb97fdaed6f709c21260b1fbb0960e50f3beff5d6bd849e2"
+      },
+      "SYMBOL": {
+        "filename": "TPS62140RGTR.kicad_sym",
+        "sha256": "b911e9cabd5d33c1cd478d7a41289c6df3c4ca54ee156efabb7b5df8e7216e39"
+      }
+    },
+    "QFN-24-4x4-0.5P": {
+      "FOOTPRINT": {
+        "filename": "TPS65131RGER.kicad_mod",
+        "sha256": "2f49dc9957f07319a7c56aa4682b8854161d4477523b733006fb1e8cf9d22b27"
+      },
+      "MODEL_3D": {
+        "filename": "TPS65131RGER.step",
+        "sha256": "72598dca435f0ff73727a423540302d0484d41da152dc154e38db6f57ed9f7f9"
+      },
+      "SYMBOL": {
+        "filename": "TPS65131RGER.kicad_sym",
+        "sha256": "a0bf5f18165c8787a04f65547b37e17d6b2bb54dc0e88639745c7c0753f0f7dd"
+      }
+    },
+    "SOIC-8": {
+      "FOOTPRINT": {
+        "filename": "LM358DR.kicad_mod",
+        "sha256": "28257435d147752b3ffd28880f903ba7f73313ce6e7a3b8e9b275eb03f4ce10a"
+      },
+      "MODEL_3D": {
+        "filename": "LM358DR.step",
+        "sha256": "209d0c19b7737613617dc4ed7a774bcdf38ba5d878c23708be6168bf259d81cf"
+      },
+      "SYMBOL": {
+        "filename": "LM358DR.kicad_sym",
+        "sha256": "4286240ccbd4194eb7fd5ab10e2493f9306290c507edf5cbefea88d2ebf25099"
+      }
+    },
+    "SOT-23": {
+      "FOOTPRINT": {
+        "filename": "MMBT3904-7-F.kicad_mod",
+        "sha256": "b029e16507e627792349849b9060b5c25d80a29993821c952d5fe2e33775bd6a"
+      },
+      "MODEL_3D": {
+        "filename": "MMBT3904-7-F.step",
+        "sha256": "39ef314aeec46d5928d4cbb94356a61a9f4272a641f147df5d8f691e62c31f97"
+      },
+      "SYMBOL": {
+        "filename": "MMBT3904-7-F.kicad_sym",
+        "sha256": "8451defb97b4b6aa53c8d037f315b372b21b182d06f4c875606201df2987ace6"
+      }
+    },
+    "TSSOP-16": {
+      "FOOTPRINT": {
+        "filename": "SN74HC595PWR.kicad_mod",
+        "sha256": "cb96cb954daa384e1ecd6ce131247e481d132eaca9aebbe3ce667a1bb4ecf8a5"
+      },
+      "MODEL_3D": {
+        "filename": "SN74HC595PWR.step",
+        "sha256": "e2ab49c6940386977584d100b785d2698583c4d6f8bfb45699d60ee424860a42"
+      },
+      "SYMBOL": {
+        "filename": "SN74HC595PWR.kicad_sym",
+        "sha256": "4aef43ffb1b08c3b1ceed1ade1a522ad981c45f5f60f551a8e61cb7499fd3492"
+      }
+    }
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "archives": [
+    {
+      "byte_length": 1336054043,
+      "path": "dist/partsmith-0.2.0-pcm.zip",
+      "sha256": "b3ba5dd4b2f3d38e59a3d833805c83ecad9043b2c9eea0b43ed06bc325eed70d"
+    },
+    {
+      "byte_length": 1336054043,
+      "path": "dist/partsmith-0.2.0-rebuilt-pcm.zip",
+      "sha256": "b3ba5dd4b2f3d38e59a3d833805c83ecad9043b2c9eea0b43ed06bc325eed70d"
+    }
+  ],
+  "clean_customer_machine_proof": false,
+  "command": "python scripts/build_production_pcm.py --runtime .tools/phase14/runtime-4 --output <distinct-output>",
+  "first_producer": "Project development environment with CAD/desktop/test dependencies",
+  "python": "3.12.10",
+  "runtime_lock_sha256": "405843a2bd6490c087c79ebb5ecf1c2c30fff08df334d70c9847049853b16728",
+  "schema_version": "partsmith-phase14-reproducible-package-1.0",
+  "scope": "Same finalized checkout bytes and reviewed runtime lock, independent producer environments",
+  "second_producer": {
+    "environment": "Fresh isolated virtual environment; no CAD or desktop packages",
+    "packages": [
+      "attrs==26.1.0",
+      "jsonschema==4.26.0",
+      "jsonschema-specifications==2025.9.1",
+      "pip==25.0.1",
+      "referencing==0.37.0",
+      "rpds-py==2026.9.1",
+      "typing_extensions==4.16.0",
+      "zstandard==0.25.0"
+    ]
+  },
+  "state": "PASS"
+}

@@ -16,7 +16,7 @@ from partsmith.gui.review_service import DesktopReview
 from partsmith.gui.session import Session
 from partsmith.ir import ComponentIR, canonical_json, validate_ir
 from partsmith.ir.canonical import parse_json
-from partsmith.pdl import resolve_pdl
+from partsmith.pdl import load_pdl
 from partsmith.persistence import ImmutableStore
 
 
@@ -486,7 +486,7 @@ def test_pdl_label_does_not_select_library_and_binding_rechecks_topology(
     """
     session, review = fielded_session(tmp_path)
     assert session.state.get("pdl") is None
-    pdl = resolve_pdl("chip_resistor", "0402", {"1", "2"})
+    pdl = load_pdl("synthetic-0402", "1.0")
     with pytest.raises(ValueError, match="hash"):
         review.bind_pdl(pdl.data["id"], pdl.data["revision"], "0" * 64)
     review.bind_pdl(

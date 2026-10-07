@@ -1,0 +1,652 @@
+{
+  "schema_version": "1.2",
+  "identity": {
+    "component_id": "01995ead-8000-7000-8000-000000000001",
+    "manufacturer": {
+      "name": "Texas Instruments",
+      "normalized_name": "texas instruments"
+    },
+    "mpn": "SN74HC595PWR",
+    "normalized_mpn": "SN74HC595PWR",
+    "package_variant": "TSSOP-16",
+    "evidence_ids": [
+      "E-001"
+    ],
+    "source_document_id": "D-001",
+    "source_revision": "SCLS041J October 2021; PW0016A 4220204/B 12/2023"
+  },
+  "source": {
+    "documents": [
+      {
+        "id": "D-001",
+        "path": "fixtures/production/sources/ti-sn74hc595.pdf",
+        "sha256": "5a6a5aeecc79a2d4bf4e15aae681e0f99cb13b54d6524be253a6844c898eeb0d",
+        "revision": "SCLS041J October 2021; PW0016A 4220204/B 12/2023"
+      },
+      {
+        "id": "D-MODEL",
+        "path": "fixtures/production/packages.json",
+        "sha256": "d82b232350b095b43bcc7c31a15170a7a1740df3733e1b7eb99fa956d6625fb5",
+        "revision": "1.0"
+      }
+    ]
+  },
+  "electrical": {},
+  "pins": [
+    {
+      "number": "1",
+      "name": "QB",
+      "electrical_type": "tri_state",
+      "function": "QB",
+      "active_low": false,
+      "alternate_functions": [],
+      "physical": {
+        "topology_side": "west",
+        "topology_index": 0
+      },
+      "flags": {
+        "exposed_pad": false,
+        "no_connect": false
+      },
+      "status": "DIRECT",
+      "evidence_ids": [
+        "E-PINS"
+      ]
+    },
+    {
+      "number": "2",
+      "name": "QC",
+      "electrical_type": "tri_state",
+      "function": "QC",
+      "active_low": false,
+      "alternate_functions": [],
+      "physical": {
+        "topology_side": "west",
+        "topology_index": 1
+      },
+      "flags": {
+        "exposed_pad": false,
+        "no_connect": false
+      },
+      "status": "DIRECT",
+      "evidence_ids": [
+        "E-PINS"
+      ]
+    },
+    {
+      "number": "3",
+      "name": "QD",
+      "electrical_type": "tri_state",
+      "function": "QD",
+      "active_low": false,
+      "alternate_functions": [],
+      "physical": {
+        "topology_side": "west",
+        "topology_index": 2
+      },
+      "flags": {
+        "exposed_pad": false,
+        "no_connect": false
+      },
+      "status": "DIRECT",
+      "evidence_ids": [
+        "E-PINS"
+      ]
+    },
+    {
+      "number": "4",
+      "name": "QE",
+      "electrical_type": "tri_state",
+      "function": "QE",
+      "active_low": false,
+      "alternate_functions": [],
+      "physical": {
+        "topology_side": "west",
+        "topology_index": 3
+      },
+      "flags": {
+        "exposed_pad": false,
+        "no_connect": false
+      },
+      "status": "DIRECT",
+      "evidence_ids": [
+        "E-PINS"
+      ]
+    },
+    {
+      "number": "5",
+      "name": "QF",
+      "electrical_type": "tri_state",
+      "function": "QF",
+      "active_low": false,
+      "alternate_functions": [],
+      "physical": {
+        "topology_side": "west",
+        "topology_index": 4
+      },
+      "flags": {
+        "exposed_pad": false,
+        "no_connect": false
+      },
+      "status": "DIRECT",
+      "evidence_ids": [
+        "E-PINS"
+      ]
+    },
+    {
+      "number": "6",
+      "name": "QG",
+      "electrical_type": "tri_state",
+      "function": "QG",
+      "active_low": false,
+      "alternate_functions": [],
+      "physical": {
+        "topology_side": "west",
+        "topology_index": 5
+      },
+      "flags": {
+        "exposed_pad": false,
+        "no_connect": false
+      },
+      "status": "DIRECT",
+      "evidence_ids": [
+        "E-PINS"
+      ]
+    },
+    {
+      "number": "7",
+      "name": "QH",
+      "electrical_type": "tri_state",
+      "function": "QH",
+      "active_low": false,
+      "alternate_functions": [],
+      "physical": {
+        "topology_side": "west",
+        "topology_index": 6
+      },
+      "flags": {
+        "exposed_pad": false,
+        "no_connect": false
+      },
+      "status": "DIRECT",
+      "evidence_ids": [
+        "E-PINS"
+      ]
+    },
+    {
+      "number": "8",
+      "name": "GND",
+      "electrical_type": "power_in",
+      "function": "GND",
+      "active_low": false,
+      "alternate_functions": [],
+      "physical": {
+        "topology_side": "west",
+        "topology_index": 7
+      },
+      "flags": {
+        "exposed_pad": false,
+        "no_connect": false
+      },
+      "status": "DIRECT",
+      "evidence_ids": [
+        "E-PINS"
+      ]
+    },
+    {
+      "number": "9",
+      "name": "QHprime",
+      "electrical_type": "output",
+      "function": "QHprime",
+      "active_low": false,
+      "alternate_functions": [],
+      "physical": {
+        "topology_side": "east",
+        "topology_index": 0
+      },
+      "flags": {
+        "exposed_pad": false,
+        "no_connect": false
+      },
+      "status": "DIRECT",
+      "evidence_ids": [
+        "E-PINS"
+      ]
+    },
+    {
+      "number": "10",
+      "name": "SRCLR",
+      "electrical_type": "input",
+      "function": "SRCLR",
+      "active_low": true,
+      "alternate_functions": [],
+      "physical": {
+        "topology_side": "east",
+        "topology_index": 1
+      },
+      "flags": {
+        "exposed_pad": false,
+        "no_connect": false
+      },
+      "status": "DIRECT",
+      "evidence_ids": [
+        "E-PINS"
+      ]
+    },
+    {
+      "number": "11",
+      "name": "SRCLK",
+      "electrical_type": "input",
+      "function": "SRCLK",
+      "active_low": false,
+      "alternate_functions": [],
+      "physical": {
+        "topology_side": "east",
+        "topology_index": 2
+      },
+      "flags": {
+        "exposed_pad": false,
+        "no_connect": false
+      },
+      "status": "DIRECT",
+      "evidence_ids": [
+        "E-PINS"
+      ]
+    },
+    {
+      "number": "12",
+      "name": "RCLK",
+      "electrical_type": "input",
+      "function": "RCLK",
+      "active_low": false,
+      "alternate_functions": [],
+      "physical": {
+        "topology_side": "east",
+        "topology_index": 3
+      },
+      "flags": {
+        "exposed_pad": false,
+        "no_connect": false
+      },
+      "status": "DIRECT",
+      "evidence_ids": [
+        "E-PINS"
+      ]
+    },
+    {
+      "number": "13",
+      "name": "OE",
+      "electrical_type": "input",
+      "function": "OE",
+      "active_low": true,
+      "alternate_functions": [],
+      "physical": {
+        "topology_side": "east",
+        "topology_index": 4
+      },
+      "flags": {
+        "exposed_pad": false,
+        "no_connect": false
+      },
+      "status": "DIRECT",
+      "evidence_ids": [
+        "E-PINS"
+      ]
+    },
+    {
+      "number": "14",
+      "name": "SER",
+      "electrical_type": "input",
+      "function": "SER",
+      "active_low": false,
+      "alternate_functions": [],
+      "physical": {
+        "topology_side": "east",
+        "topology_index": 5
+      },
+      "flags": {
+        "exposed_pad": false,
+        "no_connect": false
+      },
+      "status": "DIRECT",
+      "evidence_ids": [
+        "E-PINS"
+      ]
+    },
+    {
+      "number": "15",
+      "name": "QA",
+      "electrical_type": "tri_state",
+      "function": "QA",
+      "active_low": false,
+      "alternate_functions": [],
+      "physical": {
+        "topology_side": "east",
+        "topology_index": 6
+      },
+      "flags": {
+        "exposed_pad": false,
+        "no_connect": false
+      },
+      "status": "DIRECT",
+      "evidence_ids": [
+        "E-PINS"
+      ]
+    },
+    {
+      "number": "16",
+      "name": "VCC",
+      "electrical_type": "power_in",
+      "function": "VCC",
+      "active_low": false,
+      "alternate_functions": [],
+      "physical": {
+        "topology_side": "east",
+        "topology_index": 7
+      },
+      "flags": {
+        "exposed_pad": false,
+        "no_connect": false
+      },
+      "status": "DIRECT",
+      "evidence_ids": [
+        "E-PINS"
+      ]
+    }
+  ],
+  "package": {
+    "family": "small_outline_ic",
+    "variant": "TSSOP-16",
+    "pin_count": 16,
+    "mechanical": {
+      "body_length": {
+        "source_value": 4.4,
+        "source_unit": "mm",
+        "status": "DIRECT",
+        "evidence_ids": [
+          "E-001"
+        ]
+      },
+      "body_width": {
+        "source_value": 5,
+        "source_unit": "mm",
+        "status": "DIRECT",
+        "evidence_ids": [
+          "E-001"
+        ]
+      },
+      "body_height": {
+        "source_value": 1.1,
+        "source_unit": "mm",
+        "status": "DIRECT",
+        "evidence_ids": [
+          "E-MODEL"
+        ]
+      }
+    },
+    "status": "DIRECT",
+    "evidence_ids": [
+      "E-001"
+    ]
+  },
+  "symbol": {
+    "reference_prefix": "U",
+    "properties": {}
+  },
+  "footprint": {
+    "land_pattern_source": "MANUFACTURER_RECOMMENDED",
+    "properties": {},
+    "status": "DIRECT",
+    "evidence_ids": [
+      "E-LAND"
+    ]
+  },
+  "model_3d": {
+    "required": true,
+    "placement": {
+      "source_coordinate_system": "component",
+      "destination_coordinate_system": "footprint",
+      "translation_mm": [
+        0,
+        0,
+        0
+      ],
+      "rotation_deg": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "mirror": {
+        "x": false,
+        "y": false,
+        "z": false
+      },
+      "units": {
+        "length": "mm",
+        "angle": "deg"
+      },
+      "convention_version": "1.1",
+      "order": "T*R*S*M",
+      "status": "DIRECT",
+      "evidence_ids": [
+        "E-001"
+      ]
+    },
+    "accuracy_class": "CLASS_A"
+  },
+  "evidence": [
+    {
+      "id": "E-001",
+      "type": "MANUFACTURER_DRAWING_AND_PIN_TABLE",
+      "source": {
+        "document_id": "D-001",
+        "document_hash": "5a6a5aeecc79a2d4bf4e15aae681e0f99cb13b54d6524be253a6844c898eeb0d",
+        "page": 34,
+        "region": null,
+        "coordinate_convention": null,
+        "page_geometry": null,
+        "render_transform": null
+      },
+      "extracted": {
+        "text": "PW0016A package outline and page 35 board layout; page 3 pin functions; explicit model choices: Top-view numbering and recommended land pattern come from the cited pages. Unspecified nominal body height is a fixed representative envelope below the maximum seated height, subtracting selected standoff. Gull-wing bend elevation, index recess radius/depth and flat body styling are explicit rendering choices, not manufacturer tolerances. Index recess indicates the documented pin-one area. No JEDEC variation or electrical behavior beyond the pin table is inferred.",
+        "value": null,
+        "unit": null
+      },
+      "interpretation": {
+        "normalized_value": null,
+        "status": "DIRECT"
+      },
+      "extractor": {
+        "method": "reviewed-package-corpus",
+        "version": "1.0"
+      },
+      "confidence": {
+        "score": 1,
+        "basis": "Frozen drawing, pin table and explicit model choices"
+      },
+      "acquisition_revision_id": "IR12-1",
+      "candidate_targets": [
+        "/identity",
+        "/package",
+        "/footprint",
+        "/model_3d/placement",
+        "/pins/0",
+        "/pins/1",
+        "/pins/2",
+        "/pins/3",
+        "/pins/4",
+        "/pins/5",
+        "/pins/6",
+        "/pins/7",
+        "/pins/8",
+        "/pins/9",
+        "/pins/10",
+        "/pins/11",
+        "/pins/12",
+        "/pins/13",
+        "/pins/14",
+        "/pins/15",
+        "/package/mechanical/body_length",
+        "/package/mechanical/body_width",
+        "/package/mechanical/body_height"
+      ]
+    },
+    {
+      "id": "E-MODEL",
+      "type": "EXPLICIT_MODEL_CHOICE",
+      "source": {
+        "document_id": "D-MODEL",
+        "document_hash": "d82b232350b095b43bcc7c31a15170a7a1740df3733e1b7eb99fa956d6625fb5",
+        "page": 1,
+        "region": null,
+        "coordinate_convention": null,
+        "page_geometry": null,
+        "render_transform": null
+      },
+      "extracted": {
+        "text": "Top-view numbering and recommended land pattern come from the cited pages. Unspecified nominal body height is a fixed representative envelope below the maximum seated height, subtracting selected standoff. Gull-wing bend elevation, index recess radius/depth and flat body styling are explicit rendering choices, not manufacturer tolerances. Index recess indicates the documented pin-one area. No JEDEC variation or electrical behavior beyond the pin table is inferred.",
+        "value": null,
+        "unit": null
+      },
+      "interpretation": {
+        "normalized_value": null,
+        "status": "DIRECT"
+      },
+      "extractor": {
+        "method": "reviewed-package-corpus",
+        "version": "1.0"
+      },
+      "confidence": {
+        "score": 1,
+        "basis": "Frozen drawing, pin table and explicit model choices"
+      },
+      "acquisition_revision_id": "IR12-1",
+      "candidate_targets": [
+        "/package/mechanical/body_height"
+      ]
+    },
+    {
+      "id": "E-PINS",
+      "type": "MANUFACTURER_DRAWING_AND_PIN_TABLE",
+      "source": {
+        "document_id": "D-001",
+        "document_hash": "5a6a5aeecc79a2d4bf4e15aae681e0f99cb13b54d6524be253a6844c898eeb0d",
+        "page": 3,
+        "region": null,
+        "coordinate_convention": null,
+        "page_geometry": null,
+        "render_transform": null
+      },
+      "extracted": {
+        "text": "PW0016A package outline and page 35 board layout; page 3 pin functions",
+        "value": null,
+        "unit": null
+      },
+      "interpretation": {
+        "normalized_value": null,
+        "status": "DIRECT"
+      },
+      "extractor": {
+        "method": "reviewed-package-corpus",
+        "version": "1.0"
+      },
+      "confidence": {
+        "score": 1,
+        "basis": "Frozen drawing, pin table and explicit model choices"
+      },
+      "acquisition_revision_id": "IR12-1",
+      "candidate_targets": [
+        "/pins/0",
+        "/pins/1",
+        "/pins/2",
+        "/pins/3",
+        "/pins/4",
+        "/pins/5",
+        "/pins/6",
+        "/pins/7",
+        "/pins/8",
+        "/pins/9",
+        "/pins/10",
+        "/pins/11",
+        "/pins/12",
+        "/pins/13",
+        "/pins/14",
+        "/pins/15"
+      ]
+    },
+    {
+      "id": "E-LAND",
+      "type": "MANUFACTURER_DRAWING_AND_PIN_TABLE",
+      "source": {
+        "document_id": "D-001",
+        "document_hash": "5a6a5aeecc79a2d4bf4e15aae681e0f99cb13b54d6524be253a6844c898eeb0d",
+        "page": 35,
+        "region": null,
+        "coordinate_convention": null,
+        "page_geometry": null,
+        "render_transform": null
+      },
+      "extracted": {
+        "text": "PW0016A package outline and page 35 board layout; page 3 pin functions",
+        "value": null,
+        "unit": null
+      },
+      "interpretation": {
+        "normalized_value": null,
+        "status": "DIRECT"
+      },
+      "extractor": {
+        "method": "reviewed-package-corpus",
+        "version": "1.0"
+      },
+      "confidence": {
+        "score": 1,
+        "basis": "Frozen drawing, pin table and explicit model choices"
+      },
+      "acquisition_revision_id": "IR12-1",
+      "candidate_targets": [
+        "/footprint"
+      ]
+    }
+  ],
+  "standards": [],
+  "overrides": [],
+  "validation": {
+    "results": [],
+    "tolerances": {}
+  },
+  "build": {
+    "bft_version": "0.1.0",
+    "kicad_target": "10.x",
+    "pdl_revision": "1.0",
+    "ai_provider": null,
+    "ai_model": null
+  },
+  "revision": {
+    "id": "IR12-1",
+    "parent_id": null,
+    "description": "Manufacturer-backed Phase 14 corpus input",
+    "active_override_ids": [],
+    "active_resolution_ids": [],
+    "evidence_exclusions": [],
+    "target_rebindings": [],
+    "evidence_review": {
+      "inventory_sha256": "b4b11c6d4dc21bd55299390d85bf80ebc66b24533091f0679420832523a769ab",
+      "reviewed_evidence_ids": [
+        "E-001",
+        "E-MODEL",
+        "E-PINS",
+        "E-LAND"
+      ],
+      "reviewer": "synthetic-reviewer",
+      "timestamp": "2026-09-20T12:00:00Z",
+      "approval_state": "APPROVED"
+    }
+  },
+  "resolutions": []
+}

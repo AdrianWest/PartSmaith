@@ -19,7 +19,7 @@
     "PyMuPDF": "1.28.2"
   },
   "source_sha256": {
-    "pyproject.toml": "69b0086eb05118a4277619b10577a5f1df9b7abb9558877de9ba58cf8de1f271",
+    "pyproject.toml": "4cb461dcf646b7b46340bfcad88892c3aee25d4819abb3bc4bf75c60e83d0613",
     "requirements-extraction.txt": "104015d4659ae8a58dc6787842651f438f32ca2b0fb753fdae92bf89b6d0201d",
     "src/partsmith/extraction/document.py": "da15c6a4e4d46c7b93039375a7e7a80abfde66d16ddc2dc0f3b240a3f4f85a60",
     "src/partsmith/extraction/native_page.py": "68265065abe07914deb0089e09b1045a1c84b6c540813d8e6b72ad1f0b24e682",
@@ -28,8 +28,8 @@
     "tests/test_extraction_isolation.py": "eeeb609359c2422fa9b55a3932766ef9851f6714521d36cee09f5eac3a6c786c",
     "scripts/verify_pdf_stability.py": "aeb6583abe2a4046e7ea17b92ff875106ac0ddb8125774b9ddd5ae0322d56572",
     ".github/workflows/ci.yml": "2f676be607172e21533480ed50cbacf9cf3b27bd0e640898326ecc3a4d4ccf25",
-    ".gitattributes": "b345a7db8d695a9da64fa0c9befeb8897345935d2df882c4075fb296b3b61c09",
-    "README.md": "42499199fc5086bb2e12a7e529fda47d98802eee92cf9b695bc9b4cd578879b8"
+    ".gitattributes": "857c38fecbfd69ef13acedce1c2da273b8b417fefe4ce6a1199a98b8b7422053",
+    "README.md": "a2e6f94eb9fa6b3eff20d2c73e2555fceebd1702828894d1e987f44fd1b886fc"
   },
   "tests": {
     "source": {

@@ -67,11 +67,12 @@ def _target(data, path):
     return parent, int(token) if isinstance(parent, list) else token
 
 
-def test_phase_three_gate(valid):
+def test_phase_three_gate(valid, tmp_path):
     """
 
     @brief Implements the test_phase_three_gate operation.
     @param valid The valid argument.
+    @param tmp_path Isolated historical catalog directory.
     @return The callable result.
     @details Implements the documented behavior without changing the
     public contract.
@@ -82,12 +83,28 @@ def test_phase_three_gate(valid):
     assert pdl.data == valid
     assert pdl.sha256 == pdl_hash(valid)
     assert validate_pdl(valid) == ()
-    assert list_pdls() == (("synthetic-0402", "1.0"),)
+    assert ("synthetic-0402", "1.0") in list_pdls()
+    assert {
+        load_pdl(identity, revision).data["identity"]["variant"]
+        for identity, revision in list_pdls()
+    } == {
+        "0402",
+        "0603",
+        "0805",
+        "SOT-23",
+        "SOIC-8",
+        "TSSOP-16",
+        "QFN-16-3x3-0.5P",
+        "QFN-24-4x4-0.5P",
+    }
 
     ir = parse_json(IR.read_bytes())
     assert ir_pdl_issues(ir, pdl.data) == ()
+    # Historical resolution uses its original single-entry catalog.
+    (tmp_path / ENTRY.name).write_bytes(ENTRY.read_bytes())
     assert (
-        resolve_pdl("chip_resistor", "0402", {"1", "2"}).sha256 == pdl.sha256
+        resolve_pdl("chip_resistor", "0402", {"1", "2"}, root=tmp_path).sha256
+        == pdl.sha256
     )
 
 

@@ -8,6 +8,20 @@ prepared runtime, native editors and official PCB IPC have separate supervised
 evidence. There is no public production release. Clean-machine production/offline
 acceptance remains Phase 14.
 
+## Phase 14 executable candidate
+
+Candidate **0.2.0** bundles its isolated Python, CAD, PDF, GUI and OCR runtime.
+It uses KiCad's `exec` action and does not use KiCad's Python environment or
+customer pip/Conda. With KiCad closed, run
+[`install_production.bat`](../install_production.bat). The installer verifies the
+candidate archive, uses a spare bundled runtime and retains a rollback backup.
+The same batch accepts `-Archive C:/path/candidate.zip` and `-Uninstall`.
+
+The [Phase 14 report](gates/phase-14.md) records the eight-package corpus,
+installation checks and outstanding clean-machine/native vendor-license audit.
+This is a development acceptance candidate; the production gate remains open.
+The instructions below preserve the separately validated Phase 13 Python path.
+
 ## Install and prepare
 
 1. In KiCad's Python/IPC preferences, select the verified external CPython

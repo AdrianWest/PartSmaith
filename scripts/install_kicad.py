@@ -9,11 +9,7 @@ import json
 import os
 import subprocess
 import sys
-import time
-from datetime import UTC, datetime
 from pathlib import Path
-from uuid import uuid4
-from zipfile import ZipFile
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
@@ -23,9 +19,7 @@ from partsmith.pcm.package import (  # noqa: E402
     IDENTIFIER,
     VERSION,
     build_pcm,
-    verify_pcm,
 )
-from partsmith.pcm.runtime import verify_inventory  # noqa: E402
 
 DIRECTORY = IDENTIFIER.replace(".", "_")
 
@@ -81,150 +75,10 @@ def require_closed_kicad() -> None:
         )
 
 
-def require_owned_path(path: Path, root: Path) -> None:
-    """@brief Rejects package targets redirected outside their intended root.
-    @param path Explicit installer-owned package path.
-    @param root Intended package-root directory.
-    @return None.
-    @details Rejects symlinks, junctions and existing non-directory targets.
-    """
-    resolved = path.resolve()
-    if (
-        not resolved.is_relative_to(root.resolve())
-        or resolved == root.resolve()
-    ):
-        raise ValueError("Installer target escapes the KiCad package root")
-    for part in [path, *path.parents]:
-        if part == root.parent:
-            break
-        if part.is_symlink() or part.is_junction():
-            raise ValueError(
-                "Installer targets cannot contain path redirection"
-            )
-    if path.exists() and not path.is_dir():
-        raise ValueError("Package target must be a directory")
-
-
-def install_archive(
-    archive: Path, settings: Path, third_party: Path, *, before_publish=None
-) -> dict:
-    """@brief Installs only PartSmith's verified payload and PCM registration.
-    @param archive Fully built and schema-verified PCM ZIP.
-    @param settings Closed KiCad's versioned settings directory.
-    @param third_party Explicit third-party content root.
-    @param before_publish Optional final closed-host preflight callback.
-    @return Installed version, payload identities and retained backup path.
-    @details Stages outside plugin discovery; rollback restores prior bytes.
-    """
-    metadata = verify_pcm(archive)
-    registry = settings / "installed_packages.json"
-    before = registry.read_bytes() if registry.exists() else None
-    document = json.loads(before) if before is not None else {"packages": []}
-    if not isinstance(document.get("packages"), list):
-        raise ValueError("Invalid KiCad package registry")
-    plugin = third_party / "plugins" / DIRECTORY
-    resources = third_party / "resources" / DIRECTORY
-    require_owned_path(plugin, third_party)
-    require_owned_path(resources, third_party)
-    if plugin.exists():
-        registration = json.loads((plugin / "plugin.json").read_bytes())
-        if registration.get("identifier") != IDENTIFIER:
-            raise ValueError("Existing directory is not the PartSmith plugin")
-    stamp = datetime.now(UTC).strftime("%Y%m%dT%H%M%SZ") + "-" + uuid4().hex
-    backup = third_party.parent / "PartSmith-install-backups" / stamp
-    backup.mkdir(parents=True)
-    if before is not None:
-        (backup / "installed_packages.before.json").write_bytes(before)
-    staged_plugin = backup / "new-plugin"
-    staged_resources = backup / "new-resources"
-    staged_plugin.mkdir()
-    staged_resources.mkdir()
-    with ZipFile(archive) as package:
-        for name in package.namelist():
-            if name.startswith("plugins/"):
-                target = staged_plugin / name.removeprefix("plugins/")
-                target.parent.mkdir(parents=True, exist_ok=True)
-                target.write_bytes(package.read(name))
-        (staged_resources / "icon.png").write_bytes(
-            package.read("resources/icon.png")
-        )
-    inventory = verify_inventory(staged_plugin)
-    version = inventory["version"]
-    existing = [
-        item
-        for item in document["packages"]
-        if item.get("package", {}).get("identifier") == IDENTIFIER
-    ]
-    if len(existing) > 1:
-        raise ValueError("Duplicate PartSmith PCM registrations")
-    replacement = {
-        "current_version": version,
-        "install_timestamp": int(time.time()),
-        "package": {
-            key: value for key, value in metadata.items() if key != "$schema"
-        },
-        "pinned": existing[0].get("pinned", False) if existing else False,
-        "repository_id": "",
-        "repository_name": "Local file",
-    }
-    document["packages"] = [
-        replacement if item in existing else item
-        for item in document["packages"]
-    ]
-    if not existing:
-        document["packages"].append(replacement)
-    after = (json.dumps(document, indent=4) + "\n").encode("utf-8")
-    pending = settings / (".partsmith-packages-" + uuid4().hex + ".tmp")
-    pending.write_bytes(after)
-    installed = []
-    retained = []
-    try:
-        if before_publish is not None:
-            before_publish()
-        if (registry.read_bytes() if registry.exists() else None) != before:
-            raise RuntimeError("KiCad package registry changed during staging")
-        for target, staged, old_name in (
-            (plugin, staged_plugin, "previous-plugin"),
-            (resources, staged_resources, "previous-resources"),
-        ):
-            require_owned_path(target, third_party)
-            target.parent.mkdir(parents=True, exist_ok=True)
-            old = backup / old_name
-            if target.exists():
-                target.replace(old)
-                retained.append((target, old))
-            staged.replace(target)
-            installed.append(target)
-        verify_inventory(plugin)
-        pending.replace(registry)
-    except Exception:
-        for target in reversed(installed):
-            require_owned_path(target, third_party)
-            target.replace(backup / ("failed-" + target.parent.name))
-        for target, old in reversed(retained):
-            old.replace(target)
-        if pending.exists():
-            pending.replace(backup / "uncommitted-packages.json")
-        raise
-    report = {
-        "status": "INSTALLED",
-        "version": version,
-        "plugin_root": str(plugin),
-        "backup": str(backup),
-        "verified_files": len(inventory["files"]),
-        "runtime_preparation": "Owned by KiCad on next startup",
-    }
-    try:
-        (backup / "installation.json").write_text(
-            json.dumps(report, indent=2) + "\n",
-            encoding="utf-8",
-            newline="\n",
-        )
-    except OSError:
-        report["receipt_warning"] = (
-            "Installation committed; receipt unavailable"
-        )
-    return report
+from partsmith.pcm.installation import (  # noqa: E402,F401
+    install_archive,
+    require_owned_path,
+)
 
 
 def main() -> int:

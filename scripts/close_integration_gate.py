@@ -1,7 +1,7 @@
 """@file close_integration_gate.py
 @brief Refreshes and verifies active gate input maps in dependency order.
 @details Preserves historical receipts and records every changed input hash.
-Gate acceptance checks must already have passed; this is hash closeout only.
+Records finalized validation scope; hash closeout does not close an open gate.
 """
 
 import argparse
@@ -11,7 +11,7 @@ import subprocess
 import sys
 import xml.etree.ElementTree as ET
 from datetime import date
-from hashlib import sha256
+from hashlib import file_digest, sha256
 from pathlib import Path, PureWindowsPath
 from zipfile import ZipFile
 
@@ -24,7 +24,8 @@ def digest(path: Path) -> str:
     @return Lowercase SHA-256.
     @details Missing files fail; no historical identity is inferred.
     """
-    return sha256(path.read_bytes()).hexdigest()
+    with path.open("rb") as source:
+        return file_digest(source, "sha256").hexdigest()
 
 
 def write(path: Path, data: dict) -> None:
@@ -214,6 +215,61 @@ def verify_native_receipt(path: Path) -> None:
         )
 
 
+def verify_production_acceptance(current: dict) -> None:
+    """@brief Verifies current Phase 14 execution identities and scope.
+    @param current Finalized candidate manifest with explicit open blockers.
+    @return None.
+    @details Hash closeout validates retained execution evidence; it does not
+    establish clean-host provenance or approve the native vendor license set.
+    """
+    acceptance = current["production_acceptance"]
+    install = json.loads((ROOT / acceptance["installation"]).read_bytes())
+    assert install["state"] == "PASS"
+    for field, expected in (
+        ("corpus", "PASS"),
+        ("engines", "PASS"),
+        ("corrupted_notice", "REJECTED"),
+        ("missing_model", "REJECTED"),
+        ("untracked_bytecode", "REJECTED"),
+        ("uninstall", "PASS"),
+        ("unrelated_package", "UNCHANGED"),
+        ("python_environment", "BLOCKED"),
+    ):
+        assert install[field] == expected
+    corpus = json.loads((ROOT / acceptance["corpus"]).read_bytes())
+    assert corpus["state"] == "PASS" and len(corpus["variants"]) == 8
+    for result in corpus["variants"].values():
+        assert result["accuracy_class"] == "CLASS_A"
+        assert result["native_compatibility"] == "PASS"
+        assert result["reproducibility"] == "EXACT_BYTES"
+        assert len(result["negative_cases"]) >= 7
+    engines = json.loads((ROOT / acceptance["engines"]).read_bytes())
+    assert engines["state"] == "PASS"
+    assert set(engines["languages"]) == {"eng", "deu", "chi_sim"}
+    assert all(v["state"] == "PASS" for v in engines["languages"].values())
+    assert (
+        engines["inventory_sha256"] == acceptance["upgrade_inventory_sha256"]
+    )
+    for path in acceptance["junit"]:
+        suites = list(ET.parse(ROOT / path).getroot().iter("testsuite"))
+        assert suites and sum(int(s.get("tests", 0)) for s in suites) > 0
+        assert all(
+            int(s.get(field, 0)) == 0
+            for s in suites
+            for field in ("failures", "errors", "skipped")
+        )
+    gui = json.loads((ROOT / acceptance["gui"]).read_bytes())
+    assert gui["state"] == "PASS"
+    assert (
+        gui["inventory_sha256"] == current["pcm_package"]["inventory_sha256"]
+    )
+    closed = json.loads((ROOT / gui["closed_readiness"]).read_bytes())
+    assert closed["state"] == "CLOSED"
+    assert closed["code"] == "KICAD_HOST_EXITED"
+    audit = json.loads((ROOT / acceptance["license_audit"]).read_bytes())
+    assert audit["state"] == current["native_license_audit_state"]
+
+
 def main() -> int:
     """@brief Completes exact disk-hash refresh and executable verification.
     @return Zero after all active and CI input maps verify.
@@ -225,8 +281,8 @@ def main() -> int:
     parser.add_argument("--reason", required=True)
     args = parser.parse_args()
     stamp = date.today().isoformat()
-    if not re.fullmatch(r"13(?:\.[2-8])?", args.phase):
-        parser.error("Expected integration milestone 13.2–13.8 or full 13")
+    if not re.fullmatch(r"(?:13(?:\.[2-8])?|14)", args.phase):
+        parser.error("Expected milestone 13.2–13.8, full 13, or candidate 14")
     seed = json.loads(
         (
             ROOT / "docs/gates/phase-13.1-hash-closeout-2026-10-06.json"
@@ -239,12 +295,25 @@ def main() -> int:
     )
     if (ROOT / "docs/gates/phase-13-artifacts.json").exists():
         names.add("docs/gates/phase-13-artifacts.json")
+    for name in (
+        "docs/gates/phase-13-startup-fix-2026-10-07.json",
+        "docs/gates/phase-13-lifecycle-fix-2026-10-07.json",
+        "docs/gates/phase-14-artifacts.json",
+    ):
+        if (ROOT / name).exists():
+            names.add(name)
     documents = {
         name: json.loads((ROOT / name).read_bytes()) for name in names
     }
-    ci = re.findall(
-        r"--manifest (docs/gates/[\w.\-]+\.json)",
-        (ROOT / ".github/workflows/ci.yml").read_text("utf-8"),
+    ci = sorted(
+        {
+            name
+            for workflow in (ROOT / ".github/workflows").glob("*.yml")
+            for name in re.findall(
+                r"--manifest (docs/gates/[\w.\-]+\.json)",
+                workflow.read_text("utf-8"),
+            )
+        }
     )
     if not set(ci) <= names:
         raise ValueError("CI includes a manifest outside the active catalog")
@@ -368,11 +437,26 @@ def main() -> int:
                 == artifact["inventory_sha256"]
             )
             assert len(package.namelist()) == artifact["members"]
+            for key, member in (
+                ("dependency_manifest_sha256", "plugins/dependencies.json"),
+                ("bundle_descriptor_sha256", "plugins/bundle.json"),
+            ):
+                if key in artifact:
+                    assert (
+                        sha256(package.read(member)).hexdigest()
+                        == artifact[key]
+                    )
             icon = artifact.get("package_icon")
             if icon:
                 payload = package.read(icon["path"])
                 assert sha256(payload).hexdigest() == icon["sha256"]
                 assert len(payload) == icon["size"]
+    for identity in current.get("candidate_artifacts", []):
+        path = ROOT / identity["path"]
+        assert digest(path) == identity["sha256"]
+        assert path.stat().st_size == identity["byte_length"]
+    if current.get("production_acceptance"):
+        verify_production_acceptance(current)
     for name in current.get("evidence", []):
         if name.endswith("/receipt.json"):
             verify_native_receipt(ROOT / name)

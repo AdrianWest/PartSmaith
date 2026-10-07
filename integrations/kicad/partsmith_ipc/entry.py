@@ -1,5 +1,5 @@
 """@file entry.py
-@brief Opens the PCM-installed action using an isolated external interpreter.
+@brief Opens the PCM-installed action using its isolated interpreter.
 @details Board inspection is deliberate; startup does not select or read a PCB.
 """
 
@@ -28,6 +28,7 @@ def main() -> int:
     """@brief Checks the managed runtime before opening the desktop action.
     @return Zero for a ready action, two when engineering readiness fails.
     @details Uses isolated installed code; PCB access requires a user action.
+    Corrects an inherited Windows hidden-window startup flag before recovery.
     """
     entry = Path(__file__).resolve()
     if not sys.flags.isolated:
@@ -35,6 +36,10 @@ def main() -> int:
             [sys.executable, "-I", str(entry), *sys.argv[1:]], check=False
         ).returncode
     root = entry.parent
+    if "--install-archive" in sys.argv or "--uninstall" in sys.argv:
+        from partsmith.pcm.installation import main as installation_main
+
+        return installation_main(sys.argv[1:])
     endpoint = os.environ.pop("KICAD_API_SOCKET", "")
     token = os.environ.pop("KICAD_API_TOKEN", "")
     sys.path.insert(0, str(root))
@@ -42,6 +47,25 @@ def main() -> int:
 
     report = readiness(root)
     _save_report(report)
+    if "--self-test" in sys.argv:
+        if report["state"] != "READY":
+            print(json.dumps(report, sort_keys=True), flush=True)
+            return 2
+        from partsmith.pcm.acceptance import run_corpus
+
+        try:
+            corpus_report = run_corpus(root / "partsmith/pcm/corpus")
+        except Exception:
+            corpus_report = {"state": "FAILED", "code": "CORPUS_CHECK_FAILED"}
+        if "--output" in sys.argv:
+            output = Path(sys.argv[sys.argv.index("--output") + 1])
+            output.parent.mkdir(parents=True, exist_ok=True)
+            output.write_text(
+                json.dumps(corpus_report, sort_keys=True, indent=2) + "\n",
+                encoding="utf-8",
+            )
+        print(json.dumps(corpus_report, sort_keys=True), flush=True)
+        return 0 if corpus_report["state"] == "PASS" else 2
     if "--diagnostics" in sys.argv:
         print(json.dumps(report, sort_keys=True), flush=True)
         return 0 if report["state"] == "READY" else 2
@@ -150,9 +174,30 @@ def main() -> int:
         frame = SetupFrame(
             inspect_pcb=inspect_pcb,
             host_alive=host.is_alive if host is not None else None,
+            recover="--gui-smoke" not in sys.argv,
         )
         frame.Show()
+        if os.name == "nt":
+            import ctypes
+            from ctypes import wintypes
+
+            visible = ctypes.WinDLL("user32").IsWindowVisible
+            visible.argtypes = [wintypes.HWND]
+            visible.restype = wintypes.BOOL
+            # KiCad's hidden-console startup flag can hide the first HWND.
+            # A subsequent explicit show must expose the actual setup frame.
+            if not visible(frame.GetHandle()):
+                frame.Hide()
+                frame.Show()
+            if not visible(frame.GetHandle()):
+                raise RuntimeError("GUI_WINDOW_NOT_VISIBLE")
+        if "--gui-smoke" in sys.argv:
+            wx.CallLater(1500, frame.Close)
         app.MainLoop()
+        if "--gui-smoke" in sys.argv:
+            report["gui_smoke"] = "PASS"
+            _save_report(report)
+            print(json.dumps(report, sort_keys=True), flush=True)
         if host is not None and not host.is_alive():
             report.update(state="CLOSED", code="KICAD_HOST_EXITED")
             _save_report(report)

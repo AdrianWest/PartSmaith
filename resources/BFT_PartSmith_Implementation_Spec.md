@@ -1,7 +1,7 @@
 # PartSmith Implementation Specification
 
 **Specification version:** v0.9.7
-**Status:** Implementation baseline — Phase 13 PASS on the declared Windows target
+**Status:** Phase 13 PASS; Phase 14 acceptance candidate, gate OPEN
 **Document date:** 2026-10-05
 
 **Revision purpose:** Incorporate the project owner's requested R13-01 work
@@ -1557,6 +1557,15 @@ dependencies, and validated dependency/license manifest, without a user
 manually installing Python, CadQuery, OCP, OCCT, Conda, or
 another CAD runtime. All eight production variants pass the complete release
 corpus; single-component success is insufficient for this gate.
+
+**Implementation checkpoint, 2026-10-07:** The executable PCM candidate bundles
+isolated Python/CAD/OCR dependencies and provides offline diagnostics and
+transactional install/upgrade/uninstall operations. PDL schema 1.1 adds explicit
+per-terminal dimensions, bent-lead profiles and measured index geometry;
+symbol serializer 2.0 spaces IC pins. Historical PDL 1.0 and serializer 1.0
+contracts retain their bytes. The pinned `mvp-1@1.1` profile still requires all
+eight STD-010 variants. See [Phase 14 evidence and remaining blockers](../docs/gates/phase-14.md).
+This checkpoint does not assert clean-machine acceptance or Phase 14 PASS.
 
 # B.F.T. --- PartSmith
 
@@ -9010,13 +9019,13 @@ immutable released-package verification, acquisition metadata separate from
 engineering hashes, and a commerce boundary outside the engineering core.
 
 The IR/PDL, profile 1.2 pipeline, immutable review/bundle services and desktop
-workflow have scoped Phase 0–12 evidence; review its actual source/wheel/runtime
-bindings rather than assuming broader product coverage. Earlier gate versions
-and distribution identities remain historical. The v0.9.7 current-input refresh
-records this specification revision and ownership change, not a rerun of old
-tests. Installation contracts and execution remain due at Phase 13.1–13.8;
-production packaging/corpus completion remains Phase 14. Specification-level
-resolution is not an installation implementation PASS.
+workflow have scoped Phase 0–13 evidence; review the recorded source, PCM and
+installed-runtime bindings. Earlier wheel and gate identities remain historical.
+The Phase 13 installation contracts and execution checkpoints have recorded PASS.
+The Phase 14 executable runtime and eight-variant corpus are implemented as an
+acceptance candidate. Clean-machine acceptance and the complete native vendor
+license inventory remain blocking Phase 14 requirements. Refreshing current input
+hashes does not broaden historical execution scope or grant a new gate PASS.
 
 # 246. Consistency Resolution Register
 

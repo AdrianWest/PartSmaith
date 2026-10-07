@@ -1,0 +1,344 @@
+{
+  "schema_version": "1.2",
+  "identity": {
+    "component_id": "01995ead-8000-7000-8000-000000000001",
+    "manufacturer": {
+      "name": "Vishay",
+      "normalized_name": "vishay"
+    },
+    "mpn": "CRCW040210K0FKEA",
+    "normalized_mpn": "CRCW040210K0FKEA",
+    "package_variant": "0402",
+    "evidence_ids": [
+      "E-001"
+    ],
+    "source_document_id": "D-001",
+    "source_revision": "20035 14-Apr-2026"
+  },
+  "source": {
+    "documents": [
+      {
+        "id": "D-001",
+        "path": "fixtures/production/sources/vishay-dcrcwe3.pdf",
+        "sha256": "ca58e35d83dd8da96ae8d4ac84c163e2f2f8d4e1366370f7abd737ec00531135",
+        "revision": "20035 14-Apr-2026"
+      },
+      {
+        "id": "D-MODEL",
+        "path": "fixtures/production/packages.json",
+        "sha256": "d82b232350b095b43bcc7c31a15170a7a1740df3733e1b7eb99fa956d6625fb5",
+        "revision": "1.0"
+      }
+    ]
+  },
+  "electrical": {},
+  "pins": [
+    {
+      "number": "1",
+      "name": "1",
+      "electrical_type": "passive",
+      "function": "1",
+      "active_low": false,
+      "alternate_functions": [],
+      "physical": {
+        "topology_side": "west",
+        "topology_index": 0
+      },
+      "flags": {
+        "exposed_pad": false,
+        "no_connect": false
+      },
+      "status": "DIRECT",
+      "evidence_ids": [
+        "E-PINS"
+      ]
+    },
+    {
+      "number": "2",
+      "name": "2",
+      "electrical_type": "passive",
+      "function": "2",
+      "active_low": false,
+      "alternate_functions": [],
+      "physical": {
+        "topology_side": "east",
+        "topology_index": 0
+      },
+      "flags": {
+        "exposed_pad": false,
+        "no_connect": false
+      },
+      "status": "DIRECT",
+      "evidence_ids": [
+        "E-PINS"
+      ]
+    }
+  ],
+  "package": {
+    "family": "chip_resistor",
+    "variant": "0402",
+    "pin_count": 2,
+    "mechanical": {
+      "body_length": {
+        "source_value": 1,
+        "source_unit": "mm",
+        "status": "DIRECT",
+        "evidence_ids": [
+          "E-001"
+        ]
+      },
+      "body_width": {
+        "source_value": 0.5,
+        "source_unit": "mm",
+        "status": "DIRECT",
+        "evidence_ids": [
+          "E-001"
+        ]
+      },
+      "body_height": {
+        "source_value": 0.35,
+        "source_unit": "mm",
+        "status": "DIRECT",
+        "evidence_ids": [
+          "E-MODEL"
+        ]
+      }
+    },
+    "status": "DIRECT",
+    "evidence_ids": [
+      "E-001"
+    ]
+  },
+  "symbol": {
+    "reference_prefix": "R",
+    "properties": {}
+  },
+  "footprint": {
+    "land_pattern_source": "MANUFACTURER_RECOMMENDED",
+    "properties": {},
+    "status": "DIRECT",
+    "evidence_ids": [
+      "E-LAND"
+    ]
+  },
+  "model_3d": {
+    "required": true,
+    "placement": {
+      "source_coordinate_system": "component",
+      "destination_coordinate_system": "footprint",
+      "translation_mm": [
+        0,
+        0,
+        0
+      ],
+      "rotation_deg": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "mirror": {
+        "x": false,
+        "y": false,
+        "z": false
+      },
+      "units": {
+        "length": "mm",
+        "angle": "deg"
+      },
+      "convention_version": "1.1",
+      "order": "T*R*S*M",
+      "status": "DIRECT",
+      "evidence_ids": [
+        "E-001"
+      ]
+    },
+    "accuracy_class": "CLASS_A"
+  },
+  "evidence": [
+    {
+      "id": "E-001",
+      "type": "MANUFACTURER_DRAWING_AND_PIN_TABLE",
+      "source": {
+        "document_id": "D-001",
+        "document_hash": "ca58e35d83dd8da96ae8d4ac84c163e2f2f8d4e1366370f7abd737ec00531135",
+        "page": 11,
+        "region": null,
+        "coordinate_convention": null,
+        "page_geometry": null,
+        "render_transform": null
+      },
+      "extracted": {
+        "text": "Dimensions and recommended reflow solder pad dimensions; explicit model choices: Terminal profile uses top T1 and bottom T2; envelopes are measured. Manufacturer dimensions include end metallization. Body and metal are separate representative solids; overlap depicts the embedded termination. No polarized marker is applicable.",
+        "value": null,
+        "unit": null
+      },
+      "interpretation": {
+        "normalized_value": null,
+        "status": "DIRECT"
+      },
+      "extractor": {
+        "method": "reviewed-package-corpus",
+        "version": "1.0"
+      },
+      "confidence": {
+        "score": 1,
+        "basis": "Frozen drawing, pin table and explicit model choices"
+      },
+      "acquisition_revision_id": "IR12-1",
+      "candidate_targets": [
+        "/identity",
+        "/package",
+        "/footprint",
+        "/model_3d/placement",
+        "/pins/0",
+        "/pins/1",
+        "/package/mechanical/body_length",
+        "/package/mechanical/body_width",
+        "/package/mechanical/body_height"
+      ]
+    },
+    {
+      "id": "E-MODEL",
+      "type": "EXPLICIT_MODEL_CHOICE",
+      "source": {
+        "document_id": "D-MODEL",
+        "document_hash": "d82b232350b095b43bcc7c31a15170a7a1740df3733e1b7eb99fa956d6625fb5",
+        "page": 1,
+        "region": null,
+        "coordinate_convention": null,
+        "page_geometry": null,
+        "render_transform": null
+      },
+      "extracted": {
+        "text": "Terminal profile uses top T1 and bottom T2; envelopes are measured. Manufacturer dimensions include end metallization. Body and metal are separate representative solids; overlap depicts the embedded termination. No polarized marker is applicable.",
+        "value": null,
+        "unit": null
+      },
+      "interpretation": {
+        "normalized_value": null,
+        "status": "DIRECT"
+      },
+      "extractor": {
+        "method": "reviewed-package-corpus",
+        "version": "1.0"
+      },
+      "confidence": {
+        "score": 1,
+        "basis": "Frozen drawing, pin table and explicit model choices"
+      },
+      "acquisition_revision_id": "IR12-1",
+      "candidate_targets": [
+        "/package/mechanical/body_height"
+      ]
+    },
+    {
+      "id": "E-PINS",
+      "type": "MANUFACTURER_DRAWING_AND_PIN_TABLE",
+      "source": {
+        "document_id": "D-001",
+        "document_hash": "ca58e35d83dd8da96ae8d4ac84c163e2f2f8d4e1366370f7abd737ec00531135",
+        "page": 11,
+        "region": null,
+        "coordinate_convention": null,
+        "page_geometry": null,
+        "render_transform": null
+      },
+      "extracted": {
+        "text": "Dimensions and recommended reflow solder pad dimensions",
+        "value": null,
+        "unit": null
+      },
+      "interpretation": {
+        "normalized_value": null,
+        "status": "DIRECT"
+      },
+      "extractor": {
+        "method": "reviewed-package-corpus",
+        "version": "1.0"
+      },
+      "confidence": {
+        "score": 1,
+        "basis": "Frozen drawing, pin table and explicit model choices"
+      },
+      "acquisition_revision_id": "IR12-1",
+      "candidate_targets": [
+        "/pins/0",
+        "/pins/1"
+      ]
+    },
+    {
+      "id": "E-LAND",
+      "type": "MANUFACTURER_DRAWING_AND_PIN_TABLE",
+      "source": {
+        "document_id": "D-001",
+        "document_hash": "ca58e35d83dd8da96ae8d4ac84c163e2f2f8d4e1366370f7abd737ec00531135",
+        "page": 11,
+        "region": null,
+        "coordinate_convention": null,
+        "page_geometry": null,
+        "render_transform": null
+      },
+      "extracted": {
+        "text": "Dimensions and recommended reflow solder pad dimensions",
+        "value": null,
+        "unit": null
+      },
+      "interpretation": {
+        "normalized_value": null,
+        "status": "DIRECT"
+      },
+      "extractor": {
+        "method": "reviewed-package-corpus",
+        "version": "1.0"
+      },
+      "confidence": {
+        "score": 1,
+        "basis": "Frozen drawing, pin table and explicit model choices"
+      },
+      "acquisition_revision_id": "IR12-1",
+      "candidate_targets": [
+        "/footprint"
+      ]
+    }
+  ],
+  "standards": [],
+  "overrides": [],
+  "validation": {
+    "results": [],
+    "tolerances": {}
+  },
+  "build": {
+    "bft_version": "0.1.0",
+    "kicad_target": "10.x",
+    "pdl_revision": "1.0",
+    "ai_provider": null,
+    "ai_model": null
+  },
+  "revision": {
+    "id": "IR12-1",
+    "parent_id": null,
+    "description": "Manufacturer-backed Phase 14 corpus input",
+    "active_override_ids": [],
+    "active_resolution_ids": [],
+    "evidence_exclusions": [],
+    "target_rebindings": [],
+    "evidence_review": {
+      "inventory_sha256": "35110136d3e2789a261701769dd4486a114789cb5cc4d23ba16f28915de02b27",
+      "reviewed_evidence_ids": [
+        "E-001",
+        "E-MODEL",
+        "E-PINS",
+        "E-LAND"
+      ],
+      "reviewer": "synthetic-reviewer",
+      "timestamp": "2026-09-20T12:00:00Z",
+      "approval_state": "APPROVED"
+    }
+  },
+  "resolutions": []
+}

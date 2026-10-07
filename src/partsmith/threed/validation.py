@@ -8,12 +8,13 @@ import math
 import re
 from dataclasses import asdict, dataclass
 from hashlib import sha256
-from itertools import permutations
+from itertools import combinations
 from pathlib import Path
 
 from partsmith.ir.model import ComponentIR, normalize_ir
 from partsmith.ir.units import normalize_quantity
 from partsmith.pdl import PDL
+from partsmith.threed.package_geometry import terminal_dimensions
 from partsmith.threed.step_backend import StepMeasurement, measure_step
 from partsmith.threed.transform import (
     MirrorState,
@@ -272,9 +273,9 @@ def _match_terminals(
     @param pdl_data Validated package declaration.
     @param body Identified body solid.
     @return Terminal mapping and whether the optimum assignment is unique.
-    @details Three-or-more-terminal packages use exhaustive deterministic
-    signature assignment. Two-terminal symmetric packages retain nearest-anchor
-    matching because their unlabeled geometry cannot establish identity.
+    @details Uses polynomial minimum-cost signature assignment and checks
+    alternatives for ambiguity. A measured production index marker permits
+    coordinate-frame tie breaking for otherwise symmetric lead arrays.
     """
     features = sorted(
         (
@@ -286,7 +287,7 @@ def _match_terminals(
         key=lambda feature: feature["terminal_id"],
     )
     solids = [solid for solid in measurement.solids if solid is not body]
-    if len(solids) != len(features):
+    if len(solids) != len(features) or len(features) > 256:
         return {}, False
     expected_points = tuple(
         tuple(float(value) for value in feature["anchor_mm"])
@@ -313,9 +314,10 @@ def _match_terminals(
         _distance_signature(point, measured_points)
         for point in measured_points
     )
-    candidates = []
-    for assignment in permutations(range(len(solids))):
-        cost = sum(
+    from scipy.optimize import linear_sum_assignment
+
+    costs = [
+        [
             sum(
                 abs(left - right)
                 for left, right in zip(
@@ -324,12 +326,36 @@ def _match_terminals(
                     strict=True,
                 )
             )
-            for index, solid_index in enumerate(assignment)
+            for solid_index in range(len(solids))
+        ]
+        for index in range(len(features))
+    ]
+    if pdl_data["schema_version"] == "1.1" and pdl_data["model_3d"].get(
+        "pin1_marker"
+    ):
+        # The marker is checked from parsed STEP faces below; malformed or
+        # rotated markers remain blocking even when the array is symmetric.
+        costs = [
+            [
+                cost + 1e-4 * math.dist(expected_points[i], measured_points[j])
+                for j, cost in enumerate(row)
+            ]
+            for i, row in enumerate(costs)
+        ]
+    rows, best = linear_sum_assignment(costs)
+    best_cost = sum(costs[i][j] for i, j in zip(rows, best, strict=True))
+    unique = True
+    for row, col in zip(rows, best, strict=True):
+        alternatives = [values.copy() for values in costs]
+        alternatives[row][col] = 1e12
+        other_rows, other_cols = linear_sum_assignment(alternatives)
+        cost = sum(
+            alternatives[i][j]
+            for i, j in zip(other_rows, other_cols, strict=True)
         )
-        candidates.append((cost, assignment))
-    candidates.sort()
-    best_cost, best = candidates[0]
-    unique = len(candidates) == 1 or candidates[1][0] - best_cost > 1e-8
+        if cost - best_cost <= 1e-8:
+            unique = False
+            break
     return (
         {
             feature["terminal_id"]: solids[solid_index]
@@ -604,7 +630,21 @@ def validate_model_3d(
                 )
             )
     if len(expected_points) >= 3 and len(terminals) == len(expected_points):
-        first_id, second_id, third_id = sorted(expected_points)[:3]
+        triples = combinations(sorted(expected_points), 3)
+        first_id, second_id, third_id = next(
+            (
+                ids
+                for ids in triples
+                if abs(
+                    (expected_points[ids[1]][0] - expected_points[ids[0]][0])
+                    * (expected_points[ids[2]][1] - expected_points[ids[0]][1])
+                    - (expected_points[ids[1]][1] - expected_points[ids[0]][1])
+                    * (expected_points[ids[2]][0] - expected_points[ids[0]][0])
+                )
+                > 1e-8
+            ),
+            tuple(sorted(expected_points)[:3]),
+        )
 
         def _signed_area(points) -> float:
             """@brief Return twice the signed XY area of three points.
@@ -672,12 +712,12 @@ def validate_model_3d(
                 tolerance=observable_tolerance,
             )
         )
-        terminal_dimensions = (
+        dimension_axes = (
             ("LENGTH", 0, "length"),
             ("WIDTH", 1, "width"),
             ("HEIGHT", 2, "height"),
         )
-        for kind, axis, dimension_name in terminal_dimensions:
+        for kind, axis, dimension_name in dimension_axes:
             dimension_observable = _observable(
                 pdl_data, feature_id=feature["id"], kind=kind
             )
@@ -685,7 +725,7 @@ def validate_model_3d(
                 continue
             dimension_tolerance = _tolerance(pdl_data, dimension_observable)
             expected_dimension = float(
-                pdl_data["mechanical"]["terminal"][dimension_name][
+                terminal_dimensions(pdl_data, terminal_id)[dimension_name][
                     "nominal_mm"
                 ]
             )
@@ -734,6 +774,30 @@ def validate_model_3d(
                 measured=max(maximum_deviation, body_penetration),
                 expected=0.0,
                 tolerance=plane_tolerance,
+            )
+        )
+    marker = pdl_data["model_3d"].get("pin1_marker")
+    if marker is not None:
+        expected = tuple(map(float, marker["center_mm"]))
+        # A recess cylinder's face center lies halfway along its cut depth.
+        expected = (*expected[:2], expected[2] + float(marker["depth_mm"]) / 2)
+        delta = min(
+            (
+                math.dist(center, expected)
+                for center, radius in body.cylindrical_faces
+                if abs(radius - float(marker["radius_mm"])) < 1e-5
+            ),
+            default=math.inf,
+        )
+        results.append(
+            _result(
+                "pin1-index-geometry",
+                delta <= position_tolerance,
+                "Parsed STEP index recess fixes the package orientation",
+                artifact_ids,
+                measured=delta,
+                expected=0.0,
+                tolerance=position_tolerance,
             )
         )
     return tuple(results)
@@ -786,9 +850,12 @@ _PAD_PATTERN = re.compile(
 )
 
 
-def _pads(footprint_bytes: bytes) -> tuple[dict, ...]:
+def _pads(
+    footprint_bytes: bytes, *, engineering_y: bool = False
+) -> tuple[dict, ...]:
     """@brief Parse supported pads from a generated KiCad footprint.
     @param footprint_bytes KiCad footprint artifact bytes.
+    @param engineering_y Converts native downward Y into engineering upward Y.
     @return Parsed pad mappings in artifact order.
     @details Rejects nonzero rotation and unsupported shapes because PDL 1.0
     cannot declare their geometry for cross-validation.
@@ -802,7 +869,7 @@ def _pads(footprint_bytes: bytes) -> tuple[dict, ...]:
             raise ValueError(f"Unsupported footprint pad shape: {shape_name}")
         if rotation and float(rotation) != 0.0:
             raise ValueError("PDL 1.0 cannot validate rotated pads")
-        center = (float(x), float(y))
+        center = (float(x), -float(y) if engineering_y else float(y))
         size = (float(width), float(height))
         pads.append(
             {
@@ -962,7 +1029,9 @@ def cross_validate_footprint_3d(
         )
 
     try:
-        parsed_pads = _pads(footprint_bytes)
+        parsed_pads = _pads(
+            footprint_bytes, engineering_y=pdl_data["schema_version"] == "1.1"
+        )
     except (UnicodeDecodeError, ValueError) as error:
         return (
             _result(
@@ -1192,7 +1261,7 @@ def cross_validate_footprint_3d(
                 abs(measured_offset[index] - expected_offset[index])
                 for index in range(2)
             )
-            terminal_size = pdl_data["mechanical"]["terminal"]
+            terminal_size = terminal_dimensions(pdl_data, terminal_id)
             nominal_lead_min = (
                 transformed_anchor[0]
                 - float(terminal_size["length"]["nominal_mm"]) / 2,
