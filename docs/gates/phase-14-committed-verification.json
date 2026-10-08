@@ -1,14 +1,14 @@
 {
   "active_manifests": 36,
   "ci_manifests": 13,
-  "commit": "ad097e8ddaf2f3873681adb5fd7bf8c3059864ca",
+  "commit": "cb9adffce72a9eeac89510bb4639c8f134439157",
   "disk_mismatches": 0,
   "git_blob_mismatches": 0,
-  "input_records": 5604,
+  "input_records": 5863,
   "schema_version": "partsmith-committed-gate-inputs-1.0",
   "scope": "Exact input identities; no additional gate acceptance",
   "state": "PASS",
-  "unique_inputs": 2084,
+  "unique_inputs": 2343,
   "verified_active_manifests": [
     "docs/gates/phase-10-artifacts.json",
     "docs/gates/phase-10-parser-fix-2026-10-04.json",
