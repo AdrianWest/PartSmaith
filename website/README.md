@@ -5,11 +5,12 @@ there is no JavaScript framework, build step, package manager, or external font.
 
 ## Files
 
-- `index.html`: homepage content, navigation, and expandable questions.
-- `styles.css`: responsive layout, colors, and keyboard focus styles.
-- `assets/PartSmith-Banner3.png`: unchanged copy of the project owner's banner
+- `/index.html`: homepage at the repository root, including navigation and
+  expandable questions.
+- `/website/styles.css`: responsive layout, colors, and keyboard focus styles.
+- `/website/assets/PartSmith-Banner3.png`: unchanged copy of the owner's banner
   from `resources/PartSmith-Banner3.png`.
-- `.nojekyll`: serves these static files without a Jekyll build.
+- `/.nojekyll`: root marker for serving static files without a Jekyll build.
 
 All local asset paths are relative, so the site works under the GitHub Pages
 project path `/PartSmaith/`, at a domain root, or when opened locally.
@@ -19,18 +20,20 @@ unreleased candidate as a public production download.
 
 ## Preview
 
-Open `website/index.html` in a browser, or serve the folder from the repository:
+Open `index.html` at the repository root in a browser, or serve the repository:
 
 ```powershell
-.venv/Scripts/python.exe -m http.server 8847 --bind 127.0.0.1 --directory website
+.venv/Scripts/python.exe -m http.server 8847 --bind 127.0.0.1
 ```
 
 Then visit `http://127.0.0.1:8847`. Stop the preview server with Ctrl+C.
 
 ## Publish with GitHub Pages
 
-The workflow in `.github/workflows/website.yml` publishes **only this folder**.
-It runs for website changes pushed to `main`, or can be run manually from `main`.
+The workflow in `.github/workflows/website.yml` assembles the root `index.html`,
+`.nojekyll`, and `website` styles/assets into a dedicated `_site` artifact.
+It runs for homepage or website changes pushed to `main`, or can be run manually
+from `main`. Application source and gate evidence are not included in the site.
 
 1. Commit and push the website and workflow to `main` when ready to publish.
 2. In the repository's **Settings → Pages → Build and deployment**, set

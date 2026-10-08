@@ -4,6 +4,8 @@ on:
   push:
     branches: [main]
     paths:
+      - 'index.html'
+      - '.nojekyll'
       - 'website/**'
       - '.github/workflows/website.yml'
   workflow_dispatch:
@@ -31,10 +33,16 @@ jobs:
         uses: actions/checkout@v6
       - name: Configure Pages
         uses: actions/configure-pages@v5
+      - name: Assemble website
+        run: |
+          mkdir -p _site/website
+          cp index.html .nojekyll _site/
+          cp website/styles.css _site/website/
+          cp -R website/assets _site/website/
       - name: Upload website files
         uses: actions/upload-pages-artifact@v4
         with:
-          path: website
+          path: _site
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
