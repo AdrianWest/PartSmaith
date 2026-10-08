@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#0d131e">
+    <meta name="description" content="PartSmith by Board Forge Tools: an evidence-first component builder for KiCad symbols, PCB footprints, and STEP 3D models. Currently in development.">
+    <title>PartSmith | Component Builder for KiCad</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <div class="container header-content">
+        <a class="brand" href="#top" aria-label="PartSmith home">
+          <span class="brand-name">Part<span>Smith</span></span>
+          <span class="brand-owner">Board Forge Tools</span>
+        </a>
+        <nav aria-label="Main navigation">
+          <a href="#overview">Overview</a>
+          <a href="#workflow">Workflow</a>
+          <a href="#get-started">Get started</a>
+          <a class="repository-link" href="https://github.com/AdrianWest/PartSmaith">GitHub <span aria-hidden="true">↗</span></a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <div class="container" id="top">
+        <div class="banner">
+          <img src="assets/PartSmith-Banner3.png" width="2056" height="765" alt="PartSmith: a glowing anvil beside schematic, footprint, and 3D component drawings" fetchpriority="high">
+        </div>
+
+        <section class="intro section" id="overview" aria-labelledby="intro-title">
+          <div>
+            <p class="eyebrow">Component building, with evidence</p>
+            <h1 id="intro-title">Forge the part.<br>Trust the process.</h1>
+            <p class="lead">From manufacturer documentation to reviewable KiCad symbols, PCB footprints, and STEP 3D models. Engineering checks and human approval, built into the workflow.</p>
+            <div class="actions">
+              <a class="button button-primary" href="https://github.com/AdrianWest/PartSmaith">Explore on GitHub <span aria-hidden="true">↗</span></a>
+              <a class="text-link" href="#workflow">See how it works <span aria-hidden="true">↓</span></a>
+            </div>
+          </div>
+          <aside class="project-status" aria-labelledby="status-title">
+            <p class="status-label"><span class="status-dot" aria-hidden="true"></span> In development</p>
+            <h2 id="status-title">Good parts take<br>careful engineering.</h2>
+            <p>We're building PartSmith around traceable inputs, deterministic generation, and explicit review.</p>
+            <p class="release-note">First public release coming soon.</p>
+            <a class="text-link" href="https://github.com/AdrianWest/PartSmaith/releases">Follow releases <span aria-hidden="true">↗</span></a>
+          </aside>
+        </section>
+
+        <section class="section outputs" aria-labelledby="outputs-title">
+          <div class="section-heading">
+            <p class="eyebrow">One component. Three connected outputs.</p>
+            <h2 id="outputs-title">Built for your KiCad library.</h2>
+          </div>
+          <div class="output-grid">
+            <article class="output">
+              <span class="output-number" aria-hidden="true">01 / SYMBOL</span>
+              <svg class="output-icon" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <rect x="20" y="12" width="24" height="40" rx="2"/>
+                <path d="M8 22h12M8 32h12M8 42h12M44 22h12M44 32h12M44 42h12"/>
+                <circle cx="27" cy="20" r="2"/>
+              </svg>
+              <h3>Schematic symbols</h3>
+              <p>Native symbols with reviewed pin mappings and electrical types, ready for engineering inspection.</p>
+              <code>.kicad_sym</code>
+            </article>
+            <article class="output">
+              <span class="output-number" aria-hidden="true">02 / FOOTPRINT</span>
+              <svg class="output-icon" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path stroke-dasharray="4 4" d="M13 8h38v48H13z"/>
+                <rect x="23" y="16" width="18" height="32" rx="1"/>
+                <path d="M8 18h10v8H8zM8 38h10v8H8zM46 18h10v8H46zM46 38h10v8H46z"/>
+              </svg>
+              <h3>PCB footprints</h3>
+              <p>Land patterns tied to package definitions, with dimensional checks and symbol-to-pad cross-validation.</p>
+              <code>.kicad_mod</code>
+            </article>
+            <article class="output">
+              <span class="output-number" aria-hidden="true">03 / 3D MODEL</span>
+              <svg class="output-icon" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="m32 9 24 13v27L32 61 8 48V22zM8 22l24 13 24-13M32 35v26M20 16l24 13"/>
+                <path d="M18 41v7M25 45v7M39 45v7M46 41v7"/>
+              </svg>
+              <h3>STEP 3D models</h3>
+              <p>Parametric CAD models checked against source dimensions and the footprint's explicit 3D placement.</p>
+              <code>.step</code>
+            </article>
+          </div>
+        </section>
+
+        <section class="section workflow" id="workflow" aria-labelledby="workflow-title">
+          <div class="workflow-intro">
+            <p class="eyebrow">The workflow</p>
+            <h2 id="workflow-title">Every output has<br>a source story.</h2>
+            <p>PartSmith keeps the evidence connected to the engineering decisions. Generated files are checked together before a separate release approval.</p>
+            <span class="principle">Evidence first. Review always.</span>
+          </div>
+          <ol class="workflow-steps">
+            <li>
+              <h3>Start with the source</h3>
+              <p>Choose manufacturer documentation and the exact component ordering number.</p>
+            </li>
+            <li>
+              <h3>Review the engineering inputs</h3>
+              <p>Inspect extracted evidence, resolve missing facts, and approve component data and package definitions.</p>
+            </li>
+            <li>
+              <h3>Generate and validate</h3>
+              <p>Build symbols, footprints, and 3D models independently, then check their dimensions and relationships.</p>
+            </li>
+            <li>
+              <h3>Approve the exact release</h3>
+              <p>Review the retained artifacts and validation results before releasing a component bundle for library installation.</p>
+            </li>
+          </ol>
+        </section>
+
+        <section class="section getting-started" id="get-started" aria-labelledby="start-title">
+          <div class="section-heading">
+            <p class="eyebrow">Get involved early</p>
+            <h2 id="start-title">Follow the build.</h2>
+            <p>PartSmith is in active development. Public production downloads are not available yet; the repository has the current documentation and candidate installation guidance.</p>
+          </div>
+          <div class="resource-grid">
+            <a class="resource-link" href="https://github.com/AdrianWest/PartSmaith/blob/main/docs/pcm-installation.md">
+              <span class="resource-label">01 / SETUP</span>
+              <h3>Installation guide <span aria-hidden="true">↗</span></h3>
+              <p>KiCad PCM setup, supported prerequisites, and online environment preparation.</p>
+            </a>
+            <a class="resource-link" href="https://github.com/AdrianWest/PartSmaith#readme">
+              <span class="resource-label">02 / DOCUMENTATION</span>
+              <h3>Project documentation <span aria-hidden="true">↗</span></h3>
+              <p>The engineering approach, current development status, and contributor information.</p>
+            </a>
+            <a class="resource-link" href="https://github.com/AdrianWest/PartSmaith/issues">
+              <span class="resource-label">03 / FEEDBACK</span>
+              <h3>Issues &amp; ideas <span aria-hidden="true">↗</span></h3>
+              <p>Report a problem or share a focused suggestion for the component-building workflow.</p>
+            </a>
+          </div>
+        </section>
+
+        <section class="section questions" aria-labelledby="questions-title">
+          <div>
+            <p class="eyebrow">A few details</p>
+            <h2 id="questions-title">Before you start.</h2>
+          </div>
+          <div class="question-list">
+            <details>
+              <summary>Which platform is the current target?</summary>
+              <p>The current candidate targets Windows AMD64 and KiCad 10.0.6, using KiCad's bundled Python. See the installation guide for the exact supported setup.</p>
+            </details>
+            <details>
+              <summary>Does installation require internet access?</summary>
+              <p>Yes. KiCad prepares the plugin's Python dependencies online. Installation, dependency updates, and environment recreation require internet access. Local processing is available after successful setup.</p>
+            </details>
+            <details>
+              <summary>What needs to be installed manually?</summary>
+              <p>OCR needs Tesseract 5 with English, German, and Simplified Chinese language data. PartSmith checks these at startup and provides installation links if anything is missing.</p>
+            </details>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-content">
+        <p><strong>PartSmith</strong><span>Built by Board Forge Tools.</span></p>
+        <div>
+          <a href="https://github.com/AdrianWest/PartSmaith">Repository</a>
+          <a href="https://github.com/AdrianWest/PartSmaith/releases">Releases</a>
+          <a href="#top">Back to top <span aria-hidden="true">↑</span></a>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
