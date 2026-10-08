@@ -1,6 +1,6 @@
 """@file build_production_pcm.py
-@brief Builds the executable PCM candidate from verified runtime inputs.
-@details Requires a prepared locked runtime; does not install dependencies.
+@brief Builds the online PCM candidate with KiCad-managed dependencies.
+@details Ships source and requirements; KiCad downloads binary wheels.
 """
 
 import argparse
@@ -11,10 +11,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from partsmith.pcm.production import (  # noqa: E402
-    PRODUCTION_VERSION,
-    build_production_pcm,
-)
+from partsmith.pcm.package import VERSION, build_pcm  # noqa: E402
 
 
 def main() -> int:
@@ -23,13 +20,10 @@ def main() -> int:
     @details The receipt is written only after the final ZIP is accepted.
     """
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--runtime", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
-    parser.add_argument("--version", default=PRODUCTION_VERSION)
+    parser.add_argument("--version", default=VERSION)
     args = parser.parse_args()
-    receipt = build_production_pcm(
-        ROOT, args.runtime, args.output, args.version
-    )
+    receipt = build_pcm(ROOT, args.output, args.version)
     receipt_path = args.output.with_suffix(".json")
     receipt_path.write_text(
         json.dumps(receipt, sort_keys=True, indent=2) + "\n", encoding="utf-8"

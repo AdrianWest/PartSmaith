@@ -28,8 +28,8 @@
     "tests/test_extraction_isolation.py": "eeeb609359c2422fa9b55a3932766ef9851f6714521d36cee09f5eac3a6c786c",
     "scripts/verify_pdf_stability.py": "aeb6583abe2a4046e7ea17b92ff875106ac0ddb8125774b9ddd5ae0322d56572",
     ".github/workflows/ci.yml": "2f676be607172e21533480ed50cbacf9cf3b27bd0e640898326ecc3a4d4ccf25",
-    ".gitattributes": "857c38fecbfd69ef13acedce1c2da273b8b417fefe4ce6a1199a98b8b7422053",
-    "README.md": "a2e6f94eb9fa6b3eff20d2c73e2555fceebd1702828894d1e987f44fd1b886fc"
+    ".gitattributes": "32311e453a19a84e40a077156faa10b1f6f09c85127c0e3d14acd0208cdece32",
+    "README.md": "1c6349802529f78a88985ffc335d47760ecba7eda647be91f8871f4a0935acfe"
   },
   "tests": {
     "source": {

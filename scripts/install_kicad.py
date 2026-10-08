@@ -1,5 +1,5 @@
 """@file install_kicad.py
-@brief Builds and installs the development PCM package with KiCad closed.
+@brief Installs the managed-Python PCM package with KiCad closed.
 @details Preserves other packages, runtime environments and rollback backups.
 """
 
@@ -10,6 +10,7 @@ import os
 import subprocess
 import sys
 from pathlib import Path
+from zipfile import ZipFile
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
@@ -78,16 +79,19 @@ def require_closed_kicad() -> None:
 from partsmith.pcm.installation import (  # noqa: E402,F401
     install_archive,
     require_owned_path,
+    uninstall,
 )
 
 
 def main() -> int:
-    """@brief Builds the current development package and installs it locally.
+    """@brief Installs or removes the current managed-Python package locally.
     @return Zero on installation or dry-run success; one on a rejected install.
     @details Requires Windows Python 3.12 and preserves existing preferences.
     """
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--archive", type=Path)
+    action = parser.add_mutually_exclusive_group()
+    action.add_argument("--archive", type=Path)
+    action.add_argument("--uninstall", action="store_true")
     parser.add_argument("--settings-dir", type=Path)
     parser.add_argument("--third-party-dir", type=Path)
     parser.add_argument("--dry-run", action="store_true")
@@ -102,6 +106,13 @@ def main() -> int:
             args.settings_dir, args.third_party_dir
         )
         require_closed_kicad()
+        if args.uninstall:
+            if args.dry_run:
+                print("Dry run: no installation files changed.")
+                return 0
+            report = uninstall(settings, third_party)
+            print("Removed PartSmith; backup: " + str(report.get("backup")))
+            return 0
         common = json.loads((settings / "kicad_common.json").read_bytes())
         interpreter = (common.get("api") or {}).get("interpreter_path")
         if not interpreter or not Path(interpreter).is_file():
@@ -131,6 +142,12 @@ def main() -> int:
         archive = args.archive or ROOT / f"dist/partsmith-{VERSION}-pcm.zip"
         if args.archive is None:
             build_pcm(ROOT, archive, VERSION)
+        with ZipFile(archive) as package:
+            plugin = json.loads(package.read("plugins/plugin.json"))
+        if plugin.get("runtime", {}).get("type") != "python":
+            raise ValueError(
+                "Only KiCad-managed Python packages are supported"
+            )
         report = install_archive(
             archive.resolve(),
             settings,

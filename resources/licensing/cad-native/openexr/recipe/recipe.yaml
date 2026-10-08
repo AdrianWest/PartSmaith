@@ -1,0 +1,71 @@
+context:
+  name: openexr
+  version: "3.4.12"
+
+package:
+  name: ${{ name|lower }}
+  version: ${{ version }}
+
+source:
+  url: https://github.com/AcademySoftwareFoundation/openexr/archive/v${{ version }}.tar.gz
+  sha256: a455779c389f65c64220d45b63ead2900081e5f6337cdf93431cb1032c3e2686
+
+build:
+  number: 0
+
+requirements:
+  build:
+    - ${{ compiler('cxx') }}
+    - ${{ stdlib("c") }}
+    - cmake
+    - ninja
+    - pkg-config
+  host:
+    - libdeflate
+    - imath
+    - openjph
+    - zlib
+  run_exports:
+    # https://abi-laboratory.pro/?view=timeline&l=openexr
+    - ${{ pin_subpackage(name, upper_bound="x.x") }}
+
+tests:
+  - package_contents:
+      include:
+        - OpenEXR/OpenEXRConfig.h
+        - OpenEXR/IexConfig.h
+      lib:
+        - Iex
+        - IlmThread
+        - OpenEXR
+      files:
+        - "**/lib/pkgconfig/OpenEXR.pc"
+  - script:
+      - exrinfo --help
+      - exrmakepreview --help
+
+about:
+  homepage: https://github.com/openexr/openexr
+  license: BSD-3-Clause
+  license_file: LICENSE.md
+  summary: |
+    OpenEXR is a high dynamic-range (HDR) image file format developed by
+    Industrial Light & Magic for use in computer imaging applications.
+  description: |
+    OpenEXR is a high dynamic-range (HDR) image file format developed by
+    Industrial Light & Magic (ILM) for use in computer imaging applications. It
+    supports stereoscopic and deep images. Weta Digital, Walt Disney Animation
+    Studios, Sony Pictures Imageworks, Pixar Animation Studios, DreamWorks, and
+    other studios, companies, and individuals have made contributions to the
+    code base. The file format has seen wide adoption in a number of industries.
+  documentation: http://www.openexr.com/documentation.html
+  repository: https://github.com/openexr/openexr
+
+extra:
+  recipe-maintainers:
+    - aaronang
+    - SylvainCorlay
+    - wolfv
+    - npavlovikj
+    - JohanMabille
+    - pkgw

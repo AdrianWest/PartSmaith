@@ -77,7 +77,7 @@
     "docs/gates/phase-11-finding-fixes-2026-10-04.md": "c0bf6499b607f7020fab15de16caeebc67875e94ddf8c4be341c76771a1dab7e",
     "fixtures/ir/v1.2/valid/0402.json": "ff8f8697ef789b694123385a73777787ec16b1b8ebb8d9c9fd590cc4078a1063",
     "pyproject.toml": "4cb461dcf646b7b46340bfcad88892c3aee25d4819abb3bc4bf75c60e83d0613",
-    "resources/BFT_PartSmith_Implementation_Spec.md": "e50eb21a9837d6b33878bf23897bd5aedbbd9dc406d465f488846a9a331a5d05",
+    "resources/BFT_PartSmith_Implementation_Spec.md": "43fb82cb0f4c79b0db397ef17a81b84d786971bd2701c92475323c43f5df0460",
     "scripts/verify_ai_live.py": "83f9dc0d4cb12f838ba506c5c928132d63c607c47102cad772a9f1fbd7ea6bd9",
     "scripts/verify_gui.py": "ad65b4bef1576869a0959d823434e6bef60dd71d054a79841381bc4e9f479931",
     "scripts/verify_phase11_review.py": "9d0b0055896af3facdd444a09a2157d559dc33f4d68358205f8d3857db64f2f6",

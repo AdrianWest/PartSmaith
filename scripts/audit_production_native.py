@@ -1,16 +1,21 @@
 """@file audit_production_native.py
-@brief Inventories native wheel binaries without claiming license approval.
+@brief Inventories native runtime binaries and records verified CAD vendors.
 @details Producer-only pefile reads version resources without loading DLLs.
 Binary versions are observations, not verified upstream source provenance.
 """
 
 import argparse
 import json
+import sys
 from pathlib import Path
 
 import pefile
 
-from partsmith.pcm.bundle import file_identity
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "src"))
+
+from partsmith.pcm.bundle import file_identity  # noqa: E402
+from partsmith.pcm.licensing import validate_cad_vendors  # noqa: E402
 
 
 def versions(path: Path) -> dict[str, str]:
@@ -39,8 +44,8 @@ def versions(path: Path) -> dict[str, str]:
 def main() -> int:
     """@brief Writes exact binary identities and remaining audit obligations.
     @return Zero after every inspected binary matches the production lock.
-    @details Every native wheel remains pending vendor-level review, including
-    static dependencies that PE filename/version metadata cannot enumerate.
+    @details The 24 additional CAD DLLs have separate reproduced-source proof.
+    Other static dependencies cannot be approved from PE metadata alone.
     """
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--runtime", type=Path, required=True)
@@ -52,12 +57,17 @@ def main() -> int:
     )
     args = parser.parse_args()
     lock = json.loads(args.lock.read_bytes())
+    ledger_path = Path("resources/licensing/cad-native/vendors.json")
+    ledger = json.loads(ledger_path.read_bytes())
+    validate_cad_vendors(lock, ledger)
     components = []
     for component in lock["components"]:
+        if component["name"].startswith("cad-vendor-"):
+            continue
         binaries = []
         for name in component["files"]:
             record = lock["files"][name]
-            if not record["artifact"].endswith(".whl") or Path(
+            if name.startswith("licenses/") or Path(
                 name
             ).suffix.lower() not in {".dll", ".pyd", ".exe"}:
                 continue
@@ -80,25 +90,45 @@ def main() -> int:
                     "source": component["source"],
                     "original_archive_sha256": component["sha256"],
                     "retained_notices": component["license_files"],
-                    "vendor_license_review": "PENDING",
+                    "vendor_license_review": (
+                        "ADDITIONAL_DLLS_VERIFIED_SDK_STATIC_INPUTS_PENDING"
+                        if component["name"] == "cadquery-ocp"
+                        else "PENDING_SOURCE_CLOSURE"
+                    ),
                     "binaries": binaries,
                 }
             )
     report = {
-        "schema_version": "partsmith-native-license-audit-1.0",
-        "state": "PENDING_VENDOR_AUDIT",
+        "schema_version": "partsmith-native-license-audit-2.0",
+        "state": "BLOCKED_NATIVE_SOURCE_PROVENANCE",
         "runtime_lock_sha256": file_identity(args.lock)["sha256"],
-        "scope": "Exact native wheel binary inventory; no license approval",
+        "scope": (
+            "Exact native runtime inventory and additional CAD vendor proof"
+        ),
         "required_review": [
             "Identify every dynamic and static upstream vendor dependency",
             "Verify exact vendor version, source and build provenance",
             "Retain required original license and copyright notices",
             "Satisfy applicable source and redistribution obligations",
         ],
-        "known_gap": (
-            "cadquery_ocp.libs contains FreeImage, FreeType, OpenEXR/Imath, "
-            "LibRaw and codec binaries without a complete vendor notice set"
-        ),
+        "verified_additional_cad_vendors": {
+            "state": ledger["state"],
+            "ledger": ledger_path.as_posix(),
+            "ledger_identity": file_identity(ledger_path),
+            "vendors": len(ledger["vendors"]),
+            "dynamic_dlls": 24,
+            "static_dependency": "JPEG XR 1.1 in FreeImage",
+            "scope": ledger["scope"],
+            "receipt": (
+                "docs/gates/phase-14-license-audit/cad-verification.json"
+            ),
+        },
+        "known_gaps": [
+            "OCP/OCCT cached SDK and header-only inputs are not pinned fully",
+            "CasADi external source refs include master/develop/main",
+            "Other native wheels need static/dynamic vendor source closure",
+            "OCR GPL/LGPL libraries need corresponding source/build closure",
+        ],
         "components": components,
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
@@ -106,7 +136,10 @@ def main() -> int:
         json.dumps(report, sort_keys=True, indent=2) + "\n", "utf-8"
     )
     print(
-        "Inventoried", len(components), "native wheels; vendor audit pending"
+        "Inventoried",
+        len(components),
+        "native runtime components; 20 additional CAD vendors verified;",
+        "full native source closure blocked",
     )
     return 0
 

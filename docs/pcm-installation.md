@@ -5,22 +5,37 @@ PartSmith's customer plugin artifact is a KiCad Plugin and Content Manager
 CPython 3.12. The [full Phase 13 gate](gates/phase-13.md) passes on this declared
 target. Its final package is `dist/partsmith-0.1.9-pcm.zip`; actual PCM lifecycle,
 prepared runtime, native editors and official PCB IPC have separate supervised
-evidence. There is no public production release. Clean-machine production/offline
+evidence. There is no public production release. Clean-machine online production
 acceptance remains Phase 14.
 
-## Phase 14 executable candidate
+## Supported online installation
 
-Candidate **0.2.0** bundles its isolated Python, CAD, PDF, GUI and OCR runtime.
-It uses KiCad's `exec` action and does not use KiCad's Python environment or
-customer pip/Conda. With KiCad closed, run
-[`install_production.bat`](../install_production.bat). The installer verifies the
-candidate archive, uses a spare bundled runtime and retains a rollback backup.
-The same batch accepts `-Archive C:/path/candidate.zip` and `-Uninstall`.
+Candidate **0.3.0** uses Python IPC and KiCad's private managed environment.
+PartSmith supplies source, resources and pinned `requirements.txt`; KiCad
+installs the upstream binary wheels, including the CAD DLLs. Installation,
+updates and **Recreate Plugin Environment** require internet access. There is
+no supported offline installer, dependency mirror or optional offline edition.
+Normal local processing and recorded component replay remain available after
+successful environment preparation.
 
-The [Phase 14 report](gates/phase-14.md) records the eight-package corpus,
-installation checks and outstanding clean-machine/native vendor-license audit.
-This is a development acceptance candidate; the production gate remains open.
-The instructions below preserve the separately validated Phase 13 Python path.
+Install `dist/partsmith-0.3.0-pcm.zip` using PCM **Install from File**. Configure
+Python 3.12 in KiCad first: this machine's KiCad 10.0.6 ships Python 3.11.5,
+which cannot satisfy the current NumPy/SciPy/contourpy pins. Tesseract 5 and
+`eng`, `deu`, `chi_sim` language data are external OCR prerequisites; the existing
+adapter discovers the standard Windows installation, PATH or
+`PARTSMITH_TESSERACT`, with `TESSDATA_PREFIX` selecting language data. The Python
+package manager does not provision that standalone OCR executable.
+
+For this prepared repository, `install_partsmith.bat` builds and installs the
+current managed package. `install_production.bat` installs the prebuilt online
+candidate using the repository's Python environment; `-Archive`, `-DryRun` and
+`-Uninstall` are supported. Customer installation and removal use PCM and do not
+require this checkout or these helpers.
+
+The [Phase 14 report](gates/phase-14.md) records current checks and remaining
+online acceptance work. The 0.2.x bundled executable experiment and its receipts
+are retained as historical evidence, with no ongoing offline maintenance.
+The production gate remains open; this policy change does not grant a PASS.
 
 ## Install and prepare
 

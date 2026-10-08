@@ -1,0 +1,2583 @@
+{
+  "core_source_material": [
+    {
+      "filename": "occt-7.9.3.tar.gz",
+      "path": "licenses/cad-native/sources/occt-7.9.3.tar.gz",
+      "scope": "Upstream declared sources and recipes; cached SDK build inputs still unverified",
+      "sha256": "5ecf094ec6b12d5413dfb851d8c3590c354058aee556e32e408bdfbf8c357d57",
+      "size": 48586815,
+      "url": "https://github.com/Open-Cascade-SAS/OCCT/archive/refs/tags/V7_9_3.tar.gz"
+    },
+    {
+      "filename": "ocp-build-system-df2c31c.zip",
+      "path": "licenses/cad-native/sources/ocp-build-system-df2c31c.zip",
+      "scope": "Upstream declared sources and recipes; cached SDK build inputs still unverified",
+      "sha256": "f7b8c3a54bc91a0803aa39bd7af7cf4073f137011463bae7c276cc6dcc776619",
+      "size": 1418740,
+      "url": "https://github.com/CadQuery/ocp-build-system/archive/df2c31c25b8fce57c497895aa514e9c3550c9f02.zip"
+    },
+    {
+      "filename": "OCP_src_stubs_Windows-7.9.3.1.1.zip",
+      "path": "licenses/cad-native/sources/OCP_src_stubs_Windows-7.9.3.1.1.zip",
+      "scope": "Upstream declared sources and recipes; cached SDK build inputs still unverified",
+      "sha256": "290941ef2d34e7b10b7b6bde4577c5d5d0e703342f934c29a55660caaed8dd5b",
+      "size": 6481047,
+      "url": "https://github.com/CadQuery/OCP/releases/download/7.9.3.1.1/OCP_src_stubs_Windows.zip"
+    }
+  ],
+  "occt_binaries": {
+    "runtime/Lib/site-packages/cadquery_ocp.libs/TKBO-c84f1b6c16180f7839820c331d4ad1f9.dll": {
+      "sha256": "f8895395796323cc7d94a9b3b363331e94a52dfc4341024d55973787b4afd6e7",
+      "size": 1971712
+    },
+    "runtime/Lib/site-packages/cadquery_ocp.libs/TKBRep-8c7311fc72689a305d5fb6d914b716bc.dll": {
+      "sha256": "62065f3e8155421cf9fd7c7433f582b13556d8b23a05450cce9e4774449e449a",
+      "size": 925696
+    },
+    "runtime/Lib/site-packages/cadquery_ocp.libs/TKBin-19fce514f1bda984a16b4166db96b98c.dll": {
+      "sha256": "a62fd04d71dd58317281c4bbd13924b4ce6f887b4393056985f1c2d208fa7fbf",
+      "size": 114688
+    },
+    "runtime/Lib/site-packages/cadquery_ocp.libs/TKBinL-f278c65b68aec8ecc3ff65c907d825ea.dll": {
+      "sha256": "f556a4e96c1f0404416256267c26ffab1104683195c4d0614b48ddf1cf2e4309",
+      "size": 259072
+    },
+    "runtime/Lib/site-packages/cadquery_ocp.libs/TKBinTObj-80a7c3f1f62711770f3cef553f6adc96.dll": {
+      "sha256": "8b32bb9649f61f2541dda6b71d6ff89f2c9d923357025366960a6713a82c5beb",
+      "size": 56832
+    },
+    "runtime/Lib/site-packages/cadquery_ocp.libs/TKBinXCAF-28f16b060b7cdb6dc711345cf012ab5e.dll": {
+      "sha256": "773a1d157dab90b503283b2cb1db56adb06e67fe406ea69f263c5803cce0b6d7",
+      "size": 117760
+    },
+    "runtime/Lib/site-packages/cadquery_ocp.libs/TKBool-007b34898926686967dc5e2198e15f6b.dll": {
+      "sha256": "2ee46d5ec73b978ca490c774ca78f39c97a1a7de619f8f4b3a6ca6f04769b378",
+      "size": 3739136
+    },
+    "runtime/Lib/site-packages/cadquery_ocp.libs/TKCAF-1c90ec0e83be6a7c1db9b643f4ea7611.dll": {
+      "sha256": "f30295e948df4e23c7d29b192d9fa05e9c39b6f33b0e0056b7acd29fcd6cf4e8",
+      "size": 527872
+    },
+    "runtime/Lib/site-packages/cadquery_ocp.libs/TKCDF-d1e138f0f8c296d2c1c77da3f1783bbb.dll": {
+      "sha256": "7aa2a70a03a706cf07ab54590c8f5c08b5247a90cbbaba5a13ca4f5c3e8cd0c3",
+      "size": 283136
+    },
+    "runtime/Lib/site-packages/cadquery_ocp.libs/TKDE-6fb18023fd34d7e86ce1c8784392e7b2.dll": {
+      "sha256": "7a7e6da6d585deceafbd9617d2c5c4c683cf38ce3fd3f8417fe231ae26260ff7",
+      "size": 142848
+    },
+    "runtime/Lib/site-packages/cadquery_ocp.libs/TKDEGLTF-709640c69fb6be1bd80b0a87e3a966ae.dll": {
+      "sha256": "7130a7506f5e18d6178cc335cb7c5794bd811b6db6dce2a5445a8ef92defd5ac",
+      "size": 460800
+    },
+    "runtime/Lib/site-packages/cadquery_ocp.libs/TKDEIGES-f1ef2888bc3f4940ab8b669fc3545966.dll": {
+      "sha256": "97071de8f165aae24b9afb7d9f4fb7534262139d41831a7ec7ee46bf3604a4e1",
+      "size": 3267584
+    },
+    "runtime/Lib/site-packages/cadquery_ocp.libs/TKDESTEP-3b6cbd266d70018d74de66353afc4421.dll": {
+      "sha256": "9cdb806c7b94ca0127932b8cc200377375fcfa1cba40585adff0f02b79bf87a7",
+      "size": 5988352
+    },
+    "runtime/Lib/site-packages/cadquery_ocp.libs/TKDESTL-c6aafdf288df5845abba5b5b52a2a1fe.dll": {
+      "sha256": "b1a7f879af761de6513823c560d050a267c8c47c6341070c0dc9afeee1c56e70",
+      "size": 120320
+    },
+    "runtime/Lib/site-packages/cadquery_ocp.libs/TKDEVRML-36d4cc52d62bb01c58452cd28e978c2c.dll": {
+      "sha256": "270c3d067325c337bb2668517e5547e51dc425f8586cc3e2114ad0936e9f4dfb",
+      "size": 512512
+    },
+    "runtime/Lib/site-packages/cadquery_ocp.libs/TKExpress-54963997344179661d9db82c8fe861ac.dll": {
+      "sha256": "51f4ed84d6bc090f44fa62ecf099c0584b42779d63a174eda4cc435c015fea85",
+      "size": 501248
+    },
+    "runtime/Lib/site-packages/cadquery_ocp.libs/TKFeat-1921fdfdbfd64f4e7996a3f5d8eef005.dll": {
+      "sha256": "59a2c2d683f180137db24b61a0b71e5f09e2d6ea2a7e4b8cc10d009198c2ce7d",
+      "size": 1084416
+    },
+    "runtime/Lib/site-packages/cadquery_ocp.libs/TKFillet-e947317f6ab487710fed853550c5ef82.dll": {
+      "sha256": "30dc3d9e468ac76c4eb1b81d74546ee62c4f7e353eacfe9a6a50726ef73d62c8",
+      "size": 2292224
+    },
+    "runtime/Lib/site-packages/cadquery_ocp.libs/TKG2d-18c19f30d271bde90cc154a46ff9462b.dll": {
+      "sha256": "df3d19da6a4a803bd2cdebe8e9f16a636aac023f10f9112c3a755649ee8083d7",
+      "size": 287744
+    },
+    "runtime/Lib/site-packages/cadquery_ocp.libs/TKG3d-48b1338efcff88b8bedc336d67d600c0.dll": {
+      "sha256": "38b58a769b80829a60e569d66f2eaaf04a4cde5f1bdcdf458ea18d47804114a0",
+      "size": 914432
+    },
+    "runtime/Lib/site-packages/cadquery_ocp.libs/TKGeomAlgo-550728fcf92cbddabda6e6451ed83842.dll": {
+      "sha256": "3bf51c844d1e03ad07f9cc0a38314681bc8806ef8a2673e05df9ea032f05ff17",
+      "size": 4301312
+    },
+    "runtime/Lib/site-packages/cadquery_ocp.libs/TKGeomBase-8fc85285f54b38dc20e83806f0c4d18e.dll": {
+      "sha256": "b731301b7ab0d7ffd9535e61385e06203cdad5015e96568a4d17ae31541eb5d2",
+      "size": 4072448
+    },
+    "runtime/Lib/site-packages/cadquery_ocp.libs/TKHLR-19e23b80576261824fce86474e924793.dll": {
+      "sha256": "3fe4107272b39fbd6632edec8afa055d48c9da318b270acfb23b19e761af4df9",
+      "size": 992256
+    },
+    "runtime/Lib/site-packages/cadquery_ocp.libs/TKIVtk-9a979cfa5c26dd16069397f8760edae0.dll": {
+      "sha256": "d7743812420d1a72bd67543197eb84ef837ca4983b68e3bb0df8fcb8e7774ca9",
+      "size": 207872
+    },
+    "runtime/Lib/site-packages/cadquery_ocp.libs/TKLCAF-181df30dce4e7782a02dce730e6aca0b.dll": {
+      "sha256": "5abbda89b284d4c125e355f1d53738ef57cc351a01fe0740f47fc022ca2a8cad",
+      "size": 694272
+    },
+    "runtime/Lib/site-packages/cadquery_ocp.libs/TKMath-1767a51b1d40676e46719efc947fec48.dll": {
+      "sha256": "56dff973e95c93f629b1c9cfaada4f623da488fc8507a0c5660eab4fcc750b16",
+      "size": 1366528
+    },
+    "runtime/Lib/site-packages/cadquery_ocp.libs/TKMesh-9efb1a5010e57874592168e741b3f036.dll": {
+      "sha256": "d867f262de53c19072e6ede5caae3b9f3163b6f8a38341b02b53419a76427b3f",
+      "size": 617984
+    },
+    "runtime/Lib/site-packages/cadquery_ocp.libs/TKMeshVS-40ea3ec0fb6263b1a384244c06b94206.dll": {
+      "sha256": "201bdc63fd435a305747e1969f86f81e94702ed127f23d145d7a5877e9ce06ac",
+      "size": 306176
+    },
+    "runtime/Lib/site-packages/cadquery_ocp.libs/TKOffset-9060e78c3c34373e433433ef1d4b46e8.dll": {
+      "sha256": "8cca2d03a482c1149fbee17f1f68355d63d535c445edbe69eda73d407dd03964",
+      "size": 1904128
+    },
+    "runtime/Lib/site-packages/cadquery_ocp.libs/TKOpenGl-c3ff5467e3b59458d6cda3cf8f7c50c6.dll": {
+      "sha256": "f0674809a01335cda8d86db39cde0edcf3f0cb7b769055d9d0cf41f07b93035f",
+      "size": 1337344
+    },
+    "runtime/Lib/site-packages/cadquery_ocp.libs/TKPrim-e506153986164d1ed31e131e34157c8b.dll": {
+      "sha256": "c21a0c57eee8fc94d67f28a08077a18498f69e5caca1754162dedbce0356967c",
+      "size": 312320
+    },
+    "runtime/Lib/site-packages/cadquery_ocp.libs/TKRWMesh-cf06ba955300926ad115c5b87c6dcdc2.dll": {
+      "sha256": "72a3b61b49f8c88c8225fe652b372f87b3da0cfbc0d7857db625ff6870419e62",
+      "size": 154112
+    },
+    "runtime/Lib/site-packages/cadquery_ocp.libs/TKService-7d8d3d734f57948f3859748a24d03c49.dll": {
+      "sha256": "ca8f49b35544dac8da063c3e72d094c4e65400054c4c99a2ec0e62db159a2f46",
+      "size": 1015808
+    },
+    "runtime/Lib/site-packages/cadquery_ocp.libs/TKShHealing-4f155252d6566ba5272a14a6bf6d2816.dll": {
+      "sha256": "8606f85e9073a7b2ee4d3fdf9a99918316481b7530be7e797eb17c31e35b4041",
+      "size": 2599936
+    },
+    "runtime/Lib/site-packages/cadquery_ocp.libs/TKStd-dae52fac99b4dc67e49bf47f29f5957f.dll": {
+      "sha256": "05bd6eb6c5f0b9406a1436297d0c65a3cbe501dca418ee4c5e7061bb977dcfb6",
+      "size": 616960
+    },
+    "runtime/Lib/site-packages/cadquery_ocp.libs/TKStdL-7960bc2ce9c34001884414af5476c7f7.dll": {
+      "sha256": "c3568a46d076a04ed890b3737086bc60e10c3e2c07a229ff572e35ff1e23951f",
+      "size": 235520
+    },
+    "runtime/Lib/site-packages/cadquery_ocp.libs/TKTObj-53206b9eb2d4dda5c98a87e267370ad8.dll": {
+      "sha256": "5f9cb82a83e6284c747e25753c6cae9232528ba94a7dc0de08f2671c2196ea4b",
+      "size": 217600
+    },
+    "runtime/Lib/site-packages/cadquery_ocp.libs/TKTopAlgo-de3c4c9d4ebe455706afea1bd74bd249.dll": {
+      "sha256": "abb6b832a879b41aed5fe4b3aaaac5c9681be9bd229769d03f0aa47a4cbe9aca",
+      "size": 2401280
+    },
+    "runtime/Lib/site-packages/cadquery_ocp.libs/TKV3d-2a4c196a3b7bf1137097387454480fee.dll": {
+      "sha256": "a318b7cf22b6a3ccfcc6ce6fe20c3d0bdf15577ad9ea63f3873e253bbb93f216",
+      "size": 2502656
+    },
+    "runtime/Lib/site-packages/cadquery_ocp.libs/TKVCAF-8a749d01a8e71077214d12a2eaf4d68f.dll": {
+      "sha256": "aa8eb4959373859685d1529a448649ee22892ff8aa9ca3826cc2933f223a2052",
+      "size": 193536
+    },
+    "runtime/Lib/site-packages/cadquery_ocp.libs/TKXCAF-7cf3940fe49e9aec3a9b40dfad406db2.dll": {
+      "sha256": "67ef84ef590f843f5b36ed5e2f1f61f0dd68efbb521d9ad9ad0ac9e7fbd5301b",
+      "size": 845824
+    },
+    "runtime/Lib/site-packages/cadquery_ocp.libs/TKXSBase-88c690ecd4cc93fb029ca7b044f400e5.dll": {
+      "sha256": "548899d46daea89104e94a0142ab385313a9d19f398b043ce904edd0250fa1f1",
+      "size": 1753600
+    },
+    "runtime/Lib/site-packages/cadquery_ocp.libs/TKXml-4ead9a8f31b74f656adbc42691649b97.dll": {
+      "sha256": "c5961fadd2124898fe3ef8db4068f72d5f6d2ce4ad0ef353fe65ed0a196c9879",
+      "size": 171008
+    },
+    "runtime/Lib/site-packages/cadquery_ocp.libs/TKXmlL-f4ca4c4ae4538a3fdd449e473c730e9a.dll": {
+      "sha256": "47f8b441ba1d8c8859e3c643f2abc4437e23b6e953ba023e4c17b226b37324ca",
+      "size": 344576
+    },
+    "runtime/Lib/site-packages/cadquery_ocp.libs/TKXmlTObj-b11216df9314f021aa9d1461bd8f135c.dll": {
+      "sha256": "39bde915499bbd120dec1019249f2f6d5fb51d4d022a5471e674c353d4a1545d",
+      "size": 55808
+    },
+    "runtime/Lib/site-packages/cadquery_ocp.libs/TKXmlXCAF-b8047885f3635d113eca9c50457f2085.dll": {
+      "sha256": "a6deae0c5000cff374e7057b0525c562ed44bad3d5fead16e0303d7628c087a4",
+      "size": 148480
+    },
+    "runtime/Lib/site-packages/cadquery_ocp.libs/TKernel-7f537ebf992290773c03ef7f618dd6bb.dll": {
+      "sha256": "952aa46e2b3abc5d24e080d8c52f15f0835edf6e65017d1c16d6153b6631c112",
+      "size": 1742848
+    }
+  },
+  "producer_tools": [
+    {
+      "name": "delvewheel",
+      "original_notice_members": [
+        "delvewheel-1.12.1.dist-info/licenses/LICENSE"
+      ],
+      "path": "licenses/cad-native/tools/delvewheel-1.12.1-py3-none-any.whl",
+      "sha256": "19ce88ba99e47c4fe452d5cc394d371499446b922ea2ae0d13682f636d980915",
+      "size": 58820,
+      "source": "https://files.pythonhosted.org/packages/11/7a/69d66800a0e266a3b6de812e9a0e3b88730f18918b1e8cdcf806899e31b0/delvewheel-1.12.1-py3-none-any.whl",
+      "version": "1.12.1"
+    },
+    {
+      "name": "pefile",
+      "original_notice_members": [
+        "pefile-2024.8.26.dist-info/LICENSE"
+      ],
+      "path": "licenses/cad-native/tools/pefile-2024.8.26-py3-none-any.whl",
+      "sha256": "76f8b485dcd3b1bb8166f1128d395fa3d87af26360c2358fb75b80019b957c6f",
+      "size": 74766,
+      "source": "https://files.pythonhosted.org/packages/54/16/12b82f791c7f50ddec566873d5bdd245baa1491bac11d15ffb98aecc8f8b/pefile-2024.8.26-py3-none-any.whl",
+      "version": "2024.8.26"
+    }
+  ],
+  "remaining_scope": [
+    "OCCT and OCP header-only dependencies and cached SDK provenance",
+    "Static/dynamic vendor closure in the other native runtime wheels"
+  ],
+  "repair_tool": {
+    "name": "delvewheel",
+    "version": "1.12.1"
+  },
+  "schema_version": "partsmith-cad-vendors-1.0",
+  "scope": "24 additional CAD DLLs and statically linked JPEG XR",
+  "state": "ADDITIONAL_CAD_VENDORS_VERIFIED",
+  "vendors": [
+    {
+      "binaries": [
+        {
+          "binary": "FreeImage-cdc93a325d5d072e5fb5e9d45cff8d2e.dll",
+          "build": "hf4481c9_24",
+          "bundled_sha256": "670ad2bf7cf19d05a739bc7fc508d27205dade420375a475c0f9437096a37850",
+          "dependencies": [
+            "zlib.dll",
+            "jpeg8.dll",
+            "tiff.dll",
+            "libpng16.dll",
+            "openjp2.dll",
+            "libwebpmux.dll",
+            "libwebp.dll",
+            "raw.dll",
+            "openexr.dll",
+            "iex.dll",
+            "imath.dll",
+            "msvcp140.dll"
+          ],
+          "exact_repair_match": true,
+          "mangled_suffix": "cdc93a325d5d072e5fb5e9d45cff8d2e",
+          "original_member": "Library/bin/FreeImage.dll",
+          "original_sha256": "a84f688160d92efe25ee7864243347864f199f80a97e3fe58afdd026d77a07a0",
+          "package": "freeimage-3.18.0-hf4481c9_24.conda",
+          "package_sha256": "2ce0b1b16c8a902c701c2397efc3943230ebb380ade1691e2df61ea250a53534",
+          "path": "runtime/Lib/site-packages/cadquery_ocp.libs/FreeImage-cdc93a325d5d072e5fb5e9d45cff8d2e.dll",
+          "repaired_sha256": "670ad2bf7cf19d05a739bc7fc508d27205dade420375a475c0f9437096a37850",
+          "version": "3.18.0"
+        }
+      ],
+      "build": "hf4481c9_24",
+      "build_inputs": {
+        "info/about.json": {
+          "path": "licenses/cad-native/freeimage/about.json",
+          "sha256": "56b107399b50ca2d544d165abb944b0ab2dcd507cf995ad8e61f46695827ddfd",
+          "size": 10539
+        },
+        "info/index.json": {
+          "path": "licenses/cad-native/freeimage/index.json",
+          "sha256": "9b5e938ebc90dd01ed37cf9aa966997df9bad3744902610ea93484d904836e07",
+          "size": 703
+        },
+        "info/licenses/license-fi.txt": {
+          "path": "licenses/cad-native/freeimage/licenses/license-fi.txt",
+          "sha256": "0bb9a3123297c73ae6e19c70459fb0e58f313f67ca63176fd43f8e77668b8243",
+          "size": 17577
+        },
+        "info/licenses/license-gplv2.txt": {
+          "path": "licenses/cad-native/freeimage/licenses/license-gplv2.txt",
+          "sha256": "d51615a1a47f1ddbb027920d60d3fc30a00e1284c795a47857883e641349fadf",
+          "size": 17878
+        },
+        "info/licenses/license-gplv3.txt": {
+          "path": "licenses/cad-native/freeimage/licenses/license-gplv3.txt",
+          "sha256": "084be110e3e8757d8e6945cda1fbc7e5073bbe688dc19b92c0d8440155d8e282",
+          "size": 34801
+        },
+        "info/recipe/CMakeLists.txt": {
+          "path": "licenses/cad-native/freeimage/recipe/CMakeLists.txt",
+          "sha256": "fbbacc88197e15be7a8904dc9ddd9364704cb4d7a2a0e5263d14d752845b4bf1",
+          "size": 7578
+        },
+        "info/recipe/FreeImageConfig-dynamic.h": {
+          "path": "licenses/cad-native/freeimage/recipe/FreeImageConfig-dynamic.h",
+          "sha256": "a965b626077a71a61bd3e7caf310a8648e3f8394ecd6f186a464ea2d1b005ad4",
+          "size": 88
+        },
+        "info/recipe/FreeImageConfig-static.h": {
+          "path": "licenses/cad-native/freeimage/recipe/FreeImageConfig-static.h",
+          "sha256": "924072eb4cc81d2dcfa8757b74d6aa8ec94b3aff6dcf27b432bf7a36303901a7",
+          "size": 90
+        },
+        "info/recipe/bld.bat": {
+          "path": "licenses/cad-native/freeimage/recipe/bld.bat",
+          "sha256": "dfc14dee43351efc164e13c9cb84a2220636cf328bb19d6558f5fff3bdcfb8e1",
+          "size": 1683
+        },
+        "info/recipe/build.sh": {
+          "path": "licenses/cad-native/freeimage/recipe/build.sh",
+          "sha256": "d376f11ecb46937a3e6ffff2792d40ec637fed9586de3629bf47d097dd10b528",
+          "size": 1381
+        },
+        "info/recipe/cmake/FindJXR.cmake": {
+          "path": "licenses/cad-native/freeimage/recipe/cmake/FindJXR.cmake",
+          "sha256": "af5f9707e521ae5228778f8b54fd83b2e5dd62610c13e731d13267365bb75d04",
+          "size": 947
+        },
+        "info/recipe/cmake/FindLibRaw.cmake": {
+          "path": "licenses/cad-native/freeimage/recipe/cmake/FindLibRaw.cmake",
+          "sha256": "28ab65a6ce4eb4126ceea220a1778bac33980cc1fe50a3d3562d81fa99658a86",
+          "size": 3551
+        },
+        "info/recipe/cmake/FindWebP.cmake": {
+          "path": "licenses/cad-native/freeimage/recipe/cmake/FindWebP.cmake",
+          "sha256": "69c50163ad7a7c671b817df2f48dca6ce56e525c210581688a9ce09596b83614",
+          "size": 884
+        },
+        "info/recipe/conda_build_config.yaml": {
+          "path": "licenses/cad-native/freeimage/recipe/conda_build_config.yaml",
+          "sha256": "11e80844f0cf4ad057a6ba0be99fd6c45a5f9e6553de83bafeba33f7666ce942",
+          "size": 759
+        },
+        "info/recipe/fix_beta.patch": {
+          "path": "licenses/cad-native/freeimage/recipe/fix_beta.patch",
+          "sha256": "40881acc913971743aa33f958c23a6799e1b25fb68781db94b50722638621e2d",
+          "size": 902
+        },
+        "info/recipe/fix_libraw_0_20.patch": {
+          "path": "licenses/cad-native/freeimage/recipe/fix_libraw_0_20.patch",
+          "sha256": "5f7d877a1eaf179481543d60bf04b12e5504b4c4a004a6f1de27f8b6dc74b631",
+          "size": 1527
+        },
+        "info/recipe/fix_libraw_0_21.patch": {
+          "path": "licenses/cad-native/freeimage/recipe/fix_libraw_0_21.patch",
+          "sha256": "49806e0260e2cf442344b68dfd26c9bcfdc63085d770f85c23b0fb2c16d20777",
+          "size": 2063
+        },
+        "info/recipe/libtiff44.patch": {
+          "path": "licenses/cad-native/freeimage/recipe/libtiff44.patch",
+          "sha256": "ecaeb167f20ee170cd4d406dec1cdc2b831be3ea1a59657b627fb40cc18d57b2",
+          "size": 482
+        },
+        "info/recipe/meta.yaml": {
+          "path": "licenses/cad-native/freeimage/recipe/meta.yaml",
+          "sha256": "bbd87e3099e55e943fa2ce5d180b56e38c96c5cce8a1a1bca9c70e535ff5321e",
+          "size": 3892
+        },
+        "info/recipe/meta.yaml.template": {
+          "path": "licenses/cad-native/freeimage/recipe/meta.yaml.template",
+          "sha256": "98eeb529332e9e857f9bbde3a5a070e16dd5a36948f9ce5d15e23950b6b31075",
+          "size": 3021
+        },
+        "info/recipe/patches/CVE-2019-12211-13.patch": {
+          "path": "licenses/cad-native/freeimage/recipe/patches/CVE-2019-12211-13.patch",
+          "sha256": "2dddbd22170070ea5d1c959c809fdc60f0625e9e51f10d5a34acd70d340e900e",
+          "size": 5390
+        },
+        "info/recipe/patches/Fix-compatibility-with-system-libpng.patch": {
+          "path": "licenses/cad-native/freeimage/recipe/patches/Fix-compatibility-with-system-libpng.patch",
+          "sha256": "31e54fb37988bebf9f060d5f2425e0b205dc84be34b46039d4f1ac36bf00598c",
+          "size": 4072
+        },
+        "info/recipe/patches/Use-system-libs.patch": {
+          "path": "licenses/cad-native/freeimage/recipe/patches/Use-system-libs.patch",
+          "sha256": "55c597b15cd932925769b3eeadf360033aa0fdc2bab3e8390287ae92c072111d",
+          "size": 33189
+        },
+        "info/recipe/patches/freeimage-openexr3.patch": {
+          "path": "licenses/cad-native/freeimage/recipe/patches/freeimage-openexr3.patch",
+          "sha256": "9a89f6cd9fa9a0d59bf2222b35d7b38a355f0dad593a453b5b73eccc42a28e28",
+          "size": 3189
+        },
+        "info/recipe/patches/remove_auto_ptr.patch": {
+          "path": "licenses/cad-native/freeimage/recipe/patches/remove_auto_ptr.patch",
+          "sha256": "12659c31cddcf9bbd87b42dcedf624ff6239fccd1be92271f07050940897c76e",
+          "size": 1383
+        },
+        "info/recipe/recipe-scripts-license.txt": {
+          "path": "licenses/cad-native/freeimage/recipe/recipe-scripts-license.txt",
+          "sha256": "933c7e2f7471d8c90e6aee877c0838fc01b19dd55e362e2e2ec367b74caeb97f",
+          "size": 1568
+        }
+      },
+      "declared_license": "GPL-2.0-or-later OR GPL-3.0-or-later OR FreeImage",
+      "linkage": "DYNAMIC",
+      "name": "freeimage",
+      "notices": {
+        "licenses/cad-native/freeimage/licenses/license-fi.txt": {
+          "sha256": "0bb9a3123297c73ae6e19c70459fb0e58f313f67ca63176fd43f8e77668b8243",
+          "size": 17577
+        },
+        "licenses/cad-native/freeimage/licenses/license-gplv2.txt": {
+          "sha256": "d51615a1a47f1ddbb027920d60d3fc30a00e1284c795a47857883e641349fadf",
+          "size": 17878
+        },
+        "licenses/cad-native/freeimage/licenses/license-gplv3.txt": {
+          "sha256": "084be110e3e8757d8e6945cda1fbc7e5073bbe688dc19b92c0d8440155d8e282",
+          "size": 34801
+        }
+      },
+      "package": "freeimage-3.18.0-hf4481c9_24.conda",
+      "package_identity": {
+        "kind": "conda",
+        "sha256": "2ce0b1b16c8a902c701c2397efc3943230ebb380ade1691e2df61ea250a53534",
+        "size": 469372,
+        "url": "https://conda.anaconda.org/conda-forge/win-64/freeimage-3.18.0-hf4481c9_24.conda"
+      },
+      "selected_license": "GPL-3.0-or-later",
+      "sources": [
+        {
+          "original_recipe_url": "http://downloads.sourceforge.net/freeimage/FreeImage3180.zip",
+          "path": "licenses/cad-native/sources/f41379682f9a-FreeImage3180.zip",
+          "sha256": "f41379682f9ada94ea7b34fe86bf9ee00935a3147be41b6569c9605a53e438fd",
+          "size": 7415716,
+          "url": "https://downloads.sourceforge.net/freeimage/FreeImage3180.zip"
+        }
+      ],
+      "version": "3.18.0"
+    },
+    {
+      "binaries": [
+        {
+          "binary": "freetype-111bbfd18798ec20698ad64fb25a600c.dll",
+          "build": "hdaf720e_2",
+          "bundled_sha256": "f22aff08a7088afca5fbac8f60ff9b4f0f8ece2d09e8e7ed5f6807597f23387b",
+          "dependencies": [
+            "zlib.dll",
+            "libpng16.dll"
+          ],
+          "exact_repair_match": true,
+          "mangled_suffix": "111bbfd18798ec20698ad64fb25a600c",
+          "original_member": "Library/bin/freetype.dll",
+          "original_sha256": "f878121d560f43c398671bc1d0d7a61bf719fa7894eac5a1db665414bcd4096f",
+          "package": "freetype-2.12.1-hdaf720e_2.conda",
+          "package_sha256": "2c53ee8879e05e149a9e525481d36adfd660a6abda26fd731376fa64ff03e728",
+          "path": "runtime/Lib/site-packages/cadquery_ocp.libs/freetype-111bbfd18798ec20698ad64fb25a600c.dll",
+          "repaired_sha256": "f22aff08a7088afca5fbac8f60ff9b4f0f8ece2d09e8e7ed5f6807597f23387b",
+          "version": "2.12.1"
+        }
+      ],
+      "build": "hdaf720e_2",
+      "build_inputs": {
+        "info/about.json": {
+          "path": "licenses/cad-native/freetype/about.json",
+          "sha256": "6bc3a437fafd2c2fcc51b3491c419d154afb3ac4aac415b854c2306fc49ed845",
+          "size": 9094
+        },
+        "info/index.json": {
+          "path": "licenses/cad-native/freetype/index.json",
+          "sha256": "217a7f658a53b801f7f2a9eb22c377f6084eae9c71b834f14376ed446a167873",
+          "size": 405
+        },
+        "info/licenses/docs/FTL.TXT": {
+          "path": "licenses/cad-native/freetype/licenses/docs/FTL.TXT",
+          "sha256": "08c135755dd589039470f1fdbb400daaabaaa50d0b366d19cebff4d22986baa1",
+          "size": 6743
+        },
+        "info/licenses/docs/GPLv2.TXT": {
+          "path": "licenses/cad-native/freetype/licenses/docs/GPLv2.TXT",
+          "sha256": "c4120c6752c910c299e3bd9cb3a46ff262c268303ca2069b61f92f10a5656c18",
+          "size": 17994
+        },
+        "info/recipe/CVE-2022-37434.patch": {
+          "path": "licenses/cad-native/freetype/recipe/CVE-2022-37434.patch",
+          "sha256": "20862a2adf3cf5de4b9b4f91446c2de4291dd1717480f9bb7785291f498e6fc2",
+          "size": 825
+        },
+        "info/recipe/bld.bat": {
+          "path": "licenses/cad-native/freetype/recipe/bld.bat",
+          "sha256": "18b90b72e92a78f46a6bd70900b2cc7a3af0a52a07d280508b33ddb6d9701cb0",
+          "size": 1137
+        },
+        "info/recipe/build.sh": {
+          "path": "licenses/cad-native/freetype/recipe/build.sh",
+          "sha256": "4c1cab3a4462d06ae7671aa410ecedb4703b38689380f2842d0744f205bf057a",
+          "size": 433
+        },
+        "info/recipe/conda_build_config.yaml": {
+          "path": "licenses/cad-native/freetype/recipe/conda_build_config.yaml",
+          "sha256": "b4ff8e915ce58c5c951b36b5b8684dfd7b31278da85172550fdc23a88acd174b",
+          "size": 603
+        },
+        "info/recipe/meta.yaml": {
+          "path": "licenses/cad-native/freetype/recipe/meta.yaml",
+          "sha256": "e9c95ffb17bd6255bf97c66afcaa7fa858f9625f84340344ee5b783a2ec93993",
+          "size": 2456
+        },
+        "info/recipe/meta.yaml.template": {
+          "path": "licenses/cad-native/freetype/recipe/meta.yaml.template",
+          "sha256": "d7d3203f17201a183cd854673511b51c26690afe7c46ad4ba2ce385e0d6063d6",
+          "size": 1507
+        },
+        "info/recipe/recipe-scripts-license.txt": {
+          "path": "licenses/cad-native/freetype/recipe/recipe-scripts-license.txt",
+          "sha256": "933c7e2f7471d8c90e6aee877c0838fc01b19dd55e362e2e2ec367b74caeb97f",
+          "size": 1568
+        }
+      },
+      "declared_license": "GPL-2.0-only OR FTL",
+      "linkage": "DYNAMIC",
+      "name": "freetype",
+      "notices": {
+        "licenses/cad-native/freetype/licenses/docs/FTL.TXT": {
+          "sha256": "08c135755dd589039470f1fdbb400daaabaaa50d0b366d19cebff4d22986baa1",
+          "size": 6743
+        },
+        "licenses/cad-native/freetype/licenses/docs/GPLv2.TXT": {
+          "sha256": "c4120c6752c910c299e3bd9cb3a46ff262c268303ca2069b61f92f10a5656c18",
+          "size": 17994
+        }
+      },
+      "package": "freetype-2.12.1-hdaf720e_2.conda",
+      "package_identity": {
+        "kind": "conda",
+        "sha256": "2c53ee8879e05e149a9e525481d36adfd660a6abda26fd731376fa64ff03e728",
+        "size": 510306,
+        "url": "https://conda.anaconda.org/conda-forge/win-64/freetype-2.12.1-hdaf720e_2.conda"
+      },
+      "selected_license": "FTL",
+      "sources": [
+        {
+          "original_recipe_url": "https://download.savannah.gnu.org/releases/freetype/freetype-2.12.1.tar.gz",
+          "path": "licenses/cad-native/sources/efe71fd4b824-freetype-2.12.1.tar.gz",
+          "sha256": "efe71fd4b8246f1b0b1b9bfca13cfff1c9ad85930340c27df469733bbb620938",
+          "size": 3789426,
+          "url": "https://download.savannah.gnu.org/releases/freetype/freetype-2.12.1.tar.gz"
+        }
+      ],
+      "version": "2.12.1"
+    },
+    {
+      "binaries": [
+        {
+          "binary": "Imath-93e5719ce25c27e234d7d3cfef1a30c5.dll",
+          "build": "h1608b31_0",
+          "bundled_sha256": "5a6f13d69d70f8342d86affed788f8ff882afc14ff4acb0ad25da6da78ae84c1",
+          "dependencies": [
+            "msvcp140.dll"
+          ],
+          "exact_repair_match": true,
+          "mangled_suffix": "93e5719ce25c27e234d7d3cfef1a30c5",
+          "original_member": "Library/bin/Imath.dll",
+          "original_sha256": "f2f504bcc0870ecff6e4f6f26ead22dc41e2827197ca0afa3a88d0dc86b200bc",
+          "package": "imath-3.2.2-h1608b31_0.conda",
+          "package_sha256": "2aa57a5ed668ab34cc061b61082e3cee893d2e45ebc33f9432d13f7f292a990e",
+          "path": "runtime/Lib/site-packages/cadquery_ocp.libs/Imath-93e5719ce25c27e234d7d3cfef1a30c5.dll",
+          "repaired_sha256": "5a6f13d69d70f8342d86affed788f8ff882afc14ff4acb0ad25da6da78ae84c1",
+          "version": "3.2.2"
+        }
+      ],
+      "build": "h1608b31_0",
+      "build_inputs": {
+        "info/about.json": {
+          "path": "licenses/cad-native/imath/about.json",
+          "sha256": "e07c3ca8719dae9e1322702f4fcb24973a44574f79402eb56a835eb34f27164f",
+          "size": 10427
+        },
+        "info/index.json": {
+          "path": "licenses/cad-native/imath/index.json",
+          "sha256": "62210dae8175dde3723860135c78f1dbf5c8729e2f13b66703547370676d31c5",
+          "size": 386
+        },
+        "info/licenses/LICENSE.md": {
+          "path": "licenses/cad-native/imath/licenses/LICENSE.md",
+          "sha256": "c20236d3b39fd20eba8e3d1fb3b892a5483df2e7d8d61bf43f165d3fac22f601",
+          "size": 1497
+        },
+        "info/recipe/bld.bat": {
+          "path": "licenses/cad-native/imath/recipe/bld.bat",
+          "sha256": "21fe6aa586db39866331981698a1e1a329dbb2dc71a69c697d7ed7c1fcdc0998",
+          "size": 316
+        },
+        "info/recipe/build.sh": {
+          "path": "licenses/cad-native/imath/recipe/build.sh",
+          "sha256": "26678c7274f3d2ca2eb05e81aff092661a6fa5535202e2fbb72e8e707629c030",
+          "size": 628
+        },
+        "info/recipe/conda_build_config.yaml": {
+          "path": "licenses/cad-native/imath/recipe/conda_build_config.yaml",
+          "sha256": "2dcb788b6406261bef1d7ad6e93ccb6f76b4cde41663cc1876d749b4beb54b4e",
+          "size": 628
+        },
+        "info/recipe/macos-portability.patch": {
+          "path": "licenses/cad-native/imath/recipe/macos-portability.patch",
+          "sha256": "e20749d1c54c77b4cc8c03b927388d67a0587e70495407aa0da5ed2cafeafba0",
+          "size": 681
+        },
+        "info/recipe/meta.yaml": {
+          "path": "licenses/cad-native/imath/recipe/meta.yaml",
+          "sha256": "c98956a4bbfc4b93872fcdddb7807c45b6c74766dc50760b3de5018a690b4434",
+          "size": 2295
+        },
+        "info/recipe/meta.yaml.template": {
+          "path": "licenses/cad-native/imath/recipe/meta.yaml.template",
+          "sha256": "fa998769f1304a6b2e39a8cad929860a37e2c93177f1b97195b14295bd5ab2d0",
+          "size": 1568
+        },
+        "info/recipe/recipe-scripts-license.txt": {
+          "path": "licenses/cad-native/imath/recipe/recipe-scripts-license.txt",
+          "sha256": "933c7e2f7471d8c90e6aee877c0838fc01b19dd55e362e2e2ec367b74caeb97f",
+          "size": 1568
+        }
+      },
+      "declared_license": "BSD-3-Clause",
+      "linkage": "DYNAMIC",
+      "name": "imath",
+      "notices": {
+        "licenses/cad-native/imath/licenses/LICENSE.md": {
+          "sha256": "c20236d3b39fd20eba8e3d1fb3b892a5483df2e7d8d61bf43f165d3fac22f601",
+          "size": 1497
+        }
+      },
+      "package": "imath-3.2.2-h1608b31_0.conda",
+      "package_identity": {
+        "kind": "conda",
+        "sha256": "2aa57a5ed668ab34cc061b61082e3cee893d2e45ebc33f9432d13f7f292a990e",
+        "size": 162099,
+        "url": "https://conda.anaconda.org/conda-forge/win-64/imath-3.2.2-h1608b31_0.conda"
+      },
+      "selected_license": "BSD-3-Clause",
+      "sources": [
+        {
+          "original_recipe_url": "https://github.com/AcademySoftwareFoundation/Imath/archive/v3.2.2.tar.gz",
+          "path": "licenses/cad-native/sources/b4275d83fb95-v3.2.2.tar.gz",
+          "sha256": "b4275d83fb95521510e389b8d13af10298ed5bed1c8e13efd961d91b1105e462",
+          "size": 689217,
+          "url": "https://github.com/AcademySoftwareFoundation/Imath/archive/v3.2.2.tar.gz"
+        }
+      ],
+      "version": "3.2.2"
+    },
+    {
+      "binaries": [
+        {
+          "binary": "lcms2-7ba64f6e0c66e90b06b6fdda7ed89f37.dll",
+          "build": "hf2c6c5f_0",
+          "bundled_sha256": "7ba64f6e0c66e90b06b6fdda7ed89f37da5988d876860d407965a87fde6b8292",
+          "dependencies": [],
+          "exact_repair_match": true,
+          "mangled_suffix": "7ba64f6e0c66e90b06b6fdda7ed89f37",
+          "original_member": "Library/bin/lcms2.dll",
+          "original_sha256": "7ba64f6e0c66e90b06b6fdda7ed89f37da5988d876860d407965a87fde6b8292",
+          "package": "lcms2-2.19.1-hf2c6c5f_0.conda",
+          "package_sha256": "57ecd32470a2607db238e631cda6d160ad65451715065fc4449acb11fe48fe28",
+          "path": "runtime/Lib/site-packages/cadquery_ocp.libs/lcms2-7ba64f6e0c66e90b06b6fdda7ed89f37.dll",
+          "repaired_sha256": "7ba64f6e0c66e90b06b6fdda7ed89f37da5988d876860d407965a87fde6b8292",
+          "version": "2.19.1"
+        }
+      ],
+      "build": "hf2c6c5f_0",
+      "build_inputs": {
+        "info/about.json": {
+          "path": "licenses/cad-native/lcms2/about.json",
+          "sha256": "1c1f5d6bff40ade90fd75245c91a13eb25cec79b2c782b7d0425097f7448a6fe",
+          "size": 11426
+        },
+        "info/index.json": {
+          "path": "licenses/cad-native/lcms2/index.json",
+          "sha256": "376ec43e01b0154037a12769ba1b5a82008291a9b853f55d7756c21fbb2050b0",
+          "size": 419
+        },
+        "info/licenses/LICENSE": {
+          "path": "licenses/cad-native/lcms2/licenses/LICENSE",
+          "sha256": "6dbd60437f8ef91d8de1f08ad75882547fd4931bfcc3566a0735f28db1484d31",
+          "size": 1080
+        },
+        "info/recipe/bld.bat": {
+          "path": "licenses/cad-native/lcms2/recipe/bld.bat",
+          "sha256": "b20cac27308b128347a3d17ec80375e7de6e41fda7e2164286be79ae8c01d6b3",
+          "size": 978
+        },
+        "info/recipe/build.sh": {
+          "path": "licenses/cad-native/lcms2/recipe/build.sh",
+          "sha256": "44708927106e3e13a9cf870de5633e0c2b8b0763230127d91c01c776ec6c7c3b",
+          "size": 477
+        },
+        "info/recipe/conda_build_config.yaml": {
+          "path": "licenses/cad-native/lcms2/recipe/conda_build_config.yaml",
+          "sha256": "0e2d5d34a3e5ba4264fb2a6983b667ca9e35d7e8425a9b7762e63c9e3683edbd",
+          "size": 666
+        },
+        "info/recipe/meta.yaml": {
+          "path": "licenses/cad-native/lcms2/recipe/meta.yaml",
+          "sha256": "ffd7aa60889a961d808a07513aa19ead417ef6888f831e0a2a53f780fe420bb3",
+          "size": 1881
+        },
+        "info/recipe/meta.yaml.template": {
+          "path": "licenses/cad-native/lcms2/recipe/meta.yaml.template",
+          "sha256": "eb24a01d2a4a14ef2406fc79621eeb2e1646298060df4a73a02fa742af3a7500",
+          "size": 1181
+        },
+        "info/recipe/recipe-scripts-license.txt": {
+          "path": "licenses/cad-native/lcms2/recipe/recipe-scripts-license.txt",
+          "sha256": "b2f940c8e8ed8a05c62c1f7e41d16807a3ef28f7e33f54c3c8d1697b90ec149e",
+          "size": 1546
+        },
+        "info/recipe/win_jpegturbo.patch": {
+          "path": "licenses/cad-native/lcms2/recipe/win_jpegturbo.patch",
+          "sha256": "f396b209ee4d984569d73c1d37471cac59d270f49b087994ae68c63ed6043b00",
+          "size": 7370
+        }
+      },
+      "declared_license": "MIT",
+      "linkage": "DYNAMIC",
+      "name": "lcms2",
+      "notices": {
+        "licenses/cad-native/lcms2/licenses/LICENSE": {
+          "sha256": "6dbd60437f8ef91d8de1f08ad75882547fd4931bfcc3566a0735f28db1484d31",
+          "size": 1080
+        }
+      },
+      "package": "lcms2-2.19.1-hf2c6c5f_0.conda",
+      "package_identity": {
+        "kind": "conda",
+        "sha256": "57ecd32470a2607db238e631cda6d160ad65451715065fc4449acb11fe48fe28",
+        "size": 523813,
+        "url": "https://conda.anaconda.org/conda-forge/win-64/lcms2-2.19.1-hf2c6c5f_0.conda"
+      },
+      "selected_license": "MIT",
+      "sources": [
+        {
+          "original_recipe_url": "https://github.com/mm2/Little-CMS/releases/download/lcms2.19.1/lcms2-2.19.1.tar.gz",
+          "path": "licenses/cad-native/sources/bfc54f7bab59-lcms2-2.19.1.tar.gz",
+          "sha256": "bfc54f7bab59fbc921012014a8032e4cba4abd46db47d46b76416a8c0b2815c8",
+          "size": 5728743,
+          "url": "https://github.com/mm2/Little-CMS/releases/download/lcms2.19.1/lcms2-2.19.1.tar.gz"
+        }
+      ],
+      "version": "2.19.1"
+    },
+    {
+      "binaries": [
+        {
+          "binary": "Lerc-8e574cd1bc0b7f8e260d4530daa7446d.dll",
+          "build": "hd936e49_0",
+          "bundled_sha256": "27385d40523237cf998f5c5030c2c1673e5dbb94872b44f21959175d98aee51e",
+          "dependencies": [
+            "msvcp140.dll"
+          ],
+          "exact_repair_match": true,
+          "mangled_suffix": "8e574cd1bc0b7f8e260d4530daa7446d",
+          "original_member": "Library/bin/Lerc.dll",
+          "original_sha256": "7844ff388c1fe684c95f176a9f256a55af4511c136e3b3340fd8050741ef5d3f",
+          "package": "lerc-4.1.0-hd936e49_0.conda",
+          "package_sha256": "45df58fca800b552b17c3914cc9ab0d55a82c5172d72b5c44a59c710c06c5473",
+          "path": "runtime/Lib/site-packages/cadquery_ocp.libs/Lerc-8e574cd1bc0b7f8e260d4530daa7446d.dll",
+          "repaired_sha256": "27385d40523237cf998f5c5030c2c1673e5dbb94872b44f21959175d98aee51e",
+          "version": "4.1.0"
+        }
+      ],
+      "build": "hd936e49_0",
+      "build_inputs": {
+        "info/about.json": {
+          "path": "licenses/cad-native/lerc/about.json",
+          "sha256": "92fc015761898bf941e1467aa67dcb34041cd14530d47dd8648f4557ad5cc0d6",
+          "size": 11596
+        },
+        "info/index.json": {
+          "path": "licenses/cad-native/lerc/index.json",
+          "sha256": "70eb961ed7402ea880d35a2371e5d1dfb69e4bc6d96a4be05b8bf86fa113e84a",
+          "size": 355
+        },
+        "info/licenses/LICENSE": {
+          "path": "licenses/cad-native/lerc/licenses/LICENSE",
+          "sha256": "77a8b761727c75e2167b15bfdf61b2c0bcf8792271228bebe80779106ad00671",
+          "size": 9198
+        },
+        "info/recipe/bld.bat": {
+          "path": "licenses/cad-native/lerc/recipe/bld.bat",
+          "sha256": "cbb7363f095c80c1c61e3d9d7c0af38e66805c636a1141139d588c8309227abd",
+          "size": 338
+        },
+        "info/recipe/build.sh": {
+          "path": "licenses/cad-native/lerc/recipe/build.sh",
+          "sha256": "3651b381c78a24dcd7a85e842cecb99cf87bd83b69c7773c2ca637838d5185a6",
+          "size": 249
+        },
+        "info/recipe/conda_build_config.yaml": {
+          "path": "licenses/cad-native/lerc/recipe/conda_build_config.yaml",
+          "sha256": "e372786735fa14d4cc639f892a0740299d85d1ffb80bb217b2df97f88a934fe8",
+          "size": 638
+        },
+        "info/recipe/meta.yaml": {
+          "path": "licenses/cad-native/lerc/recipe/meta.yaml",
+          "sha256": "d39504e7189468f8fc2a17e8d98eef12f9e8e4fd41d2d355b2baf706f542b60d",
+          "size": 2383
+        },
+        "info/recipe/meta.yaml.template": {
+          "path": "licenses/cad-native/lerc/recipe/meta.yaml.template",
+          "sha256": "b7688ce834879d77de0b30f4ce34d18722ff914cf5f111b26098dfc78f709aab",
+          "size": 1584
+        },
+        "info/recipe/recipe-scripts-license.txt": {
+          "path": "licenses/cad-native/lerc/recipe/recipe-scripts-license.txt",
+          "sha256": "b2f940c8e8ed8a05c62c1f7e41d16807a3ef28f7e33f54c3c8d1697b90ec149e",
+          "size": 1546
+        }
+      },
+      "declared_license": "Apache-2.0",
+      "linkage": "DYNAMIC",
+      "name": "lerc",
+      "notices": {
+        "licenses/cad-native/lerc/licenses/LICENSE": {
+          "sha256": "77a8b761727c75e2167b15bfdf61b2c0bcf8792271228bebe80779106ad00671",
+          "size": 9198
+        }
+      },
+      "package": "lerc-4.1.0-hd936e49_0.conda",
+      "package_identity": {
+        "kind": "conda",
+        "sha256": "45df58fca800b552b17c3914cc9ab0d55a82c5172d72b5c44a59c710c06c5473",
+        "size": 172395,
+        "url": "https://conda.anaconda.org/conda-forge/win-64/lerc-4.1.0-hd936e49_0.conda"
+      },
+      "selected_license": "Apache-2.0",
+      "sources": [
+        {
+          "original_recipe_url": "https://github.com/Esri/lerc/archive/v4.1.0.tar.gz",
+          "path": "licenses/cad-native/sources/f05b24d2368b-v4.1.0.tar.gz",
+          "sha256": "f05b24d2368becab9144873878655bb718910631550d4f786262378c16ab94a7",
+          "size": 4056763,
+          "url": "https://github.com/Esri/lerc/archive/v4.1.0.tar.gz"
+        }
+      ],
+      "version": "4.1.0"
+    },
+    {
+      "binaries": [
+        {
+          "binary": "deflate-0c8d7e40b4512d86969e2003a7d8bede.dll",
+          "build": "h51727cc_0",
+          "bundled_sha256": "0c8d7e40b4512d86969e2003a7d8bede601cfb9bc0a2d2472056a08a769769d5",
+          "dependencies": [],
+          "exact_repair_match": true,
+          "mangled_suffix": "0c8d7e40b4512d86969e2003a7d8bede",
+          "original_member": "Library/bin/deflate.dll",
+          "original_sha256": "0c8d7e40b4512d86969e2003a7d8bede601cfb9bc0a2d2472056a08a769769d5",
+          "package": "libdeflate-1.25-h51727cc_0.conda",
+          "package_sha256": "834e4881a18b690d5ec36f44852facd38e13afe599e369be62d29bd675f107ee",
+          "path": "runtime/Lib/site-packages/cadquery_ocp.libs/deflate-0c8d7e40b4512d86969e2003a7d8bede.dll",
+          "repaired_sha256": "0c8d7e40b4512d86969e2003a7d8bede601cfb9bc0a2d2472056a08a769769d5",
+          "version": "1.25"
+        }
+      ],
+      "build": "h51727cc_0",
+      "build_inputs": {
+        "info/about.json": {
+          "path": "licenses/cad-native/libdeflate/about.json",
+          "sha256": "ba83eea5950a260c8691912c1aec1efac2fb2bb4f18c70d1afe31305ff790767",
+          "size": 10377
+        },
+        "info/index.json": {
+          "path": "licenses/cad-native/libdeflate/index.json",
+          "sha256": "3862c14a8d963cb80e90b5fe895d0124bca4c70d6d0d8d4124ca2ad3e12719dd",
+          "size": 322
+        },
+        "info/licenses/COPYING": {
+          "path": "licenses/cad-native/libdeflate/licenses/COPYING",
+          "sha256": "4ad69099cb4374836fd27583d9991e2838cd86b6e4666ab26b2d32582c91e73a",
+          "size": 1078
+        },
+        "info/recipe/bld.bat": {
+          "path": "licenses/cad-native/libdeflate/recipe/bld.bat",
+          "sha256": "18188c5902c6df4519ca364b6cebabecd8c95a1950016dc985f8a4756a950ad4",
+          "size": 376
+        },
+        "info/recipe/build.sh": {
+          "path": "licenses/cad-native/libdeflate/recipe/build.sh",
+          "sha256": "aa5841fb23c87bb0ea54c4df3ced3917deae5790bf60d59ef709629bd2b01a2d",
+          "size": 179
+        },
+        "info/recipe/conda_build_config.yaml": {
+          "path": "licenses/cad-native/libdeflate/recipe/conda_build_config.yaml",
+          "sha256": "d25a23ff8811e38a61b70afa3ad0dc6d259a7dc5dd6394f0b09113ac7444c32b",
+          "size": 637
+        },
+        "info/recipe/meta.yaml": {
+          "path": "licenses/cad-native/libdeflate/recipe/meta.yaml",
+          "sha256": "bac144cb7d75257e06b82db56ee83aeb422d70789eb9716e2c6cbfb64e89efcd",
+          "size": 2167
+        },
+        "info/recipe/meta.yaml.template": {
+          "path": "licenses/cad-native/libdeflate/recipe/meta.yaml.template",
+          "sha256": "09316568d701d60b171ea28f91b791c7c6f2377fdb361c7f7fc8502eb1f4ac96",
+          "size": 1179
+        },
+        "info/recipe/recipe-scripts-license.txt": {
+          "path": "licenses/cad-native/libdeflate/recipe/recipe-scripts-license.txt",
+          "sha256": "933c7e2f7471d8c90e6aee877c0838fc01b19dd55e362e2e2ec367b74caeb97f",
+          "size": 1568
+        }
+      },
+      "declared_license": "MIT",
+      "linkage": "DYNAMIC",
+      "name": "libdeflate",
+      "notices": {
+        "licenses/cad-native/libdeflate/licenses/COPYING": {
+          "sha256": "4ad69099cb4374836fd27583d9991e2838cd86b6e4666ab26b2d32582c91e73a",
+          "size": 1078
+        }
+      },
+      "package": "libdeflate-1.25-h51727cc_0.conda",
+      "package_identity": {
+        "kind": "conda",
+        "sha256": "834e4881a18b690d5ec36f44852facd38e13afe599e369be62d29bd675f107ee",
+        "size": 156818,
+        "url": "https://conda.anaconda.org/conda-forge/win-64/libdeflate-1.25-h51727cc_0.conda"
+      },
+      "selected_license": "MIT",
+      "sources": [
+        {
+          "original_recipe_url": "https://github.com/ebiggers/libdeflate/archive/v1.25.tar.gz",
+          "path": "licenses/cad-native/sources/d11473c1ad4c-v1.25.tar.gz",
+          "sha256": "d11473c1ad4c57d874695e8026865e38b47116bbcb872bfc622ec8f37a86017d",
+          "size": 197494,
+          "url": "https://github.com/ebiggers/libdeflate/archive/v1.25.tar.gz"
+        }
+      ],
+      "version": "1.25"
+    },
+    {
+      "binaries": [
+        {
+          "binary": "jpeg8-77bef8b5257987800e01806f64a189e3.dll",
+          "build": "hfd05255_0",
+          "bundled_sha256": "77bef8b5257987800e01806f64a189e312ba057e138356e69dc4367555bd0d93",
+          "dependencies": [],
+          "exact_repair_match": true,
+          "mangled_suffix": "77bef8b5257987800e01806f64a189e3",
+          "original_member": "Library/bin/jpeg8.dll",
+          "original_sha256": "77bef8b5257987800e01806f64a189e312ba057e138356e69dc4367555bd0d93",
+          "package": "libjpeg-turbo-3.1.4.1-hfd05255_0.conda",
+          "package_sha256": "698d57b5b90120270eaa401298319fcb25ea186ae95b340c2f4813ed9171083d",
+          "path": "runtime/Lib/site-packages/cadquery_ocp.libs/jpeg8-77bef8b5257987800e01806f64a189e3.dll",
+          "repaired_sha256": "77bef8b5257987800e01806f64a189e312ba057e138356e69dc4367555bd0d93",
+          "version": "3.1.4.1"
+        }
+      ],
+      "build": "hfd05255_0",
+      "build_inputs": {
+        "info/about.json": {
+          "path": "licenses/cad-native/libjpeg-turbo/about.json",
+          "sha256": "35d869e0ebfa852bcbf6224d8a9cd94debd971a691ba94c4b1778dfe4f418e7f",
+          "size": 11431
+        },
+        "info/index.json": {
+          "path": "licenses/cad-native/libjpeg-turbo/index.json",
+          "sha256": "7118f7d9f0fd49e08e7aac0807e33883425d673496142207e30dfb76839586f9",
+          "size": 399
+        },
+        "info/licenses/LICENSE.md": {
+          "path": "licenses/cad-native/libjpeg-turbo/licenses/LICENSE.md",
+          "sha256": "e10114e6e40f3d0311c401ca25245ac5ef459a43c20f976fd63f03e816f5741f",
+          "size": 5622
+        },
+        "info/recipe/bld.bat": {
+          "path": "licenses/cad-native/libjpeg-turbo/recipe/bld.bat",
+          "sha256": "ebddf6779e6db02c1804639ce3b84366a5ccb47b9768fde9c13e3133bc282400",
+          "size": 387
+        },
+        "info/recipe/build.sh": {
+          "path": "licenses/cad-native/libjpeg-turbo/recipe/build.sh",
+          "sha256": "48a7ccc10b1ffaed86eb91050eb3b7819471f8383b8893158fa50b0ff66e80ab",
+          "size": 532
+        },
+        "info/recipe/conda_build_config.yaml": {
+          "path": "licenses/cad-native/libjpeg-turbo/recipe/conda_build_config.yaml",
+          "sha256": "2dae7bd1af1165fbb4d80c966bf44682214a5f74a08a33f6a7adff3cd50c83d7",
+          "size": 618
+        },
+        "info/recipe/meta.yaml": {
+          "path": "licenses/cad-native/libjpeg-turbo/recipe/meta.yaml",
+          "sha256": "6e46b55aae48ee02f1cdd024f8c523ae12aa2a289d381e01cd3ece63a0596a77",
+          "size": 2392
+        },
+        "info/recipe/meta.yaml.template": {
+          "path": "licenses/cad-native/libjpeg-turbo/recipe/meta.yaml.template",
+          "sha256": "764ca1fe8fa325df7087d1ad22dc6313ed2283b9efa36b672a57bc18926b4720",
+          "size": 939
+        },
+        "info/recipe/recipe-scripts-license.txt": {
+          "path": "licenses/cad-native/libjpeg-turbo/recipe/recipe-scripts-license.txt",
+          "sha256": "b2f940c8e8ed8a05c62c1f7e41d16807a3ef28f7e33f54c3c8d1697b90ec149e",
+          "size": 1546
+        },
+        "info/recipe/testorig.jpg": {
+          "path": "licenses/cad-native/libjpeg-turbo/recipe/testorig.jpg",
+          "sha256": "acc6ec555d41d15b368320edaa3b20958ee6fa97cb6e4a18d1213d5ae8bec73b",
+          "size": 5770
+        }
+      },
+      "declared_license": "IJG AND BSD-3-Clause AND Zlib",
+      "linkage": "DYNAMIC",
+      "name": "libjpeg-turbo",
+      "notices": {
+        "licenses/cad-native/libjpeg-turbo/licenses/LICENSE.md": {
+          "sha256": "e10114e6e40f3d0311c401ca25245ac5ef459a43c20f976fd63f03e816f5741f",
+          "size": 5622
+        }
+      },
+      "package": "libjpeg-turbo-3.1.4.1-hfd05255_0.conda",
+      "package_identity": {
+        "kind": "conda",
+        "sha256": "698d57b5b90120270eaa401298319fcb25ea186ae95b340c2f4813ed9171083d",
+        "size": 842806,
+        "url": "https://conda.anaconda.org/conda-forge/win-64/libjpeg-turbo-3.1.4.1-hfd05255_0.conda"
+      },
+      "selected_license": "IJG AND BSD-3-Clause AND Zlib",
+      "sources": [
+        {
+          "original_recipe_url": "https://github.com/libjpeg-turbo/libjpeg-turbo/archive/3.1.4.1.tar.gz",
+          "path": "licenses/cad-native/sources/a7da42b64037-3.1.4.1.tar.gz",
+          "sha256": "a7da42b640377c2a9a9665e2c4b0ea60cd5599afb48c2521e6df0c9dc9d15a25",
+          "size": 2528617,
+          "url": "https://github.com/libjpeg-turbo/libjpeg-turbo/archive/3.1.4.1.tar.gz"
+        }
+      ],
+      "version": "3.1.4.1"
+    },
+    {
+      "binaries": [
+        {
+          "binary": "liblzma-64eb6567bead1a5b7386bd7acd1cdd9d.dll",
+          "build": "hfd05255_0",
+          "bundled_sha256": "64eb6567bead1a5b7386bd7acd1cdd9db8f9a03133eef7ae8208ae555738d680",
+          "dependencies": [],
+          "exact_repair_match": true,
+          "mangled_suffix": "64eb6567bead1a5b7386bd7acd1cdd9d",
+          "original_member": "Library/bin/liblzma.dll",
+          "original_sha256": "64eb6567bead1a5b7386bd7acd1cdd9db8f9a03133eef7ae8208ae555738d680",
+          "package": "liblzma-5.8.3-hfd05255_0.conda",
+          "package_sha256": "d636d1a25234063642f9c531a7bb58d84c1c496411280a36ea000bd122f078f1",
+          "path": "runtime/Lib/site-packages/cadquery_ocp.libs/liblzma-64eb6567bead1a5b7386bd7acd1cdd9d.dll",
+          "repaired_sha256": "64eb6567bead1a5b7386bd7acd1cdd9db8f9a03133eef7ae8208ae555738d680",
+          "version": "5.8.3"
+        }
+      ],
+      "build": "hfd05255_0",
+      "build_inputs": {
+        "info/about.json": {
+          "path": "licenses/cad-native/liblzma/about.json",
+          "sha256": "c9bb4edde3d0c844fb8eabdb55b2446361fe314d320ca8a92a1ed7adaa9e5a53",
+          "size": 11549
+        },
+        "info/index.json": {
+          "path": "licenses/cad-native/liblzma/index.json",
+          "sha256": "dd0ca4929b528cdef54c2b2583462911993301fad2f85af31bbb47203775a067",
+          "size": 364
+        },
+        "info/licenses/COPYING": {
+          "path": "licenses/cad-native/liblzma/licenses/COPYING",
+          "sha256": "616a3ad264ce29b8f1cb97e53037b139d406899ca8d1f799651e17bfa09830b8",
+          "size": 3119
+        },
+        "info/licenses/COPYING.0BSD": {
+          "path": "licenses/cad-native/liblzma/licenses/COPYING.0BSD",
+          "sha256": "0b01625d853911cd0e2e088dcfb743261034a091bb379246cb25a14cc4c74bf1",
+          "size": 607
+        },
+        "info/recipe/conda_build_config.yaml": {
+          "path": "licenses/cad-native/liblzma/recipe/conda_build_config.yaml",
+          "sha256": "4e6a25242eebd0cd005c6ea53f2756ae17223010670e1dc72a98e580065d2587",
+          "size": 627
+        },
+        "info/recipe/install-liblzma.bat": {
+          "path": "licenses/cad-native/liblzma/recipe/install-liblzma.bat",
+          "sha256": "ebdc706351fe2d98e677b1023fcfb550c5c24903e17c529c30ea8b4ee9b24e90",
+          "size": 179
+        },
+        "info/recipe/meta.yaml": {
+          "path": "licenses/cad-native/liblzma/recipe/meta.yaml",
+          "sha256": "b6d969494bd406386ed98144d1e74740c77aeb4c20019fa8f7763f665743a161",
+          "size": 1709
+        },
+        "info/recipe/parent/0002-Add-gettimeofday-for-VS2008.patch": {
+          "path": "licenses/cad-native/liblzma/recipe/parent/0002-Add-gettimeofday-for-VS2008.patch",
+          "sha256": "074c5b31f35b90edfa8f635310a1b1fc6317d54e0e71c2d385fcd8dccd142485",
+          "size": 1316
+        },
+        "info/recipe/parent/CMakeLists.txt": {
+          "path": "licenses/cad-native/liblzma/recipe/parent/CMakeLists.txt",
+          "sha256": "6fdc6ec6a5fac0090cc3efbe384d1255c549f3447060e8f7676d35088dc94671",
+          "size": 13140
+        },
+        "info/recipe/parent/bld-static.bat": {
+          "path": "licenses/cad-native/liblzma/recipe/parent/bld-static.bat",
+          "sha256": "43876f3f8788598a2084e267c26196f47375d7562aef28c8f0b762e14f0be13b",
+          "size": 477
+        },
+        "info/recipe/parent/bld.bat": {
+          "path": "licenses/cad-native/liblzma/recipe/parent/bld.bat",
+          "sha256": "651eb943501092ade80ee8d0d040726221416dcc76484a8cf75755e744e7d3ed",
+          "size": 316
+        },
+        "info/recipe/parent/build.sh": {
+          "path": "licenses/cad-native/liblzma/recipe/parent/build.sh",
+          "sha256": "be6903f58213fff7b729f81eec8fb08a4ebfcf52cbcec76655c36cb447812707",
+          "size": 299
+        },
+        "info/recipe/parent/conda_build_config.yaml": {
+          "path": "licenses/cad-native/liblzma/recipe/parent/conda_build_config.yaml",
+          "sha256": "9ea3505f6042bd412c13a21eaf209c48e605796313b8b38cb40c28c4b2a8919e",
+          "size": 120
+        },
+        "info/recipe/parent/install-liblzma.bat": {
+          "path": "licenses/cad-native/liblzma/recipe/parent/install-liblzma.bat",
+          "sha256": "ebdc706351fe2d98e677b1023fcfb550c5c24903e17c529c30ea8b4ee9b24e90",
+          "size": 179
+        },
+        "info/recipe/parent/install-liblzma.sh": {
+          "path": "licenses/cad-native/liblzma/recipe/parent/install-liblzma.sh",
+          "sha256": "8f0f0639ccfc90b8733162d8cf1d921c4c0c48c2868d8bc403f84d899f0b559a",
+          "size": 222
+        },
+        "info/recipe/parent/install.bat": {
+          "path": "licenses/cad-native/liblzma/recipe/parent/install.bat",
+          "sha256": "fdd79012b0dbcbc93294f25acb7f640c216c65fa6c06114a882c6e2f377a6d3f",
+          "size": 393
+        },
+        "info/recipe/parent/install.sh": {
+          "path": "licenses/cad-native/liblzma/recipe/parent/install.sh",
+          "sha256": "f3ec283ad47eca210868c7b2fd9a5e6cb65a698f2e02024b8a67021e3266c6b1",
+          "size": 762
+        },
+        "info/recipe/parent/meta.yaml": {
+          "path": "licenses/cad-native/liblzma/recipe/parent/meta.yaml",
+          "sha256": "547aaf8bef02a14f5e4b83a65d3c1c2b88b164b5a3ab964827a04c999beda0bc",
+          "size": 10470
+        },
+        "info/recipe/parent/recipe-scripts-license.txt": {
+          "path": "licenses/cad-native/liblzma/recipe/parent/recipe-scripts-license.txt",
+          "sha256": "b2f940c8e8ed8a05c62c1f7e41d16807a3ef28f7e33f54c3c8d1697b90ec149e",
+          "size": 1546
+        }
+      },
+      "declared_license": "0BSD",
+      "linkage": "DYNAMIC",
+      "name": "liblzma",
+      "notices": {
+        "licenses/cad-native/liblzma/licenses/COPYING": {
+          "sha256": "616a3ad264ce29b8f1cb97e53037b139d406899ca8d1f799651e17bfa09830b8",
+          "size": 3119
+        },
+        "licenses/cad-native/liblzma/licenses/COPYING.0BSD": {
+          "sha256": "0b01625d853911cd0e2e088dcfb743261034a091bb379246cb25a14cc4c74bf1",
+          "size": 607
+        }
+      },
+      "package": "liblzma-5.8.3-hfd05255_0.conda",
+      "package_identity": {
+        "kind": "conda",
+        "sha256": "d636d1a25234063642f9c531a7bb58d84c1c496411280a36ea000bd122f078f1",
+        "size": 106486,
+        "url": "https://conda.anaconda.org/conda-forge/win-64/liblzma-5.8.3-hfd05255_0.conda"
+      },
+      "selected_license": "0BSD",
+      "sources": [
+        {
+          "original_recipe_url": "https://github.com/tukaani-project/xz/releases/download/v5.8.3/xz-5.8.3.tar.gz",
+          "path": "licenses/cad-native/sources/3d3a1b973af2-xz-5.8.3.tar.gz",
+          "sha256": "3d3a1b973af218114f4f889bbaa2f4c037deaae0c8e815eec381c3d546b974a0",
+          "size": 2771455,
+          "url": "https://github.com/tukaani-project/xz/releases/download/v5.8.3/xz-5.8.3.tar.gz"
+        }
+      ],
+      "version": "5.8.3"
+    },
+    {
+      "binaries": [
+        {
+          "binary": "libpng16-c3f4406bf6331f0eb2bdd3c3323d921a.dll",
+          "build": "h7351971_0",
+          "bundled_sha256": "10429b82f82ac04dbc0633ed61616e5c5057812e30e2a9fcb12b598b4d2fb7d5",
+          "dependencies": [
+            "zlib.dll"
+          ],
+          "exact_repair_match": true,
+          "mangled_suffix": "c3f4406bf6331f0eb2bdd3c3323d921a",
+          "original_member": "Library/bin/libpng16.dll",
+          "original_sha256": "c3fc74e2bfa2d944cbea22e1db31f06247a54634f8f489f04b5ceec921118f3f",
+          "package": "libpng-1.6.58-h7351971_0.conda",
+          "package_sha256": "218913aeee391460bd0e341b834dbd9c6fa6ae0a4276c0c300266cc99a816a28",
+          "path": "runtime/Lib/site-packages/cadquery_ocp.libs/libpng16-c3f4406bf6331f0eb2bdd3c3323d921a.dll",
+          "repaired_sha256": "10429b82f82ac04dbc0633ed61616e5c5057812e30e2a9fcb12b598b4d2fb7d5",
+          "version": "1.6.58"
+        }
+      ],
+      "build": "h7351971_0",
+      "build_inputs": {
+        "info/about.json": {
+          "path": "licenses/cad-native/libpng/about.json",
+          "sha256": "72bfda9a5c56f9f4de4f4b7006c2fc05a89d43ebffa5ae66f7247d9964757213",
+          "size": 785
+        },
+        "info/index.json": {
+          "path": "licenses/cad-native/libpng/index.json",
+          "sha256": "6e6dcd9b6780d8a8d622011343bec1c1e8d0dadbebc5166ed4fe0bbf1d683e78",
+          "size": 352
+        },
+        "info/licenses/LICENSE": {
+          "path": "licenses/cad-native/libpng/licenses/LICENSE",
+          "sha256": "bdb0a645ea18c60507d0368379b1ac5474b92255fcc2d115e07486a7672ba526",
+          "size": 5345
+        },
+        "info/recipe/build.bat": {
+          "path": "licenses/cad-native/libpng/recipe/build.bat",
+          "sha256": "7a3ea2bc6f4cf3161c771ae9b64ab2acb6b77e6326b37cab225eb1f4cace211a",
+          "size": 1213
+        },
+        "info/recipe/build.sh": {
+          "path": "licenses/cad-native/libpng/recipe/build.sh",
+          "sha256": "33bf186a8f7daf2a31d7048d3ac0dc1cdec4863ff0c01f7a929d9a27d4989ece",
+          "size": 499
+        },
+        "info/recipe/patches/0001-Include-pkg-config-files-in-the-Windows-packages-too.patch": {
+          "path": "licenses/cad-native/libpng/recipe/patches/0001-Include-pkg-config-files-in-the-Windows-packages-too.patch",
+          "sha256": "1fe817e3a91201194c7db24717b186f74f3490c9062952e5e0ade62c5774dab5",
+          "size": 1477
+        },
+        "info/recipe/patches/0002-Ensure-that-lm-is-not-included-in-Windows-pkg-config.patch": {
+          "path": "licenses/cad-native/libpng/recipe/patches/0002-Ensure-that-lm-is-not-included-in-Windows-pkg-config.patch",
+          "sha256": "eda8bb8c284aebaac6a8049a20f048c712c9023c3039f877e6876ffcb4876819",
+          "size": 619
+        },
+        "info/recipe/recipe-scripts-license.txt": {
+          "path": "licenses/cad-native/libpng/recipe/recipe-scripts-license.txt",
+          "sha256": "b2f940c8e8ed8a05c62c1f7e41d16807a3ef28f7e33f54c3c8d1697b90ec149e",
+          "size": 1546
+        },
+        "info/recipe/recipe.yaml": {
+          "path": "licenses/cad-native/libpng/recipe/recipe.yaml",
+          "sha256": "5ac75aba218b9e93858e9358beb64c32fa36ac2bbfc3eb46da7906f55554a44f",
+          "size": 1906
+        },
+        "info/recipe/rendered_recipe.yaml": {
+          "path": "licenses/cad-native/libpng/recipe/rendered_recipe.yaml",
+          "sha256": "b2e9b3ac0eafef02d7b42ccea0a6a6ac5199ab6b5ae65133b803e6e75040c1eb",
+          "size": 22852
+        },
+        "info/recipe/variant_config.yaml": {
+          "path": "licenses/cad-native/libpng/recipe/variant_config.yaml",
+          "sha256": "01ce644cfd9d151c4c9358a086cefdc21bd1485731f7912d1573524047a703c8",
+          "size": 138
+        }
+      },
+      "declared_license": "zlib-acknowledgement",
+      "linkage": "DYNAMIC",
+      "name": "libpng",
+      "notices": {
+        "licenses/cad-native/libpng/licenses/LICENSE": {
+          "sha256": "bdb0a645ea18c60507d0368379b1ac5474b92255fcc2d115e07486a7672ba526",
+          "size": 5345
+        }
+      },
+      "package": "libpng-1.6.58-h7351971_0.conda",
+      "package_identity": {
+        "kind": "conda",
+        "sha256": "218913aeee391460bd0e341b834dbd9c6fa6ae0a4276c0c300266cc99a816a28",
+        "size": 385227,
+        "url": "https://conda.anaconda.org/conda-forge/win-64/libpng-1.6.58-h7351971_0.conda"
+      },
+      "selected_license": "zlib-acknowledgement",
+      "sources": [
+        {
+          "original_recipe_url": "https://downloads.sourceforge.net/project/libpng/libpng16/1.6.58/libpng-1.6.58.tar.gz",
+          "path": "licenses/cad-native/sources/8c9b05b675ca-libpng-1.6.58.tar.gz",
+          "sha256": "8c9b05b675ca7301a458df2c2e46f26e1d41ff36b8863f8c33530bc58c2e6225",
+          "size": 1582074,
+          "url": "https://downloads.sourceforge.net/project/libpng/libpng16/1.6.58/libpng-1.6.58.tar.gz"
+        }
+      ],
+      "version": "1.6.58"
+    },
+    {
+      "binaries": [
+        {
+          "binary": "raw-45784079ff4d194ec274ed36f7b6b205.dll",
+          "build": "h345c428_0",
+          "bundled_sha256": "23efe5297b755d4fedf0ddb1ce36b51fd2e6ada5409e4ac5696d91757b2dbe4a",
+          "dependencies": [
+            "lcms2.dll",
+            "zlib.dll",
+            "jpeg8.dll",
+            "msvcp140.dll",
+            "vcomp140.dll"
+          ],
+          "exact_repair_match": true,
+          "mangled_suffix": "45784079ff4d194ec274ed36f7b6b205",
+          "original_member": "Library/bin/raw.dll",
+          "original_sha256": "f6f86f952aa115f6e81a3dbc63c3d79f22e3b5d3ed56c3d61a6c9b5858c7e1a4",
+          "package": "libraw-0.21.5-h345c428_0.conda",
+          "package_sha256": "e8deadcca9dc9371e36778638bb3b3869dc79576a3d2ddfc40b5d92efbf49dbc",
+          "path": "runtime/Lib/site-packages/cadquery_ocp.libs/raw-45784079ff4d194ec274ed36f7b6b205.dll",
+          "repaired_sha256": "23efe5297b755d4fedf0ddb1ce36b51fd2e6ada5409e4ac5696d91757b2dbe4a",
+          "version": "0.21.5"
+        }
+      ],
+      "build": "h345c428_0",
+      "build_inputs": {
+        "info/about.json": {
+          "path": "licenses/cad-native/libraw/about.json",
+          "sha256": "57ccba77e13206403c5fb464cecd9eae717bea81998cf3845ff05ae15eb52cbc",
+          "size": 568
+        },
+        "info/index.json": {
+          "path": "licenses/cad-native/libraw/index.json",
+          "sha256": "07d824b98c768e8b0a75e7246dca27f6620f77a32ae4f3a30fd0deb416f53b2f",
+          "size": 437
+        },
+        "info/licenses/libraw/LICENSE.LGPL": {
+          "path": "licenses/cad-native/libraw/licenses/libraw/LICENSE.LGPL",
+          "sha256": "eea173a556abac0370461e57e12aab266894ea6be3874c2be05fd87871f75449",
+          "size": 24389
+        },
+        "info/recipe/build.bat": {
+          "path": "licenses/cad-native/libraw/recipe/build.bat",
+          "sha256": "24a89531893964ea7d4293f1b9c758fc4e9f2f0dbdf7f455e217b2038c28ab6e",
+          "size": 687
+        },
+        "info/recipe/build.sh": {
+          "path": "licenses/cad-native/libraw/recipe/build.sh",
+          "sha256": "96cde47e81eb47839f1aede08f07c4e6cd9ffb47da80a05e7714c2f638c9973f",
+          "size": 213
+        },
+        "info/recipe/recipe-scripts-license.txt": {
+          "path": "licenses/cad-native/libraw/recipe/recipe-scripts-license.txt",
+          "sha256": "933c7e2f7471d8c90e6aee877c0838fc01b19dd55e362e2e2ec367b74caeb97f",
+          "size": 1568
+        },
+        "info/recipe/recipe.yaml": {
+          "path": "licenses/cad-native/libraw/recipe/recipe.yaml",
+          "sha256": "54190eb71c0e78ebfb289d655d6ffd50d8f3b971a1e0497534f3d52ee7b48f70",
+          "size": 1861
+        },
+        "info/recipe/rendered_recipe.yaml": {
+          "path": "licenses/cad-native/libraw/recipe/rendered_recipe.yaml",
+          "sha256": "84ef9308c5ab16b3b2cc8b83c75c35b20751cd2b766603e48dec649c59cf9ee7",
+          "size": 29990
+        },
+        "info/recipe/variant_config.yaml": {
+          "path": "licenses/cad-native/libraw/recipe/variant_config.yaml",
+          "sha256": "52bc3f20e9c5ef97123f35a9f399b07350ee9f256c2fd8efbd832aa3cbb74ff2",
+          "size": 192
+        }
+      },
+      "declared_license": "LGPL-2.1-only",
+      "linkage": "DYNAMIC",
+      "name": "libraw",
+      "notices": {
+        "licenses/cad-native/libraw/licenses/libraw/LICENSE.LGPL": {
+          "sha256": "eea173a556abac0370461e57e12aab266894ea6be3874c2be05fd87871f75449",
+          "size": 24389
+        }
+      },
+      "package": "libraw-0.21.5-h345c428_0.conda",
+      "package_identity": {
+        "kind": "conda",
+        "sha256": "e8deadcca9dc9371e36778638bb3b3869dc79576a3d2ddfc40b5d92efbf49dbc",
+        "size": 558269,
+        "url": "https://conda.anaconda.org/conda-forge/win-64/libraw-0.21.5-h345c428_0.conda"
+      },
+      "selected_license": "LGPL-2.1-only",
+      "sources": [
+        {
+          "original_recipe_url": "https://github.com/LibRaw/LibRaw/archive/0.21.5.tar.gz",
+          "path": "licenses/cad-native/sources/4b7f183a68f6-0.21.5.tar.gz",
+          "sha256": "4b7f183a68f6e46e579e80ba32ab121687e75bd30a2e5566f34c36a6bcba1679",
+          "size": 566898,
+          "url": "https://github.com/LibRaw/LibRaw/archive/0.21.5.tar.gz"
+        },
+        {
+          "original_recipe_url": "https://github.com/LibRaw/LibRaw-cmake/archive/eb98e4325aef2ce85d2eb031c2ff18640ca616d3.tar.gz",
+          "path": "licenses/cad-native/sources/3cd218bf6d12-eb98e4325aef2ce85d2eb031c2ff18640ca616d3.tar.gz",
+          "sha256": "3cd218bf6d1254de86e27269541277fbfc5bae57a9002ce0b46fbe2a97088b43",
+          "size": 14063,
+          "url": "https://github.com/LibRaw/LibRaw-cmake/archive/eb98e4325aef2ce85d2eb031c2ff18640ca616d3.tar.gz"
+        }
+      ],
+      "version": "0.21.5"
+    },
+    {
+      "binaries": [
+        {
+          "binary": "tiff-36f0745325765f7bfe29a721cde40b8e.dll",
+          "build": "h8f73337_1",
+          "bundled_sha256": "e143c6d3d2f6240d7259f0f8a7c28d027333e8ce731b99db377e08ab1e9228d1",
+          "dependencies": [
+            "zlib.dll",
+            "deflate.dll",
+            "jpeg8.dll",
+            "lerc.dll",
+            "liblzma.dll",
+            "zstd.dll"
+          ],
+          "exact_repair_match": true,
+          "mangled_suffix": "36f0745325765f7bfe29a721cde40b8e",
+          "original_member": "Library/bin/tiff.dll",
+          "original_sha256": "57ad7d27c81d140cfe9b16a6b1e75ce7fa360d613add138dcdc8a61ba0872459",
+          "package": "libtiff-4.7.1-h8f73337_1.conda",
+          "package_sha256": "f1b8cccaaeea38a28b9cd496694b2e3d372bb5be0e9377c9e3d14b330d1cba8a",
+          "path": "runtime/Lib/site-packages/cadquery_ocp.libs/tiff-36f0745325765f7bfe29a721cde40b8e.dll",
+          "repaired_sha256": "e143c6d3d2f6240d7259f0f8a7c28d027333e8ce731b99db377e08ab1e9228d1",
+          "version": "4.7.1"
+        }
+      ],
+      "build": "h8f73337_1",
+      "build_inputs": {
+        "info/about.json": {
+          "path": "licenses/cad-native/libtiff/about.json",
+          "sha256": "2ddfb3055f9e87e53c05ccd19aab6354622f6d64957fe124ee5b8830e1e6afc7",
+          "size": 10569
+        },
+        "info/index.json": {
+          "path": "licenses/cad-native/libtiff/index.json",
+          "sha256": "34b5b0253df922d49b9eb4486f7d875c3bdadf08ef1320cc6ca0c2d8dbdd4bb3",
+          "size": 514
+        },
+        "info/licenses/LICENSE.md": {
+          "path": "licenses/cad-native/libtiff/licenses/LICENSE.md",
+          "sha256": "0e27c2382d7b8147972bbb746e04059a1152c8d0fda9d03ef1399d1a433c4ade",
+          "size": 2416
+        },
+        "info/recipe/bld.bat": {
+          "path": "licenses/cad-native/libtiff/recipe/bld.bat",
+          "sha256": "ade2cfe9cb7236b1d9e872394f5a3b0e14b04d00c04aa65cd6cda980eac92f38",
+          "size": 1640
+        },
+        "info/recipe/build.sh": {
+          "path": "licenses/cad-native/libtiff/recipe/build.sh",
+          "sha256": "365ab6a7ea335d976329f02f90327a9ef74c7371258615c13f63d8fa415f569e",
+          "size": 1679
+        },
+        "info/recipe/conda_build_config.yaml": {
+          "path": "licenses/cad-native/libtiff/recipe/conda_build_config.yaml",
+          "sha256": "79b8dc04d2bcfb84f7be2b1a7d018ce62ecf9ba50f4795983c17ebc4f6d454a8",
+          "size": 728
+        },
+        "info/recipe/meta.yaml": {
+          "path": "licenses/cad-native/libtiff/recipe/meta.yaml",
+          "sha256": "8170015564aea7c45beb89581b0637217e3767fbfe3535d8732cf9d2b84ec959",
+          "size": 2897
+        },
+        "info/recipe/meta.yaml.template": {
+          "path": "licenses/cad-native/libtiff/recipe/meta.yaml.template",
+          "sha256": "3d293cbff9372839a069b00b91bac5ab40cf3056ec538b451f55e19ba43b3151",
+          "size": 2497
+        },
+        "info/recipe/patches/use_unix_io.patch": {
+          "path": "licenses/cad-native/libtiff/recipe/patches/use_unix_io.patch",
+          "sha256": "ebab3a00ad525718fe852e30d56f19d6296dce4b8aa93e0879a1d3253c391025",
+          "size": 346
+        },
+        "info/recipe/recipe-scripts-license.txt": {
+          "path": "licenses/cad-native/libtiff/recipe/recipe-scripts-license.txt",
+          "sha256": "933c7e2f7471d8c90e6aee877c0838fc01b19dd55e362e2e2ec367b74caeb97f",
+          "size": 1568
+        },
+        "info/recipe/yum_requirements.txt": {
+          "path": "licenses/cad-native/libtiff/recipe/yum_requirements.txt",
+          "sha256": "129112a7d9f8e7be50e6dfa646f159bcd43ce04883c8735c69ee7fbf5b8cfef4",
+          "size": 12
+        }
+      },
+      "declared_license": "HPND",
+      "linkage": "DYNAMIC",
+      "name": "libtiff",
+      "notices": {
+        "licenses/cad-native/libtiff/licenses/LICENSE.md": {
+          "sha256": "0e27c2382d7b8147972bbb746e04059a1152c8d0fda9d03ef1399d1a433c4ade",
+          "size": 2416
+        }
+      },
+      "package": "libtiff-4.7.1-h8f73337_1.conda",
+      "package_identity": {
+        "kind": "conda",
+        "sha256": "f1b8cccaaeea38a28b9cd496694b2e3d372bb5be0e9377c9e3d14b330d1cba8a",
+        "size": 993166,
+        "url": "https://conda.anaconda.org/conda-forge/win-64/libtiff-4.7.1-h8f73337_1.conda"
+      },
+      "selected_license": "HPND",
+      "sources": [
+        {
+          "original_recipe_url": "https://download.osgeo.org/libtiff/tiff-4.7.1.tar.gz",
+          "path": "licenses/cad-native/sources/f698d94f3103-tiff-4.7.1.tar.gz",
+          "sha256": "f698d94f3103da8ca7438d84e0344e453fe0ba3b7486e04c5bf7a9a3fabe9b69",
+          "size": 4000609,
+          "url": "https://download.osgeo.org/libtiff/tiff-4.7.1.tar.gz"
+        }
+      ],
+      "version": "4.7.1"
+    },
+    {
+      "binaries": [
+        {
+          "binary": "libsharpyuv-c910eeed9d8f2bbf76ba6edf2e292ff7.dll",
+          "build": "h4d5522a_0",
+          "bundled_sha256": "c910eeed9d8f2bbf76ba6edf2e292ff7534a2674e2fb284a40514fe4e5f0a653",
+          "dependencies": [],
+          "exact_repair_match": true,
+          "mangled_suffix": "c910eeed9d8f2bbf76ba6edf2e292ff7",
+          "original_member": "Library/bin/libsharpyuv.dll",
+          "original_sha256": "c910eeed9d8f2bbf76ba6edf2e292ff7534a2674e2fb284a40514fe4e5f0a653",
+          "package": "libwebp-base-1.6.0-h4d5522a_0.conda",
+          "package_sha256": "7b6316abfea1007e100922760e9b8c820d6fc19df3f42fb5aca684cfacb31843",
+          "path": "runtime/Lib/site-packages/cadquery_ocp.libs/libsharpyuv-c910eeed9d8f2bbf76ba6edf2e292ff7.dll",
+          "repaired_sha256": "c910eeed9d8f2bbf76ba6edf2e292ff7534a2674e2fb284a40514fe4e5f0a653",
+          "version": "1.6.0"
+        },
+        {
+          "binary": "libwebp-d04c2bb4fae02ef22f9f33389e8fa295.dll",
+          "build": "h4d5522a_0",
+          "bundled_sha256": "6ccb85825bff74d705ee5ac491a30a6555afb69d5e2ca8aec63e73c00929a3be",
+          "dependencies": [
+            "libsharpyuv.dll"
+          ],
+          "exact_repair_match": true,
+          "mangled_suffix": "d04c2bb4fae02ef22f9f33389e8fa295",
+          "original_member": "Library/bin/libwebp.dll",
+          "original_sha256": "7a9b1bcc7e997e6a833850aa2811aecd9452a509490a15a1fb36a33ac4dde43f",
+          "package": "libwebp-base-1.6.0-h4d5522a_0.conda",
+          "package_sha256": "7b6316abfea1007e100922760e9b8c820d6fc19df3f42fb5aca684cfacb31843",
+          "path": "runtime/Lib/site-packages/cadquery_ocp.libs/libwebp-d04c2bb4fae02ef22f9f33389e8fa295.dll",
+          "repaired_sha256": "6ccb85825bff74d705ee5ac491a30a6555afb69d5e2ca8aec63e73c00929a3be",
+          "version": "1.6.0"
+        },
+        {
+          "binary": "libwebpmux-91ab52d47d455f8c682d0bb688b4702f.dll",
+          "build": "h4d5522a_0",
+          "bundled_sha256": "13204ad8022e8022eaab8fba417de3208f5485ba474187ce5844ab3c076d00e5",
+          "dependencies": [
+            "libwebp.dll"
+          ],
+          "exact_repair_match": true,
+          "mangled_suffix": "91ab52d47d455f8c682d0bb688b4702f",
+          "original_member": "Library/bin/libwebpmux.dll",
+          "original_sha256": "4a0f0761857badc95ed611e307a4891c8a56580a4b3c69e9814bf4a43f243b07",
+          "package": "libwebp-base-1.6.0-h4d5522a_0.conda",
+          "package_sha256": "7b6316abfea1007e100922760e9b8c820d6fc19df3f42fb5aca684cfacb31843",
+          "path": "runtime/Lib/site-packages/cadquery_ocp.libs/libwebpmux-91ab52d47d455f8c682d0bb688b4702f.dll",
+          "repaired_sha256": "13204ad8022e8022eaab8fba417de3208f5485ba474187ce5844ab3c076d00e5",
+          "version": "1.6.0"
+        }
+      ],
+      "build": "h4d5522a_0",
+      "build_inputs": {
+        "info/about.json": {
+          "path": "licenses/cad-native/libwebp-base/about.json",
+          "sha256": "ef415c20439083a7a8550037a1b3eb551a4cdce1b83b130c436f88515be59c2f",
+          "size": 10946
+        },
+        "info/index.json": {
+          "path": "licenses/cad-native/libwebp-base/index.json",
+          "sha256": "6a8bc2cfffea9351b0619f76710573d66d9738b90742786be33423b9d6dbf67e",
+          "size": 380
+        },
+        "info/licenses/COPYING": {
+          "path": "licenses/cad-native/libwebp-base/licenses/COPYING",
+          "sha256": "5aec868f669e384a22372a4e8a1a6cd7d44c64cd451f960ca69cc170d1e13acf",
+          "size": 1496
+        },
+        "info/recipe/bld.bat": {
+          "path": "licenses/cad-native/libwebp-base/recipe/bld.bat",
+          "sha256": "f42ba6480ee285cb9ac17de632df971affb0518a5659ba3a366220c888d2bc9e",
+          "size": 844
+        },
+        "info/recipe/build.sh": {
+          "path": "licenses/cad-native/libwebp-base/recipe/build.sh",
+          "sha256": "728927e9b169e863d4196dd90ad63b88b7336d44401bfb02914cf148494f549e",
+          "size": 621
+        },
+        "info/recipe/conda_build_config.yaml": {
+          "path": "licenses/cad-native/libwebp-base/recipe/conda_build_config.yaml",
+          "sha256": "0ddddd21f843761ad28c00f88c6b597d04369487f429aadd67f639f52f9ede0f",
+          "size": 631
+        },
+        "info/recipe/meta.yaml": {
+          "path": "licenses/cad-native/libwebp-base/recipe/meta.yaml",
+          "sha256": "ae90826973b925207faf371eb423fabd12e921938731ae30239d196fd3571a1c",
+          "size": 4297
+        },
+        "info/recipe/meta.yaml.template": {
+          "path": "licenses/cad-native/libwebp-base/recipe/meta.yaml.template",
+          "sha256": "0716762bb1cc42d81c1e532c38d6f3a9fd64b1ad3bc1c6483ba0ac0c16819561",
+          "size": 3326
+        },
+        "info/recipe/recipe-scripts-license.txt": {
+          "path": "licenses/cad-native/libwebp-base/recipe/recipe-scripts-license.txt",
+          "sha256": "933c7e2f7471d8c90e6aee877c0838fc01b19dd55e362e2e2ec367b74caeb97f",
+          "size": 1568
+        }
+      },
+      "declared_license": "BSD-3-Clause",
+      "linkage": "DYNAMIC",
+      "name": "libwebp-base",
+      "notices": {
+        "licenses/cad-native/libwebp-base/licenses/COPYING": {
+          "sha256": "5aec868f669e384a22372a4e8a1a6cd7d44c64cd451f960ca69cc170d1e13acf",
+          "size": 1496
+        }
+      },
+      "package": "libwebp-base-1.6.0-h4d5522a_0.conda",
+      "package_identity": {
+        "kind": "conda",
+        "sha256": "7b6316abfea1007e100922760e9b8c820d6fc19df3f42fb5aca684cfacb31843",
+        "size": 279176,
+        "url": "https://conda.anaconda.org/conda-forge/win-64/libwebp-base-1.6.0-h4d5522a_0.conda"
+      },
+      "selected_license": "BSD-3-Clause",
+      "sources": [
+        {
+          "original_recipe_url": "http://storage.googleapis.com/downloads.webmproject.org/releases/webp/libwebp-1.6.0.tar.gz",
+          "path": "licenses/cad-native/sources/e4ab7009bf06-libwebp-1.6.0.tar.gz",
+          "sha256": "e4ab7009bf0629fd11982d4c2aa83964cf244cffba7347ecd39019a9e38c4564",
+          "size": 4296070,
+          "url": "https://storage.googleapis.com/downloads.webmproject.org/releases/webp/libwebp-1.6.0.tar.gz"
+        }
+      ],
+      "version": "1.6.0"
+    },
+    {
+      "binaries": [
+        {
+          "binary": "zlib-85c711c83f96bed93184bede15be6b5a.dll",
+          "build": "hfd05255_2",
+          "bundled_sha256": "85c711c83f96bed93184bede15be6b5a3e5444df09dfffef00564107189dc722",
+          "dependencies": [],
+          "exact_repair_match": true,
+          "mangled_suffix": "85c711c83f96bed93184bede15be6b5a",
+          "original_member": "Library/bin/zlib.dll",
+          "original_sha256": "85c711c83f96bed93184bede15be6b5a3e5444df09dfffef00564107189dc722",
+          "package": "libzlib-1.3.2-hfd05255_2.conda",
+          "package_sha256": "88609816e0cc7452bac637aaf65783e5edf4fee8a9f8e22bdc3a75882c536061",
+          "path": "runtime/Lib/site-packages/cadquery_ocp.libs/zlib-85c711c83f96bed93184bede15be6b5a.dll",
+          "repaired_sha256": "85c711c83f96bed93184bede15be6b5a3e5444df09dfffef00564107189dc722",
+          "version": "1.3.2"
+        }
+      ],
+      "build": "hfd05255_2",
+      "build_inputs": {
+        "info/about.json": {
+          "path": "licenses/cad-native/libzlib/about.json",
+          "sha256": "fd1f4b8c1b5303ad78bb7b1520aef4392258e1713cd7112c04fc190d4c554060",
+          "size": 11759
+        },
+        "info/index.json": {
+          "path": "licenses/cad-native/libzlib/index.json",
+          "sha256": "3f2cb78142a7c0a3783d77df33e8eba61ca488a5cb54d9bf7ae057932e7e3cce",
+          "size": 398
+        },
+        "info/licenses/LICENSE": {
+          "path": "licenses/cad-native/libzlib/licenses/LICENSE",
+          "sha256": "e32ff4e00d9d94930537635291da39e7e612703334bf6fde8c7f1686fe8a45a2",
+          "size": 1002
+        },
+        "info/recipe/conda_build_config.yaml": {
+          "path": "licenses/cad-native/libzlib/recipe/conda_build_config.yaml",
+          "sha256": "fe5aec671173f5f66c75142cfcb471e841ab5adc0c344dd405b405c1e5f70620",
+          "size": 629
+        },
+        "info/recipe/meta.yaml": {
+          "path": "licenses/cad-native/libzlib/recipe/meta.yaml",
+          "sha256": "4a2e6040f5303fe794c93da483b95677fed7c3bf0317225ca1992f124e6f3a44",
+          "size": 1711
+        },
+        "info/recipe/parent/bld.bat": {
+          "path": "licenses/cad-native/libzlib/recipe/parent/bld.bat",
+          "sha256": "6248e2b07b6e0036ed870ded7c92aae6c1e003267fe87a23bbe835328898a484",
+          "size": 2543
+        },
+        "info/recipe/parent/build.sh": {
+          "path": "licenses/cad-native/libzlib/recipe/parent/build.sh",
+          "sha256": "c6d64207060c5c11cf73ecd858e5bd9200aeba4d8b74cf84f12322281a6917ef",
+          "size": 466
+        },
+        "info/recipe/parent/conda_build_config.yaml": {
+          "path": "licenses/cad-native/libzlib/recipe/parent/conda_build_config.yaml",
+          "sha256": "816952911a6aa46bcf9ae7e94cfca84352be1a5ac0ba6a9f937084b4185158d7",
+          "size": 171
+        },
+        "info/recipe/parent/meta.yaml": {
+          "path": "licenses/cad-native/libzlib/recipe/parent/meta.yaml",
+          "sha256": "173945ac8f7018b73e6c37a786d02ec1eef10c4b5efbf60298f45618ebaf53f1",
+          "size": 4800
+        },
+        "info/recipe/parent/recipe-scripts-license.txt": {
+          "path": "licenses/cad-native/libzlib/recipe/parent/recipe-scripts-license.txt",
+          "sha256": "b2f940c8e8ed8a05c62c1f7e41d16807a3ef28f7e33f54c3c8d1697b90ec149e",
+          "size": 1546
+        },
+        "info/recipe/parent/test_compile_flags.bat": {
+          "path": "licenses/cad-native/libzlib/recipe/parent/test_compile_flags.bat",
+          "sha256": "7fa0c671542459219c9a8ad0106fc931f896949bb8b48dc8e68c00d1c9fa8a0e",
+          "size": 420
+        },
+        "info/recipe/parent/test_compile_flags.c": {
+          "path": "licenses/cad-native/libzlib/recipe/parent/test_compile_flags.c",
+          "sha256": "b456e9029afb2d80518ec75f8c783886e467e6a5b479874dd5b94220288552c6",
+          "size": 448
+        }
+      },
+      "declared_license": "Zlib",
+      "linkage": "DYNAMIC",
+      "name": "libzlib",
+      "notices": {
+        "licenses/cad-native/libzlib/licenses/LICENSE": {
+          "sha256": "e32ff4e00d9d94930537635291da39e7e612703334bf6fde8c7f1686fe8a45a2",
+          "size": 1002
+        }
+      },
+      "package": "libzlib-1.3.2-hfd05255_2.conda",
+      "package_identity": {
+        "kind": "conda",
+        "sha256": "88609816e0cc7452bac637aaf65783e5edf4fee8a9f8e22bdc3a75882c536061",
+        "size": 58347,
+        "url": "https://conda.anaconda.org/conda-forge/win-64/libzlib-1.3.2-hfd05255_2.conda"
+      },
+      "selected_license": "Zlib",
+      "sources": [
+        {
+          "original_recipe_url": [
+            "http://zlib.net/zlib-1.3.2.tar.gz",
+            "https://gnupg.org/ftp/gcrypt/zlib/zlib-1.3.2.tar.gz"
+          ],
+          "path": "licenses/cad-native/sources/bb329a0a2cd0-zlib-1.3.2.tar.gz",
+          "sha256": "bb329a0a2cd0274d05519d61c667c062e06990d72e125ee2dfa8de64f0119d16",
+          "size": 1502830,
+          "url": "https://zlib.net/zlib-1.3.2.tar.gz"
+        }
+      ],
+      "version": "1.3.2"
+    },
+    {
+      "binaries": [
+        {
+          "binary": "Iex-fae5e0881fcdc423b6db34b2e97d9dd0.dll",
+          "build": "h7faf11f_0",
+          "bundled_sha256": "454ff06ae67c59ebc072ca2d323cb86dc662a350027e31f880e7de0d462b630f",
+          "dependencies": [
+            "msvcp140.dll"
+          ],
+          "exact_repair_match": true,
+          "mangled_suffix": "fae5e0881fcdc423b6db34b2e97d9dd0",
+          "original_member": "Library/bin/Iex.dll",
+          "original_sha256": "1c6d5abd6b1a67fc30619b3b3fc6f2b5cc1d3cf8f086f9a82d1a95e3c88484f4",
+          "package": "openexr-3.4.12-h7faf11f_0.conda",
+          "package_sha256": "08ef1d8a85b74a9e7fc3010008e9a4ce41196f841d26c51892d5cc5f39602863",
+          "path": "runtime/Lib/site-packages/cadquery_ocp.libs/Iex-fae5e0881fcdc423b6db34b2e97d9dd0.dll",
+          "repaired_sha256": "454ff06ae67c59ebc072ca2d323cb86dc662a350027e31f880e7de0d462b630f",
+          "version": "3.4.12"
+        },
+        {
+          "binary": "IlmThread-765b26b0caa5ec89c300feae4fd8d0e0.dll",
+          "build": "h7faf11f_0",
+          "bundled_sha256": "7fc67d74ea0686d8d3a48a4379766738b02e508771b288188aa789d0368a7a82",
+          "dependencies": [
+            "iex.dll",
+            "msvcp140.dll"
+          ],
+          "exact_repair_match": true,
+          "mangled_suffix": "765b26b0caa5ec89c300feae4fd8d0e0",
+          "original_member": "Library/bin/IlmThread.dll",
+          "original_sha256": "b3f753debc7c2faae0fc93a9bc3166354ebbfdf5396b31e22dc3b74a2fe087ba",
+          "package": "openexr-3.4.12-h7faf11f_0.conda",
+          "package_sha256": "08ef1d8a85b74a9e7fc3010008e9a4ce41196f841d26c51892d5cc5f39602863",
+          "path": "runtime/Lib/site-packages/cadquery_ocp.libs/IlmThread-765b26b0caa5ec89c300feae4fd8d0e0.dll",
+          "repaired_sha256": "7fc67d74ea0686d8d3a48a4379766738b02e508771b288188aa789d0368a7a82",
+          "version": "3.4.12"
+        },
+        {
+          "binary": "OpenEXR-bf6fe40a5b675f43bf836498a2ac2d38.dll",
+          "build": "h7faf11f_0",
+          "bundled_sha256": "503835435d1a94b1a72aaf9c9fc37be097e3f46a8354d913110d07227cee88a7",
+          "dependencies": [
+            "ilmthread.dll",
+            "openexrcore.dll",
+            "iex.dll",
+            "imath.dll",
+            "msvcp140.dll"
+          ],
+          "exact_repair_match": true,
+          "mangled_suffix": "bf6fe40a5b675f43bf836498a2ac2d38",
+          "original_member": "Library/bin/OpenEXR.dll",
+          "original_sha256": "031bc85a436dca4c1c33f11be4b60ab506cb4f1ba7c2681367dcdb2bfd616dd5",
+          "package": "openexr-3.4.12-h7faf11f_0.conda",
+          "package_sha256": "08ef1d8a85b74a9e7fc3010008e9a4ce41196f841d26c51892d5cc5f39602863",
+          "path": "runtime/Lib/site-packages/cadquery_ocp.libs/OpenEXR-bf6fe40a5b675f43bf836498a2ac2d38.dll",
+          "repaired_sha256": "503835435d1a94b1a72aaf9c9fc37be097e3f46a8354d913110d07227cee88a7",
+          "version": "3.4.12"
+        },
+        {
+          "binary": "OpenEXRCore-43a3d1e6dcf808d3b52c6aa1d1b3149b.dll",
+          "build": "h7faf11f_0",
+          "bundled_sha256": "ff9bec06b9b37952cbc4fbcf176a04ac4a36fe5d2df9131b84099b64313d2392",
+          "dependencies": [
+            "deflate.dll",
+            "openjph.dll",
+            "msvcp140.dll"
+          ],
+          "exact_repair_match": true,
+          "mangled_suffix": "43a3d1e6dcf808d3b52c6aa1d1b3149b",
+          "original_member": "Library/bin/OpenEXRCore.dll",
+          "original_sha256": "6460fb3b89b379087e68b1c5b350af7ece8d33484bd1dec4253f40dd8730a4be",
+          "package": "openexr-3.4.12-h7faf11f_0.conda",
+          "package_sha256": "08ef1d8a85b74a9e7fc3010008e9a4ce41196f841d26c51892d5cc5f39602863",
+          "path": "runtime/Lib/site-packages/cadquery_ocp.libs/OpenEXRCore-43a3d1e6dcf808d3b52c6aa1d1b3149b.dll",
+          "repaired_sha256": "ff9bec06b9b37952cbc4fbcf176a04ac4a36fe5d2df9131b84099b64313d2392",
+          "version": "3.4.12"
+        }
+      ],
+      "build": "h7faf11f_0",
+      "build_inputs": {
+        "info/about.json": {
+          "path": "licenses/cad-native/openexr/about.json",
+          "sha256": "297352f7088b5af93f5ea00f3ff27aff7d8d193ced3385be725f13d21e4fcb1d",
+          "size": 1208
+        },
+        "info/index.json": {
+          "path": "licenses/cad-native/openexr/index.json",
+          "sha256": "db01723c1d17532dcd993cd2dd07281d75662c97b131d802fa20d76b88240bce",
+          "size": 446
+        },
+        "info/licenses/LICENSE.md": {
+          "path": "licenses/cad-native/openexr/licenses/LICENSE.md",
+          "sha256": "84853c91d4c2e0310741d4773469d98bb93e61029608e0ba0882a3fffdf330bd",
+          "size": 1501
+        },
+        "info/recipe/build.bat": {
+          "path": "licenses/cad-native/openexr/recipe/build.bat",
+          "sha256": "1297d58c9fc3d48442fc0f78f30efa7cf44c278a57c204e9667958cdb2dd2d3d",
+          "size": 440
+        },
+        "info/recipe/build.sh": {
+          "path": "licenses/cad-native/openexr/recipe/build.sh",
+          "sha256": "8e8b504ed9ee1f085700de501725478a4bd5e65dbbe1a1a93371fd3934ac9c80",
+          "size": 334
+        },
+        "info/recipe/recipe-scripts-license.txt": {
+          "path": "licenses/cad-native/openexr/recipe/recipe-scripts-license.txt",
+          "sha256": "b2f940c8e8ed8a05c62c1f7e41d16807a3ef28f7e33f54c3c8d1697b90ec149e",
+          "size": 1546
+        },
+        "info/recipe/recipe.yaml": {
+          "path": "licenses/cad-native/openexr/recipe/recipe.yaml",
+          "sha256": "5174806b933187dfb158fffdcdcc4c3956bf9b7e0e995b2eaa5031c077456cc0",
+          "size": 1952
+        },
+        "info/recipe/rendered_recipe.yaml": {
+          "path": "licenses/cad-native/openexr/recipe/rendered_recipe.yaml",
+          "sha256": "88cbc7bebcf6ad81eb22121647e36f5dbaecd9bc35f6a8730ceeb4283a7ede22",
+          "size": 33584
+        },
+        "info/recipe/variant_config.yaml": {
+          "path": "licenses/cad-native/openexr/recipe/variant_config.yaml",
+          "sha256": "0d0a7436ab11717acf34a0b619f256b70023280e2710d07e2c50c2e5d4b6bade",
+          "size": 179
+        }
+      },
+      "declared_license": "BSD-3-Clause",
+      "linkage": "DYNAMIC",
+      "name": "openexr",
+      "notices": {
+        "licenses/cad-native/openexr/licenses/LICENSE.md": {
+          "sha256": "84853c91d4c2e0310741d4773469d98bb93e61029608e0ba0882a3fffdf330bd",
+          "size": 1501
+        }
+      },
+      "package": "openexr-3.4.12-h7faf11f_0.conda",
+      "package_identity": {
+        "kind": "conda",
+        "sha256": "08ef1d8a85b74a9e7fc3010008e9a4ce41196f841d26c51892d5cc5f39602863",
+        "size": 948711,
+        "url": "https://conda.anaconda.org/conda-forge/win-64/openexr-3.4.12-h7faf11f_0.conda"
+      },
+      "selected_license": "BSD-3-Clause",
+      "sources": [
+        {
+          "original_recipe_url": "https://github.com/AcademySoftwareFoundation/openexr/archive/v3.4.12.tar.gz",
+          "path": "licenses/cad-native/sources/a455779c389f-v3.4.12.tar.gz",
+          "sha256": "a455779c389f65c64220d45b63ead2900081e5f6337cdf93431cb1032c3e2686",
+          "size": 25760597,
+          "url": "https://github.com/AcademySoftwareFoundation/openexr/archive/v3.4.12.tar.gz"
+        }
+      ],
+      "version": "3.4.12"
+    },
+    {
+      "binaries": [
+        {
+          "binary": "openjp2-274e6a200cd564b014389546f6472d38.dll",
+          "build": "h0e57b4f_0",
+          "bundled_sha256": "274e6a200cd564b014389546f6472d387717dece95b7d03db5f99195bd1d6e03",
+          "dependencies": [],
+          "exact_repair_match": true,
+          "mangled_suffix": "274e6a200cd564b014389546f6472d38",
+          "original_member": "Library/bin/openjp2.dll",
+          "original_sha256": "274e6a200cd564b014389546f6472d387717dece95b7d03db5f99195bd1d6e03",
+          "package": "openjpeg-2.5.4-h0e57b4f_0.conda",
+          "package_sha256": "24342dee891a49a9ba92e2018ec0bde56cc07fdaec95275f7a55b96f03ea4252",
+          "path": "runtime/Lib/site-packages/cadquery_ocp.libs/openjp2-274e6a200cd564b014389546f6472d38.dll",
+          "repaired_sha256": "274e6a200cd564b014389546f6472d387717dece95b7d03db5f99195bd1d6e03",
+          "version": "2.5.4"
+        }
+      ],
+      "build": "h0e57b4f_0",
+      "build_inputs": {
+        "info/about.json": {
+          "path": "licenses/cad-native/openjpeg/about.json",
+          "sha256": "1c18a594581e2c52ba91ed9c2aae02906bfa502aeaec8b9e0e80296d4cf331ab",
+          "size": 11319
+        },
+        "info/index.json": {
+          "path": "licenses/cad-native/openjpeg/index.json",
+          "sha256": "1f2cfa2bfaa327858cd7650e611e15d03ecf39114f1c620513b40b64c57d6ffa",
+          "size": 427
+        },
+        "info/licenses/LICENSE": {
+          "path": "licenses/cad-native/openjpeg/licenses/LICENSE",
+          "sha256": "a6af136f3e15038a666b61f376612a07d9a4e48cb7c01adbf3e33b3f14ab49b6",
+          "size": 2112
+        },
+        "info/recipe/bld.bat": {
+          "path": "licenses/cad-native/openjpeg/recipe/bld.bat",
+          "sha256": "f742efc336b4bf6b0f703f740ad4708987096c25b46ccd4b73e456a9f75661bc",
+          "size": 728
+        },
+        "info/recipe/build.sh": {
+          "path": "licenses/cad-native/openjpeg/recipe/build.sh",
+          "sha256": "f53935db8868bde8ed7484d0c9c9809719b6e0d744feec34e289fd93ec7cbafc",
+          "size": 813
+        },
+        "info/recipe/conda_build_config.yaml": {
+          "path": "licenses/cad-native/openjpeg/recipe/conda_build_config.yaml",
+          "sha256": "e1e505c2e0049d7b49a6f6afe692f24ed4ae42c9b3ff3a2a781391041558ce3b",
+          "size": 675
+        },
+        "info/recipe/meta.yaml": {
+          "path": "licenses/cad-native/openjpeg/recipe/meta.yaml",
+          "sha256": "b88f35f5242f309ee90eadb984f57aeb1fbfd9ac86b4c86d5886a53fd95cece3",
+          "size": 2318
+        },
+        "info/recipe/meta.yaml.template": {
+          "path": "licenses/cad-native/openjpeg/recipe/meta.yaml.template",
+          "sha256": "561d7280e258287b41e66c77a6924f92c642f104c0fbc0b926cf579606abead1",
+          "size": 935
+        },
+        "info/recipe/p0_01.j2k": {
+          "path": "licenses/cad-native/openjpeg/recipe/p0_01.j2k",
+          "sha256": "a61ea8d21ad0f7f9b76796e0f841c3e125240f83e308e3b8d626f4356b9a1113",
+          "size": 7390
+        },
+        "info/recipe/pkgconfig-private-libs.patch": {
+          "path": "licenses/cad-native/openjpeg/recipe/pkgconfig-private-libs.patch",
+          "sha256": "caffb7b09cb4faa7871cc5c26935b8a52ab705ba7613eb3401d5397ac5bd95a7",
+          "size": 3099
+        },
+        "info/recipe/recipe-scripts-license.txt": {
+          "path": "licenses/cad-native/openjpeg/recipe/recipe-scripts-license.txt",
+          "sha256": "b2f940c8e8ed8a05c62c1f7e41d16807a3ef28f7e33f54c3c8d1697b90ec149e",
+          "size": 1546
+        }
+      },
+      "declared_license": "BSD-2-Clause",
+      "linkage": "DYNAMIC",
+      "name": "openjpeg",
+      "notices": {
+        "licenses/cad-native/openjpeg/licenses/LICENSE": {
+          "sha256": "a6af136f3e15038a666b61f376612a07d9a4e48cb7c01adbf3e33b3f14ab49b6",
+          "size": 2112
+        }
+      },
+      "package": "openjpeg-2.5.4-h0e57b4f_0.conda",
+      "package_identity": {
+        "kind": "conda",
+        "sha256": "24342dee891a49a9ba92e2018ec0bde56cc07fdaec95275f7a55b96f03ea4252",
+        "size": 245594,
+        "url": "https://conda.anaconda.org/conda-forge/win-64/openjpeg-2.5.4-h0e57b4f_0.conda"
+      },
+      "selected_license": "BSD-2-Clause",
+      "sources": [
+        {
+          "original_recipe_url": "https://github.com/uclouvain/openjpeg/archive/v2.5.4.tar.gz",
+          "path": "licenses/cad-native/sources/a695fbe19c01-v2.5.4.tar.gz",
+          "sha256": "a695fbe19c0165f295a8531b1e4e855cd94d0875d2f88ec4b61080677e27188a",
+          "size": 2157028,
+          "url": "https://github.com/uclouvain/openjpeg/archive/v2.5.4.tar.gz"
+        }
+      ],
+      "version": "2.5.4"
+    },
+    {
+      "binaries": [
+        {
+          "binary": "openjph-c9b5711ab6c6a22bd06855ce333ce0ce.dll",
+          "build": "hf13a347_0",
+          "bundled_sha256": "c9b5711ab6c6a22bd06855ce333ce0ce6a2f11b7c578786f79c1a84c93d43bfa",
+          "dependencies": [],
+          "exact_repair_match": true,
+          "mangled_suffix": "c9b5711ab6c6a22bd06855ce333ce0ce",
+          "original_member": "Library/bin/openjph.dll",
+          "original_sha256": "c9b5711ab6c6a22bd06855ce333ce0ce6a2f11b7c578786f79c1a84c93d43bfa",
+          "package": "openjph-0.27.3-hf13a347_0.conda",
+          "package_sha256": "4f930d1e82e25b3cba375fc2c1cb53a7cd818a831914ff362bb3230eb3b2b58f",
+          "path": "runtime/Lib/site-packages/cadquery_ocp.libs/openjph-c9b5711ab6c6a22bd06855ce333ce0ce.dll",
+          "repaired_sha256": "c9b5711ab6c6a22bd06855ce333ce0ce6a2f11b7c578786f79c1a84c93d43bfa",
+          "version": "0.27.3"
+        }
+      ],
+      "build": "hf13a347_0",
+      "build_inputs": {
+        "info/about.json": {
+          "path": "licenses/cad-native/openjph/about.json",
+          "sha256": "c5b35f5670128493736b45bf8f73a392c0046aa0faaf90a677fe1f65edca29c8",
+          "size": 510
+        },
+        "info/index.json": {
+          "path": "licenses/cad-native/openjph/index.json",
+          "sha256": "2d27c6a7e8f622712281bceb50ae59541552ef58af000d76e55642eb6b001e61",
+          "size": 347
+        },
+        "info/licenses/LICENSE": {
+          "path": "licenses/cad-native/openjph/licenses/LICENSE",
+          "sha256": "5ddf5177863dfc9ab65fa129d587db651241f00e21ed2427b218bea997591f98",
+          "size": 1448
+        },
+        "info/recipe/build.bat": {
+          "path": "licenses/cad-native/openjph/recipe/build.bat",
+          "sha256": "4dfb4661c78a981293266a0ed927164602490cf3011f0c9c585bae3e14e6e6c9",
+          "size": 349
+        },
+        "info/recipe/build.sh": {
+          "path": "licenses/cad-native/openjph/recipe/build.sh",
+          "sha256": "07059a5ed837c47378c4941d177427643c9eabc31dce54ca519d03a07cfc82b2",
+          "size": 270
+        },
+        "info/recipe/conda_build_config.yaml": {
+          "path": "licenses/cad-native/openjph/recipe/conda_build_config.yaml",
+          "sha256": "f91cb22f0ebbdbbbdb483176a11ebc86ae6ae961343741ad8ce5c2596158de4f",
+          "size": 102
+        },
+        "info/recipe/fix_aarch_old_stdlibc.patch": {
+          "path": "licenses/cad-native/openjph/recipe/fix_aarch_old_stdlibc.patch",
+          "sha256": "1b69e138779666da624151383daa3b0982f68343c9be5c8efa902394b176b021",
+          "size": 621
+        },
+        "info/recipe/recipe-scripts-license.txt": {
+          "path": "licenses/cad-native/openjph/recipe/recipe-scripts-license.txt",
+          "sha256": "b2f940c8e8ed8a05c62c1f7e41d16807a3ef28f7e33f54c3c8d1697b90ec149e",
+          "size": 1546
+        },
+        "info/recipe/recipe.yaml": {
+          "path": "licenses/cad-native/openjph/recipe/recipe.yaml",
+          "sha256": "ad60f663f584efd954e37ace1c0d53064c82e78479af3cb528b66f11e77027d6",
+          "size": 1242
+        },
+        "info/recipe/rendered_recipe.yaml": {
+          "path": "licenses/cad-native/openjph/recipe/rendered_recipe.yaml",
+          "sha256": "79b9a57e0033b08edd3f2a3bf3be4cf7b33bfe4a2335ba01789eb3e875504c3c",
+          "size": 25927
+        },
+        "info/recipe/variant_config.yaml": {
+          "path": "licenses/cad-native/openjph/recipe/variant_config.yaml",
+          "sha256": "79739dad88e7f8d890a7a92b02464109d8984ec888c6ad9293001ab9f33d7f3d",
+          "size": 155
+        },
+        "info/recipe/windows_lib_so_name.patch": {
+          "path": "licenses/cad-native/openjph/recipe/windows_lib_so_name.patch",
+          "sha256": "ffdadeb127a31b8ab1c374cbd5c66e1d15e4691d7a581d80e201ad18ba686451",
+          "size": 757
+        }
+      },
+      "declared_license": "BSD-2-Clause",
+      "linkage": "DYNAMIC",
+      "name": "openjph",
+      "notices": {
+        "licenses/cad-native/openjph/licenses/LICENSE": {
+          "sha256": "5ddf5177863dfc9ab65fa129d587db651241f00e21ed2427b218bea997591f98",
+          "size": 1448
+        }
+      },
+      "package": "openjph-0.27.3-hf13a347_0.conda",
+      "package_identity": {
+        "kind": "conda",
+        "sha256": "4f930d1e82e25b3cba375fc2c1cb53a7cd818a831914ff362bb3230eb3b2b58f",
+        "size": 217660,
+        "url": "https://conda.anaconda.org/conda-forge/win-64/openjph-0.27.3-hf13a347_0.conda"
+      },
+      "selected_license": "BSD-2-Clause",
+      "sources": [
+        {
+          "original_recipe_url": "https://github.com/aous72/OpenJPH/archive/0.27.3.tar.gz",
+          "path": "licenses/cad-native/sources/f96808ef72cf-0.27.3.tar.gz",
+          "sha256": "f96808ef72cf3acca73a52123bda3e680f6550dfb4774ad7de57eb3ce26de57a",
+          "size": 486878,
+          "url": "https://github.com/aous72/OpenJPH/archive/0.27.3.tar.gz"
+        }
+      ],
+      "version": "0.27.3"
+    },
+    {
+      "binaries": [
+        {
+          "binary": "msvcp140-639342ea9a67c0009122238ce070a825.dll",
+          "build": "h1b9f54f_37",
+          "bundled_sha256": "639342ea9a67c0009122238ce070a8257e2e04d367d627509fec29f8442afb42",
+          "dependencies": [],
+          "exact_repair_match": true,
+          "mangled_suffix": "639342ea9a67c0009122238ce070a825",
+          "original_member": "Library/bin/msvcp140.dll",
+          "original_sha256": "639342ea9a67c0009122238ce070a8257e2e04d367d627509fec29f8442afb42",
+          "package": "vc14_runtime-14.51.36231-h1b9f54f_37.conda",
+          "package_sha256": "4e83cc4e8c5513b5a0f174d9b0fe8f0ddc6adc71b28a289fe731415aef98c3e0",
+          "path": "runtime/Lib/site-packages/cadquery_ocp.libs/msvcp140-639342ea9a67c0009122238ce070a825.dll",
+          "repaired_sha256": "639342ea9a67c0009122238ce070a8257e2e04d367d627509fec29f8442afb42",
+          "version": "14.51.36231"
+        }
+      ],
+      "build": "h1b9f54f_37",
+      "build_inputs": {
+        "info/about.json": {
+          "path": "licenses/cad-native/vc14_runtime/about.json",
+          "sha256": "f76410379d9f0d139a31eb2a38a3f54395fd5a9e3f0a3a96b12233d302776e97",
+          "size": 12406
+        },
+        "info/index.json": {
+          "path": "licenses/cad-native/vc14_runtime/index.json",
+          "sha256": "d260da2acc7d612a7f2ae4fb68fbb0a8221efac5eaa1fbed51c02d7193cd2461",
+          "size": 460
+        },
+        "info/licenses/LICENSE.RTF": {
+          "path": "licenses/cad-native/vc14_runtime/licenses/LICENSE.RTF",
+          "sha256": "8099dc3cf9502c335da829e5c755948a12e3e6de490eb492a99deb673d883d8b",
+          "size": 9235
+        },
+        "info/licenses/LICENSE.TXT": {
+          "path": "licenses/cad-native/vc14_runtime/licenses/LICENSE.TXT",
+          "sha256": "cf89b37107c22cf8ce21043da1da143087b86ce7fd4556f91c25bc429533807e",
+          "size": 7590
+        },
+        "info/recipe/conda_build_config.yaml": {
+          "path": "licenses/cad-native/vc14_runtime/recipe/conda_build_config.yaml",
+          "sha256": "79b3845daecfc6a1c7712bd2b41aa5c0fd715f8836e4c624fa84ce524942895b",
+          "size": 1024
+        },
+        "info/recipe/meta.yaml": {
+          "path": "licenses/cad-native/vc14_runtime/recipe/meta.yaml",
+          "sha256": "a8d380274dc916f700f928012dcece89e62baa2ad7f6997369ec95f238f092c5",
+          "size": 8936
+        },
+        "info/recipe/parent/LICENSE.TXT": {
+          "path": "licenses/cad-native/vc14_runtime/recipe/parent/LICENSE.TXT",
+          "sha256": "cf89b37107c22cf8ce21043da1da143087b86ce7fd4556f91c25bc429533807e",
+          "size": 7590
+        },
+        "info/recipe/parent/activate.bat": {
+          "path": "licenses/cad-native/vc14_runtime/recipe/parent/activate.bat",
+          "sha256": "417700d2c4bde3d38be2f6f159204e97db5dca5ccd38e686ec6d9cf0d39efc73",
+          "size": 9985
+        },
+        "info/recipe/parent/bld.bat": {
+          "path": "licenses/cad-native/vc14_runtime/recipe/parent/bld.bat",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "size": 0
+        },
+        "info/recipe/parent/conda_build_config.yaml": {
+          "path": "licenses/cad-native/vc14_runtime/recipe/parent/conda_build_config.yaml",
+          "sha256": "7412420e8fee338ab88b1f9702643740876cd7eddeb55b53b42a1eb862c7e891",
+          "size": 2284
+        },
+        "info/recipe/parent/meta.yaml": {
+          "path": "licenses/cad-native/vc14_runtime/recipe/parent/meta.yaml",
+          "sha256": "aec892160a5cee9c122840deaefc049752b48b2a2702125daf835ca35b47b63f",
+          "size": 14202
+        },
+        "info/recipe/parent/recipe-scripts-license.txt": {
+          "path": "licenses/cad-native/vc14_runtime/recipe/parent/recipe-scripts-license.txt",
+          "sha256": "b2f940c8e8ed8a05c62c1f7e41d16807a3ef28f7e33f54c3c8d1697b90ec149e",
+          "size": 1546
+        },
+        "info/recipe/parent/vc_repack.py": {
+          "path": "licenses/cad-native/vc14_runtime/recipe/parent/vc_repack.py",
+          "sha256": "5437de1f6e034a80230478d96f2a1bb11a37027a074f9e4295d0e2e52ec1fd28",
+          "size": 16259
+        },
+        "info/recipe/vc_repack.py": {
+          "path": "licenses/cad-native/vc14_runtime/recipe/vc_repack.py",
+          "sha256": "5437de1f6e034a80230478d96f2a1bb11a37027a074f9e4295d0e2e52ec1fd28",
+          "size": 16259
+        }
+      },
+      "declared_license": "LicenseRef-MicrosoftVisualCpp2015-2022Runtime",
+      "linkage": "DYNAMIC",
+      "name": "vc14_runtime",
+      "notices": {
+        "licenses/cad-native/vc14_runtime/licenses/LICENSE.RTF": {
+          "sha256": "8099dc3cf9502c335da829e5c755948a12e3e6de490eb492a99deb673d883d8b",
+          "size": 9235
+        },
+        "licenses/cad-native/vc14_runtime/licenses/LICENSE.TXT": {
+          "sha256": "cf89b37107c22cf8ce21043da1da143087b86ce7fd4556f91c25bc429533807e",
+          "size": 7590
+        }
+      },
+      "package": "vc14_runtime-14.51.36231-h1b9f54f_37.conda",
+      "package_identity": {
+        "kind": "conda",
+        "sha256": "4e83cc4e8c5513b5a0f174d9b0fe8f0ddc6adc71b28a289fe731415aef98c3e0",
+        "size": 742016,
+        "url": "https://conda.anaconda.org/conda-forge/win-64/vc14_runtime-14.51.36231-h1b9f54f_37.conda"
+      },
+      "selected_license": "LicenseRef-MicrosoftVisualCpp2015-2022Runtime",
+      "sources": [
+        {
+          "original_recipe_url": "https://download.visualstudio.microsoft.com/download/pr/c1bd4f2c-3672-468e-8480-7ed419dbb641/90E48ADE404E4576D023ABFA374F323555F233982A8805EA9AC63DCA9491A16B/vc_redist.x64.exe",
+          "path": "licenses/cad-native/sources/90e48ade404e-vc_redist.x64.exe",
+          "sha256": "90e48ade404e4576d023abfa374f323555f233982a8805ea9ac63dca9491a16b",
+          "size": 18779992,
+          "url": "https://download.visualstudio.microsoft.com/download/pr/c1bd4f2c-3672-468e-8480-7ed419dbb641/90E48ADE404E4576D023ABFA374F323555F233982A8805EA9AC63DCA9491A16B/vc_redist.x64.exe"
+        }
+      ],
+      "version": "14.51.36231"
+    },
+    {
+      "binaries": [
+        {
+          "binary": "vcomp140-f96f3a14d88d8846f31f3ab38a490304.dll",
+          "build": "h1b9f54f_37",
+          "bundled_sha256": "f96f3a14d88d8846f31f3ab38a490304ce7d6e4f70fae4304c63e59c7aea2d30",
+          "dependencies": [],
+          "exact_repair_match": true,
+          "mangled_suffix": "f96f3a14d88d8846f31f3ab38a490304",
+          "original_member": "Library/bin/vcomp140.dll",
+          "original_sha256": "f96f3a14d88d8846f31f3ab38a490304ce7d6e4f70fae4304c63e59c7aea2d30",
+          "package": "vcomp14-14.51.36231-h1b9f54f_37.conda",
+          "package_sha256": "fec2c325c85505f3957f0bdb130418a09623bcaa9286239b15f8572a00d876a8",
+          "path": "runtime/Lib/site-packages/cadquery_ocp.libs/vcomp140-f96f3a14d88d8846f31f3ab38a490304.dll",
+          "repaired_sha256": "f96f3a14d88d8846f31f3ab38a490304ce7d6e4f70fae4304c63e59c7aea2d30",
+          "version": "14.51.36231"
+        }
+      ],
+      "build": "h1b9f54f_37",
+      "build_inputs": {
+        "info/about.json": {
+          "path": "licenses/cad-native/vcomp14/about.json",
+          "sha256": "2cf82ce22e54c6def73c6d000a2a84cf3064e2a702d5ea670b0f98620d823b89",
+          "size": 12412
+        },
+        "info/index.json": {
+          "path": "licenses/cad-native/vcomp14/index.json",
+          "sha256": "d6e4acd6b26f169cc7da6d26c4e45455dc5a044c57b4da1495dd1f2acf5fe56e",
+          "size": 415
+        },
+        "info/licenses/LICENSE.RTF": {
+          "path": "licenses/cad-native/vcomp14/licenses/LICENSE.RTF",
+          "sha256": "8099dc3cf9502c335da829e5c755948a12e3e6de490eb492a99deb673d883d8b",
+          "size": 9235
+        },
+        "info/licenses/LICENSE.TXT": {
+          "path": "licenses/cad-native/vcomp14/licenses/LICENSE.TXT",
+          "sha256": "cf89b37107c22cf8ce21043da1da143087b86ce7fd4556f91c25bc429533807e",
+          "size": 7590
+        },
+        "info/recipe/conda_build_config.yaml": {
+          "path": "licenses/cad-native/vcomp14/recipe/conda_build_config.yaml",
+          "sha256": "79b3845daecfc6a1c7712bd2b41aa5c0fd715f8836e4c624fa84ce524942895b",
+          "size": 1024
+        },
+        "info/recipe/meta.yaml": {
+          "path": "licenses/cad-native/vcomp14/recipe/meta.yaml",
+          "sha256": "b07952d68841286a35aef53ba6b33e9d0d06680179354d600f46c34b47fc000f",
+          "size": 1599
+        },
+        "info/recipe/parent/LICENSE.TXT": {
+          "path": "licenses/cad-native/vcomp14/recipe/parent/LICENSE.TXT",
+          "sha256": "cf89b37107c22cf8ce21043da1da143087b86ce7fd4556f91c25bc429533807e",
+          "size": 7590
+        },
+        "info/recipe/parent/activate.bat": {
+          "path": "licenses/cad-native/vcomp14/recipe/parent/activate.bat",
+          "sha256": "417700d2c4bde3d38be2f6f159204e97db5dca5ccd38e686ec6d9cf0d39efc73",
+          "size": 9985
+        },
+        "info/recipe/parent/bld.bat": {
+          "path": "licenses/cad-native/vcomp14/recipe/parent/bld.bat",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "size": 0
+        },
+        "info/recipe/parent/conda_build_config.yaml": {
+          "path": "licenses/cad-native/vcomp14/recipe/parent/conda_build_config.yaml",
+          "sha256": "7412420e8fee338ab88b1f9702643740876cd7eddeb55b53b42a1eb862c7e891",
+          "size": 2284
+        },
+        "info/recipe/parent/meta.yaml": {
+          "path": "licenses/cad-native/vcomp14/recipe/parent/meta.yaml",
+          "sha256": "aec892160a5cee9c122840deaefc049752b48b2a2702125daf835ca35b47b63f",
+          "size": 14202
+        },
+        "info/recipe/parent/recipe-scripts-license.txt": {
+          "path": "licenses/cad-native/vcomp14/recipe/parent/recipe-scripts-license.txt",
+          "sha256": "b2f940c8e8ed8a05c62c1f7e41d16807a3ef28f7e33f54c3c8d1697b90ec149e",
+          "size": 1546
+        },
+        "info/recipe/parent/vc_repack.py": {
+          "path": "licenses/cad-native/vcomp14/recipe/parent/vc_repack.py",
+          "sha256": "5437de1f6e034a80230478d96f2a1bb11a37027a074f9e4295d0e2e52ec1fd28",
+          "size": 16259
+        },
+        "info/recipe/vc_repack.py": {
+          "path": "licenses/cad-native/vcomp14/recipe/vc_repack.py",
+          "sha256": "5437de1f6e034a80230478d96f2a1bb11a37027a074f9e4295d0e2e52ec1fd28",
+          "size": 16259
+        }
+      },
+      "declared_license": "LicenseRef-MicrosoftVisualCpp2015-2022Runtime",
+      "linkage": "DYNAMIC",
+      "name": "vcomp14",
+      "notices": {
+        "licenses/cad-native/vcomp14/licenses/LICENSE.RTF": {
+          "sha256": "8099dc3cf9502c335da829e5c755948a12e3e6de490eb492a99deb673d883d8b",
+          "size": 9235
+        },
+        "licenses/cad-native/vcomp14/licenses/LICENSE.TXT": {
+          "sha256": "cf89b37107c22cf8ce21043da1da143087b86ce7fd4556f91c25bc429533807e",
+          "size": 7590
+        }
+      },
+      "package": "vcomp14-14.51.36231-h1b9f54f_37.conda",
+      "package_identity": {
+        "kind": "conda",
+        "sha256": "fec2c325c85505f3957f0bdb130418a09623bcaa9286239b15f8572a00d876a8",
+        "size": 124184,
+        "url": "https://conda.anaconda.org/conda-forge/win-64/vcomp14-14.51.36231-h1b9f54f_37.conda"
+      },
+      "selected_license": "LicenseRef-MicrosoftVisualCpp2015-2022Runtime",
+      "sources": [
+        {
+          "original_recipe_url": "https://download.visualstudio.microsoft.com/download/pr/c1bd4f2c-3672-468e-8480-7ed419dbb641/90E48ADE404E4576D023ABFA374F323555F233982A8805EA9AC63DCA9491A16B/vc_redist.x64.exe",
+          "path": "licenses/cad-native/sources/90e48ade404e-vc_redist.x64.exe",
+          "sha256": "90e48ade404e4576d023abfa374f323555f233982a8805ea9ac63dca9491a16b",
+          "size": 18779992,
+          "url": "https://download.visualstudio.microsoft.com/download/pr/c1bd4f2c-3672-468e-8480-7ed419dbb641/90E48ADE404E4576D023ABFA374F323555F233982A8805EA9AC63DCA9491A16B/vc_redist.x64.exe"
+        }
+      ],
+      "version": "14.51.36231"
+    },
+    {
+      "binaries": [
+        {
+          "binary": "zstd-ca228f0f33b8296d6650b4694bb38ba9.dll",
+          "build": "h534d264_6",
+          "bundled_sha256": "ca228f0f33b8296d6650b4694bb38ba9ea8796c523b6b5e0682fcc05a5edab0a",
+          "dependencies": [],
+          "exact_repair_match": true,
+          "mangled_suffix": "ca228f0f33b8296d6650b4694bb38ba9",
+          "original_member": "Library/bin/zstd.dll",
+          "original_sha256": "ca228f0f33b8296d6650b4694bb38ba9ea8796c523b6b5e0682fcc05a5edab0a",
+          "package": "zstd-1.5.7-h534d264_6.conda",
+          "package_sha256": "368d8628424966fd8f9c8018326a9c779e06913dd39e646cf331226acc90e5b2",
+          "path": "runtime/Lib/site-packages/cadquery_ocp.libs/zstd-ca228f0f33b8296d6650b4694bb38ba9.dll",
+          "repaired_sha256": "ca228f0f33b8296d6650b4694bb38ba9ea8796c523b6b5e0682fcc05a5edab0a",
+          "version": "1.5.7"
+        }
+      ],
+      "build": "h534d264_6",
+      "build_inputs": {
+        "info/about.json": {
+          "path": "licenses/cad-native/zstd/about.json",
+          "sha256": "a6467300eee7c7376006d536232fc37a16813da4f9e00151a2c23cc5d16bb2f4",
+          "size": 905
+        },
+        "info/index.json": {
+          "path": "licenses/cad-native/zstd/index.json",
+          "sha256": "3931aebfafb05379e695740f5d46fe3e1dda391d4e8904f219feb980eadfa473",
+          "size": 341
+        },
+        "info/licenses/LICENSE": {
+          "path": "licenses/cad-native/zstd/licenses/LICENSE",
+          "sha256": "7055266497633c9025b777c78eb7235af13922117480ed5c674677adc381c9d8",
+          "size": 1549
+        },
+        "info/recipe/cf_test/CMakeLists.txt": {
+          "path": "licenses/cad-native/zstd/recipe/cf_test/CMakeLists.txt",
+          "sha256": "e597e75ad7a2a133b52643ac3c953736e42243e5f86df0136edcce1c2774751a",
+          "size": 98
+        },
+        "info/recipe/conda_build_config.yaml": {
+          "path": "licenses/cad-native/zstd/recipe/conda_build_config.yaml",
+          "sha256": "b46912f849d54626aa7df11c335176de5d521520b2d6f273e4aede9f1b6612ea",
+          "size": 186
+        },
+        "info/recipe/install.bat": {
+          "path": "licenses/cad-native/zstd/recipe/install.bat",
+          "sha256": "7062798ce986f2d0c231a0a092fea7e7bfc1ae299b32d3738a7bf8998b8e8872",
+          "size": 1202
+        },
+        "info/recipe/install.sh": {
+          "path": "licenses/cad-native/zstd/recipe/install.sh",
+          "sha256": "54013480cdc5332f0746afcebccc781c3ce145eacafd6e0edd1c258242348653",
+          "size": 1405
+        },
+        "info/recipe/recipe-scripts-license.txt": {
+          "path": "licenses/cad-native/zstd/recipe/recipe-scripts-license.txt",
+          "sha256": "933c7e2f7471d8c90e6aee877c0838fc01b19dd55e362e2e2ec367b74caeb97f",
+          "size": 1568
+        },
+        "info/recipe/recipe.yaml": {
+          "path": "licenses/cad-native/zstd/recipe/recipe.yaml",
+          "sha256": "c439a28d4459f13edc823e05eb3d475148dfa64e84d7850967d85c5652ad8f3f",
+          "size": 4387
+        },
+        "info/recipe/rendered_recipe.yaml": {
+          "path": "licenses/cad-native/zstd/recipe/rendered_recipe.yaml",
+          "sha256": "7d86780ae18c60bf43c70a81eceed249ae51734972e2e279002c89e40737be75",
+          "size": 15411
+        },
+        "info/recipe/variant_config.yaml": {
+          "path": "licenses/cad-native/zstd/recipe/variant_config.yaml",
+          "sha256": "1fbbf7cb27c1dc8472d396afe6ed2dd2b24fd912edb28cf18e9131c7209ddc3c",
+          "size": 173
+        }
+      },
+      "declared_license": "BSD-3-Clause",
+      "linkage": "DYNAMIC",
+      "name": "zstd",
+      "notices": {
+        "licenses/cad-native/zstd/licenses/LICENSE": {
+          "sha256": "7055266497633c9025b777c78eb7235af13922117480ed5c674677adc381c9d8",
+          "size": 1549
+        }
+      },
+      "package": "zstd-1.5.7-h534d264_6.conda",
+      "package_identity": {
+        "kind": "conda",
+        "sha256": "368d8628424966fd8f9c8018326a9c779e06913dd39e646cf331226acc90e5b2",
+        "size": 388453,
+        "url": "https://conda.anaconda.org/conda-forge/win-64/zstd-1.5.7-h534d264_6.conda"
+      },
+      "selected_license": "BSD-3-Clause",
+      "sources": [
+        {
+          "original_recipe_url": "https://github.com/facebook/zstd/archive/v1.5.7.tar.gz",
+          "path": "licenses/cad-native/sources/37d7284556b2-v1.5.7.tar.gz",
+          "sha256": "37d7284556b20954e56e1ca85b80226768902e2edabd3b649e9e72c0c9012ee3",
+          "size": 2451884,
+          "url": "https://github.com/facebook/zstd/archive/v1.5.7.tar.gz"
+        }
+      ],
+      "version": "1.5.7"
+    },
+    {
+      "binaries": [],
+      "build": "hcfcfb64_3",
+      "build_inputs": {
+        "info/about.json": {
+          "path": "licenses/cad-native/jxrlib/about.json",
+          "sha256": "0ae7e39a9ccd604045b92441279676d4ea3a0f2c801471b1f1699a2217925a08",
+          "size": 8876
+        },
+        "info/index.json": {
+          "path": "licenses/cad-native/jxrlib/index.json",
+          "sha256": "b63e06243129b99cd52d888c602d214f29e1770d030833402891fb518c197d6a",
+          "size": 354
+        },
+        "info/licenses/LICENSE": {
+          "path": "licenses/cad-native/jxrlib/licenses/LICENSE",
+          "sha256": "19bbc8c9c49e7b91c4605f652df5b0f70b40687d4020475609093786f19e466b",
+          "size": 1414
+        },
+        "info/recipe/LICENSE": {
+          "path": "licenses/cad-native/jxrlib/recipe/LICENSE",
+          "sha256": "19bbc8c9c49e7b91c4605f652df5b0f70b40687d4020475609093786f19e466b",
+          "size": 1414
+        },
+        "info/recipe/bld.bat": {
+          "path": "licenses/cad-native/jxrlib/recipe/bld.bat",
+          "sha256": "374c8e0e604ee06912a67c0947f43a4866797a35b9938fe22185094bc36ea10b",
+          "size": 1882
+        },
+        "info/recipe/build.sh": {
+          "path": "licenses/cad-native/jxrlib/recipe/build.sh",
+          "sha256": "7f3a2edd22f67c57d8f64ca1bde3d02ac5037a1ac633ee59d4bd51508f81f306",
+          "size": 151
+        },
+        "info/recipe/conda_build_config.yaml": {
+          "path": "licenses/cad-native/jxrlib/recipe/conda_build_config.yaml",
+          "sha256": "ee7e836ca4ff9952359e080954bfb90e7563410a8d18e0a11c4d62a0b3aa6f1a",
+          "size": 575
+        },
+        "info/recipe/define_byteswap.patch": {
+          "path": "licenses/cad-native/jxrlib/recipe/define_byteswap.patch",
+          "sha256": "52605b6ac7968b0e5dbf78bd922112ecdadd84e4fe9c36c0eadda0dfd2f41746",
+          "size": 1017
+        },
+        "info/recipe/meta.yaml": {
+          "path": "licenses/cad-native/jxrlib/recipe/meta.yaml",
+          "sha256": "a85b26528ead84bbf5041422ec38705841d598a337e2a83f2d390c3895e51d5b",
+          "size": 1558
+        },
+        "info/recipe/meta.yaml.template": {
+          "path": "licenses/cad-native/jxrlib/recipe/meta.yaml.template",
+          "sha256": "c9441ab0ae8ecb4fa4931a9cbf1cb0bcd2893c2c3bf1cf767f74b4248fae522a",
+          "size": 1146
+        },
+        "info/recipe/recipe-scripts-license.txt": {
+          "path": "licenses/cad-native/jxrlib/recipe/recipe-scripts-license.txt",
+          "sha256": "933c7e2f7471d8c90e6aee877c0838fc01b19dd55e362e2e2ec367b74caeb97f",
+          "size": 1568
+        },
+        "info/recipe/usecmake.patch": {
+          "path": "licenses/cad-native/jxrlib/recipe/usecmake.patch",
+          "sha256": "7235f1ca7ccff3b359fd4a6cf70535659a1757cdd21370e9c8b3a04bfa31b8e0",
+          "size": 4760
+        }
+      },
+      "declared_license": "BSD-2-Clause",
+      "linkage": "STATIC_IN_FREEIMAGE",
+      "name": "jxrlib",
+      "notices": {
+        "licenses/cad-native/jxrlib/licenses/LICENSE": {
+          "sha256": "19bbc8c9c49e7b91c4605f652df5b0f70b40687d4020475609093786f19e466b",
+          "size": 1414
+        }
+      },
+      "package": "jxrlib-1.1-hcfcfb64_3.conda",
+      "package_identity": {
+        "kind": "conda",
+        "sha256": "a9ac265bcf65fce57cfb6512a1b072d5489445d14aa1b60c9bdf73370cf261b2",
+        "size": 355340,
+        "url": "https://conda.anaconda.org/conda-forge/win-64/jxrlib-1.1-hcfcfb64_3.conda"
+      },
+      "selected_license": "BSD-2-Clause",
+      "sources": [
+        {
+          "original_recipe_url": "http://http.debian.net/debian/pool/main/j/jxrlib/jxrlib_1.1.orig.tar.gz",
+          "path": "licenses/cad-native/sources/c7287b86780b-jxrlib_1.1.orig.tar.gz",
+          "sha256": "c7287b86780befa0914f2eeb8be2ac83e672ebd4bd16dc5574a36a59d9708303",
+          "size": 287517,
+          "url": "https://deb.debian.org/debian/pool/main/j/jxrlib/jxrlib_1.1.orig.tar.gz"
+        }
+      ],
+      "version": "1.1"
+    }
+  ],
+  "wheel": {
+    "kind": "wheel",
+    "sha256": "47cead7f3a7c18bcdd14659c3303e02b6f4537930bc2ff9a8946d1b1400787fe",
+    "size": 46557938,
+    "url": "https://files.pythonhosted.org/packages/b6/ab/1a2e7c10179aff37bbdd65ef9df86fa83b5ca91d18e8d88c26d1d667d5d2/cadquery_ocp-7.9.3.1.1-cp312-cp312-win_amd64.whl"
+  }
+}

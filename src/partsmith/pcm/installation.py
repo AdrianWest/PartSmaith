@@ -1,7 +1,7 @@
 """@package partsmith.pcm.installation
 @brief Installs and upgrades verified PCM archives with transactional backups.
 @details Requires closed KiCad applications and preserves unrelated packages.
-Customer operations run using the isolated bundled executable.
+Customer installation and removal use PCM; repository helpers use Python 3.12.
 """
 
 import argparse

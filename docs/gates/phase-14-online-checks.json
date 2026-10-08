@@ -1,0 +1,39 @@
+{
+  "checks": {
+    "affected_pytest": {
+      "errors": 0,
+      "failures": 0,
+      "skipped": 0,
+      "tests": 97
+    },
+    "deterministic_pcm": "EXACT_BYTES",
+    "exact_pcm_corpus_variants": 8,
+    "existing_managed_runtime": "READY",
+    "negative_cases": 63,
+    "repository_production_installer_dry_run": "PASS",
+    "ruff": "PASS",
+    "ruff_format_files": 308,
+    "tagged_docstrings": "PASS",
+    "workflow_yaml": "PASS"
+  },
+  "commands": [
+    ".venv/Scripts/python.exe -m pytest tests/test_pcm.py tests/test_kicad_installer.py tests/test_phase14.py tests/test_cad_licensing.py --junitxml=docs/gates/phase-14-online-source-results.xml -q",
+    ".venv/Scripts/python.exe -m ruff check .",
+    ".venv/Scripts/python.exe -m ruff format --check .",
+    ".venv/Scripts/python.exe scripts/build_production_pcm.py --output dist/partsmith-0.3.0-pcm.zip",
+    ".venv/Scripts/python.exe scripts/build_production_pcm.py --output dist/partsmith-0.3.0-rebuilt-pcm.zip",
+    ".venv/Scripts/python.exe scripts/verify_pcm.py dist/partsmith-0.3.0-pcm.zip --evidence docs/gates/phase-14-online-payload.json",
+    "powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts/install_production.ps1 -DryRun",
+    "Existing KiCad-managed Python -I -B exact extracted entry.py --diagnostics",
+    "Existing KiCad-managed Python -I -B exact extracted entry.py --self-test --output docs/gates/phase-14-online-corpus.json"
+  ],
+  "current_user_installation": "UNCHANGED",
+  "date": "2026-10-08",
+  "not_executed": [
+    "clean_machine_online_preparation",
+    "new_candidate_actual_PCM_lifecycle",
+    "new_candidate_GUI_launch"
+  ],
+  "schema_version": "partsmith-online-policy-checks-1.0",
+  "scope": "Online policy/build/installer and exact existing-managed-runtime verification; production gate remains OPEN"
+}

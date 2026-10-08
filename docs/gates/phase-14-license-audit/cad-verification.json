@@ -1,0 +1,450 @@
+{
+  "binaries": [
+    {
+      "installed": {
+        "sha256": "670ad2bf7cf19d05a739bc7fc508d27205dade420375a475c0f9437096a37850",
+        "size": 1125376
+      },
+      "match": "EXACT_BYTES",
+      "original": {
+        "sha256": "a84f688160d92efe25ee7864243347864f199f80a97e3fe58afdd026d77a07a0",
+        "size": 1125376
+      },
+      "path": "runtime/Lib/site-packages/cadquery_ocp.libs/FreeImage-cdc93a325d5d072e5fb5e9d45cff8d2e.dll",
+      "repaired": {
+        "sha256": "670ad2bf7cf19d05a739bc7fc508d27205dade420375a475c0f9437096a37850",
+        "size": 1125376
+      },
+      "vendor": "freeimage",
+      "version": "3.18.0"
+    },
+    {
+      "installed": {
+        "sha256": "f22aff08a7088afca5fbac8f60ff9b4f0f8ece2d09e8e7ed5f6807597f23387b",
+        "size": 670720
+      },
+      "match": "EXACT_BYTES",
+      "original": {
+        "sha256": "f878121d560f43c398671bc1d0d7a61bf719fa7894eac5a1db665414bcd4096f",
+        "size": 670720
+      },
+      "path": "runtime/Lib/site-packages/cadquery_ocp.libs/freetype-111bbfd18798ec20698ad64fb25a600c.dll",
+      "repaired": {
+        "sha256": "f22aff08a7088afca5fbac8f60ff9b4f0f8ece2d09e8e7ed5f6807597f23387b",
+        "size": 670720
+      },
+      "vendor": "freetype",
+      "version": "2.12.1"
+    },
+    {
+      "installed": {
+        "sha256": "5a6f13d69d70f8342d86affed788f8ff882afc14ff4acb0ad25da6da78ae84c1",
+        "size": 338432
+      },
+      "match": "EXACT_BYTES",
+      "original": {
+        "sha256": "f2f504bcc0870ecff6e4f6f26ead22dc41e2827197ca0afa3a88d0dc86b200bc",
+        "size": 338432
+      },
+      "path": "runtime/Lib/site-packages/cadquery_ocp.libs/Imath-93e5719ce25c27e234d7d3cfef1a30c5.dll",
+      "repaired": {
+        "sha256": "5a6f13d69d70f8342d86affed788f8ff882afc14ff4acb0ad25da6da78ae84c1",
+        "size": 338432
+      },
+      "vendor": "imath",
+      "version": "3.2.2"
+    },
+    {
+      "installed": {
+        "sha256": "7ba64f6e0c66e90b06b6fdda7ed89f37da5988d876860d407965a87fde6b8292",
+        "size": 581632
+      },
+      "match": "EXACT_BYTES",
+      "original": {
+        "sha256": "7ba64f6e0c66e90b06b6fdda7ed89f37da5988d876860d407965a87fde6b8292",
+        "size": 581632
+      },
+      "path": "runtime/Lib/site-packages/cadquery_ocp.libs/lcms2-7ba64f6e0c66e90b06b6fdda7ed89f37.dll",
+      "repaired": {
+        "sha256": "7ba64f6e0c66e90b06b6fdda7ed89f37da5988d876860d407965a87fde6b8292",
+        "size": 581632
+      },
+      "vendor": "lcms2",
+      "version": "2.19.1"
+    },
+    {
+      "installed": {
+        "sha256": "27385d40523237cf998f5c5030c2c1673e5dbb94872b44f21959175d98aee51e",
+        "size": 540672
+      },
+      "match": "EXACT_BYTES",
+      "original": {
+        "sha256": "7844ff388c1fe684c95f176a9f256a55af4511c136e3b3340fd8050741ef5d3f",
+        "size": 540672
+      },
+      "path": "runtime/Lib/site-packages/cadquery_ocp.libs/Lerc-8e574cd1bc0b7f8e260d4530daa7446d.dll",
+      "repaired": {
+        "sha256": "27385d40523237cf998f5c5030c2c1673e5dbb94872b44f21959175d98aee51e",
+        "size": 540672
+      },
+      "vendor": "lerc",
+      "version": "4.1.0"
+    },
+    {
+      "installed": {
+        "sha256": "0c8d7e40b4512d86969e2003a7d8bede601cfb9bc0a2d2472056a08a769769d5",
+        "size": 177664
+      },
+      "match": "EXACT_BYTES",
+      "original": {
+        "sha256": "0c8d7e40b4512d86969e2003a7d8bede601cfb9bc0a2d2472056a08a769769d5",
+        "size": 177664
+      },
+      "path": "runtime/Lib/site-packages/cadquery_ocp.libs/deflate-0c8d7e40b4512d86969e2003a7d8bede.dll",
+      "repaired": {
+        "sha256": "0c8d7e40b4512d86969e2003a7d8bede601cfb9bc0a2d2472056a08a769769d5",
+        "size": 177664
+      },
+      "vendor": "libdeflate",
+      "version": "1.25"
+    },
+    {
+      "installed": {
+        "sha256": "77bef8b5257987800e01806f64a189e312ba057e138356e69dc4367555bd0d93",
+        "size": 686592
+      },
+      "match": "EXACT_BYTES",
+      "original": {
+        "sha256": "77bef8b5257987800e01806f64a189e312ba057e138356e69dc4367555bd0d93",
+        "size": 686592
+      },
+      "path": "runtime/Lib/site-packages/cadquery_ocp.libs/jpeg8-77bef8b5257987800e01806f64a189e3.dll",
+      "repaired": {
+        "sha256": "77bef8b5257987800e01806f64a189e312ba057e138356e69dc4367555bd0d93",
+        "size": 686592
+      },
+      "vendor": "libjpeg-turbo",
+      "version": "3.1.4.1"
+    },
+    {
+      "installed": {
+        "sha256": "64eb6567bead1a5b7386bd7acd1cdd9db8f9a03133eef7ae8208ae555738d680",
+        "size": 188416
+      },
+      "match": "EXACT_BYTES",
+      "original": {
+        "sha256": "64eb6567bead1a5b7386bd7acd1cdd9db8f9a03133eef7ae8208ae555738d680",
+        "size": 188416
+      },
+      "path": "runtime/Lib/site-packages/cadquery_ocp.libs/liblzma-64eb6567bead1a5b7386bd7acd1cdd9d.dll",
+      "repaired": {
+        "sha256": "64eb6567bead1a5b7386bd7acd1cdd9db8f9a03133eef7ae8208ae555738d680",
+        "size": 188416
+      },
+      "vendor": "liblzma",
+      "version": "5.8.3"
+    },
+    {
+      "installed": {
+        "sha256": "10429b82f82ac04dbc0633ed61616e5c5057812e30e2a9fcb12b598b4d2fb7d5",
+        "size": 198656
+      },
+      "match": "EXACT_BYTES",
+      "original": {
+        "sha256": "c3fc74e2bfa2d944cbea22e1db31f06247a54634f8f489f04b5ceec921118f3f",
+        "size": 198656
+      },
+      "path": "runtime/Lib/site-packages/cadquery_ocp.libs/libpng16-c3f4406bf6331f0eb2bdd3c3323d921a.dll",
+      "repaired": {
+        "sha256": "10429b82f82ac04dbc0633ed61616e5c5057812e30e2a9fcb12b598b4d2fb7d5",
+        "size": 198656
+      },
+      "vendor": "libpng",
+      "version": "1.6.58"
+    },
+    {
+      "installed": {
+        "sha256": "23efe5297b755d4fedf0ddb1ce36b51fd2e6ada5409e4ac5696d91757b2dbe4a",
+        "size": 1132544
+      },
+      "match": "EXACT_BYTES",
+      "original": {
+        "sha256": "f6f86f952aa115f6e81a3dbc63c3d79f22e3b5d3ed56c3d61a6c9b5858c7e1a4",
+        "size": 1132544
+      },
+      "path": "runtime/Lib/site-packages/cadquery_ocp.libs/raw-45784079ff4d194ec274ed36f7b6b205.dll",
+      "repaired": {
+        "sha256": "23efe5297b755d4fedf0ddb1ce36b51fd2e6ada5409e4ac5696d91757b2dbe4a",
+        "size": 1132544
+      },
+      "vendor": "libraw",
+      "version": "0.21.5"
+    },
+    {
+      "installed": {
+        "sha256": "e143c6d3d2f6240d7259f0f8a7c28d027333e8ce731b99db377e08ab1e9228d1",
+        "size": 497152
+      },
+      "match": "EXACT_BYTES",
+      "original": {
+        "sha256": "57ad7d27c81d140cfe9b16a6b1e75ce7fa360d613add138dcdc8a61ba0872459",
+        "size": 497152
+      },
+      "path": "runtime/Lib/site-packages/cadquery_ocp.libs/tiff-36f0745325765f7bfe29a721cde40b8e.dll",
+      "repaired": {
+        "sha256": "e143c6d3d2f6240d7259f0f8a7c28d027333e8ce731b99db377e08ab1e9228d1",
+        "size": 497152
+      },
+      "vendor": "libtiff",
+      "version": "4.7.1"
+    },
+    {
+      "installed": {
+        "sha256": "c910eeed9d8f2bbf76ba6edf2e292ff7534a2674e2fb284a40514fe4e5f0a653",
+        "size": 25600
+      },
+      "match": "EXACT_BYTES",
+      "original": {
+        "sha256": "c910eeed9d8f2bbf76ba6edf2e292ff7534a2674e2fb284a40514fe4e5f0a653",
+        "size": 25600
+      },
+      "path": "runtime/Lib/site-packages/cadquery_ocp.libs/libsharpyuv-c910eeed9d8f2bbf76ba6edf2e292ff7.dll",
+      "repaired": {
+        "sha256": "c910eeed9d8f2bbf76ba6edf2e292ff7534a2674e2fb284a40514fe4e5f0a653",
+        "size": 25600
+      },
+      "vendor": "libwebp-base",
+      "version": "1.6.0"
+    },
+    {
+      "installed": {
+        "sha256": "6ccb85825bff74d705ee5ac491a30a6555afb69d5e2ca8aec63e73c00929a3be",
+        "size": 383488
+      },
+      "match": "EXACT_BYTES",
+      "original": {
+        "sha256": "7a9b1bcc7e997e6a833850aa2811aecd9452a509490a15a1fb36a33ac4dde43f",
+        "size": 383488
+      },
+      "path": "runtime/Lib/site-packages/cadquery_ocp.libs/libwebp-d04c2bb4fae02ef22f9f33389e8fa295.dll",
+      "repaired": {
+        "sha256": "6ccb85825bff74d705ee5ac491a30a6555afb69d5e2ca8aec63e73c00929a3be",
+        "size": 383488
+      },
+      "vendor": "libwebp-base",
+      "version": "1.6.0"
+    },
+    {
+      "installed": {
+        "sha256": "13204ad8022e8022eaab8fba417de3208f5485ba474187ce5844ab3c076d00e5",
+        "size": 43008
+      },
+      "match": "EXACT_BYTES",
+      "original": {
+        "sha256": "4a0f0761857badc95ed611e307a4891c8a56580a4b3c69e9814bf4a43f243b07",
+        "size": 43008
+      },
+      "path": "runtime/Lib/site-packages/cadquery_ocp.libs/libwebpmux-91ab52d47d455f8c682d0bb688b4702f.dll",
+      "repaired": {
+        "sha256": "13204ad8022e8022eaab8fba417de3208f5485ba474187ce5844ab3c076d00e5",
+        "size": 43008
+      },
+      "vendor": "libwebp-base",
+      "version": "1.6.0"
+    },
+    {
+      "installed": {
+        "sha256": "85c711c83f96bed93184bede15be6b5a3e5444df09dfffef00564107189dc722",
+        "size": 90624
+      },
+      "match": "EXACT_BYTES",
+      "original": {
+        "sha256": "85c711c83f96bed93184bede15be6b5a3e5444df09dfffef00564107189dc722",
+        "size": 90624
+      },
+      "path": "runtime/Lib/site-packages/cadquery_ocp.libs/zlib-85c711c83f96bed93184bede15be6b5a.dll",
+      "repaired": {
+        "sha256": "85c711c83f96bed93184bede15be6b5a3e5444df09dfffef00564107189dc722",
+        "size": 90624
+      },
+      "vendor": "libzlib",
+      "version": "1.3.2"
+    },
+    {
+      "installed": {
+        "sha256": "454ff06ae67c59ebc072ca2d323cb86dc662a350027e31f880e7de0d462b630f",
+        "size": 292864
+      },
+      "match": "EXACT_BYTES",
+      "original": {
+        "sha256": "1c6d5abd6b1a67fc30619b3b3fc6f2b5cc1d3cf8f086f9a82d1a95e3c88484f4",
+        "size": 292864
+      },
+      "path": "runtime/Lib/site-packages/cadquery_ocp.libs/Iex-fae5e0881fcdc423b6db34b2e97d9dd0.dll",
+      "repaired": {
+        "sha256": "454ff06ae67c59ebc072ca2d323cb86dc662a350027e31f880e7de0d462b630f",
+        "size": 292864
+      },
+      "vendor": "openexr",
+      "version": "3.4.12"
+    },
+    {
+      "installed": {
+        "sha256": "7fc67d74ea0686d8d3a48a4379766738b02e508771b288188aa789d0368a7a82",
+        "size": 45568
+      },
+      "match": "EXACT_BYTES",
+      "original": {
+        "sha256": "b3f753debc7c2faae0fc93a9bc3166354ebbfdf5396b31e22dc3b74a2fe087ba",
+        "size": 45568
+      },
+      "path": "runtime/Lib/site-packages/cadquery_ocp.libs/IlmThread-765b26b0caa5ec89c300feae4fd8d0e0.dll",
+      "repaired": {
+        "sha256": "7fc67d74ea0686d8d3a48a4379766738b02e508771b288188aa789d0368a7a82",
+        "size": 45568
+      },
+      "vendor": "openexr",
+      "version": "3.4.12"
+    },
+    {
+      "installed": {
+        "sha256": "503835435d1a94b1a72aaf9c9fc37be097e3f46a8354d913110d07227cee88a7",
+        "size": 850432
+      },
+      "match": "EXACT_BYTES",
+      "original": {
+        "sha256": "031bc85a436dca4c1c33f11be4b60ab506cb4f1ba7c2681367dcdb2bfd616dd5",
+        "size": 850432
+      },
+      "path": "runtime/Lib/site-packages/cadquery_ocp.libs/OpenEXR-bf6fe40a5b675f43bf836498a2ac2d38.dll",
+      "repaired": {
+        "sha256": "503835435d1a94b1a72aaf9c9fc37be097e3f46a8354d913110d07227cee88a7",
+        "size": 850432
+      },
+      "vendor": "openexr",
+      "version": "3.4.12"
+    },
+    {
+      "installed": {
+        "sha256": "ff9bec06b9b37952cbc4fbcf176a04ac4a36fe5d2df9131b84099b64313d2392",
+        "size": 311296
+      },
+      "match": "EXACT_BYTES",
+      "original": {
+        "sha256": "6460fb3b89b379087e68b1c5b350af7ece8d33484bd1dec4253f40dd8730a4be",
+        "size": 311296
+      },
+      "path": "runtime/Lib/site-packages/cadquery_ocp.libs/OpenEXRCore-43a3d1e6dcf808d3b52c6aa1d1b3149b.dll",
+      "repaired": {
+        "sha256": "ff9bec06b9b37952cbc4fbcf176a04ac4a36fe5d2df9131b84099b64313d2392",
+        "size": 311296
+      },
+      "vendor": "openexr",
+      "version": "3.4.12"
+    },
+    {
+      "installed": {
+        "sha256": "274e6a200cd564b014389546f6472d387717dece95b7d03db5f99195bd1d6e03",
+        "size": 360448
+      },
+      "match": "EXACT_BYTES",
+      "original": {
+        "sha256": "274e6a200cd564b014389546f6472d387717dece95b7d03db5f99195bd1d6e03",
+        "size": 360448
+      },
+      "path": "runtime/Lib/site-packages/cadquery_ocp.libs/openjp2-274e6a200cd564b014389546f6472d38.dll",
+      "repaired": {
+        "sha256": "274e6a200cd564b014389546f6472d387717dece95b7d03db5f99195bd1d6e03",
+        "size": 360448
+      },
+      "vendor": "openjpeg",
+      "version": "2.5.4"
+    },
+    {
+      "installed": {
+        "sha256": "c9b5711ab6c6a22bd06855ce333ce0ce6a2f11b7c578786f79c1a84c93d43bfa",
+        "size": 344064
+      },
+      "match": "EXACT_BYTES",
+      "original": {
+        "sha256": "c9b5711ab6c6a22bd06855ce333ce0ce6a2f11b7c578786f79c1a84c93d43bfa",
+        "size": 344064
+      },
+      "path": "runtime/Lib/site-packages/cadquery_ocp.libs/openjph-c9b5711ab6c6a22bd06855ce333ce0ce.dll",
+      "repaired": {
+        "sha256": "c9b5711ab6c6a22bd06855ce333ce0ce6a2f11b7c578786f79c1a84c93d43bfa",
+        "size": 344064
+      },
+      "vendor": "openjph",
+      "version": "0.27.3"
+    },
+    {
+      "installed": {
+        "sha256": "639342ea9a67c0009122238ce070a8257e2e04d367d627509fec29f8442afb42",
+        "size": 642720
+      },
+      "match": "EXACT_BYTES",
+      "original": {
+        "sha256": "639342ea9a67c0009122238ce070a8257e2e04d367d627509fec29f8442afb42",
+        "size": 642720
+      },
+      "path": "runtime/Lib/site-packages/cadquery_ocp.libs/msvcp140-639342ea9a67c0009122238ce070a825.dll",
+      "repaired": {
+        "sha256": "639342ea9a67c0009122238ce070a8257e2e04d367d627509fec29f8442afb42",
+        "size": 642720
+      },
+      "vendor": "vc14_runtime",
+      "version": "14.51.36231"
+    },
+    {
+      "installed": {
+        "sha256": "f96f3a14d88d8846f31f3ab38a490304ce7d6e4f70fae4304c63e59c7aea2d30",
+        "size": 213072
+      },
+      "match": "EXACT_BYTES",
+      "original": {
+        "sha256": "f96f3a14d88d8846f31f3ab38a490304ce7d6e4f70fae4304c63e59c7aea2d30",
+        "size": 213072
+      },
+      "path": "runtime/Lib/site-packages/cadquery_ocp.libs/vcomp140-f96f3a14d88d8846f31f3ab38a490304.dll",
+      "repaired": {
+        "sha256": "f96f3a14d88d8846f31f3ab38a490304ce7d6e4f70fae4304c63e59c7aea2d30",
+        "size": 213072
+      },
+      "vendor": "vcomp14",
+      "version": "14.51.36231"
+    },
+    {
+      "installed": {
+        "sha256": "ca228f0f33b8296d6650b4694bb38ba9ea8796c523b6b5e0682fcc05a5edab0a",
+        "size": 658432
+      },
+      "match": "EXACT_BYTES",
+      "original": {
+        "sha256": "ca228f0f33b8296d6650b4694bb38ba9ea8796c523b6b5e0682fcc05a5edab0a",
+        "size": 658432
+      },
+      "path": "runtime/Lib/site-packages/cadquery_ocp.libs/zstd-ca228f0f33b8296d6650b4694bb38ba9.dll",
+      "repaired": {
+        "sha256": "ca228f0f33b8296d6650b4694bb38ba9ea8796c523b6b5e0682fcc05a5edab0a",
+        "size": 658432
+      },
+      "vendor": "zstd",
+      "version": "1.5.7"
+    }
+  ],
+  "full_native_runtime_approval": false,
+  "ledger": {
+    "sha256": "66fa12193bb461dbacf9d2637df24398371be2f67d902e28e6ba6756b98a546d",
+    "size": 118802
+  },
+  "lock": {
+    "sha256": "380b33ec615e9f51b8f6b5c7bab6e333f8956fe55eadbeb984a84889081b9eb3",
+    "size": 4330287
+  },
+  "schema_version": "partsmith-cad-source-verification-1.0",
+  "scope": "24 additional CAD DLLs and statically linked JPEG XR",
+  "state": "PASS",
+  "static_jxr": "MATCHED_FREEIMAGE_RENDERED_HOST_RECIPE",
+  "vendors": 20
+}

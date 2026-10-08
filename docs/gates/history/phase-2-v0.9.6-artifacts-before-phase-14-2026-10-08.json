@@ -1,0 +1,555 @@
+{
+  "specification": "0.9.6",
+  "recorded_at": "2026-09-26",
+  "status": "PASS",
+  "scope": "Local Windows working-tree verification after specification consistency fixes; no remote CI run",
+  "base_commit": "f6a4a4205c4007d7a616e44475934b188f6e3b96",
+  "ir_versions": [
+    "1.0",
+    "1.1",
+    "1.2"
+  ],
+  "canonical_profile": "1.0",
+  "snapshot_profile": "1.1",
+  "snapshot_profile_1_2": "Deferred to Phases 4-6 and 8-9",
+  "python": "3.12.10",
+  "tools": {
+    "partsmith": "0.1.0",
+    "pip": "25.0.1",
+    "pytest": "8.4.2",
+    "ruff": "0.16.8",
+    "jsonschema": "4.26.0"
+  },
+  "tests": {
+    "source": {
+      "tests": 290,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "by_module": {
+        "tests.test_cli": 4,
+        "tests.test_ir": 80,
+        "tests.test_ir_v11": 85,
+        "tests.test_ir_v12": 103,
+        "tests.test_persistence": 12,
+        "tests.test_phase2_manifest": 4,
+        "tests.test_project": 2
+      }
+    },
+    "wheel": {
+      "tests": 290,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "by_module": {
+        "tests.test_cli": 4,
+        "tests.test_ir": 80,
+        "tests.test_ir_v11": 85,
+        "tests.test_ir_v12": 103,
+        "tests.test_persistence": 12,
+        "tests.test_phase2_manifest": 4,
+        "tests.test_project": 2
+      }
+    }
+  },
+  "packaged_schemas_and_migration_byte_verified": true,
+  "isolated_wheel_import_verified": true,
+  "frozen_build_test_inputs_verified": 93,
+  "git_clean_bytes_verified": false,
+  "wheel": {
+    "path": ".tools/phase-2-pr3/dist/partsmith-0.1.0-py3-none-any.whl",
+    "sha256": "293d91cd9248ed039f28a45108a6243b6f15f8b537b2e88d91a7ee741c951202",
+    "availability": "Local generated output; not required for repository input verification"
+  },
+  "commands": {
+    "source": [
+      [
+        "C:\\GIT_HUB\\PartSmaith\\.venv\\Scripts\\python.exe",
+        "-m",
+        "ruff",
+        "check",
+        "."
+      ],
+      [
+        "C:\\GIT_HUB\\PartSmaith\\.venv\\Scripts\\python.exe",
+        "-m",
+        "ruff",
+        "format",
+        "--check",
+        "."
+      ],
+      [
+        "C:\\GIT_HUB\\PartSmaith\\.venv\\Scripts\\python.exe",
+        "-m",
+        "pytest",
+        "--junitxml=docs/gates/phase-2-v0.9.6-tests.xml"
+      ],
+      [
+        "C:\\GIT_HUB\\PartSmaith\\.venv\\Scripts\\python.exe",
+        "-m",
+        "pip",
+        "check"
+      ],
+      [
+        "C:\\GIT_HUB\\PartSmaith\\.venv\\Scripts\\python.exe",
+        "-m",
+        "partsmith",
+        "version"
+      ],
+      [
+        "C:\\GIT_HUB\\PartSmaith\\.venv\\Scripts\\python.exe",
+        "-m",
+        "partsmith",
+        "doctor",
+        "--json"
+      ]
+    ],
+    "wheel": [
+      [
+        "C:\\GIT_HUB\\PartSmaith\\.venv\\Scripts\\python.exe",
+        "-m",
+        "pip",
+        "wheel",
+        ".",
+        "--no-deps",
+        "--wheel-dir",
+        "C:\\GIT_HUB\\PartSmaith\\.tools\\phase-2-pr3\\dist"
+      ],
+      [
+        "C:\\GIT_HUB\\PartSmaith\\.venv\\Scripts\\python.exe",
+        "-m",
+        "venv",
+        "C:\\GIT_HUB\\PartSmaith\\.tools\\phase-2-pr3\\env"
+      ],
+      [
+        "C:\\GIT_HUB\\PartSmaith\\.tools\\phase-2-pr3\\env\\Scripts\\python.exe",
+        "-m",
+        "pip",
+        "install",
+        "-r",
+        "requirements-ci.txt"
+      ],
+      [
+        "C:\\GIT_HUB\\PartSmaith\\.tools\\phase-2-pr3\\env\\Scripts\\python.exe",
+        "-m",
+        "pip",
+        "install",
+        "--no-deps",
+        "C:\\GIT_HUB\\PartSmaith\\.tools\\phase-2-pr3\\dist\\partsmith-0.1.0-py3-none-any.whl"
+      ],
+      [
+        "C:\\GIT_HUB\\PartSmaith\\.tools\\phase-2-pr3\\env\\Scripts\\python.exe",
+        "-c",
+        "\nfrom importlib.resources import files\nfrom pathlib import Path\nimport partsmith.ir\nfrom partsmith.ir import SUPPORTED_VERSIONS\nassert 'site-packages' in str(Path(partsmith.ir.__file__).resolve())\nassert SUPPORTED_VERSIONS == ('1.0', '1.1', '1.2')\nfor version in SUPPORTED_VERSIONS:\n    name = f'component-ir-{version}.schema.json'\n    assert files('partsmith.ir').joinpath(name).read_bytes() == Path('schemas', name).read_bytes()\nassert files('partsmith.persistence').joinpath('001_initial.sql').read_bytes() == Path('migrations/001_initial.sql').read_bytes()\nprint('PASS: isolated wheel imports; all three schema bytes and migration match')\n"
+      ],
+      [
+        "C:\\GIT_HUB\\PartSmaith\\.tools\\phase-2-pr3\\env\\Scripts\\python.exe",
+        "-m",
+        "pytest",
+        "--junitxml=docs/gates/phase-2-v0.9.6-wheel-tests.xml"
+      ],
+      [
+        "C:\\GIT_HUB\\PartSmaith\\.tools\\phase-2-pr3\\env\\Scripts\\python.exe",
+        "-m",
+        "pip",
+        "check"
+      ],
+      [
+        "C:\\GIT_HUB\\PartSmaith\\.tools\\phase-2-pr3\\env\\Scripts\\partsmith.exe",
+        "version"
+      ],
+      [
+        "C:\\GIT_HUB\\PartSmaith\\.tools\\phase-2-pr3\\env\\Scripts\\partsmith.exe",
+        "doctor",
+        "--json"
+      ]
+    ]
+  },
+  "sha256": {
+    ".gitattributes": "857c38fecbfd69ef13acedce1c2da273b8b417fefe4ce6a1199a98b8b7422053",
+    ".github/workflows/ci.yml": "2f676be607172e21533480ed50cbacf9cf3b27bd0e640898326ecc3a4d4ccf25",
+    "docs/component-ir.md": "34509a26158258789f4300e95768d2cdf18661ab780c0397dfcefd2908b85056",
+    "docs/gates/phase-2-ir-1.1-tests.xml": "8dc084e0c42a3c997f57201c79ebf5d49e290ec917f097e11aa3d76c9f5469f2",
+    "docs/gates/phase-2-ir-1.1-wheel-tests.xml": "4b41123dffaaf57af6c34fd96e937540a0c32225ab7818eda38ca95ec552affb",
+    "docs/gates/phase-2-ir-1.1.md": "b08eb6fef4b99a23ca962dfbddf90aa15f6a2518915148f2bb2eb74a2fd645f4",
+    "docs/gates/phase-2-ir-1.2-tests.xml": "3b4a9a8af394fef973f50e85f37c5bb36742a1c96f4ac2cfda1ba9caf0418206",
+    "docs/gates/phase-2-ir-1.2-wheel-tests.xml": "27ae4d7f2ec97b5968231a227e178f92c9b927d59076fc08929a5e7ebe73e1f0",
+    "docs/gates/phase-2-ir-1.2.md": "7c08010e43c170f0dd1f18b059c450c1793abe4c265163268bba9971c7e30df9",
+    "docs/gates/phase-2-tests.xml": "47f8bb448b028e09a22edd000d90b75978a1beff1c0d25b838fe516ff87a6322",
+    "docs/gates/phase-2-v0.9.6-source.log": "f6b0974d029651de3734e2e1ba2ff388eb50d821a2e6359273c054582fa956d8",
+    "docs/gates/phase-2-v0.9.6-tests.xml": "b228c9785394abe02816adf0623426e633cee8c74d4d09df69d93273e0a0807f",
+    "docs/gates/phase-2-v0.9.6-wheel-tests.xml": "e16fc1faa8fe083769ef87d786f5f41764f1244c34b0e872ac448f91a55fba0b",
+    "docs/gates/phase-2-v0.9.6-wheel.log": "933c54ef7cca3af636d063becff2eac78234bfee37a039975a9f28de327371cc",
+    "docs/gates/phase-2-v0.9.6.md": "a06e3a92e445504cc4ed83068076d98e16badb184b7c33fd14452416cf956887",
+    "docs/gates/phase-2-wheel-tests.xml": "9f2d26e3dd42f2cb3c29b2c5a7b8e5b9adda09d0a16b4a247bdf90b2099ebaae",
+    "docs/gates/phase-2.md": "013513959680595386ca69a2507a0ef3bb6acbfe6a92b008803a13c63a1dc72b",
+    "fixtures/ir/expected/0402.canonical.json": "7a90c2784528ee872a1ea206b34282104909c1b9020cf7da8ca9520871521868",
+    "fixtures/ir/expected/0402.sha256": "50196ae640b21203a570758d3b3f90dc5dbfff33172724015ec863acaf2ef992",
+    "fixtures/ir/invalid/absolute-path.json": "784b1d873775617c35617752be3663c1e3db4d325d95e0a85834a2132f9b0d2a",
+    "fixtures/ir/invalid/contradictory-bounds.json": "13ecb41176ae2c0f789023dd6a5a49f31cae3c9635a6f44b60681dabb187f587",
+    "fixtures/ir/invalid/duplicate-pin.json": "f8036dbdcca27b2a7f305edfcafc7579a490b16c9579d019b11a673f80ca4089",
+    "fixtures/ir/invalid/expected.json": "66dbbd90527c911f61a1c0f2584b8ecc4446fed9fb9e9ea62c1bece7b39dd402",
+    "fixtures/ir/invalid/inferred-critical-value.json": "e41846483cfebd79ed0b521a532bff3e3b2d89fb2ec9a3d07e5d14e2b6d93245",
+    "fixtures/ir/invalid/missing-domain.json": "ed4cf6ab76ab6e96ec75b40512e13c876ea4eec15ce37e937a08c2dfc560776d",
+    "fixtures/ir/invalid/missing-evidence-reference.json": "099e8312300d7096cdc7bf4ad0d7e656b8225ec5d41e0c030aaaa16aaa8b0c25",
+    "fixtures/ir/invalid/negative-dimension.json": "330d62c00af9b751df0376a60d16a64076ad45b5ead79ddcf6e2030172442e44",
+    "fixtures/ir/invalid/numeric-pin-number.json": "35727e9b192983417e0b7d62c2ba5d4b097b9d6b24c3c290cc3a5591096c9810",
+    "fixtures/ir/invalid/singular-transform.json": "1273d7c8b7a025f05a6510d93f9df87af416b8a893d5b89c13fdf39a6bf4a704",
+    "fixtures/ir/invalid/unknown-property.json": "7d94b77a0c8e6337b21ab24b8ffe9b6269219bba63b09118ef6a370c2e7c8850",
+    "fixtures/ir/invalid/unknown-schema-version.json": "512870f2c31035b26c479053f7d1ad8df5c8b4aedf90812ff12827dfe6aeccc2",
+    "fixtures/ir/invalid/unsupported-unit.json": "f05acd5511096906f8cae5216aed0e5e49f37afe3ac283e2af6da0b0f241e0b2",
+    "fixtures/ir/invalid/wrong-pin-count.json": "e6aac827904ea909c4471a23843fbeba0404ecce40dea1b3978d2c5e1e0296ac",
+    "fixtures/ir/source/synthetic-0402.txt": "1c636a36d87288fa1de3c3ae29728713e00d773e126eb7464409a170b154fe55",
+    "fixtures/ir/v1.1/expected/0402.canonical.json": "1907fe7bb5f17bc48cf9539894162bcdaf84d625bf86d693180676b26924014a",
+    "fixtures/ir/v1.1/expected/0402.sha256": "89e68ef39eb17b684280d5041a5f81a27c724006b089a7f081f10474fbebf494",
+    "fixtures/ir/v1.1/invalid/active-conflict.json": "40e502fdb241541878d8e13780b55df7a4a90cb298d296b33e7f3757b1eff9c5",
+    "fixtures/ir/v1.1/invalid/dangling-evidence.json": "25de4ebc8ccac9d2ad2376844a677cc4451344ce301fa3457e0f982c83756bc8",
+    "fixtures/ir/v1.1/invalid/document-link.json": "9738c296b0fbc9bd9e2b47e1ba4a9ab6c52ee7d0a152ff46256450ee1afc2554",
+    "fixtures/ir/v1.1/invalid/expected.json": "2a6002e05236edf6db48484d1d354e8663c713bd53122fc97eb552deb84f3ddc",
+    "fixtures/ir/v1.1/invalid/legacy-frame.json": "e55098f3c97f0ed49e0ece77b918868da5c0fa59fb32f0b9c3739cdc365c7794",
+    "fixtures/ir/v1.1/invalid/legacy-power.json": "ca72d26c305ef553bcc9dad942434cabe5f5f0ba9c3c3444969fc1339ba26183",
+    "fixtures/ir/v1.1/invalid/legacy-source.json": "3c1d7140999a041493bd8e51ed04c9dbb589c2ce3e0444cc0995a4134da4c52b",
+    "fixtures/ir/v1.1/invalid/missing-resolutions-type.json": "68bf01add37bfdbf01bd3da39e035d82cef6a7570f6e912d7a9328157864a685",
+    "fixtures/ir/v1.1/invalid/negative-scale.json": "2fe5de9ba77fd70cc83602eb1e1f6eda0c12109ee65be118ba9d5d23fc1ff7eb",
+    "fixtures/ir/v1.1/invalid/null-source-resolved.json": "0bf7e901ee032756ec8c7860253b570fce1226c8ae84cbf1e416446e172670b1",
+    "fixtures/ir/v1.1/invalid/revision-conflict.json": "696f27b98368107bd4cd84a9d21d28e4b2d1cba680ee03c879468035c64a8181",
+    "fixtures/ir/v1.1/invalid/unknown-field.json": "a71db1b7020d8671f10d5df73ed4d2c7e9f13b7437117db750ac137cdef4eedd",
+    "fixtures/ir/v1.1/invalid/unknown-version.json": "07f74ac537ed08264853f9a5efb93c3dc36d6f95f98d5f82932fb612db665281",
+    "fixtures/ir/v1.1/valid/0402.json": "204bafddd72372cd0dd7d4b2a75fdac0ba4217b747b6570b57d73f3c0f1cd945",
+    "fixtures/ir/v1.2/expected/0402.canonical.json": "ff7a2362e1556909a074023aafed9acdfe63b6e60f036f24a4e64297e302cc0a",
+    "fixtures/ir/v1.2/expected/0402.dependency.sha256": "c969f9bb3e4e19f4657d59df4abae11e4058e0cdf7f2f079654733a2f7d762f1",
+    "fixtures/ir/v1.2/expected/0402.projection.json": "328f88062ccc8c2ead97e304e126562dcdc7e7913b78caf7a661fc78f439d7aa",
+    "fixtures/ir/v1.2/expected/0402.sha256": "6b64049080c6da3fa8d792c1dd5240b0762106e4ce53c65fb1793c2b8b2eeeb6",
+    "fixtures/ir/v1.2/expected/quantity-override.dependency.sha256": "677033a587a747b5c51d80a25131ae7b15d4f33ebcf8f0e56018ca718014be0c",
+    "fixtures/ir/v1.2/expected/quantity-override.projection.json": "f49ef1508616990c9dcaa92c88bd612c4c3ee49d62678eaabdae31d5d095ec86",
+    "fixtures/ir/v1.2/history/inventory.json": "c31c5bd29fcd66375e79ab30e9db87db49310ec447ccdabea7f02e7ed1f9eb2d",
+    "fixtures/ir/v1.2/invalid/dangling-active-override.json": "2debaa339366a7b42a413b9898727e967570157636cbdee54278557bdeda1038",
+    "fixtures/ir/v1.2/invalid/dangling-active-resolution.json": "f09d09ba60c6a0ea192c0bbf660d1e6fecf0813b6398f056294fe756a5500fee",
+    "fixtures/ir/v1.2/invalid/duplicate-selector.json": "127236c2c6ea351daf189571be25d4009203ec66526bba02d74ff1a9a6517fb7",
+    "fixtures/ir/v1.2/invalid/expected.json": "20acb5bb54a8b2abef45a9faff9d88e057a26a587916ee58fcd87cadf58c3580",
+    "fixtures/ir/v1.2/invalid/legacy-pin-type.json": "bf05a999233c20b0c25b8894248ee2cc8759cb8cd3a6bd9330bb84007d4ab6f3",
+    "fixtures/ir/v1.2/invalid/metadata-target.json": "3c1b47236dfa288025335782355e3f3dc5ef3d6118c2f2d8f1e965ea4b497003",
+    "fixtures/ir/v1.2/invalid/missing-accuracy.json": "31ae7abdf1ec077029aab3a98e928e8e8bc92013cc8815fdf4deeb35deb9070c",
+    "fixtures/ir/v1.2/invalid/missing-relevance.json": "0f5282a740e1aacca98c6ac170e763e909dad3217f9d3d8e678fd1da02e9e3fe",
+    "fixtures/ir/v1.2/invalid/missing-review-field.json": "4e8fc8b2ff94b0f89872cc13cfd6769298398850ff24ac0d7c87321c96df5f43",
+    "fixtures/ir/v1.2/invalid/negative-scale.json": "7e7cb2dc333fc57c46664ee2cba43ab85c0a4f7f5b0129b3789e47d4fcd37f4b",
+    "fixtures/ir/v1.2/invalid/null-region-frame.json": "7d6ad6fbcdb06d99470ee090cc2e043dbab5e5b2ecf7424530c784d981958f59",
+    "fixtures/ir/v1.2/invalid/unknown-field.json": "7bccc98b5c0da0f71f244fc4e5f24baabe912c956105979628dd735879a5cc7a",
+    "fixtures/ir/v1.2/invalid/unknown-version.json": "30659fedd5c1ddf01d479360b5d988f319b9932c314a0340eecb5ab6c5736510",
+    "fixtures/ir/v1.2/valid/0402.json": "ff8f8697ef789b694123385a73777787ec16b1b8ebb8d9c9fd590cc4078a1063",
+    "fixtures/ir/valid/0402.json": "8fdf5a74adf5ed04c884b763175de93fee63ea0e63d1950e4f6ea0f1b24ce622",
+    "LICENSE": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+    "migrations/001_initial.sql": "840216cf721f9b76be6575a4dccc07ff70b3fd32637f4c1f39d33892f5c3eba9",
+    "pyproject.toml": "4cb461dcf646b7b46340bfcad88892c3aee25d4819abb3bc4bf75c60e83d0613",
+    "README.md": "a2e6f94eb9fa6b3eff20d2c73e2555fceebd1702828894d1e987f44fd1b886fc",
+    "requirements-ci.txt": "df99cf3dc1ac9c11e29b7303972fb7368517a435df3c9c39e7afdb080ca29ccb",
+    "resources/BFT_PartSmith_Implementation_Spec.md": "e50eb21a9837d6b33878bf23897bd5aedbbd9dc406d465f488846a9a331a5d05",
+    "schemas/component-ir-1.0.schema.json": "c58e687cd2e324edcec83eff1e0e7b5dbbb86ad95cecef3315679a28b8c82e6d",
+    "schemas/component-ir-1.1.schema.json": "4ed64619ad5d1c50a7c75125835067e8594b8b6a73c197dfe07267588832d438",
+    "schemas/component-ir-1.2.schema.json": "b93ba49d787ca5d0d79c1526b18869068e95dea609717e036a8ee48f3ee49570",
+    "scripts/verify_phase2_manifest.py": "28b8e28c51c74a71ca20d7c570f402eef1e12468abaf1b0e77e5161abf72a1fc",
+    "src/partsmith/__init__.py": "b537bd5dcdce0ffaf3da13b8108e9a71f0e9789ed00949c1efa131c1f113f5ad",
+    "src/partsmith/__main__.py": "369be25b672f3b7d33a8dfff1a3b972ef35bf67fe9ad60a36abf70302f363b7f",
+    "src/partsmith/cli.py": "cd83e30092510c26a113719b836b304b7f1178a974484863543885f5fba0f7ee",
+    "src/partsmith/ir/__init__.py": "0d32100d0dbac10233fa63c79f669de9ee125b519e8fe6a2b23a849857af3acc",
+    "src/partsmith/ir/canonical.py": "aea58db6d42efbae25cb299389a6b9b93e32a4ff167b5b63210d9e40fe8a5ab8",
+    "src/partsmith/ir/contract.py": "8c96dbe350cacc6bcdd75ba42f1a0e99425b907c2e546e5817f2b923da5d4b57",
+    "src/partsmith/ir/errors.py": "f04e70a6a2b07dd2e6aa67fa521a3c97afd93454c8fd1e74486f0977ad3a19d8",
+    "src/partsmith/ir/history.py": "c5f558db25673eb7ed4b48fa36fd4d08c81013bd39df57e816f0375edc179155",
+    "src/partsmith/ir/migration.py": "e3b2efb39eea3d453c452c67fed7fef29a928506e56967cc43fa58542b1a182a",
+    "src/partsmith/ir/migration_v12.py": "beb103a12f06641b5e28c05dc4d5b5d68c7aea9aa1d8ea7aea5364cc089504d4",
+    "src/partsmith/ir/model.py": "0965a0817072c4902d268ac648a720fda8c8401d82426e9d103798b003c76a11",
+    "src/partsmith/ir/projection.py": "b7de58f69e667496564a96ccf3c68c73e28921134f5aebb9dc103c9788730db6",
+    "src/partsmith/ir/revised.py": "9c818ab499ce79af1de67bc836419febd04aa327f1a6bc15885d3981e3c7083f",
+    "src/partsmith/ir/schema.py": "da891157f0272d956c6d100db0247f3bfb543287c24dcf53d071061529c3dc47",
+    "src/partsmith/ir/targets.py": "578e50af5e41d00252a119bc7f5f61a5b07092edc887022c59b9a8627b80fd38",
+    "src/partsmith/ir/units.py": "02c1e6a2e5e2c1d9272612eb050c7ca389c8a73911ef548c32d00be3c722ff02",
+    "src/partsmith/persistence/__init__.py": "e88b56d35e918a09b8393050909198ce84bb6284755431180cc35bcdc2272862",
+    "src/partsmith/persistence/database.py": "61c9f3dfe9ed1042825c4766d6c407f33bbfe957c0b62b30a86d014b16f4c09c",
+    "src/partsmith/persistence/records.py": "d34b9f6481c436aeb97327738cf568b4b05ae0fef1bf6996e917debe5fa87142",
+    "tests/test_cli.py": "75761f7ee9b9c09af93d0fe2b9e247b52cf01aad40788cfc8f6bac16548c7252",
+    "tests/test_ir.py": "7d25bceda1b3ecfdf354a259d07c1ee1c29121abb78ca04ae973efbe54ce7f6e",
+    "tests/test_ir_v11.py": "0e8833f89fff4d98ba4278c177528f07f38acf564cb3c8c5a6abcb62ecb6425b",
+    "tests/test_ir_v12.py": "a2713667df6a3880726c84e62c0fe03eca4952ee0ee11e3f784fa2c38fae502c",
+    "tests/test_persistence.py": "b8f5904ed3c58b67a0deded758b05e657f3b87394c45d95be87a3eb3cec4cf8f",
+    "tests/test_phase2_manifest.py": "55b2db5bbeec681efaee0d7e960868263abae278dec688a5c5ddc46570ae3699",
+    "tests/test_project.py": "60695f9c0e8fee8501370d11fa1c0ea3941add7236237b078e37d54577ac100b"
+  },
+  "phase_12_1_input_refresh": {
+    "date": "2026-10-04",
+    "reason": "Phase 12 startup/prototype and prior committed shared-input changes.",
+    "scope": "Current input-map identities only. Historical status, tests, wheel, canonical and engineering identities retain their original acceptance scope. Separate core/PDF and targeted viewer checks passed; the combined full-source native crash remains unresolved.",
+    "historical_manifest": "docs/gates/history/phase-2-v0.9.6-artifacts-before-phase-12.1-2026-10-04.json",
+    "report": "docs/gates/phase-12.1.md",
+    "changes": {
+      "sha256/.gitattributes": {
+        "before": "32b1798dae7df64a5e40e95bd7d3363e5a27b72c7c9ccae6c2e268724158b696",
+        "after": "263337eb3aaf780ac77c7769c9056908eca51d01a157d3840b9efb7cfa4ba509"
+      },
+      "sha256/.github/workflows/ci.yml": {
+        "before": "bfe42fc32aab1f5c4f599d9b4158c5bdb01bb93955d8380ee53adaa30e21e9d1",
+        "after": "5ba41fb430b6fcfc40d244af60b1158ebdd5f4d2ca0f3f889b7d82de9250376b"
+      },
+      "sha256/pyproject.toml": {
+        "before": "c28b1e299dff01cecdc07a2a7fb2e36b428960f79d6bcb14ba6aafe2dcf18e48",
+        "after": "3cf64183de05ba5651721a642cba6527389472f58614aa2ad231c447d02c4aeb"
+      },
+      "sha256/README.md": {
+        "before": "f3b205dfb320dd56a870cac79a04553bd0aace5ac9b2dd7f7467b7697a166dde",
+        "after": "44384077684e3f7024d832d42f9d6f48bf1be56de0a69a4fcda7772e6b60df62"
+      },
+      "sha256/requirements-ci.txt": {
+        "before": "ac773cdab39cfa6bd99576737561c0ee6fbc1c63a8b7f2e1365adbb9b7ce4422",
+        "after": "df99cf3dc1ac9c11e29b7303972fb7368517a435df3c9c39e7afdb080ca29ccb"
+      },
+      "sha256/resources/BFT_PartSmith_Implementation_Spec.md": {
+        "before": "a2e45ce06bb6c961926bd0e5b01082e2c5d3316a4c11ed68c0fa0ac6d7e8f84d",
+        "after": "0ac92a01c268c0a63f9eeaa71fc805aa1f414e92b5fc636cb9e6963aee99d3ee"
+      },
+      "sha256/scripts/verify_phase2_manifest.py": {
+        "before": "a840984893a066923e8cffd7dc4869c0e9479e08c4ee96f62daa0d229a641842",
+        "after": "28b8e28c51c74a71ca20d7c570f402eef1e12468abaf1b0e77e5161abf72a1fc"
+      },
+      "sha256/src/partsmith/__init__.py": {
+        "before": "0282a88bf703b74daa8169ce8c2510a0b4292ad81c3d85cadbe496a1a3901a10",
+        "after": "b537bd5dcdce0ffaf3da13b8108e9a71f0e9789ed00949c1efa131c1f113f5ad"
+      },
+      "sha256/src/partsmith/__main__.py": {
+        "before": "2eed1c8ab4d81c223c09e3f0969c455ee037f95e8f237947576b01a7611b2bec",
+        "after": "369be25b672f3b7d33a8dfff1a3b972ef35bf67fe9ad60a36abf70302f363b7f"
+      },
+      "sha256/src/partsmith/cli.py": {
+        "before": "0cae15158f1c35aa46d1cd6725f0c43153d3045bf669162ad457310c20c1f9ce",
+        "after": "cd83e30092510c26a113719b836b304b7f1178a974484863543885f5fba0f7ee"
+      },
+      "sha256/src/partsmith/ir/__init__.py": {
+        "before": "ed85d7caefe05c9c7c0eefc6c6e5db19b71f04796d2978a469251940f151dbc6",
+        "after": "0d32100d0dbac10233fa63c79f669de9ee125b519e8fe6a2b23a849857af3acc"
+      },
+      "sha256/src/partsmith/ir/canonical.py": {
+        "before": "981b05fcaae6f222f317607413ae6305f816780058fb1e431b205bb3d5b432d8",
+        "after": "aea58db6d42efbae25cb299389a6b9b93e32a4ff167b5b63210d9e40fe8a5ab8"
+      },
+      "sha256/src/partsmith/ir/contract.py": {
+        "before": "c349f3341735fcf00b236277cc7d039454c7ce986f445fd85b193c29a4228e1f",
+        "after": "1960189a3bc9fbb11883018edf31c6ff9ffc805ba44b42e53126b984a9ae43af"
+      },
+      "sha256/src/partsmith/ir/errors.py": {
+        "before": "0129a8f5d572bb8f2500a1bf7d147ef1d85c6676d9c8c75a6f3b471985c8d7eb",
+        "after": "f04e70a6a2b07dd2e6aa67fa521a3c97afd93454c8fd1e74486f0977ad3a19d8"
+      },
+      "sha256/src/partsmith/ir/history.py": {
+        "before": "bf7812cdb8af5930519f0b6a43c60bda4886101012b4fe132ed6344861dc6125",
+        "after": "c5f558db25673eb7ed4b48fa36fd4d08c81013bd39df57e816f0375edc179155"
+      },
+      "sha256/src/partsmith/ir/migration.py": {
+        "before": "2d84dad20650a4a809ae80c829ad4e6dd885efe1bd105a617a0f3138ff5c261d",
+        "after": "e3b2efb39eea3d453c452c67fed7fef29a928506e56967cc43fa58542b1a182a"
+      },
+      "sha256/src/partsmith/ir/migration_v12.py": {
+        "before": "5f54ecc4f116a1eebd83f9f74d2df82156d400da9fb11ad32bbe63453f2ddddc",
+        "after": "beb103a12f06641b5e28c05dc4d5b5d68c7aea9aa1d8ea7aea5364cc089504d4"
+      },
+      "sha256/src/partsmith/ir/model.py": {
+        "before": "0036ff9715e2e96b508ec9cf9b4ead2f47db360beebed841c7c3fea924ca8e3c",
+        "after": "0dccad1a37e29f013e956b25c3bf0129af620cae51565acab653c03a270cd382"
+      },
+      "sha256/src/partsmith/ir/projection.py": {
+        "before": "061a8582b940016c79f954c2e855360c265fa61ba183c5ab2b9013e3447039ab",
+        "after": "b7de58f69e667496564a96ccf3c68c73e28921134f5aebb9dc103c9788730db6"
+      },
+      "sha256/src/partsmith/ir/revised.py": {
+        "before": "56ad56015576469d889ce5172996e0cbb4c29a1908e56cc26d0121b1db6bb039",
+        "after": "9c818ab499ce79af1de67bc836419febd04aa327f1a6bc15885d3981e3c7083f"
+      },
+      "sha256/src/partsmith/ir/targets.py": {
+        "before": "7d5cebe9201c943230bd45325ef93f448f8138b76be20dcb647884ddbcc76d41",
+        "after": "578e50af5e41d00252a119bc7f5f61a5b07092edc887022c59b9a8627b80fd38"
+      },
+      "sha256/src/partsmith/ir/units.py": {
+        "before": "d5f6bd41ad13c3861d774b4b5bd6b8fea5566486784182a46228aac2ce3d2166",
+        "after": "02c1e6a2e5e2c1d9272612eb050c7ca389c8a73911ef548c32d00be3c722ff02"
+      },
+      "sha256/src/partsmith/persistence/database.py": {
+        "before": "8c3834e4b8e98b4d26a7eac5910d832f5cb57ed8eaf40d69157e524136d670e3",
+        "after": "a0d90af3d623fa8904ef57c3b8bf9e281486df5e688d9b714c87ebed290f88e6"
+      },
+      "sha256/tests/test_cli.py": {
+        "before": "604f667d65f144e58b594ac1fe0ff2a5781e890a28a4697949b1bd98698b255e",
+        "after": "23ae12da06601f203818dcfd53b6604efb23d60837aa9103abf7ad9863a394d4"
+      },
+      "sha256/tests/test_ir.py": {
+        "before": "ca8b1b6d4cb3aaa9d1d00caf26d1b4c2c6d409e8de848274b39122fd5156dd02",
+        "after": "7d25bceda1b3ecfdf354a259d07c1ee1c29121abb78ca04ae973efbe54ce7f6e"
+      },
+      "sha256/tests/test_ir_v11.py": {
+        "before": "9fa78ddc84a72621e7e66d50073686deda45d32eac313c596a5f99de8b66b9f8",
+        "after": "0e8833f89fff4d98ba4278c177528f07f38acf564cb3c8c5a6abcb62ecb6425b"
+      },
+      "sha256/tests/test_ir_v12.py": {
+        "before": "2069b936d55bdd2d093f3215441f39d0879c1d4fedf52e8946fd9c7c8c8ac2c1",
+        "after": "a2713667df6a3880726c84e62c0fe03eca4952ee0ee11e3f784fa2c38fae502c"
+      },
+      "sha256/tests/test_persistence.py": {
+        "before": "6368b65ed3a8c266d21ba8def32f59aef6c8cf3c2d845be5047d5b44c702bc05",
+        "after": "881336e7dcb53bcf856a3107fef29b1d81d549166f081989ef539c47d06d7045"
+      },
+      "sha256/tests/test_phase2_manifest.py": {
+        "before": "c150625937283a57426e17f675bc62ca08d54adadb48e8baf1cbc53e4f00c30b",
+        "after": "55b2db5bbeec681efaee0d7e960868263abae278dec688a5c5ddc46570ae3699"
+      },
+      "sha256/tests/test_project.py": {
+        "before": "f61ccd056e662363e8c9955f91dbcb1022494684695a219410207c2636f6667d",
+        "after": "60695f9c0e8fee8501370d11fa1c0ea3941add7236237b078e37d54577ac100b"
+      }
+    }
+  },
+  "phase_12_input_refresh": {
+    "date": "2026-10-05",
+    "reason": "Full Phase 12 implementation, validation and shared-input closeout.",
+    "scope": "Current input-map identities revalidated by the final source/wheel suites. Historical status, test results, generated wheel and golden artifact identities retain their original acceptance scope. The Phase 12.1 failed combined run remains historical failure evidence.",
+    "historical_manifest": "docs/gates/history/phase-2-v0.9.6-artifacts-before-phase-12-2026-10-05.json",
+    "report": "docs/gates/phase-12.md",
+    "changes": {
+      "sha256/.gitattributes": {
+        "before": "263337eb3aaf780ac77c7769c9056908eca51d01a157d3840b9efb7cfa4ba509",
+        "after": "78f38e3b2ce18c051461055b9cbe619751486bc326ebc0fe27ff5f7485fa941d"
+      },
+      "sha256/.github/workflows/ci.yml": {
+        "before": "5ba41fb430b6fcfc40d244af60b1158ebdd5f4d2ca0f3f889b7d82de9250376b",
+        "after": "8ab5a65662be3e3c631ba2171db9230b05a05fc4b387cf31170f7fee75300961"
+      },
+      "sha256/pyproject.toml": {
+        "before": "3cf64183de05ba5651721a642cba6527389472f58614aa2ad231c447d02c4aeb",
+        "after": "861a31f7a0cf66015c7635e7aeb97a49f43da0b652485c4f804ca4b4afff7e8e"
+      },
+      "sha256/README.md": {
+        "before": "44384077684e3f7024d832d42f9d6f48bf1be56de0a69a4fcda7772e6b60df62",
+        "after": "8548f42c1a521004eb63e4ce14774df2b86dd69ec7d14969e5c0bc6230bb60cf"
+      },
+      "sha256/schemas/component-ir-1.2.schema.json": {
+        "before": "4a26d6bd925fbf91862f5eeeae27989ea59a1c4b2f8924a23743f6d1a464a8c1",
+        "after": "b93ba49d787ca5d0d79c1526b18869068e95dea609717e036a8ee48f3ee49570"
+      },
+      "sha256/src/partsmith/ir/contract.py": {
+        "before": "1960189a3bc9fbb11883018edf31c6ff9ffc805ba44b42e53126b984a9ae43af",
+        "after": "8c96dbe350cacc6bcdd75ba42f1a0e99425b907c2e546e5817f2b923da5d4b57"
+      },
+      "sha256/src/partsmith/ir/model.py": {
+        "before": "0dccad1a37e29f013e956b25c3bf0129af620cae51565acab653c03a270cd382",
+        "after": "0965a0817072c4902d268ac648a720fda8c8401d82426e9d103798b003c76a11"
+      }
+    }
+  },
+  "banner_layout_input_refresh": {
+    "date": "2026-10-05",
+    "report": "docs/gates/phase-12-banner-update.md",
+    "historical_manifest": "docs/gates/history/phase-2-v0.9.6-artifacts-before-banner-update-2026-10-05.json",
+    "reason": "User-requested Banner3 on the Phase 9.5 main GUI; no Phase 12 viewer banner; updated specification and layout checks.",
+    "scope": "Final input-map bytes revalidated by scoped GUI checks. Original full-gate tests, distributions and other historical evidence retain their acceptance scope.",
+    "changes": {
+      "sha256/README.md": {
+        "before": "8548f42c1a521004eb63e4ce14774df2b86dd69ec7d14969e5c0bc6230bb60cf",
+        "after": "a982261618eb203fc10a0c09125072b90b8e1af3cbdb3240de2f632cf3ef7d9b"
+      },
+      "sha256/resources/BFT_PartSmith_Implementation_Spec.md": {
+        "before": "0ac92a01c268c0a63f9eeaa71fc805aa1f414e92b5fc636cb9e6963aee99d3ee",
+        "after": "a01675ca05871643edc9bec81d67505ac7b69d786c8e1332994b5a052fb272b1"
+      }
+    }
+  },
+  "symbol_viewer_input_refresh": {
+    "date": "2026-10-05",
+    "reason": "Separate-viewer symbol inspection, explicit full-part review contract and current Banner3 parity validation.",
+    "scope": "Refresh affected active input maps and their dependencies from finalized disk bytes. Historical tests, wheels, golden artifacts and prior before/after records retain their original acceptance scope.",
+    "historical_manifest": "docs/gates/history/phase-2-v0.9.6-artifacts-before-symbol-viewer-2026-10-05.json",
+    "report": "docs/gates/phase-12-symbol-viewer.md",
+    "changes": {
+      "README.md": {
+        "before": "a982261618eb203fc10a0c09125072b90b8e1af3cbdb3240de2f632cf3ef7d9b",
+        "after": "e7c675924a63b20c240acb2c0434588615a175ea24bc4be904c85bfd069af530"
+      },
+      "resources/BFT_PartSmith_Implementation_Spec.md": {
+        "before": "a01675ca05871643edc9bec81d67505ac7b69d786c8e1332994b5a052fb272b1",
+        "after": "e0dd473ca1b6219c8c0fe51ef7ab4a7ba98094a79eca2d8cf59501444636681c"
+      }
+    }
+  },
+  "phase_12_finding_fixes_input_refresh": {
+    "date": "2026-10-05",
+    "report": "docs/gates/phase-12-finding-fixes-2026-10-05.md",
+    "reason": "Resolve bound-part identity and post-commit recovery outcomes",
+    "scope": "Current validated input bytes and manifest dependencies; historical tests/wheels retain original acceptance scope",
+    "historical_manifest": "docs/gates/history/phase-2-v0.9.6-artifacts-before-phase-12-finding-fixes-2026-10-05.json",
+    "changes": {
+      "README.md": {
+        "before": "e7c675924a63b20c240acb2c0434588615a175ea24bc4be904c85bfd069af530",
+        "after": "b23c4234a222e3c3dd6c138d1b9fe5043fbdca1e5b847be5a8991c44c8b32c5d"
+      }
+    }
+  },
+  "spec_v097_input_refresh": {
+    "date": "2026-10-05",
+    "report": "docs/spec-phase-13-review-v0.9.7.md",
+    "reason": "Explicit Phase 13 contract reassignment and plugin/data/spec gap review",
+    "scope": "Current documentation/specification and manifest dependencies only; unchanged runtime and historical tests/binaries retain acceptance scope",
+    "historical_manifest": "docs/gates/history/phase-2-v0.9.6-artifacts-before-spec-v0.9.7-2026-10-05.json",
+    "changes": {
+      "README.md": {
+        "before": "b23c4234a222e3c3dd6c138d1b9fe5043fbdca1e5b847be5a8991c44c8b32c5d",
+        "after": "5debdba8af19a25f05e639cc650361c6ebad2b93133c4772b438e5b9af0f10b2"
+      },
+      "resources/BFT_PartSmith_Implementation_Spec.md": {
+        "before": "e0dd473ca1b6219c8c0fe51ef7ab4a7ba98094a79eca2d8cf59501444636681c",
+        "after": "80cbf284de63d6a8ba934510418ac99522585c7985fac2a71c3cbe4c104b92b8"
+      }
+    }
+  },
+  "pcm_spec_input_refresh": {
+    "date": "2026-10-05",
+    "reason": "Explicit PCM ZIP/runtime/lifecycle correction to Phase 13",
+    "scope": "Current documentation and dependent maps; historical tests/binaries unchanged",
+    "report": "docs/spec-phase-13-pcm-installation-update-2026-10-05.md",
+    "historical_manifest": "docs/gates/history/phase-2-v0.9.6-artifacts-before-pcm-spec-update-2026-10-05.json",
+    "changes": {
+      "README.md": {
+        "before": "5debdba8af19a25f05e639cc650361c6ebad2b93133c4772b438e5b9af0f10b2",
+        "after": "171de95f57362a8bc1f63ed7786bb421c5f88d1af19e89b47304528404dd6f5c"
+      },
+      "resources/BFT_PartSmith_Implementation_Spec.md": {
+        "before": "80cbf284de63d6a8ba934510418ac99522585c7985fac2a71c3cbe4c104b92b8",
+        "after": "a9f7626d41177002e3746a130bc8a7ed41612b67d37f8942778e93ec31945f26"
+      }
+    }
+  },
+  "pcm_only_input_refresh": {
+    "date": "2026-10-05",
+    "reason": "Explicit PCM-only build/test correction to Phase 13",
+    "scope": "Current documentation and dependent maps; historical tests/binaries unchanged",
+    "report": "docs/spec-phase-13-pcm-only-update-2026-10-05.md",
+    "historical_manifest": "docs/gates/history/phase-2-v0.9.6-artifacts-before-pcm-only-spec-update-2026-10-05.json",
+    "changes": {
+      "README.md": {
+        "before": "171de95f57362a8bc1f63ed7786bb421c5f88d1af19e89b47304528404dd6f5c",
+        "after": "26a1db3c3f21a016e62b1acc796635c3db28b4516669eefa2fe1a8fef3e2db0c"
+      },
+      "resources/BFT_PartSmith_Implementation_Spec.md": {
+        "before": "a9f7626d41177002e3746a130bc8a7ed41612b67d37f8942778e93ec31945f26",
+        "after": "b61c9845d05888b7c30db7a305b5247119070c564f4091fb17b22cc1470a8076"
+      }
+    }
+  },
+  "viewer_performance_input_refresh": {
+    "date": "2026-10-05",
+    "reason": "Persistent renderer and continuous-navigation frame delivery.",
+    "scope": "Current input-map refresh validated by the scoped source/wheel amendment. Historical tests, package identities and gate statuses retain their original acceptance scope.",
+    "historical_manifest": "docs/gates/history/phase-2-v0.9.6-artifacts-before-viewer-performance-2026-10-05.json",
+    "report": "docs/gates/phase-12-viewer-performance.md",
+    "changes": {
+      "sha256/.gitattributes": {
+        "before": "78f38e3b2ce18c051461055b9cbe619751486bc326ebc0fe27ff5f7485fa941d",
+        "after": "44a19d704861ec047282322e3edad133eb0275ed65bf348545836c4d907da315"
+      }
+    }
+  }
+}

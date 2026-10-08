@@ -96,6 +96,11 @@ def test_source_resource_parity_and_root_layout(pcm_archive):
     assert "plugins/plugin.json" in payload
     assert "plugins/requirements.txt" in payload
     assert "plugins/entry.py" in payload
+    assert "plugins/bundle.json" not in payload
+    assert not any(
+        Path(name).suffix.lower() in {".exe", ".dll", ".pyd", ".conda"}
+        for name in payload
+    )
     assert (
         payload["resources/icon.png"]
         == (ROOT / "resources/PartSmith_Logo_64x64.png").read_bytes()

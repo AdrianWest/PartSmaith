@@ -111,10 +111,10 @@
     "docs/gates/phase-13.6-target-initial-results.xml"
   ],
   "sha256": {
-    ".gitattributes": "857c38fecbfd69ef13acedce1c2da273b8b417fefe4ce6a1199a98b8b7422053",
+    ".gitattributes": "32311e453a19a84e40a077156faa10b1f6f09c85127c0e3d14acd0208cdece32",
     ".github/workflows/ci.yml": "2f676be607172e21533480ed50cbacf9cf3b27bd0e640898326ecc3a4d4ccf25",
     ".gitignore": "df3657222dd3cd82c8a745caaa9f45fe5777258771637ab0a6eac5287a9c1517",
-    "README.md": "a2e6f94eb9fa6b3eff20d2c73e2555fceebd1702828894d1e987f44fd1b886fc",
+    "README.md": "1c6349802529f78a88985ffc335d47760ecba7eda647be91f8871f4a0935acfe",
     "docs/gates/phase-13.6-combined-results.xml": "b13c336d30b8aedfcb16818cae10ce106b6509977db67d2c2aac00f2d1f18845",
     "docs/gates/phase-13.6-final-revalidation-results.xml": "e80e51ab97f4fa7b442c7e5e2dec07b5f3d72b0520d1d3a579cd2d0befddd7af",
     "docs/gates/phase-13.6-final-source-results.xml": "f2849a62c31a9a67cf0ebf26092d2a76ed8bd0c49673a8a5795655349b54e8b4",
@@ -213,7 +213,7 @@
     "migrations/004_node_cache.sql": "67b2a1549f1b746eea39df81a764aa5861e988a27549f24081b971390a90fc18",
     "migrations/005_integration.sql": "0c2df55e0d48ac3a8deb18c9ab77b9fb6c334d24b68c856619d0255e4bfb8e39",
     "pyproject.toml": "4cb461dcf646b7b46340bfcad88892c3aee25d4819abb3bc4bf75c60e83d0613",
-    "resources/BFT_PartSmith_Implementation_Spec.md": "e50eb21a9837d6b33878bf23897bd5aedbbd9dc406d465f488846a9a331a5d05",
+    "resources/BFT_PartSmith_Implementation_Spec.md": "43fb82cb0f4c79b0db397ef17a81b84d786971bd2701c92475323c43f5df0460",
     "schemas/integration-contracts-1.0.schema.json": "39f09b7f5a3048944c30665da53d770eae6a7e325d2c9869ebc29674cd392cfd",
     "scripts/close_integration_gate.py": "d65ece12a18ea34196afd0b09bf581338290757e73038ec0b3fbf35e0132509a",
     "scripts/record_integration_gate.py": "84b8119f7accfa142ec32ec2af9a8d140532d747ec92e13c91f24f2210a5e027",

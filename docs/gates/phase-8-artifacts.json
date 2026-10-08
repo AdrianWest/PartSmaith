@@ -40,8 +40,8 @@
   },
   "sha256": {
     ".github/workflows/ci.yml": "2f676be607172e21533480ed50cbacf9cf3b27bd0e640898326ecc3a4d4ccf25",
-    "README.md": "a2e6f94eb9fa6b3eff20d2c73e2555fceebd1702828894d1e987f44fd1b886fc",
-    "resources/BFT_PartSmith_Implementation_Spec.md": "e50eb21a9837d6b33878bf23897bd5aedbbd9dc406d465f488846a9a331a5d05",
+    "README.md": "1c6349802529f78a88985ffc335d47760ecba7eda647be91f8871f4a0935acfe",
+    "resources/BFT_PartSmith_Implementation_Spec.md": "43fb82cb0f4c79b0db397ef17a81b84d786971bd2701c92475323c43f5df0460",
     "scripts/setup_kicad.ps1": "bf2e4d0539a8bdc815707408cda70af291193f74da49c1789b48b6bf062c731b",
     "schemas/phase8-contracts-1.0.schema.json": "7b1e4e0c3dd75d539fadc05f3432088c5051336b3592ed1f67bd1cce2bddf860",
     "migrations/002_phase8.sql": "aa2a81d676964a77a89158c8d40c64031c51f31412bd0bd8c3a0bc95acc5b42d",

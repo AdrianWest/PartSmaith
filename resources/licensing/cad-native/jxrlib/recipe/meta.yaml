@@ -1,0 +1,51 @@
+# This file created by conda-build 3.28.2
+# meta.yaml template originally from:
+# D:\a\1\s\recipe, last modified Sat Dec 23 12:13:54 2023
+# ------------------------------------------------
+
+package:
+  name: jxrlib
+  version: '1.1'
+source:
+  patches:
+    - define_byteswap.patch
+  sha256: c7287b86780befa0914f2eeb8be2ac83e672ebd4bd16dc5574a36a59d9708303
+  url: http://http.debian.net/debian/pool/main/j/jxrlib/jxrlib_1.1.orig.tar.gz
+build:
+  number: '3'
+  run_exports:
+    - jxrlib >=1.1,<1.2.0a0
+  string: hcfcfb64_3
+requirements:
+  build:
+    - vs2019_win-64 19.29.30139 he1865b1_18
+    - vswhere 3.1.4 h57928b3_0
+  host:
+    - ucrt 10.0.22621.0 h57928b3_0
+    - vc 14.3 hcf57466_18
+    - vc14_runtime 14.38.33130 h82b7239_18
+  run:
+    - ucrt >=10.0.20348.0
+    - vc >=14.2,<15
+    - vc14_runtime >=14.29.30139
+test:
+  commands:
+    - if not exist %LIBRARY_LIB%\\libjxrglue.lib exit 1
+    - if not exist %LIBRARY_LIB%\\libjpegxr.lib exit 1
+about:
+  description: This package seems to be no longer maintained by the original developer
+    (Microsoft).
+  home: https://packages.debian.org/source/sid/jxrlib
+  license: BSD-2-Clause
+  license_family: BSD
+  license_file: LICENSE
+  summary: jxrlib - JPEG XR Library by Microsoft, built from Debian hosted sources.
+extra:
+  copy_test_source_files: true
+  final: true
+  flow_run_id: azure_20231223.3.1
+  recipe-maintainers:
+    - csachs
+    - hmaarrfk
+  remote_url: https://github.com/conda-forge/jxrlib-feedstock
+  sha: 0160e553d21ab0f429bb5dda3fda9deb3f984e63

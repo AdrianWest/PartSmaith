@@ -218,15 +218,19 @@ def test_unowned_directory_is_rejected(archive, target):
 
 
 @pytest.mark.skipif(os.name != "nt", reason="Windows batch launcher")
-def test_batch_installs_from_another_working_directory(archive, target):
+@pytest.mark.parametrize("launcher", ["development", "production"])
+def test_batch_installs_from_another_working_directory(
+    archive, target, launcher
+):
     """@brief Executes the batch launcher against isolated KiCad directories.
     @param archive Real verified PCM package.
     @param target Isolated settings and third-party paths containing spaces.
+    @param launcher Development batch or production PowerShell entry point.
     @return None.
     @details Uses the real repository environment and installer entry point.
     """
     settings, third_party = target
-    result = subprocess.run(
+    command = (
         [
             "cmd.exe",
             "/d",
@@ -239,7 +243,25 @@ def test_batch_installs_from_another_working_directory(archive, target):
             str(settings),
             "--third-party-dir",
             str(third_party),
-        ],
+        ]
+        if launcher == "development"
+        else [
+            "powershell.exe",
+            "-NoProfile",
+            "-ExecutionPolicy",
+            "Bypass",
+            "-File",
+            str(ROOT / "scripts/install_production.ps1"),
+            "-Archive",
+            str(archive),
+            "-SettingsDir",
+            str(settings),
+            "-ThirdPartyDir",
+            str(third_party),
+        ]
+    )
+    result = subprocess.run(
+        command,
         cwd=settings,
         capture_output=True,
         text=True,
@@ -250,3 +272,17 @@ def test_batch_installs_from_another_working_directory(archive, target):
     plugin = third_party / "plugins" / INSTALLER.DIRECTORY
     assert verify_inventory(plugin)["version"] == VERSION
     assert "Installed PartSmith " + VERSION in result.stdout
+    if launcher == "production":
+        command[command.index("-Archive")] = "-Uninstall"
+        command.remove(str(archive))
+        removed = subprocess.run(
+            command,
+            cwd=settings,
+            capture_output=True,
+            text=True,
+            timeout=60,
+            check=False,
+        )
+        assert removed.returncode == 0, removed.stdout + removed.stderr
+        assert not plugin.exists()
+        assert (third_party / "plugins/other_package/keep.txt").is_file()

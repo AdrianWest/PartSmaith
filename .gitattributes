@@ -57,3 +57,6 @@ docs/gates/history/** -text
 
 # Production native references retain exact exported artifact bytes.
 fixtures/production/golden/** -text
+
+# Native supplier licenses and build recipes retain original archive bytes.
+resources/licensing/cad-native/** -text

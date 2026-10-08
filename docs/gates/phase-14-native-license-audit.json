@@ -40,7 +40,7 @@
         }
       },
       "source": "https://files.pythonhosted.org/packages/76/9b/f2f8f108da17ecef2cc3efc424e8b7ad3782b1a8360f7b8eae8ced84f6ea/aiohttp-3.14.3-cp312-cp312-win_amd64.whl",
-      "vendor_license_review": "PENDING",
+      "vendor_license_review": "PENDING_SOURCE_CLOSURE",
       "version": "3.14.3"
     },
     {
@@ -663,7 +663,7 @@
         }
       },
       "source": "https://files.pythonhosted.org/packages/b6/ab/1a2e7c10179aff37bbdd65ef9df86fa83b5ca91d18e8d88c26d1d667d5d2/cadquery_ocp-7.9.3.1.1-cp312-cp312-win_amd64.whl",
-      "vendor_license_review": "PENDING",
+      "vendor_license_review": "ADDITIONAL_DLLS_VERIFIED_SDK_STATIC_INPUTS_PENDING",
       "version": "7.9.3.1.1"
     },
     {
@@ -1730,7 +1730,7 @@
         }
       },
       "source": "https://files.pythonhosted.org/packages/a7/5b/62721e8962acc2385829ac51a938ce0213e86981fda158ee03c6335d6040/casadi-3.8.1-cp311-abi3-win_amd64.whl",
-      "vendor_license_review": "PENDING",
+      "vendor_license_review": "PENDING_SOURCE_CLOSURE",
       "version": "3.8.1"
     },
     {
@@ -1755,7 +1755,7 @@
         }
       },
       "source": "https://files.pythonhosted.org/packages/f8/ed/13bd4418627013bec4ed6e54283b1959cf6db888048c7cf4b4c3b5b36002/cffi-2.0.0-cp312-cp312-win_amd64.whl",
-      "vendor_license_review": "PENDING",
+      "vendor_license_review": "PENDING_SOURCE_CLOSURE",
       "version": "2.0.0"
     },
     {
@@ -1782,7 +1782,7 @@
         }
       },
       "source": "https://files.pythonhosted.org/packages/eb/e6/e6e083884cbcfd49c64865af05027fe7011be7b2d9179524f099a1b611f3/charset_normalizer-3.5.2-cp312-cp312-win_amd64.whl",
-      "vendor_license_review": "PENDING",
+      "vendor_license_review": "PENDING_SOURCE_CLOSURE",
       "version": "3.5.2"
     },
     {
@@ -1803,8 +1803,299 @@
         }
       },
       "source": "https://files.pythonhosted.org/packages/50/a9/dab08786bb4d77ef9a046b3c1be923be4e73c5d07d91f5a54e8ea9b09e41/contourpy-1.4.0-cp312-cp312-win_amd64.whl",
-      "vendor_license_review": "PENDING",
+      "vendor_license_review": "PENDING_SOURCE_CLOSURE",
       "version": "1.4.0"
+    },
+    {
+      "binaries": [
+        {
+          "declared_pe_versions": {
+            "FileVersion": "3.12.10",
+            "ProductVersion": "3.12.10"
+          },
+          "path": "runtime/_asyncio.pyd",
+          "sha256": "c77de90cad749087a0c5dc5e19d78d24f6ef44e7e5ac19b8420cfc0cea62395d",
+          "size": 74096
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "3.12.10",
+            "ProductVersion": "3.12.10"
+          },
+          "path": "runtime/_bz2.pyd",
+          "sha256": "65f610646d10d5babea080e060d244b546ec52c54012e5e937dc72dcc2e2e7bc",
+          "size": 86896
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "3.12.10",
+            "ProductVersion": "3.12.10"
+          },
+          "path": "runtime/_ctypes.pyd",
+          "sha256": "0e56107a891100535f2da79d85a5ae65ff1227b4765bd108f8593ac1a1110d81",
+          "size": 127480
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "3.12.10",
+            "ProductVersion": "3.12.10"
+          },
+          "path": "runtime/_decimal.pyd",
+          "sha256": "aeacfead2befcc0768063a037bb64bd32109ae09cb144e5f571b04dd7965db9d",
+          "size": 262000
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "3.12.10",
+            "ProductVersion": "3.12.10"
+          },
+          "path": "runtime/_elementtree.pyd",
+          "sha256": "5009a9a53c03ef8387443b5cf6ce08e5c3a79727466a0b931c5bbca915bf89ca",
+          "size": 135160
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "3.12.10",
+            "ProductVersion": "3.12.10"
+          },
+          "path": "runtime/_hashlib.pyd",
+          "sha256": "03d233dbace599168eaffec823de6ed7beec8c2a4ebfe9b8a3d8e042a59af3ba",
+          "size": 68976
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "3.12.10",
+            "ProductVersion": "3.12.10"
+          },
+          "path": "runtime/_lzma.pyd",
+          "sha256": "e3deecc1f59a3b811c608861decd84de1e8df8bafd5e2b39188861318c5a38cf",
+          "size": 161136
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "3.12.10",
+            "ProductVersion": "3.12.10"
+          },
+          "path": "runtime/_msi.pyd",
+          "sha256": "b49332bae154ebdd8c3d5e7ddfdde336d9c47f91ba028dc67bafb2420b3dbb5c",
+          "size": 46584
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "3.12.10",
+            "ProductVersion": "3.12.10"
+          },
+          "path": "runtime/_multiprocessing.pyd",
+          "sha256": "2c636df7059cb0dd7e978dd735c7c5c8ddb09cf94754cf9e232296b96c5c545a",
+          "size": 37368
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "3.12.10",
+            "ProductVersion": "3.12.10"
+          },
+          "path": "runtime/_overlapped.pyd",
+          "sha256": "662126ff80c3a1b4cedf74074029c12ae4743e6d3b37376e39ac70aacb7d4d3c",
+          "size": 57336
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "3.12.10",
+            "ProductVersion": "3.12.10"
+          },
+          "path": "runtime/_queue.pyd",
+          "sha256": "48e76e0ad63f6932b4a77b5819f41c1e7595636ca8d9e824f0943a14b8bb5035",
+          "size": 33784
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "3.12.10",
+            "ProductVersion": "3.12.10"
+          },
+          "path": "runtime/_socket.pyd",
+          "sha256": "3efa4636cf9e350856f6927d67a4c2564bf9bd2758a00bbf17d3aece5b60016d",
+          "size": 85496
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "3.12.10",
+            "ProductVersion": "3.12.10"
+          },
+          "path": "runtime/_sqlite3.pyd",
+          "sha256": "64b51df2805c58b023a875e8ae3be7ac7f61ef664f32ca6c90f6315da47ef0bc",
+          "size": 126184
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "3.12.10",
+            "ProductVersion": "3.12.10"
+          },
+          "path": "runtime/_ssl.pyd",
+          "sha256": "0bc527d2dbc50009f43b2ed5d5982c4f63f4b647647ffa9eda612dcda80f6040",
+          "size": 179432
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "3.12.10",
+            "ProductVersion": "3.12.10"
+          },
+          "path": "runtime/_uuid.pyd",
+          "sha256": "acce4f281d7ffb2dec0997527faf25b1df62ad7bd3032c568ddcf65c90edc867",
+          "size": 27128
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "3.12.10",
+            "ProductVersion": "3.12.10"
+          },
+          "path": "runtime/_wmi.pyd",
+          "sha256": "a980f1e7a29842bd946863fc2693fbeb555a9dc0f9e1630dfed9a2fcdef3ece2",
+          "size": 40304
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "3.12.10",
+            "ProductVersion": "3.12.10"
+          },
+          "path": "runtime/_zoneinfo.pyd",
+          "sha256": "76f1439cda82ab6976df6ba505c4079444703f6d44d8b0259ce59c0ff4279fb4",
+          "size": 49656
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "3.0.16",
+            "ProductVersion": "3.0.16"
+          },
+          "path": "runtime/libcrypto-3.dll",
+          "sha256": "ccfffddcd3defb8d899026298af9af43bc186130f8483d77e97c93233d5f27d7",
+          "size": 5231472
+        },
+        {
+          "declared_pe_versions": {},
+          "path": "runtime/libffi-8.dll",
+          "sha256": "eff52743773eb550fcc6ce3efc37c85724502233b6b002a35496d828bd7b280a",
+          "size": 39696
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "3.0.16",
+            "ProductVersion": "3.0.16"
+          },
+          "path": "runtime/libssl-3.dll",
+          "sha256": "007142039f04d04e0ed607bda53de095e5bc6a8a10d26ecedde94ea7d2d7eefe",
+          "size": 794992
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "3.12.10",
+            "ProductVersion": "3.12.10"
+          },
+          "path": "runtime/pyexpat.pyd",
+          "sha256": "d615e193d1affcdbfe504e90d3621cbdcff94bf72b79d899126534507fd6d27a",
+          "size": 205304
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "3.12.10",
+            "ProductVersion": "3.12.10"
+          },
+          "path": "runtime/python.exe",
+          "sha256": "4d6f5f81a4bca11191c4c7c6b43632694d0a4ce74e068619d8fdc161d469859a",
+          "size": 104952
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "3.12.10",
+            "ProductVersion": "3.12.10"
+          },
+          "path": "runtime/python3.dll",
+          "sha256": "fb975a606e7fbf74f64260e3f60c3490b4f74a183c0926fd6ed1ac4c52ac7b1c",
+          "size": 70376
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "3.12.10",
+            "ProductVersion": "3.12.10"
+          },
+          "path": "runtime/python312.dll",
+          "sha256": "9a0e3435aaa680d868150f87ab3e388ad2eebc22f87e036155c7b4eda8cd2120",
+          "size": 6945272
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "3.12.10",
+            "ProductVersion": "3.12.10"
+          },
+          "path": "runtime/pythonw.exe",
+          "sha256": "d72294fb338bc2fc8896d25a7395a4db466425427e1559e77185d5135a830681",
+          "size": 104304
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "3.12.10",
+            "ProductVersion": "3.12.10"
+          },
+          "path": "runtime/select.pyd",
+          "sha256": "d4d7181b11db0bd22a6cd5cda6f8583d1f5c77615fd0a6ca33350619d6e0438a",
+          "size": 33136
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "3.49.1.0",
+            "ProductVersion": "3.49.1.0"
+          },
+          "path": "runtime/sqlite3.dll",
+          "sha256": "8daa45684bf6688fca28d956b2e8942f2fa98f656675ce68e6d61dd869848a7a",
+          "size": 1583608
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "3.12.10",
+            "ProductVersion": "3.12.10"
+          },
+          "path": "runtime/unicodedata.pyd",
+          "sha256": "208ee1cd3cbad0828433ca7246b05be2b1ff5569983d27d296c0b38888585488",
+          "size": 1140592
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "14.42.34438.0",
+            "ProductVersion": "14.42.34438.0"
+          },
+          "path": "runtime/vcruntime140.dll",
+          "sha256": "052ad6a20d375957e82aa6a3c441ea548d89be0981516ca7eb306e063d5027f4",
+          "size": 120400
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "14.42.34438.0",
+            "ProductVersion": "14.42.34438.0"
+          },
+          "path": "runtime/vcruntime140_1.dll",
+          "sha256": "6a99bc0128e0c7d6cbbf615fcc26909565e17d4ca3451b97f8987f9c6acbc6c8",
+          "size": 49776
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "3.12.10",
+            "ProductVersion": "3.12.10"
+          },
+          "path": "runtime/winsound.pyd",
+          "sha256": "100e8d676777603c7258daf9b2f23ef001f09f1596d8708de359326fff72bddd",
+          "size": 31736
+        }
+      ],
+      "name": "CPython",
+      "original_archive_sha256": "4acbed6dd1c744b0376e3b1cf57ce906f9dc9e95e68824584c8099a63025a3c3",
+      "retained_notices": {
+        "runtime/LICENSE.txt": {
+          "sha256": "e502c6b880ff58d614901495a9009c136539cd0b1e2a2abb8fc00b934c203419",
+          "size": 36874
+        }
+      },
+      "source": "https://www.python.org/ftp/python/3.12.10/python-3.12.10-embed-amd64.zip",
+      "vendor_license_review": "PENDING_SOURCE_CLOSURE",
+      "version": "3.12.10"
     },
     {
       "binaries": [
@@ -1832,7 +2123,7 @@
         }
       },
       "source": "https://files.pythonhosted.org/packages/7e/bf/80fbf45253ea585a1e492a6a17efcb93467701fa79e71550a430c5e60df0/cryptography-46.0.3-cp311-abi3-win_amd64.whl",
-      "vendor_license_review": "PENDING",
+      "vendor_license_review": "PENDING_SOURCE_CLOSURE",
       "version": "46.0.3"
     },
     {
@@ -1865,7 +2156,7 @@
         }
       },
       "source": "https://files.pythonhosted.org/packages/33/6b/e0547afaf41bf2c42e52430072fa5658766e3d65bd4b03a563d1b6336f57/distlib-0.4.0-py2.py3-none-any.whl",
-      "vendor_license_review": "PENDING",
+      "vendor_license_review": "PENDING_SOURCE_CLOSURE",
       "version": "0.4.0"
     },
     {
@@ -1934,7 +2225,7 @@
         }
       },
       "source": "https://files.pythonhosted.org/packages/0b/99/2e81cb168e0f09adfb05fb40e5f890ff87ac2c00e98079cf09837dd76330/ezdxf-1.4.4-cp312-cp312-win_amd64.whl",
-      "vendor_license_review": "PENDING",
+      "vendor_license_review": "PENDING_SOURCE_CLOSURE",
       "version": "1.4.4"
     },
     {
@@ -1989,7 +2280,7 @@
         }
       },
       "source": "https://files.pythonhosted.org/packages/b5/f2/fd490f1ddf2e430289c13059982771e6b02a2bf37504401d2a5c53307892/fonttools-4.66.0-cp312-cp312-win_amd64.whl",
-      "vendor_license_review": "PENDING",
+      "vendor_license_review": "PENDING_SOURCE_CLOSURE",
       "version": "4.66.0"
     },
     {
@@ -2010,7 +2301,7 @@
         }
       },
       "source": "https://files.pythonhosted.org/packages/b8/af/38e51a553dd66eb064cdf193841f16f077585d4d28394c2fa6235cb41765/frozenlist-1.8.0-cp312-cp312-win_amd64.whl",
-      "vendor_license_review": "PENDING",
+      "vendor_license_review": "PENDING_SOURCE_CLOSURE",
       "version": "1.8.0"
     },
     {
@@ -2031,7 +2322,7 @@
         }
       },
       "source": "https://files.pythonhosted.org/packages/6e/7c/7b210498f9f92e1cd7855f260fa69ef056881087b199ee20c208f0e4189a/kiwisolver-1.5.1-cp312-cp312-win_amd64.whl",
-      "vendor_license_review": "PENDING",
+      "vendor_license_review": "PENDING_SOURCE_CLOSURE",
       "version": "1.5.1"
     },
     {
@@ -2065,7 +2356,7 @@
         }
       },
       "source": "https://files.pythonhosted.org/packages/84/49/2a44871cac6b5a2fd4aabd68cfdaf6de9a5c7edb36dee5d47b77bda4b50f/llvmlite-0.49.0-cp312-cp312-win_amd64.whl",
-      "vendor_license_review": "PENDING",
+      "vendor_license_review": "PENDING_SOURCE_CLOSURE",
       "version": "0.49.0"
     },
     {
@@ -2136,7 +2427,7 @@
         }
       },
       "source": "https://files.pythonhosted.org/packages/04/93/0d239bde12b308262265c2d98909b2f0ecad2b5deeae96241642e822e9c7/matplotlib-3.11.2-cp312-cp312-win_amd64.whl",
-      "vendor_license_review": "PENDING",
+      "vendor_license_review": "PENDING_SOURCE_CLOSURE",
       "version": "3.11.2"
     },
     {
@@ -2157,7 +2448,7 @@
         }
       },
       "source": "https://files.pythonhosted.org/packages/85/98/a33b8b4af14e3476bb0da1b8c36ef7a0f28dcf95db1c5e68ff88cb89d591/msgpack-1.2.2-cp312-cp312-win_amd64.whl",
-      "vendor_license_review": "PENDING",
+      "vendor_license_review": "PENDING_SOURCE_CLOSURE",
       "version": "1.2.2"
     },
     {
@@ -2178,7 +2469,7 @@
         }
       },
       "source": "https://files.pythonhosted.org/packages/d7/2e/8c9c2591df01e5692ad1bf92febb082a17b1c6c3a19aa8b7ff49988fd989/multidict-6.9.1-cp312-cp312-win_amd64.whl",
-      "vendor_license_review": "PENDING",
+      "vendor_license_review": "PENDING_SOURCE_CLOSURE",
       "version": "6.9.1"
     },
     {
@@ -2205,7 +2496,7 @@
         }
       },
       "source": "https://files.pythonhosted.org/packages/ce/c4/c753b9251cbf34447c6ce41a119d345c8bd1f16c1af88840afb6e8bc3637/nlopt-2.11.0-cp312-cp312-win_amd64.whl",
-      "vendor_license_review": "PENDING",
+      "vendor_license_review": "PENDING_SOURCE_CLOSURE",
       "version": "2.11.0"
     },
     {
@@ -2308,7 +2599,7 @@
         }
       },
       "source": "https://files.pythonhosted.org/packages/6e/63/ab21828b4056afed71f9ecb40f4de26c2c19de731cc001961aca74b79464/numba-0.67.0-cp312-cp312-win_amd64.whl",
-      "vendor_license_review": "PENDING",
+      "vendor_license_review": "PENDING_SOURCE_CLOSURE",
       "version": "0.67.0"
     },
     {
@@ -2528,8 +2819,2012 @@
         }
       },
       "source": "https://files.pythonhosted.org/packages/3c/a1/accf6d4f0c80c5d9ba9735d6b1550e444180599f34dec69ca01360f717ad/numpy-2.5.3-cp312-cp312-win_amd64.whl",
-      "vendor_license_review": "PENDING",
+      "vendor_license_review": "PENDING_SOURCE_CLOSURE",
       "version": "2.5.3"
+    },
+    {
+      "binaries": [
+        {
+          "declared_pe_versions": {},
+          "path": "ocr/bin/libbz2.dll",
+          "sha256": "7f3ddbb88b670d79ada028480067ccdf240601319128e40eec8dce1daf4a9238",
+          "size": 77824
+        }
+      ],
+      "name": "ocr-bzip2",
+      "original_archive_sha256": "04767466ee9227c9c57ab2c6503e0149177d34111c7418d2f420297acb1eb229",
+      "retained_notices": {
+        "licenses/ocr/bzip2/LICENSE": {
+          "sha256": "c6dbbf828498be844a89eaa3b84adbab3199e342eb5cb2ed2f0d4ba7ec0f38a3",
+          "size": 1896
+        }
+      },
+      "source": "https://conda.anaconda.org/conda-forge/win-64/bzip2-1.0.8-h0ad9c76_10.conda",
+      "vendor_license_review": "PENDING_SOURCE_CLOSURE",
+      "version": "1.0.8"
+    },
+    {
+      "binaries": [
+        {
+          "declared_pe_versions": {},
+          "path": "ocr/bin/gif-7.dll",
+          "sha256": "3d84b3da03a4cdc1d6f30fc8ff362afc17f4e149ce60f4fa5fd77c4e9dfeb292",
+          "size": 44544
+        },
+        {
+          "declared_pe_versions": {},
+          "path": "ocr/bin/gif2rgb.exe",
+          "sha256": "d8a154b6cd08c2f2bbffdcd9990aff5e754c1e9a19e9617fba7f77becc3bb321",
+          "size": 18944
+        },
+        {
+          "declared_pe_versions": {},
+          "path": "ocr/bin/gifbuild.exe",
+          "sha256": "b02a210ef1b51fc5344df9e6dd5cce6b34991e41caebac3f398f8ebaed27c7b6",
+          "size": 25088
+        },
+        {
+          "declared_pe_versions": {},
+          "path": "ocr/bin/gifclrmp.exe",
+          "sha256": "f95c94a1727dd4a8b59a87e140b292c380aed07a8510104320d7e1bafdec3820",
+          "size": 15872
+        },
+        {
+          "declared_pe_versions": {},
+          "path": "ocr/bin/giffix.exe",
+          "sha256": "1037c9da0c00989c022a310aed44a4b446487557331a2e24a992320c386873f5",
+          "size": 13312
+        },
+        {
+          "declared_pe_versions": {},
+          "path": "ocr/bin/giftext.exe",
+          "sha256": "bde12930f2f0b143ea2d6bfcf8f482de9539c6b10baa5b62d1b7961fd748e39f",
+          "size": 17920
+        },
+        {
+          "declared_pe_versions": {},
+          "path": "ocr/bin/giftool.exe",
+          "sha256": "23eac19314141658f8cae0c409488da81649a38f3fe5be83d86b30825951415a",
+          "size": 19456
+        }
+      ],
+      "name": "ocr-giflib",
+      "original_archive_sha256": "573af9bb6294d125a0be6dc4963e589188da92426c3887feb60dd22a07530e4f",
+      "retained_notices": {
+        "licenses/ocr/giflib/COPYING": {
+          "sha256": "0c9b7990ecdca88b676db232c226548ac408b279f550d424d996f0d83591dd8e",
+          "size": 1088
+        },
+        "licenses/ocr/giflib/getopt_LICENSE.txt": {
+          "sha256": "fe73146296e90e2079d2cba94192ffe44887d92821bd2e59267503720cfee68f",
+          "size": 2940
+        }
+      },
+      "source": "https://conda.anaconda.org/conda-forge/win-64/giflib-5.2.2-hb0bd012_1.conda",
+      "vendor_license_review": "PENDING_SOURCE_CLOSURE",
+      "version": "5.2.2"
+    },
+    {
+      "binaries": [
+        {
+          "declared_pe_versions": {},
+          "path": "ocr/bin/derb.exe",
+          "sha256": "cb30f35782dd07d350b5398d7a6b6011ffd9298362cdcb0ae01a0150ad64576f",
+          "size": 171520
+        },
+        {
+          "declared_pe_versions": {},
+          "path": "ocr/bin/escapesrc.exe",
+          "sha256": "72cb274f1f2512b65519ffa3851783c81843d1d6e5dcab2b6595419dd24cbb09",
+          "size": 318464
+        },
+        {
+          "declared_pe_versions": {},
+          "path": "ocr/bin/genbrk.exe",
+          "sha256": "601a80b5a9c8ed54f973935b59bf71f976f45ec7acf8f3d31631bd2b1a626d0a",
+          "size": 175616
+        },
+        {
+          "declared_pe_versions": {},
+          "path": "ocr/bin/genccode.exe",
+          "sha256": "2ad481df4a6a9ca486db33e8b1dd899d92ffd4a254253cfaf2814edc949aa884",
+          "size": 144896
+        },
+        {
+          "declared_pe_versions": {},
+          "path": "ocr/bin/gencfu.exe",
+          "sha256": "24dc9dfe3d5a27557644023bc44f6e453f08930389854839ccacef8ebe866e56",
+          "size": 160256
+        },
+        {
+          "declared_pe_versions": {},
+          "path": "ocr/bin/gencmn.exe",
+          "sha256": "9e42cef48040982df9fbaac3e019916895e524c4cfdc13f5041f49706b0e46ac",
+          "size": 145408
+        },
+        {
+          "declared_pe_versions": {},
+          "path": "ocr/bin/gencnval.exe",
+          "sha256": "b0a946e79b2f4fa37ee958cc9f4f0ba3b28989c7238892e88b2960eac8af99b7",
+          "size": 159232
+        },
+        {
+          "declared_pe_versions": {},
+          "path": "ocr/bin/gendict.exe",
+          "sha256": "e9e4b1af84ae4d65dab902fde40d168783fd42f7b49e3b0a6ef9c5821a09623f",
+          "size": 182272
+        },
+        {
+          "declared_pe_versions": {},
+          "path": "ocr/bin/gennorm2.exe",
+          "sha256": "6c6cce84e882e56e76187b7fb56669c34446a81a44b4e1737f4c8119e37ec42e",
+          "size": 328192
+        },
+        {
+          "declared_pe_versions": {},
+          "path": "ocr/bin/genrb.exe",
+          "sha256": "4f9ac74461222f07a1b1750ce364a0c18e796c3d376981160aaa55d3c32bf6e5",
+          "size": 497664
+        },
+        {
+          "declared_pe_versions": {},
+          "path": "ocr/bin/gensprep.exe",
+          "sha256": "8aaa4b1b7930d15e9e0050d1a5f3b3c5f50982a185e2067ee126f5b49d0f5356",
+          "size": 157696
+        },
+        {
+          "declared_pe_versions": {},
+          "path": "ocr/bin/icudt.dll",
+          "sha256": "5410cc846d4f6bbfe6cc9bdb8ccab48ef92b2f7244a54d50c562beeb2786e60b",
+          "size": 1024
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "78, 3, 0, 0",
+            "ProductVersion": "78, 3, 0, 0"
+          },
+          "path": "ocr/bin/icudt78.dll",
+          "sha256": "18dd8e1881c5d378de868f8f2c2309d95d3f6757ef40868b76657e7a1f061a51",
+          "size": 33110528
+        },
+        {
+          "declared_pe_versions": {},
+          "path": "ocr/bin/icuexportdata.exe",
+          "sha256": "69b9c3a2067813bde41fb336861370cbb9e1791e636f9dc8af809f96c6af9e6f",
+          "size": 355840
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "78, 3, 0, 0",
+            "ProductVersion": "78, 3, 0, 0"
+          },
+          "path": "ocr/bin/icuin.dll",
+          "sha256": "365ea33b3b204bc06a57c1c3c611f4c7f14e08153ee27ffcd9aacbd4dafeb60a",
+          "size": 4221952
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "78, 3, 0, 0",
+            "ProductVersion": "78, 3, 0, 0"
+          },
+          "path": "ocr/bin/icuin78.dll",
+          "sha256": "365ea33b3b204bc06a57c1c3c611f4c7f14e08153ee27ffcd9aacbd4dafeb60a",
+          "size": 4221952
+        },
+        {
+          "declared_pe_versions": {},
+          "path": "ocr/bin/icuinfo.exe",
+          "sha256": "92ad368852a7ca09b52ed78e5ee024cabe19a6078b31a60dcbfeb6f5e47b6a84",
+          "size": 154112
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "78, 3, 0, 0",
+            "ProductVersion": "78, 3, 0, 0"
+          },
+          "path": "ocr/bin/icuio.dll",
+          "sha256": "7a057b2a7c7dc3029087b0c0882a09c059bca26b29e934d0aefac8ffbf552927",
+          "size": 272384
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "78, 3, 0, 0",
+            "ProductVersion": "78, 3, 0, 0"
+          },
+          "path": "ocr/bin/icuio78.dll",
+          "sha256": "7a057b2a7c7dc3029087b0c0882a09c059bca26b29e934d0aefac8ffbf552927",
+          "size": 272384
+        },
+        {
+          "declared_pe_versions": {},
+          "path": "ocr/bin/icupkg.exe",
+          "sha256": "e8524e250bafef0a2d3a0bb38077b2cb74a019dd8900363270535e0a7803a67e",
+          "size": 166400
+        },
+        {
+          "declared_pe_versions": {},
+          "path": "ocr/bin/icutest.dll",
+          "sha256": "2c24b0f11d4710ebafd9334fa22534aabb14b449327c5dde9903db2b2b48808b",
+          "size": 262144
+        },
+        {
+          "declared_pe_versions": {},
+          "path": "ocr/bin/icutest78.dll",
+          "sha256": "2c24b0f11d4710ebafd9334fa22534aabb14b449327c5dde9903db2b2b48808b",
+          "size": 262144
+        },
+        {
+          "declared_pe_versions": {},
+          "path": "ocr/bin/icutu.dll",
+          "sha256": "5b04f0dbe6d16226c16cc2ff425fb990e6800abc63e1bcd82673b0b2496d499b",
+          "size": 581120
+        },
+        {
+          "declared_pe_versions": {},
+          "path": "ocr/bin/icutu78.dll",
+          "sha256": "5b04f0dbe6d16226c16cc2ff425fb990e6800abc63e1bcd82673b0b2496d499b",
+          "size": 581120
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "78, 3, 0, 0",
+            "ProductVersion": "78, 3, 0, 0"
+          },
+          "path": "ocr/bin/icuuc.dll",
+          "sha256": "af525f3cb120014ded7c1b5c346ea00a5a488dee5d17b18e0172b6421e730737",
+          "size": 2728448
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "78, 3, 0, 0",
+            "ProductVersion": "78, 3, 0, 0"
+          },
+          "path": "ocr/bin/icuuc78.dll",
+          "sha256": "af525f3cb120014ded7c1b5c346ea00a5a488dee5d17b18e0172b6421e730737",
+          "size": 2728448
+        },
+        {
+          "declared_pe_versions": {},
+          "path": "ocr/bin/makeconv.exe",
+          "sha256": "70c85d25bfff1309c9b283d56007301363120bbf4878de99972c55be05eaeb7d",
+          "size": 200704
+        },
+        {
+          "declared_pe_versions": {},
+          "path": "ocr/bin/pkgdata.exe",
+          "sha256": "fba89f6f6a55a826d0104b9ea990266f016331a3d42aaafb3291fb8c18e0cdca",
+          "size": 201216
+        }
+      ],
+      "name": "ocr-icu",
+      "original_archive_sha256": "75c549b55b673e15de8785a8e5dd85bca7eb612eee0ff4dc8d7bdaa15eacbdbb",
+      "retained_notices": {
+        "licenses/ocr/icu/LICENSE": {
+          "sha256": "e55522d81edc687a341a4411e0776e54ca654e90147f354a90458aaced4116af",
+          "size": 27718
+        }
+      },
+      "source": "https://conda.anaconda.org/conda-forge/win-64/icu-78.3-h5112557_2.conda",
+      "vendor_license_review": "PENDING_SOURCE_CLOSURE",
+      "version": "78.3"
+    },
+    {
+      "binaries": [
+        {
+          "declared_pe_versions": {
+            "FileVersion": "4.1-prerelease",
+            "ProductVersion": "4.1-prerelease"
+          },
+          "path": "ocr/bin/ccapiserver.exe",
+          "sha256": "215c72978bc0669d5f46e4eef66d173bc2d2d2b8877306b05fbaf0e684cf3467",
+          "size": 157184
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "4.1-prerelease",
+            "ProductVersion": "4.1-prerelease"
+          },
+          "path": "ocr/bin/comerr64.dll",
+          "sha256": "244d7f39f1333cfbeb37cbc6a4623c13bca9a3a29980bfd4658ec57bf2c44221",
+          "size": 21504
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "4.1-prerelease",
+            "ProductVersion": "4.1-prerelease"
+          },
+          "path": "ocr/bin/gss-client.exe",
+          "sha256": "ca878433999809c6de88d201ea0b9fa96b206226d66735fc8d4c259868e4327e",
+          "size": 27136
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "4.1-prerelease",
+            "ProductVersion": "4.1-prerelease"
+          },
+          "path": "ocr/bin/gss-server.exe",
+          "sha256": "0efa7b478667005d7ca4660d21079548f8694f8d7c52f93edfe9d57b994d5655",
+          "size": 27136
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "4.1-prerelease",
+            "ProductVersion": "4.1-prerelease"
+          },
+          "path": "ocr/bin/gssapi64.dll",
+          "sha256": "4f7ad046630d7869c40a35a3114cf297659012d44fa56a8c64e006c9200ec784",
+          "size": 397824
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "4.1-prerelease",
+            "ProductVersion": "4.1-prerelease"
+          },
+          "path": "ocr/bin/k5sprt64.dll",
+          "sha256": "c125a20add80639b9d92cf06ba47dff004f85b432cd1981af3c842819cd53feb",
+          "size": 165376
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "4.1-prerelease",
+            "ProductVersion": "4.1-prerelease"
+          },
+          "path": "ocr/bin/kcpytkt.exe",
+          "sha256": "c763620cba97593ae2be3f65c0d81a2103a350c28779f0abbaab10b6e0c7cbaa",
+          "size": 15360
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "4.1-prerelease",
+            "ProductVersion": "4.1-prerelease"
+          },
+          "path": "ocr/bin/kdeltkt.exe",
+          "sha256": "3f99afcfb6005ad6473f39d51be82813a6cbd2bcd3d87a2977905228f38b7061",
+          "size": 14336
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "4.1-prerelease",
+            "ProductVersion": "4.1-prerelease"
+          },
+          "path": "ocr/bin/kdestroy.exe",
+          "sha256": "98a52338573b81f9436221d1a2bc745967fd19550bf5449d8737d3582c323752",
+          "size": 14848
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "4.1-prerelease",
+            "ProductVersion": "4.1-prerelease"
+          },
+          "path": "ocr/bin/kfwcpcc.exe",
+          "sha256": "f8315cc79afacf8e1370795b10c2ae80319e315075f6288920708f38521ec1d0",
+          "size": 31232
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "4.1-prerelease",
+            "ProductVersion": "4.1-prerelease"
+          },
+          "path": "ocr/bin/kfwlogon.dll",
+          "sha256": "f56dbc097129f1c2a82782895794457ccc302d9d62284238186cae2a59e5b838",
+          "size": 36864
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "4.1-prerelease",
+            "ProductVersion": "4.1-prerelease"
+          },
+          "path": "ocr/bin/kinit.exe",
+          "sha256": "8fa50362366bea3549a96b5007df1e884177ff50514e0525afe639dbda8b7920",
+          "size": 28672
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "4.1-prerelease",
+            "ProductVersion": "4.1-prerelease"
+          },
+          "path": "ocr/bin/klist.exe",
+          "sha256": "75bfb1005a435730999766a0f698eec125e5a30060849fad8b5d88d3a92bd17e",
+          "size": 28672
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "4.1-prerelease",
+            "ProductVersion": "4.1-prerelease"
+          },
+          "path": "ocr/bin/kpasswd.exe",
+          "sha256": "3a13872038534929c510eae31fbc6eaad0baa31c04635f9834c8357da06b49af",
+          "size": 15360
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "4.1-prerelease",
+            "ProductVersion": "4.1-prerelease"
+          },
+          "path": "ocr/bin/krb5_64.dll",
+          "sha256": "5943f70ec700335ca1edda41fae1efbbf7bf7cb6048628265a6aa44c2f788e86",
+          "size": 1226240
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "4.1-prerelease",
+            "ProductVersion": "4.1-prerelease"
+          },
+          "path": "ocr/bin/krbcc64.dll",
+          "sha256": "af7d4feeb0fd776caf7fb3d08e12e6c9b08d0d91882c49dca681da1967f700b1",
+          "size": 112640
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "4.1-prerelease",
+            "ProductVersion": "4.1-prerelease"
+          },
+          "path": "ocr/bin/kswitch.exe",
+          "sha256": "5dc73a956c4ad8a657a01977091bc4ac6e65ac475fe8c7e79a10c0f2325e97b9",
+          "size": 13312
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "4.1-prerelease",
+            "ProductVersion": "4.1-prerelease"
+          },
+          "path": "ocr/bin/kvno.exe",
+          "sha256": "1915daa8514ccd67b3ad3b78f3ebe72ea27395ba94968bff73662df529fc1f5c",
+          "size": 23040
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "4.1-prerelease",
+            "ProductVersion": "4.1-prerelease"
+          },
+          "path": "ocr/bin/leashw64.dll",
+          "sha256": "723d03066fa5d60730ba133d3f931e239f0eb09b894307fb475436e5b22fd37d",
+          "size": 152576
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "4.1-prerelease",
+            "ProductVersion": "4.1-prerelease"
+          },
+          "path": "ocr/bin/mit2ms.exe",
+          "sha256": "e366c8fde9befc5c7adcae582908a4ee6b0a9fd75399df9162611c49d1c08e4b",
+          "size": 14336
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "4.1-prerelease",
+            "ProductVersion": "4.1-prerelease"
+          },
+          "path": "ocr/bin/ms2mit.exe",
+          "sha256": "6e099078362b80f910a929e6de7382cf3b11e6c092e8179a6a3b1ac83f558f7f",
+          "size": 15360
+        },
+        {
+          "declared_pe_versions": {},
+          "path": "ocr/bin/plugins/preauth/spake64.dll",
+          "sha256": "d38c80de8a070117ea9d628f12495177d53d1b4674d69a1220e6f92a1beca6a1",
+          "size": 100352
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "4.1-prerelease",
+            "ProductVersion": "4.1-prerelease"
+          },
+          "path": "ocr/bin/xpprof64.dll",
+          "sha256": "4d11aa50a246f13750079bbcddf8d86efc636e1fbfbc9d354ad939f8f9ff8037",
+          "size": 54784
+        }
+      ],
+      "name": "ocr-krb5",
+      "original_archive_sha256": "63ff03324e903eb01a715ccf357df56d66224e61952fd6615d86490ebefb3285",
+      "retained_notices": {
+        "licenses/ocr/krb5/doc/notice.rst": {
+          "sha256": "35a540e57bd0c22f1a5c8262dac9f80b1b440ce249db8d2d02604c800149b52e",
+          "size": 62479
+        }
+      },
+      "source": "https://conda.anaconda.org/conda-forge/win-64/krb5-1.22.2-h719d79b_2.conda",
+      "vendor_license_review": "PENDING_SOURCE_CLOSURE",
+      "version": "1.22.2"
+    },
+    {
+      "binaries": [
+        {
+          "declared_pe_versions": {},
+          "path": "ocr/bin/convertfilestopdf.exe",
+          "sha256": "afd2e415c3c8e248e6d9defbb692cd6138d5719844a1e317c370d9c7520e7fbb",
+          "size": 11776
+        },
+        {
+          "declared_pe_versions": {},
+          "path": "ocr/bin/convertfilestops.exe",
+          "sha256": "af9a770da2ad0393913020b15f32452729d9da09c50476dd2c3ebdc487514f42",
+          "size": 11264
+        },
+        {
+          "declared_pe_versions": {},
+          "path": "ocr/bin/convertformat.exe",
+          "sha256": "6cbead6fbb9e833fa0bf33395e1e355ceee913ec4cff483468f9f22cab3461e9",
+          "size": 12800
+        },
+        {
+          "declared_pe_versions": {},
+          "path": "ocr/bin/convertsegfilestopdf.exe",
+          "sha256": "8a9a12441895e123c249d41cf9a11fb4266b673527efcfcbb477af70e465528b",
+          "size": 12800
+        },
+        {
+          "declared_pe_versions": {},
+          "path": "ocr/bin/convertsegfilestops.exe",
+          "sha256": "106a88f085c6babc96fab982c763bff2d1cd116322008c29078dd50a00b5ecb9",
+          "size": 12288
+        },
+        {
+          "declared_pe_versions": {},
+          "path": "ocr/bin/converttopdf.exe",
+          "sha256": "bfeeb696d1a80f4de90a2e6935ed92bd34383164e850f0522382dc0de8b03ded",
+          "size": 10752
+        },
+        {
+          "declared_pe_versions": {},
+          "path": "ocr/bin/converttops.exe",
+          "sha256": "f303ac19191448eb6c799476cd5451b4025565423ad0bec140a6201a58f589cc",
+          "size": 11776
+        },
+        {
+          "declared_pe_versions": {},
+          "path": "ocr/bin/fileinfo.exe",
+          "sha256": "aaf1b310355187d1d5253dc7e8d4708ac8846a878bb00d4860c843360fd22726",
+          "size": 10752
+        },
+        {
+          "declared_pe_versions": {},
+          "path": "ocr/bin/imagetops.exe",
+          "sha256": "1e6104b51ebe7f9f6f6c494a667ee8d11b392c9fe6dba9019beba76a972f8645",
+          "size": 11776
+        },
+        {
+          "declared_pe_versions": {},
+          "path": "ocr/bin/leptonica-1.86.0.dll",
+          "sha256": "ba99665fe5b50f37aa94aa20fc19d3b81ef989b5c913526f3cec463ed98d27a8",
+          "size": 2715136
+        },
+        {
+          "declared_pe_versions": {},
+          "path": "ocr/bin/xtractprotos.exe",
+          "sha256": "a7565ac46e1e82d7e499d2c141784ee1d7dd62c49b56de75fe320770b0cd530b",
+          "size": 15360
+        }
+      ],
+      "name": "ocr-leptonica",
+      "original_archive_sha256": "82f637eacfdaea53bde18e1595fa2b97cb6979b058ae59dd7d9585915208a42f",
+      "retained_notices": {
+        "licenses/ocr/leptonica/leptonica-license.txt": {
+          "sha256": "87829abb5bbb00b55a107365da89e9a33f86c4250169e5a1e5588505be7d5806",
+          "size": 1521
+        }
+      },
+      "source": "https://conda.anaconda.org/conda-forge/win-64/leptonica-1.86.0-he7db40c_1.conda",
+      "vendor_license_review": "PENDING_SOURCE_CLOSURE",
+      "version": "1.86.0"
+    },
+    {
+      "binaries": [
+        {
+          "declared_pe_versions": {},
+          "path": "ocr/bin/Lerc.dll",
+          "sha256": "451cd3d0eaede32c199886717ec7484b8ca7effda47ee89febea957540058975",
+          "size": 548864
+        }
+      ],
+      "name": "ocr-lerc",
+      "original_archive_sha256": "93d666f63f284ef77b87b0b1f77b70f7d36d315a132f9afa64bc0012d937ba39",
+      "retained_notices": {
+        "licenses/ocr/lerc/LICENSE": {
+          "sha256": "77a8b761727c75e2167b15bfdf61b2c0bcf8792271228bebe80779106ad00671",
+          "size": 9198
+        }
+      },
+      "source": "https://conda.anaconda.org/conda-forge/win-64/lerc-4.2.0-hd936e49_0.conda",
+      "vendor_license_review": "PENDING_SOURCE_CLOSURE",
+      "version": "4.2.0"
+    },
+    {
+      "binaries": [
+        {
+          "declared_pe_versions": {},
+          "path": "ocr/bin/archive.dll",
+          "sha256": "055b9f4c3e0c6284cbe5de21c6afda891d7a77a8ae4f8aecb88c8b11c3268f27",
+          "size": 787456
+        },
+        {
+          "declared_pe_versions": {},
+          "path": "ocr/bin/bsdcat.exe",
+          "sha256": "3a1c113c6026f58d8cb277fa848eb472fafd011acf67e19eff8626b63c18f09f",
+          "size": 103424
+        },
+        {
+          "declared_pe_versions": {},
+          "path": "ocr/bin/bsdcpio.exe",
+          "sha256": "1a7a8481d695bda61ab0753587b8ba47da0a649d4b2e04790dd4d20316e1c1c9",
+          "size": 741376
+        },
+        {
+          "declared_pe_versions": {},
+          "path": "ocr/bin/bsdtar.exe",
+          "sha256": "aebb0014734c1de5c5a9dc5a5c6c4293eadb88693abf2255478e9217b60f9621",
+          "size": 780800
+        },
+        {
+          "declared_pe_versions": {},
+          "path": "ocr/bin/bsdunzip.exe",
+          "sha256": "a3ff84e4fa986ed8065b269fe33a787ee572f80c01a3726203d45f3a3f8c2690",
+          "size": 167936
+        }
+      ],
+      "name": "ocr-libarchive",
+      "original_archive_sha256": "71cb6e49282d2aee1eb0249a290dc2333b0063ac2ecec69116ad569d822a0aaf",
+      "retained_notices": {
+        "licenses/ocr/libarchive/COPYING": {
+          "sha256": "30e556b3959e3985d66efefec5eaac51d4995053caa1d3cffe6eb916f146f229",
+          "size": 3089
+        }
+      },
+      "source": "https://conda.anaconda.org/conda-forge/win-64/libarchive-3.8.9-gpl_h8fdc8af_101.conda",
+      "vendor_license_review": "PENDING_SOURCE_CLOSURE",
+      "version": "3.8.9"
+    },
+    {
+      "binaries": [
+        {
+          "declared_pe_versions": {
+            "FileVersion": "8.22.0",
+            "ProductVersion": "8.22.0"
+          },
+          "path": "ocr/bin/libcurl.dll",
+          "sha256": "f4a617c5d17d4a1b87389e443fbd32de0d38bb16b35506da9f2fd8e7f3d85114",
+          "size": 795136
+        }
+      ],
+      "name": "ocr-libcurl",
+      "original_archive_sha256": "5fe063cffa90ad3ef04e25c76b1a79cdbc4f6c43747164a7dcdd89c4faebb84e",
+      "retained_notices": {
+        "licenses/ocr/libcurl/COPYING": {
+          "sha256": "82f2f4427d6545ee5aaac4f0b80428da6cc8ba41c2cf5da3a03680ec327b9681",
+          "size": 1088
+        }
+      },
+      "source": "https://conda.anaconda.org/conda-forge/win-64/libcurl-8.22.0-hdb0ef4a_0.conda",
+      "vendor_license_review": "PENDING_SOURCE_CLOSURE",
+      "version": "8.22.0"
+    },
+    {
+      "binaries": [
+        {
+          "declared_pe_versions": {},
+          "path": "ocr/bin/deflate.dll",
+          "sha256": "6dd36dd208f18c6b44b3a78ae2c9462f28430e39b7e5bdb00faaec22b495021b",
+          "size": 177664
+        },
+        {
+          "declared_pe_versions": {},
+          "path": "ocr/bin/libdeflate-gunzip.exe",
+          "sha256": "6877ac4059e46b3218def0e0fa2cec8b146c3212458443829c058f801ccf3a4f",
+          "size": 176640
+        },
+        {
+          "declared_pe_versions": {},
+          "path": "ocr/bin/libdeflate-gzip.exe",
+          "sha256": "6877ac4059e46b3218def0e0fa2cec8b146c3212458443829c058f801ccf3a4f",
+          "size": 176640
+        }
+      ],
+      "name": "ocr-libdeflate",
+      "original_archive_sha256": "af1cda21d4653f594fbef20aa4e1ff158a546902b3307ef8af9a9b44b43862d2",
+      "retained_notices": {
+        "licenses/ocr/libdeflate/COPYING": {
+          "sha256": "4ad69099cb4374836fd27583d9991e2838cd86b6e4666ab26b2d32582c91e73a",
+          "size": 1078
+        }
+      },
+      "source": "https://conda.anaconda.org/conda-forge/win-64/libdeflate-1.25-h1a1d4e4_1.conda",
+      "vendor_license_review": "PENDING_SOURCE_CLOSURE",
+      "version": "1.25"
+    },
+    {
+      "binaries": [
+        {
+          "declared_pe_versions": {},
+          "path": "ocr/bin/charset.dll",
+          "sha256": "4983c202d0424ad6e271741fb9453b7a833bb1697854bc37046db39618234f14",
+          "size": 12800
+        },
+        {
+          "declared_pe_versions": {},
+          "path": "ocr/bin/iconv.dll",
+          "sha256": "4fe67a10b7455892ac546d79bc0b2ab2e3483135495255ea2c31d2c794c28e38",
+          "size": 1086464
+        }
+      ],
+      "name": "ocr-libiconv",
+      "original_archive_sha256": "35e04e3ddac7720fc7c550a1c9f998604299d6a7bd1f3ec9b2825d825061daa2",
+      "retained_notices": {
+        "licenses/ocr/libiconv/COPYING.LIB": {
+          "sha256": "20e50fe7aae3e56378ebf0417d9de904f55a0e61e4df315333e632a4d3555d95",
+          "size": 26419
+        }
+      },
+      "source": "https://conda.anaconda.org/conda-forge/win-64/libiconv-1.18-hc1393d2_3.conda",
+      "vendor_license_review": "PENDING_SOURCE_CLOSURE",
+      "version": "1.18"
+    },
+    {
+      "binaries": [
+        {
+          "declared_pe_versions": {},
+          "path": "ocr/bin/cjpeg.exe",
+          "sha256": "652b251a6528a5d3c9f780a0f967e7bf1ad544192ce228d06ae508263d22cafd",
+          "size": 194560
+        },
+        {
+          "declared_pe_versions": {},
+          "path": "ocr/bin/djpeg.exe",
+          "sha256": "e13be1183efee7d12302297fef7e7b02cbb3ae6628c5ac60efb6730cee35cbad",
+          "size": 151040
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "8,3,2,0",
+            "ProductVersion": "3.2.0"
+          },
+          "path": "ocr/bin/jpeg8.dll",
+          "sha256": "c8ae4649b8bcf41ec8bfd359bd6239ff7622e2041554cee3e99f740698db848f",
+          "size": 694784
+        },
+        {
+          "declared_pe_versions": {},
+          "path": "ocr/bin/jpegtran.exe",
+          "sha256": "784bdbe6716abd2963b0b81f747fcc99f8fd4e4bf907fb53812c43221c2d6c2f",
+          "size": 51200
+        },
+        {
+          "declared_pe_versions": {},
+          "path": "ocr/bin/rdjpgcom.exe",
+          "sha256": "9d47f6ef875ecc13324df0c98bf81be7bf91b5c051f4469aaf00a25d79bfb121",
+          "size": 193536
+        },
+        {
+          "declared_pe_versions": {},
+          "path": "ocr/bin/tjbench.exe",
+          "sha256": "7f1ad5b668e7cb9bfb612fad483e0aee097d4ff9eeff48636f7387c69687164d",
+          "size": 240128
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "0,5,0,0",
+            "ProductVersion": "3.2.0"
+          },
+          "path": "ocr/bin/turbojpeg.dll",
+          "sha256": "ba53786a4935b86753e7eaf56e48745e59c210572e878d569958ef85cf0c0e0d",
+          "size": 1165312
+        },
+        {
+          "declared_pe_versions": {},
+          "path": "ocr/bin/wrjpgcom.exe",
+          "sha256": "3d6da93edc22585e8ecb56f8d14180d465cfc0c4b59280027e5d633db7360292",
+          "size": 158720
+        }
+      ],
+      "name": "ocr-libjpeg-turbo",
+      "original_archive_sha256": "df78ab4c0eecb3dd9331898f96baeed8e5ca1c363346332517abeb0b614b9a53",
+      "retained_notices": {
+        "licenses/ocr/libjpeg-turbo/LICENSE.md": {
+          "sha256": "ba6bceebcba0fdd35488477c2cca8c4632ce82c74dbfbc87d886ce6fc4433579",
+          "size": 6077
+        }
+      },
+      "source": "https://conda.anaconda.org/conda-forge/win-64/libjpeg-turbo-3.2.0-hfd05255_1.conda",
+      "vendor_license_review": "PENDING_SOURCE_CLOSURE",
+      "version": "3.2.0"
+    },
+    {
+      "binaries": [
+        {
+          "declared_pe_versions": {
+            "FileVersion": "5.8.3",
+            "ProductVersion": "5.8.3"
+          },
+          "path": "ocr/bin/liblzma.dll",
+          "sha256": "8439ed3564a8dbbf6355e29c92e88fdf1f6dee096504149fc051104155c868a9",
+          "size": 188416
+        }
+      ],
+      "name": "ocr-liblzma",
+      "original_archive_sha256": "d36c4a1e1f80fd08e18a407e03622ff2f34dfdd022da6488ad19603dea19e6d5",
+      "retained_notices": {
+        "licenses/ocr/liblzma/COPYING": {
+          "sha256": "616a3ad264ce29b8f1cb97e53037b139d406899ca8d1f799651e17bfa09830b8",
+          "size": 3119
+        },
+        "licenses/ocr/liblzma/COPYING.0BSD": {
+          "sha256": "0b01625d853911cd0e2e088dcfb743261034a091bb379246cb25a14cc4c74bf1",
+          "size": 607
+        }
+      },
+      "source": "https://conda.anaconda.org/conda-forge/win-64/liblzma-5.8.3-hfd05255_1.conda",
+      "vendor_license_review": "PENDING_SOURCE_CLOSURE",
+      "version": "5.8.3"
+    },
+    {
+      "binaries": [
+        {
+          "declared_pe_versions": {},
+          "path": "ocr/bin/libpng16.dll",
+          "sha256": "d4547a7b9f58e4525be0e8b16cb688e16f314ad8e199456c7217dc8835ad4152",
+          "size": 198656
+        },
+        {
+          "declared_pe_versions": {},
+          "path": "ocr/bin/png-fix-itxt.exe",
+          "sha256": "5bf9170cf74848ad4be0a660f74bdcfc33bacaedca6bb34937861a20b0245a95",
+          "size": 12288
+        },
+        {
+          "declared_pe_versions": {},
+          "path": "ocr/bin/pngfix.exe",
+          "sha256": "bc027f4ae55da2a6e036d1d19adde8fd4ebb83822b3c4a468676fcf960972803",
+          "size": 52224
+        }
+      ],
+      "name": "ocr-libpng",
+      "original_archive_sha256": "36050852deae6edc98d7b71489b8d07254e2753c69bd524bf5784927cd1f0b2c",
+      "retained_notices": {
+        "licenses/ocr/libpng/LICENSE": {
+          "sha256": "bdb0a645ea18c60507d0368379b1ac5474b92255fcc2d115e07486a7672ba526",
+          "size": 5345
+        }
+      },
+      "source": "https://conda.anaconda.org/conda-forge/win-64/libpng-1.6.59-hdc8cecf_0.conda",
+      "vendor_license_review": "PENDING_SOURCE_CLOSURE",
+      "version": "1.6.59"
+    },
+    {
+      "binaries": [
+        {
+          "declared_pe_versions": {},
+          "path": "ocr/bin/psl-5.dll",
+          "sha256": "24a1963f1684f342fbd2740c498cddd8f4dbf12846414d2b95637a1a24f86ba1",
+          "size": 77312
+        }
+      ],
+      "name": "ocr-libpsl",
+      "original_archive_sha256": "e53fe3b09f82b59b644264133d6d148ac31bb5451b7583cff55690bf038f2f62",
+      "retained_notices": {
+        "licenses/ocr/libpsl/LICENSE": {
+          "sha256": "e7c9f0d8498d28a360a7e8293ea70fd7bd952955b636938322c13d60a03b5a45",
+          "size": 1126
+        }
+      },
+      "source": "https://conda.anaconda.org/conda-forge/win-64/libpsl-0.23.1-h9b16d47_1.conda",
+      "vendor_license_review": "PENDING_SOURCE_CLOSURE",
+      "version": "0.23.1"
+    },
+    {
+      "binaries": [
+        {
+          "declared_pe_versions": {
+            "FileVersion": "1.11.1",
+            "ProductVersion": "1.11.1"
+          },
+          "path": "ocr/bin/libssh2.dll",
+          "sha256": "69c35872dae1ed72e67388a4c64d51004dd15fc1be0901b2025da721d1496bb4",
+          "size": 260608
+        }
+      ],
+      "name": "ocr-libssh2",
+      "original_archive_sha256": "1097b08429b4f53f5751a32c6d99a083d227ca7f7812c0b239eea124cec073a0",
+      "retained_notices": {
+        "licenses/ocr/libssh2/COPYING": {
+          "sha256": "f7f9633cf9ff2f1333f3d7ce46973a8716a4d2a2815ad56f30d437d5fea7bafe",
+          "size": 1959
+        }
+      },
+      "source": "https://conda.anaconda.org/conda-forge/win-64/libssh2-1.11.1-h734d217_1.conda",
+      "vendor_license_review": "PENDING_SOURCE_CLOSURE",
+      "version": "1.11.1"
+    },
+    {
+      "binaries": [
+        {
+          "declared_pe_versions": {
+            "FileVersion": "4.7.2",
+            "ProductVersion": "4.7.2"
+          },
+          "path": "ocr/bin/fax2ps.exe",
+          "sha256": "0487602b526dbdea12758a25d25b770933715362935ad583455116b8092bf777",
+          "size": 21504
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "4.7.2",
+            "ProductVersion": "4.7.2"
+          },
+          "path": "ocr/bin/fax2tiff.exe",
+          "sha256": "f59f83625c8dcb49ad2876085adc93276c4963dd2dd608448d0307c4940eb8a6",
+          "size": 18944
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "4.7.2",
+            "ProductVersion": "4.7.2"
+          },
+          "path": "ocr/bin/libtiff.dll",
+          "sha256": "e5555ff9f826a47885c87d9a648f9823d8bf6967b7c848e4d4824abcf518e356",
+          "size": 504320
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "4.7.2",
+            "ProductVersion": "4.7.2"
+          },
+          "path": "ocr/bin/pal2rgb.exe",
+          "sha256": "973a2bf2ab88b5fc88ce1e397bf01a47d3cb28a1f77b5c4abfffa8bb01583b2b",
+          "size": 17408
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "4.7.2",
+            "ProductVersion": "4.7.2"
+          },
+          "path": "ocr/bin/ppm2tiff.exe",
+          "sha256": "4a20b9d976cbc541eafe6bef2b1218f0099c0bd7874649300f88fad4af76fcff",
+          "size": 17920
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "4.7.2",
+            "ProductVersion": "4.7.2"
+          },
+          "path": "ocr/bin/raw2tiff.exe",
+          "sha256": "ccffb30dfe967f6108fbb9313c1503b0891bc0eb28d20f1b1b53b126f723bd52",
+          "size": 27648
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "4.7.2",
+            "ProductVersion": "4.7.2"
+          },
+          "path": "ocr/bin/tiff.dll",
+          "sha256": "e5555ff9f826a47885c87d9a648f9823d8bf6967b7c848e4d4824abcf518e356",
+          "size": 504320
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "4.7.2",
+            "ProductVersion": "4.7.2"
+          },
+          "path": "ocr/bin/tiff2bw.exe",
+          "sha256": "7e43d0b51fca5dca64b9aed77feee66f1d98ae9c9cc27074572a90b9983585ca",
+          "size": 19456
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "4.7.2",
+            "ProductVersion": "4.7.2"
+          },
+          "path": "ocr/bin/tiff2pdf.exe",
+          "sha256": "aeeb6fb40372a9ac988b2486fc58283ebab3524b0db1e04c9e79efd1bfef61ff",
+          "size": 92160
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "4.7.2",
+            "ProductVersion": "4.7.2"
+          },
+          "path": "ocr/bin/tiff2ps.exe",
+          "sha256": "780810ea541bbaadda4f4386c21163e11bbe33ef971c620f44f8d86c3bee0ad1",
+          "size": 54272
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "4.7.2",
+            "ProductVersion": "4.7.2"
+          },
+          "path": "ocr/bin/tiff2rgba.exe",
+          "sha256": "147db3a22f52fa57e8b02f2662134e3d3a7e5194b52e3d21b7765f29b945edaa",
+          "size": 20480
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "4.7.2",
+            "ProductVersion": "4.7.2"
+          },
+          "path": "ocr/bin/tiffcmp.exe",
+          "sha256": "177e01f369a45117251f32d1e281ef9b6174f5d7d019838ab5bb49294e644e55",
+          "size": 23040
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "4.7.2",
+            "ProductVersion": "4.7.2"
+          },
+          "path": "ocr/bin/tiffcp.exe",
+          "sha256": "210e012d6323bf3c4f00285a07fc96277173df0c557edde702658602d6a3a413",
+          "size": 41984
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "4.7.2",
+            "ProductVersion": "4.7.2"
+          },
+          "path": "ocr/bin/tiffcrop.exe",
+          "sha256": "c1257ac0d95a248066b5703362f59a45dbfb98813c9e61e881609430363453ec",
+          "size": 131584
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "4.7.2",
+            "ProductVersion": "4.7.2"
+          },
+          "path": "ocr/bin/tiffdither.exe",
+          "sha256": "393406f763233a0bea3c46ba89f9f94374dde2a887c3cfd423770603e8b1c9e0",
+          "size": 17920
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "4.7.2",
+            "ProductVersion": "4.7.2"
+          },
+          "path": "ocr/bin/tiffdump.exe",
+          "sha256": "704e1c42214e9c415b9fb8a4c8bfd682d1cb831aae19951bf6c1d8da5a000f6c",
+          "size": 23552
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "4.7.2",
+            "ProductVersion": "4.7.2"
+          },
+          "path": "ocr/bin/tiffinfo.exe",
+          "sha256": "d3580b30b0ee65b3a5d7f251eba1a29f968ca9c06bbd5a44931de9e2e77a024f",
+          "size": 23552
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "4.7.2",
+            "ProductVersion": "4.7.2"
+          },
+          "path": "ocr/bin/tiffmedian.exe",
+          "sha256": "a15a9b13e93a9147d61ba47cab28393653aee9203eb3f9e3c52996fcfee10714",
+          "size": 24064
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "4.7.2",
+            "ProductVersion": "4.7.2"
+          },
+          "path": "ocr/bin/tiffset.exe",
+          "sha256": "ef871ff82f4385b9c4ffdf6c8681b0b41a52fe66d6af2c84db82d8f37d0222ae",
+          "size": 17920
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "4.7.2",
+            "ProductVersion": "4.7.2"
+          },
+          "path": "ocr/bin/tiffsplit.exe",
+          "sha256": "f4541442501b7d6c6af5c6b52016e288814e4cff9167a6c1d07bb6ed56a79c06",
+          "size": 20480
+        }
+      ],
+      "name": "ocr-libtiff",
+      "original_archive_sha256": "3575a092e3e52625a1767804a4ebd321becaadf61b63dcd6735ebb88c0b3c359",
+      "retained_notices": {
+        "licenses/ocr/libtiff/LICENSE.md": {
+          "sha256": "0e27c2382d7b8147972bbb746e04059a1152c8d0fda9d03ef1399d1a433c4ade",
+          "size": 2416
+        }
+      },
+      "source": "https://conda.anaconda.org/conda-forge/win-64/libtiff-4.7.2-h8f73337_1.conda",
+      "vendor_license_review": "PENDING_SOURCE_CLOSURE",
+      "version": "4.7.2"
+    },
+    {
+      "binaries": [
+        {
+          "declared_pe_versions": {},
+          "path": "ocr/bin/libsharpyuv.dll",
+          "sha256": "09e089c9ad5da983f04e98ccc8f41de1750b0a351370a4d42b9080c3e68eac50",
+          "size": 25600
+        },
+        {
+          "declared_pe_versions": {},
+          "path": "ocr/bin/libwebp.dll",
+          "sha256": "9e13857e99f7fa275aa7870393322d3d54dc55d0a9293098f60f199ae070d235",
+          "size": 382976
+        },
+        {
+          "declared_pe_versions": {},
+          "path": "ocr/bin/libwebpdecoder.dll",
+          "sha256": "9b6c268b8f76fc9225e78ecb6c44f18c297093ff565b88b677add75997db5df9",
+          "size": 172544
+        },
+        {
+          "declared_pe_versions": {},
+          "path": "ocr/bin/libwebpdemux.dll",
+          "sha256": "8ef90ba6327c40049fbb99d26742c0d50a3eb95214dae9bdb3549282cf87c73b",
+          "size": 20480
+        },
+        {
+          "declared_pe_versions": {},
+          "path": "ocr/bin/libwebpmux.dll",
+          "sha256": "dfa99a3245a78c0ea006907a52705aa07413200c38a190a6ad6e3839455705f3",
+          "size": 43008
+        }
+      ],
+      "name": "ocr-libwebp-base",
+      "original_archive_sha256": "4470d98d3178b0d45492eed4808afe421d2e7808352b8d06c2dc29166b75d94d",
+      "retained_notices": {
+        "licenses/ocr/libwebp-base/COPYING": {
+          "sha256": "5aec868f669e384a22372a4e8a1a6cd7d44c64cd451f960ca69cc170d1e13acf",
+          "size": 1496
+        }
+      },
+      "source": "https://conda.anaconda.org/conda-forge/win-64/libwebp-base-1.6.0-h4d5522a_1.conda",
+      "vendor_license_review": "PENDING_SOURCE_CLOSURE",
+      "version": "1.6.0"
+    },
+    {
+      "binaries": [
+        {
+          "declared_pe_versions": {},
+          "path": "ocr/bin/xmlcatalog.exe",
+          "sha256": "8eb46a3e9006511b199a5cc29ae4fe32ede1ae111a834100e518f15ea6c9c86a",
+          "size": 20480
+        },
+        {
+          "declared_pe_versions": {},
+          "path": "ocr/bin/xmllint.exe",
+          "sha256": "8370906188aa8455541a7f0a3ddb3918fbbf9927970361b8200f83122ac073a8",
+          "size": 66560
+        }
+      ],
+      "name": "ocr-libxml2",
+      "original_archive_sha256": "a19bb3821830f6b1281e782844d5dd265f796dfed2e4812b16c9995a8c778c88",
+      "retained_notices": {
+        "licenses/ocr/libxml2/Copyright": {
+          "sha256": "5d4873884a890122a4b9b20ad56ac6f7da1d796a5bfcf04a427970ac96217626",
+          "size": 1314
+        }
+      },
+      "source": "https://conda.anaconda.org/conda-forge/win-64/libxml2-2.15.4-he095d88_0.conda",
+      "vendor_license_review": "PENDING_SOURCE_CLOSURE",
+      "version": "2.15.4"
+    },
+    {
+      "binaries": [
+        {
+          "declared_pe_versions": {
+            "FileVersion": "2.15.4",
+            "ProductVersion": "2.15.4"
+          },
+          "path": "ocr/bin/libxml2.dll",
+          "sha256": "775953e3ea923ca87b426cabd3dfe10feb0fd5ce6f68394af7b87ef057d3fd79",
+          "size": 1221632
+        }
+      ],
+      "name": "ocr-libxml2-16",
+      "original_archive_sha256": "9fa71cec30425c9cc8eda6af3574af1faf4fefa5e239c9e037b1f778ef3ce8ac",
+      "retained_notices": {
+        "licenses/ocr/libxml2-16/Copyright": {
+          "sha256": "5d4873884a890122a4b9b20ad56ac6f7da1d796a5bfcf04a427970ac96217626",
+          "size": 1314
+        }
+      },
+      "source": "https://conda.anaconda.org/conda-forge/win-64/libxml2-16-2.15.4-h3cfd58e_0.conda",
+      "vendor_license_review": "PENDING_SOURCE_CLOSURE",
+      "version": "2.15.4"
+    },
+    {
+      "binaries": [
+        {
+          "declared_pe_versions": {
+            "FileVersion": "1.3.2",
+            "ProductVersion": "1.3.2"
+          },
+          "path": "ocr/bin/zlib.dll",
+          "sha256": "f4f26ea6300c8449daad4650915e01ac80aafc6ca8b73a50be450f1fb66cdd63",
+          "size": 90624
+        }
+      ],
+      "name": "ocr-libzlib",
+      "original_archive_sha256": "0629c2cc0404d3bb29d6baa7b4ba62da80797015e86de050db81ea5a07050527",
+      "retained_notices": {
+        "licenses/ocr/libzlib/LICENSE": {
+          "sha256": "e32ff4e00d9d94930537635291da39e7e612703334bf6fde8c7f1686fe8a45a2",
+          "size": 1002
+        }
+      },
+      "source": "https://conda.anaconda.org/conda-forge/win-64/libzlib-1.3.2-hfd05255_3.conda",
+      "vendor_license_review": "PENDING_SOURCE_CLOSURE",
+      "version": "1.3.2"
+    },
+    {
+      "binaries": [
+        {
+          "declared_pe_versions": {},
+          "path": "ocr/bin/lz4.dll",
+          "sha256": "4d747c9c0d4ad4d5d3b205da03920dc304719f0a4f12e1ea83c2b5cbde27a89f",
+          "size": 126464
+        },
+        {
+          "declared_pe_versions": {},
+          "path": "ocr/bin/lz4.exe",
+          "sha256": "b44491c1b00bd0a2369466bbf115f94f8f5e2c0cbbbf618a47039ae5fb7f92ac",
+          "size": 193024
+        }
+      ],
+      "name": "ocr-lz4-c",
+      "original_archive_sha256": "6824e36be0f95ae516dc36dddd18f69cbad0e4e07906fcb10a5f26a8dc471903",
+      "retained_notices": {
+        "licenses/ocr/lz4-c/lib/LICENSE": {
+          "sha256": "8b58c446121a109ccf32edc094bba3010a3d85e4ee3702950db55e4d3e87736c",
+          "size": 1311
+        }
+      },
+      "source": "https://conda.anaconda.org/conda-forge/win-64/lz4-c-1.10.0-h6a83c73_2.conda",
+      "vendor_license_review": "PENDING_SOURCE_CLOSURE",
+      "version": "1.10.0"
+    },
+    {
+      "binaries": [
+        {
+          "declared_pe_versions": {},
+          "path": "ocr/bin/lzo2.dll",
+          "sha256": "1894becf58e966183b63b0d88520e0ba5a7c27cb87add1cbc39d56fa9b620832",
+          "size": 114688
+        }
+      ],
+      "name": "ocr-lzo",
+      "original_archive_sha256": "e26c855c4b5d797ba5a9e96a6392d58676981660849b99fdb939aee3164e8323",
+      "retained_notices": {
+        "licenses/ocr/lzo/COPYING": {
+          "sha256": "8177f97513213526df2cf6184d8ff986c675afb514d4e68a404010521b880643",
+          "size": 18092
+        }
+      },
+      "source": "https://conda.anaconda.org/conda-forge/win-64/lzo-2.10-h6a83c73_1003.conda",
+      "vendor_license_review": "PENDING_SOURCE_CLOSURE",
+      "version": "2.10"
+    },
+    {
+      "binaries": [
+        {
+          "declared_pe_versions": {},
+          "path": "ocr/bin/openjp2.dll",
+          "sha256": "5d11a0abfa2b679c22f0d91df66bd2abc83acb6988b050ad9e75ea0b0025e2b0",
+          "size": 360448
+        },
+        {
+          "declared_pe_versions": {},
+          "path": "ocr/bin/opj_compress.exe",
+          "sha256": "ab7e6df056732fe86076ea6b32145473f621375ba9a22257ce4b765dada77b94",
+          "size": 84480
+        },
+        {
+          "declared_pe_versions": {},
+          "path": "ocr/bin/opj_decompress.exe",
+          "sha256": "eda72163cd9784d8666346af04e5e4bf6ebbdedbf13521c3348022ab3c6f8f07",
+          "size": 70144
+        },
+        {
+          "declared_pe_versions": {},
+          "path": "ocr/bin/opj_dump.exe",
+          "sha256": "9dedbb88c02c1a07aab3a7fcb88c70dcdd06a64f28d35dba524c9acc5334f47c",
+          "size": 26112
+        }
+      ],
+      "name": "ocr-openjpeg",
+      "original_archive_sha256": "d1c630ccd9ae0898b48d84e986f4c330f66a25e535f99efe8cbf03f042b33da5",
+      "retained_notices": {
+        "licenses/ocr/openjpeg/LICENSE": {
+          "sha256": "a6af136f3e15038a666b61f376612a07d9a4e48cb7c01adbf3e33b3f14ab49b6",
+          "size": 2112
+        }
+      },
+      "source": "https://conda.anaconda.org/conda-forge/win-64/openjpeg-2.5.4-h90fa87c_2.conda",
+      "vendor_license_review": "PENDING_SOURCE_CLOSURE",
+      "version": "2.5.4"
+    },
+    {
+      "binaries": [
+        {
+          "declared_pe_versions": {
+            "FileVersion": "3.6.5",
+            "ProductVersion": "3.6.5"
+          },
+          "path": "ocr/bin/libcrypto-3-x64.dll",
+          "sha256": "7ff26fb03c914b87e22f55c6abed6eda0bfbfc628f9c1f1fde67993ddf1f8d47",
+          "size": 7203840
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "3.6.5",
+            "ProductVersion": "3.6.5"
+          },
+          "path": "ocr/bin/libssl-3-x64.dll",
+          "sha256": "a1b3fd1f6eb95812e4fc3c68106f8ebec6b3f9dad9ff873ce4eebe20582b6f4f",
+          "size": 1294848
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "3.6.5",
+            "ProductVersion": "3.6.5"
+          },
+          "path": "ocr/bin/openssl.exe",
+          "sha256": "0fc578ff7e946f2f1ead8f9fdae7f47b94637611ea45987d71838af960f94bba",
+          "size": 814592
+        }
+      ],
+      "name": "ocr-openssl",
+      "original_archive_sha256": "bc44625e0c6d83f3e02b5f6adc01e0e3ca7001d3d94e24959591a57f5a011b9a",
+      "retained_notices": {
+        "licenses/ocr/openssl/LICENSE.txt": {
+          "sha256": "7d5450cb2d142651b8afa315b5f238efc805dad827d91ba367d8516bc9d49e7a",
+          "size": 10175
+        }
+      },
+      "source": "https://conda.anaconda.org/conda-forge/win-64/openssl-3.6.5-hf411b9b_0.conda",
+      "vendor_license_review": "PENDING_SOURCE_CLOSURE",
+      "version": "3.6.5"
+    },
+    {
+      "binaries": [
+        {
+          "declared_pe_versions": {},
+          "path": "ocr/bin/tesseract.exe",
+          "sha256": "ea22b4adaa35ba9f449aaff9f111c97550ecd2220510cdce60c1503465a38357",
+          "size": 68096
+        },
+        {
+          "declared_pe_versions": {},
+          "path": "ocr/bin/tesseract55.dll",
+          "sha256": "583234cdf931fd8c026cd543b1550e255e934908068b7bee45bbe7b7b57b5109",
+          "size": 2907648
+        }
+      ],
+      "name": "ocr-tesseract",
+      "original_archive_sha256": "394a3dc0d9ab9ec0b930ecff19a8d27df99c82f321805fcb7a95b732fb024bf7",
+      "retained_notices": {
+        "licenses/ocr/tesseract/tesseract/LICENSE": {
+          "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+          "size": 11358
+        }
+      },
+      "source": "https://conda.anaconda.org/conda-forge/win-64/tesseract-5.5.1-hfa586c3_2.conda",
+      "vendor_license_review": "PENDING_SOURCE_CLOSURE",
+      "version": "5.5.1"
+    },
+    {
+      "binaries": [
+        {
+          "declared_pe_versions": {
+            "FileVersion": "10.0.26100.4654 (WinBuild.160101.0800)",
+            "ProductVersion": "10.0.26100.4654"
+          },
+          "path": "ocr/bin/api-ms-win-core-console-l1-1-0.dll",
+          "sha256": "015bd08815c7b934a8952c3a7578e9ce59f21136e8a880d42bbd414bec2c6058",
+          "size": 22872
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "10.0.26100.4654 (WinBuild.160101.0800)",
+            "ProductVersion": "10.0.26100.4654"
+          },
+          "path": "ocr/bin/api-ms-win-core-console-l1-2-0.dll",
+          "sha256": "dcb4b82b6177fae57fdf0f3e05ab62ff75e05560b54547c16d6a1d83b33e07d4",
+          "size": 22872
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "10.0.26100.4654 (WinBuild.160101.0800)",
+            "ProductVersion": "10.0.26100.4654"
+          },
+          "path": "ocr/bin/api-ms-win-core-datetime-l1-1-0.dll",
+          "sha256": "5534812cdbdae94ba45cb216e5eb9af686b853948df54365103555abbbaf9d9a",
+          "size": 22896
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "10.0.26100.4654 (WinBuild.160101.0800)",
+            "ProductVersion": "10.0.26100.4654"
+          },
+          "path": "ocr/bin/api-ms-win-core-debug-l1-1-0.dll",
+          "sha256": "837d2b1b2cd03e03fc6ccb050698b6b5763af17c201304872342a5eae9e0a2d2",
+          "size": 22872
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "10.0.26100.4654 (WinBuild.160101.0800)",
+            "ProductVersion": "10.0.26100.4654"
+          },
+          "path": "ocr/bin/api-ms-win-core-errorhandling-l1-1-0.dll",
+          "sha256": "de43b165f568c276c00e95acd454e3092f352a18e95874595f4f4658c06d2ec7",
+          "size": 22872
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "10.0.26100.4654 (WinBuild.160101.0800)",
+            "ProductVersion": "10.0.26100.4654"
+          },
+          "path": "ocr/bin/api-ms-win-core-fibers-l1-1-0.dll",
+          "sha256": "3cebc45bf479ad74cfabf2c6bfd4994d7ad639ed1221025981d19cedf9ce0416",
+          "size": 22872
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "10.0.26100.4654 (WinBuild.160101.0800)",
+            "ProductVersion": "10.0.26100.4654"
+          },
+          "path": "ocr/bin/api-ms-win-core-fibers-l1-1-1.dll",
+          "sha256": "5ef70308bcca628ce6b0e2856b15b1c7ae340c3f9bbbc4c1071d8c191a34a5c3",
+          "size": 22872
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "10.0.26100.4654 (WinBuild.160101.0800)",
+            "ProductVersion": "10.0.26100.4654"
+          },
+          "path": "ocr/bin/api-ms-win-core-file-l1-1-0.dll",
+          "sha256": "250ac829f2617bcac1c6e5b8c4f630462e20765863ba573526a3e11bbfb94a9a",
+          "size": 27008
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "10.0.26100.4654 (WinBuild.160101.0800)",
+            "ProductVersion": "10.0.26100.4654"
+          },
+          "path": "ocr/bin/api-ms-win-core-file-l1-2-0.dll",
+          "sha256": "ae14079a114733f60ce87b92cba42acd8083c2cd67594e53bc37dc0b97a4b465",
+          "size": 22888
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "10.0.26100.4654 (WinBuild.160101.0800)",
+            "ProductVersion": "10.0.26100.4654"
+          },
+          "path": "ocr/bin/api-ms-win-core-file-l2-1-0.dll",
+          "sha256": "914bf26a298713119477ea0a8e7bd43171b91344ebe24fb47ad77c49686e3d87",
+          "size": 22912
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "10.0.26100.4654 (WinBuild.160101.0800)",
+            "ProductVersion": "10.0.26100.4654"
+          },
+          "path": "ocr/bin/api-ms-win-core-handle-l1-1-0.dll",
+          "sha256": "ab5489955e371b15f77906c08ec3c7affe2c7a46a08c514ca628768b4478974b",
+          "size": 22896
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "10.0.26100.4654 (WinBuild.160101.0800)",
+            "ProductVersion": "10.0.26100.4654"
+          },
+          "path": "ocr/bin/api-ms-win-core-heap-l1-1-0.dll",
+          "sha256": "c70f9644d8377fa39c5b71f2e9734c1400d7598904fdeb772e8502099982dcb7",
+          "size": 22872
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "10.0.26100.4654 (WinBuild.160101.0800)",
+            "ProductVersion": "10.0.26100.4654"
+          },
+          "path": "ocr/bin/api-ms-win-core-interlocked-l1-1-0.dll",
+          "sha256": "f8129710188e407bb0e6f46d30aeba277d67b947ece5fe09e883fde2323f3ae6",
+          "size": 22888
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "10.0.26100.4654 (WinBuild.160101.0800)",
+            "ProductVersion": "10.0.26100.4654"
+          },
+          "path": "ocr/bin/api-ms-win-core-kernel32-legacy-l1-1-1.dll",
+          "sha256": "5200b16cb2ddc61cfc07373a9a84aa85a3ab50806ca96c879c883275832944c1",
+          "size": 22888
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "10.0.26100.4654 (WinBuild.160101.0800)",
+            "ProductVersion": "10.0.26100.4654"
+          },
+          "path": "ocr/bin/api-ms-win-core-libraryloader-l1-1-0.dll",
+          "sha256": "48786fb88b001dcd1f63acea903d3ca9cc0b3060d5a325e3f2f3cbc3bfd53166",
+          "size": 22872
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "10.0.26100.4654 (WinBuild.160101.0800)",
+            "ProductVersion": "10.0.26100.4654"
+          },
+          "path": "ocr/bin/api-ms-win-core-localization-l1-2-0.dll",
+          "sha256": "9ec3898f7eba91faa28b51616c211a2689e3a13aeef8de6e13cb674e49d689eb",
+          "size": 22872
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "10.0.26100.4654 (WinBuild.160101.0800)",
+            "ProductVersion": "10.0.26100.4654"
+          },
+          "path": "ocr/bin/api-ms-win-core-memory-l1-1-0.dll",
+          "sha256": "3a6cbc524c99e1cd80d5368f5601402a37ad602528b1ab628093573ef638eb3b",
+          "size": 22896
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "10.0.26100.4654 (WinBuild.160101.0800)",
+            "ProductVersion": "10.0.26100.4654"
+          },
+          "path": "ocr/bin/api-ms-win-core-namedpipe-l1-1-0.dll",
+          "sha256": "97145ef89c44949fcf0f04ac834a8bc7d687ef49ee73ae9fc32f3c11136b7201",
+          "size": 22888
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "10.0.26100.4654 (WinBuild.160101.0800)",
+            "ProductVersion": "10.0.26100.4654"
+          },
+          "path": "ocr/bin/api-ms-win-core-processenvironment-l1-1-0.dll",
+          "sha256": "8bc7c10b1851aea644e9c9f381cdb935e091fee6b0be3d3aedc6fffaac96adb7",
+          "size": 22872
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "10.0.26100.4654 (WinBuild.160101.0800)",
+            "ProductVersion": "10.0.26100.4654"
+          },
+          "path": "ocr/bin/api-ms-win-core-processthreads-l1-1-0.dll",
+          "sha256": "d8030b777617c71f0f94564607699dbf7561487d779db9756aed378c5675213f",
+          "size": 22912
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "10.0.26100.4654 (WinBuild.160101.0800)",
+            "ProductVersion": "10.0.26100.4654"
+          },
+          "path": "ocr/bin/api-ms-win-core-processthreads-l1-1-1.dll",
+          "sha256": "f5e676713340f73a03a3d41a6ec9883b431da7d16c7f07bd0a920fb80e6c0753",
+          "size": 22872
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "10.0.26100.4654 (WinBuild.160101.0800)",
+            "ProductVersion": "10.0.26100.4654"
+          },
+          "path": "ocr/bin/api-ms-win-core-profile-l1-1-0.dll",
+          "sha256": "f023d47e44d3eea6b0743580f57e8c6ba81e79d5ebfa7da26250076c647b980e",
+          "size": 22872
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "10.0.26100.4654 (WinBuild.160101.0800)",
+            "ProductVersion": "10.0.26100.4654"
+          },
+          "path": "ocr/bin/api-ms-win-core-rtlsupport-l1-1-0.dll",
+          "sha256": "9746d8930704153578a628c010638a5f818ffe5a927e25591b108e256dc6afca",
+          "size": 22888
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "10.0.26100.4654 (WinBuild.160101.0800)",
+            "ProductVersion": "10.0.26100.4654"
+          },
+          "path": "ocr/bin/api-ms-win-core-string-l1-1-0.dll",
+          "sha256": "7c53ae24c982d16ffd1bf7f918d115b11b7f30e57bc7feaa18cb9781e4abb926",
+          "size": 22896
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "10.0.26100.4654 (WinBuild.160101.0800)",
+            "ProductVersion": "10.0.26100.4654"
+          },
+          "path": "ocr/bin/api-ms-win-core-synch-l1-1-0.dll",
+          "sha256": "56d9d62ca5dba79a6581b8d574a7d8b2a64a5ecb71e47dcf06ed0285708b1859",
+          "size": 22896
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "10.0.26100.4654 (WinBuild.160101.0800)",
+            "ProductVersion": "10.0.26100.4654"
+          },
+          "path": "ocr/bin/api-ms-win-core-synch-l1-2-0.dll",
+          "sha256": "f6482bbec5612c39ecb4822787a333f2b7570f7a5f922a4059be41ba957bb372",
+          "size": 22888
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "10.0.26100.4654 (WinBuild.160101.0800)",
+            "ProductVersion": "10.0.26100.4654"
+          },
+          "path": "ocr/bin/api-ms-win-core-sysinfo-l1-1-0.dll",
+          "sha256": "272d02765fdd3582618236c2d309abba069642f9bc1062ede069d0c144e17007",
+          "size": 22896
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "10.0.26100.4654 (WinBuild.160101.0800)",
+            "ProductVersion": "10.0.26100.4654"
+          },
+          "path": "ocr/bin/api-ms-win-core-sysinfo-l1-2-0.dll",
+          "sha256": "8a0900788859d0eb51c2f48f50cc6ed376a120b518100fa20e11d7702ccde260",
+          "size": 22912
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "10.0.26100.4654 (WinBuild.160101.0800)",
+            "ProductVersion": "10.0.26100.4654"
+          },
+          "path": "ocr/bin/api-ms-win-core-timezone-l1-1-0.dll",
+          "sha256": "ff35de6c03812b332e140f17dade25c5dd4775156da9eeb1eaae3fddd27236ec",
+          "size": 22896
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "10.0.26100.4654 (WinBuild.160101.0800)",
+            "ProductVersion": "10.0.26100.4654"
+          },
+          "path": "ocr/bin/api-ms-win-core-util-l1-1-0.dll",
+          "sha256": "191ef3e98641a57296f19d572d8eb62489470ff1ef6030d136af170c2f835173",
+          "size": 22896
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "10.0.26100.4654 (WinBuild.160101.0800)",
+            "ProductVersion": "10.0.26100.4654"
+          },
+          "path": "ocr/bin/api-ms-win-crt-conio-l1-1-0.dll",
+          "sha256": "54ee5ec719a051496ff60aa00dbeaa94b9a7d2cdac27fe9b7317f1a666b6a2aa",
+          "size": 22872
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "10.0.26100.4654 (WinBuild.160101.0800)",
+            "ProductVersion": "10.0.26100.4654"
+          },
+          "path": "ocr/bin/api-ms-win-crt-convert-l1-1-0.dll",
+          "sha256": "8b94662429171019fcd63c70bbf2095a075170599704a5e7dcdbe3da13f3a429",
+          "size": 26992
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "10.0.26100.4654 (WinBuild.160101.0800)",
+            "ProductVersion": "10.0.26100.4654"
+          },
+          "path": "ocr/bin/api-ms-win-crt-environment-l1-1-0.dll",
+          "sha256": "39e5929593709e8af3bc9e0a75ec1155778d6f4a247f4cdfc58928ad6db88434",
+          "size": 22912
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "10.0.26100.4654 (WinBuild.160101.0800)",
+            "ProductVersion": "10.0.26100.4654"
+          },
+          "path": "ocr/bin/api-ms-win-crt-filesystem-l1-1-0.dll",
+          "sha256": "5a8ecebac32edf4e1f3c5c6c1c8ea1a1add6cda4f9c9cb26f752fb295bea6865",
+          "size": 22872
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "10.0.26100.4654 (WinBuild.160101.0800)",
+            "ProductVersion": "10.0.26100.4654"
+          },
+          "path": "ocr/bin/api-ms-win-crt-heap-l1-1-0.dll",
+          "sha256": "c71080cbcb43bf1f8f3e391deb12a582eb0abefc80946f340675a2c616e4feb4",
+          "size": 22872
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "10.0.26100.4654 (WinBuild.160101.0800)",
+            "ProductVersion": "10.0.26100.4654"
+          },
+          "path": "ocr/bin/api-ms-win-crt-locale-l1-1-0.dll",
+          "sha256": "6c68648e524187e03c4ad9aaa4a99113c6ee9f29fb39cc0ed93f951975138e63",
+          "size": 22896
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "10.0.26100.4654 (WinBuild.160101.0800)",
+            "ProductVersion": "10.0.26100.4654"
+          },
+          "path": "ocr/bin/api-ms-win-crt-math-l1-1-0.dll",
+          "sha256": "d4fbcccbe29371cbce431e43b2eb4f7ba9a6f04a3d740a071f02457a505e9dc8",
+          "size": 31064
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "10.0.26100.4654 (WinBuild.160101.0800)",
+            "ProductVersion": "10.0.26100.4654"
+          },
+          "path": "ocr/bin/api-ms-win-crt-multibyte-l1-1-0.dll",
+          "sha256": "41b98a59bea1c86ab3b2357acb77de4eae7ff1132f130b1d9669ab9c2b456a2a",
+          "size": 31064
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "10.0.26100.4654 (WinBuild.160101.0800)",
+            "ProductVersion": "10.0.26100.4654"
+          },
+          "path": "ocr/bin/api-ms-win-crt-private-l1-1-0.dll",
+          "sha256": "29bf3d90617d3781d19b332d6ceb9f20ba5ce082ec74bf6c34d5d4aee56e48a1",
+          "size": 76120
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "10.0.26100.4654 (WinBuild.160101.0800)",
+            "ProductVersion": "10.0.26100.4654"
+          },
+          "path": "ocr/bin/api-ms-win-crt-process-l1-1-0.dll",
+          "sha256": "47c1935942e3ac0812e4dcf18c0e265e565f0194a3349111c299712f5565f7ac",
+          "size": 22896
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "10.0.26100.4654 (WinBuild.160101.0800)",
+            "ProductVersion": "10.0.26100.4654"
+          },
+          "path": "ocr/bin/api-ms-win-crt-runtime-l1-1-0.dll",
+          "sha256": "72adc1b3677e0814d9c4ebf0964000e84bb2acf67336c8963061665e44f78029",
+          "size": 26968
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "10.0.26100.4654 (WinBuild.160101.0800)",
+            "ProductVersion": "10.0.26100.4654"
+          },
+          "path": "ocr/bin/api-ms-win-crt-stdio-l1-1-0.dll",
+          "sha256": "900afc3989673c9bb1a687ed38c192f46db9e6ba6d11a668898a539e7fc23798",
+          "size": 26968
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "10.0.26100.4654 (WinBuild.160101.0800)",
+            "ProductVersion": "10.0.26100.4654"
+          },
+          "path": "ocr/bin/api-ms-win-crt-string-l1-1-0.dll",
+          "sha256": "fcf12466cc12fd3b73611fc0763a5a1f9d44e90349513c34a0c83b0f36421793",
+          "size": 26968
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "10.0.26100.4654 (WinBuild.160101.0800)",
+            "ProductVersion": "10.0.26100.4654"
+          },
+          "path": "ocr/bin/api-ms-win-crt-time-l1-1-0.dll",
+          "sha256": "886e57c4a6adb299b38f02945369f590a67da4e79a798359fc60aaa067212d7c",
+          "size": 22912
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "10.0.26100.4654 (WinBuild.160101.0800)",
+            "ProductVersion": "10.0.26100.4654"
+          },
+          "path": "ocr/bin/api-ms-win-crt-utility-l1-1-0.dll",
+          "sha256": "5f8f26b216ade615b67a41f6fbbb910972fc6153315a65bb8f09912be50215b1",
+          "size": 22912
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "10.0.26100.4654 (WinBuild.160101.0800)",
+            "ProductVersion": "10.0.26100.4654"
+          },
+          "path": "ocr/bin/ucrtbase.dll",
+          "sha256": "3239227d27667ba20d10a880751924e5719de0078f9fce232d149d383f7681f6",
+          "size": 1362264
+        }
+      ],
+      "name": "ocr-ucrt",
+      "original_archive_sha256": "3005729dce6f3d3f5ec91dfc49fc75a0095f9cd23bab49efb899657297ac91a5",
+      "retained_notices": {
+        "licenses/ocr/ucrt/LICENSE.txt": {
+          "sha256": "f4589c739597890dd40bccb6bf20632a99c228bdd20cfbf585b5b30c9e61b3fb",
+          "size": 29410
+        }
+      },
+      "source": "https://conda.anaconda.org/conda-forge/win-64/ucrt-10.0.26100.0-h57928b3_0.conda",
+      "vendor_license_review": "PENDING_SOURCE_CLOSURE",
+      "version": "10.0.26100.0"
+    },
+    {
+      "binaries": [
+        {
+          "declared_pe_versions": {
+            "FileVersion": "14.51.36247.0",
+            "ProductVersion": "14.51.36247.0"
+          },
+          "path": "ocr/bin/concrt140.dll",
+          "sha256": "54716f0738af891f283d213b5c8d11b25896bb8ee3097d301eae718560cf974e",
+          "size": 374200
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "14.51.36247.0",
+            "ProductVersion": "14.51.36247.0"
+          },
+          "path": "ocr/bin/msvcp140.dll",
+          "sha256": "7c26614e1d733892c2deac7e245ce115504b1d80592dd0a01b08e3e5a55f89ca",
+          "size": 643512
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "14.51.36247.0",
+            "ProductVersion": "14.51.36247.0"
+          },
+          "path": "ocr/bin/msvcp140_1.dll",
+          "sha256": "206c931bf90fdad8816de3b5e2ef80b2bcaa9406c89ecc05fe6fddffe251e982",
+          "size": 35768
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "14.51.36247.0",
+            "ProductVersion": "14.51.36247.0"
+          },
+          "path": "ocr/bin/msvcp140_2.dll",
+          "sha256": "d50d7883f20d1dc6191768d3746f52dd9cac89c346ffaed5be1f110c2f34a838",
+          "size": 274872
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "14.51.36247.0",
+            "ProductVersion": "14.51.36247.0"
+          },
+          "path": "ocr/bin/msvcp140_atomic_wait.dll",
+          "sha256": "3d0cbfaa1bf3eecf5a3f4491d2960ee803cb994f30292c6adc4a07c498f60e2b",
+          "size": 57792
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "14.51.36247.0",
+            "ProductVersion": "14.51.36247.0"
+          },
+          "path": "ocr/bin/msvcp140_codecvt_ids.dll",
+          "sha256": "8a65c7596ef2e6938731f5a1058e7e40145b6d97967cc649231a076b9a608d78",
+          "size": 31160
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "14.51.36247.0",
+            "ProductVersion": "14.51.36247.0"
+          },
+          "path": "ocr/bin/vcamp140.dll",
+          "sha256": "dc283ffb87e9b82e687ed4e899ae062a209aa338207abfc9a89d61407d678bd4",
+          "size": 417728
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "14.51.36247.0",
+            "ProductVersion": "14.51.36247.0"
+          },
+          "path": "ocr/bin/vccorlib140.dll",
+          "sha256": "09f93d5ff96ae09767f3e1af3cdd43a5a58f2598654fc63089429bb6f9f4737f",
+          "size": 350648
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "14.51.36247.0",
+            "ProductVersion": "14.51.36247.0"
+          },
+          "path": "ocr/bin/vcruntime140.dll",
+          "sha256": "d1f4225df2cd877dbf130d5668a021dce3f94118455ff5ec952061c30afc9ce7",
+          "size": 178616
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "14.51.36247.0",
+            "ProductVersion": "14.51.36247.0"
+          },
+          "path": "ocr/bin/vcruntime140_1.dll",
+          "sha256": "a7146c08f89fe5b04541ab507cdb59ff7b44534d4ba3c668a426c6450a03434e",
+          "size": 50112
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "14.51.36247.0",
+            "ProductVersion": "14.51.36247.0"
+          },
+          "path": "ocr/bin/vcruntime140_threads.dll",
+          "sha256": "40f39e8cee5f5a531b4010e18b807e8fe265b908dc58f959ecb7ebc6ea6cb11a",
+          "size": 38840
+        }
+      ],
+      "name": "ocr-vc14_runtime",
+      "original_archive_sha256": "4e4cb599cdc41bf2109d1464c127b5bcbddf548ce3e322e612afb691338b48f8",
+      "retained_notices": {
+        "licenses/ocr/vc14_runtime/LICENSE.DOCX": {
+          "sha256": "08651651a7602fc7c0e2763de0fde1ff9f868df2780597cd1775ee9d6441c783",
+          "size": 39553
+        },
+        "licenses/ocr/vc14_runtime/LICENSE.RTF": {
+          "sha256": "9020a331682370e8359e02c5e51762d375896d62f42e33aef331be83255036bc",
+          "size": 45
+        },
+        "licenses/ocr/vc14_runtime/LICENSE.TXT": {
+          "sha256": "cf89b37107c22cf8ce21043da1da143087b86ce7fd4556f91c25bc429533807e",
+          "size": 7590
+        }
+      },
+      "source": "https://conda.anaconda.org/conda-forge/win-64/vc14_runtime-14.51.36247-habf1de7_41.conda",
+      "vendor_license_review": "PENDING_SOURCE_CLOSURE",
+      "version": "14.51.36247"
+    },
+    {
+      "binaries": [
+        {
+          "declared_pe_versions": {
+            "FileVersion": "14.51.36247.0",
+            "ProductVersion": "14.51.36247.0"
+          },
+          "path": "ocr/bin/vcomp140.dll",
+          "sha256": "95d4ce4a6802d1e18b5e0e1722cc30ea72ca7e033f83828f05c0b7b993fe7cbf",
+          "size": 212920
+        }
+      ],
+      "name": "ocr-vcomp14",
+      "original_archive_sha256": "731e043390c9457299484d39e427221fc868a9249540a498a5a4f6456c7744d1",
+      "retained_notices": {
+        "licenses/ocr/vcomp14/LICENSE.DOCX": {
+          "sha256": "08651651a7602fc7c0e2763de0fde1ff9f868df2780597cd1775ee9d6441c783",
+          "size": 39553
+        },
+        "licenses/ocr/vcomp14/LICENSE.RTF": {
+          "sha256": "9020a331682370e8359e02c5e51762d375896d62f42e33aef331be83255036bc",
+          "size": 45
+        },
+        "licenses/ocr/vcomp14/LICENSE.TXT": {
+          "sha256": "cf89b37107c22cf8ce21043da1da143087b86ce7fd4556f91c25bc429533807e",
+          "size": 7590
+        }
+      },
+      "source": "https://conda.anaconda.org/conda-forge/win-64/vcomp14-14.51.36247-habf1de7_41.conda",
+      "vendor_license_review": "PENDING_SOURCE_CLOSURE",
+      "version": "14.51.36247"
+    },
+    {
+      "binaries": [
+        {
+          "declared_pe_versions": {
+            "FileVersion": "1.5.7",
+            "ProductVersion": "1.5.7"
+          },
+          "path": "ocr/bin/libzstd.dll",
+          "sha256": "fcc1dc71b7df5489e37a78abab9c31d763570d55e93c67f388058c41c0d7b8df",
+          "size": 657408
+        },
+        {
+          "declared_pe_versions": {
+            "FileVersion": "1.5.7",
+            "ProductVersion": "1.5.7"
+          },
+          "path": "ocr/bin/zstd.dll",
+          "sha256": "fcc1dc71b7df5489e37a78abab9c31d763570d55e93c67f388058c41c0d7b8df",
+          "size": 657408
+        },
+        {
+          "declared_pe_versions": {},
+          "path": "ocr/bin/zstd.exe",
+          "sha256": "d28e0286d3c90693785ad831da2d5681bef11ab77da24eef1b9cb716c89d6a8d",
+          "size": 164864
+        }
+      ],
+      "name": "ocr-zstd",
+      "original_archive_sha256": "ca7daae4f218a11fab82cc2857f0ea518ec3f46acec60490485347a4c22c6b3e",
+      "retained_notices": {
+        "licenses/ocr/zstd/LICENSE": {
+          "sha256": "7055266497633c9025b777c78eb7235af13922117480ed5c674677adc381c9d8",
+          "size": 1549
+        }
+      },
+      "source": "https://conda.anaconda.org/conda-forge/win-64/zstd-1.5.7-h534d264_7.conda",
+      "vendor_license_review": "PENDING_SOURCE_CLOSURE",
+      "version": "1.5.7"
     },
     {
       "binaries": [
@@ -2591,7 +4886,7 @@
         }
       },
       "source": "https://files.pythonhosted.org/packages/45/89/da2f7971a317f83d807fdd4065c0af40208e59e692cc43d315a71a0e96d1/pillow-12.3.0-cp312-cp312-win_amd64.whl",
-      "vendor_license_review": "PENDING",
+      "vendor_license_review": "PENDING_SOURCE_CLOSURE",
       "version": "12.3.0"
     },
     {
@@ -2616,7 +4911,7 @@
         }
       },
       "source": "https://files.pythonhosted.org/packages/58/7b/6e8ef26f6d510a7916064fec68d55fcbfbdf7eb01e377480d66a122152d8/propcache-0.5.4-cp312-cp312-win_amd64.whl",
-      "vendor_license_review": "PENDING",
+      "vendor_license_review": "PENDING_SOURCE_CLOSURE",
       "version": "0.5.4"
     },
     {
@@ -2637,7 +4932,7 @@
         }
       },
       "source": "https://files.pythonhosted.org/packages/1c/66/2dc736a4d576847134fb6d80bd995c569b13cdc7b815d669050bf0ce2d2c/protobuf-5.29.6-cp310-abi3-win_amd64.whl",
-      "vendor_license_review": "PENDING",
+      "vendor_license_review": "PENDING_SOURCE_CLOSURE",
       "version": "5.29.6"
     },
     {
@@ -2658,7 +4953,7 @@
         }
       },
       "source": "https://files.pythonhosted.org/packages/6c/c6/112a6c44020bad15054d3e0654977b92bbaf793ab32dc6455027d0a44fbe/pynng-0.9.0-cp312-cp312-win_amd64.whl",
-      "vendor_license_review": "PENDING",
+      "vendor_license_review": "PENDING_SOURCE_CLOSURE",
       "version": "0.9.0"
     },
     {
@@ -2750,7 +5045,7 @@
         }
       },
       "source": "https://files.pythonhosted.org/packages/00/dc/ca7874924c9cfd701ad53f89529968523790e70473e0b71e834668316148/pypdfium2-5.14.0-py3-none-win_amd64.whl",
-      "vendor_license_review": "PENDING",
+      "vendor_license_review": "PENDING_SOURCE_CLOSURE",
       "version": "5.14.0"
     },
     {
@@ -2771,7 +5066,7 @@
         }
       },
       "source": "https://files.pythonhosted.org/packages/86/bf/899e81e4cce32febab4fb42bb97dcdf66bc135272882d1987881a4b519e9/pyyaml-6.0.3-cp312-cp312-win_amd64.whl",
-      "vendor_license_review": "PENDING",
+      "vendor_license_review": "PENDING_SOURCE_CLOSURE",
       "version": "6.0.3"
     },
     {
@@ -2792,7 +5087,7 @@
         }
       },
       "source": "https://files.pythonhosted.org/packages/04/3a/f0ee4d4dde9d3b69dedf1b5f74e7a40017046d55052d173e418c6a94f960/rpds_py-2026.6.3-cp312-cp312-win_amd64.whl",
-      "vendor_license_review": "PENDING",
+      "vendor_license_review": "PENDING_SOURCE_CLOSURE",
       "version": "2026.6.3"
     },
     {
@@ -3465,7 +5760,7 @@
         }
       },
       "source": "https://files.pythonhosted.org/packages/39/e7/979fd14e75008623df31ba70d6bb144700f68feadcea042021c06a05bf82/scipy-1.18.1-cp312-cp312-win_amd64.whl",
-      "vendor_license_review": "PENDING",
+      "vendor_license_review": "PENDING_SOURCE_CLOSURE",
       "version": "1.18.1"
     },
     {
@@ -5661,7 +7956,7 @@
         }
       },
       "source": "https://files.pythonhosted.org/packages/b4/61/58e162d9cdbf02a3578ef4e68f4003b8cb9f351b7aa409960da3cc383017/vtk-9.6.2-cp312-cp312-win_amd64.whl",
-      "vendor_license_review": "PENDING",
+      "vendor_license_review": "PENDING_SOURCE_CLOSURE",
       "version": "9.6.2"
     },
     {
@@ -5947,7 +8242,7 @@
         }
       },
       "source": "https://files.pythonhosted.org/packages/8a/70/c03bdacc6496b52ea5cfcf1f0a0c3030d56b6ca72efcbd4dab63a41f0e03/wxpython-4.3.1-cp312-cp312-win_amd64.whl",
-      "vendor_license_review": "PENDING",
+      "vendor_license_review": "PENDING_SOURCE_CLOSURE",
       "version": "4.3.1"
     },
     {
@@ -5972,19 +8267,37 @@
         }
       },
       "source": "https://files.pythonhosted.org/packages/bb/cc/51a7b4abf4ac593b8e7eb3794b28e5a35ae26eed8bc04787628d215af82f/yarl-1.25.1-cp312-cp312-win_amd64.whl",
-      "vendor_license_review": "PENDING",
+      "vendor_license_review": "PENDING_SOURCE_CLOSURE",
       "version": "1.25.1"
     }
   ],
-  "known_gap": "cadquery_ocp.libs contains FreeImage, FreeType, OpenEXR/Imath, LibRaw and codec binaries without a complete vendor notice set",
+  "known_gaps": [
+    "OCP/OCCT cached SDK and header-only inputs are not pinned fully",
+    "CasADi external source refs include master/develop/main",
+    "Other native wheels need static/dynamic vendor source closure",
+    "OCR GPL/LGPL libraries need corresponding source/build closure"
+  ],
   "required_review": [
     "Identify every dynamic and static upstream vendor dependency",
     "Verify exact vendor version, source and build provenance",
     "Retain required original license and copyright notices",
     "Satisfy applicable source and redistribution obligations"
   ],
-  "runtime_lock_sha256": "405843a2bd6490c087c79ebb5ecf1c2c30fff08df334d70c9847049853b16728",
-  "schema_version": "partsmith-native-license-audit-1.0",
-  "scope": "Exact native wheel binary inventory; no license approval",
-  "state": "PENDING_VENDOR_AUDIT"
+  "runtime_lock_sha256": "380b33ec615e9f51b8f6b5c7bab6e333f8956fe55eadbeb984a84889081b9eb3",
+  "schema_version": "partsmith-native-license-audit-2.0",
+  "scope": "Exact native runtime inventory and additional CAD vendor proof",
+  "state": "BLOCKED_NATIVE_SOURCE_PROVENANCE",
+  "verified_additional_cad_vendors": {
+    "dynamic_dlls": 24,
+    "ledger": "resources/licensing/cad-native/vendors.json",
+    "ledger_identity": {
+      "sha256": "66fa12193bb461dbacf9d2637df24398371be2f67d902e28e6ba6756b98a546d",
+      "size": 118802
+    },
+    "receipt": "docs/gates/phase-14-license-audit/cad-verification.json",
+    "scope": "24 additional CAD DLLs and statically linked JPEG XR",
+    "state": "ADDITIONAL_CAD_VENDORS_VERIFIED",
+    "static_dependency": "JPEG XR 1.1 in FreeImage",
+    "vendors": 20
+  }
 }

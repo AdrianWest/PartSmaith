@@ -17,7 +17,7 @@ from jsonschema import Draft7Validator
 from partsmith.integration.policy import ResourcePolicy
 
 IDENTIFIER = "com.boardforgetools.partsmith"
-VERSION = "0.1.12"
+VERSION = "0.3.0"
 INVENTORY = "plugins/inventory.json"
 PCM_ICON = "resources/icon.png"
 PCM_ICON_SHA256 = (
@@ -164,7 +164,7 @@ def _metadata(version: str, install_size: int) -> dict:
             "PartSmith IPC action for Windows AMD64, KiCad 10.0.6 and "
             "verified external Python 3.12. KiCad prepares pinned binary "
             "dependencies in the background; first preparation requires "
-            "network or an explicitly provisioned offline binary supply. "
+            "internet access. Offline installation is unsupported. "
             "Engineering readiness is checked again by the action."
         ),
         "identifier": IDENTIFIER,

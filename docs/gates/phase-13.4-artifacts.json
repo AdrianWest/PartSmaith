@@ -43,9 +43,9 @@
     "docs/gates/phase-13.4-native-staging/stage-p396uvb0/BFT_Footprints.pretty/P_47384239_6c35_498f_ba0b_c57e208edd86.kicad_mod"
   ],
   "sha256": {
-    ".gitattributes": "857c38fecbfd69ef13acedce1c2da273b8b417fefe4ce6a1199a98b8b7422053",
+    ".gitattributes": "32311e453a19a84e40a077156faa10b1f6f09c85127c0e3d14acd0208cdece32",
     ".github/workflows/ci.yml": "2f676be607172e21533480ed50cbacf9cf3b27bd0e640898326ecc3a4d4ccf25",
-    "README.md": "a2e6f94eb9fa6b3eff20d2c73e2555fceebd1702828894d1e987f44fd1b886fc",
+    "README.md": "1c6349802529f78a88985ffc335d47760ecba7eda647be91f8871f4a0935acfe",
     "docs/gates/phase-13.4-final-source-results.xml": "f5821865b1f2ff194b35e73205aa3e4ac4d6f208be7b43c8a79770e86301fa45",
     "docs/gates/phase-13.4-native-staging/manifest.json": "650d0280c31abcaf55fc8daf5884a0f10bf199a4c9dc6f79460922dec764fa4e",
     "docs/gates/phase-13.4-native-staging/plan.json": "a039a5bf49457ff0ab971a5b713992c76bb82a7c8c3452d03bc5dfa109e245b2",
@@ -76,7 +76,7 @@
     "migrations/004_node_cache.sql": "67b2a1549f1b746eea39df81a764aa5861e988a27549f24081b971390a90fc18",
     "migrations/005_integration.sql": "0c2df55e0d48ac3a8deb18c9ab77b9fb6c334d24b68c856619d0255e4bfb8e39",
     "pyproject.toml": "4cb461dcf646b7b46340bfcad88892c3aee25d4819abb3bc4bf75c60e83d0613",
-    "resources/BFT_PartSmith_Implementation_Spec.md": "e50eb21a9837d6b33878bf23897bd5aedbbd9dc406d465f488846a9a331a5d05",
+    "resources/BFT_PartSmith_Implementation_Spec.md": "43fb82cb0f4c79b0db397ef17a81b84d786971bd2701c92475323c43f5df0460",
     "schemas/integration-contracts-1.0.schema.json": "39f09b7f5a3048944c30665da53d770eae6a7e325d2c9869ebc29674cd392cfd",
     "scripts/close_integration_gate.py": "d65ece12a18ea34196afd0b09bf581338290757e73038ec0b3fbf35e0132509a",
     "scripts/record_integration_gate.py": "84b8119f7accfa142ec32ec2af9a8d140532d747ec92e13c91f24f2210a5e027",

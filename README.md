@@ -174,12 +174,15 @@ records 1,104 source checks, 14 source desktop checks, 1,118 isolated PCM checks
 passing without skips, alongside supervised PCM/native/IPC evidence and final
 affected-manifest hash verification.
 Customers install through PCM; see [PCM installation](docs/pcm-installation.md).
-The [Phase 14 acceptance candidate](docs/gates/phase-14.md) bundles isolated
-Python, CAD, GUI, PDF and multilingual OCR runtimes in an executable PCM ZIP.
-It adds manufacturer-backed definitions and frozen release tests for all eight
-MVP variants. The production gate remains open pending clean Windows acceptance
-and completion of the embedded native-library license inventory. The ZIP is a
-development candidate, and no public release is asserted.
+The [Phase 14 online candidate](docs/gates/phase-14.md) uses KiCad's managed
+Python environment and pinned `requirements.txt`. KiCad downloads the upstream
+binary wheels, including their CAD DLLs; the PartSmith ZIP contains source and
+resources. Installation, updates and environment recreation require internet.
+Offline installation and an optional offline edition are out of scope.
+Python 3.12 selected in KiCad and external Tesseract 5 with `eng`, `deu` and
+`chi_sim` models are prerequisites. All eight MVP variants retain their frozen
+release corpus. The gate remains open for clean Windows online PCM acceptance
+and dependency/license manifest review. No public release is asserted.
 
 AI-assisted document interpretation is intentionally later in the plan. The
 first end-to-end component path must be deterministic and AI-free.

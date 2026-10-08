@@ -23,6 +23,7 @@ from .bundle import (
     validate_dependencies,
     validate_descriptor,
 )
+from .licensing import validate_cad_vendors
 from .package import (
     IDENTIFIER,
     INVENTORY,
@@ -35,7 +36,7 @@ from .package import (
     json_bytes,
 )
 
-PRODUCTION_VERSION = "0.2.0"
+PRODUCTION_VERSION = "0.2.2"
 
 
 def registration() -> dict:
@@ -163,6 +164,15 @@ def build_production_pcm(
     lock_bytes = (root / "resources/runtime/production-lock.json").read_bytes()
     lock = json.loads(lock_bytes)
     payload = collect_payload(root)
+    if any(c["name"] == "cadquery-ocp" for c in lock["components"]):
+        vendor_bytes = (
+            root / "resources/licensing/cad-native/vendors.json"
+        ).read_bytes()
+        validate_cad_vendors(lock, json.loads(vendor_bytes))
+        payload["plugins/licenses/cad-native/vendors.json"] = vendor_bytes
+        payload["plugins/licenses/cad-native/README.md"] = (
+            root / "resources/licensing/cad-native/README.md"
+        ).read_bytes()
     payload["plugins/plugin.json"] = json_bytes(registration())
     paths = {}
     for name, record in lock["files"].items():
@@ -189,6 +199,11 @@ def build_production_pcm(
         ]
         if item["name"] == "distlib-launcher":
             item["files"] += ["PartSmith.exe", "PartSmith-diagnostics.exe"]
+        elif item["name"] == "cadquery-ocp":
+            item["files"] += [
+                "licenses/cad-native/vendors.json",
+                "licenses/cad-native/README.md",
+            ]
     dependencies = json_bytes(
         {
             "schema_version": "partsmith-dependencies-1.0",

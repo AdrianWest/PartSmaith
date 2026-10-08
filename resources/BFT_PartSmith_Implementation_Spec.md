@@ -1,7 +1,7 @@
 # PartSmith Implementation Specification
 
 **Specification version:** v0.9.7
-**Status:** Phase 13 PASS; Phase 14 acceptance candidate, gate OPEN
+**Status:** Phase 13 PASS; Phase 14 online PCM candidate, gate OPEN
 **Document date:** 2026-10-05
 
 **Revision purpose:** Incorporate the project owner's requested R13-01 work
@@ -136,7 +136,7 @@ round trips through PCM-installed 0.1.9. The
 [13.8 acceptance checkpoint](../docs/gates/phase-13.8.md) and
 [full Phase 13 receipt](../docs/gates/phase-13-artifacts.json) record all final
 source/PCM/desktop/offline/PDF checks and affected active/CI hash verification.
-The complete gate permits Phase 14; production clean/offline installation
+The complete gate permits Phase 14; clean-machine online installation
 remains that separate phase's responsibility.
 The subsequent PCM 0.1.10 startup correction opens setup directly. Board
 selection and read-only PCB inspection require the deliberate **Inspect PCB...**
@@ -1314,15 +1314,15 @@ KiCad prepares the per-plugin environment in the background. Verify its actual
 Python 3.12 interpreter and binary-package availability for the declared OS/ABI.
 The pinned 10.0.6 loader uses pip's binary-only requirement installation, so a
 source-build fallback cannot satisfy readiness. Do not rely on `min_version`
-alone to enforce the interpreter. An executable IPC package may instead carry
-an owned bundled runtime/application, provided its real PCM launch and complete
-runtime/license/resource inventory pass. Select and record the supported
-mechanism in 13.2; a separate customer runtime installer is not the default.
+alone to enforce the interpreter. The supported production mechanism is Python
+IPC with KiCad-managed requirements. Executable bundles are historical prototypes,
+not a supported alternative. A separate customer runtime installer is not supplied.
 
-Declare first-load network/download behavior, dependency provenance and the
-offline production path. For offline acceptance, use a tested local binary
-dependency supply or a bundled executable/runtime; an offline ZIP alone does
-not prove Python environment preparation. Show preparation, ready and failed
+Declare first-load internet/download behavior and dependency provenance.
+Installation, dependency updates and environment recreation require internet
+access. Offline installation, dependency mirrors, runtime bundles and an offline
+edition are out of scope. Existing local processing and recorded component replay
+remain available after successful preparation. Show preparation, ready and failed
 states; actions become usable only after runtime/schema/CAD diagnostics pass.
 Test denied network, incompatible/missing binaries, interrupted preparation,
 environment recreation and retry without touching component history or secrets.
@@ -1533,15 +1533,17 @@ automation and gate receipts contain no new PartSmith wheel build/test dependenc
 
 ## Phase 14 — Packaging and clean installation
 
-Build on Phase 13's verified PCM package/runtime mechanism. The production
-plugin artifact remains a PCM ZIP; bundled runtime/dependency requirements
-below may be satisfied inside a PCM executable package or another proven PCM
-layout. They do not mandate a separate OS installer or a customer wheel/pip
-step. Phase 14 adds clean-machine, offline and complete production-matrix proof.
+Build on Phase 13's verified Python IPC mechanism. The production artifact is
+one PCM ZIP containing PartSmith source, resources and pinned requirements.txt.
+KiCad installs upstream binary wheels into its per-plugin Python environment.
+The PartSmith ZIP does not carry Python, CAD/native DLLs, a wheel cache or Conda.
+Installation, updates and environment recreation require internet access.
+No offline installer or offline edition is maintained. Phase 14 adds clean-machine
+online lifecycle acceptance and the complete production-matrix proof.
 
 1. Build the production application.
-2. Bundle the selected CAD runtime.
-3. Bundle required runtime dependencies.
+2. Pin the selected CAD runtime in KiCad-managed requirements.
+3. Verify the online binary dependency closure for Python 3.12/Windows AMD64.
 4. Generate dependency/license manifest.
 5. Test clean-machine installation.
 6. Test upgrade/uninstall.
@@ -1552,15 +1554,18 @@ step. Phase 14 adds clean-machine, offline and complete production-matrix proof.
 
 **Phase 14 gate (blocking):** A clean supported machine passes automated
 install, launch, runtime-diagnostic, upgrade, and uninstall tests. The
-production package includes the selected CAD runtime, required
-dependencies, and validated dependency/license manifest, without a user
-manually installing Python, CadQuery, OCP, OCCT, Conda, or
-another CAD runtime. All eight production variants pass the complete release
+production package declares the pinned CAD/runtime dependencies and validated
+dependency/license manifest. KiCad provisions the binary wheels online without
+manual CadQuery/OCP/OCCT/Conda installation. Python 3.12 configured in KiCad and
+Tesseract 5 with eng/deu/chi_sim language data are explicit prerequisites; the
+installed KiCad 10.0.6 default Python 3.11 does not satisfy the current pins.
+All eight production variants pass the complete release
 corpus; single-component success is insufficient for this gate.
 
-**Implementation checkpoint, 2026-10-07:** The executable PCM candidate bundles
-isolated Python/CAD/OCR dependencies and provides offline diagnostics and
-transactional install/upgrade/uninstall operations. PDL schema 1.1 adds explicit
+**Installation policy revision, 2026-10-08:** The project owner removed offline
+installation from scope. Production now uses Python IPC and KiCad-managed
+requirements; the 0.2.x executable bundle and its receipts are historical only.
+The 0.3.0 online candidate reuses the managed installer and diagnostics. PDL schema 1.1 adds explicit
 per-terminal dimensions, bent-lead profiles and measured index geometry;
 symbol serializer 2.0 spaces IC pins. Historical PDL 1.0 and serializer 1.0
 contracts retain their bytes. The pinned `mvp-1@1.1` profile still requires all
@@ -1664,18 +1669,18 @@ when `BFT_TOKEN` is unset or empty; offline tests shall not require it.
 
 ## INSTALL-001 — Single-product installation
 
-The customer installation experience shall be a **single PartSmith
-installation**. Users shall not be required to manually install
-CadQuery, OCP, OCCT, Python, Conda, or another CAD runtime
-merely to use the supported PartSmith 3D-generation workflow.
+The customer installs one PartSmith PCM package. KiCad provisions its exact
+pinned Python/CAD dependencies online in the plugin's managed environment.
+Users do not manually install CadQuery, OCP, OCCT, Conda or individual DLLs.
 
-The installer shall provision the exact runtime dependencies required by
-the selected production backend.
+Supported prerequisites are KiCad 10.0.6 on Windows AMD64, a Python 3.12
+interpreter selected in KiCad, and Tesseract 5 with eng/deu/chi_sim language data.
+These external prerequisites are declared by the online installation policy;
+they are not packaged by PartSmith.
 
-For the KiCad plugin, this installation starts in PCM under Phase 13.2.
-Runtime provisioning may use a verified managed Python environment or a bundled
-executable/runtime. Phase 14 must prove the complete production/offline path;
-"single installation" does not require a separate OS installer or manual wheel.
+Installation, updates and environment recreation require internet access.
+Offline installation, runtime bundles and an optional offline edition are not
+supported. Phase 14 proves the clean-machine online path through PCM.
 
 ## INSTALL-002 — Development versus customer runtime
 
@@ -1686,10 +1691,11 @@ customer installation requirements unless explicitly approved.
 
 ## INSTALL-003 — Backend packaging
 
-Production PartSmith shall package the selected CAD runtime and its
-native dependencies. The runtime shall be version-pinned, isolated from
-the user's unrelated Python environment, and invoked through the
-PartSmith backend adapter.
+Production PartSmith shall declare the selected CAD runtime and its native
+Python dependencies in pinned requirements.txt. KiCad downloads their upstream
+binary wheels into its per-plugin environment. PartSmith does not extract or
+repackage those DLLs into its release ZIP. The verified runtime is invoked
+through the PartSmith backend adapter.
 
 Missing or corrupt runtime files shall produce a specific runtime error;
 users shall not be instructed to manually discover dependency packages.
@@ -1710,14 +1716,19 @@ dependency:
   sha256:
 ```
 
-The manifest shall cover direct and redistributable runtime dependencies.
+The manifest shall distinguish PartSmith-shipped files, upstream packages fetched
+by KiCad, and external Python/OCR prerequisites. Record source, version, license
+and available archive identities for the supported dependency closure. Downloaded
+wheels are not counted as files redistributed inside the PartSmith PCM ZIP.
 
 ## INSTALL-005 — License compliance
 
 PartSmith shall preserve required license notices, attribution, and
 license texts for redistributed open-source dependencies. Production
 release checks shall compare the dependency manifest against packaged
-files.
+files. Preserve integration compatibility review and upstream package provenance
+for downloaded dependencies; changing the installation method does not itself
+establish license compliance or approve an unresolved review.
 
 ## INSTALL-006 — Runtime reproducibility
 
@@ -7574,8 +7585,9 @@ alone is insufficient. Use fixed argument vectors without a shell, strip embedde
 Python path overrides and report moved/missing/incompatible runtimes clearly.
 
 PCM packaging follows milestone 13.2, with root `metadata.json`, installed
-package ownership and actual lifecycle checks. Python IPC may use KiCad's
-verified per-plugin environment; executable IPC may bundle a verified runtime.
+package ownership and actual lifecycle checks. Production Python IPC uses
+KiCad's verified per-plugin environment and online requirements preparation.
+Executable runtime bundles are retained only as historical prototypes.
 Do not generate a machine-specific launcher path inside a portable release ZIP.
 If a PartSmith launcher is needed, provision it as local non-secret operational
 data and retain explicit legacy migration; `plugin.json` alone is sufficient
@@ -9022,9 +9034,12 @@ The IR/PDL, profile 1.2 pipeline, immutable review/bundle services and desktop
 workflow have scoped Phase 0–13 evidence; review the recorded source, PCM and
 installed-runtime bindings. Earlier wheel and gate identities remain historical.
 The Phase 13 installation contracts and execution checkpoints have recorded PASS.
-The Phase 14 executable runtime and eight-variant corpus are implemented as an
-acceptance candidate. Clean-machine acceptance and the complete native vendor
-license inventory remain blocking Phase 14 requirements. Refreshing current input
+The Phase 14 eight-variant corpus is implemented. Production installation now
+uses the online managed-Python candidate under the 2026-10-08 owner decision.
+Clean-machine online PCM lifecycle acceptance and the dependency/license manifest
+review for this distribution remain blocking Phase 14 requirements. The retired
+executable bundle's incomplete vendor-source audit is retained at its historical
+scope and is not a requirement to maintain or release an offline edition. Refreshing current input
 hashes does not broaden historical execution scope or grant a new gate PASS.
 
 # 246. Consistency Resolution Register
@@ -9115,7 +9130,7 @@ the original Phase 8 assignment is preserved there and in the R13-01 finding.
 | R13-01 | RESOLVED by Phase 13.1 PASS, 2026-10-06: closed schemas/frozen types, canonical/golden/negative checks, exact source preservation, affected Phase 8/12 source regressions, isolated offline PCM contract payload and final archived hash closeout; see `docs/gates/phase-13.1-artifacts.json`. Complete Phase 13 PASS is separately recorded in `docs/gates/phase-13-artifacts.json`, 2026-10-07. |
 | Broad Phase 13 bullets | Nine numbered work items and eight ordered milestones with explicit prerequisites, per-milestone checks and final gate |
 | Plugin/configuration gap | Launch-only legacy data distinguished from IPC registration; versioned runtime configuration, packaged metadata, explicit migration and transient session/credential rules in 13.2/174.1.5 |
-| PCM installation correction, 2026-10-05 | PCM ZIP/metadata and IPC registration are separate; verified managed-Python or bundled-executable runtime; real install/preparation/update/uninstall/reinstall in 13.2/13.7/13.8; Phase 14 proves clean/offline production installation |
+| PCM installation correction, 2026-10-05 | PCM ZIP/metadata and IPC registration are separate; verified managed-Python or bundled-executable runtime; real install/preparation/update/uninstall/reinstall in 13.2/13.7/13.8; Phase 14 proves clean online production installation; the 2026-10-08 owner decision retires runtime bundles |
 | Phase 13 wheel retirement, 2026-10-05 | No PartSmith wheel build/install/test or required wheel receipt in Phase 13; isolated contract payload in 13.1, retire wheel automation and prove PCM resource/runtime parity in 13.2, full source/PCM acceptance in 13.8; historical Phase 0–12 evidence retained |
 | Native/API target gap | Pinned-build capability/units tests; real KiCad 10 PCB Editor IPC; CLI/native-editor schematic evidence and tested target publication mechanism in 13.2/13.7 |
 | Installation data gap | Closed plan/manifest/authorization/check/audit/journal objects, initial-base/null rules, source closure, content identities and acyclic hash order in 174.1.1–174.1.3 |

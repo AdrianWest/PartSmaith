@@ -1,0 +1,50 @@
+CI: azure
+CONDA_BUILD_SKIP_TESTS: '0'
+c_compiler: vs2017
+channel_sources: conda-forge
+channel_targets: conda-forge main
+cl_version: 19.51.36231
+cpu_optimization_target: nocona
+cran_mirror: https://cran.r-project.org
+cross_target_platform: win-64
+cxx_compiler: vs2017
+extend_keys:
+- ignore_version
+- extend_keys
+- pin_run_as_build
+- ignore_build_only_deps
+fortran_compiler: gfortran
+ignore_build_only_deps:
+- python
+- numpy
+lua: '5'
+numpy: '1.26'
+perl: 5.26.2
+pin_run_as_build:
+  python:
+    max_pin: x.x
+    min_pin: x.x
+  r-base:
+    max_pin: x.x
+    min_pin: x.x
+python: '3.12'
+r_base: '3.4'
+runtime_version: 14.51.36231
+sha256: 90E48ADE404E4576D023ABFA374F323555F233982A8805EA9AC63DCA9491A16B
+target_platform: win-64
+update_version: '1'
+uuid: c1bd4f2c-3672-468e-8480-7ed419dbb641
+vc: '14'
+vcver: '14.5'
+vsver: '18'
+vsyear: '2026'
+zip_keys:
+- - vcver
+  - vsyear
+  - vsver
+  - runtime_version
+  - update_version
+  - cl_version
+  - uuid
+  - sha256
+  - cross_target_platform

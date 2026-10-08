@@ -203,7 +203,9 @@ def test_production_archive_fails_closed(production_archive, tmp_path, fault):
         members["plugins/inventory.json"] = json_bytes(inventory)
         for _ in range(10):
             size = sum(map(len, members.values()))
-            members["metadata.json"] = json_bytes(metadata("0.2.0", size))
+            members["metadata.json"] = json_bytes(
+                metadata(inventory["version"], size)
+            )
             if size == sum(map(len, members.values())):
                 break
     path = tmp_path / "bad.zip"
