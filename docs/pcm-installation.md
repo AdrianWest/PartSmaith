@@ -10,7 +10,7 @@ acceptance remains Phase 14.
 
 ## Supported online installation
 
-Candidate **0.3.1** uses Python IPC and KiCad's private managed environment.
+Candidate **0.3.2** uses Python IPC and KiCad's private managed environment.
 PartSmith supplies source, resources and pinned `requirements.txt`; KiCad
 installs the upstream binary wheels, including the CAD DLLs. Installation,
 updates and **Recreate Plugin Environment** require internet access. There is
@@ -18,7 +18,7 @@ no supported offline installer, dependency mirror or optional offline edition.
 Normal local processing and recorded component replay remain available after
 successful environment preparation.
 
-Install `dist/partsmith-0.3.1-pcm.zip` using PCM **Install from File**. Use
+Install `dist/partsmith-0.3.2-pcm.zip` using PCM **Install from File**. Use
 KiCad's bundled Python 3.11. No external Python installation is needed.
 Compatible pins are NumPy 2.4.6, SciPy 1.17.1 and contourpy 1.3.3, with three
 3.11 backports. The CAD tuple remains unchanged. Tesseract 5 and
@@ -26,6 +26,17 @@ Compatible pins are NumPy 2.4.6, SciPy 1.17.1 and contourpy 1.3.3, with three
 adapter discovers the standard Windows installation, PATH or
 `PARTSMITH_TESSERACT`, with `TESSDATA_PREFIX` selecting language data. The Python
 package manager does not provision that standalone OCR executable.
+
+At startup, PartSmith checks Tesseract 5 and the three required OCR languages
+before opening setup or recovering a session. If something is missing or
+unusable, an error dialog lists only the affected manual prerequisites, with
+clickable links to the [Windows Tesseract installer](https://github.com/UB-Mannheim/tesseract/wiki)
+or the individual official language files. Install the listed items and restart
+PartSmith. The dialog also closes if the launching KiCad process exits.
+KiCad installation and packages provisioned by `requirements.txt` are excluded
+from this manual-install checklist. Existing engineering readiness checks still
+validate the managed runtime separately. Startup does not open download pages
+or run installers automatically.
 
 For this prepared repository, `install_partsmith.bat` builds and installs the
 current managed package. `install_production.bat` installs the prebuilt online

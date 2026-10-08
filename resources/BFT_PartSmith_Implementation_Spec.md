@@ -5,7 +5,8 @@
 **Document date:** 2026-10-08
 
 **Revision purpose:** Target KiCad 10.0.6's bundled Windows AMD64 Python
-3.11 for online PCM candidate 0.3.1. No external Python installation or offline
+3.11 for online PCM candidate 0.3.2, with manual OCR prerequisite checks at
+startup. No external Python installation or offline
 dependency supply is required. Historical Python 3.12 receipts and their lock
 retain their original scope. This migration does not grant Phase 14 PASS.
 
@@ -1564,6 +1565,20 @@ production package declares the pinned CAD/runtime dependencies and validated
 dependency/license manifest. KiCad provisions the binary wheels online without
 manual CadQuery/OCP/OCCT/Conda installation. KiCad's bundled Python 3.11 and
 Tesseract 5 with eng/deu/chi_sim language data are explicit prerequisites.
+Before setup or session recovery, startup checks only manually provisioned OCR:
+Tesseract major version 5 and availability of eng, deu and chi_sim in its active
+language-data folder. Missing, unsupported or unresponsive OCR blocks launch
+with an error dialog naming the affected items and clickable manual-install
+links. Missing languages link to their official traineddata files; a missing
+engine links to the Windows installer provider with required language guidance.
+The check honors PARTSMITH_TESSERACT, PATH, the standard Windows installation
+and TESSDATA_PREFIX, matching extraction. It does not detect KiCad installation
+or include requirements-managed Python packages/native wheel libraries in the
+manual checklist. Existing engineering readiness remains separate. No automatic
+download, installation or browser launch occurs. Closing the launching KiCad
+process closes this dialog too. Noninteractive diagnostics report the same safe
+issue codes and links without opening a GUI. Standalone desktop startup follows
+the same prerequisite policy.
 An external Python 3.12 installation is not required. The optional
 `runtime.min_version` field is not an enforcement boundary; the action verifies
 Python 3.11 and the actual pinned dependencies before engineering work.
@@ -1573,7 +1588,8 @@ corpus; single-component success is insufficient for this gate.
 **Installation policy revision, 2026-10-08:** The project owner removed offline
 installation from scope. Production now uses Python IPC and KiCad-managed
 requirements; the 0.2.x executable bundle and its receipts are historical only.
-The 0.3.1 online candidate targets bundled Python 3.11. The retired 0.3.0
+The 0.3.2 online candidate targets bundled Python 3.11. Candidate 0.3.1 migration
+receipts retain their original scope. The retired 0.3.0
 Python 3.12 candidate and its receipts remain historical. PDL schema 1.1 adds
 explicit
 per-terminal dimensions, bent-lead profiles and measured index geometry;

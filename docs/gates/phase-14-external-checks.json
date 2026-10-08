@@ -1,0 +1,81 @@
+{
+  "state": "PASS",
+  "python311_syntax_files": 9,
+  "modified_callables_checked": 29,
+  "tagged_docstrings": "PASS",
+  "ruff": "PASS",
+  "ruff_format": "PASS",
+  "workflow_yaml": "PASS",
+  "callables": [
+    "src/partsmith/external_dependencies.py:find_tesseract",
+    "src/partsmith/external_dependencies.py:_probe",
+    "src/partsmith/external_dependencies.py:_engine_issue",
+    "src/partsmith/external_dependencies.py:check_external_dependencies",
+    "src/partsmith/gui/prerequisites.py:show_missing_dependencies",
+    "src/partsmith/gui/prerequisites.py:__init__",
+    "src/partsmith/gui/prerequisites.py:_check_host",
+    "src/partsmith/gui/prerequisites.py:stop_monitoring",
+    "src/partsmith/gui/__main__.py:main",
+    "src/partsmith/pcm/runtime.py:readiness",
+    "src/partsmith/extraction/ocr.py:__init__",
+    "integrations/kicad/partsmith_ipc/entry.py:main",
+    "tests/test_external_dependencies.py:test_resolution_matches_ocr_override_policy",
+    "tests/test_external_dependencies.py:test_missing_engine_has_one_actionable_manual_install",
+    "tests/test_external_dependencies.py:test_unsupported_engine_has_installer_link",
+    "tests/test_external_dependencies.py:test_language_links_only_list_missing_models",
+    "tests/test_external_dependencies.py:test_ready_ocr_allows_extra_languages_and_whitespace",
+    "tests/test_external_dependencies.py:test_probe_failures_are_safe_and_actionable",
+    "tests/test_external_dependencies.py:test_native_probe_is_bounded_noninteractive_and_inherits_models",
+    "tests/test_external_dependencies.py:test_readiness_reports_manual_issues_before_engineering_imports",
+    "tests/test_external_dependencies.py:test_standalone_blocks_recovery_until_manual_prerequisites_ready",
+    "tests/test_external_dependencies.py:test_ipc_manual_dialog_lifetime_and_diagnostics",
+    "scripts/verify_external_dependencies_gui.py:app",
+    "scripts/verify_external_dependencies_gui.py:children",
+    "scripts/verify_external_dependencies_gui.py:capture_dialog",
+    "scripts/verify_external_dependencies_gui.py:test_prerequisite_language_dialog_has_clickable_links",
+    "scripts/verify_external_dependencies_gui.py:test_prerequisite_dialog_closes_when_launch_host_exits",
+    "scripts/verify_external_dependencies_gui.py:test_prerequisite_startup_with_real_missing_install",
+    "scripts/verify_external_dependencies_gui.py:inspect_and_close"
+  ],
+  "test_results": {
+    "source": {
+      "tests": 71,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "gui": {
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "extraction": {
+      "tests": 74,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  },
+  "source_and_gui_python": "KiCad bundled CPython 3.11.5, separately prepared test venv",
+  "extraction_and_producer_python": "CPython 3.12.10 producer venv",
+  "manual_check_scope": [
+    "Tesseract 5",
+    "eng",
+    "deu",
+    "chi_sim"
+  ],
+  "excludes": [
+    "KiCad installation",
+    "requirements-managed Python/native dependencies"
+  ],
+  "native_dialog": "PASS: correct hyperlink URLs, real missing executable/models, host-exit timer",
+  "ruff_format_files": 243,
+  "deterministic_pcm": "EXACT_BYTES",
+  "archive_sha256": "6ca73829dbe0dafd3f350b1d86569e2d0b526f7e180f93fb41056e9e66f0459c",
+  "inventory_sha256": "4d04873071726afc14b9cf22bc8a72874bb0a1f4d471d65230034f0bb30f1d50",
+  "exact_pcm_corpus_variants": 8,
+  "negative_cases": 63,
+  "actual_current_user_installation": "UNCHANGED",
+  "gate_status": "OPEN"
+}

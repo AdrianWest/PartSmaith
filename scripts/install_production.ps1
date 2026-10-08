@@ -1,5 +1,5 @@
 param(
-    [string]$Archive = (Join-Path $PSScriptRoot '../dist/partsmith-0.3.1-pcm.zip'),
+    [string]$Archive = (Join-Path $PSScriptRoot '../dist/partsmith-0.3.2-pcm.zip'),
     [string]$Python = (Join-Path $PSScriptRoot '../.venv/Scripts/python.exe'),
     [string]$SettingsDir,
     [string]$ThirdPartyDir,

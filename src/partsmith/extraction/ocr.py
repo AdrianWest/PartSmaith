@@ -1,13 +1,16 @@
-"""Local Tesseract with bounded execution and cooperative cancellation."""
+"""@package partsmith.extraction.ocr
+@brief Runs local Tesseract with bounded execution and cancellation.
+@details Uses the same executable discovery policy as startup prerequisites.
+"""
 
 import csv
 import io
-import os
-import shutil
 import subprocess
 import tempfile
 import time
 from pathlib import Path
+
+from partsmith.external_dependencies import find_tesseract
 
 
 class ExtractionCancelled(Exception):
@@ -21,18 +24,18 @@ def check_cancel(cancel):
 
 class TesseractOCR:
     def __init__(self, executable=None, *, timeout=120, page_segmentation=3):
+        """@brief Resolves Tesseract and records its native version.
+        @param executable Optional explicit OCR executable or command name.
+        @param timeout Maximum seconds for each OCR operation.
+        @param page_segmentation Supported layout mode: 3, 6 or 11.
+        @return None.
+        @details Explicit selection, environment, PATH and standard Windows
+        discovery match the startup check; missing engines raise ValueError.
+        """
         if page_segmentation not in (3, 6, 11):
             raise ValueError("Supported OCR segmentation modes are 3, 6, 11.")
         self.page_segmentation = page_segmentation
-        self.executable = (
-            executable
-            or os.environ.get("PARTSMITH_TESSERACT")
-            or shutil.which("tesseract")
-        )
-        if self.executable is None:
-            candidate = Path("C:/Program Files/Tesseract-OCR/tesseract.exe")
-            if candidate.is_file():
-                self.executable = str(candidate)
+        self.executable = find_tesseract(executable)
         if not self.executable:
             raise ValueError("BFT-E002: Tesseract OCR is not installed.")
         self.timeout = timeout

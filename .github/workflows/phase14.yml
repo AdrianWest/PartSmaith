@@ -17,6 +17,16 @@ jobs:
       - name: Prepare supported KiCad
         shell: powershell
         run: .\scripts\setup_kicad.ps1 -Version 10.0.6 -AddToGitHubEnvironment
+      - name: Prepare manual OCR prerequisites for candidate checks
+        shell: powershell
+        run: |
+          choco install tesseract --yes --no-progress
+          $ocrDirectory = Join-Path $env:ProgramFiles 'Tesseract-OCR'
+          "$ocrDirectory" | Out-File -FilePath $env:GITHUB_PATH -Append
+          foreach ($language in @('eng', 'deu', 'chi_sim')) {
+            $model = Join-Path $ocrDirectory "tessdata/$language.traineddata"
+            Invoke-WebRequest "https://raw.githubusercontent.com/tesseract-ocr/tessdata_fast/4.1.0/$language.traineddata" -OutFile $model
+          }
       - name: Create private runtime using KiCad bundled Python
         shell: powershell
         run: |
@@ -32,10 +42,10 @@ jobs:
         run: python scripts/verify_phase2_manifest.py --manifest docs/gates/phase-14-artifacts.json
       - name: Build and verify managed-Python candidate
         run: |
-          python scripts/build_production_pcm.py --output dist/partsmith-0.3.1-pcm.zip
-          python scripts/verify_pcm.py dist/partsmith-0.3.1-pcm.zip --evidence online-payload-results.json
+          python scripts/build_production_pcm.py --output dist/partsmith-0.3.2-pcm.zip
+          python scripts/verify_pcm.py dist/partsmith-0.3.2-pcm.zip --evidence online-payload-results.json
       - name: Verify package lifecycle helpers and installed resource checks
-        run: python -m pytest tests/test_pcm.py tests/test_kicad_installer.py tests/test_python311_compatibility.py --junitxml=online-source-results.xml
+        run: python -m pytest tests/test_external_dependencies.py tests/test_pcm.py tests/test_kicad_installer.py tests/test_python311_compatibility.py --junitxml=online-source-results.xml
       - name: Verify all eight production variants
         run: python scripts/verify_phase14_packages.py --output online-corpus-results.json
       # These are candidate checks, not actual clean-host PCM preparation evidence.

@@ -9,6 +9,7 @@ import json
 import platform
 import subprocess
 import sys
+from dataclasses import asdict
 from hashlib import sha256
 from importlib.metadata import version
 from pathlib import Path
@@ -64,10 +65,11 @@ def verify_inventory(root: Path) -> dict:
 
 
 def readiness(root: Path) -> dict:
-    """@brief Verifies Python, locked binary/CAD dependencies and resources.
+    """@brief Verifies manual OCR, Python/CAD dependencies and resources.
     @param root Exact installed plugin root, never a repository fallback.
     @return Safe diagnostic document with READY or FAILED and stable code.
-    @details Failures do not serialize exception text or import legacy pcbnew.
+    @details Manual OCR failures include install links, separately from managed
+    Python packages. Never serializes exception text or imports legacy pcbnew.
     """
     result = {
         "schema_version": "partsmith-pcm-readiness-1.0",
@@ -120,6 +122,17 @@ def readiness(root: Path) -> dict:
             inventory = json.loads((root / "inventory.json").read_bytes())
         else:
             inventory = verify_inventory(root)
+            from partsmith.external_dependencies import (
+                check_external_dependencies,
+            )
+
+            missing = check_external_dependencies()
+            if missing:
+                result.update(
+                    code="EXTERNAL_DEPENDENCIES_MISSING",
+                    external_dependencies=[asdict(issue) for issue in missing],
+                )
+                return result
         result["code"] = "PINNED_DEPENDENCY_MISSING_OR_CHANGED"
         pins = {}
         for line in (

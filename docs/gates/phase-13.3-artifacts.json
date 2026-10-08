@@ -23,7 +23,7 @@
   "sha256": {
     ".gitattributes": "32311e453a19a84e40a077156faa10b1f6f09c85127c0e3d14acd0208cdece32",
     ".github/workflows/ci.yml": "f94adf3fa9575bb6fc26fe538c874a1b81e153c8244de230c1c541230cc23b0b",
-    "README.md": "1130c671963b7ccf32f70e7cd8f52d4a0be93b7380aeca0d27c1bc9ef8e4c985",
+    "README.md": "1278afd639d6eb9057ad1bcbcf1ed4b26218c3b8b379c22d7e2cfaef35b5ec77",
     "docs/gates/phase-13.3-final-source-results.xml": "6d6fdba88898c6ab0d85e32d008deef0cf4ef5199f922d78c1c5016ec5ed6c8e",
     "docs/gates/phase-13.3-source-results.xml": "a70593132c97dbfe0c3fd4382d5a3fafaa8e9a698cfe2dbdbc7ad014cd9d19f8",
     "docs/gates/phase-13.3.md": "2cbd2f33d7a4b20531b79b0711254972faf777af9fae7c4e13550a22d939ddc5",
@@ -33,7 +33,7 @@
     "migrations/004_node_cache.sql": "67b2a1549f1b746eea39df81a764aa5861e988a27549f24081b971390a90fc18",
     "migrations/005_integration.sql": "0c2df55e0d48ac3a8deb18c9ab77b9fb6c334d24b68c856619d0255e4bfb8e39",
     "pyproject.toml": "8d37ccc6843a091b9d50943def64d00b47197a64f7e0081cd78c1a7b8cf0867c",
-    "resources/BFT_PartSmith_Implementation_Spec.md": "279eee3ed3098966c5a844edb2b809d7b0c9d30cb45e2ba4df6a2841c9b620d5",
+    "resources/BFT_PartSmith_Implementation_Spec.md": "41f6725c85ee009474c4b120ad07d4355dc865487d3c7f5c775d5caa10de2564",
     "schemas/integration-contracts-1.0.schema.json": "39f09b7f5a3048944c30665da53d770eae6a7e325d2c9869ebc29674cd392cfd",
     "scripts/close_integration_gate.py": "d65ece12a18ea34196afd0b09bf581338290757e73038ec0b3fbf35e0132509a",
     "scripts/record_integration_gate.py": "84b8119f7accfa142ec32ec2af9a8d140532d747ec92e13c91f24f2210a5e027",

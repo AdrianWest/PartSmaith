@@ -232,13 +232,13 @@
     "docs/gates/phase-13-startup-fix-native/inspection-awaits-refresh.png": "7d5e7b8a8bbef735c1162d874aa0b5fe7cbc8ff27df91c4a1d6256558dae3e52",
     "docs/gates/phase-13-startup-fix-native/pcm-installed.png": "025ab7da9c1eb4a187c92a7b9b3ee31053928c0111143d9298c0306884167050",
     "docs/gates/phase-13-startup-fix-source-results.xml": "c06ed1213df4a199d43481fc1b7665bac4c442ea381b2b7115119a6b662f55cf",
-    "docs/pcm-installation.md": "1d3d83b27ac6a7450fe223c2b5634c87b45e1894bbc17a40665e5cb35f9db4d2",
-    "integrations/kicad/partsmith_ipc/entry.py": "64712381b5b9e3085be897ec9e01adaab1851b28da7af146ab5a718dd1fa6e9b",
+    "docs/pcm-installation.md": "2a82740f71f81fa09a096362ebecca703644e03268c60e250944ecfab11f95ba",
+    "integrations/kicad/partsmith_ipc/entry.py": "5353a66d7579c8ef3f268ba597a336f27727a40a5bda8717db1046c85e6ba35b",
     "pyproject.toml": "8d37ccc6843a091b9d50943def64d00b47197a64f7e0081cd78c1a7b8cf0867c",
-    "resources/BFT_PartSmith_Implementation_Spec.md": "279eee3ed3098966c5a844edb2b809d7b0c9d30cb45e2ba4df6a2841c9b620d5",
+    "resources/BFT_PartSmith_Implementation_Spec.md": "41f6725c85ee009474c4b120ad07d4355dc865487d3c7f5c775d5caa10de2564",
     "scripts/verify_gui.py": "ad65b4bef1576869a0959d823434e6bef60dd71d054a79841381bc4e9f479931",
     "src/partsmith/gui/app.py": "186de53d17ec7fcf963da804f89869e6004cf4b3931bf82df1127bc003404090",
-    "src/partsmith/pcm/package.py": "c012b1dc4428e1e1ecfe8246290033a554178448b3b08658ed4ce2669e6d8fd4",
+    "src/partsmith/pcm/package.py": "0bd69d977d4a99024de6cea714da7d1e2d3f9630049c1417ab2215de6ef2a932",
     "tests/test_pcm.py": "a6a57599fd46c36ab5f4d3daab5939d7359b4a829a1c0653724338d2bf5797f6"
   },
   "hash_closeout_verification": {

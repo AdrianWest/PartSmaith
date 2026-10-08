@@ -27,7 +27,8 @@ def _save_report(report: dict) -> None:
 def main() -> int:
     """@brief Checks the managed runtime before opening the desktop action.
     @return Zero for a ready action, two when engineering readiness fails.
-    @details Uses isolated installed code; PCB access requires a user action.
+    @details Missing manual OCR prerequisites show clickable install links.
+    Uses isolated installed code; PCB access requires a user action.
     Corrects an inherited Windows hidden-window startup flag before recovery.
     """
     entry = Path(__file__).resolve()
@@ -80,7 +81,47 @@ def main() -> int:
             import wx
 
             app = wx.App(False)
-            wx.MessageBox(message, "PartSmith runtime", wx.OK | wx.ICON_ERROR)
+            if report.get("external_dependencies"):
+                from partsmith.external_dependencies import (
+                    ExternalDependencyIssue,
+                )
+                from partsmith.gui.prerequisites import (
+                    show_missing_dependencies,
+                )
+                from partsmith.integration.host import capture_launch_host
+
+                error_host = (
+                    capture_launch_host() if endpoint and token else None
+                )
+                try:
+                    if (
+                        endpoint
+                        and token
+                        and (error_host is None or not error_host.is_alive())
+                    ):
+                        report.update(state="CLOSED", code="KICAD_HOST_EXITED")
+                        _save_report(report)
+                        return 0
+                    show_missing_dependencies(
+                        tuple(
+                            ExternalDependencyIssue(**issue)
+                            for issue in report["external_dependencies"]
+                        ),
+                        host_alive=(
+                            error_host.is_alive if error_host else None
+                        ),
+                    )
+                    if error_host and not error_host.is_alive():
+                        report.update(state="CLOSED", code="KICAD_HOST_EXITED")
+                        _save_report(report)
+                        return 0
+                finally:
+                    if error_host is not None:
+                        error_host.close()
+            else:
+                wx.MessageBox(
+                    message, "PartSmith runtime", wx.OK | wx.ICON_ERROR
+                )
             del app
         except ImportError:
             pass

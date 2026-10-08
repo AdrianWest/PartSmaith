@@ -60,10 +60,10 @@
   "sha256": {
     ".gitattributes": "32311e453a19a84e40a077156faa10b1f6f09c85127c0e3d14acd0208cdece32",
     ".github/workflows/ci.yml": "f94adf3fa9575bb6fc26fe538c874a1b81e153c8244de230c1c541230cc23b0b",
-    "README.md": "1130c671963b7ccf32f70e7cd8f52d4a0be93b7380aeca0d27c1bc9ef8e4c985",
+    "README.md": "1278afd639d6eb9057ad1bcbcf1ed4b26218c3b8b379c22d7e2cfaef35b5ec77",
     "pyproject.toml": "8d37ccc6843a091b9d50943def64d00b47197a64f7e0081cd78c1a7b8cf0867c",
     "requirements-ci.txt": "df99cf3dc1ac9c11e29b7303972fb7368517a435df3c9c39e7afdb080ca29ccb",
-    "resources/BFT_PartSmith_Implementation_Spec.md": "279eee3ed3098966c5a844edb2b809d7b0c9d30cb45e2ba4df6a2841c9b620d5",
+    "resources/BFT_PartSmith_Implementation_Spec.md": "41f6725c85ee009474c4b120ad07d4355dc865487d3c7f5c775d5caa10de2564",
     "schemas/pdl-1.0.schema.json": "beb270c6f7ef0aecd93399cc1bc836b42d42a8a0a14656d7e160efe8144f223a",
     "pdl/entries/synthetic-0402@1.0.json": "199ad7042f45eda4dd0b839f8838a6135c2e0abc2bea0b1011658ab8495a811a",
     "pdl/release-profiles/mvp-1@1.0.json": "8798d9a552e5dab29f0c5985a4bfbf7b91fb148ac4e90c42f73952dcf8550b0a",

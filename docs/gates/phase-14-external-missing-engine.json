@@ -1,0 +1,15 @@
+{
+  "code": "EXTERNAL_DEPENDENCIES_MISSING",
+  "external_dependencies": [
+    {
+      "code": "TESSERACT_UNAVAILABLE",
+      "instructions": "Install Tesseract 5 for Windows (64-bit), including English, German and Simplified Chinese language data. If it is already installed, correct PARTSMITH_TESSERACT or PATH, then restart PartSmith.",
+      "name": "Tesseract OCR 5",
+      "reason": "The OCR installation failed its check or did not respond.",
+      "url": "https://github.com/UB-Mannheim/tesseract/wiki"
+    }
+  ],
+  "python": "3.11.5",
+  "schema_version": "partsmith-pcm-readiness-1.0",
+  "state": "FAILED"
+}

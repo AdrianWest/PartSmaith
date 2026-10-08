@@ -1,6 +1,6 @@
 # Phase 14 online PCM candidate
 
-**Phase 14 remains OPEN.** Candidate **0.3.1** targets Windows AMD64,
+**Phase 14 remains OPEN.** Candidate **0.3.2** targets Windows AMD64,
 KiCad 10.0.6 and KiCad's bundled Python **3.11** (locally verified as 3.11.5).
 Specification v0.9.8 removes the external Python 3.12 customer prerequisite.
 The owner also removed offline installation from scope on 2026-10-08.
@@ -30,7 +30,7 @@ and the [10.0.6 binary-only requirements installer](https://gitlab.com/kicad/cod
 The action enforces Python 3.11 itself; `runtime.min_version` is informational
 in the pinned loader. Dependencies are never installed into KiCad's base Python.
 
-Install `dist/partsmith-0.3.1-pcm.zip` through PCM **Install from File**.
+Install `dist/partsmith-0.3.2-pcm.zip` through PCM **Install from File**.
 Select bundled Python in KiCad's Python/IPC preferences and enable the PCB
 Editor API. An existing external 3.12 override must be replaced. Recreate any
 3.12 per-plugin environment using **Recreate Plugin Environment** after the
@@ -48,9 +48,43 @@ sessions. The producer helper may run in its existing Python 3.12 environment;
 customers use PCM and need no checkout or external Python.
 
 ```powershell
-.venv/Scripts/python.exe scripts/build_production_pcm.py --output dist/partsmith-0.3.1-pcm.zip
-./install_production.bat -Archive C:/path/partsmith-0.3.1-pcm.zip -DryRun
+.venv/Scripts/python.exe scripts/build_production_pcm.py --output dist/partsmith-0.3.2-pcm.zip
+./install_production.bat -Archive C:/path/partsmith-0.3.2-pcm.zip -DryRun
 ```
+
+## Manual prerequisite startup checks
+
+Both IPC and standalone desktop startup now check Tesseract major version 5
+and availability of `eng`, `deu` and `chi_sim` before setup or session recovery.
+The check honors the same executable and language-directory selection as OCR.
+A missing, unsupported or unresponsive engine shows the Windows installer link;
+missing languages each show their official traineddata link. The modal dialog
+blocks startup until the user closes PartSmith and repairs the listed items.
+It closes automatically if the launching KiCad host exits. Links open only on
+click; no download or installer runs at startup.
+
+This manual checklist excludes KiCad and every Python dependency installed by
+requirements. Existing engineering readiness remains separate. Diagnostic and
+self-test modes report safe issue codes and links without opening a GUI.
+
+Current evidence includes [source and installer tests](phase-14-external-source-results.xml),
+[native dialog/startup tests](phase-14-external-gui-results.xml),
+[rendered language dialog](phase-14-external-dialog.png),
+[extraction regressions](phase-14-external-extraction-results.xml),
+[payload parity](phase-14-external-payload.json),
+[healthy readiness](phase-14-external-readiness.json),
+[GUI smoke](phase-14-external-gui-smoke.json),
+[missing engine](phase-14-external-missing-engine.json),
+[missing languages](phase-14-external-missing-languages.json),
+[exact-payload corpus](phase-14-external-corpus.json), and
+[code/documentation checks](phase-14-external-checks.json).
+The source and native startup checks run under actual KiCad Python 3.11.5;
+the extraction suite and artifact producer use the retained Python 3.12 venv.
+Real missing-executable and empty-language-directory launches show the native
+blocking popup without creating setup/recovery state. The installed Windows
+`tesseract v5.5.0.20241111` banner is accepted alongside upstream numeric banners.
+The [initial investigation](history/phase-14-external-check-investigation-2026-10-08/README.md)
+preserves the corrected banner failure and an installer-test concurrency error.
 
 ## Verification scope
 
@@ -58,12 +92,12 @@ The eight manufacturer-backed variants retain their original frozen golden
 bytes: 0402, 0603, 0805, SOT-23, SOIC-8, TSSOP-16, QFN-16-3x3-0.5P and
 QFN-24-4x4-0.5P. They pass CLASS A measurement, native KiCad compatibility,
 exact regeneration and all 63 negative cases under the actual KiCad Python
-3.11.5 in a separately prepared test venv. The exact final PCM payload also
+3.11.5 in a separately prepared test venv. The exact 0.3.2 PCM payload also
 reports READY and passes a local GUI smoke launch. Startup remains deliberate,
 follows the launching KiCad host and excludes the retired 0402 prototype button.
 The smoke launch does not prove a real IPC toolbar launch or host lifecycle.
 
-Retained evidence includes [source/runtime checks](phase-14-python311-source-results.xml),
+The earlier 0.3.1 migration evidence includes [source/runtime checks](phase-14-python311-source-results.xml),
 [producer checks](phase-14-python311-producer-results.xml),
 [producer runtime regressions](phase-14-python311-producer-runtime-results.xml),
 [installer checks](phase-14-python311-installer-results.xml),
@@ -72,11 +106,12 @@ Retained evidence includes [source/runtime checks](phase-14-python311-source-res
 [GUI smoke](phase-14-python311-gui-smoke.json), and
 [exact-payload corpus](phase-14-python311-corpus.json).
 The [current manifest](phase-14-artifacts.json) binds finalized artifacts and
-records check counts. Two independent ZIP builds have identical bytes.
+records current check counts. Two independent 0.3.2 ZIP builds have identical bytes.
 The current-user installed package and interpreter preference were not migrated.
 
 The [candidate workflow](../../.github/workflows/phase14.yml) creates a venv
 using KiCad's bundled interpreter and downloads the 3.11 binary closure.
+It provisions manual OCR prerequisites for its candidate test environment too.
 The general CI retains its historical 3.12 producer baseline. No remote workflow
 execution or clean-machine PCM acceptance is claimed by editing these files.
 Exploratory failures are retained in the [migration investigation archive](history/phase-14-python311-pytest-capture/README.md).
@@ -84,7 +119,9 @@ Exploratory failures are retained in the [migration investigation archive](histo
 The [pre-migration report](history/phase-14-before-python311-2026-10-08/docs/gates/phase-14.md)
 and manifest preserve 0.3.0/Python 3.12 evidence. Historical Phase 13 and 0.2.x
 executable receipts retain their exact original scope. They do not establish
-acceptance of 0.3.1. No offline executable release is being maintained.
+acceptance of the current candidate. The
+[pre-startup-check report and manifest](history/phase-14-before-external-check-2026-10-08/docs/gates/phase-14.md)
+preserve the exact 0.3.1 scope. No offline executable release is maintained.
 
 ## Remaining production requirements
 

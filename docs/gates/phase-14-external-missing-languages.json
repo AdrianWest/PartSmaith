@@ -1,0 +1,29 @@
+{
+  "code": "EXTERNAL_DEPENDENCIES_MISSING",
+  "external_dependencies": [
+    {
+      "code": "OCR_LANGUAGE_MISSING_ENG",
+      "instructions": "Add this language using the Tesseract installer, or download eng.traineddata into Tesseract's tessdata folder. If you use TESSDATA_PREFIX, check that folder instead. Restart PartSmith after installing the data.",
+      "name": "English OCR language data (eng)",
+      "reason": "Not available in Tesseract's active language-data folder.",
+      "url": "https://github.com/tesseract-ocr/tessdata_fast/blob/4.1.0/eng.traineddata"
+    },
+    {
+      "code": "OCR_LANGUAGE_MISSING_DEU",
+      "instructions": "Add this language using the Tesseract installer, or download deu.traineddata into Tesseract's tessdata folder. If you use TESSDATA_PREFIX, check that folder instead. Restart PartSmith after installing the data.",
+      "name": "German OCR language data (deu)",
+      "reason": "Not available in Tesseract's active language-data folder.",
+      "url": "https://github.com/tesseract-ocr/tessdata_fast/blob/4.1.0/deu.traineddata"
+    },
+    {
+      "code": "OCR_LANGUAGE_MISSING_CHI_SIM",
+      "instructions": "Add this language using the Tesseract installer, or download chi_sim.traineddata into Tesseract's tessdata folder. If you use TESSDATA_PREFIX, check that folder instead. Restart PartSmith after installing the data.",
+      "name": "Simplified Chinese OCR language data (chi_sim)",
+      "reason": "Not available in Tesseract's active language-data folder.",
+      "url": "https://github.com/tesseract-ocr/tessdata_fast/blob/4.1.0/chi_sim.traineddata"
+    }
+  ],
+  "python": "3.11.5",
+  "schema_version": "partsmith-pcm-readiness-1.0",
+  "state": "FAILED"
+}

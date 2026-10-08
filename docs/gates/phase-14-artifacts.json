@@ -2,7 +2,7 @@
   "phase": "14",
   "date": "2026-10-08",
   "status": "OPEN",
-  "scope": "Online-only Python 3.11 PCM candidate; separate KiCad-bundled-interpreter local verification",
+  "scope": "Online-only Python 3.11 PCM candidate with manual OCR startup checks; local KiCad-interpreter verification only",
   "prerequisite_phase13": "PASS_AT_ITS_RECORDED_SCOPE",
   "hash_closeout": "docs/gates/phase-14-hash-closeout.json",
   "hash_source": "disk",
@@ -21,15 +21,25 @@
     "external_ocr": "Tesseract 5; eng/deu/chi_sim",
     "bundled_native_runtime": "RETIRED",
     "external_python": "NOT_REQUIRED",
-    "existing_312_cache": "Recreate Plugin Environment after interpreter switch"
+    "existing_312_cache": "Recreate Plugin Environment after interpreter switch",
+    "manual_startup_checks": [
+      "Tesseract 5",
+      "eng",
+      "deu",
+      "chi_sim"
+    ],
+    "manual_check_excludes": [
+      "KiCad installation",
+      "requirements-managed packages"
+    ]
   },
   "pcm_package": {
-    "path": "dist/partsmith-0.3.1-pcm.zip",
-    "sha256": "c7e45fcdd3be4989bc22ad1b5d4a1b49e37da87aae588b9aed5c6d77f2741290",
-    "byte_length": 22412269,
-    "version": "0.3.1",
-    "members": 228,
-    "inventory_sha256": "46b0dffddb0c12ce5474321c0a7e90bc97823b62c63b7ef80e9956d5b918d08d",
+    "path": "dist/partsmith-0.3.2-pcm.zip",
+    "sha256": "6ca73829dbe0dafd3f350b1d86569e2d0b526f7e180f93fb41056e9e66f0459c",
+    "byte_length": 22425800,
+    "version": "0.3.2",
+    "members": 230,
+    "inventory_sha256": "4d04873071726afc14b9cf22bc8a72874bb0a1f4d471d65230034f0bb30f1d50",
     "identifier": "com.boardforgetools.partsmith",
     "package_icon": {
       "path": "resources/icon.png",
@@ -38,116 +48,130 @@
     }
   },
   "checks": {
-    "python311_source": {
-      "tests": 115,
-      "failures": 0,
-      "errors": 0,
-      "skipped": 0
-    },
-    "python312_producer": {
-      "tests": 50,
-      "failures": 0,
-      "errors": 0,
-      "skipped": 0
-    },
-    "python312_runtime": {
-      "tests": 48,
-      "failures": 0,
-      "errors": 0,
-      "skipped": 0
-    },
-    "final_installer": {
-      "tests": 15,
-      "failures": 0,
-      "errors": 0,
-      "skipped": 0
-    },
-    "python311_syntax": "PASS",
+    "python311_syntax_files": 9,
     "modified_callables_checked": 29,
     "tagged_docstrings": "PASS",
-    "workflow_yaml": "PASS",
     "ruff": "PASS",
-    "ruff_format_files": 311,
+    "ruff_format": "PASS",
+    "workflow_yaml": "PASS",
+    "source_and_gui_python": "KiCad bundled CPython 3.11.5, separately prepared test venv",
+    "extraction_and_producer_python": "CPython 3.12.10 producer venv",
+    "manual_check_scope": [
+      "Tesseract 5",
+      "eng",
+      "deu",
+      "chi_sim"
+    ],
+    "excludes": [
+      "KiCad installation",
+      "requirements-managed Python/native dependencies"
+    ],
+    "native_dialog": "PASS: correct hyperlink URLs, real missing executable/models, host-exit timer",
+    "ruff_format_files": 243,
     "deterministic_pcm": "EXACT_BYTES",
-    "kicad_python311_test_runtime": "READY",
-    "local_gui_smoke": "PASS",
+    "archive_sha256": "6ca73829dbe0dafd3f350b1d86569e2d0b526f7e180f93fb41056e9e66f0459c",
+    "inventory_sha256": "4d04873071726afc14b9cf22bc8a72874bb0a1f4d471d65230034f0bb30f1d50",
     "exact_pcm_corpus_variants": 8,
     "negative_cases": 63,
-    "repository_installer_dry_run": "EXACT_PREFERENCES_UNCHANGED"
+    "actual_current_user_installation": "UNCHANGED",
+    "gate_status": "OPEN",
+    "test_results": {
+      "source": {
+        "tests": 71,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "gui": {
+        "tests": 4,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "extraction": {
+        "tests": 74,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      }
+    },
+    "kicad_python311_test_runtime": "READY",
+    "local_gui_smoke": "PASS",
+    "missing_engine_and_models": "BLOCKED_WITH_LINKS"
   },
   "evidence": [
-    "docs/gates/phase-14-python311-cad-lock.json",
-    "docs/gates/phase-14-python311-checks.json",
-    "docs/gates/phase-14-python311-corpus.json",
-    "docs/gates/phase-14-python311-gui-smoke.json",
-    "docs/gates/phase-14-python311-installer-dry-run.json",
-    "docs/gates/phase-14-python311-installer-results.xml",
-    "docs/gates/phase-14-python311-payload.json",
-    "docs/gates/phase-14-python311-producer-results.xml",
-    "docs/gates/phase-14-python311-producer-runtime-results.xml",
-    "docs/gates/phase-14-python311-readiness.json",
-    "docs/gates/phase-14-python311-source-results.xml"
+    "docs/gates/phase-14-external-checks.json",
+    "docs/gates/phase-14-external-corpus.json",
+    "docs/gates/phase-14-external-dialog.png",
+    "docs/gates/phase-14-external-extraction-results.xml",
+    "docs/gates/phase-14-external-gui-results.xml",
+    "docs/gates/phase-14-external-gui-smoke.json",
+    "docs/gates/phase-14-external-missing-engine.json",
+    "docs/gates/phase-14-external-missing-languages.json",
+    "docs/gates/phase-14-external-payload.json",
+    "docs/gates/phase-14-external-readiness.json",
+    "docs/gates/phase-14-external-source-results.xml"
   ],
   "candidate_artifacts": [
     {
-      "path": "dist/partsmith-0.3.1-rebuilt-pcm.zip",
-      "sha256": "c7e45fcdd3be4989bc22ad1b5d4a1b49e37da87aae588b9aed5c6d77f2741290",
-      "byte_length": 22412269
+      "path": "dist/partsmith-0.3.2-rebuilt-pcm.zip",
+      "sha256": "6ca73829dbe0dafd3f350b1d86569e2d0b526f7e180f93fb41056e9e66f0459c",
+      "byte_length": 22425800
     },
     {
-      "path": "docs/gates/phase-14-python311-cad-lock.json",
-      "sha256": "f94268eec12b92103a0267fae49e2d89d3f0affd88d1963154b37f175f642275",
-      "byte_length": 2062
+      "path": "docs/gates/phase-14-external-checks.json",
+      "sha256": "e3961fd53a56df0aa1ff74f94f3926cb363fbb0d96be842a324f2c40f509ea8a",
+      "byte_length": 3549
     },
     {
-      "path": "docs/gates/phase-14-python311-checks.json",
-      "sha256": "3bc6f5cd93afd5dcca897f180dc8e58ae3d0ee66787f2f0d480ed26f90359721",
-      "byte_length": 1726
-    },
-    {
-      "path": "docs/gates/phase-14-python311-corpus.json",
+      "path": "docs/gates/phase-14-external-corpus.json",
       "sha256": "a2f479e6425d88a85fc5952005ef253fb354d625b3933761729e606849459efb",
       "byte_length": 54878
     },
     {
-      "path": "docs/gates/phase-14-python311-gui-smoke.json",
-      "sha256": "6b62a21280a6924cfe2b5779caa032c9f62168ca0bea186d6a0f516e52794eb6",
-      "byte_length": 5377
+      "path": "docs/gates/phase-14-external-dialog.png",
+      "sha256": "108b4d3a3a8c134e08442a5c288a242a3ba989b16477abad644d4cae85058c99",
+      "byte_length": 29359
     },
     {
-      "path": "docs/gates/phase-14-python311-installer-dry-run.json",
-      "sha256": "b55b8896bfc994ee3ffcb281b21eb01bef5a227d7368130d161e7047e84f0cee",
-      "byte_length": 654
+      "path": "docs/gates/phase-14-external-extraction-results.xml",
+      "sha256": "8261e4de52698de46711bf1ac7eddcd6fecd201d316b4b364115cf0385a6c33d",
+      "byte_length": 9656
     },
     {
-      "path": "docs/gates/phase-14-python311-installer-results.xml",
-      "sha256": "5d920713204adf27938910f76303846d8bcc12db2aa3016dd62e6e2269f9ad40",
-      "byte_length": 2154
+      "path": "docs/gates/phase-14-external-gui-results.xml",
+      "sha256": "5a63c8ae0140952ab0e1516f5078311fde3e15aa84b14c755bb4e729a5c9d9b8",
+      "byte_length": 823
     },
     {
-      "path": "docs/gates/phase-14-python311-payload.json",
-      "sha256": "b097cb792fdfc8b8eedfcec8ab7a8347172957ccee4ea4a756bfbd5063094a3d",
+      "path": "docs/gates/phase-14-external-gui-smoke.json",
+      "sha256": "cb3c33ff26b0fa57ccf3b5a5f055707372a0a414c15d9a013c4449a83541f565",
+      "byte_length": 6466
+    },
+    {
+      "path": "docs/gates/phase-14-external-missing-engine.json",
+      "sha256": "68847d5009eeeeeb0d17fad9df5958a3c9b8268d00333ecd2b66b3004e58f8a6",
+      "byte_length": 616
+    },
+    {
+      "path": "docs/gates/phase-14-external-missing-languages.json",
+      "sha256": "6c430821bc2b32ed39e154697b057b5992335495a096c4cffc0f0ae1bb15dc75",
+      "byte_length": 1717
+    },
+    {
+      "path": "docs/gates/phase-14-external-payload.json",
+      "sha256": "b0f7f2f6146556260a3d68de16a5dcf09d4a7030f56d056423eddc3915e69051",
       "byte_length": 307
     },
     {
-      "path": "docs/gates/phase-14-python311-producer-results.xml",
-      "sha256": "5cea5ea842ce56840529e5dc85fc3992de8b90a15b4356e8916874ee6516dac4",
-      "byte_length": 6542
+      "path": "docs/gates/phase-14-external-readiness.json",
+      "sha256": "2010e0fe898a6daff7def6d9913bf7082ca87c2f178120637b6b76c1b5113e0e",
+      "byte_length": 6443
     },
     {
-      "path": "docs/gates/phase-14-python311-producer-runtime-results.xml",
-      "sha256": "66d31f98db7af7932692e78b3683f95861958a1da6e916cae4f1e8963471cc3e",
-      "byte_length": 6033
-    },
-    {
-      "path": "docs/gates/phase-14-python311-readiness.json",
-      "sha256": "40ce5ba2abf2dfb7845643342e5d5416bc35652ba999ae87684969ad26462075",
-      "byte_length": 5356
-    },
-    {
-      "path": "docs/gates/phase-14-python311-source-results.xml",
-      "sha256": "e5088a2b742984d0a7144216ab8f4b2114f2310546408b8c4974c51a045446bc",
-      "byte_length": 14172
+      "path": "docs/gates/phase-14-external-source-results.xml",
+      "sha256": "1c5c3d2057dc1b12e3c9932faff64265d76c9efd5ed0e80993844199504a4a0c",
+      "byte_length": 9089
     }
   ],
   "clean_supported_machine_acceptance": "NOT_EXECUTED",
@@ -157,18 +181,18 @@
     "Dependency/license manifest and integration review for shipped source/resources, KiCad-downloaded wheels and external Python/OCR prerequisites"
   ],
   "historical_executable_acceptance": "docs/gates/history/phase-14-before-online-only-2026-10-08/docs/gates/phase-14-artifacts.json",
-  "historical_evidence_scope": "Original Python 3.12, executable candidate and Phase 13 receipts retain their original bytes and execution scope; no new gate PASS",
+  "historical_evidence_scope": "Original Python 3.12, executable, Phase 13 and 0.3.1 migration receipts retain their original bytes and execution scope; no new gate PASS",
   "forensic_cad_audit": "docs/gates/phase-14-native-license-audit.json",
   "sha256": {
     ".gitattributes": "32311e453a19a84e40a077156faa10b1f6f09c85127c0e3d14acd0208cdece32",
     ".github/instructions/gate-closeout.instructions.md": "379f662435f4478397d7167531ffa719e29d828eb55a518aa0b108a07eccffbc",
     ".github/instructions/python-docstrings.instructions.md": "79e65e42e29e5785777811102c4501838ecb296fc52b647e28b3513e7fe48fd1",
     ".github/workflows/ci.yml": "f94adf3fa9575bb6fc26fe538c874a1b81e153c8244de230c1c541230cc23b0b",
-    ".github/workflows/phase14.yml": "a4f6419a1b3bb6fc666869d3b188040c0db1219c4dd56bc8a8ed3117791fcc1d",
+    ".github/workflows/phase14.yml": "b6f91d907649a325ba00c5b56bc4af28e28f6768d0550eb60c684230fcc1aba2",
     ".gitignore": "df3657222dd3cd82c8a745caaa9f45fe5777258771637ab0a6eac5287a9c1517",
     "AGENTS.md": "08ba9c88839cc00c7ad9626e1b6a281c5085d670debede9c20b13c3221df7a8a",
     "LICENSE": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
-    "README.md": "1130c671963b7ccf32f70e7cd8f52d4a0be93b7380aeca0d27c1bc9ef8e4c985",
+    "README.md": "1278afd639d6eb9057ad1bcbcf1ed4b26218c3b8b379c22d7e2cfaef35b5ec77",
     "docs/gates/history/phase-14-before-online-only-2026-10-08/docs/gates/phase-14-artifacts.json": "57da2af0d7a8be6e51698b2fa496ace8845c66f2c6694315a4dc17edcfdbb64b",
     "docs/gates/history/phase-14-stale-wx-double/source-results.xml": "f2ab92a7481876ef1deb163972d99a55322597fa56e26d8c8e70d66ad6eb3816",
     "docs/gates/history/phase-14-stale-wx-double/test_pcm.py": "811f2dba836d97754e7b230f7fd93862b842024f311fa6a4c82f41163c65c3fc",
@@ -202,8 +226,8 @@
     "docs/gates/phase-14-runtime/source-revalidation.json": "b66fd2c5081379aa330abf19376ac8a84ef652dc93c6c01ba40d83da2feed66b",
     "docs/gates/phase-14-runtime/source-unchanged-results.xml": "510fd2bfa78c0c9a496c25d1f71b1f3c76f0481eee2f03a2ec98cb43dad6ab9d",
     "docs/gates/phase-14-runtime/static-checks.json": "031be7aa5244d0a6e22fa91eab57c7d2fda4ba436be8e203f472d45ea09e54aa",
-    "docs/gates/phase-14.md": "0cc42a3b4c80d3ed0ed266e268dc5b095ede44d58835ff6ed49275dd3c03881b",
-    "docs/pcm-installation.md": "1d3d83b27ac6a7450fe223c2b5634c87b45e1894bbc17a40665e5cb35f9db4d2",
+    "docs/gates/phase-14.md": "bd2d37fe4b1ebcf534b7fa39daab37db82a413fdfe7581d3c5ede659b92cf2a4",
+    "docs/pcm-installation.md": "2a82740f71f81fa09a096362ebecca703644e03268c60e250944ecfab11f95ba",
     "fixtures/.gitkeep": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
     "fixtures/extraction/README.md": "a76423deb0d370db619dcf1e47199fa2e03d8902da606aee17cdb93936e10662",
     "fixtures/extraction/language-matrix.json": "76808c8b8ae494c974f59715c44bf7fdf753a94ab56404c6218027c6f9749134",
@@ -349,7 +373,7 @@
     "fixtures/viewer/0402-placement.json": "5fc9d623239488b5580fb539aca3c05c90c705292702dbcdf0683344bff327d1",
     "install_partsmith.bat": "58e56efead7648d3f7df7bd5fc580a3318d3cf7492ac663f76f8984bf16d5fc9",
     "install_production.bat": "0464a9c9b4260681fd7173a888f3120c900b79cf7099ce03f4e17e7d32128d85",
-    "integrations/kicad/partsmith_ipc/entry.py": "64712381b5b9e3085be897ec9e01adaab1851b28da7af146ab5a718dd1fa6e9b",
+    "integrations/kicad/partsmith_ipc/entry.py": "5353a66d7579c8ef3f268ba597a336f27727a40a5bda8717db1046c85e6ba35b",
     "integrations/kicad/partsmith_ipc/icons/PartSmith_Anvil_Icon_24x24.png": "d0a479884a128ab7a741a2a388da27358547577ff37489f0cb74e6988980b6d7",
     "integrations/kicad/partsmith_ipc/icons/PartSmith_Anvil_Icon_64x64.png": "fdc35a8d3a813a26cec298317d1c7623edd39f93ae1ccca07e995f49fcc601c7",
     "integrations/kicad/partsmith_ipc/plugin.json": "5cd66a2898c5e56345b25c77dbee20a103f04a24b58063687794ba11e9c9f8bf",
@@ -384,7 +408,7 @@
     "resources/BFT_App_Icon_64px.png": "6e9f0e6b363e16a8b4c29c6eaced594c48f0e578e008d36bdce2c73addf4caa6",
     "resources/BFT_Banner_01.png": "e30225b62b49b75f7780bbb144a57147781ab325a188e93c5403f697ec90d20e",
     "resources/BFT_Logo 03.png": "e30225b62b49b75f7780bbb144a57147781ab325a188e93c5403f697ec90d20e",
-    "resources/BFT_PartSmith_Implementation_Spec.md": "279eee3ed3098966c5a844edb2b809d7b0c9d30cb45e2ba4df6a2841c9b620d5",
+    "resources/BFT_PartSmith_Implementation_Spec.md": "41f6725c85ee009474c4b120ad07d4355dc865487d3c7f5c775d5caa10de2564",
     "resources/BFT_logo_02.png": "556f135a8c89b8a694518b19ab98fd7c89a8223ffb1383c78d117c3d983af512",
     "resources/PartSmith-Banner.png": "816ac87337b9981db68b1b4b06d50317c5918bc99a6493895d609bb4b3ad8ff7",
     "resources/PartSmith-Banner2.png": "31c8e5a38a64f1432a062622faea135d1a718dc059b4e5e6f6ce117f11a30ded",
@@ -664,7 +688,7 @@
     "scripts/generate_extraction_fixtures.py": "c24d58ce4371cb3b38c763b6d83659142677ca7b00866fa94f1a3319186d8204",
     "scripts/install_kicad.py": "0ae7fec0f1901ccf33bc9473a66902ab54bfef22074556337948240f8bd49ad9",
     "scripts/install_kicad_gui.py": "0e5683f2f6ad11e2e9f680c87636f1b35e7810a05dff1ded74a27e8b0c62b313",
-    "scripts/install_production.ps1": "5a4e92b6872f1cc253fba00ae8d0d205d115b3b413f72ebf169a7fc92e0a61b6",
+    "scripts/install_production.ps1": "f7ebd5c0f3bb2c9b85523214d0f9dc0b5f7ab38093ca91eadf77bd7bb30fe354",
     "scripts/load-env.ps1": "bbd6818f426705538756bdfe1490526ddea10312eaffe77291f555858b556545",
     "scripts/partsmith_gui.py": "298ae6123daacdf964747a149a47f7fcc273c3353bf5e9dfdeea2490f1e2ed16",
     "scripts/prepare_phase13_portable_update.py": "5774e025185dce4b5adf2a9feaf4fafafca7a7cd56bd26e8c87ae9cdc9849a89",
@@ -712,14 +736,14 @@
     "src/partsmith/extraction/document.py": "da15c6a4e4d46c7b93039375a7e7a80abfde66d16ddc2dc0f3b240a3f4f85a60",
     "src/partsmith/extraction/isolated.py": "401e32d274e1b01904c89d504db67c911c03bc511fe2450e0dba8f7ad8a862f6",
     "src/partsmith/extraction/native_page.py": "68265065abe07914deb0089e09b1045a1c84b6c540813d8e6b72ad1f0b24e682",
-    "src/partsmith/extraction/ocr.py": "8c402e7a6fd16fa08716ff722957d56a5e9365eaf4229a5e72b709e577b71408",
+    "src/partsmith/extraction/ocr.py": "baee40fcffc9242d1722f18105b21959818ce75b22978c58b28458a2082a2f28",
     "src/partsmith/extraction/packages.py": "669e25d4354bfce044c07db1f00971f9e125cf72e8b3d31d16128987adbc4fda",
     "src/partsmith/extraction/tables.py": "5be1cfd16e85bf12bf54a6ee06fdb4e93ef0f146a2c7326da9c3e063c94da199",
     "src/partsmith/extraction/translation.py": "6616131015539fb82868f26f9151b2d8d72b0c674a23d3ff5502b217760b3d17",
     "src/partsmith/footprint/__init__.py": "1e875df185d78e80e1dcdbee8fe1d36d7009609857e119b999e45f19b803215b",
     "src/partsmith/footprint/model.py": "da8bbf092197a7a0e8aca567ad03535e8ee0cbebf201ff6f6c450ca211efeb84",
     "src/partsmith/gui/__init__.py": "30213ef127eaa460428918cdd98ee4080c2af03b2f61a21366676bbf2753a19f",
-    "src/partsmith/gui/__main__.py": "7899c82dc1e1956eb15b959dce39504048443fc5252db7862ca1a219bdcae6b9",
+    "src/partsmith/gui/__main__.py": "14037fb9ec5fded55c5cbb9931fa2b14510aa3203aca12f7038d93d6ab19d4c2",
     "src/partsmith/gui/actions.py": "7a345ec786439143d854e22a787e62151494df559ded2621d6b5d20714b9edcc",
     "src/partsmith/gui/app.py": "186de53d17ec7fcf963da804f89869e6004cf4b3931bf82df1127bc003404090",
     "src/partsmith/gui/artifact_panel.py": "8d86ba267a2e5a6048603f245be47fe415547d64040c1b6ffc2ecf55062083f9",
@@ -798,9 +822,9 @@
     "src/partsmith/pcm/installation.py": "9aebbcf6f2422b97255bb1e13c206c29b2d8b450017cb2a324010e956465a1da",
     "src/partsmith/pcm/licensing.py": "f77d2637c184dd7cc4d3d99c87ef9263404352e2994f7c0ede555646486dd8cc",
     "src/partsmith/pcm/native.py": "65cbc4ed0f98ba9f14248ca54ee98c53e999987d1452c9d94a65572439b7f4fe",
-    "src/partsmith/pcm/package.py": "c012b1dc4428e1e1ecfe8246290033a554178448b3b08658ed4ce2669e6d8fd4",
+    "src/partsmith/pcm/package.py": "0bd69d977d4a99024de6cea714da7d1e2d3f9630049c1417ab2215de6ef2a932",
     "src/partsmith/pcm/production.py": "65b7abb3fc50a1beb5d6f3ce3cb828cd94f7a9d586e6598a46426c5dfe9d2b81",
-    "src/partsmith/pcm/runtime.py": "8fd742ffbe94f0ce314fa5b450e3be2d0a94796d7bba5d54498f3d718a826fff",
+    "src/partsmith/pcm/runtime.py": "43c2e4a8c916a8a19d873b89464ab9e8cc437b9d3c11f6705468b18702ef04d5",
     "src/partsmith/pcm/schemas/api.v1.schema.json": "a51ecc9cc4166fc857a0378b6361909c66a7957451146bd50123d52313fdea96",
     "src/partsmith/pcm/schemas/pcm.v2.schema.json": "74bfb8fca2abdcf619afd152f57bcc768c855541587e21b81e2c6e8fd3b8abb2",
     "src/partsmith/pcm/supply.py": "cc8fedfe8d1f6cb7e9f473c3005e60c0ab41c4535955cde75ba855940e148237",
@@ -922,7 +946,23 @@
     "docs/gates/history/phase-14-before-python311-2026-10-08/docs/gates/phase-14.md": "43c6a107d8f96215c0aaa3249e38bce5595be8d292df42853dc0c9412756aec2",
     "docs/gates/history/phase-14-python311-pytest-capture/phase-14-python311-source-results.xml": "643ae9b8e6f7e83f78a03139634e4926ac7266e2af6e426fd7581c8bcf9cab1c",
     "docs/gates/history/phase-14-python311-pytest-capture/README.md": "3ee0aa2fb72ce3bba20d1e613890fdc2e0507f54822238c67e534c5b7a4086b8",
-    "docs/gates/history/phase-14-python311-pytest-capture/source-before-stdio-and-worker-path.xml": "9253359da72c2c03ddb638ec3acc701eb9869c7d36f415aee515cd1d2c940d60"
+    "docs/gates/history/phase-14-python311-pytest-capture/source-before-stdio-and-worker-path.xml": "9253359da72c2c03ddb638ec3acc701eb9869c7d36f415aee515cd1d2c940d60",
+    "src/partsmith/external_dependencies.py": "2bf87b0fec70adab2a5788d20a87fcbd0011bc54546f6f84bb09e4196c24377f",
+    "src/partsmith/gui/prerequisites.py": "322da34c0a9c3ee05c5fd01d5592a15e40849a0908e49fbb63b6fdcac4474ffc",
+    "tests/test_external_dependencies.py": "a9cd7a79e4c0da4bf495bd268c2d0b8ef86141d5f613fb6ed87946677cc20ff9",
+    "scripts/verify_external_dependencies_gui.py": "98666d9dac98b32192ef5cf60ed30019f07dd8baaf6c0ab4ea8c0c6f14ad9c3e",
+    "docs/gates/phase-14-external-checks.json": "e3961fd53a56df0aa1ff74f94f3926cb363fbb0d96be842a324f2c40f509ea8a",
+    "docs/gates/phase-14-external-corpus.json": "a2f479e6425d88a85fc5952005ef253fb354d625b3933761729e606849459efb",
+    "docs/gates/phase-14-external-dialog.png": "108b4d3a3a8c134e08442a5c288a242a3ba989b16477abad644d4cae85058c99",
+    "docs/gates/phase-14-external-extraction-results.xml": "8261e4de52698de46711bf1ac7eddcd6fecd201d316b4b364115cf0385a6c33d",
+    "docs/gates/phase-14-external-gui-results.xml": "5a63c8ae0140952ab0e1516f5078311fde3e15aa84b14c755bb4e729a5c9d9b8",
+    "docs/gates/phase-14-external-gui-smoke.json": "cb3c33ff26b0fa57ccf3b5a5f055707372a0a414c15d9a013c4449a83541f565",
+    "docs/gates/phase-14-external-missing-engine.json": "68847d5009eeeeeb0d17fad9df5958a3c9b8268d00333ecd2b66b3004e58f8a6",
+    "docs/gates/phase-14-external-missing-languages.json": "6c430821bc2b32ed39e154697b057b5992335495a096c4cffc0f0ae1bb15dc75",
+    "docs/gates/phase-14-external-payload.json": "b0f7f2f6146556260a3d68de16a5dcf09d4a7030f56d056423eddc3915e69051",
+    "docs/gates/phase-14-external-readiness.json": "2010e0fe898a6daff7def6d9913bf7082ca87c2f178120637b6b76c1b5113e0e",
+    "docs/gates/phase-14-external-source-results.xml": "1c5c3d2057dc1b12e3c9932faff64265d76c9efd5ed0e80993844199504a4a0c"
   },
-  "historical_python312_candidate": "docs/gates/history/phase-14-before-python311-2026-10-08/docs/gates/phase-14-artifacts.json"
+  "historical_python312_candidate": "docs/gates/history/phase-14-before-python311-2026-10-08/docs/gates/phase-14-artifacts.json",
+  "historical_python311_migration": "docs/gates/history/phase-14-before-external-check-2026-10-08/docs/gates/phase-14-artifacts.json"
 }

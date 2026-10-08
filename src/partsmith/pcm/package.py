@@ -18,7 +18,7 @@ from partsmith.integration.policy import ResourcePolicy
 from partsmith.path_support import is_junction
 
 IDENTIFIER = "com.boardforgetools.partsmith"
-VERSION = "0.3.1"
+VERSION = "0.3.2"
 INVENTORY = "plugins/inventory.json"
 PCM_ICON = "resources/icon.png"
 PCM_ICON_SHA256 = (

@@ -180,7 +180,10 @@ binary wheels, including their CAD DLLs; the PartSmith ZIP contains source and
 resources. Installation, updates and environment recreation require internet.
 Offline installation and an optional offline edition are out of scope.
 KiCad's bundled Python 3.11 and external Tesseract 5 with `eng`, `deu` and
-`chi_sim` models are prerequisites. All eight MVP variants retain their frozen
+`chi_sim` models are prerequisites. Startup checks these manual OCR items and
+shows install links for anything missing before opening setup or recovery.
+KiCad and requirements-managed packages are outside that manual checklist.
+All eight MVP variants retain their frozen
 release corpus. The gate remains open for clean Windows online PCM acceptance
 and dependency/license manifest review. No public release is asserted.
 
