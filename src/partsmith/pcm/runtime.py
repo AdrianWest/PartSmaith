@@ -73,9 +73,9 @@ def readiness(root: Path) -> dict:
         "schema_version": "partsmith-pcm-readiness-1.0",
         "state": "FAILED",
         "python": platform.python_version(),
-        "code": "PYTHON_312_REQUIRED",
+        "code": "PYTHON_311_REQUIRED",
     }
-    if sys.version_info[:2] != (3, 12):
+    if sys.version_info[:2] != (3, 11):
         return result
     result["code"] = "WINDOWS_AMD64_REQUIRED"
     if (platform.system(), platform.machine()) != ("Windows", "AMD64"):

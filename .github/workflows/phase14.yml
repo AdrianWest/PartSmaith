@@ -17,18 +17,25 @@ jobs:
       - name: Prepare supported KiCad
         shell: powershell
         run: .\scripts\setup_kicad.ps1 -Version 10.0.6 -AddToGitHubEnvironment
+      - name: Create private runtime using KiCad bundled Python
+        shell: powershell
+        run: |
+          $kicadPython = Join-Path (Split-Path $env:PARTSMITH_KICAD_CLI) 'python.exe'
+          & $kicadPython -I -B -m venv --system-site-packages .venv
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          (Join-Path $pwd '.venv/Scripts') | Out-File -FilePath $env:GITHUB_PATH -Append
       - name: Install online binary dependency closure and test tools
         run: |
-          python -m pip install --only-binary :all: --requirement requirements-pcm.txt
+          python -I -B -m pip install --no-input --isolated --only-binary :all: --require-virtualenv --requirement requirements-pcm.txt
           python -m pip install pytest==8.4.2 ruff==0.16.8
       - name: Verify recorded candidate inputs
         run: python scripts/verify_phase2_manifest.py --manifest docs/gates/phase-14-artifacts.json
       - name: Build and verify managed-Python candidate
         run: |
-          python scripts/build_production_pcm.py --output dist/partsmith-0.3.0-pcm.zip
-          python scripts/verify_pcm.py dist/partsmith-0.3.0-pcm.zip --evidence online-payload-results.json
+          python scripts/build_production_pcm.py --output dist/partsmith-0.3.1-pcm.zip
+          python scripts/verify_pcm.py dist/partsmith-0.3.1-pcm.zip --evidence online-payload-results.json
       - name: Verify package lifecycle helpers and installed resource checks
-        run: python -m pytest tests/test_pcm.py tests/test_kicad_installer.py --junitxml=online-source-results.xml
+        run: python -m pytest tests/test_pcm.py tests/test_kicad_installer.py tests/test_python311_compatibility.py --junitxml=online-source-results.xml
       - name: Verify all eight production variants
         run: python scripts/verify_phase14_packages.py --output online-corpus-results.json
       # These are candidate checks, not actual clean-host PCM preparation evidence.

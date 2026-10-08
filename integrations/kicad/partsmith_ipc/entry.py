@@ -33,7 +33,11 @@ def main() -> int:
     entry = Path(__file__).resolve()
     if not sys.flags.isolated:
         return subprocess.run(
-            [sys.executable, "-I", str(entry), *sys.argv[1:]], check=False
+            [sys.executable, "-I", str(entry), *sys.argv[1:]],
+            stdin=subprocess.DEVNULL,
+            stdout=sys.stdout,
+            stderr=sys.stderr,
+            check=False,
         ).returncode
     root = entry.parent
     if "--install-archive" in sys.argv or "--uninstall" in sys.argv:

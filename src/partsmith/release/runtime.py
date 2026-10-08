@@ -7,13 +7,13 @@ import platform
 import sys
 from hashlib import sha256
 from importlib.metadata import distribution, version
-from importlib.resources import files
 from pathlib import Path
 
 import OCP
 
 from partsmith.ir.canonical import canonical_json, parse_json
 from partsmith.kicad import KiCadRuntime
+from partsmith.release.runtime_resources import runtime_resources
 
 
 def runtime_configuration(kicad: KiCadRuntime) -> dict:
@@ -23,11 +23,7 @@ def runtime_configuration(kicad: KiCadRuntime) -> dict:
     @details Paths belong to audit metadata. Python build, native content,
     dependency archive hashes and bundled notices affect reproducibility.
     """
-    if sys.version_info[:2] != (3, 12):
-        raise RuntimeError("PartSmith requires Python 3.12.x")
-    lock_bytes = (
-        files(__package__).joinpath("runtime-lock-1.0.json").read_bytes()
-    )
+    lock_bytes, constraints_bytes = runtime_resources()
     lock = parse_json(lock_bytes)
     tag = f"{platform.system()}-{platform.machine()}"
     archives = lock["platforms"].get(tag)
@@ -56,12 +52,6 @@ def runtime_configuration(kicad: KiCadRuntime) -> dict:
                 ).hexdigest()
             }
         )
-    constraints = files(__package__).joinpath("runtime-constraints.txt")
-    if not constraints.is_file():
-        constraints = (
-            Path(__file__).resolve().parents[3] / "requirements-ci.txt"
-        )
-    constraints_bytes = constraints.read_bytes()
     # Record the complete installed pinned environment. Missing or drifted
     # dependencies fail before generating release files.
     dependencies = {}

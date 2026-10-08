@@ -2,1270 +2,2330 @@
   "phase": "14",
   "date": "2026-10-08",
   "status": "HASH_CLOSEOUT_VERIFIED",
-  "reason": "Owner removed offline installation; online managed-Python PCM candidate with exact-payload local revalidation",
+  "reason": "Owner requested bundled Python 3.11; compatible online pins, transactional installer preference migration and exact PCM runtime/corpus validation; Phase 14 remains open",
   "hash_source": "disk",
   "scope": "Final inputs; historical acceptance bytes retained",
   "git_blob_verification": "Due after current inputs are committed",
   "refreshed_manifests": [
     {
       "path": "docs/gates/phase-10-artifacts.json",
-      "historical_path": "docs/gates/history/phase-10-artifacts-before-phase-14-2026-10-08.json",
-      "previous_sha256": "f772a2dde9cd6fc1d4aef9c78c344e80eb13b9eaf1c4e9dc795fdc08a5074721",
-      "new_sha256": "566e3126aa7b7a2cfed7791c259ef93d7a9c9d7a9446a49231c4ef83405b066c"
+      "historical_path": "docs/gates/history/phase-10-artifacts-before-phase-14-2026-10-08-566e3126aa7b.json",
+      "previous_sha256": "566e3126aa7b7a2cfed7791c259ef93d7a9c9d7a9446a49231c4ef83405b066c",
+      "new_sha256": "6160c1d057b8d00a369ea598c6ea8680ccdd6a5c93e0a428101c2f268f6d91ef"
     },
     {
       "path": "docs/gates/phase-10-parser-fix-2026-10-04.json",
-      "historical_path": "docs/gates/history/phase-10-parser-fix-2026-10-04-before-phase-14-2026-10-08.json",
-      "previous_sha256": "47d032495fae5122afa23febcaa89899e7ac01bb168f0a01ad9c60b4103536eb",
-      "new_sha256": "5607f10828b8065034020297ea21382fecd4ab7ef2393bc323ecfa6d45c7e131"
+      "historical_path": "docs/gates/history/phase-10-parser-fix-2026-10-04-before-phase-14-2026-10-08-5607f10828b8.json",
+      "previous_sha256": "5607f10828b8065034020297ea21382fecd4ab7ef2393bc323ecfa6d45c7e131",
+      "new_sha256": "0ed2463c8ff78e085b275191976d9fd82bd41c18508db055d07d42c5bbeed0e7"
+    },
+    {
+      "path": "docs/gates/phase-6-artifacts.json",
+      "historical_path": "docs/gates/history/phase-6-artifacts-before-phase-14-2026-10-08.json",
+      "previous_sha256": "bd4a846738f1afd62c1a82311cd01537f59163bfc2e1844f9ba8e8c03959dd7b",
+      "new_sha256": "f73cd295cd10740031f3825362c28894ad691daac07fd8920268edef4eb884c9"
     },
     {
       "path": "docs/gates/phase-8-artifacts.json",
-      "historical_path": "docs/gates/history/phase-8-artifacts-before-phase-14-2026-10-08.json",
-      "previous_sha256": "a14952dcb2048d446f99e6f01c39feb4ebb5234bbb3d5d344e25f16394233251",
-      "new_sha256": "37fc74e06c5d40f6f7669e5c077298b8fea5aeaafe86b96f9127ead713a7dcb9"
+      "historical_path": "docs/gates/history/phase-8-artifacts-before-phase-14-2026-10-08-37fc74e06c5d.json",
+      "previous_sha256": "37fc74e06c5d40f6f7669e5c077298b8fea5aeaafe86b96f9127ead713a7dcb9",
+      "new_sha256": "5f713fe9d4a5951865c1c41cf3edde39188301e710a9de87771111abb94120ae"
     },
     {
       "path": "docs/gates/phase-9-artifacts.json",
-      "historical_path": "docs/gates/history/phase-9-artifacts-before-phase-14-2026-10-08.json",
-      "previous_sha256": "e28a63c48f7f9fe5fcafaf97efe265b06da4a0ff75e185ed200628b967249103",
-      "new_sha256": "798862adc17d79557ced98b8c35acf5fc9fa6c93855653e3932d44637910b2f5"
+      "historical_path": "docs/gates/history/phase-9-artifacts-before-phase-14-2026-10-08-798862adc17d.json",
+      "previous_sha256": "798862adc17d79557ced98b8c35acf5fc9fa6c93855653e3932d44637910b2f5",
+      "new_sha256": "02cdc45a882de07d73b017813e4a80c8a56669c603262263d6a47dffad87620a"
+    },
+    {
+      "path": "docs/gates/phase-7-artifacts.json",
+      "historical_path": "docs/gates/history/phase-7-artifacts-before-phase-14-2026-10-08.json",
+      "previous_sha256": "f6b401a1d508a87dd0e3cafd0871b1b22699f3116944c5b7a340835690779291",
+      "new_sha256": "c2f05a5595a788c917697dbe9b88d446736f76afdae02faa63765f217482c552"
     },
     {
       "path": "docs/gates/phase-9.5-artifacts.json",
-      "historical_path": "docs/gates/history/phase-9.5-artifacts-before-phase-14-2026-10-08.json",
-      "previous_sha256": "d1469d8f08429584fea0622e02898f07a9f979b15181c7da44776d76d2e1fd8b",
-      "new_sha256": "e7d818fb9bd999155e78b45c99fdd55a0273d8ffbdb7f6f006f191fc3329d102"
+      "historical_path": "docs/gates/history/phase-9.5-artifacts-before-phase-14-2026-10-08-e7d818fb9bd9.json",
+      "previous_sha256": "e7d818fb9bd999155e78b45c99fdd55a0273d8ffbdb7f6f006f191fc3329d102",
+      "new_sha256": "cd3f9e420764330fb54b3fa5b665e87e52d4da2a2af2034beea249c4c809255a"
     },
     {
       "path": "docs/gates/phase-11-artifacts.json",
-      "historical_path": "docs/gates/history/phase-11-artifacts-before-phase-14-2026-10-08.json",
-      "previous_sha256": "e831a3f0bf549a14eff330f2c58943f5b3c04c0215f29abacbde6eec14c68ac9",
-      "new_sha256": "e8b984f4de520ae9b2b3cff38b48ab9fc365e8236212be972918750b600273bd"
+      "historical_path": "docs/gates/history/phase-11-artifacts-before-phase-14-2026-10-08-e8b984f4de52.json",
+      "previous_sha256": "e8b984f4de520ae9b2b3cff38b48ab9fc365e8236212be972918750b600273bd",
+      "new_sha256": "aded82b31c2e5ddd51c144a604a34e01923ed98659c56dcd024b0ef5169e2a8e"
     },
     {
       "path": "docs/gates/phase-11-finding-fixes-2026-10-04.json",
-      "historical_path": "docs/gates/history/phase-11-finding-fixes-2026-10-04-before-phase-14-2026-10-08.json",
-      "previous_sha256": "1a8cafc585754619f0be9116fca6c109bf2d6a6988fe6be66f69ca583f92bb8f",
-      "new_sha256": "b133524426a6d9d3e6613eebe2a322cfbb51e43e9c1472f3c7d5625a7733db25"
+      "historical_path": "docs/gates/history/phase-11-finding-fixes-2026-10-04-before-phase-14-2026-10-08-b133524426a6.json",
+      "previous_sha256": "b133524426a6d9d3e6613eebe2a322cfbb51e43e9c1472f3c7d5625a7733db25",
+      "new_sha256": "4a07c960685b38fde653f41abc75710c61e00caad60ec6df0c7c8ddff3f6a9f0"
     },
     {
       "path": "docs/gates/phase-12-finding-fixes-2026-10-05.json",
-      "historical_path": "docs/gates/history/phase-12-finding-fixes-2026-10-05-before-phase-14-2026-10-08.json",
-      "previous_sha256": "ae7ff809a4a09e05ab07391780d4068b939e7bc65e711d1cadf222bb31535cbb",
-      "new_sha256": "1d400707ca34ecb470f9c4af4340fc22062039af781ff80c544969aedce9cbf7"
+      "historical_path": "docs/gates/history/phase-12-finding-fixes-2026-10-05-before-phase-14-2026-10-08-1d400707ca34.json",
+      "previous_sha256": "1d400707ca34ecb470f9c4af4340fc22062039af781ff80c544969aedce9cbf7",
+      "new_sha256": "8b65556e6863e98149b132a3542d28518c3235070efeb34397214a154a96aa0d"
     },
     {
       "path": "docs/gates/phase-2-ir-1.1-artifacts.json",
-      "historical_path": "docs/gates/history/phase-2-ir-1.1-artifacts-before-phase-14-2026-10-08.json",
-      "previous_sha256": "1fac7ee94551d61728384053cc99427a93d43039a4425c96dfc55fba9686f9ca",
-      "new_sha256": "537e976c664b56f13a2b463b03b12238936c9d1944d2cac8405b6c2b5494f5f4"
+      "historical_path": "docs/gates/history/phase-2-ir-1.1-artifacts-before-phase-14-2026-10-08-537e976c664b.json",
+      "previous_sha256": "537e976c664b56f13a2b463b03b12238936c9d1944d2cac8405b6c2b5494f5f4",
+      "new_sha256": "6a92fcb629b7fef08a62d46a3c4ef482d42c2b547b500adb1c5bad730d821c31"
     },
     {
       "path": "docs/gates/phase-2-ir-1.2-artifacts.json",
-      "historical_path": "docs/gates/history/phase-2-ir-1.2-artifacts-before-phase-14-2026-10-08.json",
-      "previous_sha256": "4d51db19bbc6935cddf80d95f5c8e1bbab540dc4457e5d113898d811f1651aa9",
-      "new_sha256": "82f74df7eca3564095175a52b2b100c622aa133cac23cc44eccb4ad669a27cb0"
+      "historical_path": "docs/gates/history/phase-2-ir-1.2-artifacts-before-phase-14-2026-10-08-82f74df7eca3.json",
+      "previous_sha256": "82f74df7eca3564095175a52b2b100c622aa133cac23cc44eccb4ad669a27cb0",
+      "new_sha256": "911cd06f3f084ee6473cab74b46fdf3c646e6286b271527cee8023d915baf08a"
     },
     {
       "path": "docs/gates/phase-2-v0.9.6-artifacts.json",
-      "historical_path": "docs/gates/history/phase-2-v0.9.6-artifacts-before-phase-14-2026-10-08.json",
-      "previous_sha256": "079acbffe5d306bac05596a0d8ac17d48451d3cec45508ba9ba0de075ac96cfe",
-      "new_sha256": "d1b28466559282e30ce8b0015dc3797708020a86f3782b09e10653d9dacf8cb5"
+      "historical_path": "docs/gates/history/phase-2-v0.9.6-artifacts-before-phase-14-2026-10-08-d1b284665592.json",
+      "previous_sha256": "d1b28466559282e30ce8b0015dc3797708020a86f3782b09e10653d9dacf8cb5",
+      "new_sha256": "2be097427a19f375ba0833176d75499cfe8c75993155be9d49adb51538704149"
     },
     {
       "path": "docs/gates/phase-3-artifacts.json",
-      "historical_path": "docs/gates/history/phase-3-artifacts-before-phase-14-2026-10-08.json",
-      "previous_sha256": "de7bc25d816554e03db110bde0c70d8262a516a4875a3b3a794c77ce74fe55fe",
-      "new_sha256": "25691d359db9c00025d3b2a2d321b111218801772524fec7fb5a34d8c19d44b6"
+      "historical_path": "docs/gates/history/phase-3-artifacts-before-phase-14-2026-10-08-25691d359db9.json",
+      "previous_sha256": "25691d359db9c00025d3b2a2d321b111218801772524fec7fb5a34d8c19d44b6",
+      "new_sha256": "338e976506aebe0e4fae223ff67314ce49f6ac8a3a15bcf619c6f54d9ef2fa80"
     },
     {
       "path": "docs/gates/phase-12.1-artifacts.json",
-      "historical_path": "docs/gates/history/phase-12.1-artifacts-before-phase-14-2026-10-08.json",
-      "previous_sha256": "fd8306dc13099c6aeb0e4d587caab1e800f8e36202d850d198fd03844ea89997",
-      "new_sha256": "1e6db76cbe29ac1ddbc7ec45102b753b155ad47097bd245ae7336a4c124292ee"
+      "historical_path": "docs/gates/history/phase-12.1-artifacts-before-phase-14-2026-10-08-1e6db76cbe29.json",
+      "previous_sha256": "1e6db76cbe29ac1ddbc7ec45102b753b155ad47097bd245ae7336a4c124292ee",
+      "new_sha256": "3d1eaecb7a75373fc0ca29ce338bf68a56d7a179662ce7958752d553bf5f26c9"
     },
     {
       "path": "docs/gates/phase-12-readiness-review-2026-10-05.json",
-      "historical_path": "docs/gates/history/phase-12-readiness-review-2026-10-05-before-phase-14-2026-10-08.json",
-      "previous_sha256": "98f7f4b6eef42e6c9bf18059b36e1001b763a302479630838dbf58920f3dec2e",
-      "new_sha256": "a03c80ab9a0e0a5d5ac298fdd66c1eca9e535b884bf162a7458e39f0f93f17b6"
+      "historical_path": "docs/gates/history/phase-12-readiness-review-2026-10-05-before-phase-14-2026-10-08-a03c80ab9a0e.json",
+      "previous_sha256": "a03c80ab9a0e0a5d5ac298fdd66c1eca9e535b884bf162a7458e39f0f93f17b6",
+      "new_sha256": "a457cbd96829c2aea93a8eef77db0cb18753bd916be6cc493fb492dbdbd02fe4"
     },
     {
       "path": "docs/gates/phase-13-pcm-only-spec-update-2026-10-05.json",
-      "historical_path": "docs/gates/history/phase-13-pcm-only-spec-update-2026-10-05-before-phase-14-2026-10-08.json",
-      "previous_sha256": "00703e745ba58b2a563e31a5d54bbf55f8c98f45b5543f946f99913f61b6c1c6",
-      "new_sha256": "467537cf8ddd56b3693500e24d70448cd1b0d49261b2a71268912e43b83ad9c0"
+      "historical_path": "docs/gates/history/phase-13-pcm-only-spec-update-2026-10-05-before-phase-14-2026-10-08-467537cf8ddd.json",
+      "previous_sha256": "467537cf8ddd56b3693500e24d70448cd1b0d49261b2a71268912e43b83ad9c0",
+      "new_sha256": "c12ca50374000094b0812e60e279fc81d68f2b1065114d3a4911421f56f6bb0c"
     },
     {
       "path": "docs/gates/phase-13-pcm-spec-update-2026-10-05.json",
-      "historical_path": "docs/gates/history/phase-13-pcm-spec-update-2026-10-05-before-phase-14-2026-10-08.json",
-      "previous_sha256": "42af56bb01aa8f86b91e21ba785e35c68813630457c32e8484fe6974627df668",
-      "new_sha256": "0f452400a1bed74230e2842c0d7a9a6093c65aaaea877602bb1af5cf9b0a44be"
+      "historical_path": "docs/gates/history/phase-13-pcm-spec-update-2026-10-05-before-phase-14-2026-10-08-0f452400a1be.json",
+      "previous_sha256": "0f452400a1bed74230e2842c0d7a9a6093c65aaaea877602bb1af5cf9b0a44be",
+      "new_sha256": "8ccb8b4f6e0ba84a76be8522c6ed4355ab72aec9d3df0c7ace6f73f930ec791a"
     },
     {
       "path": "docs/gates/phase-13-spec-revision-v0.9.7-2026-10-05.json",
-      "historical_path": "docs/gates/history/phase-13-spec-revision-v0.9.7-2026-10-05-before-phase-14-2026-10-08.json",
-      "previous_sha256": "f41047bf208351a79923f016bf110dae7cfeed3b6cae1ae485db698311daf409",
-      "new_sha256": "59a5ede9cf2eeabfbaee9e81f507371810e01af998c6f72295fcf6a8b40c5962"
+      "historical_path": "docs/gates/history/phase-13-spec-revision-v0.9.7-2026-10-05-before-phase-14-2026-10-08-59a5ede9cf2e.json",
+      "previous_sha256": "59a5ede9cf2eeabfbaee9e81f507371810e01af998c6f72295fcf6a8b40c5962",
+      "new_sha256": "acad0264245b78d3794270233626818d2e7c4b8cbd8663177057cdf61dbc5acf"
     },
     {
       "path": "docs/gates/phase-12-artifacts.json",
-      "historical_path": "docs/gates/history/phase-12-artifacts-before-phase-14-2026-10-08.json",
-      "previous_sha256": "5fdd844ff15c2f8555b5040cf6fc5f597b76e9bd0c65a49ffdec7c04fd2455cf",
-      "new_sha256": "dad8fd8d5e43faa1342d0d8693edcc221ffc15cbb6197528be10ccaf727da751"
+      "historical_path": "docs/gates/history/phase-12-artifacts-before-phase-14-2026-10-08-dad8fd8d5e43.json",
+      "previous_sha256": "dad8fd8d5e43faa1342d0d8693edcc221ffc15cbb6197528be10ccaf727da751",
+      "new_sha256": "1854213aacabbd5111af4ef82129a9a941523660bee4c0d9bf89d91fcdb540f5"
     },
     {
       "path": "docs/gates/phase-12-viewer-performance-artifacts.json",
-      "historical_path": "docs/gates/history/phase-12-viewer-performance-artifacts-before-phase-14-2026-10-08.json",
-      "previous_sha256": "d34dc57a7a09e5b332edfe377f8e7d92f57c4ae90aaac6b70d9498d94c0aa3ae",
-      "new_sha256": "456e068fcb0dbdb7204104088d15c612dc9fc4ccfbd8bb6f5165d62010dac7af"
+      "historical_path": "docs/gates/history/phase-12-viewer-performance-artifacts-before-phase-14-2026-10-08-456e068fcb0d.json",
+      "previous_sha256": "456e068fcb0dbdb7204104088d15c612dc9fc4ccfbd8bb6f5165d62010dac7af",
+      "new_sha256": "e051c03fc62727721936f8fe89dbb246dad60da33546ed17909a163dfe1cb154"
     },
     {
       "path": "docs/gates/phase-13.1-artifacts.json",
-      "historical_path": "docs/gates/history/phase-13.1-artifacts-before-phase-14-2026-10-08.json",
-      "previous_sha256": "9fbd3edca22bce1ef65a4da13e51919961e26d3c02f36ccca3e01602f160a4b3",
-      "new_sha256": "ba4a20be6300d40f28142897d2c7b1a59d7d7b550d6a5ee2c3dc6c9ea6b0539b"
+      "historical_path": "docs/gates/history/phase-13.1-artifacts-before-phase-14-2026-10-08-ba4a20be6300.json",
+      "previous_sha256": "ba4a20be6300d40f28142897d2c7b1a59d7d7b550d6a5ee2c3dc6c9ea6b0539b",
+      "new_sha256": "49ebf0067e055e819d2b92fa31744973b4c7db32c7adae657bdc67c24d685efb"
     },
     {
       "path": "docs/gates/phase-13.2-artifacts.json",
-      "historical_path": "docs/gates/history/phase-13.2-artifacts-before-phase-14-2026-10-08.json",
-      "previous_sha256": "7ac9c82e2ad9ba50dcd9179c2766d357a083f8bacf47678a9224b0a12675ce4f",
-      "new_sha256": "57478a36f70ca34b3897532919cd7bf1bf09ce996fc5f7dbc6a8fb95320b158f"
+      "historical_path": "docs/gates/history/phase-13.2-artifacts-before-phase-14-2026-10-08-57478a36f70c.json",
+      "previous_sha256": "57478a36f70ca34b3897532919cd7bf1bf09ce996fc5f7dbc6a8fb95320b158f",
+      "new_sha256": "86483eb08a62cb4f465309046a64c85fb253fc56dfa10ace3b1a8b936a3c19b8"
     },
     {
       "path": "docs/gates/phase-13.3-artifacts.json",
-      "historical_path": "docs/gates/history/phase-13.3-artifacts-before-phase-14-2026-10-08.json",
-      "previous_sha256": "5c15391d5889d10067d0c84676818229897be8422bc59add6d9879650796e108",
-      "new_sha256": "8a9d503281848abb5c4c8670e98f2a32c99930779cacf4e2ec40a3df9c060869"
+      "historical_path": "docs/gates/history/phase-13.3-artifacts-before-phase-14-2026-10-08-8a9d50328184.json",
+      "previous_sha256": "8a9d503281848abb5c4c8670e98f2a32c99930779cacf4e2ec40a3df9c060869",
+      "new_sha256": "e93a8f056352f258574a8ea805a634ed1e0fb2eb0f9452c42030984a7f7ae9e7"
     },
     {
       "path": "docs/gates/phase-13.4-artifacts.json",
-      "historical_path": "docs/gates/history/phase-13.4-artifacts-before-phase-14-2026-10-08.json",
-      "previous_sha256": "d8dcb977dbee7fc11063e3a46e9891d0ab41b93bbe17a80357d61c4c64f38e7a",
-      "new_sha256": "87d15ab454b269047a09618f141057fc5a2d0a9d51c6248642f81764133f73e6"
+      "historical_path": "docs/gates/history/phase-13.4-artifacts-before-phase-14-2026-10-08-87d15ab454b2.json",
+      "previous_sha256": "87d15ab454b269047a09618f141057fc5a2d0a9d51c6248642f81764133f73e6",
+      "new_sha256": "dc397c30c9d1a84cd8003a9e4d4c18dc26e1da0788fd1e8edac2b41019697941"
     },
     {
       "path": "docs/gates/phase-13.5-artifacts.json",
-      "historical_path": "docs/gates/history/phase-13.5-artifacts-before-phase-14-2026-10-08.json",
-      "previous_sha256": "f1e09d4c1b074b88762afbfa658898b158bb65ed3fe04285b776b8d094592d9f",
-      "new_sha256": "eeee0733523067fa4b1b33a923c7426c3160aac3ff3bbcf63655136f7344b66d"
+      "historical_path": "docs/gates/history/phase-13.5-artifacts-before-phase-14-2026-10-08-eeee07335230.json",
+      "previous_sha256": "eeee0733523067fa4b1b33a923c7426c3160aac3ff3bbcf63655136f7344b66d",
+      "new_sha256": "831ac1e792c52e62057d30edbcd4803d5ac9a40afef19fca35f68edee0203eda"
     },
     {
       "path": "docs/gates/phase-13.6-artifacts.json",
-      "historical_path": "docs/gates/history/phase-13.6-artifacts-before-phase-14-2026-10-08.json",
-      "previous_sha256": "4bc44eeefe36dd71bc3accf5b489042b174933084ca0f9c0b2c2fe81a2db4dbb",
-      "new_sha256": "eecd4290ff9c29506cd2e2c71903c628c3a664eb2eb073bcfeffcc7a3133e445"
+      "historical_path": "docs/gates/history/phase-13.6-artifacts-before-phase-14-2026-10-08-eecd4290ff9c.json",
+      "previous_sha256": "eecd4290ff9c29506cd2e2c71903c628c3a664eb2eb073bcfeffcc7a3133e445",
+      "new_sha256": "f43b3c24af8990375b6fce5bb7df975319f03d4c16ca9f93342421a42e3b45d0"
     },
     {
       "path": "docs/gates/phase-13.7-artifacts.json",
-      "historical_path": "docs/gates/history/phase-13.7-artifacts-before-phase-14-2026-10-08.json",
-      "previous_sha256": "fe7d63b1a942f836a1a11b4e14eb78ce433ba3672de291fcbe4e9e3eb189c9b8",
-      "new_sha256": "d6e594c1686401fc0908add8be9cb39065554d4661896569428daae2483e4521"
+      "historical_path": "docs/gates/history/phase-13.7-artifacts-before-phase-14-2026-10-08-d6e594c16864.json",
+      "previous_sha256": "d6e594c1686401fc0908add8be9cb39065554d4661896569428daae2483e4521",
+      "new_sha256": "4f334f521c91634f79a753276e34d8edc9a11ea7100352e29ab4ef2e28a5bbe9"
     },
     {
       "path": "docs/gates/phase-13.8-artifacts.json",
-      "historical_path": "docs/gates/history/phase-13.8-artifacts-before-phase-14-2026-10-08.json",
-      "previous_sha256": "66385511b97cde05bc5ae15c622c39e6bb571d2e3726f497e0a60c57048d56ec",
-      "new_sha256": "d141e0ef5f73386ef5f5143cc1bbfdd5a57b0b374e7b17d8b12e0f1b66935204"
+      "historical_path": "docs/gates/history/phase-13.8-artifacts-before-phase-14-2026-10-08-d141e0ef5f73.json",
+      "previous_sha256": "d141e0ef5f73386ef5f5143cc1bbfdd5a57b0b374e7b17d8b12e0f1b66935204",
+      "new_sha256": "706eeff88d60375a45c5f3a263ce033f7a128f95499045109578f840424d329d"
     },
     {
       "path": "docs/gates/phase-13-artifacts.json",
-      "historical_path": "docs/gates/history/phase-13-artifacts-before-phase-14-2026-10-08.json",
-      "previous_sha256": "09fd2a70388a23e075a11aa4a161215a6ab4ef938d8af0f8a8f6be6646d34c7d",
-      "new_sha256": "5b61ee441c9169595d8a3879ea41b52543ffa0c97de51445d2da654e48443784"
+      "historical_path": "docs/gates/history/phase-13-artifacts-before-phase-14-2026-10-08-5b61ee441c91.json",
+      "previous_sha256": "5b61ee441c9169595d8a3879ea41b52543ffa0c97de51445d2da654e48443784",
+      "new_sha256": "c333970d5074d5245164e8d1655530f471dee078cce126f837f452a57fcd0368"
     },
     {
       "path": "docs/gates/phase-13-startup-fix-2026-10-07.json",
-      "historical_path": "docs/gates/history/phase-13-startup-fix-2026-10-07-before-phase-14-2026-10-08.json",
-      "previous_sha256": "5dd1cf1ef7cdae7f85678b9d76fc09882af7073afb2d4b6f64ab6b0a697a57e3",
-      "new_sha256": "898a86da8ea7dfa123d26d87f3f378958b7c292153760c0bd1b961e134094db8"
+      "historical_path": "docs/gates/history/phase-13-startup-fix-2026-10-07-before-phase-14-2026-10-08-898a86da8ea7.json",
+      "previous_sha256": "898a86da8ea7dfa123d26d87f3f378958b7c292153760c0bd1b961e134094db8",
+      "new_sha256": "2edf479a07b8f8cfe3841672cdd36aec676661269e43d8ecc1b4197f986bdaf2"
     },
     {
       "path": "docs/gates/phase-13-lifecycle-fix-2026-10-07.json",
-      "historical_path": "docs/gates/history/phase-13-lifecycle-fix-2026-10-07-before-phase-14-2026-10-08.json",
-      "previous_sha256": "36229544f0f9e27d073c57621db07244cd06bce515391b8004d0f43884dcf523",
-      "new_sha256": "47ac06a1f94e9266bda2ec5328aaa2f5193ffc8277c28e38c8509d15f30ade2a"
+      "historical_path": "docs/gates/history/phase-13-lifecycle-fix-2026-10-07-before-phase-14-2026-10-08-47ac06a1f94e.json",
+      "previous_sha256": "47ac06a1f94e9266bda2ec5328aaa2f5193ffc8277c28e38c8509d15f30ade2a",
+      "new_sha256": "572edffc4a023e7076aaca1f08b87bedd2fe25310558cebd9b703380f8c1cef2"
+    },
+    {
+      "path": "docs/gates/phase-14-artifacts.json",
+      "historical_path": "docs/gates/history/phase-14-artifacts-before-phase-14-2026-10-08.json",
+      "previous_sha256": "aa68c5df229b3b7fd7e1d51e1d74f9dc85081d70577ce72829fdd7d9830ae649",
+      "new_sha256": "9786866aa1d75d8f58dc50ec7e64120033b569fc2d5d6bcb38c6553e4614c998"
+    },
+    {
+      "path": "docs/gates/phase-5-artifacts.json",
+      "historical_path": "docs/gates/history/phase-5-artifacts-before-phase-14-2026-10-08.json",
+      "previous_sha256": "d91b3f09e6b048bc0354f06fb6c4e07032c27bee8b81cc22f114cc98360cb91e",
+      "new_sha256": "1df7c0943dc9b846ef95ed8086a66aa56e5605a70c405970ed16ca8e8bd539d2"
     }
   ],
   "hash_changes": [
     {
       "manifest": "docs/gates/phase-10-artifacts.json",
       "field": "sha256",
+      "path": ".github/workflows/ci.yml",
+      "previous_sha256": "2f676be607172e21533480ed50cbacf9cf3b27bd0e640898326ecc3a4d4ccf25",
+      "new_sha256": "f94adf3fa9575bb6fc26fe538c874a1b81e153c8244de230c1c541230cc23b0b"
+    },
+    {
+      "manifest": "docs/gates/phase-10-artifacts.json",
+      "field": "sha256",
+      "path": "pyproject.toml",
+      "previous_sha256": "4cb461dcf646b7b46340bfcad88892c3aee25d4819abb3bc4bf75c60e83d0613",
+      "new_sha256": "8d37ccc6843a091b9d50943def64d00b47197a64f7e0081cd78c1a7b8cf0867c"
+    },
+    {
+      "manifest": "docs/gates/phase-10-artifacts.json",
+      "field": "sha256",
       "path": "README.md",
-      "previous_sha256": "a2e6f94eb9fa6b3eff20d2c73e2555fceebd1702828894d1e987f44fd1b886fc",
-      "new_sha256": "1c6349802529f78a88985ffc335d47760ecba7eda647be91f8871f4a0935acfe"
+      "previous_sha256": "1c6349802529f78a88985ffc335d47760ecba7eda647be91f8871f4a0935acfe",
+      "new_sha256": "1130c671963b7ccf32f70e7cd8f52d4a0be93b7380aeca0d27c1bc9ef8e4c985"
     },
     {
       "manifest": "docs/gates/phase-10-parser-fix-2026-10-04.json",
       "field": "source_sha256",
-      "path": ".gitattributes",
-      "previous_sha256": "857c38fecbfd69ef13acedce1c2da273b8b417fefe4ce6a1199a98b8b7422053",
-      "new_sha256": "32311e453a19a84e40a077156faa10b1f6f09c85127c0e3d14acd0208cdece32"
+      "path": "pyproject.toml",
+      "previous_sha256": "4cb461dcf646b7b46340bfcad88892c3aee25d4819abb3bc4bf75c60e83d0613",
+      "new_sha256": "8d37ccc6843a091b9d50943def64d00b47197a64f7e0081cd78c1a7b8cf0867c"
+    },
+    {
+      "manifest": "docs/gates/phase-10-parser-fix-2026-10-04.json",
+      "field": "source_sha256",
+      "path": ".github/workflows/ci.yml",
+      "previous_sha256": "2f676be607172e21533480ed50cbacf9cf3b27bd0e640898326ecc3a4d4ccf25",
+      "new_sha256": "f94adf3fa9575bb6fc26fe538c874a1b81e153c8244de230c1c541230cc23b0b"
     },
     {
       "manifest": "docs/gates/phase-10-parser-fix-2026-10-04.json",
       "field": "source_sha256",
       "path": "README.md",
-      "previous_sha256": "a2e6f94eb9fa6b3eff20d2c73e2555fceebd1702828894d1e987f44fd1b886fc",
-      "new_sha256": "1c6349802529f78a88985ffc335d47760ecba7eda647be91f8871f4a0935acfe"
+      "previous_sha256": "1c6349802529f78a88985ffc335d47760ecba7eda647be91f8871f4a0935acfe",
+      "new_sha256": "1130c671963b7ccf32f70e7cd8f52d4a0be93b7380aeca0d27c1bc9ef8e4c985"
+    },
+    {
+      "manifest": "docs/gates/phase-6-artifacts.json",
+      "field": "sha256",
+      "path": "pyproject.toml",
+      "previous_sha256": "4cb461dcf646b7b46340bfcad88892c3aee25d4819abb3bc4bf75c60e83d0613",
+      "new_sha256": "8d37ccc6843a091b9d50943def64d00b47197a64f7e0081cd78c1a7b8cf0867c"
+    },
+    {
+      "manifest": "docs/gates/phase-6-artifacts.json",
+      "field": "sha256",
+      "path": "src/partsmith/release/runtime.py",
+      "previous_sha256": "ae7bdb59343379e0478aa3301939cffd1468081059cf539279f38fde3cce8d00",
+      "new_sha256": "7561ee2a3f2123e7d0be31ab4d0944bdb17dae37dd2be672cb2e079e2cbed4a8"
+    },
+    {
+      "manifest": "docs/gates/phase-6-artifacts.json",
+      "field": "sha256",
+      "path": "tests/test_phase8_snapshot.py",
+      "previous_sha256": "4b4e51e5c70a6ee37715162211b1dcd8f1db7a0ec14a3829c170b3941cac2629",
+      "new_sha256": "fd7396d8e2380afdf28ec1c20d981fb01a96f2cbd3567162c64a0c77f2510ee7"
+    },
+    {
+      "manifest": "docs/gates/phase-8-artifacts.json",
+      "field": "sha256",
+      "path": ".github/workflows/ci.yml",
+      "previous_sha256": "2f676be607172e21533480ed50cbacf9cf3b27bd0e640898326ecc3a4d4ccf25",
+      "new_sha256": "f94adf3fa9575bb6fc26fe538c874a1b81e153c8244de230c1c541230cc23b0b"
     },
     {
       "manifest": "docs/gates/phase-8-artifacts.json",
       "field": "sha256",
       "path": "README.md",
-      "previous_sha256": "a2e6f94eb9fa6b3eff20d2c73e2555fceebd1702828894d1e987f44fd1b886fc",
-      "new_sha256": "1c6349802529f78a88985ffc335d47760ecba7eda647be91f8871f4a0935acfe"
+      "previous_sha256": "1c6349802529f78a88985ffc335d47760ecba7eda647be91f8871f4a0935acfe",
+      "new_sha256": "1130c671963b7ccf32f70e7cd8f52d4a0be93b7380aeca0d27c1bc9ef8e4c985"
     },
     {
       "manifest": "docs/gates/phase-8-artifacts.json",
       "field": "sha256",
       "path": "resources/BFT_PartSmith_Implementation_Spec.md",
-      "previous_sha256": "e50eb21a9837d6b33878bf23897bd5aedbbd9dc406d465f488846a9a331a5d05",
-      "new_sha256": "43fb82cb0f4c79b0db397ef17a81b84d786971bd2701c92475323c43f5df0460"
+      "previous_sha256": "43fb82cb0f4c79b0db397ef17a81b84d786971bd2701c92475323c43f5df0460",
+      "new_sha256": "279eee3ed3098966c5a844edb2b809d7b0c9d30cb45e2ba4df6a2841c9b620d5"
+    },
+    {
+      "manifest": "docs/gates/phase-8-artifacts.json",
+      "field": "sha256",
+      "path": "src/partsmith/kicad/runtime.py",
+      "previous_sha256": "394547da4d5bb2e051d1ce6bf5e23403f725409120e884d9f6dfbb075c3ff238",
+      "new_sha256": "4df1d8d5398791bb649d57c4d2dd0e18c4da49abff67f5199fb309bfcea8707a"
+    },
+    {
+      "manifest": "docs/gates/phase-8-artifacts.json",
+      "field": "sha256",
+      "path": "pyproject.toml",
+      "previous_sha256": "4cb461dcf646b7b46340bfcad88892c3aee25d4819abb3bc4bf75c60e83d0613",
+      "new_sha256": "8d37ccc6843a091b9d50943def64d00b47197a64f7e0081cd78c1a7b8cf0867c"
+    },
+    {
+      "manifest": "docs/gates/phase-8-artifacts.json",
+      "field": "sha256",
+      "path": "src/partsmith/release/runtime.py",
+      "previous_sha256": "ae7bdb59343379e0478aa3301939cffd1468081059cf539279f38fde3cce8d00",
+      "new_sha256": "7561ee2a3f2123e7d0be31ab4d0944bdb17dae37dd2be672cb2e079e2cbed4a8"
+    },
+    {
+      "manifest": "docs/gates/phase-8-artifacts.json",
+      "field": "sha256",
+      "path": "tests/test_phase8_snapshot.py",
+      "previous_sha256": "4b4e51e5c70a6ee37715162211b1dcd8f1db7a0ec14a3829c170b3941cac2629",
+      "new_sha256": "fd7396d8e2380afdf28ec1c20d981fb01a96f2cbd3567162c64a0c77f2510ee7"
+    },
+    {
+      "manifest": "docs/gates/phase-9-artifacts.json",
+      "field": "sha256",
+      "path": ".github/workflows/ci.yml",
+      "previous_sha256": "2f676be607172e21533480ed50cbacf9cf3b27bd0e640898326ecc3a4d4ccf25",
+      "new_sha256": "f94adf3fa9575bb6fc26fe538c874a1b81e153c8244de230c1c541230cc23b0b"
     },
     {
       "manifest": "docs/gates/phase-9-artifacts.json",
       "field": "sha256",
       "path": "README.md",
-      "previous_sha256": "a2e6f94eb9fa6b3eff20d2c73e2555fceebd1702828894d1e987f44fd1b886fc",
-      "new_sha256": "1c6349802529f78a88985ffc335d47760ecba7eda647be91f8871f4a0935acfe"
+      "previous_sha256": "1c6349802529f78a88985ffc335d47760ecba7eda647be91f8871f4a0935acfe",
+      "new_sha256": "1130c671963b7ccf32f70e7cd8f52d4a0be93b7380aeca0d27c1bc9ef8e4c985"
+    },
+    {
+      "manifest": "docs/gates/phase-9-artifacts.json",
+      "field": "sha256",
+      "path": "pyproject.toml",
+      "previous_sha256": "4cb461dcf646b7b46340bfcad88892c3aee25d4819abb3bc4bf75c60e83d0613",
+      "new_sha256": "8d37ccc6843a091b9d50943def64d00b47197a64f7e0081cd78c1a7b8cf0867c"
     },
     {
       "manifest": "docs/gates/phase-9-artifacts.json",
       "field": "sha256",
       "path": "resources/BFT_PartSmith_Implementation_Spec.md",
-      "previous_sha256": "e50eb21a9837d6b33878bf23897bd5aedbbd9dc406d465f488846a9a331a5d05",
-      "new_sha256": "43fb82cb0f4c79b0db397ef17a81b84d786971bd2701c92475323c43f5df0460"
+      "previous_sha256": "43fb82cb0f4c79b0db397ef17a81b84d786971bd2701c92475323c43f5df0460",
+      "new_sha256": "279eee3ed3098966c5a844edb2b809d7b0c9d30cb45e2ba4df6a2841c9b620d5"
+    },
+    {
+      "manifest": "docs/gates/phase-9-artifacts.json",
+      "field": "sha256",
+      "path": "src/partsmith/footprint/model.py",
+      "previous_sha256": "d35e31afcab8481d285d81333fb41b764d7fbd874c978c1e366b2efad183767b",
+      "new_sha256": "da8bbf092197a7a0e8aca567ad03535e8ee0cbebf201ff6f6c450ca211efeb84"
+    },
+    {
+      "manifest": "docs/gates/phase-9-artifacts.json",
+      "field": "sha256",
+      "path": "src/partsmith/kicad/runtime.py",
+      "previous_sha256": "394547da4d5bb2e051d1ce6bf5e23403f725409120e884d9f6dfbb075c3ff238",
+      "new_sha256": "4df1d8d5398791bb649d57c4d2dd0e18c4da49abff67f5199fb309bfcea8707a"
+    },
+    {
+      "manifest": "docs/gates/phase-9-artifacts.json",
+      "field": "sha256",
+      "path": "src/partsmith/release/replay.py",
+      "previous_sha256": "c75cfb6d10e9b28a62dc8c8854a37e73cc9488f78fe63eb9b14a77a8016a5af5",
+      "new_sha256": "17f1f1ed6e27a29e78a4f085e80701d869f82285713c19fef51cac1d938560f4"
+    },
+    {
+      "manifest": "docs/gates/phase-9-artifacts.json",
+      "field": "sha256",
+      "path": "src/partsmith/release/runtime.py",
+      "previous_sha256": "ae7bdb59343379e0478aa3301939cffd1468081059cf539279f38fde3cce8d00",
+      "new_sha256": "7561ee2a3f2123e7d0be31ab4d0944bdb17dae37dd2be672cb2e079e2cbed4a8"
+    },
+    {
+      "manifest": "docs/gates/phase-9-artifacts.json",
+      "field": "sha256",
+      "path": "tests/test_phase8_snapshot.py",
+      "previous_sha256": "4b4e51e5c70a6ee37715162211b1dcd8f1db7a0ec14a3829c170b3941cac2629",
+      "new_sha256": "fd7396d8e2380afdf28ec1c20d981fb01a96f2cbd3567162c64a0c77f2510ee7"
+    },
+    {
+      "manifest": "docs/gates/phase-9-artifacts.json",
+      "field": "sha256",
+      "path": "tests/test_phase9.py",
+      "previous_sha256": "bf92645ba939f4f09b375ff493cf4c6194b3729d865769a963dc194120f43b21",
+      "new_sha256": "4e3916c32d61bc5056bcc25b618354cc854e35821b5114708039b69b3647c48b"
+    },
+    {
+      "manifest": "docs/gates/phase-7-artifacts.json",
+      "field": "sha256",
+      "path": "src/partsmith/release/runtime.py",
+      "previous_sha256": "ae7bdb59343379e0478aa3301939cffd1468081059cf539279f38fde3cce8d00",
+      "new_sha256": "7561ee2a3f2123e7d0be31ab4d0944bdb17dae37dd2be672cb2e079e2cbed4a8"
+    },
+    {
+      "manifest": "docs/gates/phase-7-artifacts.json",
+      "field": "sha256",
+      "path": "tests/test_phase8_snapshot.py",
+      "previous_sha256": "4b4e51e5c70a6ee37715162211b1dcd8f1db7a0ec14a3829c170b3941cac2629",
+      "new_sha256": "fd7396d8e2380afdf28ec1c20d981fb01a96f2cbd3567162c64a0c77f2510ee7"
     },
     {
       "manifest": "docs/gates/phase-9.5-artifacts.json",
       "field": "sha256",
       "path": "README.md",
-      "previous_sha256": "a2e6f94eb9fa6b3eff20d2c73e2555fceebd1702828894d1e987f44fd1b886fc",
-      "new_sha256": "1c6349802529f78a88985ffc335d47760ecba7eda647be91f8871f4a0935acfe"
+      "previous_sha256": "1c6349802529f78a88985ffc335d47760ecba7eda647be91f8871f4a0935acfe",
+      "new_sha256": "1130c671963b7ccf32f70e7cd8f52d4a0be93b7380aeca0d27c1bc9ef8e4c985"
+    },
+    {
+      "manifest": "docs/gates/phase-9.5-artifacts.json",
+      "field": "sha256",
+      "path": "docs/gates/phase-6-artifacts.json",
+      "previous_sha256": "bd4a846738f1afd62c1a82311cd01537f59163bfc2e1844f9ba8e8c03959dd7b",
+      "new_sha256": "f73cd295cd10740031f3825362c28894ad691daac07fd8920268edef4eb884c9"
+    },
+    {
+      "manifest": "docs/gates/phase-9.5-artifacts.json",
+      "field": "sha256",
+      "path": "docs/gates/phase-7-artifacts.json",
+      "previous_sha256": "f6b401a1d508a87dd0e3cafd0871b1b22699f3116944c5b7a340835690779291",
+      "new_sha256": "c2f05a5595a788c917697dbe9b88d446736f76afdae02faa63765f217482c552"
     },
     {
       "manifest": "docs/gates/phase-9.5-artifacts.json",
       "field": "sha256",
       "path": "docs/gates/phase-8-artifacts.json",
-      "previous_sha256": "a14952dcb2048d446f99e6f01c39feb4ebb5234bbb3d5d344e25f16394233251",
-      "new_sha256": "37fc74e06c5d40f6f7669e5c077298b8fea5aeaafe86b96f9127ead713a7dcb9"
+      "previous_sha256": "37fc74e06c5d40f6f7669e5c077298b8fea5aeaafe86b96f9127ead713a7dcb9",
+      "new_sha256": "5f713fe9d4a5951865c1c41cf3edde39188301e710a9de87771111abb94120ae"
     },
     {
       "manifest": "docs/gates/phase-9.5-artifacts.json",
       "field": "sha256",
       "path": "docs/gates/phase-9-artifacts.json",
-      "previous_sha256": "e28a63c48f7f9fe5fcafaf97efe265b06da4a0ff75e185ed200628b967249103",
-      "new_sha256": "798862adc17d79557ced98b8c35acf5fc9fa6c93855653e3932d44637910b2f5"
+      "previous_sha256": "798862adc17d79557ced98b8c35acf5fc9fa6c93855653e3932d44637910b2f5",
+      "new_sha256": "02cdc45a882de07d73b017813e4a80c8a56669c603262263d6a47dffad87620a"
+    },
+    {
+      "manifest": "docs/gates/phase-9.5-artifacts.json",
+      "field": "sha256",
+      "path": "pyproject.toml",
+      "previous_sha256": "4cb461dcf646b7b46340bfcad88892c3aee25d4819abb3bc4bf75c60e83d0613",
+      "new_sha256": "8d37ccc6843a091b9d50943def64d00b47197a64f7e0081cd78c1a7b8cf0867c"
     },
     {
       "manifest": "docs/gates/phase-9.5-artifacts.json",
       "field": "sha256",
       "path": "resources/BFT_PartSmith_Implementation_Spec.md",
-      "previous_sha256": "e50eb21a9837d6b33878bf23897bd5aedbbd9dc406d465f488846a9a331a5d05",
-      "new_sha256": "43fb82cb0f4c79b0db397ef17a81b84d786971bd2701c92475323c43f5df0460"
+      "previous_sha256": "43fb82cb0f4c79b0db397ef17a81b84d786971bd2701c92475323c43f5df0460",
+      "new_sha256": "279eee3ed3098966c5a844edb2b809d7b0c9d30cb45e2ba4df6a2841c9b620d5"
     },
     {
       "manifest": "docs/gates/phase-11-artifacts.json",
       "field": "sha256",
       "path": "docs/gates/phase-10-artifacts.json",
-      "previous_sha256": "f772a2dde9cd6fc1d4aef9c78c344e80eb13b9eaf1c4e9dc795fdc08a5074721",
-      "new_sha256": "566e3126aa7b7a2cfed7791c259ef93d7a9c9d7a9446a49231c4ef83405b066c"
+      "previous_sha256": "566e3126aa7b7a2cfed7791c259ef93d7a9c9d7a9446a49231c4ef83405b066c",
+      "new_sha256": "6160c1d057b8d00a369ea598c6ea8680ccdd6a5c93e0a428101c2f268f6d91ef"
+    },
+    {
+      "manifest": "docs/gates/phase-11-artifacts.json",
+      "field": "sha256",
+      "path": "docs/gates/phase-6-artifacts.json",
+      "previous_sha256": "bd4a846738f1afd62c1a82311cd01537f59163bfc2e1844f9ba8e8c03959dd7b",
+      "new_sha256": "f73cd295cd10740031f3825362c28894ad691daac07fd8920268edef4eb884c9"
     },
     {
       "manifest": "docs/gates/phase-11-artifacts.json",
       "field": "sha256",
       "path": "docs/gates/phase-8-artifacts.json",
-      "previous_sha256": "a14952dcb2048d446f99e6f01c39feb4ebb5234bbb3d5d344e25f16394233251",
-      "new_sha256": "37fc74e06c5d40f6f7669e5c077298b8fea5aeaafe86b96f9127ead713a7dcb9"
+      "previous_sha256": "37fc74e06c5d40f6f7669e5c077298b8fea5aeaafe86b96f9127ead713a7dcb9",
+      "new_sha256": "5f713fe9d4a5951865c1c41cf3edde39188301e710a9de87771111abb94120ae"
     },
     {
       "manifest": "docs/gates/phase-11-artifacts.json",
       "field": "sha256",
       "path": "docs/gates/phase-9-artifacts.json",
-      "previous_sha256": "e28a63c48f7f9fe5fcafaf97efe265b06da4a0ff75e185ed200628b967249103",
-      "new_sha256": "798862adc17d79557ced98b8c35acf5fc9fa6c93855653e3932d44637910b2f5"
+      "previous_sha256": "798862adc17d79557ced98b8c35acf5fc9fa6c93855653e3932d44637910b2f5",
+      "new_sha256": "02cdc45a882de07d73b017813e4a80c8a56669c603262263d6a47dffad87620a"
     },
     {
       "manifest": "docs/gates/phase-11-artifacts.json",
       "field": "sha256",
       "path": "docs/gates/phase-9.5-artifacts.json",
-      "previous_sha256": "d1469d8f08429584fea0622e02898f07a9f979b15181c7da44776d76d2e1fd8b",
-      "new_sha256": "e7d818fb9bd999155e78b45c99fdd55a0273d8ffbdb7f6f006f191fc3329d102"
+      "previous_sha256": "e7d818fb9bd999155e78b45c99fdd55a0273d8ffbdb7f6f006f191fc3329d102",
+      "new_sha256": "cd3f9e420764330fb54b3fa5b665e87e52d4da2a2af2034beea249c4c809255a"
+    },
+    {
+      "manifest": "docs/gates/phase-11-artifacts.json",
+      "field": "sha256",
+      "path": "pyproject.toml",
+      "previous_sha256": "4cb461dcf646b7b46340bfcad88892c3aee25d4819abb3bc4bf75c60e83d0613",
+      "new_sha256": "8d37ccc6843a091b9d50943def64d00b47197a64f7e0081cd78c1a7b8cf0867c"
     },
     {
       "manifest": "docs/gates/phase-11-artifacts.json",
       "field": "sha256",
       "path": "README.md",
-      "previous_sha256": "a2e6f94eb9fa6b3eff20d2c73e2555fceebd1702828894d1e987f44fd1b886fc",
-      "new_sha256": "1c6349802529f78a88985ffc335d47760ecba7eda647be91f8871f4a0935acfe"
+      "previous_sha256": "1c6349802529f78a88985ffc335d47760ecba7eda647be91f8871f4a0935acfe",
+      "new_sha256": "1130c671963b7ccf32f70e7cd8f52d4a0be93b7380aeca0d27c1bc9ef8e4c985"
     },
     {
       "manifest": "docs/gates/phase-11-artifacts.json",
       "field": "sha256",
       "path": "resources/BFT_PartSmith_Implementation_Spec.md",
-      "previous_sha256": "e50eb21a9837d6b33878bf23897bd5aedbbd9dc406d465f488846a9a331a5d05",
-      "new_sha256": "43fb82cb0f4c79b0db397ef17a81b84d786971bd2701c92475323c43f5df0460"
+      "previous_sha256": "43fb82cb0f4c79b0db397ef17a81b84d786971bd2701c92475323c43f5df0460",
+      "new_sha256": "279eee3ed3098966c5a844edb2b809d7b0c9d30cb45e2ba4df6a2841c9b620d5"
+    },
+    {
+      "manifest": "docs/gates/phase-11-finding-fixes-2026-10-04.json",
+      "field": "sha256",
+      "path": "pyproject.toml",
+      "previous_sha256": "4cb461dcf646b7b46340bfcad88892c3aee25d4819abb3bc4bf75c60e83d0613",
+      "new_sha256": "8d37ccc6843a091b9d50943def64d00b47197a64f7e0081cd78c1a7b8cf0867c"
     },
     {
       "manifest": "docs/gates/phase-11-finding-fixes-2026-10-04.json",
       "field": "sha256",
       "path": "resources/BFT_PartSmith_Implementation_Spec.md",
-      "previous_sha256": "e50eb21a9837d6b33878bf23897bd5aedbbd9dc406d465f488846a9a331a5d05",
-      "new_sha256": "43fb82cb0f4c79b0db397ef17a81b84d786971bd2701c92475323c43f5df0460"
+      "previous_sha256": "43fb82cb0f4c79b0db397ef17a81b84d786971bd2701c92475323c43f5df0460",
+      "new_sha256": "279eee3ed3098966c5a844edb2b809d7b0c9d30cb45e2ba4df6a2841c9b620d5"
     },
     {
       "manifest": "docs/gates/phase-12-finding-fixes-2026-10-05.json",
       "field": "sha256",
-      "path": ".gitattributes",
-      "previous_sha256": "857c38fecbfd69ef13acedce1c2da273b8b417fefe4ce6a1199a98b8b7422053",
-      "new_sha256": "32311e453a19a84e40a077156faa10b1f6f09c85127c0e3d14acd0208cdece32"
+      "path": ".github/workflows/ci.yml",
+      "previous_sha256": "2f676be607172e21533480ed50cbacf9cf3b27bd0e640898326ecc3a4d4ccf25",
+      "new_sha256": "f94adf3fa9575bb6fc26fe538c874a1b81e153c8244de230c1c541230cc23b0b"
     },
     {
       "manifest": "docs/gates/phase-12-finding-fixes-2026-10-05.json",
       "field": "sha256",
       "path": "README.md",
-      "previous_sha256": "a2e6f94eb9fa6b3eff20d2c73e2555fceebd1702828894d1e987f44fd1b886fc",
-      "new_sha256": "1c6349802529f78a88985ffc335d47760ecba7eda647be91f8871f4a0935acfe"
+      "previous_sha256": "1c6349802529f78a88985ffc335d47760ecba7eda647be91f8871f4a0935acfe",
+      "new_sha256": "1130c671963b7ccf32f70e7cd8f52d4a0be93b7380aeca0d27c1bc9ef8e4c985"
     },
     {
       "manifest": "docs/gates/phase-12-finding-fixes-2026-10-05.json",
       "field": "sha256",
       "path": "docs/gates/phase-10-parser-fix-2026-10-04.json",
-      "previous_sha256": "47d032495fae5122afa23febcaa89899e7ac01bb168f0a01ad9c60b4103536eb",
-      "new_sha256": "5607f10828b8065034020297ea21382fecd4ab7ef2393bc323ecfa6d45c7e131"
+      "previous_sha256": "5607f10828b8065034020297ea21382fecd4ab7ef2393bc323ecfa6d45c7e131",
+      "new_sha256": "0ed2463c8ff78e085b275191976d9fd82bd41c18508db055d07d42c5bbeed0e7"
+    },
+    {
+      "manifest": "docs/gates/phase-12-finding-fixes-2026-10-05.json",
+      "field": "sha256",
+      "path": "pyproject.toml",
+      "previous_sha256": "4cb461dcf646b7b46340bfcad88892c3aee25d4819abb3bc4bf75c60e83d0613",
+      "new_sha256": "8d37ccc6843a091b9d50943def64d00b47197a64f7e0081cd78c1a7b8cf0867c"
     },
     {
       "manifest": "docs/gates/phase-12-finding-fixes-2026-10-05.json",
       "field": "sha256",
       "path": "resources/BFT_PartSmith_Implementation_Spec.md",
-      "previous_sha256": "e50eb21a9837d6b33878bf23897bd5aedbbd9dc406d465f488846a9a331a5d05",
-      "new_sha256": "43fb82cb0f4c79b0db397ef17a81b84d786971bd2701c92475323c43f5df0460"
+      "previous_sha256": "43fb82cb0f4c79b0db397ef17a81b84d786971bd2701c92475323c43f5df0460",
+      "new_sha256": "279eee3ed3098966c5a844edb2b809d7b0c9d30cb45e2ba4df6a2841c9b620d5"
+    },
+    {
+      "manifest": "docs/gates/phase-12-finding-fixes-2026-10-05.json",
+      "field": "sha256",
+      "path": "src/partsmith/footprint/model.py",
+      "previous_sha256": "d35e31afcab8481d285d81333fb41b764d7fbd874c978c1e366b2efad183767b",
+      "new_sha256": "da8bbf092197a7a0e8aca567ad03535e8ee0cbebf201ff6f6c450ca211efeb84"
+    },
+    {
+      "manifest": "docs/gates/phase-12-finding-fixes-2026-10-05.json",
+      "field": "sha256",
+      "path": "src/partsmith/kicad/runtime.py",
+      "previous_sha256": "394547da4d5bb2e051d1ce6bf5e23403f725409120e884d9f6dfbb075c3ff238",
+      "new_sha256": "4df1d8d5398791bb649d57c4d2dd0e18c4da49abff67f5199fb309bfcea8707a"
+    },
+    {
+      "manifest": "docs/gates/phase-12-finding-fixes-2026-10-05.json",
+      "field": "sha256",
+      "path": "src/partsmith/process.py",
+      "previous_sha256": "fbded159d2cc37170577eff284a274a1e8a9fe4e636433dcc8da0296c1b4e128",
+      "new_sha256": "70dbe221de94ffc82ef2bcb73d13b77025cdd6839255b3c55de50cc98d9f5916"
+    },
+    {
+      "manifest": "docs/gates/phase-12-finding-fixes-2026-10-05.json",
+      "field": "sha256",
+      "path": "src/partsmith/release/replay.py",
+      "previous_sha256": "c75cfb6d10e9b28a62dc8c8854a37e73cc9488f78fe63eb9b14a77a8016a5af5",
+      "new_sha256": "17f1f1ed6e27a29e78a4f085e80701d869f82285713c19fef51cac1d938560f4"
+    },
+    {
+      "manifest": "docs/gates/phase-12-finding-fixes-2026-10-05.json",
+      "field": "sha256",
+      "path": "src/partsmith/release/runtime.py",
+      "previous_sha256": "ae7bdb59343379e0478aa3301939cffd1468081059cf539279f38fde3cce8d00",
+      "new_sha256": "7561ee2a3f2123e7d0be31ab4d0944bdb17dae37dd2be672cb2e079e2cbed4a8"
+    },
+    {
+      "manifest": "docs/gates/phase-2-ir-1.1-artifacts.json",
+      "field": "sha256",
+      "path": ".github/workflows/ci.yml",
+      "previous_sha256": "2f676be607172e21533480ed50cbacf9cf3b27bd0e640898326ecc3a4d4ccf25",
+      "new_sha256": "f94adf3fa9575bb6fc26fe538c874a1b81e153c8244de230c1c541230cc23b0b"
     },
     {
       "manifest": "docs/gates/phase-2-ir-1.1-artifacts.json",
       "field": "sha256",
       "path": "README.md",
-      "previous_sha256": "a2e6f94eb9fa6b3eff20d2c73e2555fceebd1702828894d1e987f44fd1b886fc",
-      "new_sha256": "1c6349802529f78a88985ffc335d47760ecba7eda647be91f8871f4a0935acfe"
+      "previous_sha256": "1c6349802529f78a88985ffc335d47760ecba7eda647be91f8871f4a0935acfe",
+      "new_sha256": "1130c671963b7ccf32f70e7cd8f52d4a0be93b7380aeca0d27c1bc9ef8e4c985"
+    },
+    {
+      "manifest": "docs/gates/phase-2-ir-1.1-artifacts.json",
+      "field": "sha256",
+      "path": "pyproject.toml",
+      "previous_sha256": "4cb461dcf646b7b46340bfcad88892c3aee25d4819abb3bc4bf75c60e83d0613",
+      "new_sha256": "8d37ccc6843a091b9d50943def64d00b47197a64f7e0081cd78c1a7b8cf0867c"
     },
     {
       "manifest": "docs/gates/phase-2-ir-1.1-artifacts.json",
       "field": "sha256",
       "path": "resources/BFT_PartSmith_Implementation_Spec.md",
-      "previous_sha256": "e50eb21a9837d6b33878bf23897bd5aedbbd9dc406d465f488846a9a331a5d05",
-      "new_sha256": "43fb82cb0f4c79b0db397ef17a81b84d786971bd2701c92475323c43f5df0460"
+      "previous_sha256": "43fb82cb0f4c79b0db397ef17a81b84d786971bd2701c92475323c43f5df0460",
+      "new_sha256": "279eee3ed3098966c5a844edb2b809d7b0c9d30cb45e2ba4df6a2841c9b620d5"
+    },
+    {
+      "manifest": "docs/gates/phase-2-ir-1.2-artifacts.json",
+      "field": "sha256",
+      "path": ".github/workflows/ci.yml",
+      "previous_sha256": "2f676be607172e21533480ed50cbacf9cf3b27bd0e640898326ecc3a4d4ccf25",
+      "new_sha256": "f94adf3fa9575bb6fc26fe538c874a1b81e153c8244de230c1c541230cc23b0b"
     },
     {
       "manifest": "docs/gates/phase-2-ir-1.2-artifacts.json",
       "field": "sha256",
       "path": "README.md",
-      "previous_sha256": "a2e6f94eb9fa6b3eff20d2c73e2555fceebd1702828894d1e987f44fd1b886fc",
-      "new_sha256": "1c6349802529f78a88985ffc335d47760ecba7eda647be91f8871f4a0935acfe"
+      "previous_sha256": "1c6349802529f78a88985ffc335d47760ecba7eda647be91f8871f4a0935acfe",
+      "new_sha256": "1130c671963b7ccf32f70e7cd8f52d4a0be93b7380aeca0d27c1bc9ef8e4c985"
+    },
+    {
+      "manifest": "docs/gates/phase-2-ir-1.2-artifacts.json",
+      "field": "sha256",
+      "path": "pyproject.toml",
+      "previous_sha256": "4cb461dcf646b7b46340bfcad88892c3aee25d4819abb3bc4bf75c60e83d0613",
+      "new_sha256": "8d37ccc6843a091b9d50943def64d00b47197a64f7e0081cd78c1a7b8cf0867c"
     },
     {
       "manifest": "docs/gates/phase-2-ir-1.2-artifacts.json",
       "field": "sha256",
       "path": "resources/BFT_PartSmith_Implementation_Spec.md",
-      "previous_sha256": "e50eb21a9837d6b33878bf23897bd5aedbbd9dc406d465f488846a9a331a5d05",
-      "new_sha256": "43fb82cb0f4c79b0db397ef17a81b84d786971bd2701c92475323c43f5df0460"
+      "previous_sha256": "43fb82cb0f4c79b0db397ef17a81b84d786971bd2701c92475323c43f5df0460",
+      "new_sha256": "279eee3ed3098966c5a844edb2b809d7b0c9d30cb45e2ba4df6a2841c9b620d5"
     },
     {
       "manifest": "docs/gates/phase-2-v0.9.6-artifacts.json",
       "field": "sha256",
-      "path": ".gitattributes",
-      "previous_sha256": "857c38fecbfd69ef13acedce1c2da273b8b417fefe4ce6a1199a98b8b7422053",
-      "new_sha256": "32311e453a19a84e40a077156faa10b1f6f09c85127c0e3d14acd0208cdece32"
+      "path": ".github/workflows/ci.yml",
+      "previous_sha256": "2f676be607172e21533480ed50cbacf9cf3b27bd0e640898326ecc3a4d4ccf25",
+      "new_sha256": "f94adf3fa9575bb6fc26fe538c874a1b81e153c8244de230c1c541230cc23b0b"
+    },
+    {
+      "manifest": "docs/gates/phase-2-v0.9.6-artifacts.json",
+      "field": "sha256",
+      "path": "pyproject.toml",
+      "previous_sha256": "4cb461dcf646b7b46340bfcad88892c3aee25d4819abb3bc4bf75c60e83d0613",
+      "new_sha256": "8d37ccc6843a091b9d50943def64d00b47197a64f7e0081cd78c1a7b8cf0867c"
     },
     {
       "manifest": "docs/gates/phase-2-v0.9.6-artifacts.json",
       "field": "sha256",
       "path": "README.md",
-      "previous_sha256": "a2e6f94eb9fa6b3eff20d2c73e2555fceebd1702828894d1e987f44fd1b886fc",
-      "new_sha256": "1c6349802529f78a88985ffc335d47760ecba7eda647be91f8871f4a0935acfe"
+      "previous_sha256": "1c6349802529f78a88985ffc335d47760ecba7eda647be91f8871f4a0935acfe",
+      "new_sha256": "1130c671963b7ccf32f70e7cd8f52d4a0be93b7380aeca0d27c1bc9ef8e4c985"
     },
     {
       "manifest": "docs/gates/phase-2-v0.9.6-artifacts.json",
       "field": "sha256",
       "path": "resources/BFT_PartSmith_Implementation_Spec.md",
-      "previous_sha256": "e50eb21a9837d6b33878bf23897bd5aedbbd9dc406d465f488846a9a331a5d05",
-      "new_sha256": "43fb82cb0f4c79b0db397ef17a81b84d786971bd2701c92475323c43f5df0460"
+      "previous_sha256": "43fb82cb0f4c79b0db397ef17a81b84d786971bd2701c92475323c43f5df0460",
+      "new_sha256": "279eee3ed3098966c5a844edb2b809d7b0c9d30cb45e2ba4df6a2841c9b620d5"
     },
     {
       "manifest": "docs/gates/phase-3-artifacts.json",
       "field": "sha256",
-      "path": ".gitattributes",
-      "previous_sha256": "857c38fecbfd69ef13acedce1c2da273b8b417fefe4ce6a1199a98b8b7422053",
-      "new_sha256": "32311e453a19a84e40a077156faa10b1f6f09c85127c0e3d14acd0208cdece32"
+      "path": ".github/workflows/ci.yml",
+      "previous_sha256": "2f676be607172e21533480ed50cbacf9cf3b27bd0e640898326ecc3a4d4ccf25",
+      "new_sha256": "f94adf3fa9575bb6fc26fe538c874a1b81e153c8244de230c1c541230cc23b0b"
     },
     {
       "manifest": "docs/gates/phase-3-artifacts.json",
       "field": "sha256",
       "path": "README.md",
-      "previous_sha256": "a2e6f94eb9fa6b3eff20d2c73e2555fceebd1702828894d1e987f44fd1b886fc",
-      "new_sha256": "1c6349802529f78a88985ffc335d47760ecba7eda647be91f8871f4a0935acfe"
+      "previous_sha256": "1c6349802529f78a88985ffc335d47760ecba7eda647be91f8871f4a0935acfe",
+      "new_sha256": "1130c671963b7ccf32f70e7cd8f52d4a0be93b7380aeca0d27c1bc9ef8e4c985"
+    },
+    {
+      "manifest": "docs/gates/phase-3-artifacts.json",
+      "field": "sha256",
+      "path": "pyproject.toml",
+      "previous_sha256": "4cb461dcf646b7b46340bfcad88892c3aee25d4819abb3bc4bf75c60e83d0613",
+      "new_sha256": "8d37ccc6843a091b9d50943def64d00b47197a64f7e0081cd78c1a7b8cf0867c"
     },
     {
       "manifest": "docs/gates/phase-3-artifacts.json",
       "field": "sha256",
       "path": "resources/BFT_PartSmith_Implementation_Spec.md",
-      "previous_sha256": "e50eb21a9837d6b33878bf23897bd5aedbbd9dc406d465f488846a9a331a5d05",
-      "new_sha256": "43fb82cb0f4c79b0db397ef17a81b84d786971bd2701c92475323c43f5df0460"
+      "previous_sha256": "43fb82cb0f4c79b0db397ef17a81b84d786971bd2701c92475323c43f5df0460",
+      "new_sha256": "279eee3ed3098966c5a844edb2b809d7b0c9d30cb45e2ba4df6a2841c9b620d5"
     },
     {
       "manifest": "docs/gates/phase-12.1-artifacts.json",
       "field": "sha256",
-      "path": ".gitattributes",
-      "previous_sha256": "857c38fecbfd69ef13acedce1c2da273b8b417fefe4ce6a1199a98b8b7422053",
-      "new_sha256": "32311e453a19a84e40a077156faa10b1f6f09c85127c0e3d14acd0208cdece32"
+      "path": ".github/workflows/ci.yml",
+      "previous_sha256": "2f676be607172e21533480ed50cbacf9cf3b27bd0e640898326ecc3a4d4ccf25",
+      "new_sha256": "f94adf3fa9575bb6fc26fe538c874a1b81e153c8244de230c1c541230cc23b0b"
     },
     {
       "manifest": "docs/gates/phase-12.1-artifacts.json",
       "field": "sha256",
       "path": "README.md",
-      "previous_sha256": "a2e6f94eb9fa6b3eff20d2c73e2555fceebd1702828894d1e987f44fd1b886fc",
-      "new_sha256": "1c6349802529f78a88985ffc335d47760ecba7eda647be91f8871f4a0935acfe"
+      "previous_sha256": "1c6349802529f78a88985ffc335d47760ecba7eda647be91f8871f4a0935acfe",
+      "new_sha256": "1130c671963b7ccf32f70e7cd8f52d4a0be93b7380aeca0d27c1bc9ef8e4c985"
     },
     {
       "manifest": "docs/gates/phase-12.1-artifacts.json",
       "field": "sha256",
       "path": "docs/gates/phase-10-artifacts.json",
-      "previous_sha256": "f772a2dde9cd6fc1d4aef9c78c344e80eb13b9eaf1c4e9dc795fdc08a5074721",
-      "new_sha256": "566e3126aa7b7a2cfed7791c259ef93d7a9c9d7a9446a49231c4ef83405b066c"
+      "previous_sha256": "566e3126aa7b7a2cfed7791c259ef93d7a9c9d7a9446a49231c4ef83405b066c",
+      "new_sha256": "6160c1d057b8d00a369ea598c6ea8680ccdd6a5c93e0a428101c2f268f6d91ef"
     },
     {
       "manifest": "docs/gates/phase-12.1-artifacts.json",
       "field": "sha256",
       "path": "docs/gates/phase-10-parser-fix-2026-10-04.json",
-      "previous_sha256": "47d032495fae5122afa23febcaa89899e7ac01bb168f0a01ad9c60b4103536eb",
-      "new_sha256": "5607f10828b8065034020297ea21382fecd4ab7ef2393bc323ecfa6d45c7e131"
+      "previous_sha256": "5607f10828b8065034020297ea21382fecd4ab7ef2393bc323ecfa6d45c7e131",
+      "new_sha256": "0ed2463c8ff78e085b275191976d9fd82bd41c18508db055d07d42c5bbeed0e7"
     },
     {
       "manifest": "docs/gates/phase-12.1-artifacts.json",
       "field": "sha256",
       "path": "docs/gates/phase-11-artifacts.json",
-      "previous_sha256": "e831a3f0bf549a14eff330f2c58943f5b3c04c0215f29abacbde6eec14c68ac9",
-      "new_sha256": "e8b984f4de520ae9b2b3cff38b48ab9fc365e8236212be972918750b600273bd"
+      "previous_sha256": "e8b984f4de520ae9b2b3cff38b48ab9fc365e8236212be972918750b600273bd",
+      "new_sha256": "aded82b31c2e5ddd51c144a604a34e01923ed98659c56dcd024b0ef5169e2a8e"
     },
     {
       "manifest": "docs/gates/phase-12.1-artifacts.json",
       "field": "sha256",
       "path": "docs/gates/phase-11-finding-fixes-2026-10-04.json",
-      "previous_sha256": "1a8cafc585754619f0be9116fca6c109bf2d6a6988fe6be66f69ca583f92bb8f",
-      "new_sha256": "b133524426a6d9d3e6613eebe2a322cfbb51e43e9c1472f3c7d5625a7733db25"
+      "previous_sha256": "b133524426a6d9d3e6613eebe2a322cfbb51e43e9c1472f3c7d5625a7733db25",
+      "new_sha256": "4a07c960685b38fde653f41abc75710c61e00caad60ec6df0c7c8ddff3f6a9f0"
     },
     {
       "manifest": "docs/gates/phase-12.1-artifacts.json",
       "field": "sha256",
       "path": "docs/gates/phase-2-ir-1.1-artifacts.json",
-      "previous_sha256": "1fac7ee94551d61728384053cc99427a93d43039a4425c96dfc55fba9686f9ca",
-      "new_sha256": "537e976c664b56f13a2b463b03b12238936c9d1944d2cac8405b6c2b5494f5f4"
+      "previous_sha256": "537e976c664b56f13a2b463b03b12238936c9d1944d2cac8405b6c2b5494f5f4",
+      "new_sha256": "6a92fcb629b7fef08a62d46a3c4ef482d42c2b547b500adb1c5bad730d821c31"
     },
     {
       "manifest": "docs/gates/phase-12.1-artifacts.json",
       "field": "sha256",
       "path": "docs/gates/phase-2-ir-1.2-artifacts.json",
-      "previous_sha256": "4d51db19bbc6935cddf80d95f5c8e1bbab540dc4457e5d113898d811f1651aa9",
-      "new_sha256": "82f74df7eca3564095175a52b2b100c622aa133cac23cc44eccb4ad669a27cb0"
+      "previous_sha256": "82f74df7eca3564095175a52b2b100c622aa133cac23cc44eccb4ad669a27cb0",
+      "new_sha256": "911cd06f3f084ee6473cab74b46fdf3c646e6286b271527cee8023d915baf08a"
     },
     {
       "manifest": "docs/gates/phase-12.1-artifacts.json",
       "field": "sha256",
       "path": "docs/gates/phase-2-v0.9.6-artifacts.json",
-      "previous_sha256": "079acbffe5d306bac05596a0d8ac17d48451d3cec45508ba9ba0de075ac96cfe",
-      "new_sha256": "d1b28466559282e30ce8b0015dc3797708020a86f3782b09e10653d9dacf8cb5"
+      "previous_sha256": "d1b28466559282e30ce8b0015dc3797708020a86f3782b09e10653d9dacf8cb5",
+      "new_sha256": "2be097427a19f375ba0833176d75499cfe8c75993155be9d49adb51538704149"
     },
     {
       "manifest": "docs/gates/phase-12.1-artifacts.json",
       "field": "sha256",
       "path": "docs/gates/phase-3-artifacts.json",
-      "previous_sha256": "de7bc25d816554e03db110bde0c70d8262a516a4875a3b3a794c77ce74fe55fe",
-      "new_sha256": "25691d359db9c00025d3b2a2d321b111218801772524fec7fb5a34d8c19d44b6"
+      "previous_sha256": "25691d359db9c00025d3b2a2d321b111218801772524fec7fb5a34d8c19d44b6",
+      "new_sha256": "338e976506aebe0e4fae223ff67314ce49f6ac8a3a15bcf619c6f54d9ef2fa80"
+    },
+    {
+      "manifest": "docs/gates/phase-12.1-artifacts.json",
+      "field": "sha256",
+      "path": "docs/gates/phase-6-artifacts.json",
+      "previous_sha256": "bd4a846738f1afd62c1a82311cd01537f59163bfc2e1844f9ba8e8c03959dd7b",
+      "new_sha256": "f73cd295cd10740031f3825362c28894ad691daac07fd8920268edef4eb884c9"
     },
     {
       "manifest": "docs/gates/phase-12.1-artifacts.json",
       "field": "sha256",
       "path": "docs/gates/phase-8-artifacts.json",
-      "previous_sha256": "a14952dcb2048d446f99e6f01c39feb4ebb5234bbb3d5d344e25f16394233251",
-      "new_sha256": "37fc74e06c5d40f6f7669e5c077298b8fea5aeaafe86b96f9127ead713a7dcb9"
+      "previous_sha256": "37fc74e06c5d40f6f7669e5c077298b8fea5aeaafe86b96f9127ead713a7dcb9",
+      "new_sha256": "5f713fe9d4a5951865c1c41cf3edde39188301e710a9de87771111abb94120ae"
     },
     {
       "manifest": "docs/gates/phase-12.1-artifacts.json",
       "field": "sha256",
       "path": "docs/gates/phase-9-artifacts.json",
-      "previous_sha256": "e28a63c48f7f9fe5fcafaf97efe265b06da4a0ff75e185ed200628b967249103",
-      "new_sha256": "798862adc17d79557ced98b8c35acf5fc9fa6c93855653e3932d44637910b2f5"
+      "previous_sha256": "798862adc17d79557ced98b8c35acf5fc9fa6c93855653e3932d44637910b2f5",
+      "new_sha256": "02cdc45a882de07d73b017813e4a80c8a56669c603262263d6a47dffad87620a"
     },
     {
       "manifest": "docs/gates/phase-12.1-artifacts.json",
       "field": "sha256",
       "path": "docs/gates/phase-9.5-artifacts.json",
-      "previous_sha256": "d1469d8f08429584fea0622e02898f07a9f979b15181c7da44776d76d2e1fd8b",
-      "new_sha256": "e7d818fb9bd999155e78b45c99fdd55a0273d8ffbdb7f6f006f191fc3329d102"
+      "previous_sha256": "e7d818fb9bd999155e78b45c99fdd55a0273d8ffbdb7f6f006f191fc3329d102",
+      "new_sha256": "cd3f9e420764330fb54b3fa5b665e87e52d4da2a2af2034beea249c4c809255a"
+    },
+    {
+      "manifest": "docs/gates/phase-12.1-artifacts.json",
+      "field": "sha256",
+      "path": "pyproject.toml",
+      "previous_sha256": "4cb461dcf646b7b46340bfcad88892c3aee25d4819abb3bc4bf75c60e83d0613",
+      "new_sha256": "8d37ccc6843a091b9d50943def64d00b47197a64f7e0081cd78c1a7b8cf0867c"
     },
     {
       "manifest": "docs/gates/phase-12.1-artifacts.json",
       "field": "sha256",
       "path": "resources/BFT_PartSmith_Implementation_Spec.md",
-      "previous_sha256": "e50eb21a9837d6b33878bf23897bd5aedbbd9dc406d465f488846a9a331a5d05",
-      "new_sha256": "43fb82cb0f4c79b0db397ef17a81b84d786971bd2701c92475323c43f5df0460"
+      "previous_sha256": "43fb82cb0f4c79b0db397ef17a81b84d786971bd2701c92475323c43f5df0460",
+      "new_sha256": "279eee3ed3098966c5a844edb2b809d7b0c9d30cb45e2ba4df6a2841c9b620d5"
     },
     {
       "manifest": "docs/gates/phase-12-readiness-review-2026-10-05.json",
       "field": "sha256",
-      "path": ".gitattributes",
-      "previous_sha256": "857c38fecbfd69ef13acedce1c2da273b8b417fefe4ce6a1199a98b8b7422053",
-      "new_sha256": "32311e453a19a84e40a077156faa10b1f6f09c85127c0e3d14acd0208cdece32"
+      "path": ".github/workflows/ci.yml",
+      "previous_sha256": "2f676be607172e21533480ed50cbacf9cf3b27bd0e640898326ecc3a4d4ccf25",
+      "new_sha256": "f94adf3fa9575bb6fc26fe538c874a1b81e153c8244de230c1c541230cc23b0b"
     },
     {
       "manifest": "docs/gates/phase-12-readiness-review-2026-10-05.json",
       "field": "sha256",
       "path": "README.md",
-      "previous_sha256": "a2e6f94eb9fa6b3eff20d2c73e2555fceebd1702828894d1e987f44fd1b886fc",
-      "new_sha256": "1c6349802529f78a88985ffc335d47760ecba7eda647be91f8871f4a0935acfe"
+      "previous_sha256": "1c6349802529f78a88985ffc335d47760ecba7eda647be91f8871f4a0935acfe",
+      "new_sha256": "1130c671963b7ccf32f70e7cd8f52d4a0be93b7380aeca0d27c1bc9ef8e4c985"
     },
     {
       "manifest": "docs/gates/phase-12-readiness-review-2026-10-05.json",
       "field": "sha256",
       "path": "docs/gates/phase-10-artifacts.json",
-      "previous_sha256": "f772a2dde9cd6fc1d4aef9c78c344e80eb13b9eaf1c4e9dc795fdc08a5074721",
-      "new_sha256": "566e3126aa7b7a2cfed7791c259ef93d7a9c9d7a9446a49231c4ef83405b066c"
+      "previous_sha256": "566e3126aa7b7a2cfed7791c259ef93d7a9c9d7a9446a49231c4ef83405b066c",
+      "new_sha256": "6160c1d057b8d00a369ea598c6ea8680ccdd6a5c93e0a428101c2f268f6d91ef"
     },
     {
       "manifest": "docs/gates/phase-12-readiness-review-2026-10-05.json",
       "field": "sha256",
       "path": "docs/gates/phase-10-parser-fix-2026-10-04.json",
-      "previous_sha256": "47d032495fae5122afa23febcaa89899e7ac01bb168f0a01ad9c60b4103536eb",
-      "new_sha256": "5607f10828b8065034020297ea21382fecd4ab7ef2393bc323ecfa6d45c7e131"
+      "previous_sha256": "5607f10828b8065034020297ea21382fecd4ab7ef2393bc323ecfa6d45c7e131",
+      "new_sha256": "0ed2463c8ff78e085b275191976d9fd82bd41c18508db055d07d42c5bbeed0e7"
     },
     {
       "manifest": "docs/gates/phase-12-readiness-review-2026-10-05.json",
       "field": "sha256",
       "path": "docs/gates/phase-11-artifacts.json",
-      "previous_sha256": "e831a3f0bf549a14eff330f2c58943f5b3c04c0215f29abacbde6eec14c68ac9",
-      "new_sha256": "e8b984f4de520ae9b2b3cff38b48ab9fc365e8236212be972918750b600273bd"
+      "previous_sha256": "e8b984f4de520ae9b2b3cff38b48ab9fc365e8236212be972918750b600273bd",
+      "new_sha256": "aded82b31c2e5ddd51c144a604a34e01923ed98659c56dcd024b0ef5169e2a8e"
     },
     {
       "manifest": "docs/gates/phase-12-readiness-review-2026-10-05.json",
       "field": "sha256",
       "path": "docs/gates/phase-11-finding-fixes-2026-10-04.json",
-      "previous_sha256": "1a8cafc585754619f0be9116fca6c109bf2d6a6988fe6be66f69ca583f92bb8f",
-      "new_sha256": "b133524426a6d9d3e6613eebe2a322cfbb51e43e9c1472f3c7d5625a7733db25"
+      "previous_sha256": "b133524426a6d9d3e6613eebe2a322cfbb51e43e9c1472f3c7d5625a7733db25",
+      "new_sha256": "4a07c960685b38fde653f41abc75710c61e00caad60ec6df0c7c8ddff3f6a9f0"
     },
     {
       "manifest": "docs/gates/phase-12-readiness-review-2026-10-05.json",
       "field": "sha256",
       "path": "docs/gates/phase-12.1-artifacts.json",
-      "previous_sha256": "fd8306dc13099c6aeb0e4d587caab1e800f8e36202d850d198fd03844ea89997",
-      "new_sha256": "1e6db76cbe29ac1ddbc7ec45102b753b155ad47097bd245ae7336a4c124292ee"
+      "previous_sha256": "1e6db76cbe29ac1ddbc7ec45102b753b155ad47097bd245ae7336a4c124292ee",
+      "new_sha256": "3d1eaecb7a75373fc0ca29ce338bf68a56d7a179662ce7958752d553bf5f26c9"
     },
     {
       "manifest": "docs/gates/phase-12-readiness-review-2026-10-05.json",
       "field": "sha256",
       "path": "docs/gates/phase-2-ir-1.1-artifacts.json",
-      "previous_sha256": "1fac7ee94551d61728384053cc99427a93d43039a4425c96dfc55fba9686f9ca",
-      "new_sha256": "537e976c664b56f13a2b463b03b12238936c9d1944d2cac8405b6c2b5494f5f4"
+      "previous_sha256": "537e976c664b56f13a2b463b03b12238936c9d1944d2cac8405b6c2b5494f5f4",
+      "new_sha256": "6a92fcb629b7fef08a62d46a3c4ef482d42c2b547b500adb1c5bad730d821c31"
     },
     {
       "manifest": "docs/gates/phase-12-readiness-review-2026-10-05.json",
       "field": "sha256",
       "path": "docs/gates/phase-2-ir-1.2-artifacts.json",
-      "previous_sha256": "4d51db19bbc6935cddf80d95f5c8e1bbab540dc4457e5d113898d811f1651aa9",
-      "new_sha256": "82f74df7eca3564095175a52b2b100c622aa133cac23cc44eccb4ad669a27cb0"
+      "previous_sha256": "82f74df7eca3564095175a52b2b100c622aa133cac23cc44eccb4ad669a27cb0",
+      "new_sha256": "911cd06f3f084ee6473cab74b46fdf3c646e6286b271527cee8023d915baf08a"
     },
     {
       "manifest": "docs/gates/phase-12-readiness-review-2026-10-05.json",
       "field": "sha256",
       "path": "docs/gates/phase-2-v0.9.6-artifacts.json",
-      "previous_sha256": "079acbffe5d306bac05596a0d8ac17d48451d3cec45508ba9ba0de075ac96cfe",
-      "new_sha256": "d1b28466559282e30ce8b0015dc3797708020a86f3782b09e10653d9dacf8cb5"
+      "previous_sha256": "d1b28466559282e30ce8b0015dc3797708020a86f3782b09e10653d9dacf8cb5",
+      "new_sha256": "2be097427a19f375ba0833176d75499cfe8c75993155be9d49adb51538704149"
     },
     {
       "manifest": "docs/gates/phase-12-readiness-review-2026-10-05.json",
       "field": "sha256",
       "path": "docs/gates/phase-3-artifacts.json",
-      "previous_sha256": "de7bc25d816554e03db110bde0c70d8262a516a4875a3b3a794c77ce74fe55fe",
-      "new_sha256": "25691d359db9c00025d3b2a2d321b111218801772524fec7fb5a34d8c19d44b6"
+      "previous_sha256": "25691d359db9c00025d3b2a2d321b111218801772524fec7fb5a34d8c19d44b6",
+      "new_sha256": "338e976506aebe0e4fae223ff67314ce49f6ac8a3a15bcf619c6f54d9ef2fa80"
+    },
+    {
+      "manifest": "docs/gates/phase-12-readiness-review-2026-10-05.json",
+      "field": "sha256",
+      "path": "docs/gates/phase-6-artifacts.json",
+      "previous_sha256": "bd4a846738f1afd62c1a82311cd01537f59163bfc2e1844f9ba8e8c03959dd7b",
+      "new_sha256": "f73cd295cd10740031f3825362c28894ad691daac07fd8920268edef4eb884c9"
     },
     {
       "manifest": "docs/gates/phase-12-readiness-review-2026-10-05.json",
       "field": "sha256",
       "path": "docs/gates/phase-8-artifacts.json",
-      "previous_sha256": "a14952dcb2048d446f99e6f01c39feb4ebb5234bbb3d5d344e25f16394233251",
-      "new_sha256": "37fc74e06c5d40f6f7669e5c077298b8fea5aeaafe86b96f9127ead713a7dcb9"
+      "previous_sha256": "37fc74e06c5d40f6f7669e5c077298b8fea5aeaafe86b96f9127ead713a7dcb9",
+      "new_sha256": "5f713fe9d4a5951865c1c41cf3edde39188301e710a9de87771111abb94120ae"
     },
     {
       "manifest": "docs/gates/phase-12-readiness-review-2026-10-05.json",
       "field": "sha256",
       "path": "docs/gates/phase-9-artifacts.json",
-      "previous_sha256": "e28a63c48f7f9fe5fcafaf97efe265b06da4a0ff75e185ed200628b967249103",
-      "new_sha256": "798862adc17d79557ced98b8c35acf5fc9fa6c93855653e3932d44637910b2f5"
+      "previous_sha256": "798862adc17d79557ced98b8c35acf5fc9fa6c93855653e3932d44637910b2f5",
+      "new_sha256": "02cdc45a882de07d73b017813e4a80c8a56669c603262263d6a47dffad87620a"
     },
     {
       "manifest": "docs/gates/phase-12-readiness-review-2026-10-05.json",
       "field": "sha256",
       "path": "docs/gates/phase-9.5-artifacts.json",
-      "previous_sha256": "d1469d8f08429584fea0622e02898f07a9f979b15181c7da44776d76d2e1fd8b",
-      "new_sha256": "e7d818fb9bd999155e78b45c99fdd55a0273d8ffbdb7f6f006f191fc3329d102"
+      "previous_sha256": "e7d818fb9bd999155e78b45c99fdd55a0273d8ffbdb7f6f006f191fc3329d102",
+      "new_sha256": "cd3f9e420764330fb54b3fa5b665e87e52d4da2a2af2034beea249c4c809255a"
+    },
+    {
+      "manifest": "docs/gates/phase-12-readiness-review-2026-10-05.json",
+      "field": "sha256",
+      "path": "pyproject.toml",
+      "previous_sha256": "4cb461dcf646b7b46340bfcad88892c3aee25d4819abb3bc4bf75c60e83d0613",
+      "new_sha256": "8d37ccc6843a091b9d50943def64d00b47197a64f7e0081cd78c1a7b8cf0867c"
     },
     {
       "manifest": "docs/gates/phase-12-readiness-review-2026-10-05.json",
       "field": "sha256",
       "path": "resources/BFT_PartSmith_Implementation_Spec.md",
-      "previous_sha256": "e50eb21a9837d6b33878bf23897bd5aedbbd9dc406d465f488846a9a331a5d05",
-      "new_sha256": "43fb82cb0f4c79b0db397ef17a81b84d786971bd2701c92475323c43f5df0460"
+      "previous_sha256": "43fb82cb0f4c79b0db397ef17a81b84d786971bd2701c92475323c43f5df0460",
+      "new_sha256": "279eee3ed3098966c5a844edb2b809d7b0c9d30cb45e2ba4df6a2841c9b620d5"
+    },
+    {
+      "manifest": "docs/gates/phase-12-readiness-review-2026-10-05.json",
+      "field": "sha256",
+      "path": "src/partsmith/footprint/model.py",
+      "previous_sha256": "d35e31afcab8481d285d81333fb41b764d7fbd874c978c1e366b2efad183767b",
+      "new_sha256": "da8bbf092197a7a0e8aca567ad03535e8ee0cbebf201ff6f6c450ca211efeb84"
+    },
+    {
+      "manifest": "docs/gates/phase-12-readiness-review-2026-10-05.json",
+      "field": "sha256",
+      "path": "src/partsmith/kicad/runtime.py",
+      "previous_sha256": "394547da4d5bb2e051d1ce6bf5e23403f725409120e884d9f6dfbb075c3ff238",
+      "new_sha256": "4df1d8d5398791bb649d57c4d2dd0e18c4da49abff67f5199fb309bfcea8707a"
+    },
+    {
+      "manifest": "docs/gates/phase-12-readiness-review-2026-10-05.json",
+      "field": "sha256",
+      "path": "src/partsmith/process.py",
+      "previous_sha256": "fbded159d2cc37170577eff284a274a1e8a9fe4e636433dcc8da0296c1b4e128",
+      "new_sha256": "70dbe221de94ffc82ef2bcb73d13b77025cdd6839255b3c55de50cc98d9f5916"
+    },
+    {
+      "manifest": "docs/gates/phase-12-readiness-review-2026-10-05.json",
+      "field": "sha256",
+      "path": "src/partsmith/release/replay.py",
+      "previous_sha256": "c75cfb6d10e9b28a62dc8c8854a37e73cc9488f78fe63eb9b14a77a8016a5af5",
+      "new_sha256": "17f1f1ed6e27a29e78a4f085e80701d869f82285713c19fef51cac1d938560f4"
+    },
+    {
+      "manifest": "docs/gates/phase-12-readiness-review-2026-10-05.json",
+      "field": "sha256",
+      "path": "src/partsmith/release/runtime.py",
+      "previous_sha256": "ae7bdb59343379e0478aa3301939cffd1468081059cf539279f38fde3cce8d00",
+      "new_sha256": "7561ee2a3f2123e7d0be31ab4d0944bdb17dae37dd2be672cb2e079e2cbed4a8"
     },
     {
       "manifest": "docs/gates/phase-13-pcm-only-spec-update-2026-10-05.json",
       "field": "sha256",
-      "path": ".gitattributes",
-      "previous_sha256": "857c38fecbfd69ef13acedce1c2da273b8b417fefe4ce6a1199a98b8b7422053",
-      "new_sha256": "32311e453a19a84e40a077156faa10b1f6f09c85127c0e3d14acd0208cdece32"
+      "path": ".github/workflows/ci.yml",
+      "previous_sha256": "2f676be607172e21533480ed50cbacf9cf3b27bd0e640898326ecc3a4d4ccf25",
+      "new_sha256": "f94adf3fa9575bb6fc26fe538c874a1b81e153c8244de230c1c541230cc23b0b"
     },
     {
       "manifest": "docs/gates/phase-13-pcm-only-spec-update-2026-10-05.json",
       "field": "sha256",
       "path": "README.md",
-      "previous_sha256": "a2e6f94eb9fa6b3eff20d2c73e2555fceebd1702828894d1e987f44fd1b886fc",
-      "new_sha256": "1c6349802529f78a88985ffc335d47760ecba7eda647be91f8871f4a0935acfe"
+      "previous_sha256": "1c6349802529f78a88985ffc335d47760ecba7eda647be91f8871f4a0935acfe",
+      "new_sha256": "1130c671963b7ccf32f70e7cd8f52d4a0be93b7380aeca0d27c1bc9ef8e4c985"
+    },
+    {
+      "manifest": "docs/gates/phase-13-pcm-only-spec-update-2026-10-05.json",
+      "field": "sha256",
+      "path": "pyproject.toml",
+      "previous_sha256": "4cb461dcf646b7b46340bfcad88892c3aee25d4819abb3bc4bf75c60e83d0613",
+      "new_sha256": "8d37ccc6843a091b9d50943def64d00b47197a64f7e0081cd78c1a7b8cf0867c"
     },
     {
       "manifest": "docs/gates/phase-13-pcm-only-spec-update-2026-10-05.json",
       "field": "sha256",
       "path": "resources/BFT_PartSmith_Implementation_Spec.md",
-      "previous_sha256": "e50eb21a9837d6b33878bf23897bd5aedbbd9dc406d465f488846a9a331a5d05",
-      "new_sha256": "43fb82cb0f4c79b0db397ef17a81b84d786971bd2701c92475323c43f5df0460"
+      "previous_sha256": "43fb82cb0f4c79b0db397ef17a81b84d786971bd2701c92475323c43f5df0460",
+      "new_sha256": "279eee3ed3098966c5a844edb2b809d7b0c9d30cb45e2ba4df6a2841c9b620d5"
+    },
+    {
+      "manifest": "docs/gates/phase-13-pcm-only-spec-update-2026-10-05.json",
+      "field": "sha256",
+      "path": "src/partsmith/footprint/model.py",
+      "previous_sha256": "d35e31afcab8481d285d81333fb41b764d7fbd874c978c1e366b2efad183767b",
+      "new_sha256": "da8bbf092197a7a0e8aca567ad03535e8ee0cbebf201ff6f6c450ca211efeb84"
+    },
+    {
+      "manifest": "docs/gates/phase-13-pcm-only-spec-update-2026-10-05.json",
+      "field": "sha256",
+      "path": "src/partsmith/kicad/runtime.py",
+      "previous_sha256": "394547da4d5bb2e051d1ce6bf5e23403f725409120e884d9f6dfbb075c3ff238",
+      "new_sha256": "4df1d8d5398791bb649d57c4d2dd0e18c4da49abff67f5199fb309bfcea8707a"
+    },
+    {
+      "manifest": "docs/gates/phase-13-pcm-only-spec-update-2026-10-05.json",
+      "field": "sha256",
+      "path": "src/partsmith/process.py",
+      "previous_sha256": "fbded159d2cc37170577eff284a274a1e8a9fe4e636433dcc8da0296c1b4e128",
+      "new_sha256": "70dbe221de94ffc82ef2bcb73d13b77025cdd6839255b3c55de50cc98d9f5916"
+    },
+    {
+      "manifest": "docs/gates/phase-13-pcm-only-spec-update-2026-10-05.json",
+      "field": "sha256",
+      "path": "src/partsmith/release/replay.py",
+      "previous_sha256": "c75cfb6d10e9b28a62dc8c8854a37e73cc9488f78fe63eb9b14a77a8016a5af5",
+      "new_sha256": "17f1f1ed6e27a29e78a4f085e80701d869f82285713c19fef51cac1d938560f4"
+    },
+    {
+      "manifest": "docs/gates/phase-13-pcm-only-spec-update-2026-10-05.json",
+      "field": "sha256",
+      "path": "src/partsmith/release/runtime.py",
+      "previous_sha256": "ae7bdb59343379e0478aa3301939cffd1468081059cf539279f38fde3cce8d00",
+      "new_sha256": "7561ee2a3f2123e7d0be31ab4d0944bdb17dae37dd2be672cb2e079e2cbed4a8"
     },
     {
       "manifest": "docs/gates/phase-13-pcm-spec-update-2026-10-05.json",
       "field": "sha256",
-      "path": ".gitattributes",
-      "previous_sha256": "857c38fecbfd69ef13acedce1c2da273b8b417fefe4ce6a1199a98b8b7422053",
-      "new_sha256": "32311e453a19a84e40a077156faa10b1f6f09c85127c0e3d14acd0208cdece32"
+      "path": ".github/workflows/ci.yml",
+      "previous_sha256": "2f676be607172e21533480ed50cbacf9cf3b27bd0e640898326ecc3a4d4ccf25",
+      "new_sha256": "f94adf3fa9575bb6fc26fe538c874a1b81e153c8244de230c1c541230cc23b0b"
     },
     {
       "manifest": "docs/gates/phase-13-pcm-spec-update-2026-10-05.json",
       "field": "sha256",
       "path": "README.md",
-      "previous_sha256": "a2e6f94eb9fa6b3eff20d2c73e2555fceebd1702828894d1e987f44fd1b886fc",
-      "new_sha256": "1c6349802529f78a88985ffc335d47760ecba7eda647be91f8871f4a0935acfe"
+      "previous_sha256": "1c6349802529f78a88985ffc335d47760ecba7eda647be91f8871f4a0935acfe",
+      "new_sha256": "1130c671963b7ccf32f70e7cd8f52d4a0be93b7380aeca0d27c1bc9ef8e4c985"
+    },
+    {
+      "manifest": "docs/gates/phase-13-pcm-spec-update-2026-10-05.json",
+      "field": "sha256",
+      "path": "pyproject.toml",
+      "previous_sha256": "4cb461dcf646b7b46340bfcad88892c3aee25d4819abb3bc4bf75c60e83d0613",
+      "new_sha256": "8d37ccc6843a091b9d50943def64d00b47197a64f7e0081cd78c1a7b8cf0867c"
     },
     {
       "manifest": "docs/gates/phase-13-pcm-spec-update-2026-10-05.json",
       "field": "sha256",
       "path": "resources/BFT_PartSmith_Implementation_Spec.md",
-      "previous_sha256": "e50eb21a9837d6b33878bf23897bd5aedbbd9dc406d465f488846a9a331a5d05",
-      "new_sha256": "43fb82cb0f4c79b0db397ef17a81b84d786971bd2701c92475323c43f5df0460"
+      "previous_sha256": "43fb82cb0f4c79b0db397ef17a81b84d786971bd2701c92475323c43f5df0460",
+      "new_sha256": "279eee3ed3098966c5a844edb2b809d7b0c9d30cb45e2ba4df6a2841c9b620d5"
+    },
+    {
+      "manifest": "docs/gates/phase-13-pcm-spec-update-2026-10-05.json",
+      "field": "sha256",
+      "path": "src/partsmith/footprint/model.py",
+      "previous_sha256": "d35e31afcab8481d285d81333fb41b764d7fbd874c978c1e366b2efad183767b",
+      "new_sha256": "da8bbf092197a7a0e8aca567ad03535e8ee0cbebf201ff6f6c450ca211efeb84"
+    },
+    {
+      "manifest": "docs/gates/phase-13-pcm-spec-update-2026-10-05.json",
+      "field": "sha256",
+      "path": "src/partsmith/kicad/runtime.py",
+      "previous_sha256": "394547da4d5bb2e051d1ce6bf5e23403f725409120e884d9f6dfbb075c3ff238",
+      "new_sha256": "4df1d8d5398791bb649d57c4d2dd0e18c4da49abff67f5199fb309bfcea8707a"
+    },
+    {
+      "manifest": "docs/gates/phase-13-pcm-spec-update-2026-10-05.json",
+      "field": "sha256",
+      "path": "src/partsmith/process.py",
+      "previous_sha256": "fbded159d2cc37170577eff284a274a1e8a9fe4e636433dcc8da0296c1b4e128",
+      "new_sha256": "70dbe221de94ffc82ef2bcb73d13b77025cdd6839255b3c55de50cc98d9f5916"
+    },
+    {
+      "manifest": "docs/gates/phase-13-pcm-spec-update-2026-10-05.json",
+      "field": "sha256",
+      "path": "src/partsmith/release/replay.py",
+      "previous_sha256": "c75cfb6d10e9b28a62dc8c8854a37e73cc9488f78fe63eb9b14a77a8016a5af5",
+      "new_sha256": "17f1f1ed6e27a29e78a4f085e80701d869f82285713c19fef51cac1d938560f4"
+    },
+    {
+      "manifest": "docs/gates/phase-13-pcm-spec-update-2026-10-05.json",
+      "field": "sha256",
+      "path": "src/partsmith/release/runtime.py",
+      "previous_sha256": "ae7bdb59343379e0478aa3301939cffd1468081059cf539279f38fde3cce8d00",
+      "new_sha256": "7561ee2a3f2123e7d0be31ab4d0944bdb17dae37dd2be672cb2e079e2cbed4a8"
     },
     {
       "manifest": "docs/gates/phase-13-spec-revision-v0.9.7-2026-10-05.json",
       "field": "sha256",
-      "path": ".gitattributes",
-      "previous_sha256": "857c38fecbfd69ef13acedce1c2da273b8b417fefe4ce6a1199a98b8b7422053",
-      "new_sha256": "32311e453a19a84e40a077156faa10b1f6f09c85127c0e3d14acd0208cdece32"
+      "path": ".github/workflows/ci.yml",
+      "previous_sha256": "2f676be607172e21533480ed50cbacf9cf3b27bd0e640898326ecc3a4d4ccf25",
+      "new_sha256": "f94adf3fa9575bb6fc26fe538c874a1b81e153c8244de230c1c541230cc23b0b"
     },
     {
       "manifest": "docs/gates/phase-13-spec-revision-v0.9.7-2026-10-05.json",
       "field": "sha256",
       "path": "README.md",
-      "previous_sha256": "a2e6f94eb9fa6b3eff20d2c73e2555fceebd1702828894d1e987f44fd1b886fc",
-      "new_sha256": "1c6349802529f78a88985ffc335d47760ecba7eda647be91f8871f4a0935acfe"
+      "previous_sha256": "1c6349802529f78a88985ffc335d47760ecba7eda647be91f8871f4a0935acfe",
+      "new_sha256": "1130c671963b7ccf32f70e7cd8f52d4a0be93b7380aeca0d27c1bc9ef8e4c985"
     },
     {
       "manifest": "docs/gates/phase-13-spec-revision-v0.9.7-2026-10-05.json",
       "field": "sha256",
       "path": "docs/gates/phase-10-parser-fix-2026-10-04.json",
-      "previous_sha256": "47d032495fae5122afa23febcaa89899e7ac01bb168f0a01ad9c60b4103536eb",
-      "new_sha256": "5607f10828b8065034020297ea21382fecd4ab7ef2393bc323ecfa6d45c7e131"
+      "previous_sha256": "5607f10828b8065034020297ea21382fecd4ab7ef2393bc323ecfa6d45c7e131",
+      "new_sha256": "0ed2463c8ff78e085b275191976d9fd82bd41c18508db055d07d42c5bbeed0e7"
+    },
+    {
+      "manifest": "docs/gates/phase-13-spec-revision-v0.9.7-2026-10-05.json",
+      "field": "sha256",
+      "path": "pyproject.toml",
+      "previous_sha256": "4cb461dcf646b7b46340bfcad88892c3aee25d4819abb3bc4bf75c60e83d0613",
+      "new_sha256": "8d37ccc6843a091b9d50943def64d00b47197a64f7e0081cd78c1a7b8cf0867c"
     },
     {
       "manifest": "docs/gates/phase-13-spec-revision-v0.9.7-2026-10-05.json",
       "field": "sha256",
       "path": "resources/BFT_PartSmith_Implementation_Spec.md",
-      "previous_sha256": "e50eb21a9837d6b33878bf23897bd5aedbbd9dc406d465f488846a9a331a5d05",
-      "new_sha256": "43fb82cb0f4c79b0db397ef17a81b84d786971bd2701c92475323c43f5df0460"
+      "previous_sha256": "43fb82cb0f4c79b0db397ef17a81b84d786971bd2701c92475323c43f5df0460",
+      "new_sha256": "279eee3ed3098966c5a844edb2b809d7b0c9d30cb45e2ba4df6a2841c9b620d5"
+    },
+    {
+      "manifest": "docs/gates/phase-13-spec-revision-v0.9.7-2026-10-05.json",
+      "field": "sha256",
+      "path": "src/partsmith/footprint/model.py",
+      "previous_sha256": "d35e31afcab8481d285d81333fb41b764d7fbd874c978c1e366b2efad183767b",
+      "new_sha256": "da8bbf092197a7a0e8aca567ad03535e8ee0cbebf201ff6f6c450ca211efeb84"
+    },
+    {
+      "manifest": "docs/gates/phase-13-spec-revision-v0.9.7-2026-10-05.json",
+      "field": "sha256",
+      "path": "src/partsmith/kicad/runtime.py",
+      "previous_sha256": "394547da4d5bb2e051d1ce6bf5e23403f725409120e884d9f6dfbb075c3ff238",
+      "new_sha256": "4df1d8d5398791bb649d57c4d2dd0e18c4da49abff67f5199fb309bfcea8707a"
+    },
+    {
+      "manifest": "docs/gates/phase-13-spec-revision-v0.9.7-2026-10-05.json",
+      "field": "sha256",
+      "path": "src/partsmith/process.py",
+      "previous_sha256": "fbded159d2cc37170577eff284a274a1e8a9fe4e636433dcc8da0296c1b4e128",
+      "new_sha256": "70dbe221de94ffc82ef2bcb73d13b77025cdd6839255b3c55de50cc98d9f5916"
+    },
+    {
+      "manifest": "docs/gates/phase-13-spec-revision-v0.9.7-2026-10-05.json",
+      "field": "sha256",
+      "path": "src/partsmith/release/replay.py",
+      "previous_sha256": "c75cfb6d10e9b28a62dc8c8854a37e73cc9488f78fe63eb9b14a77a8016a5af5",
+      "new_sha256": "17f1f1ed6e27a29e78a4f085e80701d869f82285713c19fef51cac1d938560f4"
+    },
+    {
+      "manifest": "docs/gates/phase-13-spec-revision-v0.9.7-2026-10-05.json",
+      "field": "sha256",
+      "path": "src/partsmith/release/runtime.py",
+      "previous_sha256": "ae7bdb59343379e0478aa3301939cffd1468081059cf539279f38fde3cce8d00",
+      "new_sha256": "7561ee2a3f2123e7d0be31ab4d0944bdb17dae37dd2be672cb2e079e2cbed4a8"
     },
     {
       "manifest": "docs/gates/phase-12-artifacts.json",
       "field": "sha256",
-      "path": ".gitattributes",
-      "previous_sha256": "857c38fecbfd69ef13acedce1c2da273b8b417fefe4ce6a1199a98b8b7422053",
-      "new_sha256": "32311e453a19a84e40a077156faa10b1f6f09c85127c0e3d14acd0208cdece32"
+      "path": ".github/workflows/ci.yml",
+      "previous_sha256": "2f676be607172e21533480ed50cbacf9cf3b27bd0e640898326ecc3a4d4ccf25",
+      "new_sha256": "f94adf3fa9575bb6fc26fe538c874a1b81e153c8244de230c1c541230cc23b0b"
     },
     {
       "manifest": "docs/gates/phase-12-artifacts.json",
       "field": "sha256",
       "path": "README.md",
-      "previous_sha256": "a2e6f94eb9fa6b3eff20d2c73e2555fceebd1702828894d1e987f44fd1b886fc",
-      "new_sha256": "1c6349802529f78a88985ffc335d47760ecba7eda647be91f8871f4a0935acfe"
+      "previous_sha256": "1c6349802529f78a88985ffc335d47760ecba7eda647be91f8871f4a0935acfe",
+      "new_sha256": "1130c671963b7ccf32f70e7cd8f52d4a0be93b7380aeca0d27c1bc9ef8e4c985"
     },
     {
       "manifest": "docs/gates/phase-12-artifacts.json",
       "field": "sha256",
       "path": "docs/gates/phase-10-artifacts.json",
-      "previous_sha256": "f772a2dde9cd6fc1d4aef9c78c344e80eb13b9eaf1c4e9dc795fdc08a5074721",
-      "new_sha256": "566e3126aa7b7a2cfed7791c259ef93d7a9c9d7a9446a49231c4ef83405b066c"
+      "previous_sha256": "566e3126aa7b7a2cfed7791c259ef93d7a9c9d7a9446a49231c4ef83405b066c",
+      "new_sha256": "6160c1d057b8d00a369ea598c6ea8680ccdd6a5c93e0a428101c2f268f6d91ef"
     },
     {
       "manifest": "docs/gates/phase-12-artifacts.json",
       "field": "sha256",
       "path": "docs/gates/phase-10-parser-fix-2026-10-04.json",
-      "previous_sha256": "47d032495fae5122afa23febcaa89899e7ac01bb168f0a01ad9c60b4103536eb",
-      "new_sha256": "5607f10828b8065034020297ea21382fecd4ab7ef2393bc323ecfa6d45c7e131"
+      "previous_sha256": "5607f10828b8065034020297ea21382fecd4ab7ef2393bc323ecfa6d45c7e131",
+      "new_sha256": "0ed2463c8ff78e085b275191976d9fd82bd41c18508db055d07d42c5bbeed0e7"
     },
     {
       "manifest": "docs/gates/phase-12-artifacts.json",
       "field": "sha256",
       "path": "docs/gates/phase-11-artifacts.json",
-      "previous_sha256": "e831a3f0bf549a14eff330f2c58943f5b3c04c0215f29abacbde6eec14c68ac9",
-      "new_sha256": "e8b984f4de520ae9b2b3cff38b48ab9fc365e8236212be972918750b600273bd"
+      "previous_sha256": "e8b984f4de520ae9b2b3cff38b48ab9fc365e8236212be972918750b600273bd",
+      "new_sha256": "aded82b31c2e5ddd51c144a604a34e01923ed98659c56dcd024b0ef5169e2a8e"
     },
     {
       "manifest": "docs/gates/phase-12-artifacts.json",
       "field": "sha256",
       "path": "docs/gates/phase-11-finding-fixes-2026-10-04.json",
-      "previous_sha256": "1a8cafc585754619f0be9116fca6c109bf2d6a6988fe6be66f69ca583f92bb8f",
-      "new_sha256": "b133524426a6d9d3e6613eebe2a322cfbb51e43e9c1472f3c7d5625a7733db25"
+      "previous_sha256": "b133524426a6d9d3e6613eebe2a322cfbb51e43e9c1472f3c7d5625a7733db25",
+      "new_sha256": "4a07c960685b38fde653f41abc75710c61e00caad60ec6df0c7c8ddff3f6a9f0"
     },
     {
       "manifest": "docs/gates/phase-12-artifacts.json",
       "field": "sha256",
       "path": "docs/gates/phase-12.1-artifacts.json",
-      "previous_sha256": "fd8306dc13099c6aeb0e4d587caab1e800f8e36202d850d198fd03844ea89997",
-      "new_sha256": "1e6db76cbe29ac1ddbc7ec45102b753b155ad47097bd245ae7336a4c124292ee"
+      "previous_sha256": "1e6db76cbe29ac1ddbc7ec45102b753b155ad47097bd245ae7336a4c124292ee",
+      "new_sha256": "3d1eaecb7a75373fc0ca29ce338bf68a56d7a179662ce7958752d553bf5f26c9"
     },
     {
       "manifest": "docs/gates/phase-12-artifacts.json",
       "field": "sha256",
       "path": "docs/gates/phase-2-ir-1.1-artifacts.json",
-      "previous_sha256": "1fac7ee94551d61728384053cc99427a93d43039a4425c96dfc55fba9686f9ca",
-      "new_sha256": "537e976c664b56f13a2b463b03b12238936c9d1944d2cac8405b6c2b5494f5f4"
+      "previous_sha256": "537e976c664b56f13a2b463b03b12238936c9d1944d2cac8405b6c2b5494f5f4",
+      "new_sha256": "6a92fcb629b7fef08a62d46a3c4ef482d42c2b547b500adb1c5bad730d821c31"
     },
     {
       "manifest": "docs/gates/phase-12-artifacts.json",
       "field": "sha256",
       "path": "docs/gates/phase-2-ir-1.2-artifacts.json",
-      "previous_sha256": "4d51db19bbc6935cddf80d95f5c8e1bbab540dc4457e5d113898d811f1651aa9",
-      "new_sha256": "82f74df7eca3564095175a52b2b100c622aa133cac23cc44eccb4ad669a27cb0"
+      "previous_sha256": "82f74df7eca3564095175a52b2b100c622aa133cac23cc44eccb4ad669a27cb0",
+      "new_sha256": "911cd06f3f084ee6473cab74b46fdf3c646e6286b271527cee8023d915baf08a"
     },
     {
       "manifest": "docs/gates/phase-12-artifacts.json",
       "field": "sha256",
       "path": "docs/gates/phase-2-v0.9.6-artifacts.json",
-      "previous_sha256": "079acbffe5d306bac05596a0d8ac17d48451d3cec45508ba9ba0de075ac96cfe",
-      "new_sha256": "d1b28466559282e30ce8b0015dc3797708020a86f3782b09e10653d9dacf8cb5"
+      "previous_sha256": "d1b28466559282e30ce8b0015dc3797708020a86f3782b09e10653d9dacf8cb5",
+      "new_sha256": "2be097427a19f375ba0833176d75499cfe8c75993155be9d49adb51538704149"
     },
     {
       "manifest": "docs/gates/phase-12-artifacts.json",
       "field": "sha256",
       "path": "docs/gates/phase-3-artifacts.json",
-      "previous_sha256": "de7bc25d816554e03db110bde0c70d8262a516a4875a3b3a794c77ce74fe55fe",
-      "new_sha256": "25691d359db9c00025d3b2a2d321b111218801772524fec7fb5a34d8c19d44b6"
+      "previous_sha256": "25691d359db9c00025d3b2a2d321b111218801772524fec7fb5a34d8c19d44b6",
+      "new_sha256": "338e976506aebe0e4fae223ff67314ce49f6ac8a3a15bcf619c6f54d9ef2fa80"
+    },
+    {
+      "manifest": "docs/gates/phase-12-artifacts.json",
+      "field": "sha256",
+      "path": "docs/gates/phase-6-artifacts.json",
+      "previous_sha256": "bd4a846738f1afd62c1a82311cd01537f59163bfc2e1844f9ba8e8c03959dd7b",
+      "new_sha256": "f73cd295cd10740031f3825362c28894ad691daac07fd8920268edef4eb884c9"
     },
     {
       "manifest": "docs/gates/phase-12-artifacts.json",
       "field": "sha256",
       "path": "docs/gates/phase-8-artifacts.json",
-      "previous_sha256": "a14952dcb2048d446f99e6f01c39feb4ebb5234bbb3d5d344e25f16394233251",
-      "new_sha256": "37fc74e06c5d40f6f7669e5c077298b8fea5aeaafe86b96f9127ead713a7dcb9"
+      "previous_sha256": "37fc74e06c5d40f6f7669e5c077298b8fea5aeaafe86b96f9127ead713a7dcb9",
+      "new_sha256": "5f713fe9d4a5951865c1c41cf3edde39188301e710a9de87771111abb94120ae"
     },
     {
       "manifest": "docs/gates/phase-12-artifacts.json",
       "field": "sha256",
       "path": "docs/gates/phase-9-artifacts.json",
-      "previous_sha256": "e28a63c48f7f9fe5fcafaf97efe265b06da4a0ff75e185ed200628b967249103",
-      "new_sha256": "798862adc17d79557ced98b8c35acf5fc9fa6c93855653e3932d44637910b2f5"
+      "previous_sha256": "798862adc17d79557ced98b8c35acf5fc9fa6c93855653e3932d44637910b2f5",
+      "new_sha256": "02cdc45a882de07d73b017813e4a80c8a56669c603262263d6a47dffad87620a"
     },
     {
       "manifest": "docs/gates/phase-12-artifacts.json",
       "field": "sha256",
       "path": "docs/gates/phase-9.5-artifacts.json",
-      "previous_sha256": "d1469d8f08429584fea0622e02898f07a9f979b15181c7da44776d76d2e1fd8b",
-      "new_sha256": "e7d818fb9bd999155e78b45c99fdd55a0273d8ffbdb7f6f006f191fc3329d102"
+      "previous_sha256": "e7d818fb9bd999155e78b45c99fdd55a0273d8ffbdb7f6f006f191fc3329d102",
+      "new_sha256": "cd3f9e420764330fb54b3fa5b665e87e52d4da2a2af2034beea249c4c809255a"
+    },
+    {
+      "manifest": "docs/gates/phase-12-artifacts.json",
+      "field": "sha256",
+      "path": "pyproject.toml",
+      "previous_sha256": "4cb461dcf646b7b46340bfcad88892c3aee25d4819abb3bc4bf75c60e83d0613",
+      "new_sha256": "8d37ccc6843a091b9d50943def64d00b47197a64f7e0081cd78c1a7b8cf0867c"
     },
     {
       "manifest": "docs/gates/phase-12-artifacts.json",
       "field": "sha256",
       "path": "resources/BFT_PartSmith_Implementation_Spec.md",
-      "previous_sha256": "e50eb21a9837d6b33878bf23897bd5aedbbd9dc406d465f488846a9a331a5d05",
-      "new_sha256": "43fb82cb0f4c79b0db397ef17a81b84d786971bd2701c92475323c43f5df0460"
+      "previous_sha256": "43fb82cb0f4c79b0db397ef17a81b84d786971bd2701c92475323c43f5df0460",
+      "new_sha256": "279eee3ed3098966c5a844edb2b809d7b0c9d30cb45e2ba4df6a2841c9b620d5"
+    },
+    {
+      "manifest": "docs/gates/phase-12-artifacts.json",
+      "field": "sha256",
+      "path": "src/partsmith/footprint/model.py",
+      "previous_sha256": "d35e31afcab8481d285d81333fb41b764d7fbd874c978c1e366b2efad183767b",
+      "new_sha256": "da8bbf092197a7a0e8aca567ad03535e8ee0cbebf201ff6f6c450ca211efeb84"
+    },
+    {
+      "manifest": "docs/gates/phase-12-artifacts.json",
+      "field": "sha256",
+      "path": "src/partsmith/kicad/runtime.py",
+      "previous_sha256": "394547da4d5bb2e051d1ce6bf5e23403f725409120e884d9f6dfbb075c3ff238",
+      "new_sha256": "4df1d8d5398791bb649d57c4d2dd0e18c4da49abff67f5199fb309bfcea8707a"
+    },
+    {
+      "manifest": "docs/gates/phase-12-artifacts.json",
+      "field": "sha256",
+      "path": "src/partsmith/process.py",
+      "previous_sha256": "fbded159d2cc37170577eff284a274a1e8a9fe4e636433dcc8da0296c1b4e128",
+      "new_sha256": "70dbe221de94ffc82ef2bcb73d13b77025cdd6839255b3c55de50cc98d9f5916"
+    },
+    {
+      "manifest": "docs/gates/phase-12-artifacts.json",
+      "field": "sha256",
+      "path": "src/partsmith/release/replay.py",
+      "previous_sha256": "c75cfb6d10e9b28a62dc8c8854a37e73cc9488f78fe63eb9b14a77a8016a5af5",
+      "new_sha256": "17f1f1ed6e27a29e78a4f085e80701d869f82285713c19fef51cac1d938560f4"
+    },
+    {
+      "manifest": "docs/gates/phase-12-artifacts.json",
+      "field": "sha256",
+      "path": "src/partsmith/release/runtime.py",
+      "previous_sha256": "ae7bdb59343379e0478aa3301939cffd1468081059cf539279f38fde3cce8d00",
+      "new_sha256": "7561ee2a3f2123e7d0be31ab4d0944bdb17dae37dd2be672cb2e079e2cbed4a8"
     },
     {
       "manifest": "docs/gates/phase-12-artifacts.json",
       "field": "sha256",
       "path": "docs/gates/phase-12-readiness-review-2026-10-05.json",
-      "previous_sha256": "98f7f4b6eef42e6c9bf18059b36e1001b763a302479630838dbf58920f3dec2e",
-      "new_sha256": "a03c80ab9a0e0a5d5ac298fdd66c1eca9e535b884bf162a7458e39f0f93f17b6"
+      "previous_sha256": "a03c80ab9a0e0a5d5ac298fdd66c1eca9e535b884bf162a7458e39f0f93f17b6",
+      "new_sha256": "a457cbd96829c2aea93a8eef77db0cb18753bd916be6cc493fb492dbdbd02fe4"
     },
     {
       "manifest": "docs/gates/phase-12-artifacts.json",
       "field": "sha256",
       "path": "docs/gates/phase-12-finding-fixes-2026-10-05.json",
-      "previous_sha256": "ae7ff809a4a09e05ab07391780d4068b939e7bc65e711d1cadf222bb31535cbb",
-      "new_sha256": "1d400707ca34ecb470f9c4af4340fc22062039af781ff80c544969aedce9cbf7"
+      "previous_sha256": "1d400707ca34ecb470f9c4af4340fc22062039af781ff80c544969aedce9cbf7",
+      "new_sha256": "8b65556e6863e98149b132a3542d28518c3235070efeb34397214a154a96aa0d"
     },
     {
       "manifest": "docs/gates/phase-12-artifacts.json",
       "field": "sha256",
       "path": "docs/gates/phase-13-spec-revision-v0.9.7-2026-10-05.json",
-      "previous_sha256": "f41047bf208351a79923f016bf110dae7cfeed3b6cae1ae485db698311daf409",
-      "new_sha256": "59a5ede9cf2eeabfbaee9e81f507371810e01af998c6f72295fcf6a8b40c5962"
+      "previous_sha256": "59a5ede9cf2eeabfbaee9e81f507371810e01af998c6f72295fcf6a8b40c5962",
+      "new_sha256": "acad0264245b78d3794270233626818d2e7c4b8cbd8663177057cdf61dbc5acf"
     },
     {
       "manifest": "docs/gates/phase-12-artifacts.json",
       "field": "sha256",
       "path": "docs/gates/phase-13-pcm-spec-update-2026-10-05.json",
-      "previous_sha256": "42af56bb01aa8f86b91e21ba785e35c68813630457c32e8484fe6974627df668",
-      "new_sha256": "0f452400a1bed74230e2842c0d7a9a6093c65aaaea877602bb1af5cf9b0a44be"
+      "previous_sha256": "0f452400a1bed74230e2842c0d7a9a6093c65aaaea877602bb1af5cf9b0a44be",
+      "new_sha256": "8ccb8b4f6e0ba84a76be8522c6ed4355ab72aec9d3df0c7ace6f73f930ec791a"
     },
     {
       "manifest": "docs/gates/phase-12-artifacts.json",
       "field": "sha256",
       "path": "docs/gates/phase-13-pcm-only-spec-update-2026-10-05.json",
-      "previous_sha256": "00703e745ba58b2a563e31a5d54bbf55f8c98f45b5543f946f99913f61b6c1c6",
-      "new_sha256": "467537cf8ddd56b3693500e24d70448cd1b0d49261b2a71268912e43b83ad9c0"
-    },
-    {
-      "manifest": "docs/gates/phase-12-viewer-performance-artifacts.json",
-      "field": "sha256",
-      "path": ".gitattributes",
-      "previous_sha256": "857c38fecbfd69ef13acedce1c2da273b8b417fefe4ce6a1199a98b8b7422053",
-      "new_sha256": "32311e453a19a84e40a077156faa10b1f6f09c85127c0e3d14acd0208cdece32"
+      "previous_sha256": "467537cf8ddd56b3693500e24d70448cd1b0d49261b2a71268912e43b83ad9c0",
+      "new_sha256": "c12ca50374000094b0812e60e279fc81d68f2b1065114d3a4911421f56f6bb0c"
     },
     {
       "manifest": "docs/gates/phase-12-viewer-performance-artifacts.json",
       "field": "sha256",
       "path": "docs/gates/phase-10-parser-fix-2026-10-04.json",
-      "previous_sha256": "47d032495fae5122afa23febcaa89899e7ac01bb168f0a01ad9c60b4103536eb",
-      "new_sha256": "5607f10828b8065034020297ea21382fecd4ab7ef2393bc323ecfa6d45c7e131"
+      "previous_sha256": "5607f10828b8065034020297ea21382fecd4ab7ef2393bc323ecfa6d45c7e131",
+      "new_sha256": "0ed2463c8ff78e085b275191976d9fd82bd41c18508db055d07d42c5bbeed0e7"
     },
     {
       "manifest": "docs/gates/phase-12-viewer-performance-artifacts.json",
       "field": "sha256",
       "path": "docs/gates/phase-12-artifacts.json",
-      "previous_sha256": "5fdd844ff15c2f8555b5040cf6fc5f597b76e9bd0c65a49ffdec7c04fd2455cf",
-      "new_sha256": "dad8fd8d5e43faa1342d0d8693edcc221ffc15cbb6197528be10ccaf727da751"
+      "previous_sha256": "dad8fd8d5e43faa1342d0d8693edcc221ffc15cbb6197528be10ccaf727da751",
+      "new_sha256": "1854213aacabbd5111af4ef82129a9a941523660bee4c0d9bf89d91fcdb540f5"
     },
     {
       "manifest": "docs/gates/phase-12-viewer-performance-artifacts.json",
       "field": "sha256",
       "path": "docs/gates/phase-12-finding-fixes-2026-10-05.json",
-      "previous_sha256": "ae7ff809a4a09e05ab07391780d4068b939e7bc65e711d1cadf222bb31535cbb",
-      "new_sha256": "1d400707ca34ecb470f9c4af4340fc22062039af781ff80c544969aedce9cbf7"
+      "previous_sha256": "1d400707ca34ecb470f9c4af4340fc22062039af781ff80c544969aedce9cbf7",
+      "new_sha256": "8b65556e6863e98149b132a3542d28518c3235070efeb34397214a154a96aa0d"
     },
     {
       "manifest": "docs/gates/phase-12-viewer-performance-artifacts.json",
       "field": "sha256",
       "path": "docs/gates/phase-12-readiness-review-2026-10-05.json",
-      "previous_sha256": "98f7f4b6eef42e6c9bf18059b36e1001b763a302479630838dbf58920f3dec2e",
-      "new_sha256": "a03c80ab9a0e0a5d5ac298fdd66c1eca9e535b884bf162a7458e39f0f93f17b6"
+      "previous_sha256": "a03c80ab9a0e0a5d5ac298fdd66c1eca9e535b884bf162a7458e39f0f93f17b6",
+      "new_sha256": "a457cbd96829c2aea93a8eef77db0cb18753bd916be6cc493fb492dbdbd02fe4"
     },
     {
       "manifest": "docs/gates/phase-12-viewer-performance-artifacts.json",
       "field": "sha256",
       "path": "docs/gates/phase-12.1-artifacts.json",
-      "previous_sha256": "fd8306dc13099c6aeb0e4d587caab1e800f8e36202d850d198fd03844ea89997",
-      "new_sha256": "1e6db76cbe29ac1ddbc7ec45102b753b155ad47097bd245ae7336a4c124292ee"
+      "previous_sha256": "1e6db76cbe29ac1ddbc7ec45102b753b155ad47097bd245ae7336a4c124292ee",
+      "new_sha256": "3d1eaecb7a75373fc0ca29ce338bf68a56d7a179662ce7958752d553bf5f26c9"
     },
     {
       "manifest": "docs/gates/phase-12-viewer-performance-artifacts.json",
       "field": "sha256",
       "path": "docs/gates/phase-13-pcm-only-spec-update-2026-10-05.json",
-      "previous_sha256": "00703e745ba58b2a563e31a5d54bbf55f8c98f45b5543f946f99913f61b6c1c6",
-      "new_sha256": "467537cf8ddd56b3693500e24d70448cd1b0d49261b2a71268912e43b83ad9c0"
+      "previous_sha256": "467537cf8ddd56b3693500e24d70448cd1b0d49261b2a71268912e43b83ad9c0",
+      "new_sha256": "c12ca50374000094b0812e60e279fc81d68f2b1065114d3a4911421f56f6bb0c"
     },
     {
       "manifest": "docs/gates/phase-12-viewer-performance-artifacts.json",
       "field": "sha256",
       "path": "docs/gates/phase-13-pcm-spec-update-2026-10-05.json",
-      "previous_sha256": "42af56bb01aa8f86b91e21ba785e35c68813630457c32e8484fe6974627df668",
-      "new_sha256": "0f452400a1bed74230e2842c0d7a9a6093c65aaaea877602bb1af5cf9b0a44be"
+      "previous_sha256": "0f452400a1bed74230e2842c0d7a9a6093c65aaaea877602bb1af5cf9b0a44be",
+      "new_sha256": "8ccb8b4f6e0ba84a76be8522c6ed4355ab72aec9d3df0c7ace6f73f930ec791a"
     },
     {
       "manifest": "docs/gates/phase-12-viewer-performance-artifacts.json",
       "field": "sha256",
       "path": "docs/gates/phase-13-spec-revision-v0.9.7-2026-10-05.json",
-      "previous_sha256": "f41047bf208351a79923f016bf110dae7cfeed3b6cae1ae485db698311daf409",
-      "new_sha256": "59a5ede9cf2eeabfbaee9e81f507371810e01af998c6f72295fcf6a8b40c5962"
+      "previous_sha256": "59a5ede9cf2eeabfbaee9e81f507371810e01af998c6f72295fcf6a8b40c5962",
+      "new_sha256": "acad0264245b78d3794270233626818d2e7c4b8cbd8663177057cdf61dbc5acf"
     },
     {
       "manifest": "docs/gates/phase-12-viewer-performance-artifacts.json",
       "field": "sha256",
       "path": "docs/gates/phase-2-v0.9.6-artifacts.json",
-      "previous_sha256": "079acbffe5d306bac05596a0d8ac17d48451d3cec45508ba9ba0de075ac96cfe",
-      "new_sha256": "d1b28466559282e30ce8b0015dc3797708020a86f3782b09e10653d9dacf8cb5"
+      "previous_sha256": "d1b28466559282e30ce8b0015dc3797708020a86f3782b09e10653d9dacf8cb5",
+      "new_sha256": "2be097427a19f375ba0833176d75499cfe8c75993155be9d49adb51538704149"
     },
     {
       "manifest": "docs/gates/phase-12-viewer-performance-artifacts.json",
       "field": "sha256",
       "path": "docs/gates/phase-3-artifacts.json",
-      "previous_sha256": "de7bc25d816554e03db110bde0c70d8262a516a4875a3b3a794c77ce74fe55fe",
-      "new_sha256": "25691d359db9c00025d3b2a2d321b111218801772524fec7fb5a34d8c19d44b6"
+      "previous_sha256": "25691d359db9c00025d3b2a2d321b111218801772524fec7fb5a34d8c19d44b6",
+      "new_sha256": "338e976506aebe0e4fae223ff67314ce49f6ac8a3a15bcf619c6f54d9ef2fa80"
+    },
+    {
+      "manifest": "docs/gates/phase-12-viewer-performance-artifacts.json",
+      "field": "sha256",
+      "path": "src/partsmith/process.py",
+      "previous_sha256": "fbded159d2cc37170577eff284a274a1e8a9fe4e636433dcc8da0296c1b4e128",
+      "new_sha256": "70dbe221de94ffc82ef2bcb73d13b77025cdd6839255b3c55de50cc98d9f5916"
     },
     {
       "manifest": "docs/gates/phase-13.1-artifacts.json",
       "field": "sha256",
-      "path": ".gitattributes",
-      "previous_sha256": "857c38fecbfd69ef13acedce1c2da273b8b417fefe4ce6a1199a98b8b7422053",
-      "new_sha256": "32311e453a19a84e40a077156faa10b1f6f09c85127c0e3d14acd0208cdece32"
+      "path": ".github/workflows/ci.yml",
+      "previous_sha256": "2f676be607172e21533480ed50cbacf9cf3b27bd0e640898326ecc3a4d4ccf25",
+      "new_sha256": "f94adf3fa9575bb6fc26fe538c874a1b81e153c8244de230c1c541230cc23b0b"
     },
     {
       "manifest": "docs/gates/phase-13.1-artifacts.json",
       "field": "sha256",
       "path": "README.md",
-      "previous_sha256": "a2e6f94eb9fa6b3eff20d2c73e2555fceebd1702828894d1e987f44fd1b886fc",
-      "new_sha256": "1c6349802529f78a88985ffc335d47760ecba7eda647be91f8871f4a0935acfe"
+      "previous_sha256": "1c6349802529f78a88985ffc335d47760ecba7eda647be91f8871f4a0935acfe",
+      "new_sha256": "1130c671963b7ccf32f70e7cd8f52d4a0be93b7380aeca0d27c1bc9ef8e4c985"
     },
     {
       "manifest": "docs/gates/phase-13.1-artifacts.json",
       "field": "sha256",
       "path": "docs/gates/phase-12-artifacts.json",
-      "previous_sha256": "5fdd844ff15c2f8555b5040cf6fc5f597b76e9bd0c65a49ffdec7c04fd2455cf",
-      "new_sha256": "dad8fd8d5e43faa1342d0d8693edcc221ffc15cbb6197528be10ccaf727da751"
+      "previous_sha256": "dad8fd8d5e43faa1342d0d8693edcc221ffc15cbb6197528be10ccaf727da751",
+      "new_sha256": "1854213aacabbd5111af4ef82129a9a941523660bee4c0d9bf89d91fcdb540f5"
+    },
+    {
+      "manifest": "docs/gates/phase-13.1-artifacts.json",
+      "field": "sha256",
+      "path": "pyproject.toml",
+      "previous_sha256": "4cb461dcf646b7b46340bfcad88892c3aee25d4819abb3bc4bf75c60e83d0613",
+      "new_sha256": "8d37ccc6843a091b9d50943def64d00b47197a64f7e0081cd78c1a7b8cf0867c"
     },
     {
       "manifest": "docs/gates/phase-13.1-artifacts.json",
       "field": "sha256",
       "path": "resources/BFT_PartSmith_Implementation_Spec.md",
-      "previous_sha256": "e50eb21a9837d6b33878bf23897bd5aedbbd9dc406d465f488846a9a331a5d05",
-      "new_sha256": "43fb82cb0f4c79b0db397ef17a81b84d786971bd2701c92475323c43f5df0460"
+      "previous_sha256": "43fb82cb0f4c79b0db397ef17a81b84d786971bd2701c92475323c43f5df0460",
+      "new_sha256": "279eee3ed3098966c5a844edb2b809d7b0c9d30cb45e2ba4df6a2841c9b620d5"
+    },
+    {
+      "manifest": "docs/gates/phase-13.1-artifacts.json",
+      "field": "sha256",
+      "path": "src/partsmith/release/replay.py",
+      "previous_sha256": "c75cfb6d10e9b28a62dc8c8854a37e73cc9488f78fe63eb9b14a77a8016a5af5",
+      "new_sha256": "17f1f1ed6e27a29e78a4f085e80701d869f82285713c19fef51cac1d938560f4"
     },
     {
       "manifest": "docs/gates/phase-13.2-artifacts.json",
       "field": "sha256",
-      "path": ".gitattributes",
-      "previous_sha256": "857c38fecbfd69ef13acedce1c2da273b8b417fefe4ce6a1199a98b8b7422053",
-      "new_sha256": "32311e453a19a84e40a077156faa10b1f6f09c85127c0e3d14acd0208cdece32"
+      "path": ".github/workflows/ci.yml",
+      "previous_sha256": "2f676be607172e21533480ed50cbacf9cf3b27bd0e640898326ecc3a4d4ccf25",
+      "new_sha256": "f94adf3fa9575bb6fc26fe538c874a1b81e153c8244de230c1c541230cc23b0b"
     },
     {
       "manifest": "docs/gates/phase-13.2-artifacts.json",
       "field": "sha256",
       "path": "README.md",
-      "previous_sha256": "a2e6f94eb9fa6b3eff20d2c73e2555fceebd1702828894d1e987f44fd1b886fc",
-      "new_sha256": "1c6349802529f78a88985ffc335d47760ecba7eda647be91f8871f4a0935acfe"
+      "previous_sha256": "1c6349802529f78a88985ffc335d47760ecba7eda647be91f8871f4a0935acfe",
+      "new_sha256": "1130c671963b7ccf32f70e7cd8f52d4a0be93b7380aeca0d27c1bc9ef8e4c985"
     },
     {
       "manifest": "docs/gates/phase-13.2-artifacts.json",
       "field": "sha256",
       "path": "docs/gates/phase-12-artifacts.json",
-      "previous_sha256": "5fdd844ff15c2f8555b5040cf6fc5f597b76e9bd0c65a49ffdec7c04fd2455cf",
-      "new_sha256": "dad8fd8d5e43faa1342d0d8693edcc221ffc15cbb6197528be10ccaf727da751"
+      "previous_sha256": "dad8fd8d5e43faa1342d0d8693edcc221ffc15cbb6197528be10ccaf727da751",
+      "new_sha256": "1854213aacabbd5111af4ef82129a9a941523660bee4c0d9bf89d91fcdb540f5"
     },
     {
       "manifest": "docs/gates/phase-13.2-artifacts.json",
       "field": "sha256",
       "path": "docs/pcm-installation.md",
-      "previous_sha256": "b1adf0dd4869053b5400b7e43af2b572431e51776f74b6e6592a9e517a21b907",
-      "new_sha256": "cbca78e0e6de323ee8e07278443a93d54ebb7f79df9317f1d4cd047e24af1147"
+      "previous_sha256": "cbca78e0e6de323ee8e07278443a93d54ebb7f79df9317f1d4cd047e24af1147",
+      "new_sha256": "1d3d83b27ac6a7450fe223c2b5634c87b45e1894bbc17a40665e5cb35f9db4d2"
+    },
+    {
+      "manifest": "docs/gates/phase-13.2-artifacts.json",
+      "field": "sha256",
+      "path": "integrations/kicad/partsmith_ipc/entry.py",
+      "previous_sha256": "a3cbfdaa59764779a01dfbdd3d2e409b61b4898c36580f13b28007f22f0b1e1b",
+      "new_sha256": "64712381b5b9e3085be897ec9e01adaab1851b28da7af146ab5a718dd1fa6e9b"
+    },
+    {
+      "manifest": "docs/gates/phase-13.2-artifacts.json",
+      "field": "sha256",
+      "path": "integrations/kicad/partsmith_ipc/plugin.json",
+      "previous_sha256": "c7ee5031ac1a280c929043b7c860dc38c9ece2228fbfd7e5545d1f88fd697994",
+      "new_sha256": "5cd66a2898c5e56345b25c77dbee20a103f04a24b58063687794ba11e9c9f8bf"
+    },
+    {
+      "manifest": "docs/gates/phase-13.2-artifacts.json",
+      "field": "sha256",
+      "path": "pyproject.toml",
+      "previous_sha256": "4cb461dcf646b7b46340bfcad88892c3aee25d4819abb3bc4bf75c60e83d0613",
+      "new_sha256": "8d37ccc6843a091b9d50943def64d00b47197a64f7e0081cd78c1a7b8cf0867c"
+    },
+    {
+      "manifest": "docs/gates/phase-13.2-artifacts.json",
+      "field": "sha256",
+      "path": "requirements-pcm.txt",
+      "previous_sha256": "6ac9272a3742bdc0b324cbe865f27f9edb03b7ee3a31a460faac036df998d1e9",
+      "new_sha256": "a5d3007c579ae3e2360b7aa985c477476abd91625e37047deb594ad4fbfaf46a"
     },
     {
       "manifest": "docs/gates/phase-13.2-artifacts.json",
       "field": "sha256",
       "path": "resources/BFT_PartSmith_Implementation_Spec.md",
-      "previous_sha256": "e50eb21a9837d6b33878bf23897bd5aedbbd9dc406d465f488846a9a331a5d05",
-      "new_sha256": "43fb82cb0f4c79b0db397ef17a81b84d786971bd2701c92475323c43f5df0460"
+      "previous_sha256": "43fb82cb0f4c79b0db397ef17a81b84d786971bd2701c92475323c43f5df0460",
+      "new_sha256": "279eee3ed3098966c5a844edb2b809d7b0c9d30cb45e2ba4df6a2841c9b620d5"
+    },
+    {
+      "manifest": "docs/gates/phase-13.2-artifacts.json",
+      "field": "sha256",
+      "path": "src/partsmith/footprint/model.py",
+      "previous_sha256": "d35e31afcab8481d285d81333fb41b764d7fbd874c978c1e366b2efad183767b",
+      "new_sha256": "da8bbf092197a7a0e8aca567ad03535e8ee0cbebf201ff6f6c450ca211efeb84"
+    },
+    {
+      "manifest": "docs/gates/phase-13.2-artifacts.json",
+      "field": "sha256",
+      "path": "src/partsmith/kicad/runtime.py",
+      "previous_sha256": "394547da4d5bb2e051d1ce6bf5e23403f725409120e884d9f6dfbb075c3ff238",
+      "new_sha256": "4df1d8d5398791bb649d57c4d2dd0e18c4da49abff67f5199fb309bfcea8707a"
     },
     {
       "manifest": "docs/gates/phase-13.2-artifacts.json",
       "field": "sha256",
       "path": "src/partsmith/pcm/package.py",
-      "previous_sha256": "04422063ffe62aee4686bd4597a770dffc2c74c19f41edc2e3694cb144d30110",
-      "new_sha256": "6ddf79a89bb924c465b4c5a0666b6ab2e791ff473e48bc8e849fdfe63e09e59b"
+      "previous_sha256": "6ddf79a89bb924c465b4c5a0666b6ab2e791ff473e48bc8e849fdfe63e09e59b",
+      "new_sha256": "c012b1dc4428e1e1ecfe8246290033a554178448b3b08658ed4ce2669e6d8fd4"
+    },
+    {
+      "manifest": "docs/gates/phase-13.2-artifacts.json",
+      "field": "sha256",
+      "path": "src/partsmith/pcm/runtime.py",
+      "previous_sha256": "993ad2f0679f97ccc237b9dcb2efdbf6f6cd6bcd582160ae304fa730734fff03",
+      "new_sha256": "8fd742ffbe94f0ce314fa5b450e3be2d0a94796d7bba5d54498f3d718a826fff"
+    },
+    {
+      "manifest": "docs/gates/phase-13.2-artifacts.json",
+      "field": "sha256",
+      "path": "src/partsmith/process.py",
+      "previous_sha256": "fbded159d2cc37170577eff284a274a1e8a9fe4e636433dcc8da0296c1b4e128",
+      "new_sha256": "70dbe221de94ffc82ef2bcb73d13b77025cdd6839255b3c55de50cc98d9f5916"
+    },
+    {
+      "manifest": "docs/gates/phase-13.2-artifacts.json",
+      "field": "sha256",
+      "path": "src/partsmith/release/replay.py",
+      "previous_sha256": "c75cfb6d10e9b28a62dc8c8854a37e73cc9488f78fe63eb9b14a77a8016a5af5",
+      "new_sha256": "17f1f1ed6e27a29e78a4f085e80701d869f82285713c19fef51cac1d938560f4"
+    },
+    {
+      "manifest": "docs/gates/phase-13.2-artifacts.json",
+      "field": "sha256",
+      "path": "src/partsmith/release/runtime.py",
+      "previous_sha256": "ae7bdb59343379e0478aa3301939cffd1468081059cf539279f38fde3cce8d00",
+      "new_sha256": "7561ee2a3f2123e7d0be31ab4d0944bdb17dae37dd2be672cb2e079e2cbed4a8"
     },
     {
       "manifest": "docs/gates/phase-13.2-artifacts.json",
       "field": "sha256",
       "path": "tests/test_pcm.py",
-      "previous_sha256": "fa1a433c79fadde17f07627680b0ef287e45c1d36d2a14dfafaab756c0e8e2f6",
-      "new_sha256": "e5600dead8934f43043602c536da307d721085b37d8890c4062ce6b706dfa7a5"
+      "previous_sha256": "e5600dead8934f43043602c536da307d721085b37d8890c4062ce6b706dfa7a5",
+      "new_sha256": "a6a57599fd46c36ab5f4d3daab5939d7359b4a829a1c0653724338d2bf5797f6"
+    },
+    {
+      "manifest": "docs/gates/phase-13.2-artifacts.json",
+      "field": "sha256",
+      "path": "tests/test_phase8_snapshot.py",
+      "previous_sha256": "4b4e51e5c70a6ee37715162211b1dcd8f1db7a0ec14a3829c170b3941cac2629",
+      "new_sha256": "fd7396d8e2380afdf28ec1c20d981fb01a96f2cbd3567162c64a0c77f2510ee7"
+    },
+    {
+      "manifest": "docs/gates/phase-13.2-artifacts.json",
+      "field": "sha256",
+      "path": "tests/test_phase9.py",
+      "previous_sha256": "bf92645ba939f4f09b375ff493cf4c6194b3729d865769a963dc194120f43b21",
+      "new_sha256": "4e3916c32d61bc5056bcc25b618354cc854e35821b5114708039b69b3647c48b"
     },
     {
       "manifest": "docs/gates/phase-13.3-artifacts.json",
       "field": "sha256",
-      "path": ".gitattributes",
-      "previous_sha256": "857c38fecbfd69ef13acedce1c2da273b8b417fefe4ce6a1199a98b8b7422053",
-      "new_sha256": "32311e453a19a84e40a077156faa10b1f6f09c85127c0e3d14acd0208cdece32"
+      "path": ".github/workflows/ci.yml",
+      "previous_sha256": "2f676be607172e21533480ed50cbacf9cf3b27bd0e640898326ecc3a4d4ccf25",
+      "new_sha256": "f94adf3fa9575bb6fc26fe538c874a1b81e153c8244de230c1c541230cc23b0b"
     },
     {
       "manifest": "docs/gates/phase-13.3-artifacts.json",
       "field": "sha256",
       "path": "README.md",
-      "previous_sha256": "a2e6f94eb9fa6b3eff20d2c73e2555fceebd1702828894d1e987f44fd1b886fc",
-      "new_sha256": "1c6349802529f78a88985ffc335d47760ecba7eda647be91f8871f4a0935acfe"
+      "previous_sha256": "1c6349802529f78a88985ffc335d47760ecba7eda647be91f8871f4a0935acfe",
+      "new_sha256": "1130c671963b7ccf32f70e7cd8f52d4a0be93b7380aeca0d27c1bc9ef8e4c985"
+    },
+    {
+      "manifest": "docs/gates/phase-13.3-artifacts.json",
+      "field": "sha256",
+      "path": "pyproject.toml",
+      "previous_sha256": "4cb461dcf646b7b46340bfcad88892c3aee25d4819abb3bc4bf75c60e83d0613",
+      "new_sha256": "8d37ccc6843a091b9d50943def64d00b47197a64f7e0081cd78c1a7b8cf0867c"
     },
     {
       "manifest": "docs/gates/phase-13.3-artifacts.json",
       "field": "sha256",
       "path": "resources/BFT_PartSmith_Implementation_Spec.md",
-      "previous_sha256": "e50eb21a9837d6b33878bf23897bd5aedbbd9dc406d465f488846a9a331a5d05",
-      "new_sha256": "43fb82cb0f4c79b0db397ef17a81b84d786971bd2701c92475323c43f5df0460"
+      "previous_sha256": "43fb82cb0f4c79b0db397ef17a81b84d786971bd2701c92475323c43f5df0460",
+      "new_sha256": "279eee3ed3098966c5a844edb2b809d7b0c9d30cb45e2ba4df6a2841c9b620d5"
+    },
+    {
+      "manifest": "docs/gates/phase-13.3-artifacts.json",
+      "field": "sha256",
+      "path": "src/partsmith/integration/planner.py",
+      "previous_sha256": "7a5828eba1e2ae3cb9cc27aab01eea524e196cf75c41f9a25ae14446464bc595",
+      "new_sha256": "565725d7b87d2cf0d0c0315e7663755d7ec7da2efb3f91554d903ac360ae632b"
     },
     {
       "manifest": "docs/gates/phase-13.4-artifacts.json",
       "field": "sha256",
-      "path": ".gitattributes",
-      "previous_sha256": "857c38fecbfd69ef13acedce1c2da273b8b417fefe4ce6a1199a98b8b7422053",
-      "new_sha256": "32311e453a19a84e40a077156faa10b1f6f09c85127c0e3d14acd0208cdece32"
+      "path": ".github/workflows/ci.yml",
+      "previous_sha256": "2f676be607172e21533480ed50cbacf9cf3b27bd0e640898326ecc3a4d4ccf25",
+      "new_sha256": "f94adf3fa9575bb6fc26fe538c874a1b81e153c8244de230c1c541230cc23b0b"
     },
     {
       "manifest": "docs/gates/phase-13.4-artifacts.json",
       "field": "sha256",
       "path": "README.md",
-      "previous_sha256": "a2e6f94eb9fa6b3eff20d2c73e2555fceebd1702828894d1e987f44fd1b886fc",
-      "new_sha256": "1c6349802529f78a88985ffc335d47760ecba7eda647be91f8871f4a0935acfe"
+      "previous_sha256": "1c6349802529f78a88985ffc335d47760ecba7eda647be91f8871f4a0935acfe",
+      "new_sha256": "1130c671963b7ccf32f70e7cd8f52d4a0be93b7380aeca0d27c1bc9ef8e4c985"
+    },
+    {
+      "manifest": "docs/gates/phase-13.4-artifacts.json",
+      "field": "sha256",
+      "path": "pyproject.toml",
+      "previous_sha256": "4cb461dcf646b7b46340bfcad88892c3aee25d4819abb3bc4bf75c60e83d0613",
+      "new_sha256": "8d37ccc6843a091b9d50943def64d00b47197a64f7e0081cd78c1a7b8cf0867c"
     },
     {
       "manifest": "docs/gates/phase-13.4-artifacts.json",
       "field": "sha256",
       "path": "resources/BFT_PartSmith_Implementation_Spec.md",
-      "previous_sha256": "e50eb21a9837d6b33878bf23897bd5aedbbd9dc406d465f488846a9a331a5d05",
-      "new_sha256": "43fb82cb0f4c79b0db397ef17a81b84d786971bd2701c92475323c43f5df0460"
+      "previous_sha256": "43fb82cb0f4c79b0db397ef17a81b84d786971bd2701c92475323c43f5df0460",
+      "new_sha256": "279eee3ed3098966c5a844edb2b809d7b0c9d30cb45e2ba4df6a2841c9b620d5"
+    },
+    {
+      "manifest": "docs/gates/phase-13.4-artifacts.json",
+      "field": "sha256",
+      "path": "src/partsmith/integration/planner.py",
+      "previous_sha256": "7a5828eba1e2ae3cb9cc27aab01eea524e196cf75c41f9a25ae14446464bc595",
+      "new_sha256": "565725d7b87d2cf0d0c0315e7663755d7ec7da2efb3f91554d903ac360ae632b"
+    },
+    {
+      "manifest": "docs/gates/phase-13.4-artifacts.json",
+      "field": "sha256",
+      "path": "src/partsmith/integration/staging.py",
+      "previous_sha256": "c371795e455990f722a8b77e120b2911f2fc518381bd4c7d234ccfde2b121a73",
+      "new_sha256": "2421aafc3b39c7096ff8183340debe85e8d69ca2b456a60847517a8a45e436c0"
     },
     {
       "manifest": "docs/gates/phase-13.5-artifacts.json",
       "field": "sha256",
-      "path": ".gitattributes",
-      "previous_sha256": "857c38fecbfd69ef13acedce1c2da273b8b417fefe4ce6a1199a98b8b7422053",
-      "new_sha256": "32311e453a19a84e40a077156faa10b1f6f09c85127c0e3d14acd0208cdece32"
+      "path": ".github/workflows/ci.yml",
+      "previous_sha256": "2f676be607172e21533480ed50cbacf9cf3b27bd0e640898326ecc3a4d4ccf25",
+      "new_sha256": "f94adf3fa9575bb6fc26fe538c874a1b81e153c8244de230c1c541230cc23b0b"
     },
     {
       "manifest": "docs/gates/phase-13.5-artifacts.json",
       "field": "sha256",
       "path": "README.md",
-      "previous_sha256": "a2e6f94eb9fa6b3eff20d2c73e2555fceebd1702828894d1e987f44fd1b886fc",
-      "new_sha256": "1c6349802529f78a88985ffc335d47760ecba7eda647be91f8871f4a0935acfe"
+      "previous_sha256": "1c6349802529f78a88985ffc335d47760ecba7eda647be91f8871f4a0935acfe",
+      "new_sha256": "1130c671963b7ccf32f70e7cd8f52d4a0be93b7380aeca0d27c1bc9ef8e4c985"
+    },
+    {
+      "manifest": "docs/gates/phase-13.5-artifacts.json",
+      "field": "sha256",
+      "path": "pyproject.toml",
+      "previous_sha256": "4cb461dcf646b7b46340bfcad88892c3aee25d4819abb3bc4bf75c60e83d0613",
+      "new_sha256": "8d37ccc6843a091b9d50943def64d00b47197a64f7e0081cd78c1a7b8cf0867c"
     },
     {
       "manifest": "docs/gates/phase-13.5-artifacts.json",
       "field": "sha256",
       "path": "resources/BFT_PartSmith_Implementation_Spec.md",
-      "previous_sha256": "e50eb21a9837d6b33878bf23897bd5aedbbd9dc406d465f488846a9a331a5d05",
-      "new_sha256": "43fb82cb0f4c79b0db397ef17a81b84d786971bd2701c92475323c43f5df0460"
+      "previous_sha256": "43fb82cb0f4c79b0db397ef17a81b84d786971bd2701c92475323c43f5df0460",
+      "new_sha256": "279eee3ed3098966c5a844edb2b809d7b0c9d30cb45e2ba4df6a2841c9b620d5"
+    },
+    {
+      "manifest": "docs/gates/phase-13.5-artifacts.json",
+      "field": "sha256",
+      "path": "src/partsmith/integration/planner.py",
+      "previous_sha256": "7a5828eba1e2ae3cb9cc27aab01eea524e196cf75c41f9a25ae14446464bc595",
+      "new_sha256": "565725d7b87d2cf0d0c0315e7663755d7ec7da2efb3f91554d903ac360ae632b"
+    },
+    {
+      "manifest": "docs/gates/phase-13.5-artifacts.json",
+      "field": "sha256",
+      "path": "src/partsmith/integration/staging.py",
+      "previous_sha256": "c371795e455990f722a8b77e120b2911f2fc518381bd4c7d234ccfde2b121a73",
+      "new_sha256": "2421aafc3b39c7096ff8183340debe85e8d69ca2b456a60847517a8a45e436c0"
     },
     {
       "manifest": "docs/gates/phase-13.6-artifacts.json",
       "field": "sha256",
-      "path": ".gitattributes",
-      "previous_sha256": "857c38fecbfd69ef13acedce1c2da273b8b417fefe4ce6a1199a98b8b7422053",
-      "new_sha256": "32311e453a19a84e40a077156faa10b1f6f09c85127c0e3d14acd0208cdece32"
+      "path": ".github/workflows/ci.yml",
+      "previous_sha256": "2f676be607172e21533480ed50cbacf9cf3b27bd0e640898326ecc3a4d4ccf25",
+      "new_sha256": "f94adf3fa9575bb6fc26fe538c874a1b81e153c8244de230c1c541230cc23b0b"
     },
     {
       "manifest": "docs/gates/phase-13.6-artifacts.json",
       "field": "sha256",
       "path": "README.md",
-      "previous_sha256": "a2e6f94eb9fa6b3eff20d2c73e2555fceebd1702828894d1e987f44fd1b886fc",
-      "new_sha256": "1c6349802529f78a88985ffc335d47760ecba7eda647be91f8871f4a0935acfe"
+      "previous_sha256": "1c6349802529f78a88985ffc335d47760ecba7eda647be91f8871f4a0935acfe",
+      "new_sha256": "1130c671963b7ccf32f70e7cd8f52d4a0be93b7380aeca0d27c1bc9ef8e4c985"
+    },
+    {
+      "manifest": "docs/gates/phase-13.6-artifacts.json",
+      "field": "sha256",
+      "path": "pyproject.toml",
+      "previous_sha256": "4cb461dcf646b7b46340bfcad88892c3aee25d4819abb3bc4bf75c60e83d0613",
+      "new_sha256": "8d37ccc6843a091b9d50943def64d00b47197a64f7e0081cd78c1a7b8cf0867c"
     },
     {
       "manifest": "docs/gates/phase-13.6-artifacts.json",
       "field": "sha256",
       "path": "resources/BFT_PartSmith_Implementation_Spec.md",
-      "previous_sha256": "e50eb21a9837d6b33878bf23897bd5aedbbd9dc406d465f488846a9a331a5d05",
-      "new_sha256": "43fb82cb0f4c79b0db397ef17a81b84d786971bd2701c92475323c43f5df0460"
+      "previous_sha256": "43fb82cb0f4c79b0db397ef17a81b84d786971bd2701c92475323c43f5df0460",
+      "new_sha256": "279eee3ed3098966c5a844edb2b809d7b0c9d30cb45e2ba4df6a2841c9b620d5"
+    },
+    {
+      "manifest": "docs/gates/phase-13.6-artifacts.json",
+      "field": "sha256",
+      "path": "src/partsmith/integration/planner.py",
+      "previous_sha256": "7a5828eba1e2ae3cb9cc27aab01eea524e196cf75c41f9a25ae14446464bc595",
+      "new_sha256": "565725d7b87d2cf0d0c0315e7663755d7ec7da2efb3f91554d903ac360ae632b"
+    },
+    {
+      "manifest": "docs/gates/phase-13.6-artifacts.json",
+      "field": "sha256",
+      "path": "src/partsmith/integration/staging.py",
+      "previous_sha256": "c371795e455990f722a8b77e120b2911f2fc518381bd4c7d234ccfde2b121a73",
+      "new_sha256": "2421aafc3b39c7096ff8183340debe85e8d69ca2b456a60847517a8a45e436c0"
     },
     {
       "manifest": "docs/gates/phase-13.7-artifacts.json",
       "field": "sha256",
-      "path": ".gitattributes",
-      "previous_sha256": "857c38fecbfd69ef13acedce1c2da273b8b417fefe4ce6a1199a98b8b7422053",
-      "new_sha256": "32311e453a19a84e40a077156faa10b1f6f09c85127c0e3d14acd0208cdece32"
+      "path": ".github/workflows/ci.yml",
+      "previous_sha256": "2f676be607172e21533480ed50cbacf9cf3b27bd0e640898326ecc3a4d4ccf25",
+      "new_sha256": "f94adf3fa9575bb6fc26fe538c874a1b81e153c8244de230c1c541230cc23b0b"
     },
     {
       "manifest": "docs/gates/phase-13.7-artifacts.json",
       "field": "sha256",
       "path": "README.md",
-      "previous_sha256": "a2e6f94eb9fa6b3eff20d2c73e2555fceebd1702828894d1e987f44fd1b886fc",
-      "new_sha256": "1c6349802529f78a88985ffc335d47760ecba7eda647be91f8871f4a0935acfe"
+      "previous_sha256": "1c6349802529f78a88985ffc335d47760ecba7eda647be91f8871f4a0935acfe",
+      "new_sha256": "1130c671963b7ccf32f70e7cd8f52d4a0be93b7380aeca0d27c1bc9ef8e4c985"
+    },
+    {
+      "manifest": "docs/gates/phase-13.7-artifacts.json",
+      "field": "sha256",
+      "path": "pyproject.toml",
+      "previous_sha256": "4cb461dcf646b7b46340bfcad88892c3aee25d4819abb3bc4bf75c60e83d0613",
+      "new_sha256": "8d37ccc6843a091b9d50943def64d00b47197a64f7e0081cd78c1a7b8cf0867c"
     },
     {
       "manifest": "docs/gates/phase-13.7-artifacts.json",
       "field": "sha256",
       "path": "resources/BFT_PartSmith_Implementation_Spec.md",
-      "previous_sha256": "e50eb21a9837d6b33878bf23897bd5aedbbd9dc406d465f488846a9a331a5d05",
-      "new_sha256": "43fb82cb0f4c79b0db397ef17a81b84d786971bd2701c92475323c43f5df0460"
+      "previous_sha256": "43fb82cb0f4c79b0db397ef17a81b84d786971bd2701c92475323c43f5df0460",
+      "new_sha256": "279eee3ed3098966c5a844edb2b809d7b0c9d30cb45e2ba4df6a2841c9b620d5"
+    },
+    {
+      "manifest": "docs/gates/phase-13.7-artifacts.json",
+      "field": "sha256",
+      "path": "src/partsmith/integration/planner.py",
+      "previous_sha256": "7a5828eba1e2ae3cb9cc27aab01eea524e196cf75c41f9a25ae14446464bc595",
+      "new_sha256": "565725d7b87d2cf0d0c0315e7663755d7ec7da2efb3f91554d903ac360ae632b"
+    },
+    {
+      "manifest": "docs/gates/phase-13.7-artifacts.json",
+      "field": "sha256",
+      "path": "src/partsmith/integration/staging.py",
+      "previous_sha256": "c371795e455990f722a8b77e120b2911f2fc518381bd4c7d234ccfde2b121a73",
+      "new_sha256": "2421aafc3b39c7096ff8183340debe85e8d69ca2b456a60847517a8a45e436c0"
     },
     {
       "manifest": "docs/gates/phase-13.7-artifacts.json",
       "field": "sha256",
       "path": "src/partsmith/pcm/package.py",
-      "previous_sha256": "04422063ffe62aee4686bd4597a770dffc2c74c19f41edc2e3694cb144d30110",
-      "new_sha256": "6ddf79a89bb924c465b4c5a0666b6ab2e791ff473e48bc8e849fdfe63e09e59b"
+      "previous_sha256": "6ddf79a89bb924c465b4c5a0666b6ab2e791ff473e48bc8e849fdfe63e09e59b",
+      "new_sha256": "c012b1dc4428e1e1ecfe8246290033a554178448b3b08658ed4ce2669e6d8fd4"
+    },
+    {
+      "manifest": "docs/gates/phase-13.7-artifacts.json",
+      "field": "sha256",
+      "path": "src/partsmith/pcm/runtime.py",
+      "previous_sha256": "993ad2f0679f97ccc237b9dcb2efdbf6f6cd6bcd582160ae304fa730734fff03",
+      "new_sha256": "8fd742ffbe94f0ce314fa5b450e3be2d0a94796d7bba5d54498f3d718a826fff"
     },
     {
       "manifest": "docs/gates/phase-13.8-artifacts.json",
       "field": "sha256",
-      "path": ".gitattributes",
-      "previous_sha256": "857c38fecbfd69ef13acedce1c2da273b8b417fefe4ce6a1199a98b8b7422053",
-      "new_sha256": "32311e453a19a84e40a077156faa10b1f6f09c85127c0e3d14acd0208cdece32"
+      "path": ".github/workflows/ci.yml",
+      "previous_sha256": "2f676be607172e21533480ed50cbacf9cf3b27bd0e640898326ecc3a4d4ccf25",
+      "new_sha256": "f94adf3fa9575bb6fc26fe538c874a1b81e153c8244de230c1c541230cc23b0b"
     },
     {
       "manifest": "docs/gates/phase-13.8-artifacts.json",
       "field": "sha256",
       "path": "README.md",
-      "previous_sha256": "a2e6f94eb9fa6b3eff20d2c73e2555fceebd1702828894d1e987f44fd1b886fc",
-      "new_sha256": "1c6349802529f78a88985ffc335d47760ecba7eda647be91f8871f4a0935acfe"
+      "previous_sha256": "1c6349802529f78a88985ffc335d47760ecba7eda647be91f8871f4a0935acfe",
+      "new_sha256": "1130c671963b7ccf32f70e7cd8f52d4a0be93b7380aeca0d27c1bc9ef8e4c985"
     },
     {
       "manifest": "docs/gates/phase-13.8-artifacts.json",
       "field": "sha256",
       "path": "docs/pcm-installation.md",
-      "previous_sha256": "b1adf0dd4869053b5400b7e43af2b572431e51776f74b6e6592a9e517a21b907",
-      "new_sha256": "cbca78e0e6de323ee8e07278443a93d54ebb7f79df9317f1d4cd047e24af1147"
+      "previous_sha256": "cbca78e0e6de323ee8e07278443a93d54ebb7f79df9317f1d4cd047e24af1147",
+      "new_sha256": "1d3d83b27ac6a7450fe223c2b5634c87b45e1894bbc17a40665e5cb35f9db4d2"
+    },
+    {
+      "manifest": "docs/gates/phase-13.8-artifacts.json",
+      "field": "sha256",
+      "path": "integrations/kicad/partsmith_ipc/entry.py",
+      "previous_sha256": "a3cbfdaa59764779a01dfbdd3d2e409b61b4898c36580f13b28007f22f0b1e1b",
+      "new_sha256": "64712381b5b9e3085be897ec9e01adaab1851b28da7af146ab5a718dd1fa6e9b"
+    },
+    {
+      "manifest": "docs/gates/phase-13.8-artifacts.json",
+      "field": "sha256",
+      "path": "integrations/kicad/partsmith_ipc/plugin.json",
+      "previous_sha256": "c7ee5031ac1a280c929043b7c860dc38c9ece2228fbfd7e5545d1f88fd697994",
+      "new_sha256": "5cd66a2898c5e56345b25c77dbee20a103f04a24b58063687794ba11e9c9f8bf"
+    },
+    {
+      "manifest": "docs/gates/phase-13.8-artifacts.json",
+      "field": "sha256",
+      "path": "pyproject.toml",
+      "previous_sha256": "4cb461dcf646b7b46340bfcad88892c3aee25d4819abb3bc4bf75c60e83d0613",
+      "new_sha256": "8d37ccc6843a091b9d50943def64d00b47197a64f7e0081cd78c1a7b8cf0867c"
+    },
+    {
+      "manifest": "docs/gates/phase-13.8-artifacts.json",
+      "field": "sha256",
+      "path": "requirements-pcm.txt",
+      "previous_sha256": "6ac9272a3742bdc0b324cbe865f27f9edb03b7ee3a31a460faac036df998d1e9",
+      "new_sha256": "a5d3007c579ae3e2360b7aa985c477476abd91625e37047deb594ad4fbfaf46a"
     },
     {
       "manifest": "docs/gates/phase-13.8-artifacts.json",
       "field": "sha256",
       "path": "resources/BFT_PartSmith_Implementation_Spec.md",
-      "previous_sha256": "e50eb21a9837d6b33878bf23897bd5aedbbd9dc406d465f488846a9a331a5d05",
-      "new_sha256": "43fb82cb0f4c79b0db397ef17a81b84d786971bd2701c92475323c43f5df0460"
+      "previous_sha256": "43fb82cb0f4c79b0db397ef17a81b84d786971bd2701c92475323c43f5df0460",
+      "new_sha256": "279eee3ed3098966c5a844edb2b809d7b0c9d30cb45e2ba4df6a2841c9b620d5"
+    },
+    {
+      "manifest": "docs/gates/phase-13.8-artifacts.json",
+      "field": "sha256",
+      "path": "src/partsmith/footprint/model.py",
+      "previous_sha256": "d35e31afcab8481d285d81333fb41b764d7fbd874c978c1e366b2efad183767b",
+      "new_sha256": "da8bbf092197a7a0e8aca567ad03535e8ee0cbebf201ff6f6c450ca211efeb84"
+    },
+    {
+      "manifest": "docs/gates/phase-13.8-artifacts.json",
+      "field": "sha256",
+      "path": "src/partsmith/integration/planner.py",
+      "previous_sha256": "7a5828eba1e2ae3cb9cc27aab01eea524e196cf75c41f9a25ae14446464bc595",
+      "new_sha256": "565725d7b87d2cf0d0c0315e7663755d7ec7da2efb3f91554d903ac360ae632b"
+    },
+    {
+      "manifest": "docs/gates/phase-13.8-artifacts.json",
+      "field": "sha256",
+      "path": "src/partsmith/integration/staging.py",
+      "previous_sha256": "c371795e455990f722a8b77e120b2911f2fc518381bd4c7d234ccfde2b121a73",
+      "new_sha256": "2421aafc3b39c7096ff8183340debe85e8d69ca2b456a60847517a8a45e436c0"
+    },
+    {
+      "manifest": "docs/gates/phase-13.8-artifacts.json",
+      "field": "sha256",
+      "path": "src/partsmith/kicad/runtime.py",
+      "previous_sha256": "394547da4d5bb2e051d1ce6bf5e23403f725409120e884d9f6dfbb075c3ff238",
+      "new_sha256": "4df1d8d5398791bb649d57c4d2dd0e18c4da49abff67f5199fb309bfcea8707a"
     },
     {
       "manifest": "docs/gates/phase-13.8-artifacts.json",
       "field": "sha256",
       "path": "src/partsmith/pcm/package.py",
-      "previous_sha256": "04422063ffe62aee4686bd4597a770dffc2c74c19f41edc2e3694cb144d30110",
-      "new_sha256": "6ddf79a89bb924c465b4c5a0666b6ab2e791ff473e48bc8e849fdfe63e09e59b"
+      "previous_sha256": "6ddf79a89bb924c465b4c5a0666b6ab2e791ff473e48bc8e849fdfe63e09e59b",
+      "new_sha256": "c012b1dc4428e1e1ecfe8246290033a554178448b3b08658ed4ce2669e6d8fd4"
+    },
+    {
+      "manifest": "docs/gates/phase-13.8-artifacts.json",
+      "field": "sha256",
+      "path": "src/partsmith/pcm/runtime.py",
+      "previous_sha256": "993ad2f0679f97ccc237b9dcb2efdbf6f6cd6bcd582160ae304fa730734fff03",
+      "new_sha256": "8fd742ffbe94f0ce314fa5b450e3be2d0a94796d7bba5d54498f3d718a826fff"
+    },
+    {
+      "manifest": "docs/gates/phase-13.8-artifacts.json",
+      "field": "sha256",
+      "path": "src/partsmith/process.py",
+      "previous_sha256": "fbded159d2cc37170577eff284a274a1e8a9fe4e636433dcc8da0296c1b4e128",
+      "new_sha256": "70dbe221de94ffc82ef2bcb73d13b77025cdd6839255b3c55de50cc98d9f5916"
+    },
+    {
+      "manifest": "docs/gates/phase-13.8-artifacts.json",
+      "field": "sha256",
+      "path": "src/partsmith/release/replay.py",
+      "previous_sha256": "c75cfb6d10e9b28a62dc8c8854a37e73cc9488f78fe63eb9b14a77a8016a5af5",
+      "new_sha256": "17f1f1ed6e27a29e78a4f085e80701d869f82285713c19fef51cac1d938560f4"
+    },
+    {
+      "manifest": "docs/gates/phase-13.8-artifacts.json",
+      "field": "sha256",
+      "path": "src/partsmith/release/runtime.py",
+      "previous_sha256": "ae7bdb59343379e0478aa3301939cffd1468081059cf539279f38fde3cce8d00",
+      "new_sha256": "7561ee2a3f2123e7d0be31ab4d0944bdb17dae37dd2be672cb2e079e2cbed4a8"
     },
     {
       "manifest": "docs/gates/phase-13.8-artifacts.json",
       "field": "sha256",
       "path": "tests/test_pcm.py",
-      "previous_sha256": "fa1a433c79fadde17f07627680b0ef287e45c1d36d2a14dfafaab756c0e8e2f6",
-      "new_sha256": "e5600dead8934f43043602c536da307d721085b37d8890c4062ce6b706dfa7a5"
+      "previous_sha256": "e5600dead8934f43043602c536da307d721085b37d8890c4062ce6b706dfa7a5",
+      "new_sha256": "a6a57599fd46c36ab5f4d3daab5939d7359b4a829a1c0653724338d2bf5797f6"
+    },
+    {
+      "manifest": "docs/gates/phase-13.8-artifacts.json",
+      "field": "sha256",
+      "path": "tests/test_phase8_snapshot.py",
+      "previous_sha256": "4b4e51e5c70a6ee37715162211b1dcd8f1db7a0ec14a3829c170b3941cac2629",
+      "new_sha256": "fd7396d8e2380afdf28ec1c20d981fb01a96f2cbd3567162c64a0c77f2510ee7"
+    },
+    {
+      "manifest": "docs/gates/phase-13.8-artifacts.json",
+      "field": "sha256",
+      "path": "tests/test_phase9.py",
+      "previous_sha256": "bf92645ba939f4f09b375ff493cf4c6194b3729d865769a963dc194120f43b21",
+      "new_sha256": "4e3916c32d61bc5056bcc25b618354cc854e35821b5114708039b69b3647c48b"
     },
     {
       "manifest": "docs/gates/phase-13-artifacts.json",
       "field": "sha256",
       "path": "docs/gates/phase-13.1-artifacts.json",
-      "previous_sha256": "9fbd3edca22bce1ef65a4da13e51919961e26d3c02f36ccca3e01602f160a4b3",
-      "new_sha256": "ba4a20be6300d40f28142897d2c7b1a59d7d7b550d6a5ee2c3dc6c9ea6b0539b"
+      "previous_sha256": "ba4a20be6300d40f28142897d2c7b1a59d7d7b550d6a5ee2c3dc6c9ea6b0539b",
+      "new_sha256": "49ebf0067e055e819d2b92fa31744973b4c7db32c7adae657bdc67c24d685efb"
     },
     {
       "manifest": "docs/gates/phase-13-artifacts.json",
       "field": "sha256",
       "path": "docs/gates/phase-13.2-artifacts.json",
-      "previous_sha256": "7ac9c82e2ad9ba50dcd9179c2766d357a083f8bacf47678a9224b0a12675ce4f",
-      "new_sha256": "57478a36f70ca34b3897532919cd7bf1bf09ce996fc5f7dbc6a8fb95320b158f"
+      "previous_sha256": "57478a36f70ca34b3897532919cd7bf1bf09ce996fc5f7dbc6a8fb95320b158f",
+      "new_sha256": "86483eb08a62cb4f465309046a64c85fb253fc56dfa10ace3b1a8b936a3c19b8"
     },
     {
       "manifest": "docs/gates/phase-13-artifacts.json",
       "field": "sha256",
       "path": "docs/gates/phase-13.3-artifacts.json",
-      "previous_sha256": "5c15391d5889d10067d0c84676818229897be8422bc59add6d9879650796e108",
-      "new_sha256": "8a9d503281848abb5c4c8670e98f2a32c99930779cacf4e2ec40a3df9c060869"
+      "previous_sha256": "8a9d503281848abb5c4c8670e98f2a32c99930779cacf4e2ec40a3df9c060869",
+      "new_sha256": "e93a8f056352f258574a8ea805a634ed1e0fb2eb0f9452c42030984a7f7ae9e7"
     },
     {
       "manifest": "docs/gates/phase-13-artifacts.json",
       "field": "sha256",
       "path": "docs/gates/phase-13.4-artifacts.json",
-      "previous_sha256": "d8dcb977dbee7fc11063e3a46e9891d0ab41b93bbe17a80357d61c4c64f38e7a",
-      "new_sha256": "87d15ab454b269047a09618f141057fc5a2d0a9d51c6248642f81764133f73e6"
+      "previous_sha256": "87d15ab454b269047a09618f141057fc5a2d0a9d51c6248642f81764133f73e6",
+      "new_sha256": "dc397c30c9d1a84cd8003a9e4d4c18dc26e1da0788fd1e8edac2b41019697941"
     },
     {
       "manifest": "docs/gates/phase-13-artifacts.json",
       "field": "sha256",
       "path": "docs/gates/phase-13.5-artifacts.json",
-      "previous_sha256": "f1e09d4c1b074b88762afbfa658898b158bb65ed3fe04285b776b8d094592d9f",
-      "new_sha256": "eeee0733523067fa4b1b33a923c7426c3160aac3ff3bbcf63655136f7344b66d"
+      "previous_sha256": "eeee0733523067fa4b1b33a923c7426c3160aac3ff3bbcf63655136f7344b66d",
+      "new_sha256": "831ac1e792c52e62057d30edbcd4803d5ac9a40afef19fca35f68edee0203eda"
     },
     {
       "manifest": "docs/gates/phase-13-artifacts.json",
       "field": "sha256",
       "path": "docs/gates/phase-13.6-artifacts.json",
-      "previous_sha256": "4bc44eeefe36dd71bc3accf5b489042b174933084ca0f9c0b2c2fe81a2db4dbb",
-      "new_sha256": "eecd4290ff9c29506cd2e2c71903c628c3a664eb2eb073bcfeffcc7a3133e445"
+      "previous_sha256": "eecd4290ff9c29506cd2e2c71903c628c3a664eb2eb073bcfeffcc7a3133e445",
+      "new_sha256": "f43b3c24af8990375b6fce5bb7df975319f03d4c16ca9f93342421a42e3b45d0"
     },
     {
       "manifest": "docs/gates/phase-13-artifacts.json",
       "field": "sha256",
       "path": "docs/gates/phase-13.7-artifacts.json",
-      "previous_sha256": "fe7d63b1a942f836a1a11b4e14eb78ce433ba3672de291fcbe4e9e3eb189c9b8",
-      "new_sha256": "d6e594c1686401fc0908add8be9cb39065554d4661896569428daae2483e4521"
+      "previous_sha256": "d6e594c1686401fc0908add8be9cb39065554d4661896569428daae2483e4521",
+      "new_sha256": "4f334f521c91634f79a753276e34d8edc9a11ea7100352e29ab4ef2e28a5bbe9"
     },
     {
       "manifest": "docs/gates/phase-13-artifacts.json",
       "field": "sha256",
       "path": "docs/gates/phase-13.8-artifacts.json",
-      "previous_sha256": "66385511b97cde05bc5ae15c622c39e6bb571d2e3726f497e0a60c57048d56ec",
-      "new_sha256": "d141e0ef5f73386ef5f5143cc1bbfdd5a57b0b374e7b17d8b12e0f1b66935204"
+      "previous_sha256": "d141e0ef5f73386ef5f5143cc1bbfdd5a57b0b374e7b17d8b12e0f1b66935204",
+      "new_sha256": "706eeff88d60375a45c5f3a263ce033f7a128f95499045109578f840424d329d"
     },
     {
       "manifest": "docs/gates/phase-13-startup-fix-2026-10-07.json",
       "field": "sha256",
       "path": "docs/pcm-installation.md",
-      "previous_sha256": "b1adf0dd4869053b5400b7e43af2b572431e51776f74b6e6592a9e517a21b907",
-      "new_sha256": "cbca78e0e6de323ee8e07278443a93d54ebb7f79df9317f1d4cd047e24af1147"
+      "previous_sha256": "cbca78e0e6de323ee8e07278443a93d54ebb7f79df9317f1d4cd047e24af1147",
+      "new_sha256": "1d3d83b27ac6a7450fe223c2b5634c87b45e1894bbc17a40665e5cb35f9db4d2"
+    },
+    {
+      "manifest": "docs/gates/phase-13-startup-fix-2026-10-07.json",
+      "field": "sha256",
+      "path": "integrations/kicad/partsmith_ipc/entry.py",
+      "previous_sha256": "a3cbfdaa59764779a01dfbdd3d2e409b61b4898c36580f13b28007f22f0b1e1b",
+      "new_sha256": "64712381b5b9e3085be897ec9e01adaab1851b28da7af146ab5a718dd1fa6e9b"
+    },
+    {
+      "manifest": "docs/gates/phase-13-startup-fix-2026-10-07.json",
+      "field": "sha256",
+      "path": "pyproject.toml",
+      "previous_sha256": "4cb461dcf646b7b46340bfcad88892c3aee25d4819abb3bc4bf75c60e83d0613",
+      "new_sha256": "8d37ccc6843a091b9d50943def64d00b47197a64f7e0081cd78c1a7b8cf0867c"
     },
     {
       "manifest": "docs/gates/phase-13-startup-fix-2026-10-07.json",
       "field": "sha256",
       "path": "resources/BFT_PartSmith_Implementation_Spec.md",
-      "previous_sha256": "e50eb21a9837d6b33878bf23897bd5aedbbd9dc406d465f488846a9a331a5d05",
-      "new_sha256": "43fb82cb0f4c79b0db397ef17a81b84d786971bd2701c92475323c43f5df0460"
+      "previous_sha256": "43fb82cb0f4c79b0db397ef17a81b84d786971bd2701c92475323c43f5df0460",
+      "new_sha256": "279eee3ed3098966c5a844edb2b809d7b0c9d30cb45e2ba4df6a2841c9b620d5"
     },
     {
       "manifest": "docs/gates/phase-13-startup-fix-2026-10-07.json",
       "field": "sha256",
       "path": "src/partsmith/pcm/package.py",
-      "previous_sha256": "04422063ffe62aee4686bd4597a770dffc2c74c19f41edc2e3694cb144d30110",
-      "new_sha256": "6ddf79a89bb924c465b4c5a0666b6ab2e791ff473e48bc8e849fdfe63e09e59b"
+      "previous_sha256": "6ddf79a89bb924c465b4c5a0666b6ab2e791ff473e48bc8e849fdfe63e09e59b",
+      "new_sha256": "c012b1dc4428e1e1ecfe8246290033a554178448b3b08658ed4ce2669e6d8fd4"
     },
     {
       "manifest": "docs/gates/phase-13-startup-fix-2026-10-07.json",
       "field": "sha256",
       "path": "tests/test_pcm.py",
-      "previous_sha256": "fa1a433c79fadde17f07627680b0ef287e45c1d36d2a14dfafaab756c0e8e2f6",
-      "new_sha256": "e5600dead8934f43043602c536da307d721085b37d8890c4062ce6b706dfa7a5"
+      "previous_sha256": "e5600dead8934f43043602c536da307d721085b37d8890c4062ce6b706dfa7a5",
+      "new_sha256": "a6a57599fd46c36ab5f4d3daab5939d7359b4a829a1c0653724338d2bf5797f6"
     },
     {
       "manifest": "docs/gates/phase-13-lifecycle-fix-2026-10-07.json",
       "field": "sha256",
       "path": "docs/gates/phase-13-startup-fix-2026-10-07.json",
-      "previous_sha256": "5dd1cf1ef7cdae7f85678b9d76fc09882af7073afb2d4b6f64ab6b0a697a57e3",
-      "new_sha256": "898a86da8ea7dfa123d26d87f3f378958b7c292153760c0bd1b961e134094db8"
+      "previous_sha256": "898a86da8ea7dfa123d26d87f3f378958b7c292153760c0bd1b961e134094db8",
+      "new_sha256": "2edf479a07b8f8cfe3841672cdd36aec676661269e43d8ecc1b4197f986bdaf2"
     },
     {
       "manifest": "docs/gates/phase-13-lifecycle-fix-2026-10-07.json",
       "field": "sha256",
       "path": "docs/pcm-installation.md",
-      "previous_sha256": "b1adf0dd4869053b5400b7e43af2b572431e51776f74b6e6592a9e517a21b907",
-      "new_sha256": "cbca78e0e6de323ee8e07278443a93d54ebb7f79df9317f1d4cd047e24af1147"
+      "previous_sha256": "cbca78e0e6de323ee8e07278443a93d54ebb7f79df9317f1d4cd047e24af1147",
+      "new_sha256": "1d3d83b27ac6a7450fe223c2b5634c87b45e1894bbc17a40665e5cb35f9db4d2"
+    },
+    {
+      "manifest": "docs/gates/phase-13-lifecycle-fix-2026-10-07.json",
+      "field": "sha256",
+      "path": "install_partsmith.bat",
+      "previous_sha256": "bc1fcee11fcd81d4b97d439f24b46367adf466228262036269ec3fb30c59a792",
+      "new_sha256": "58e56efead7648d3f7df7bd5fc580a3318d3cf7492ac663f76f8984bf16d5fc9"
+    },
+    {
+      "manifest": "docs/gates/phase-13-lifecycle-fix-2026-10-07.json",
+      "field": "sha256",
+      "path": "integrations/kicad/partsmith_ipc/entry.py",
+      "previous_sha256": "a3cbfdaa59764779a01dfbdd3d2e409b61b4898c36580f13b28007f22f0b1e1b",
+      "new_sha256": "64712381b5b9e3085be897ec9e01adaab1851b28da7af146ab5a718dd1fa6e9b"
     },
     {
       "manifest": "docs/gates/phase-13-lifecycle-fix-2026-10-07.json",
       "field": "sha256",
       "path": "resources/BFT_PartSmith_Implementation_Spec.md",
-      "previous_sha256": "e50eb21a9837d6b33878bf23897bd5aedbbd9dc406d465f488846a9a331a5d05",
-      "new_sha256": "43fb82cb0f4c79b0db397ef17a81b84d786971bd2701c92475323c43f5df0460"
+      "previous_sha256": "43fb82cb0f4c79b0db397ef17a81b84d786971bd2701c92475323c43f5df0460",
+      "new_sha256": "279eee3ed3098966c5a844edb2b809d7b0c9d30cb45e2ba4df6a2841c9b620d5"
     },
     {
       "manifest": "docs/gates/phase-13-lifecycle-fix-2026-10-07.json",
       "field": "sha256",
       "path": "scripts/install_kicad.py",
-      "previous_sha256": "64d0350220d9d039da5042ce01466ae11050cc2d2ad91c0cc90193a4d2297c54",
-      "new_sha256": "c793cb8afe1ef771d4f9cf0fb5982806c291fe3d524ebf556dc8e0ce41b9fcc7"
+      "previous_sha256": "c793cb8afe1ef771d4f9cf0fb5982806c291fe3d524ebf556dc8e0ce41b9fcc7",
+      "new_sha256": "0ae7fec0f1901ccf33bc9473a66902ab54bfef22074556337948240f8bd49ad9"
     },
     {
       "manifest": "docs/gates/phase-13-lifecycle-fix-2026-10-07.json",
       "field": "sha256",
       "path": "src/partsmith/pcm/package.py",
-      "previous_sha256": "04422063ffe62aee4686bd4597a770dffc2c74c19f41edc2e3694cb144d30110",
-      "new_sha256": "6ddf79a89bb924c465b4c5a0666b6ab2e791ff473e48bc8e849fdfe63e09e59b"
+      "previous_sha256": "6ddf79a89bb924c465b4c5a0666b6ab2e791ff473e48bc8e849fdfe63e09e59b",
+      "new_sha256": "c012b1dc4428e1e1ecfe8246290033a554178448b3b08658ed4ce2669e6d8fd4"
     },
     {
       "manifest": "docs/gates/phase-13-lifecycle-fix-2026-10-07.json",
       "field": "sha256",
       "path": "tests/test_kicad_installer.py",
-      "previous_sha256": "124e7e1e109e8729f84b82e26d112fbffafcf0356b28ceffec29765d6afc4a0d",
-      "new_sha256": "ada9c113b25972facd7dc2e0ec95550f2eec678cc18c3ca26762866d97e9f857"
+      "previous_sha256": "ada9c113b25972facd7dc2e0ec95550f2eec678cc18c3ca26762866d97e9f857",
+      "new_sha256": "cb4170e15ea1facda6728deef2cacfb8ff80fde45fc9781480fcb5784dda1cd4"
     },
     {
       "manifest": "docs/gates/phase-13-lifecycle-fix-2026-10-07.json",
       "field": "sha256",
       "path": "tests/test_pcm.py",
-      "previous_sha256": "fa1a433c79fadde17f07627680b0ef287e45c1d36d2a14dfafaab756c0e8e2f6",
-      "new_sha256": "e5600dead8934f43043602c536da307d721085b37d8890c4062ce6b706dfa7a5"
+      "previous_sha256": "e5600dead8934f43043602c536da307d721085b37d8890c4062ce6b706dfa7a5",
+      "new_sha256": "a6a57599fd46c36ab5f4d3daab5939d7359b4a829a1c0653724338d2bf5797f6"
+    },
+    {
+      "manifest": "docs/gates/phase-14-artifacts.json",
+      "field": "sha256",
+      "path": ".github/workflows/ci.yml",
+      "previous_sha256": "2f676be607172e21533480ed50cbacf9cf3b27bd0e640898326ecc3a4d4ccf25",
+      "new_sha256": "f94adf3fa9575bb6fc26fe538c874a1b81e153c8244de230c1c541230cc23b0b"
+    },
+    {
+      "manifest": "docs/gates/phase-14-artifacts.json",
+      "field": "sha256",
+      "path": ".github/workflows/phase14.yml",
+      "previous_sha256": "2b91df76c68fc94034711b66cccdc35d81a2d7546e5f37cca2e7f8d339750b2c",
+      "new_sha256": "a4f6419a1b3bb6fc666869d3b188040c0db1219c4dd56bc8a8ed3117791fcc1d"
+    },
+    {
+      "manifest": "docs/gates/phase-14-artifacts.json",
+      "field": "sha256",
+      "path": "README.md",
+      "previous_sha256": "1c6349802529f78a88985ffc335d47760ecba7eda647be91f8871f4a0935acfe",
+      "new_sha256": "1130c671963b7ccf32f70e7cd8f52d4a0be93b7380aeca0d27c1bc9ef8e4c985"
+    },
+    {
+      "manifest": "docs/gates/phase-14-artifacts.json",
+      "field": "sha256",
+      "path": "docs/gates/phase-14.md",
+      "previous_sha256": "43c6a107d8f96215c0aaa3249e38bce5595be8d292df42853dc0c9412756aec2",
+      "new_sha256": "0cc42a3b4c80d3ed0ed266e268dc5b095ede44d58835ff6ed49275dd3c03881b"
+    },
+    {
+      "manifest": "docs/gates/phase-14-artifacts.json",
+      "field": "sha256",
+      "path": "docs/pcm-installation.md",
+      "previous_sha256": "cbca78e0e6de323ee8e07278443a93d54ebb7f79df9317f1d4cd047e24af1147",
+      "new_sha256": "1d3d83b27ac6a7450fe223c2b5634c87b45e1894bbc17a40665e5cb35f9db4d2"
+    },
+    {
+      "manifest": "docs/gates/phase-14-artifacts.json",
+      "field": "sha256",
+      "path": "install_partsmith.bat",
+      "previous_sha256": "bc1fcee11fcd81d4b97d439f24b46367adf466228262036269ec3fb30c59a792",
+      "new_sha256": "58e56efead7648d3f7df7bd5fc580a3318d3cf7492ac663f76f8984bf16d5fc9"
+    },
+    {
+      "manifest": "docs/gates/phase-14-artifacts.json",
+      "field": "sha256",
+      "path": "integrations/kicad/partsmith_ipc/entry.py",
+      "previous_sha256": "a3cbfdaa59764779a01dfbdd3d2e409b61b4898c36580f13b28007f22f0b1e1b",
+      "new_sha256": "64712381b5b9e3085be897ec9e01adaab1851b28da7af146ab5a718dd1fa6e9b"
+    },
+    {
+      "manifest": "docs/gates/phase-14-artifacts.json",
+      "field": "sha256",
+      "path": "integrations/kicad/partsmith_ipc/plugin.json",
+      "previous_sha256": "c7ee5031ac1a280c929043b7c860dc38c9ece2228fbfd7e5545d1f88fd697994",
+      "new_sha256": "5cd66a2898c5e56345b25c77dbee20a103f04a24b58063687794ba11e9c9f8bf"
+    },
+    {
+      "manifest": "docs/gates/phase-14-artifacts.json",
+      "field": "sha256",
+      "path": "pyproject.toml",
+      "previous_sha256": "4cb461dcf646b7b46340bfcad88892c3aee25d4819abb3bc4bf75c60e83d0613",
+      "new_sha256": "8d37ccc6843a091b9d50943def64d00b47197a64f7e0081cd78c1a7b8cf0867c"
+    },
+    {
+      "manifest": "docs/gates/phase-14-artifacts.json",
+      "field": "sha256",
+      "path": "requirements-pcm.txt",
+      "previous_sha256": "6ac9272a3742bdc0b324cbe865f27f9edb03b7ee3a31a460faac036df998d1e9",
+      "new_sha256": "a5d3007c579ae3e2360b7aa985c477476abd91625e37047deb594ad4fbfaf46a"
+    },
+    {
+      "manifest": "docs/gates/phase-14-artifacts.json",
+      "field": "sha256",
+      "path": "resources/BFT_PartSmith_Implementation_Spec.md",
+      "previous_sha256": "43fb82cb0f4c79b0db397ef17a81b84d786971bd2701c92475323c43f5df0460",
+      "new_sha256": "279eee3ed3098966c5a844edb2b809d7b0c9d30cb45e2ba4df6a2841c9b620d5"
+    },
+    {
+      "manifest": "docs/gates/phase-14-artifacts.json",
+      "field": "sha256",
+      "path": "scripts/install_kicad.py",
+      "previous_sha256": "c793cb8afe1ef771d4f9cf0fb5982806c291fe3d524ebf556dc8e0ce41b9fcc7",
+      "new_sha256": "0ae7fec0f1901ccf33bc9473a66902ab54bfef22074556337948240f8bd49ad9"
+    },
+    {
+      "manifest": "docs/gates/phase-14-artifacts.json",
+      "field": "sha256",
+      "path": "scripts/install_production.ps1",
+      "previous_sha256": "2c5512b53b1bfb9c4e1d8ac3cd2d134fcfa9471945aee4c7d82afd9d04a84536",
+      "new_sha256": "5a4e92b6872f1cc253fba00ae8d0d205d115b3b413f72ebf169a7fc92e0a61b6"
+    },
+    {
+      "manifest": "docs/gates/phase-14-artifacts.json",
+      "field": "sha256",
+      "path": "src/partsmith/footprint/model.py",
+      "previous_sha256": "d35e31afcab8481d285d81333fb41b764d7fbd874c978c1e366b2efad183767b",
+      "new_sha256": "da8bbf092197a7a0e8aca567ad03535e8ee0cbebf201ff6f6c450ca211efeb84"
+    },
+    {
+      "manifest": "docs/gates/phase-14-artifacts.json",
+      "field": "sha256",
+      "path": "src/partsmith/integration/planner.py",
+      "previous_sha256": "7a5828eba1e2ae3cb9cc27aab01eea524e196cf75c41f9a25ae14446464bc595",
+      "new_sha256": "565725d7b87d2cf0d0c0315e7663755d7ec7da2efb3f91554d903ac360ae632b"
+    },
+    {
+      "manifest": "docs/gates/phase-14-artifacts.json",
+      "field": "sha256",
+      "path": "src/partsmith/integration/staging.py",
+      "previous_sha256": "c371795e455990f722a8b77e120b2911f2fc518381bd4c7d234ccfde2b121a73",
+      "new_sha256": "2421aafc3b39c7096ff8183340debe85e8d69ca2b456a60847517a8a45e436c0"
+    },
+    {
+      "manifest": "docs/gates/phase-14-artifacts.json",
+      "field": "sha256",
+      "path": "src/partsmith/kicad/runtime.py",
+      "previous_sha256": "394547da4d5bb2e051d1ce6bf5e23403f725409120e884d9f6dfbb075c3ff238",
+      "new_sha256": "4df1d8d5398791bb649d57c4d2dd0e18c4da49abff67f5199fb309bfcea8707a"
+    },
+    {
+      "manifest": "docs/gates/phase-14-artifacts.json",
+      "field": "sha256",
+      "path": "src/partsmith/pcm/installation.py",
+      "previous_sha256": "986b6404d44d6d27596f04f36c726d0778dae3f6f2e8c7c81f96327c799d76ac",
+      "new_sha256": "9aebbcf6f2422b97255bb1e13c206c29b2d8b450017cb2a324010e956465a1da"
+    },
+    {
+      "manifest": "docs/gates/phase-14-artifacts.json",
+      "field": "sha256",
+      "path": "src/partsmith/pcm/package.py",
+      "previous_sha256": "6ddf79a89bb924c465b4c5a0666b6ab2e791ff473e48bc8e849fdfe63e09e59b",
+      "new_sha256": "c012b1dc4428e1e1ecfe8246290033a554178448b3b08658ed4ce2669e6d8fd4"
+    },
+    {
+      "manifest": "docs/gates/phase-14-artifacts.json",
+      "field": "sha256",
+      "path": "src/partsmith/pcm/runtime.py",
+      "previous_sha256": "993ad2f0679f97ccc237b9dcb2efdbf6f6cd6bcd582160ae304fa730734fff03",
+      "new_sha256": "8fd742ffbe94f0ce314fa5b450e3be2d0a94796d7bba5d54498f3d718a826fff"
+    },
+    {
+      "manifest": "docs/gates/phase-14-artifacts.json",
+      "field": "sha256",
+      "path": "src/partsmith/process.py",
+      "previous_sha256": "fbded159d2cc37170577eff284a274a1e8a9fe4e636433dcc8da0296c1b4e128",
+      "new_sha256": "70dbe221de94ffc82ef2bcb73d13b77025cdd6839255b3c55de50cc98d9f5916"
+    },
+    {
+      "manifest": "docs/gates/phase-14-artifacts.json",
+      "field": "sha256",
+      "path": "src/partsmith/release/replay.py",
+      "previous_sha256": "c75cfb6d10e9b28a62dc8c8854a37e73cc9488f78fe63eb9b14a77a8016a5af5",
+      "new_sha256": "17f1f1ed6e27a29e78a4f085e80701d869f82285713c19fef51cac1d938560f4"
+    },
+    {
+      "manifest": "docs/gates/phase-14-artifacts.json",
+      "field": "sha256",
+      "path": "src/partsmith/release/runtime.py",
+      "previous_sha256": "ae7bdb59343379e0478aa3301939cffd1468081059cf539279f38fde3cce8d00",
+      "new_sha256": "7561ee2a3f2123e7d0be31ab4d0944bdb17dae37dd2be672cb2e079e2cbed4a8"
+    },
+    {
+      "manifest": "docs/gates/phase-14-artifacts.json",
+      "field": "sha256",
+      "path": "tests/test_kicad_installer.py",
+      "previous_sha256": "ada9c113b25972facd7dc2e0ec95550f2eec678cc18c3ca26762866d97e9f857",
+      "new_sha256": "cb4170e15ea1facda6728deef2cacfb8ff80fde45fc9781480fcb5784dda1cd4"
+    },
+    {
+      "manifest": "docs/gates/phase-14-artifacts.json",
+      "field": "sha256",
+      "path": "tests/test_pcm.py",
+      "previous_sha256": "e5600dead8934f43043602c536da307d721085b37d8890c4062ce6b706dfa7a5",
+      "new_sha256": "a6a57599fd46c36ab5f4d3daab5939d7359b4a829a1c0653724338d2bf5797f6"
+    },
+    {
+      "manifest": "docs/gates/phase-14-artifacts.json",
+      "field": "sha256",
+      "path": "tests/test_phase8_snapshot.py",
+      "previous_sha256": "4b4e51e5c70a6ee37715162211b1dcd8f1db7a0ec14a3829c170b3941cac2629",
+      "new_sha256": "fd7396d8e2380afdf28ec1c20d981fb01a96f2cbd3567162c64a0c77f2510ee7"
+    },
+    {
+      "manifest": "docs/gates/phase-14-artifacts.json",
+      "field": "sha256",
+      "path": "tests/test_phase9.py",
+      "previous_sha256": "bf92645ba939f4f09b375ff493cf4c6194b3729d865769a963dc194120f43b21",
+      "new_sha256": "4e3916c32d61bc5056bcc25b618354cc854e35821b5114708039b69b3647c48b"
+    },
+    {
+      "manifest": "docs/gates/phase-5-artifacts.json",
+      "field": "sha256",
+      "path": "src/partsmith/footprint/model.py",
+      "previous_sha256": "d35e31afcab8481d285d81333fb41b764d7fbd874c978c1e366b2efad183767b",
+      "new_sha256": "da8bbf092197a7a0e8aca567ad03535e8ee0cbebf201ff6f6c450ca211efeb84"
     }
   ],
   "verified_active_manifests": [

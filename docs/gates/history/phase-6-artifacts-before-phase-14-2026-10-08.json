@@ -1,0 +1,209 @@
+{
+  "specification": "0.9.6",
+  "phase": 6,
+  "status": "PASS",
+  "scope": "Local Windows verification; no remote CI run claimed",
+  "branch": "Implment-phase-06",
+  "base_commit": "f3092ca",
+  "python": "3.12.10",
+  "tools": {
+    "partsmith": "0.1.0",
+    "pytest": "8.4.2",
+    "ruff": "0.16.8",
+    "jsonschema": "4.26.0",
+    "cadquery": "2.8.0",
+    "cadquery-ocp": "7.9.3.1.1"
+  },
+  "tests": {
+    "source": 361,
+    "installed_wheel": 361,
+    "phase_6_transform": 20,
+    "phase_6_threed": 6
+  },
+  "model_3d": {
+    "artifact_type": "MODEL_3D",
+    "filename": "TEST-R-0402.step",
+    "sha256": "789ee84bd00e5fa7adfec322191eeb678f849c82b990b30a41f1bb51da839c92",
+    "dependency_hash": "c35d468b9126e11e62adf300f10ccaea35a29c2578e661374a1f176bd3a1a905",
+    "association_dependency_hash": "1f4f176f96b93f6a916801ea71ef75cdcb90b6e2e1342a63c4a1de766c3b27e3",
+    "dependency_profile": "1.2",
+    "dependency_node": "MODEL_3D",
+    "solid_count": 3
+  },
+  "determinism": {
+    "method": "Two exports in separate fresh `python -c` processes, each with its own OS temp work directory, no generated-artifact cache reused between runs",
+    "step_sha256_run_1": "789ee84bd00e5fa7adfec322191eeb678f849c82b990b30a41f1bb51da839c92",
+    "step_sha256_run_2": "789ee84bd00e5fa7adfec322191eeb678f849c82b990b30a41f1bb51da839c92",
+    "match": true,
+    "normalization": {
+      "algorithm": "Regex substitution on raw STEP bytes before hashing/use, then reparse + remeasure the normalized bytes to confirm the solid count is unchanged",
+      "fields_normalized": [
+        "FILE_NAME creation timestamp, fixed to '1970-01-01T00:00:00'",
+        "PRODUCT 'Open CASCADE STEP translator <ver> <counter>' trailing counter, renumbered in first-appearance order",
+        "NEXT_ASSEMBLY_USAGE_OCCURRENCE first quoted ID, renumbered in first-appearance order"
+      ],
+      "verified_against_geometry": "Reparsed normalized bytes with cadquery.importers.importStep and confirmed the measured solid count equals the pre-normalization solid count"
+    }
+  },
+  "wheel": {
+    "filename": "partsmith-0.1.0-py3-none-any.whl",
+    "sha256": "d99502254db14fc4df7e8cc5966b41c763b0239296846d3bc7b289c6ab8ab92d",
+    "availability": "Temporary local generated output"
+  },
+  "packaged_threed_import_verified": true,
+  "sha256": {
+    "src/partsmith/threed/__init__.py": "d043f5f1417b994b9115e40223879400b4df968ac45e9bb82672b18527f1b6a3",
+    "src/partsmith/threed/model.py": "865d1d75f4875927663915ca048c585da89e575b41769b3e720a5e90220e3dee",
+    "src/partsmith/threed/geometry.py": "7d552cb6c1e4eb05fea23ff6ce9387f374acaa2e585d03e3c9f7c5b2a74482eb",
+    "src/partsmith/threed/step_backend.py": "d3a5277f46e41a7f0e84609a5f052971f355b0822df1d068c4f74a8b4dd272df",
+    "src/partsmith/threed/transform.py": "50a497769d2284dc55b794f2869f32cd4170adfa951059fc594e9b16c57c5f27",
+    "tests/test_threed.py": "097d6b893055d23e5a011938289d1e8127155c13b21930abf1f394e40b284860",
+    "tests/test_transform.py": "80c3cb72f8bcb3029b486c7ad01ee935df8a21d7972b17367d57128d56f28e3c",
+    "fixtures/threed/expected/0402.step": "789ee84bd00e5fa7adfec322191eeb678f849c82b990b30a41f1bb51da839c92",
+    "fixtures/ir/v1.2/valid/0402.json": "ff8f8697ef789b694123385a73777787ec16b1b8ebb8d9c9fd590cc4078a1063",
+    "pdl/entries/synthetic-0402@1.0.json": "199ad7042f45eda4dd0b839f8838a6135c2e0abc2bea0b1011658ab8495a811a",
+    "pdl/release-profiles/mvp-1@1.0.json": "8798d9a552e5dab29f0c5985a4bfbf7b91fb148ac4e90c42f73952dcf8550b0a",
+    "docs/gates/phase-6-tests.xml": "cbfe37406118a48e74947feb58ec5d0dc39ce9fac03135a7cc19b6d124a58dca",
+    "docs/gates/phase-6-wheel-tests.xml": "cc671eee02c2be57b89b5fff555781030f153a9af474039883fbfb9b1f35b8b9",
+    "pyproject.toml": "4cb461dcf646b7b46340bfcad88892c3aee25d4819abb3bc4bf75c60e83d0613",
+    "requirements-ci.txt": "df99cf3dc1ac9c11e29b7303972fb7368517a435df3c9c39e7afdb080ca29ccb",
+    "src/partsmith/ir/projection.py": "b7de58f69e667496564a96ccf3c68c73e28921134f5aebb9dc103c9788730db6",
+    "src/partsmith/release/runtime.py": "ae7bdb59343379e0478aa3301939cffd1468081059cf539279f38fde3cce8d00",
+    "src/partsmith/release/runtime-lock-1.0.json": "a3e60c9207bd6bfa98d0ab5bb941ec8a026d062ad6556a762422bd373362cfec",
+    "migrations/003_manifest_rebuilds.sql": "800b114e6cea14278f4a37a091c9fa99f11a1c9ef93ce39484fa02ed83f8ed39",
+    "tests/test_phase8_snapshot.py": "4b4e51e5c70a6ee37715162211b1dcd8f1db7a0ec14a3829c170b3941cac2629",
+    "tests/test_phase8_bundle.py": "93753c0ba2e9d57b665e0dda4f3470430d3d4ac43ba98ad387299031342de68f",
+    "tests/test_persistence.py": "b8f5904ed3c58b67a0deded758b05e657f3b87394c45d95be87a3eb3cec4cf8f",
+    "docs/gates/phase-8.md": "b93118ffcec24be65d27d8ab9cc170173552919bde1eba1304d6e681591fd0a2",
+    "docs/gates/phase-8-revalidation.md": "267470ae11db10a34994c0cf775faa90fe6ca63958909112a207f747101cf8fa",
+    "docs/gates/phase-8-revalidation-comparison.json": "34cb2b5bcc285cb495c0d49bee419a3cd17d2e69173649231952b62a71b31e19",
+    "docs/gates/phase-8-revalidation-tests.xml": "b56d7d1c2e6d3a48760513dd89e30b033ea359389b6f2fc4a9047096f690fcc9",
+    "docs/gates/phase-8-revalidation-lf-tests.xml": "06d61d3b6d4200f05ed7a1d929436fedbb6ad12a3789fc4f465b48b7c94c4741",
+    "docs/gates/phase-8-revalidation-wheel-tests.xml": "c8e43a29316394e1123dfb333229756fc3de719635f792db4a8f9a64a217a6d4",
+    "docs/gates/history/phase-6-artifacts-before-2026-10-03.json": "a223ef5d40678ddcb1cad0e71fe467fdb4600c058e4c80c352481874ef43c836"
+  },
+  "revalidation": {
+    "date": "2026-10-03",
+    "base_commit": "0b2fc25",
+    "report": "docs/gates/phase-8-revalidation.md",
+    "source_tests": 459,
+    "installed_wheel_tests": 459,
+    "lf_source_regressions": 7,
+    "environment": "Local Windows AMD64; existing pinned dependency environment",
+    "archived_previous_manifest": "docs/gates/history/phase-6-artifacts-before-2026-10-03.json",
+    "commands": [
+      ".venv/Scripts/python.exe -m ruff check .",
+      ".venv/Scripts/python.exe -m ruff format --check .",
+      ".venv/Scripts/python.exe -m pip check",
+      ".venv/Scripts/python.exe -m partsmith doctor --json",
+      ".venv/Scripts/python.exe -m pytest -p no:cacheprovider --junitxml=.tools/phase8-fix/source-final-tests.xml",
+      ".venv/Scripts/python.exe -m pytest tests/test_phase8_snapshot.py tests/test_phase8_pipeline.py -p no:cacheprovider --junitxml=.tools/phase8-fix/source-lf-regressions.xml",
+      "PYTHONHASHSEED=11: .venv/Scripts/python.exe .tools/gate-audit/probe.py .tools/phase8-fix/lf-build-a",
+      "PYTHONHASHSEED=97: .venv/Scripts/python.exe .tools/gate-audit/probe.py .tools/phase8-fix/lf-build-b",
+      ".venv/Scripts/python.exe -m pip wheel . --no-deps --wheel-dir .tools/phase8-fix/lf-dist",
+      ".venv/Scripts/python.exe -m pip install --no-deps --target .tools/phase8-fix/lf-wheel-site .tools/phase8-fix/lf-dist/partsmith-0.1.0-py3-none-any.whl",
+      "With PYTHONPATH=.tools/phase8-fix/lf-wheel-site (absolute) and packaged resource byte checks: .venv/Scripts/python.exe -m pytest -p no:cacheprovider --junitxml=.tools/phase8-fix/wheel-lf-tests.xml"
+    ],
+    "phase9_status": "PENDING"
+  },
+  "phase9_revalidation": {
+    "date": "2026-10-03",
+    "report": "docs/gates/phase-9.md",
+    "source_tests": 476,
+    "installed_wheel_tests": 476,
+    "archived_previous_manifest": "docs/gates/history/phase-6-artifacts-before-phase-9-2026-10-03.json",
+    "status": "PASS",
+    "scope": "Local Windows AMD64; pinned runtime"
+  },
+  "phase_9_5_revalidation": {
+    "date": "2026-10-04",
+    "report": "docs/gates/phase-9.5.md",
+    "scope": "Shared documentation/GUI packaging bytes; core unchanged",
+    "source_regressions": 490,
+    "gui_checks": 26,
+    "historical_manifest": "docs/gates/history/phase-6-artifacts-before-phase-9.5-2026-10-04.json",
+    "changed_inputs": {
+      "pyproject.toml": {
+        "before": "be17362b3813079c06e251c7dba3ca3e594b8c541d7b717ae6e76fa827c3fc8b",
+        "after": "45f87c96c5e61adc2a66d83d5374f4d8e8e48d648c2c59ce13fc071d4559d6a7"
+      },
+      "docs/gates/phase-8.md": {
+        "before": "d1d81ed0ef1cfc335ad6459dc5db78d6097483246a6ca855f95c55160922dcd2",
+        "after": "b93118ffcec24be65d27d8ab9cc170173552919bde1eba1304d6e681591fd0a2"
+      },
+      "docs/gates/phase-8-revalidation.md": {
+        "before": "70267d4ccc58b4b814c664255a57132d2ba57bed4114a9e41a8e5d107e41fe77",
+        "after": "267470ae11db10a34994c0cf775faa90fe6ca63958909112a207f747101cf8fa"
+      }
+    }
+  },
+  "phase_10_revalidation": {
+    "date": "2026-10-04",
+    "report": "docs/gates/phase-10.md",
+    "scope": "Shared CLI/GUI, documentation, CI and PDF packaging changes. Frozen CAD constraints/generators unchanged. Prior wheel and gate identities retain their historical scope.",
+    "source_tests": 570,
+    "installed_wheel_checks": 98,
+    "historical_manifest": "docs/gates/history/phase-6-artifacts-before-phase-10-2026-10-04.json",
+    "changed_inputs": {
+      "pyproject.toml": {
+        "before": "45f87c96c5e61adc2a66d83d5374f4d8e8e48d648c2c59ce13fc071d4559d6a7",
+        "after": "f25fbbffafce750108da08d03fde3dd8abfe9cc1c6b8a72f958b946c80e32349"
+      }
+    }
+  },
+  "parser_fix_input_refresh": {
+    "date": "2026-10-04",
+    "prior_manifest": "docs/gates/history/phase-6-artifacts-before-parser-fix-2026-10-04.json",
+    "reason": "Shared packaging, CLI and documentation inputs revalidated by the 662-case final source suite; historical test/wheel identities retained.",
+    "verification_report": "docs/gates/phase-10-parser-fix-2026-10-04.md",
+    "refreshed_inputs": [
+      "pyproject.toml"
+    ]
+  },
+  "banner_rename_input_refresh": {
+    "date": "2026-10-04",
+    "reason": "Packaging, GUI loading and README references now match the tracked PartSmith-Banner.png rename; CI verifies the installed banner bytes.",
+    "scope": "Changed packaging/README/CI inputs only. Historical gate identities retain their original scope.",
+    "changed_inputs": {
+      "pyproject.toml": {
+        "before": "fcbba6ea527c5503128c1c07284398339b5a233c72702c588105af91e28fac5f",
+        "after": "ede343525dbd0f6f2d40a06dc7e1e8681af0284871182d0dd9862ab91cf28426"
+      }
+    },
+    "validation": {
+      "python": "3.12.10",
+      "platform": "Windows AMD64",
+      "editable_install": "PASS",
+      "wheel_build_and_banner_loading": "PASS",
+      "gui_service_tests": 14,
+      "manifest_verifier_tests": 4,
+      "lint_and_format": "PASS"
+    }
+  },
+  "phase_12_1_input_refresh": {
+    "date": "2026-10-04",
+    "reason": "Phase 12 startup/prototype and prior committed shared-input changes.",
+    "scope": "Current input-map identities only. Historical status, tests, wheel, canonical and engineering identities retain their original acceptance scope. Separate core/PDF and targeted viewer checks passed; the combined full-source native crash remains unresolved.",
+    "historical_manifest": "docs/gates/history/phase-6-artifacts-before-phase-12.1-2026-10-04.json",
+    "report": "docs/gates/phase-12.1.md",
+    "changes": {
+      "sha256/pyproject.toml": {
+        "before": "ede343525dbd0f6f2d40a06dc7e1e8681af0284871182d0dd9862ab91cf28426",
+        "after": "3cf64183de05ba5651721a642cba6527389472f58614aa2ad231c447d02c4aeb"
+      }
+    }
+  },
+  "phase_12_input_refresh": {
+    "date": "2026-10-05",
+    "reason": "Full Phase 12 implementation, validation and shared-input closeout.",
+    "scope": "Current input-map identities revalidated by the final source/wheel suites. Historical status, test results, generated wheel and golden artifact identities retain their original acceptance scope. The Phase 12.1 failed combined run remains historical failure evidence.",
+    "historical_manifest": "docs/gates/history/phase-6-artifacts-before-phase-12-2026-10-05.json",
+    "report": "docs/gates/phase-12.md",
+    "changes": {
+      "sha256/pyproject.toml": {
+        "before": "3cf64183de05ba5651721a642cba6527389472f58614aa2ad231c447d02c4aeb",
+        "after": "861a31f7a0cf66015c7635e7aeb97a49f43da0b652485c4f804ca4b4afff7e8e"
+      }
+    }
+  }
+}

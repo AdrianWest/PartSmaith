@@ -1,9 +1,11 @@
-"""Offline replay closure with retained revision and approval audit."""
+"""@package partsmith.release.replay
+@brief Verifies offline replay closure with retained approval audit.
+@details Runtime resources match the executing Python baseline.
+"""
 
 import json
 from dataclasses import dataclass
 from hashlib import sha256
-from importlib.resources import files
 from pathlib import Path
 from uuid import uuid4
 
@@ -37,6 +39,7 @@ from partsmith.release.reproducibility import (
     digest,
 )
 from partsmith.release.runtime import runtime_configuration
+from partsmith.release.runtime_resources import runtime_resources
 from partsmith.release.schema import load_schema as release_schema
 from partsmith.schema_support import (
     decimal_validator_class,
@@ -73,17 +76,14 @@ def _inspection_hashes(ir):
 
 
 def _local_resources():
-    lock = files("partsmith.release").joinpath("runtime-lock-1.0.json")
-    constraints = files("partsmith.release").joinpath(
-        "runtime-constraints.txt"
-    )
-    if not constraints.is_file():
-        constraints = (
-            Path(__file__).resolve().parents[3] / "requirements-ci.txt"
-        )
+    """@brief Collects exact runtime resources and local replay schemas.
+    @return Mapping of portable replay paths to verified resource bytes.
+    @details The executing interpreter selects the reviewed runtime baseline.
+    """
+    lock, constraints = runtime_resources()
     return {
-        "runtime/lock.json": lock.read_bytes(),
-        "runtime/constraints.txt": constraints.read_bytes(),
+        "runtime/lock.json": lock,
+        "runtime/constraints.txt": constraints,
         "schemas/ir.json": canonical_json(ir_schema("1.2")),
         "schemas/pdl.json": canonical_json(pdl_schema()),
         "schemas/release.json": canonical_json(release_schema()),

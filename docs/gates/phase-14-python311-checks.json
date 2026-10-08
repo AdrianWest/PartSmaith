@@ -1,0 +1,64 @@
+{
+  "state": "PASS_AT_RECORDED_SCOPE",
+  "scope": "Python 3.11 migration; exact source PCM in separate KiCad-based test venv; not clean-host PCM lifecycle acceptance",
+  "python": "3.11.5",
+  "package": {
+    "download_size": 22412269,
+    "identifier": "com.boardforgetools.partsmith",
+    "install_size": 22375737,
+    "inventory_sha256": "46b0dffddb0c12ce5474321c0a7e90bc97823b62c63b7ef80e9956d5b918d08d",
+    "members": 228,
+    "package_icon": {
+      "path": "resources/icon.png",
+      "sha256": "dc06e6c7275a24553b16667cf2fa7c2afe08efcd8a2cfd8a4e02d97864f1fdae",
+      "size": 7519
+    },
+    "sha256": "c7e45fcdd3be4989bc22ad1b5d4a1b49e37da87aae588b9aed5c6d77f2741290",
+    "version": "0.3.1"
+  },
+  "test_checks": {
+    "python311_source": {
+      "tests": 115,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "python312_producer": {
+      "tests": 50,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "python312_runtime": {
+      "tests": 48,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "final_installer": {
+      "tests": 15,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  },
+  "static_checks": {
+    "python311_syntax": "PASS",
+    "modified_callables_checked": 29,
+    "tagged_docstrings": "PASS",
+    "workflow_yaml": "PASS",
+    "ruff": "PASS",
+    "ruff_format_files": 311
+  },
+  "payload": "SOURCE_RESOURCE_PARITY",
+  "deterministic_zip": "EXACT_BYTES",
+  "native_files_in_pcm": 0,
+  "readiness": "READY",
+  "gui_smoke": "PASS",
+  "corpus_variants": 8,
+  "negative_cases": 63,
+  "goldens": "UNCHANGED",
+  "current_user_installation": "NOT_MIGRATED",
+  "clean_host_pcm_acceptance": "NOT_EXECUTED",
+  "phase14": "OPEN"
+}

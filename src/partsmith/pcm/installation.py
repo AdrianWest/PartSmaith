@@ -1,7 +1,7 @@
 """@package partsmith.pcm.installation
 @brief Installs and upgrades verified PCM archives with transactional backups.
 @details Requires closed KiCad applications and preserves unrelated packages.
-Customer installation and removal use PCM; repository helpers use Python 3.12.
+Customer installation and removal use PCM; the producer may use Python 3.12.
 """
 
 import argparse
@@ -13,6 +13,8 @@ from datetime import UTC, datetime
 from pathlib import Path
 from uuid import uuid4
 from zipfile import ZipFile
+
+from partsmith.path_support import is_junction
 
 from .package import IDENTIFIER, verify_pcm
 from .runtime import verify_inventory
@@ -87,7 +89,7 @@ def require_owned_path(path: Path, root: Path) -> None:
     for part in [path, *path.parents]:
         if part == root.parent:
             break
-        if part.is_symlink() or part.is_junction():
+        if part.is_symlink() or is_junction(part):
             raise ValueError(
                 "Installer targets cannot contain path redirection"
             )
@@ -96,19 +98,41 @@ def require_owned_path(path: Path, root: Path) -> None:
 
 
 def install_archive(
-    archive: Path, settings: Path, third_party: Path, *, before_publish=None
+    archive: Path,
+    settings: Path,
+    third_party: Path,
+    *,
+    before_publish=None,
+    python_interpreter: Path | None = None,
 ) -> dict:
     """@brief Installs only PartSmith's verified payload and PCM registration.
     @param archive Fully built and schema-verified PCM ZIP.
     @param settings Closed KiCad's versioned settings directory.
     @param third_party Explicit third-party content root.
     @param before_publish Optional final closed-host preflight callback.
+    @param python_interpreter Optional verified KiCad Python for IPC settings.
     @return Installed version, payload identities and retained backup path.
-    @details Stages outside plugin discovery; rollback restores prior bytes.
+    @details Stages outside plugin discovery; rollback restores prior bytes,
+    including interpreter preferences. Other settings and caches survive.
     """
     metadata = verify_pcm(archive)
     registry = settings / "installed_packages.json"
     before = registry.read_bytes() if registry.exists() else None
+    common = settings / "kicad_common.json"
+    common_before = common.read_bytes() if python_interpreter else None
+    common_after = None
+    if common_before is not None:
+        preferences = json.loads(common_before)
+        api = preferences.get("api") or {}
+        if not isinstance(api, dict):
+            raise ValueError("Invalid KiCad API settings")
+        if api.get("interpreter_path") != str(python_interpreter):
+            preferences["api"] = api | {
+                "interpreter_path": str(python_interpreter)
+            }
+            common_after = (json.dumps(preferences, indent=4) + "\n").encode(
+                "utf-8"
+            )
     document = json.loads(before) if before is not None else {"packages": []}
     if not isinstance(document.get("packages"), list):
         raise ValueError("Invalid KiCad package registry")
@@ -125,6 +149,9 @@ def install_archive(
     backup.mkdir(parents=True)
     if before is not None:
         (backup / "installed_packages.before.json").write_bytes(before)
+    pending_common = settings / (".partsmith-common-" + uuid4().hex + ".tmp")
+    if common_after is not None:
+        (backup / "kicad_common.before.json").write_bytes(common_before)
     staged_plugin = backup / "new-plugin"
     staged_resources = backup / "new-resources"
     staged_plugin.mkdir()
@@ -168,11 +195,14 @@ def install_archive(
     pending.write_bytes(after)
     installed = []
     retained = []
+    common_committed = False
     try:
         if before_publish is not None:
             before_publish()
         if (registry.read_bytes() if registry.exists() else None) != before:
             raise RuntimeError("KiCad package registry changed during staging")
+        if common_before is not None and common.read_bytes() != common_before:
+            raise RuntimeError("KiCad preferences changed during staging")
         for target, staged, old_name in (
             (plugin, staged_plugin, "previous-plugin"),
             (resources, staged_resources, "previous-resources"),
@@ -186,8 +216,18 @@ def install_archive(
             staged.replace(target)
             installed.append(target)
         verify_inventory(plugin)
+        if common_after is not None:
+            pending_common.write_bytes(common_after)
+            pending_common.replace(common)
+            common_committed = True
         pending.replace(registry)
     except Exception:
+        if common_committed:
+            restore_common = settings / (
+                ".partsmith-common-restore-" + uuid4().hex + ".tmp"
+            )
+            restore_common.write_bytes(common_before)
+            restore_common.replace(common)
         for target in reversed(installed):
             require_owned_path(target, third_party)
             target.replace(backup / ("failed-" + target.parent.name))
@@ -195,6 +235,8 @@ def install_archive(
             old.replace(target)
         if pending.exists():
             pending.replace(backup / "uncommitted-packages.json")
+        if pending_common.exists():
+            pending_common.unlink()
         raise
     report = {
         "status": "INSTALLED",
@@ -202,6 +244,9 @@ def install_archive(
         "plugin_root": str(plugin),
         "backup": str(backup),
         "verified_files": len(inventory["files"]),
+        "ipc_interpreter": (
+            str(python_interpreter) if python_interpreter else "Unchanged"
+        ),
         "runtime_preparation": (
             "Bundled and verified"
             if (plugin / "bundle.json").is_file()

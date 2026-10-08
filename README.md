@@ -123,7 +123,7 @@ and value-free error paths while each domain owns its validation policy.
 `partsmith.persistence.database` provides common UTC audit timestamps and
 rollback-safe SQLite savepoints while callers retain transaction ownership.
 
-The current specification is **v0.9.7**. Phases 0–9 have recorded gate evidence.
+The current specification is **v0.9.8**. Phases 0–9 have recorded gate evidence.
 The deterministic release pipeline includes scoped dependency projections,
 immutable input review, native KiCad validation, exact-byte release approval,
 and history-complete revision/inventory import and export. Revision bundles
@@ -179,7 +179,7 @@ Python environment and pinned `requirements.txt`. KiCad downloads the upstream
 binary wheels, including their CAD DLLs; the PartSmith ZIP contains source and
 resources. Installation, updates and environment recreation require internet.
 Offline installation and an optional offline edition are out of scope.
-Python 3.12 selected in KiCad and external Tesseract 5 with `eng`, `deu` and
+KiCad's bundled Python 3.11 and external Tesseract 5 with `eng`, `deu` and
 `chi_sim` models are prerequisites. All eight MVP variants retain their frozen
 release corpus. The gate remains open for clean Windows online PCM acceptance
 and dependency/license manifest review. No public release is asserted.
@@ -199,8 +199,8 @@ mapping or a blocked unrecognized/ambiguous mapping. The optional OpenAI
 checkbox adds unreviewed Phase 11 interpretation candidates. Phase 12 human
 review/application remains required before a component can be built.
 
-For development in an existing Python 3.12 environment, install the pinned
-Windows runtime and load the declared source tree:
+For development in a Python 3.11 environment, install the pinned
+Windows customer runtime and load the declared source tree:
 
 ```powershell
 .\.venv\Scripts\python.exe -m pip install --only-binary :all: -r requirements-pcm.txt
@@ -243,8 +243,10 @@ See [Phase 9.5 verification](docs/gates/phase-9.5.md) for evidence and scope.
 
 ## For contributors
 
-PartSmith currently supports **Python 3.12.x** (`>=3.12,<3.13`). Create a
-development environment and install the pinned project tools:
+Customer PCM targets **Python 3.11.x**, bundled with KiCad 10.0.6 (locally
+verified as 3.11.5). No external customer Python is required. The project permits
+`>=3.11,<3.13`; existing Python 3.12 producer tools and historical verification
+remain supported. Create a Python 3.12 producer environment with its pinned tools:
 
 ```powershell
 py -3.12 -m venv .venv
@@ -259,16 +261,18 @@ Phase 8 and later release validation requires native KiCad 10.0.6. Internal
 PartSmith syntax parsers cannot replace `kicad-cli`; `partsmith doctor` fails
 when the pinned target runtime is missing or incompatible.
 
-PartSmith uses its own Python 3.12.x environment and invokes KiCad through the
-native CLI. The installed Windows KiCad 10.0.6 bundles Python 3.11.5; its
-embedded interpreter is separate from PartSmith's supported Python baseline.
+The IPC plugin uses KiCad's private venv based on bundled Python 3.11, outside
+the legacy ActionPlugin host. Native validation invokes the CLI. Existing 3.12
+plugin caches require **Recreate Plugin Environment** after switching Python.
+The repository installer selects bundled Python with a preference backup;
+customer installation uses PCM.
 Release snapshots record the actual Python patch/build and executable hash,
 the pinned KiCad CLI version/hash, and the verified CadQuery/OCP/OCCT tuple.
-The packaged runtime lock contains Windows/Linux CAD wheel hashes and file
-identities; release generation rejects mismatched installed runtime bytes.
+The 3.11 lock contains Windows AMD64 cp311 CAD wheel and file identities;
+the unchanged historical 3.12 lock covers Windows/Linux; release generation rejects mismatched installed runtime bytes.
 
-For the Windows PCM runtime and desktop checks, also install the pinned
-third-party closure with `python -m pip install --only-binary :all:
+For Windows PCM runtime and desktop checks, create a separate Python 3.11
+venv and install the pinned third-party closure with `python -m pip install --only-binary :all:
 --requirement requirements-pcm.txt`. This is contributor setup; customers use
 KiCad's managed preparation and do not run pip or install a PartSmith package.
 

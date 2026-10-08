@@ -1,0 +1,42 @@
+{
+  "state": "VERIFIED_WHEEL_AND_INSTALLED_BYTES",
+  "scope": "Python 3.11 Windows AMD64 CAD lock identities; not a full native license/source audit",
+  "lock_path": "src/partsmith/release/runtime-lock-1.1.json",
+  "lock_sha256": "ab0620ebb60f7cf0d4f61e5dc573ffd32d35edfa983a23745ffb6b9b5ae3387e",
+  "archives": [
+    {
+      "distribution": "cadquery",
+      "version": "2.8.0",
+      "filename": "cadquery-2.8.0-py3-none-any.whl",
+      "source_url": "https://files.pythonhosted.org/packages/42/3c/57a6c1683576c9a626207399972c2e83420dc6f87c239446190021d649db/cadquery-2.8.0-py3-none-any.whl",
+      "pypi_metadata_url": "https://pypi.org/pypi/cadquery/2.8.0/json",
+      "sha256": "0acaddf36415551c26c3f8237907980ba86c277e211c32398121c839f719c81f",
+      "content_files": 37,
+      "notice_files": 1,
+      "installed_bytes": "EXACT_MATCH"
+    },
+    {
+      "distribution": "cadquery-ocp",
+      "version": "7.9.3.1.1",
+      "filename": "cadquery_ocp-7.9.3.1.1-cp311-cp311-win_amd64.whl",
+      "source_url": "https://files.pythonhosted.org/packages/cb/02/d68d304a0355d1c87f8606fb5bedd431d1e6ac43069061c01b210e92bf16/cadquery_ocp-7.9.3.1.1-cp311-cp311-win_amd64.whl",
+      "pypi_metadata_url": "https://pypi.org/pypi/cadquery-ocp/7.9.3.1.1/json",
+      "sha256": "68f722e3ca804262e5b8f43b7d0249939786efc2f256cc8d2a24c0e057a240df",
+      "content_files": 398,
+      "notice_files": 1,
+      "installed_bytes": "EXACT_MATCH"
+    },
+    {
+      "distribution": "cadquery-ocp-proxy",
+      "version": "7.9.3.1.1",
+      "filename": "cadquery_ocp_proxy-7.9.3.1.1-py3-none-any.whl",
+      "source_url": "https://files.pythonhosted.org/packages/30/c0/04e9363a99fee892de2776820e3dcf04f8825b6edc9580efe3416c9465a7/cadquery_ocp_proxy-7.9.3.1.1-py3-none-any.whl",
+      "pypi_metadata_url": "https://pypi.org/pypi/cadquery-ocp-proxy/7.9.3.1.1/json",
+      "sha256": "ca4164ec4b54956d9fc3e68c67d555b5486cb963c2f71e18df005ba16b921c91",
+      "content_files": 2,
+      "notice_files": 0,
+      "installed_bytes": "EXACT_MATCH"
+    }
+  ],
+  "legacy_lock_changed": false
+}

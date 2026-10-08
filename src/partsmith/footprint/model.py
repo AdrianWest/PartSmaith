@@ -55,7 +55,7 @@ class FootprintContext:
     )
 
 
-type GeneratorContext = FootprintContext
+GeneratorContext = FootprintContext
 
 
 @dataclass(frozen=True)

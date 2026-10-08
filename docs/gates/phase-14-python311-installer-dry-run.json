@@ -1,0 +1,7 @@
+{
+  "state": "PASS",
+  "scope": "Current-user installer dry run only; no installation or interpreter migration executed",
+  "preferences_sha256_before_and_after": "4825fa2ede19dcfd05bb4fe03f994f68c001a8ab620bec6c2c81953d62531d50",
+  "selected_python": "KiCad 10.0.6 bundled Python 3.11",
+  "stdout": "KiCad IPC interpreter: C:\\Program Files\\KiCad\\10.0\\bin\\python.exe\nInstallation selects this interpreter for KiCad Python IPC.\nKiCad settings: C:\\Users\\User\\AppData\\Roaming\\kicad\\10.0\nPlugin destination: C:\\Users\\User\\Documents\\KiCad\\10.0\\3rdparty\\plugins\\com_boardforgetools_partsmith\nDry run: no installation files changed.\n"
+}

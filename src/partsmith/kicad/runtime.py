@@ -92,6 +92,7 @@ def _run(
             result = subprocess.run(
                 [str(executable), *arguments],
                 cwd=cwd,
+                stdin=subprocess.DEVNULL,
                 check=False,
                 capture_output=True,
                 text=True,

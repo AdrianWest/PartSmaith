@@ -1,4 +1,7 @@
-"""Phase 9 selective invalidation and materialized offline replay gates."""
+"""@file test_phase9.py
+@brief Checks selective invalidation and materialized offline replay.
+@details Independent builds run with explicit noninteractive child streams.
+"""
 
 import copy
 import json
@@ -296,18 +299,27 @@ def test_replay_tampering_prevents_execution(tmp_path, path):
 
 
 def test_independent_clean_processes_and_offline_replay(tmp_path):
+    """@brief Compares two clean processes and their offline replay results.
+    @param tmp_path Disposable independent worker directories.
+    @return None.
+    @details Child failures retain diagnostics on KiCad's Windows Python.
+    """
     outcomes = []
     for seed_value in (11, 97):
         directory = tmp_path / str(seed_value)
         directory.mkdir()
         environment = os.environ.copy()
         environment["PYTHONHASHSEED"] = str(seed_value)
-        subprocess.run(
+        result = subprocess.run(
             [sys.executable, str(Path(__file__).resolve()), str(directory)],
             env=environment,
-            check=True,
+            stdin=subprocess.DEVNULL,
+            capture_output=True,
+            text=True,
+            check=False,
             timeout=180,
         )
+        assert result.returncode == 0, result.stdout + result.stderr
         outcomes.append(json.loads((directory / "outcome.json").read_bytes()))
     report = comparison_report(
         outcomes[0]["hashes"],

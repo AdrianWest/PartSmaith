@@ -1,112 +1,103 @@
 # Phase 14 online PCM candidate
 
-**Phase 14 remains OPEN.** On 2026-10-08 the project owner removed offline
-installation from scope. The supported production path is Python IPC with
-KiCad-managed online requirements. There is no offline edition to maintain.
+**Phase 14 remains OPEN.** Candidate **0.3.1** targets Windows AMD64,
+KiCad 10.0.6 and KiCad's bundled Python **3.11** (locally verified as 3.11.5).
+Specification v0.9.8 removes the external Python 3.12 customer prerequisite.
+The owner also removed offline installation from scope on 2026-10-08.
 
-The candidate is **0.3.0**, Windows AMD64, KiCad 10.0.6 and Python 3.12.
-The PCM ZIP contains PartSmith source, resources, `plugin.json`, pinned
-`requirements.txt` and an installed-file inventory. It contains no Python
-interpreter, DLLs, dependency wheels, Conda archives or OCR executable.
-KiCad creates its per-plugin environment and downloads upstream binary wheels.
-The CAD DLLs, including FreeImage/FreeType/OpenEXR, are supplied inside the
-upstream `cadquery-ocp` wheel. The selected CAD tuple remains CadQuery 2.8.0,
-OCP distribution 7.9.3.1.1 and OCCT 7.9.3.
+The PCM ZIP contains PartSmith source/resources, Python IPC registration,
+70 pinned requirements and an installed-file inventory. It contains no Python
+interpreter, native DLLs, dependency wheels, Conda archives or OCR executable.
+KiCad downloads upstream binary wheels into a private per-plugin environment.
+Installation, updates and environment recreation require internet access;
+no offline edition or wheel mirror is maintained. Normal local processing and
+recorded component replay remain available after preparation.
 
-This follows [KiCad's IPC plugin documentation](https://dev-docs.kicad.org/en/apis-and-binding/ipc-api/for-addon-developers/)
-and its [10.0.6 requirements installer](https://gitlab.com/kicad/code/kicad/-/raw/10.0.6/common/api/api_plugin_manager.cpp).
-The pinned loader requires binary wheels; source compilation is not a fallback.
-Installation, updates and environment recreation require internet access.
-Denied network or interrupted preparation must report a failure and allow retry.
-Local extraction, deterministic generation and recorded component replay retain
-their existing behavior after successful dependency preparation.
+## Runtime migration and installation
 
-## Prerequisites and installation
+NumPy changes from 2.5.3 to **2.4.6**, SciPy from 1.18.1 to **1.17.1**, and
+contourpy from 1.4.0 to **1.3.3**. Python 3.11 also needs pinned
+backports.tarfile 1.2.0, importlib_metadata 9.0.1 and zipp 4.1.1. CadQuery 2.8.0,
+OCP distribution 7.9.3.1.1 and OCCT 7.9.3 remain the selected tuple.
+The new Windows cp311 CAD lock verifies upstream wheel hashes and installed
+members/notices. [Wheel identity proof](phase-14-python311-cad-lock.json)
+records its sources. The original 3.12 lock remains byte-for-byte unchanged.
+Runtime snapshots, replay resources and installation plans select the matching
+lock and constraints; Python baseline changes remain reproducibility inputs.
 
-Select a Python 3.12 interpreter in KiCad and enable the PCB Editor API.
-The installed KiCad Python is 3.11.5; NumPy 2.5.3, SciPy 1.18.1 and
-contourpy 1.4.0 require Python 3.12 or newer. The PartSmith runtime contract
-currently supports 3.12 only. `runtime.min_version` alone does not enforce it.
+This uses [KiCad's documented managed Python IPC environment](https://dev-docs.kicad.org/en/apis-and-binding/ipc-api/for-addon-developers/)
+and the [10.0.6 binary-only requirements installer](https://gitlab.com/kicad/code/kicad/-/raw/10.0.6/common/api/api_plugin_manager.cpp).
+The action enforces Python 3.11 itself; `runtime.min_version` is informational
+in the pinned loader. Dependencies are never installed into KiCad's base Python.
 
-OCR requires an external Tesseract 5 installation and `eng`, `deu`, `chi_sim`
-language files. Use its standard Windows installation or configure
-`PARTSMITH_TESSERACT` and `TESSDATA_PREFIX`. It is not bundled in the PCM ZIP.
+Install `dist/partsmith-0.3.1-pcm.zip` through PCM **Install from File**.
+Select bundled Python in KiCad's Python/IPC preferences and enable the PCB
+Editor API. An existing external 3.12 override must be replaced. Recreate any
+3.12 per-plugin environment using **Recreate Plugin Environment** after the
+switch; changing the interpreter preference alone does not migrate a cache.
+OCR still requires external Tesseract 5 plus `eng`, `deu` and `chi_sim` data.
+See [installation instructions](../pcm-installation.md).
 
-Install the candidate through PCM **Install from File**, allow background
-preparation to finish, then use **Open PartSmith**. PCM owns customer update and
-removal. See [installation instructions](../pcm-installation.md).
-Repository helpers retain transactional backups outside plugin discovery.
+The prepared-checkout batch helpers discover bundled Python beside the
+verified KiCad CLI, select it for Python IPC, and retain the original preference
+bytes alongside the payload/registry backup. This is a global KiCad IPC
+preference; other settings and plugin files are preserved. Failed publication
+restores the previous settings and payload. Dry runs change no installation
+files or preferences. The helpers do not delete environment caches or durable
+sessions. The producer helper may run in its existing Python 3.12 environment;
+customers use PCM and need no checkout or external Python.
 
 ```powershell
-.venv/Scripts/python.exe scripts/build_production_pcm.py --output dist/partsmith-0.3.0-pcm.zip
-.venv/Scripts/python.exe scripts/verify_pcm.py dist/partsmith-0.3.0-pcm.zip --evidence online-payload-results.json
-./install_production.bat -Archive C:/path/partsmith-0.3.0-pcm.zip
+.venv/Scripts/python.exe scripts/build_production_pcm.py --output dist/partsmith-0.3.1-pcm.zip
+./install_production.bat -Archive C:/path/partsmith-0.3.1-pcm.zip -DryRun
 ```
 
-The production build now uses the same managed-Python builder as Phase 13.
-It does not reconstruct the retired runtime lock or download a runtime for the
-producer. The production batch is a prepared-checkout helper; it requires the
-project Python environment. It is not a separate customer installer.
-The old offline acceptance harness is retired.
+## Verification scope
 
-## Engineering and evidence scope
+The eight manufacturer-backed variants retain their original frozen golden
+bytes: 0402, 0603, 0805, SOT-23, SOIC-8, TSSOP-16, QFN-16-3x3-0.5P and
+QFN-24-4x4-0.5P. They pass CLASS A measurement, native KiCad compatibility,
+exact regeneration and all 63 negative cases under the actual KiCad Python
+3.11.5 in a separately prepared test venv. The exact final PCM payload also
+reports READY and passes a local GUI smoke launch. Startup remains deliberate,
+follows the launching KiCad host and excludes the retired 0402 prototype button.
+The smoke launch does not prove a real IPC toolbar launch or host lifecycle.
 
-The eight manufacturer-backed STD-010 variants and their frozen goldens remain:
-0402, 0603, 0805, SOT-23, SOIC-8, TSSOP-16, QFN-16-3x3-0.5P and
-QFN-24-4x4-0.5P. [Source facts](../../fixtures/production/packages.json) and
-[golden identities](../../fixtures/production/golden.json) are unchanged.
-Acceptance still requires CLASS A, native KiCad round trips, exact regeneration
-and the complete per-variant negative corpus. Fixtures grant no user approval.
-Startup remains deliberate, follows the launching KiCad host and excludes the
-retired 0402 rendering button.
+Retained evidence includes [source/runtime checks](phase-14-python311-source-results.xml),
+[producer checks](phase-14-python311-producer-results.xml),
+[producer runtime regressions](phase-14-python311-producer-runtime-results.xml),
+[installer checks](phase-14-python311-installer-results.xml),
+[payload parity](phase-14-python311-payload.json),
+[readiness](phase-14-python311-readiness.json),
+[GUI smoke](phase-14-python311-gui-smoke.json), and
+[exact-payload corpus](phase-14-python311-corpus.json).
+The [current manifest](phase-14-artifacts.json) binds finalized artifacts and
+records check counts. Two independent ZIP builds have identical bytes.
+The current-user installed package and interpreter preference were not migrated.
 
-The [online candidate workflow](../../.github/workflows/phase14.yml) downloads
-the pinned Windows binary dependencies, builds/verifies the source PCM ZIP,
-runs installer/resource regressions and the complete eight-variant corpus.
-These automated candidate checks are not proof of an actual clean-host PCM
-preparation, toolbar launch or customer upgrade/removal. No workflow execution
-or new clean-machine acceptance is claimed by changing the workflow file.
+The [candidate workflow](../../.github/workflows/phase14.yml) creates a venv
+using KiCad's bundled interpreter and downloads the 3.11 binary closure.
+The general CI retains its historical 3.12 producer baseline. No remote workflow
+execution or clean-machine PCM acceptance is claimed by editing these files.
+Exploratory failures are retained in the [migration investigation archive](history/phase-14-python311-pytest-capture/README.md).
 
-Current local verification passed 97 affected source/installer/license checks,
-Ruff lint and formatting, tagged docstrings and identical independent ZIP builds.
-The exact 0.3.0 payload reports READY in the existing KiCad-managed Python
-3.12.10 environment. Its installed-resource self-test passes all eight variants
-with CLASS A, native compatibility, exact bytes and 63 negative cases. See
-[source results](phase-14-online-source-results.xml),
-[payload verification](phase-14-online-payload.json),
-[managed-runtime diagnostics](phase-14-online-managed-runtime.json) and
-[exact-payload corpus](phase-14-online-corpus.json). This reused an existing
-prepared environment: network preparation and actual GUI/PCM lifecycle were not
-executed for this candidate. The installed current-user plugin was not changed.
-
-[Current artifact and validation identities](phase-14-artifacts.json) distinguish
-this candidate from historical executable acceptance. The previous full report,
-manifest and installer/workflow bytes are retained in
-[the policy-change archive](history/phase-14-before-online-only-2026-10-08/docs/gates/phase-14.md).
-Original 0.2.0/0.2.1 package identities, local installation/corpus/engine/GUI
-receipts and historical test results retain their original execution scope.
-They do not establish acceptance of the new 0.3.0 online candidate.
+The [pre-migration report](history/phase-14-before-python311-2026-10-08/docs/gates/phase-14.md)
+and manifest preserve 0.3.0/Python 3.12 evidence. Historical Phase 13 and 0.2.x
+executable receipts retain their exact original scope. They do not establish
+acceptance of 0.3.1. No offline executable release is being maintained.
 
 ## Remaining production requirements
 
-- Retained clean Windows 11 online PCM install/preparation, real toolbar launch,
-  diagnostics, upgrade/removal/recreation and denied-network retry evidence.
-- A validated dependency/license manifest distinguishing PartSmith-shipped
-  files, upstream wheels downloaded by KiCad, and external Python/OCR tools.
-  Review integration compatibility and retained notices for the shipped files.
+- Clean Windows online PCM preparation, real toolbar launch, lifecycle,
+  upgrade/removal/recreation and denied-network/interruption retry evidence.
+- Dependency/license manifest and integration review for shipped resources,
+  KiCad-downloaded wheels and external KiCad/Python/OCR prerequisites.
 
-The forensic CAD audit verified the versions and repaired bytes of 24 additional
-DLLs, including FreeImage 3.18.0, FreeType 2.12.1 and OpenEXR 3.4.12. Its
-[ledger](../../resources/licensing/cad-native/vendors.json), original notices,
-source identities and [proof](phase-14-license-audit/cad-verification.json)
-remain research evidence. The broader executable-bundle source audit is still
-incomplete and is recorded as such in [its audit](phase-14-native-license-audit.json).
-The retired bundle is not being approved for redistribution or maintained as an
-offline release. Online delivery does not by itself settle license compliance.
+The earlier native-library forensic audit remains research evidence. Its
+[ledger](../../resources/licensing/cad-native/vendors.json) and
+[verification](phase-14-license-audit/cad-verification.json) retain their scope;
+the broader retired executable-bundle source audit is incomplete. Wheel hash
+verification and online delivery do not by themselves complete license review.
 
-Hash refresh records the current policy and candidate bytes without broadening
-historical evidence or closing this gate:
-
-```powershell
-.venv/Scripts/python.exe scripts/close_integration_gate.py --phase 14 --reason "Owner removed offline installation; managed online PCM candidate"
-```
+Hash refresh verifies current bytes while preserving historical execution
+scope; it does not close the production gate.

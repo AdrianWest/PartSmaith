@@ -10,7 +10,6 @@ import sqlite3
 import stat
 from dataclasses import dataclass
 from hashlib import sha256
-from importlib.resources import files
 from pathlib import Path
 
 from partsmith.integration.bindings import verify_files
@@ -31,6 +30,7 @@ from partsmith.integration.sources import (
 )
 from partsmith.integration.store import IntegrationStore
 from partsmith.ir.canonical import canonical_json, parse_json
+from partsmith.release.runtime_resources import runtime_resources
 
 TABLES = {"sym-lib-table": "sym_lib_table", "fp-lib-table": "fp_lib_table"}
 OWNED_NAMES = {
@@ -412,11 +412,7 @@ class Planner:
             "serializer": "1.0",
             "comparator": "1.0",
             "kicad": "10.0.6",
-            "runtime_lock_hash": sha256(
-                files("partsmith.release")
-                .joinpath("runtime-lock-1.0.json")
-                .read_bytes()
-            ).hexdigest(),
+            "runtime_lock_hash": sha256(runtime_resources()[0]).hexdigest(),
         }
         old = head.data if head else {"sources": [], "mappings": []}
         no_op = bool(

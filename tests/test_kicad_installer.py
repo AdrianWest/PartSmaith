@@ -158,6 +158,8 @@ def test_registry_commit_failure_restores_prior_bytes(
     plugin, resources = seed_old_plugin(third_party)
     registry = settings / "installed_packages.json"
     before = registry.read_bytes()
+    common = settings / "kicad_common.json"
+    preferences = common.read_bytes()
     original = Path.replace
 
     def reject_commit(path, destination):
@@ -173,11 +175,73 @@ def test_registry_commit_failure_restores_prior_bytes(
 
     monkeypatch.setattr(Path, "replace", reject_commit)
     with pytest.raises(OSError, match="Simulated registry"):
-        INSTALLER.install_archive(archive, settings, third_party)
+        INSTALLER.install_archive(
+            archive,
+            settings,
+            third_party,
+            python_interpreter=Path("C:/KiCad/bin/python.exe"),
+        )
     assert registry.read_bytes() == before
     assert (plugin / "old.txt").read_bytes() == b"old plugin bytes"
     assert (resources / "icon.png").read_bytes() == b"old icon bytes"
     assert not (plugin / "inventory.json").exists()
+    assert common.read_bytes() == preferences
+
+
+def test_install_selects_bundled_python_with_preference_backup(
+    archive, target
+):
+    """@brief Migrates the IPC interpreter while preserving other preferences.
+    @param archive Real verified PCM package.
+    @param target Isolated settings and third-party paths.
+    @return None.
+    @details The exact original settings remain available in the backup.
+    """
+    settings, third_party = target
+    common = settings / "kicad_common.json"
+    original = {
+        "api": {
+            "interpreter_path": "C:/old/python.exe",
+            "enable_server": True,
+        },
+        "unknown": {"preserve": True},
+    }
+    common.write_text(json.dumps(original), encoding="utf-8")
+    before = common.read_bytes()
+    interpreter = Path("C:/KiCad space/bin/python.exe")
+    report = INSTALLER.install_archive(
+        archive, settings, third_party, python_interpreter=interpreter
+    )
+    after = json.loads(common.read_bytes())
+    assert after == original | {
+        "api": original["api"] | {"interpreter_path": str(interpreter)}
+    }
+    assert (
+        Path(report["backup"]) / "kicad_common.before.json"
+    ).read_bytes() == before
+
+
+def test_concurrent_preferences_change_is_preserved(archive, target):
+    """@brief Rejects stale preference bytes before changing the installation.
+    @param archive Real verified PCM package.
+    @param target Isolated settings and third-party paths.
+    @return None.
+    @details A concurrent writer's settings and the old plugin both survive.
+    """
+    settings, third_party = target
+    plugin, _ = seed_old_plugin(third_party)
+    common = settings / "kicad_common.json"
+    concurrent = b'{"concurrent": true}'
+    with pytest.raises(RuntimeError, match="preferences changed"):
+        INSTALLER.install_archive(
+            archive,
+            settings,
+            third_party,
+            python_interpreter=Path("C:/KiCad/bin/python.exe"),
+            before_publish=lambda: common.write_bytes(concurrent),
+        )
+    assert common.read_bytes() == concurrent
+    assert (plugin / "old.txt").read_bytes() == b"old plugin bytes"
 
 
 def test_concurrent_registry_change_is_preserved(archive, target):
@@ -215,6 +279,46 @@ def test_unowned_directory_is_rejected(archive, target):
     with pytest.raises(ValueError, match="not the PartSmith"):
         INSTALLER.install_archive(archive, settings, third_party)
     assert (plugin / "old.txt").read_bytes() == b"old plugin bytes"
+
+
+@pytest.mark.skipif(os.name != "nt", reason="Windows batch launcher")
+def test_batch_dry_run_preserves_python_override(target):
+    """@brief Verifies a dry run leaves old IPC preferences and files intact.
+    @param target Isolated settings and third-party paths.
+    @return None.
+    @details No payload, backup, registry or environment is changed.
+    """
+    settings, third_party = target
+    common = settings / "kicad_common.json"
+    common.write_bytes(b'{"api":{"interpreter_path":"C:/old312/python.exe"}}')
+    before = {path: path.read_bytes() for path in settings.iterdir()}
+    result = subprocess.run(
+        [
+            "powershell.exe",
+            "-NoProfile",
+            "-ExecutionPolicy",
+            "Bypass",
+            "-File",
+            str(ROOT / "scripts/install_production.ps1"),
+            "-SettingsDir",
+            str(settings),
+            "-ThirdPartyDir",
+            str(third_party),
+            "-DryRun",
+        ],
+        cwd=settings,
+        stdin=subprocess.DEVNULL,
+        capture_output=True,
+        text=True,
+        timeout=60,
+        check=False,
+    )
+    assert result.returncode == 0, result.stdout + result.stderr
+    assert {path: path.read_bytes() for path in settings.iterdir()} == before
+    assert "KiCad IPC interpreter:" in result.stdout
+    assert "Dry run: no installation files changed." in result.stdout
+    assert not (third_party / "plugins" / INSTALLER.DIRECTORY).exists()
+    assert not (third_party.parent / "PartSmith-install-backups").exists()
 
 
 @pytest.mark.skipif(os.name != "nt", reason="Windows batch launcher")
@@ -263,6 +367,7 @@ def test_batch_installs_from_another_working_directory(
     result = subprocess.run(
         command,
         cwd=settings,
+        stdin=subprocess.DEVNULL,
         capture_output=True,
         text=True,
         timeout=60,
@@ -278,6 +383,7 @@ def test_batch_installs_from_another_working_directory(
         removed = subprocess.run(
             command,
             cwd=settings,
+            stdin=subprocess.DEVNULL,
             capture_output=True,
             text=True,
             timeout=60,

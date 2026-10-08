@@ -2,7 +2,7 @@
   "identifier": "com.boardforgetools.partsmith",
   "name": "PartSmith",
   "description": "Deterministic component preparation and inspection",
-  "runtime": {"type": "python", "min_version": "3.12"},
+  "runtime": {"type": "python", "min_version": "3.11"},
   "actions": [
     {
       "identifier": "open",

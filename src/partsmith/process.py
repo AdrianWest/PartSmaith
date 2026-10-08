@@ -155,6 +155,7 @@ def run_process(
         command,
         cwd=cwd,
         env=env,
+        stdin=subprocess.DEVNULL,
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
         creationflags=getattr(subprocess, "CREATE_NO_WINDOW", 0)

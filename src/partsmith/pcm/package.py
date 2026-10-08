@@ -15,9 +15,10 @@ from zipfile import ZIP_STORED, ZipFile, ZipInfo
 from jsonschema import Draft7Validator
 
 from partsmith.integration.policy import ResourcePolicy
+from partsmith.path_support import is_junction
 
 IDENTIFIER = "com.boardforgetools.partsmith"
-VERSION = "0.3.0"
+VERSION = "0.3.1"
 INVENTORY = "plugins/inventory.json"
 PCM_ICON = "resources/icon.png"
 PCM_ICON_SHA256 = (
@@ -100,7 +101,7 @@ def _tree(root: Path) -> list[Path]:
     for path in sorted(root.rglob("*")):
         if "__pycache__" in path.parts or path.suffix in {".pyc", ".pyo"}:
             continue
-        if path.is_symlink() or path.is_junction():
+        if path.is_symlink() or is_junction(path):
             raise ValueError("PCM source cannot contain symlinks")
         if path.is_file():
             paths.append(path)
@@ -162,7 +163,7 @@ def _metadata(version: str, install_size: int) -> dict:
         "description": "Deterministic component preparation and inspection",
         "description_full": (
             "PartSmith IPC action for Windows AMD64, KiCad 10.0.6 and "
-            "verified external Python 3.12. KiCad prepares pinned binary "
+            "KiCad's bundled Python 3.11. KiCad prepares pinned binary "
             "dependencies in the background; first preparation requires "
             "internet access. Offline installation is unsupported. "
             "Engineering readiness is checked again by the action."
@@ -310,7 +311,7 @@ def validate_payload(payload: dict[str, bytes]) -> dict:
         raise ValueError("Unknown IPC plugin registration field")
     if plugin["identifier"] != IDENTIFIER or plugin["runtime"] != {
         "type": "python",
-        "min_version": "3.12",
+        "min_version": "3.11",
     }:
         raise ValueError("IPC plugin identity/runtime differs")
     if len(plugin["actions"]) != 1:

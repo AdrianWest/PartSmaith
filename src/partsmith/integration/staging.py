@@ -10,7 +10,6 @@ import sqlite3
 from copy import deepcopy
 from dataclasses import dataclass
 from hashlib import sha256
-from importlib.resources import files
 from pathlib import Path
 from tempfile import TemporaryDirectory, mkdtemp
 
@@ -45,6 +44,7 @@ from partsmith.integration.store import IntegrationStore
 from partsmith.ir.canonical import canonical_json, parse_json
 from partsmith.kicad.runtime import discover_kicad
 from partsmith.process import run_process
+from partsmith.release.runtime_resources import runtime_resources
 
 
 def resolve_sources(
@@ -340,11 +340,7 @@ def verify_versions(result: PlanningResult) -> None:
         "serializer": "1.0",
         "comparator": "1.0",
         "kicad": "10.0.6",
-        "runtime_lock_hash": sha256(
-            files("partsmith.release")
-            .joinpath("runtime-lock-1.0.json")
-            .read_bytes()
-        ).hexdigest(),
+        "runtime_lock_hash": sha256(runtime_resources()[0]).hexdigest(),
     }
     if result.plan.data["versions"] != expected:
         raise IntegrationError(FailureCode.INVALID_CONTRACT)

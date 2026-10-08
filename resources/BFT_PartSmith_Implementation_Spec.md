@@ -1,10 +1,15 @@
 # PartSmith Implementation Specification
 
-**Specification version:** v0.9.7
+**Specification version:** v0.9.8
 **Status:** Phase 13 PASS; Phase 14 online PCM candidate, gate OPEN
-**Document date:** 2026-10-05
+**Document date:** 2026-10-08
 
-**Revision purpose:** Incorporate the project owner's requested R13-01 work
+**Revision purpose:** Target KiCad 10.0.6's bundled Windows AMD64 Python
+3.11 for online PCM candidate 0.3.1. No external Python installation or offline
+dependency supply is required. Historical Python 3.12 receipts and their lock
+retain their original scope. This migration does not grant Phase 14 PASS.
+
+**Previous revision purpose:** Incorporate the project owner's requested R13-01 work
 into Phase 13, review the current launch plugin and retained data, and make
 installation contracts, plugin/IPC boundaries, publication and acceptance
 explicit. Phase 13 now proceeds through eight ordered milestones. Its first
@@ -31,7 +36,7 @@ The [PCM-only validation update](../docs/spec-phase-13-pcm-only-update-2026-10-0
 and [pre-retirement snapshot](history/BFT_PartSmith_Implementation_Spec_v0.9.7_before_PCM_only_2026-10-05.md)
 preserve the explicit removal of the former internal wheel requirement.
 
-## v0.9.7 Normative Baseline
+## v0.9.8 Normative Baseline
 
 Current sections and numbered phase gates are authoritative. Abbreviated
 YAML/JSON and directory examples explain those contracts; they are not
@@ -1262,12 +1267,13 @@ Record native/API units and coordinate frames; version the conversion to the
 exact-decimal IR/placement conventions in STD-005 and section 92. Known-unit,
 angle/orientation and conversion round-trip fixtures detect scale/axis mistakes.
 
-Preserve external PartSmith Python 3.12/CAD execution. Choose and document the
+Run PartSmith in KiCad's private Python 3.11/CAD environment, created from
+the bundled interpreter. Keep CAD imports out of the legacy ActionPlugin host. Choose and document the
 supported launch mechanism for the pinned build and PCM package: the current
 legacy ActionPlugin is a development launch entry; an IPC action uses KiCad's
 version-matched `plugin.json` and a tested Python or executable runtime boundary.
 Keep that registration separate from PartSmith's versioned launcher configuration
-in section 174.1.5. A KiCad-managed external Python environment is acceptable
+in section 174.1.5. A KiCad-managed private Python environment is acceptable
 only after the interpreter, dependencies and CAD tuple pass the same engineering
 runtime checks; generation cannot use the embedded legacy `pcbnew` interpreter.
 
@@ -1311,7 +1317,7 @@ for the local PCM test. Official repository listing is not assumed.
 
 For Python IPC, ship `plugins/requirements.txt` with pinned dependency closure;
 KiCad prepares the per-plugin environment in the background. Verify its actual
-Python 3.12 interpreter and binary-package availability for the declared OS/ABI.
+Python 3.11 interpreter and binary-package availability for the declared OS/ABI.
 The pinned 10.0.6 loader uses pip's binary-only requirement installation, so a
 source-build fallback cannot satisfy readiness. Do not rely on `min_version`
 alone to enforce the interpreter. The supported production mechanism is Python
@@ -1543,7 +1549,7 @@ online lifecycle acceptance and the complete production-matrix proof.
 
 1. Build the production application.
 2. Pin the selected CAD runtime in KiCad-managed requirements.
-3. Verify the online binary dependency closure for Python 3.12/Windows AMD64.
+3. Verify the online binary dependency closure for Python 3.11/Windows AMD64.
 4. Generate dependency/license manifest.
 5. Test clean-machine installation.
 6. Test upgrade/uninstall.
@@ -1556,16 +1562,20 @@ online lifecycle acceptance and the complete production-matrix proof.
 install, launch, runtime-diagnostic, upgrade, and uninstall tests. The
 production package declares the pinned CAD/runtime dependencies and validated
 dependency/license manifest. KiCad provisions the binary wheels online without
-manual CadQuery/OCP/OCCT/Conda installation. Python 3.12 configured in KiCad and
-Tesseract 5 with eng/deu/chi_sim language data are explicit prerequisites; the
-installed KiCad 10.0.6 default Python 3.11 does not satisfy the current pins.
+manual CadQuery/OCP/OCCT/Conda installation. KiCad's bundled Python 3.11 and
+Tesseract 5 with eng/deu/chi_sim language data are explicit prerequisites.
+An external Python 3.12 installation is not required. The optional
+`runtime.min_version` field is not an enforcement boundary; the action verifies
+Python 3.11 and the actual pinned dependencies before engineering work.
 All eight production variants pass the complete release
 corpus; single-component success is insufficient for this gate.
 
 **Installation policy revision, 2026-10-08:** The project owner removed offline
 installation from scope. Production now uses Python IPC and KiCad-managed
 requirements; the 0.2.x executable bundle and its receipts are historical only.
-The 0.3.0 online candidate reuses the managed installer and diagnostics. PDL schema 1.1 adds explicit
+The 0.3.1 online candidate targets bundled Python 3.11. The retired 0.3.0
+Python 3.12 candidate and its receipts remain historical. PDL schema 1.1 adds
+explicit
 per-terminal dimensions, bent-lead profiles and measured index geometry;
 symbol serializer 2.0 spaces IC pins. Historical PDL 1.0 and serializer 1.0
 contracts retain their bytes. The pinned `mvp-1@1.1` profile still requires all
@@ -1673,10 +1683,31 @@ The customer installs one PartSmith PCM package. KiCad provisions its exact
 pinned Python/CAD dependencies online in the plugin's managed environment.
 Users do not manually install CadQuery, OCP, OCCT, Conda or individual DLLs.
 
-Supported prerequisites are KiCad 10.0.6 on Windows AMD64, a Python 3.12
-interpreter selected in KiCad, and Tesseract 5 with eng/deu/chi_sim language data.
-These external prerequisites are declared by the online installation policy;
-they are not packaged by PartSmith.
+Supported prerequisites are KiCad 10.0.6 on Windows AMD64 with its bundled
+Python 3.11 (verified locally as 3.11.5), and external Tesseract 5 with
+eng/deu/chi_sim language data. PartSmith does not package either prerequisite.
+KiCad creates a private per-plugin venv and installs pinned upstream wheels;
+PartSmith never installs dependencies into KiCad's base interpreter.
+
+The 3.11 closure pins NumPy 2.4.6, SciPy 1.17.1 and contourpy 1.3.3, plus
+backports.tarfile 1.2.0, importlib_metadata 9.0.1 and zipp 4.1.1 for the 3.11
+dependency graph. CadQuery 2.8.0 / OCP distribution 7.9.3.1.1 / OCCT 7.9.3
+remain the selected CAD tuple. Windows cp311 wheel and installed member
+identities are in `runtime-lock-1.1.json`; historical cp312
+`runtime-lock-1.0.json` remains unchanged. Snapshots, replay and project plans
+select the lock and constraints matching the running Python. A Python baseline
+change is a build-input change; old approvals must never be relabeled as 3.11.
+
+PCM customers select bundled Python in KiCad's Python/IPC preferences. The
+repository batch installer discovers it beside the verified KiCad CLI and sets
+`api.interpreter_path`, preserving other settings and retaining the exact old
+preferences in its transactional backup. This preference applies to all Python
+IPC plugins. Dry runs change no preferences or files. Close KiCad and PartSmith
+before installation. Existing 3.12 plugin caches must be recreated through
+KiCad's **Recreate Plugin Environment** action. The helper does not delete
+caches, durable sessions or user data. External Python is not a customer
+prerequisite. Producer tooling may retain Python 3.12 for historical checks
+and gate hash closeout.
 
 Installation, updates and environment recreation require internet access.
 Offline installation, runtime bundles and an optional offline edition are not
@@ -1856,8 +1887,8 @@ engineering source.
 #### CadQuery runtime boundary
 
 CadQuery shall be integrated through a PartSmith backend adapter. The
-customer runtime shall package the required CadQuery/OCP/OCCT components
-so that users do not need separate CAD-runtime installation.
+customer runtime shall declare required CadQuery/OCP/OCCT components in
+KiCad-managed requirements so users do not install the CAD runtime manually.
 
 The adapter shall expose deterministic geometry construction and STEP export
 through a controlled interface. Runtime versions, exact dependency archive
@@ -1865,7 +1896,7 @@ hashes, exporter settings, and the Python version shall be recorded for
 reproducibility. The CadQuery, OCP, and OCCT versions shall be pinned as one
 tested compatibility tuple in a reviewed lockfile or constraints file.
 The tuple shall also record the supported operating system, architecture,
-Python 3.12 build, dependency source, archive SHA-256, and redistributable
+actual Python 3.11 patch/build, dependency source, archive SHA-256, and redistributable
 license files. A different tuple is a reproducibility-relevant build input
 and requires fresh Phase 6 validation.
 
@@ -5428,7 +5459,7 @@ compatibility tests govern supported KiCad capabilities.
 
 ## Purpose
 
-v0.9.7 defines the current implementation contract and phase-gate requirements.
+v0.9.8 defines the current implementation contract and phase-gate requirements.
 
 This document defines:
 
@@ -5478,7 +5509,8 @@ and validate components without opening the GUI.
 The MVP reference implementation shall use:
 
 ``` text
-Language: Python 3.12
+Language: Python 3.11 for customer PCM; Python 3.12 retained for historical
+producer verification
 Data: JSON/YAML
 Geometry: deterministic Python geometry + CadQuery/OCP/OCCT backend
 3D exchange: STEP
@@ -5601,7 +5633,7 @@ section 174.1. Operational attempt/decision IDs remain separate audit identities
 
 ## 121.1 Normative Component IR 1.2 contract
 
-IR 1.2 remains the v0.9.7 target. Its implemented Draft 2020-12
+IR 1.2 remains the v0.9.8 target. Its implemented Draft 2020-12
 [schema](../schemas/component-ir-1.2.schema.json) has ID
 `bft://schemas/component-ir/1.2` and `schema_version: "1.2"`. The existing
 [IR 1.0](../schemas/component-ir-1.0.schema.json) and
@@ -5706,8 +5738,9 @@ requirements and the review UI. No artifact validator is an input prerequisite.
   code point. Array order is significant and preserved.
 - Numbers use exact decimal tokens without exponent notation or unnecessary
   fractional zeros. `1`, `1.0`, and `1e0` serialize as `1`; negative zero is `0`.
-- JSON numbers are parsed directly as Decimal. Python floats use Python 3.12's
-  shortest round-trip decimal spelling. No tolerance-based rounding occurs:
+- JSON numbers are parsed directly as Decimal. Python floats use CPython's
+  shortest round-trip decimal spelling (unchanged between 3.11 and 3.12).
+  No tolerance-based rounding occurs:
   `0.1 + 0.2` and `0.3` are distinct inputs. Numeric tokens are limited to 100
   significant coefficient digits and an absolute decimal exponent of 100
   after removing redundant trailing zeros, before and after
@@ -7579,7 +7612,7 @@ It contains no provider/IPC credentials or implicit target/approval flags.
 Read the legacy one-field form only as standalone launch configuration; upgrading
 it is an explicit installer operation. Reject unknown versions or unsafe runtime
 commands. Keep interpreter/local-path metadata out of engineering hashes.
-Verify the selected Python 3.12 runtime, PartSmith/package compatibility and
+Verify the selected Python 3.11 runtime, PartSmith/package compatibility and
 declared dependency lock before engineering operations; existence of a file
 alone is insufficient. Use fixed argument vectors without a shell, strip embedded
 Python path overrides and report moved/missing/incompatible runtimes clearly.
@@ -8993,7 +9026,7 @@ for failed builds.
 
 # 244. Engineering Review Checklist
 
-Before declaring the v0.9.7 production implementation release-ready after Phase 14:
+Before declaring the v0.9.8 production implementation release-ready after Phase 14:
 
 -   [ ] Component IR schema frozen
 -   [ ] Evidence schema frozen
@@ -9115,7 +9148,7 @@ gates. The earlier resolution tables describe their original revision scopes.
 | D095-04 | Snapshot profile 1.2 scopes trusted configuration per generator/validator/finalizer while the full snapshot retains complete runtime inputs; retain profile 1.1 hashes unchanged | 166; incremental projection implementation Phases 4–6, whole-build integration Phases 8–9 |
 | D095-05 | Silkscreen edits invalidate results bound to changed footprint bytes, final checks, manifest and approval while preserving independent STEP geometry | 103/167; Phases 8–9 negative/reuse tests |
 | D095-06 | Two clean independent STEP exports must be byte-identical in the CAD spike, with deterministic settings and revalidated normalization | Phase 6 gate; whole-build Phase 9 test retained |
-| Metadata remnants | Current product/spec headers identify v0.9.7 and 2026-10-05; the archived v0.9.6 header/date and earlier review/gate versions remain historical | Header/product description/245/246 |
+| Metadata remnants | Current product/spec headers identify v0.9.8 and 2026-10-08; the archived v0.9.6 header/date and earlier review/gate versions remain historical | Header/product description/245/246 |
 | Count/fault examples | QFN examples distinguish peripheral leads, conductive exposed terminals and groups; blanket fault language excludes allowed symmetry-equivalence positives | 6/21/93.1/241 |
 | Downstream checkpoints | Define supported pin-edit sequencing, complete PDL feature declarations, and required-rule result aggregation | 121.7/126/152; Phases 3/7–8/12 |
 

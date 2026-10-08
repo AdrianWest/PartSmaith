@@ -1,16 +1,16 @@
 # PartSmith PCM installation
 
 PartSmith's customer plugin artifact is a KiCad Plugin and Content Manager
-(PCM) ZIP. The current development target is Windows AMD64, KiCad 10.0.6 and
-CPython 3.12. The [full Phase 13 gate](gates/phase-13.md) passes on this declared
-target. Its final package is `dist/partsmith-0.1.9-pcm.zip`; actual PCM lifecycle,
+(PCM) ZIP. The customer target is Windows AMD64, KiCad 10.0.6 and its bundled
+CPython 3.11 (verified locally as 3.11.5). The [full Phase 13 gate](gates/phase-13.md)
+passed on its historical Python 3.12 target; its receipts retain that scope. Its final package is `dist/partsmith-0.1.9-pcm.zip`; actual PCM lifecycle,
 prepared runtime, native editors and official PCB IPC have separate supervised
 evidence. There is no public production release. Clean-machine online production
 acceptance remains Phase 14.
 
 ## Supported online installation
 
-Candidate **0.3.0** uses Python IPC and KiCad's private managed environment.
+Candidate **0.3.1** uses Python IPC and KiCad's private managed environment.
 PartSmith supplies source, resources and pinned `requirements.txt`; KiCad
 installs the upstream binary wheels, including the CAD DLLs. Installation,
 updates and **Recreate Plugin Environment** require internet access. There is
@@ -18,9 +18,10 @@ no supported offline installer, dependency mirror or optional offline edition.
 Normal local processing and recorded component replay remain available after
 successful environment preparation.
 
-Install `dist/partsmith-0.3.0-pcm.zip` using PCM **Install from File**. Configure
-Python 3.12 in KiCad first: this machine's KiCad 10.0.6 ships Python 3.11.5,
-which cannot satisfy the current NumPy/SciPy/contourpy pins. Tesseract 5 and
+Install `dist/partsmith-0.3.1-pcm.zip` using PCM **Install from File**. Use
+KiCad's bundled Python 3.11. No external Python installation is needed.
+Compatible pins are NumPy 2.4.6, SciPy 1.17.1 and contourpy 1.3.3, with three
+3.11 backports. The CAD tuple remains unchanged. Tesseract 5 and
 `eng`, `deu`, `chi_sim` language data are external OCR prerequisites; the existing
 adapter discovers the standard Windows installation, PATH or
 `PARTSMITH_TESSERACT`, with `TESSDATA_PREFIX` selecting language data. The Python
@@ -39,9 +40,10 @@ The production gate remains open; this policy change does not grant a PASS.
 
 ## Install and prepare
 
-1. In KiCad's Python/IPC preferences, select the verified external CPython
-   3.12 interpreter. Enable the PCB Editor API. KiCad's embedded legacy 3.11
-   interpreter does not meet PartSmith's engineering runtime requirement.
+1. In KiCad's Python/IPC preferences, select bundled Python 3.11, for example
+   `C:/Program Files/KiCad/10.0/bin/python.exe`. This is KiCad's default on
+   Windows; replace any old external 3.12 override. Enable the PCB Editor API.
+   PartSmith runs in a separate managed venv, outside the legacy ActionPlugin host.
 2. Open PCM from the KiCad project manager. Choose **Install from File** and
    select the released PartSmith PCM ZIP. For a configured repository, select
    the package/version, inspect Pending actions and choose **Apply Pending
@@ -50,7 +52,12 @@ The production gate remains open; this policy change does not grant a PASS.
 3. KiCad prepares the plugin's private Python environment in the background.
    First preparation normally downloads pip and the pinned binary dependencies.
    Wait for preparation to finish, then reload/restart the PCB Editor as needed
-   for registration. A successful pip job alone does not establish engineering
+   for registration. After switching interpreters, recreate any existing 3.12
+   plugin cache: right-click **Open PartSmith** under
+   **Preferences → PCB Editor → Plugins** and select **Recreate Plugin Environment**.
+   If the failed action is absent, restart KiCad after installing the package
+   and correcting the interpreter preference. Recreation requires internet.
+   A successful pip job alone does not establish engineering
    readiness: the action verifies the actual Python, CAD/native bytes, dependency
    pins, schemas and full installed resource inventory again.
 4. With the intended board open, use the **Open PartSmith** IPC toolbar action
@@ -73,18 +80,22 @@ The setup window no longer exposes the 0402 rendering prototype button.
 
 For this prepared development checkout, close KiCad and PartSmith, then
 double-click [`install_partsmith.bat`](../install_partsmith.bat). It uses the
-repository's existing Python 3.12 `.venv`, builds the current PCM ZIP, validates
-its payload and installs it into the configured KiCad 10 third-party directory.
-KiCad's external Python 3.12 must already be configured. Reopen KiCad afterward
-and allow its private plugin runtime preparation to finish.
+repository's producer `.venv` (Python 3.11 or 3.12), builds and verifies the PCM
+ZIP, and installs it into the configured KiCad 10 third-party directory. It
+selects the bundled Python beside the verified KiCad 10.0.6 CLI for Python IPC.
+This preference applies to every Python IPC plugin. The exact old settings are
+retained in the install backup; other preferences remain intact, and publication
+failure restores the original settings. For custom locations, set
+`PARTSMITH_KICAD_CLI` to KiCad's `kicad-cli.exe`. Reopen KiCad afterward and
+allow preparation to finish. Recreate any old 3.12 plugin cache as described above.
 
 The installer updates PartSmith's local PCM registration, preserves other
-packages and settings, and retains the previous plugin, icon and registry in
+packages and unrelated settings, and retains the previous plugin, icon and registry in
 `PartSmith-install-backups` beside the third-party root. Staging and backups
 stay outside KiCad's recursive plugin discovery. A failed publication restores
 the prior payload. `install_partsmith.bat --no-pause --dry-run` checks the target
 without changing installation files. This repository helper does not replace
-Phase 14 clean-machine or offline installation acceptance.
+Phase 14 clean-machine online installation acceptance.
 
 The final 0.1.9 package uses the project owner's `resources/PartSmith_Logo_64x64.png`
 unchanged for the package manager listing. The PCM ZIP includes it as
@@ -137,51 +148,18 @@ Disconnecting or switching the selected board invalidates execution. Native
 schematic/PCB use and PCB inspection are verified; library installation does
 not write or place PCB instances automatically.
 
-## Offline supply and recovery
+## Historical offline supply
 
-An offline ZIP is insufficient for Python environment preparation. The tested
-development supply contains the exact CPython 3.12 Windows AMD64/universal
-third-party wheels for `requirements-pcm.txt`, plus a pip wheel for the loader's
-upgrade stage. The gate evidence inventories each binary's size and SHA-256.
-Administrators provision this verified local supply before offline preparation;
-the customer does not run pip.
-
-The tested owned environment uses its site `pip.ini` policy:
-
-```ini
-[global]
-no-index = true
-find-links = C:/owned/verified/binary-supply
-disable-pip-version-check = true
-```
-
-The supply path is local operational configuration, outside the ZIP. KiCad's
-`--isolated` requirement installation reads this per-environment site policy.
-Missing or incompatible binaries leave preparation failed rather than invoking
-a source build or silently using another dependency version. The owned
-loader-sequence checks exercise denied-index failure, interruption, retry,
-environment recreation, dependency closure and complete engineering readiness.
-Actual PCM background preparation/recovery has separate gate evidence.
-
-For a registered IPC action, right-click **Open PartSmith** under
-**Preferences → PCB Editor → Plugins** and choose **Recreate Plugin Environment**
-to discard its cache and queue fresh preparation. A failed dependency job can
-remove the action row entirely. Provision the corrected binary supply/site
-policy, restart KiCad itself, and reopen the PCB Editor to retry preparation;
-the tested missing-binary case recovers without running customer pip commands.
-Reload/Refresh
-after a failed pip job can retain a busy/unusable state in the pinned loader;
-explicit recreation or a complete KiCad restart provides the recovery boundary.
-For offline use,
-the local supply/site policy must also be available to the recreated environment
-before the loader's pip stage. Recreating a cache is not a component-library
-rollback. Use PCM or the verified repository installer to update registration.
+The prior Python 3.12 wheel supply, site `pip.ini` policy and offline recovery
+experiments are retired. Their original instructions remain in the
+[pre-migration archive](gates/history/phase-14-before-python311-2026-10-08/docs/pcm-installation.md).
+Use online KiCad preparation and recreation for the current package.
 
 Safe action diagnostics are in
 `%LOCALAPPDATA%/PartSmith/runtime/last-launch.json`. They contain stable readiness
 and inspection codes and exact resource/runtime identities. IPC endpoints,
 tokens, credential values and raw provider error messages are excluded.
-`PYTHON_312_REQUIRED`, dependency/resource errors and IPC context-loss codes
+`PYTHON_311_REQUIRED`, dependency/resource errors and IPC context-loss codes
 require correcting the indicated boundary before retrying.
 
 ## Update, uninstall and durable data

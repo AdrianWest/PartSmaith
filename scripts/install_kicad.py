@@ -10,6 +10,7 @@ import os
 import subprocess
 import sys
 from pathlib import Path
+from tempfile import TemporaryDirectory
 from zipfile import ZipFile
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -76,6 +77,46 @@ def require_closed_kicad() -> None:
         )
 
 
+def bundled_python() -> Path:
+    """@brief Verifies Python beside the supported native KiCad executable.
+    @return Absolute KiCad-bundled Python 3.11 interpreter path.
+    @details Uses KiCad discovery, including PARTSMITH_KICAD_CLI for custom
+    installations. Probes use disposable KiCad settings, so even CLI startup
+    bookkeeping cannot change user preferences. Base Python is never modified.
+    """
+    from partsmith.kicad import discover_kicad
+
+    previous_config = os.environ.get("KICAD_CONFIG_HOME")
+    try:
+        with TemporaryDirectory(prefix="partsmith-kicad-probe-") as temporary:
+            os.environ["KICAD_CONFIG_HOME"] = temporary
+            runtime = discover_kicad()
+    finally:
+        if previous_config is None:
+            os.environ.pop("KICAD_CONFIG_HOME", None)
+        else:
+            os.environ["KICAD_CONFIG_HOME"] = previous_config
+    if runtime.version != "10.0.6":
+        raise RuntimeError("KiCad 10.0.6 is required")
+    interpreter = runtime.executable.with_name("python.exe").resolve()
+    result = subprocess.run(
+        [
+            str(interpreter),
+            "-I",
+            "-c",
+            "import platform, sys; "
+            "raise SystemExit(0 if sys.version_info[:2] == (3,11) "
+            "and platform.machine() == 'AMD64' else 1)",
+        ],
+        check=False,
+        capture_output=True,
+        timeout=15,
+    )
+    if result.returncode:
+        raise RuntimeError("KiCad must supply Windows AMD64 Python 3.11")
+    return interpreter
+
+
 from partsmith.pcm.installation import (  # noqa: E402,F401
     install_archive,
     require_owned_path,
@@ -86,7 +127,8 @@ from partsmith.pcm.installation import (  # noqa: E402,F401
 def main() -> int:
     """@brief Installs or removes the current managed-Python package locally.
     @return Zero on installation or dry-run success; one on a rejected install.
-    @details Requires Windows Python 3.12 and preserves existing preferences.
+    @details The producer uses Python 3.11 or 3.12. Installation selects
+    KiCad's bundled 3.11 for IPC with a transactional preference backup.
     """
     parser = argparse.ArgumentParser(description=__doc__)
     action = parser.add_mutually_exclusive_group()
@@ -98,9 +140,9 @@ def main() -> int:
     parser.add_argument("--no-pause", action="store_true")
     args = parser.parse_args()
     try:
-        if os.name != "nt" or sys.version_info[:2] != (3, 12):
+        if os.name != "nt" or sys.version_info[:2] not in {(3, 11), (3, 12)}:
             raise RuntimeError(
-                "Use the Windows Python 3.12 project environment"
+                "Use the Windows Python 3.11 or 3.12 project environment"
             )
         settings, third_party = installation_paths(
             args.settings_dir, args.third_party_dir
@@ -113,24 +155,9 @@ def main() -> int:
             report = uninstall(settings, third_party)
             print("Removed PartSmith; backup: " + str(report.get("backup")))
             return 0
-        common = json.loads((settings / "kicad_common.json").read_bytes())
-        interpreter = (common.get("api") or {}).get("interpreter_path")
-        if not interpreter or not Path(interpreter).is_file():
-            raise RuntimeError("Configure KiCad's external Python 3.12 first")
-        result = subprocess.run(
-            [
-                interpreter,
-                "-I",
-                "-c",
-                "import sys; "
-                "raise SystemExit(0 if sys.version_info[:2] == (3,12) else 1)",
-            ],
-            check=False,
-            capture_output=True,
-            timeout=15,
-        )
-        if result.returncode:
-            raise RuntimeError("KiCad's selected Python must be version 3.12")
+        interpreter = bundled_python()
+        print("KiCad IPC interpreter: " + str(interpreter))
+        print("Installation selects this interpreter for KiCad Python IPC.")
         if args.dry_run:
             print("KiCad settings: " + str(settings))
             print(
@@ -153,10 +180,15 @@ def main() -> int:
             settings,
             third_party,
             before_publish=require_closed_kicad,
+            python_interpreter=interpreter,
         )
         print("Installed PartSmith " + report["version"])
         print("Backup: " + report["backup"])
         print("Open KiCad and wait for its plugin runtime preparation.")
+        print(
+            "For an existing Python 3.12 cache, use Recreate Plugin "
+            "Environment in PCB Editor plugin preferences."
+        )
         return 0
     except Exception as error:
         print("PartSmith installation failed: " + str(error), file=sys.stderr)

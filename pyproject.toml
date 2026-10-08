@@ -7,12 +7,13 @@ name = "partsmith"
 version = "0.1.0"
 description = "Deterministic KiCad component builder for Board Forge Tools."
 readme = "README.md"
-requires-python = ">=3.12,<3.13"
+requires-python = ">=3.11,<3.13"
 license = { file = "LICENSE" }
 authors = [{ name = "Board Forge Tools" }]
 classifiers = [
   "Development Status :: 2 - Pre-Alpha",
   "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
 ]
 dependencies = [
@@ -22,7 +23,8 @@ dependencies = [
 
 [project.optional-dependencies]
 gui = [
-  "wxPython==4.3.1", "keyring==25.7.0", "Pillow==12.3.0", "numpy==2.5.3",
+  "wxPython==4.3.1", "keyring==25.7.0", "Pillow==12.3.0", "numpy==2.4.6; python_version < '3.12'",
+  "numpy==2.5.3; python_version >= '3.12'",
 ]
 dev = [
   "PyMuPDF==1.28.2",
@@ -70,6 +72,7 @@ exclude = ["docs/gates"]
 "pdl/entries" = "partsmith/pdl/entries"
 "pdl/release-profiles" = "partsmith/pdl/release-profiles"
 "requirements-ci.txt" = "partsmith/release/runtime-constraints.txt"
+"requirements-pcm.txt" = "partsmith/release/runtime-constraints-311.txt"
 "fixtures/production" = "partsmith/pcm/corpus"
 
 [tool.pytest.ini_options]
@@ -78,7 +81,7 @@ addopts = ["-ra"]
 pythonpath = ["src"]
 
 [tool.ruff]
-target-version = "py312"
+target-version = "py311"
 line-length = 79
 # Historical receipts retain their exact original bytes and code examples.
 extend-exclude = [

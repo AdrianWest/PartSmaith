@@ -1,4 +1,7 @@
-"""Release snapshots and manifests preserve the engineering/audit boundary."""
+"""@file test_phase8_snapshot.py
+@brief Verifies frozen engineering snapshots and runtime identities.
+@details Checks the running Python baseline without rewriting old receipts.
+"""
 
 import copy
 import json
@@ -45,10 +48,21 @@ def _seed(connection):
 def test_snapshot_is_complete_and_frozen_before_any_generator(
     tmp_path, monkeypatch
 ):
+    """@brief Requires a complete snapshot before any generator executes.
+    @param tmp_path Disposable snapshot database directory.
+    @param monkeypatch Generator interception helper.
+    @return None.
+    @details Runtime identities must match the executing Python baseline.
+    """
     with database(tmp_path / "snapshot.db") as connection:
         component, data, _ = _seed(connection)
 
         def before_symbol(*args):
+            """@brief Inspects the frozen runtime at the generator boundary.
+            @param args Unused symbol generator arguments.
+            @return Never returns; terminates after checking the snapshot.
+            @details No generated artifact may exist at this point.
+            """
             row = connection.execute(
                 "SELECT canonical_bytes FROM build_snapshots"
             ).fetchone()
@@ -60,7 +74,9 @@ def test_snapshot_is_complete_and_frozen_before_any_generator(
             config = snapshot["configuration"]
             runtime = config["runtime"]
             assert runtime["python"] == platform.python_version()
-            assert runtime["python_baseline"] == "3.12"
+            assert runtime["python_baseline"] == ".".join(
+                platform.python_version_tuple()[:2]
+            )
             assert runtime["occt"] == "7.9.3.1"
             assert runtime["archives"]
             assert all(len(x["sha256"]) == 64 for x in runtime["archives"])

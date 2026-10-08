@@ -237,16 +237,16 @@ def test_installed_inventory_and_missing_resource(pcm_archive, tmp_path):
         verify_inventory(root)
 
 
-def test_python311_is_rejected_before_resource_or_native_import(monkeypatch):
-    """@brief Rejects embedded legacy Python before touching resource/CAD code.
+def test_python310_is_rejected_before_resource_or_native_import(monkeypatch):
+    """@brief Rejects unsupported Python before touching resource/CAD code.
     @param monkeypatch Interpreter-state test helper.
     @return None.
     @details A missing package root cannot obscure the interpreter error.
     """
-    monkeypatch.setattr(sys, "version_info", (3, 11, 5))
+    monkeypatch.setattr(sys, "version_info", (3, 10, 11))
     result = readiness(Path("does-not-exist"))
     assert result["state"] == "FAILED"
-    assert result["code"] == "PYTHON_312_REQUIRED"
+    assert result["code"] == "PYTHON_311_REQUIRED"
 
 
 def test_entry_isolates_pythonpath_and_removes_tokens_before_checks(tmp_path):
@@ -275,6 +275,7 @@ def test_entry_isolates_pythonpath_and_removes_tokens_before_checks(tmp_path):
 
     child = subprocess.run(
         [sys.executable, str(entry), "--diagnostics"],
+        stdin=subprocess.DEVNULL,
         env=os.environ
         | {
             "PYTHONPATH": "untrusted-path",
@@ -321,6 +322,7 @@ def test_failure_reports_never_serialize_dependency_exception(
 
     monkeypatch.setattr(runtime.platform, "system", system)
     monkeypatch.setattr(runtime.platform, "machine", machine)
+    monkeypatch.setattr(sys, "version_info", (3, 11, 5))
     result = readiness(tmp_path)
     assert result["code"] == "PCM_RESOURCE_CHECK_FAILED"
     assert "Exception" not in json.dumps(result)

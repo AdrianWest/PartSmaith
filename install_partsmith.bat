@@ -2,7 +2,7 @@
 setlocal
 pushd "%~dp0"
 if not exist ".venv\Scripts\python.exe" (
-    echo PartSmith's Python 3.12 environment is missing.
+    echo PartSmith's producer environment is missing. Use Python 3.11 or 3.12.
     echo Prepare the repository .venv before running this installer.
     set "PARTSMITH_INSTALL_RESULT=1"
     goto finish

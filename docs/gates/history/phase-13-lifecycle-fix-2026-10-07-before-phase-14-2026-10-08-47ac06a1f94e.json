@@ -1,0 +1,149 @@
+{
+  "schema_version": "partsmith-lifecycle-installer-fix-1.0",
+  "date": "2026-10-07",
+  "status": "PASS",
+  "scope": "Post-Phase-13 development correction; Phase 14 production acceptance remains separate",
+  "behavior": [
+    "No board selection, IPC connection or automatic PCB read at startup",
+    "Retained exact launching KiCad process handle detects process exit without following a reused PID",
+    "Closing editors while the launching project manager remains open permits library publication",
+    "KiCad process exit closes PartSmith and owned generic message dialogs without a save/discard prompt",
+    "Cooperative worker cleanup and recovery retain unfinished work",
+    "No Open 0402 Rendering Prototype button in the setup window",
+    "Batch builds, verifies and installs only owned payload and PCM registration with rollback backups outside plugin discovery"
+  ],
+  "pcm_package": {
+    "path": "dist/partsmith-0.1.11-pcm.zip",
+    "version": "0.1.11",
+    "sha256": "f7d715aa07ace8df59ad3a48c86a4d05d261a5f0a5a44af6aff457da47ddf2a3",
+    "inventory_sha256": "f34c27d79e38572b761653ba5e41459e25448702c8f7e8ef239ddc29be84469a",
+    "byte_length": 7018107,
+    "members": 166,
+    "deterministic_rebuild": "PASS"
+  },
+  "checks": [
+    {
+      "command": ".venv/Scripts/python.exe -m pytest tests/test_pcm.py tests/test_integration_ipc.py tests/test_ipc_inspection.py tests/test_kicad_lifecycle.py tests/test_kicad_installer.py -q --junitxml=docs/gates/phase-13-lifecycle-fix-source-results.xml",
+      "status": "PASS",
+      "tests": 141
+    },
+    {
+      "command": ".venv/Scripts/python.exe -m pytest scripts/verify_gui.py -q --junitxml=docs/gates/phase-13-lifecycle-fix-gui-results.xml",
+      "status": "PASS",
+      "tests": 18
+    },
+    {
+      "command": ".venv/Scripts/python.exe -m pytest scripts/verify_viewer_prototype.py -q -k 'actual_modeless_rotation_zoom_resize_and_reopen or main_close_waits_for_viewer_worker_cleanup' --junitxml=docs/gates/phase-13-lifecycle-fix-prototype-results.xml",
+      "status": "PASS",
+      "tests": 2,
+      "deselected": 10
+    },
+    {
+      "command": ".venv/Scripts/python.exe -m ruff check .",
+      "status": "PASS"
+    },
+    {
+      "command": ".venv/Scripts/python.exe -m ruff format --check .",
+      "status": "PASS",
+      "files": 286
+    }
+  ],
+  "native_verification": {
+    "kicad_version": "10.0.6",
+    "installed_version": "0.1.11",
+    "installation": "Actual repository batch installer",
+    "runtime_state": "READY",
+    "python_version": null,
+    "direct_startup_without_prototype_button": "PASS",
+    "editor_close_preserves_setup_with_manager_open": "PASS",
+    "host_exit_dismisses_real_recovery_dialog": "PASS",
+    "all_kicad_and_partsmith_windows_closed": "PASS",
+    "host_closed_diagnostic": "KICAD_HOST_EXITED",
+    "board_bytes_unchanged": "PASS",
+    "board_sha256": "9181b6a70a205652ff169443915c04de125bf3adb21f9a6ae3078ec87c855335",
+    "verified_installed_files": 163,
+    "other_pcm_packages_unchanged": 14,
+    "backup": "C:\\Users\\User\\Documents\\KiCad\\10.0\\PartSmith-install-backups\\20261007T172509Z-691ce52017d64d9ba743897b201dda2a",
+    "backup_outside_plugin_discovery": true
+  },
+  "historical_acceptance": "Frozen 0.1.9 and 0.1.10 archive size, archive SHA-256 and inventory SHA-256 verified unchanged",
+  "startup_fix_input_refresh": {
+    "historical_manifest": "docs/gates/history/phase-13-startup-fix-2026-10-07-before-lifecycle-fix-9dbdd7de2e57.json",
+    "changes": [
+      {
+        "path": "docs/pcm-installation.md",
+        "previous_sha256": "db74c3b77849d282691a75aa99b3aa9179d3b78dffb2bfb73f5e628dcaf424e7",
+        "new_sha256": "a238b161c9ed45c33b362de5d9e4304ff44a72b9c28eb3825810fdd758143a71"
+      },
+      {
+        "path": "integrations/kicad/partsmith_ipc/entry.py",
+        "previous_sha256": "458c6f76a93d8224191a1865b63198a5b64f3c1be08e6c07d15eea79fe03db12",
+        "new_sha256": "c11e084afad2b241cdbe1514d36eb7435f0f860ed397d21d744c13d5aa294bab"
+      },
+      {
+        "path": "resources/BFT_PartSmith_Implementation_Spec.md",
+        "previous_sha256": "916e56ff69f2a0c42e5337d2e7384f96fb8530077f8d1c519ae5c02976363113",
+        "new_sha256": "922a7be968c7ed329fd775ffc63c330924cf75c81b8920a971f05207435dda79"
+      },
+      {
+        "path": "scripts/verify_gui.py",
+        "previous_sha256": "c0fad53aa6d8f2fead96d511f79575b6d24fa7335194e2c95e59b9c37d03ab92",
+        "new_sha256": "ad65b4bef1576869a0959d823434e6bef60dd71d054a79841381bc4e9f479931"
+      },
+      {
+        "path": "src/partsmith/gui/app.py",
+        "previous_sha256": "cb6c5d03022a7d41bbb43efe020f14bd7837e0cee56559be04301c74fd17d123",
+        "new_sha256": "186de53d17ec7fcf963da804f89869e6004cf4b3931bf82df1127bc003404090"
+      },
+      {
+        "path": "src/partsmith/pcm/package.py",
+        "previous_sha256": "b8610d2269e4a280d185c191358fd35253e49992a1e6097fe21dbd2e7be4041d",
+        "new_sha256": "3ba677609a65fd37dfbd73d9a929918c63dd7fa9d0488cf8c428920133394f1c"
+      },
+      {
+        "path": "tests/test_pcm.py",
+        "previous_sha256": "70851262388bcec358ab21800154c898adeaa928b0e75300f992065dd503b1be",
+        "new_sha256": "811f2dba836d97754e7b230f7fd93862b842024f311fa6a4c82f41163c65c3fc"
+      }
+    ]
+  },
+  "hash_closeout_verification": {
+    "status": "PASS",
+    "core_active_manifests": 33,
+    "active_manifests_including_patch_receipts": 35,
+    "ci_manifests": 12,
+    "refreshed_core_hashes": 121,
+    "command": ".venv/Scripts/python.exe scripts/close_integration_gate.py --phase 13 --reason <lifecycle and batch installer correction>",
+    "hash_source": "disk",
+    "git_blob_verification": "PASS at f424e28d794a414368e11530caf876064f94b2d1; see docs/gates/phase-13-lifecycle-fix-committed-verification-2026-10-07.json"
+  },
+  "sha256": {
+    "docs/gates/history/phase-13-startup-fix-2026-10-07-before-lifecycle-fix-9dbdd7de2e57.json": "9dbdd7de2e577007d0c3bbf4c6a9b29d01e68bc14eb8c4d092684c017100540d",
+    "docs/gates/phase-13-hash-closeout.json": "b4823a5ddf6a85fe242b83082ad743093b0586ca6806982bc11ad878f3deaa5a",
+    "docs/gates/phase-13-lifecycle-fix-gui-results.xml": "7e0c178e704c56e3bacec503847ba5628ef4bb8609945f102b99c355c85d2bc3",
+    "docs/gates/phase-13-lifecycle-fix-native/batch-install.txt": "0f65ee0b66f844f75652668eb7799df6580fbeacd9e7930499c69b1ed3e76e4a",
+    "docs/gates/phase-13-lifecycle-fix-native/direct-startup-readiness.json": "88145790abac0665b10c048d986ea2d344d87124a3f7f55f0d47567fd2b56eec",
+    "docs/gates/phase-13-lifecycle-fix-native/direct-startup.png": "0b1a437ca6538aa392ac6f71f667f06d7fba008fa7540f9a9e2c1ae4f3cd4d79",
+    "docs/gates/phase-13-lifecycle-fix-native/editor-closed-manager-open.json": "bd96691165298c95371f73bb1d21288e94a31fbb68c9978d3bd523c7840e1176",
+    "docs/gates/phase-13-lifecycle-fix-native/host-closed-readiness.json": "46bfea5dbfa1f5986bd5104bb05e11bf89977d1109e924a101b603f810b07767",
+    "docs/gates/phase-13-lifecycle-fix-native/host-closed-windows.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+    "docs/gates/phase-13-lifecycle-fix-native/installation-verification.json": "911f20fcfdfc9e1473b78c193b25058c685a77972914300d4675196844081cda",
+    "docs/gates/phase-13-lifecycle-fix-prototype-results.xml": "c827c73bed6bf384470332d5501a8ebec2107464b166d33e2bf5c8b0def914ae",
+    "docs/gates/phase-13-lifecycle-fix-source-results.xml": "a6bf95f5d7a02d95e1d470ecbb9f8f528906c8f108dd613554ed63904f963a91",
+    "docs/gates/phase-13-startup-fix-2026-10-07.json": "898a86da8ea7dfa123d26d87f3f378958b7c292153760c0bd1b961e134094db8",
+    "docs/pcm-installation.md": "cbca78e0e6de323ee8e07278443a93d54ebb7f79df9317f1d4cd047e24af1147",
+    "install_partsmith.bat": "bc1fcee11fcd81d4b97d439f24b46367adf466228262036269ec3fb30c59a792",
+    "integrations/kicad/partsmith_ipc/entry.py": "a3cbfdaa59764779a01dfbdd3d2e409b61b4898c36580f13b28007f22f0b1e1b",
+    "resources/BFT_PartSmith_Implementation_Spec.md": "43fb82cb0f4c79b0db397ef17a81b84d786971bd2701c92475323c43f5df0460",
+    "scripts/install_kicad.py": "c793cb8afe1ef771d4f9cf0fb5982806c291fe3d524ebf556dc8e0ce41b9fcc7",
+    "scripts/verify_gui.py": "ad65b4bef1576869a0959d823434e6bef60dd71d054a79841381bc4e9f479931",
+    "src/partsmith/gui/app.py": "186de53d17ec7fcf963da804f89869e6004cf4b3931bf82df1127bc003404090",
+    "src/partsmith/gui/integration_panel.py": "c9ddc1348271e3f24cff3e77e3e184c95f1de359e48d42b27abc919465e0aeb4",
+    "src/partsmith/integration/host.py": "17e29eda2e0c16165bd83222ff0a93db684a315bc0b6153f192e94f154c23d5a",
+    "src/partsmith/pcm/package.py": "6ddf79a89bb924c465b4c5a0666b6ab2e791ff473e48bc8e849fdfe63e09e59b",
+    "tests/test_kicad_installer.py": "ada9c113b25972facd7dc2e0ec95550f2eec678cc18c3ca26762866d97e9f857",
+    "tests/test_kicad_lifecycle.py": "9e34cd7bae98280c7ff280893372fd753dc387595870b48aaf71846f6d4d4b5c",
+    "tests/test_pcm.py": "e5600dead8934f43043602c536da307d721085b37d8890c4062ce6b706dfa7a5",
+    "docs/gates/phase-13-lifecycle-fix-committed-verification-2026-10-07.json": "c84ff0913eb9a5301f13f2227ccc9386c37c6df7f034e3e5c9582fe62c089a2d"
+  }
+}
