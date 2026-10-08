@@ -78,6 +78,8 @@ nav a { font-size: 0.88rem; font-weight: 550; text-decoration: none; }
 .workflow-steps li:not(:last-child)::after { position: absolute; top: 36px; bottom: 9px; left: 16px; width: 1px; background: var(--line); content: ""; }
 .workflow-steps li:last-child { padding-bottom: 0; }
 .workflow-steps h3 { margin-bottom: 10px; font-size: 1.08rem; }
+.installation-guide { max-width: 860px; }
+.installation-guide h2 { margin-bottom: 12px; font-size: 1.3rem; letter-spacing: -0.02em; }
 .workflow-steps p { margin: 0; color: var(--muted); font-size: 0.9rem; }
 
 .getting-started { padding-top: 88px; }

@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#0d131e">
+    <meta name="description" content="Prepare the PartSmith development candidate for KiCad on Windows: PCM installation, online dependency preparation, and manual OCR prerequisites.">
+    <title>Installation Guide | PartSmith</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <div class="container header-content">
+        <a class="brand" href="../index.html" aria-label="PartSmith home">
+          <span class="brand-name">Part<span>Smith</span></span>
+          <span class="brand-owner">Board Forge Tools</span>
+        </a>
+        <nav aria-label="Main navigation">
+          <a href="../index.html">Home</a>
+          <a href="../index.html#workflow">Workflow</a>
+          <a class="repository-link" href="https://github.com/AdrianWest/PartSmaith">GitHub <span aria-hidden="true">↗</span></a>
+        </nav>
+      </div>
+    </header>
+    <main class="container" id="main">
+      <section class="section installation-guide" aria-labelledby="guide-title">
+        <div class="section-heading">
+          <p class="eyebrow">Installation guide · Development candidate</p>
+          <h1 id="guide-title">Prepare PartSmith<br>for KiCad.</h1>
+          <p class="lead">The current candidate targets Windows AMD64 and KiCad 10.0.6. The first public production release is not available yet. These steps describe preparing a candidate PCM package for testing.</p>
+        </div>
+        <ol class="workflow-steps">
+          <li>
+            <h2>Check your KiCad setup</h2>
+            <p>Use KiCad 10.0.6 and its bundled Python 3.11. In KiCad's Python/IPC preferences, select the bundled interpreter and enable the PCB Editor API. On a standard Windows installation, the interpreter is <code>C:/Program Files/KiCad/10.0/bin/python.exe</code>. Customer installation does not need a separate Python installation.</p>
+          </li>
+          <li>
+            <h2>Install the OCR prerequisites</h2>
+            <p>Install <a href="https://github.com/UB-Mannheim/tesseract/wiki">Tesseract 5 for Windows (64-bit)</a> with English (<code>eng</code>), German (<code>deu</code>), and Simplified Chinese (<code>chi_sim</code>) language data. KiCad's Python package installer does not install this standalone OCR engine.</p>
+          </li>
+          <li>
+            <h2>Install the PCM package</h2>
+            <p>Use a PartSmith PCM ZIP supplied for your test build. In the KiCad project manager, open <strong>Plugin and Content Manager</strong>, choose <strong>Install from File</strong>, and select that ZIP. Public production packages will be listed on the <a href="https://github.com/AdrianWest/PartSmaith/releases">releases page</a> when available.</p>
+          </li>
+          <li>
+            <h2>Wait for environment preparation</h2>
+            <p>KiCad downloads and installs PartSmith's Python dependencies in a private plugin environment. Installation, dependency updates, and environment recreation require internet access. Wait for preparation to finish; reload or restart the PCB Editor if needed for plugin registration. Local processing is available after successful preparation.</p>
+          </li>
+          <li>
+            <h2>Open PartSmith</h2>
+            <p>Use the <strong>Open PartSmith</strong> IPC toolbar action in the PCB Editor. Startup checks the runtime and manual OCR prerequisites before opening setup. Missing OCR items show an error with installation links. PCB inspection is a separate, deliberate action through <strong>Inspect PCB...</strong>.</p>
+          </li>
+        </ol>
+      </section>
+      <section class="section questions" aria-labelledby="help-title">
+        <div>
+          <p class="eyebrow">Setup help</p>
+          <h2 id="help-title">An existing installation?</h2>
+        </div>
+        <div class="question-list">
+          <details>
+            <summary>My plugin environment previously used Python 3.12.</summary>
+            <p>Select KiCad's bundled Python 3.11, then right-click <strong>Open PartSmith</strong> under <strong>Preferences → PCB Editor → Plugins</strong> and choose <strong>Recreate Plugin Environment</strong>. Changing the interpreter preference alone does not migrate an existing environment. Recreation requires internet access.</p>
+          </details>
+          <details>
+            <summary>Tesseract is installed, but PartSmith cannot find it.</summary>
+            <p>PartSmith checks <code>PARTSMITH_TESSERACT</code>, then <code>PATH</code>, then the standard Windows Tesseract installation. A stale explicit override must be corrected. If <code>TESSDATA_PREFIX</code> is set, the required language data must be available in that selected folder. Correct the installation or settings, then restart PartSmith.</p>
+          </details>
+        </div>
+      </section>
+    </main>
+    <footer class="site-footer">
+      <div class="container footer-content">
+        <p><strong>PartSmith</strong><span>Built by Board Forge Tools.</span></p>
+        <div>
+          <a href="../index.html">Home</a>
+          <a href="https://github.com/AdrianWest/PartSmaith">Repository</a>
+          <a href="https://github.com/AdrianWest/PartSmaith/releases">Releases</a>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
